@@ -7,6 +7,7 @@ import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500' }
 const PRESETS = [
+  { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
   { id: '30', label: '30 dias', days: 30 },
   { id: '90', label: '90 dias', days: 90 },
@@ -21,7 +22,7 @@ const rangeFor = (days) => {
   return { start, end }
 }
 
-function Period({ range, preset, onPreset, onDates }) {
+function Period({ range, preset, onPreset, onDates, day, onDay }) {
   const today = toInput(new Date())
   return (
     <div className="period">
@@ -32,6 +33,13 @@ function Period({ range, preset, onPreset, onDates }) {
           </button>
         ))}
       </div>
+      {preset === 'day' ? (
+        <label>
+          Dia
+          <input type="date" id="dia" max={today} value={toInput(day)} onChange={(e) => e.target.value && onDay(e.target.value)} />
+        </label>
+      ) : (
+        <>
       <label>
         De
         <input type="date" id="de" max={toInput(range.end)} value={toInput(range.start)} onChange={(e) => e.target.value && onDates(e.target.value, toInput(range.end))} />
@@ -40,6 +48,8 @@ function Period({ range, preset, onPreset, onDates }) {
         Até
         <input type="date" id="ate" max={today} min={toInput(range.start)} value={toInput(range.end)} onChange={(e) => e.target.value && onDates(toInput(range.start), e.target.value)} />
       </label>
+        </>
+      )}
     </div>
   )
 }
@@ -117,12 +127,18 @@ export default function App() {
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
+  const [day, setDay] = useState(() => {
+    const d = new Date()
+    d.setHours(0, 0, 0, 0)
+    return d
+  })
 
   const onPreset = (p) => {
     setPreset(p.id)
-    setRange(rangeFor(p.days))
+    if (p.id !== 'day') setRange(rangeFor(p.days))
     setNotice('')
   }
+  const onDay = (v) => setDay(fromInput(v))
   const onDates = (a, b) => {
     let start = fromInput(a)
     let end = fromInput(b)
@@ -166,12 +182,12 @@ export default function App() {
       <section className="history">
         <div className="history-head">
           <h2>Histórico</h2>
-          <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
+          <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
         </div>
         {notice && <p className="status">{notice}</p>}
         <div className="charts">
           {CURRENCIES.map((c) => (
-            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} />
+            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
           ))}
         </div>
       </section>
