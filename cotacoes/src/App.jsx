@@ -6,6 +6,7 @@ import Macro from './Macro.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
 import ParityChart from './ParityChart.jsx'
+import { liveParity } from './parity.js'
 import Projecoes from './Projecoes.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
@@ -192,6 +193,59 @@ function Share({ quotes, updatedAt }) {
   )
 }
 
+const eur4 = (v) => `€ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`
+
+// Card da paridade dólar/euro, calculado a partir dos cards de USD/BRL e EUR/BRL.
+function ParityCard({ quotes }) {
+  const p = liveParity(quotes?.USD, quotes?.EUR)
+  const pct = p?.pct ?? 0
+  const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
+  return (
+    <article className="card" style={{ '--series': COLORS.PAR }}>
+      <header>
+        <span className="flag pair" aria-hidden="true">
+          <span dangerouslySetInnerHTML={{ __html: flagSvg('USD', 'width="24" height="16"') }} />
+          <span dangerouslySetInnerHTML={{ __html: flagSvg('EUR', 'width="24" height="16"') }} />
+        </span>
+        <div>
+          <h2>USD/EUR</h2>
+          <p>Paridade dólar/euro</p>
+        </div>
+      </header>
+      {p ? (
+        <>
+          <div className="price">{eur4(p.main)}</div>
+          <div className={`pct ${trend}`}>
+            {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {pct.toFixed(2).replace('.', ',')}%
+          </div>
+          <dl>
+            <div>
+              <dt>
+                Compra
+                <Help label="O que é compra na paridade" align="right">
+                  Euros que se obtêm por 1 dólar ao vender dólar e comprar euro. Cálculo: dólar compra ÷ euro venda.
+                </Help>
+              </dt>
+              <dd>{eur4(p.buy)}</dd>
+            </div>
+            <div>
+              <dt>
+                Venda
+                <Help label="O que é venda na paridade" align="right">
+                  Euros por 1 dólar no sentido contrário. Cálculo: dólar venda ÷ euro compra. É uma referência calculada, não uma cotação de mesa.
+                </Help>
+              </dt>
+              <dd>{eur4(p.sell)}</dd>
+            </div>
+          </dl>
+        </>
+      ) : (
+        <div className="price skeleton">—</div>
+      )}
+    </article>
+  )
+}
+
 export default function App() {
   const { quotes, direction, error, errors, updatedAt } = useQuotes(5000)
   const macro = useMacro()
@@ -239,6 +293,7 @@ export default function App() {
         {CURRENCIES.map((c) => (
           <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} />
         ))}
+        <ParityCard quotes={quotes} />
       </section>
       <section className="history">
         <div className="history-head">

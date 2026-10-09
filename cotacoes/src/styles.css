@@ -120,3 +120,4 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 .proj-table tr.section th { text-align:left; color:var(--mut); font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; background:transparent; padding-top:14px; border-bottom:1px solid var(--line); }
 .proj-table tbody th[scope="row"] { font-weight:500; min-width:260px; }
 .proj-table { min-width:760px; }
+.flag.pair { gap:4px; }
