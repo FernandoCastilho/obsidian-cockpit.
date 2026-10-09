@@ -218,6 +218,9 @@ export default function Macro() {
       </div>
       {m.status === 'loading' && <p className="status">Carregando dados do Banco Central…</p>}
       {m.status === 'error' && <p className="status">Dados do Banco Central indisponíveis no momento ({m.error}).</p>}
+      {m.status === 'ok' && m.data.generatedAt && Date.now() - m.data.generatedAt > 3 * 3600e3 && (
+        <p className="status stale">Atenção: os dados do Banco Central foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
+      )}
       {m.status === 'ok' && (
         <div className="charts">
           {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} /> : <p className="status">CDI indisponível no momento.</p>}

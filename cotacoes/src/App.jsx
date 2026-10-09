@@ -65,6 +65,21 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
 const brl = (v, digits = 4) =>
   v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: digits, maximumFractionDigits: digits })
 
+// Horário da própria cotação (vem da fonte), não o da consulta.
+function QuoteTime({ t }) {
+  if (!t) return null
+  const d = new Date(t)
+  const sameDay = d.toDateString() === new Date().toDateString()
+  const text = sameDay ? d.toLocaleTimeString('pt-BR') : `${d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`
+  const old = Date.now() - t > 15 * 60000
+  return (
+    <p className={`quote-time${old ? ' old' : ''}`} title={old ? 'Cotação com mais de 15 minutos: mercado fechado ou fonte atrasada.' : 'Horário da cotação informado pela fonte.'}>
+      cotação de {text}
+      {old && ' · defasada'}
+    </p>
+  )
+}
+
 function Card({ currency, quote, dir, err, ptax }) {
   const pct = quote?.pct ?? 0
   const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
@@ -136,6 +151,7 @@ function Card({ currency, quote, dir, err, ptax }) {
           {err && <p className="card-error">{err}</p>}
         </>
       )}
+      {quote && <QuoteTime t={quote.timestamp} />}
       {quote && err && <p className="card-error">Desatualizado: {err}</p>}
     </article>
   )
@@ -285,7 +301,7 @@ export default function App() {
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Atualizado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada 5 s`
+            ? `Consultado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada 5 s · veja o horário da cotação em cada card`
             : 'Carregando…'}
       </p>
       <Share quotes={quotes} updatedAt={updatedAt} />

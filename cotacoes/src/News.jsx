@@ -68,6 +68,9 @@ export default function News({ colors }) {
           })}
         </div>
       )}
+      {generated && Date.now() - generated.getTime() > 3 * 3600e3 && (
+        <p className="status stale">Atenção: as notícias foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
+      )}
       {generated && (
         <p className="status">
           Atualizado às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · a cada hora · Google

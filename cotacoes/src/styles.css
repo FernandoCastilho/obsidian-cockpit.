@@ -121,3 +121,6 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 .proj-table tbody th[scope="row"] { font-weight:500; min-width:260px; }
 .proj-table { min-width:760px; }
 .flag.pair { gap:4px; }
+.quote-time { margin:10px 0 0; font-size:.72rem; color:var(--mut); }
+.quote-time.old { color:#d29922; }
+.status.stale { color:#d29922; }
