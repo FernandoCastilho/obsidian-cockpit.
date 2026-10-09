@@ -25,3 +25,4 @@ dd { margin:0; font-size:.85rem; font-variant-numeric: tabular-nums; }
 @keyframes fdown { from { background:#5a1d1a; } }
 @keyframes pulse { 50% { opacity:.3; } }
 footer { color:var(--mut); font-size:.75rem; margin-top:24px; }
+.card-error { color: var(--down); font-size: .75rem; margin: 8px 0 0; word-break: break-word; }
