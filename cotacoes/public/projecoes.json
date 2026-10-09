@@ -1,7 +1,7 @@
 {
  "_como_editar": "Preencha 'source', 'date' e 'tables'. Cada tabela: title, unit (opcional), note (opcional), columns (texto ou {label, group, strong}), e rows [{label, decimals, values}] ou sections [{title, rows}]. Use null para célula vazia. O painel só aparece quando há tabelas.",
  "source": "Itaú BBA",
- "date": "",
+ "date": "2026-10-09",
  "tables": [
   {
    "title": "Cenário macroeconômico do Brasil",
