@@ -6,6 +6,7 @@ import Macro from './Macro.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
 import ParityChart from './ParityChart.jsx'
+import Projecoes from './Projecoes.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
@@ -253,6 +254,7 @@ export default function App() {
         </div>
       </section>
       <Macro />
+      <Projecoes />
       <News colors={COLORS} />
       <footer>
         <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>
