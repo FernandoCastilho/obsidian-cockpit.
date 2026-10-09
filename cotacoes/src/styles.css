@@ -27,6 +27,7 @@ dd { margin:0; font-size:.85rem; font-variant-numeric: tabular-nums; }
 @keyframes fdown { from { background:#5a1d1a; } to { background:transparent; } }
 @keyframes pulse { 50% { opacity:.3; } }
 footer { color:var(--mut); font-size:.75rem; margin-top:24px; }
+footer p { margin:0 0 4px; }
 .card-error { color: var(--down); font-size: .75rem; margin: 8px 0 0; word-break: break-word; }
 .card { border-top: 3px solid var(--series, var(--line)); }
 .history { margin-top: 40px; }
