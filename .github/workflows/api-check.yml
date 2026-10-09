@@ -1,4 +1,4 @@
-name: Checagem temporária da API de cotações
+name: Checagem temporária de fontes (curva de juros)
 
 on:
   workflow_dispatch:
@@ -7,26 +7,28 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Intraday da AwesomeAPI e alternativas
+      - name: B3, ANBIMA, debit.com.br e Tesouro dos EUA
         continue-on-error: true
         run: |
-          T=$(date +%Y%m%d)
           show() {
             echo "== $1"
-            for i in 1 2 3; do
-              code=$(curl -sS -m 25 -D /tmp/h.txt -o /tmp/r.json -w '%{http_code}' -H 'user-agent: Mozilla/5.0' "$1" || echo 000)
-              echo "tentativa $i: HTTP $code"
-              [ "$code" = "200" ] && break
-              sleep 6
+            for i in 1 2; do
+              code=$(curl -sSL -m 30 -D /tmp/h.txt -o /tmp/r.bin -w '%{http_code} %{content_type} %{size_download}B' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36' "$1" || echo "000")
+              echo "tentativa $i: $code"
+              case "$code" in 200*) break;; esac
+              sleep 5
             done
-            grep -i 'access-control-allow-origin' /tmp/h.txt || echo "(sem CORS)"
-            head -c 420 /tmp/r.json | tr '\n' ' '; echo
-            jq -r 'if type=="array" then "itens: \(length)" else "chaves: \(keys|join(","))" end' /tmp/r.json 2>/dev/null || true
-            jq -r 'if type=="array" and length>1 then "primeiro/último timestamp: \(.[0].timestamp // .[0].create_date) / \(.[-1].timestamp // .[-1].create_date)" else empty end' /tmp/r.json 2>/dev/null || true
+            grep -i 'access-control-allow-origin' /tmp/h.txt | head -1 || echo "(sem CORS)"
+            head -c 600 /tmp/r.bin | tr -c '[:print:]\n' '?' | tr '\n' ' ' ; echo
           }
-          B=https://economia.awesomeapi.com.br/json
-          show "$B/USD-BRL/10"
-          show "$B/USD-BRL/360"
-          show "$B/USD-BRL/360?start_date=$T&end_date=$T"
-          show "$B/daily/USD-BRL/3"
-          show "https://query1.finance.yahoo.com/v8/finance/chart/USDBRL=X?interval=5m&range=1d"
+          # B3: taxas referenciais DI x Pré e ajustes do pregão (endereços clássicos da BM&FBOVESPA)
+          show "https://www2.bmf.com.br/pages/portal/bmfbovespa/boletim1/TxRef1.asp"
+          show "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-ajustes-do-pregao-ptBR.asp"
+          show "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-referenciais/taxas-referenciais-bm-fbovespa/"
+          show "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-de-ajuste/"
+          # ANBIMA: estrutura a termo
+          show "https://www.anbima.com.br/informacoes/est-termo/default.asp"
+          # debit.com.br
+          show "https://www.debit.com.br/"
+          # EUA: curva do Tesouro (CSV aberto)
+          show "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
