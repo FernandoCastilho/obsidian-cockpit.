@@ -4,14 +4,16 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Curva DI na B3 (rotas da API)
+      - name: Curva DI na B3 (parâmetros da API)
         run: |
           UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
           H=https://sistemaswebb3-derivativos.b3.com.br
           curl -sSL -m 60 -A "$UA" -o /tmp/m.js "$H/referenceRatesPage/main-SNKCZLWW.js"
-          echo "== rotas"
-          grep -oE "[A-Za-z]*[Rr]eferenceRates[A-Za-z/]*" /tmp/m.js | sort | uniq -c | head -30
-          echo "== contexto"
-          grep -oE ".{250}referenceRatesProxy/.{500}" /tmp/m.js | head -3
-          grep -oE ".{200}ReferenceRatesDiIPCA_.{200}" /tmp/m.js | head -2
-          grep -oE "(get|post)\([^)]{0,160}(Rates|rates)[^)]{0,100}\)" /tmp/m.js | head -20
+          echo "== usos"
+          grep -oE ".{400}\.(getList|getDate|getDownload)\(.{400}" /tmp/m.js | grep -v "^.*getList(t){return" | head -6
+          echo "== tentativas"
+          t() { b=$(printf '%s' "$1" | base64 -w0); echo "$2 $1"; curl -sSL -m 30 -A "$UA" -w "\n-> %{http_code}\n" "$H/referenceRatesProxy/Search/$2/$b" | head -c 700; echo; }
+          D=$(date -d 'yesterday' +%d/%m/%Y)
+          t '{"language":"pt-br"}' GetDate
+          t '{"pageNumber":1,"pageSize":20,"language":"pt-br","product":"DI","date":"'"$D"'"}' GetList
+          t '{"pageNumber":1,"pageSize":20,"language":"pt-br"}' GetList
