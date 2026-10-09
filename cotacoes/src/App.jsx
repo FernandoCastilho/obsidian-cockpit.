@@ -128,6 +128,16 @@ function Card({ currency, quote, dir, err }) {
 function Share({ quotes, updatedAt }) {
   const [msg, setMsg] = useState('')
   const text = buildMessage(quotes, updatedAt ?? new Date())
+  // No celular, o compartilhamento nativo leva o texto sem passar por endereço de internet,
+  // que perdia os emojis (bandeiras e setas). Sem suporte, abre o link do WhatsApp.
+  const send = (e) => {
+    const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    if (!mobile || !navigator.share) return
+    e.preventDefault()
+    navigator.share({ text }).catch((err) => {
+      if (err?.name !== 'AbortError') window.open(whatsappUrl(text), '_blank', 'noopener')
+    })
+  }
   const copy = async () => {
     const when = updatedAt ?? new Date()
     const plain = buildPlain(quotes, when)
@@ -153,7 +163,7 @@ function Share({ quotes, updatedAt }) {
   return (
     <div className="share">
       {text ? (
-        <a className="btn wa" href={whatsappUrl(text)} target="_blank" rel="noopener noreferrer">
+        <a className="btn wa" href={whatsappUrl(text)} target="_blank" rel="noopener noreferrer" onClick={send} title="No celular, abre a lista de compartilhamento: escolha o WhatsApp">
           Enviar no WhatsApp
         </a>
       ) : (
