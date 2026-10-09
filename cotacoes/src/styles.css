@@ -113,3 +113,10 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 }
 .projecoes { margin-top:40px; }
 .projecoes > .status { margin-top:12px; font-size:.78rem; }
+.proj-table td.strong, .proj-table th.strong { color:var(--fg); font-weight:700; }
+.proj-table td { color:var(--mut); }
+.proj-table td.strong { color:var(--fg); }
+.proj-table thead th.group { text-align:center; color:var(--fg); border-bottom:1px solid var(--line); }
+.proj-table tr.section th { text-align:left; color:var(--mut); font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; background:transparent; padding-top:14px; border-bottom:1px solid var(--line); }
+.proj-table tbody th[scope="row"] { font-weight:500; min-width:260px; }
+.proj-table { min-width:760px; }
