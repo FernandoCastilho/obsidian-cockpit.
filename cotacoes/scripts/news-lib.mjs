@@ -54,27 +54,33 @@ export const googleUrl = (q, lang) => {
   return `https://news.google.com/rss/search?q=${encodeURIComponent(`${q} when:7d`)}&${p}`
 }
 
-// Tradução para português (Brasil) via endpoint público do Google Tradutor, sem chave.
-export const translateUrl = (text) =>
-  `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=pt&dt=t&q=${encodeURIComponent(text)}`
+// ---- Tradução para português (Brasil) ----
 
-// Resposta: [[[traduzido, original, ...], ...], null, idiomaDetectado, ...]
-export function parseTranslation(data) {
-  const text = Array.isArray(data?.[0]) ? data[0].map((s) => s?.[0] ?? '').join('').trim() : ''
-  return { text, lang: String(data?.[2] ?? '') }
-}
+const EN = /\b(the|and|of|to|in|for|on|as|with|at|by|from|is|are|after|over|amid|rises|falls|says|ahead|rate|rates|bank|dollar|yen|euro|yuan)\b/gi
+const PT = /\b(de|do|da|dos|das|em|para|com|que|os|as|um|uma|no|na|nos|nas|ao|pelo|pela|mais|após|diante|sobre|alta|queda)\b/gi
+export const isEnglish = (t) => (t.match(EN) ?? []).length > (t.match(PT) ?? []).length
 
-// Escolhe até `limit` manchetes alternando as fontes (Valor, Investing, demais), mais recentes primeiro.
-export function balance(items, limit) {
-  const kind = (s) => (s === 'Valor Econômico' ? 'valor' : s === 'Investing.com' ? 'investing' : 'outras')
-  const queues = { valor: [], investing: [], outras: [] }
-  for (const it of pick(items, items.length)) queues[kind(it.source)].push(it)
-  const out = []
-  while (out.length < limit && Object.values(queues).some((q) => q.length)) {
-    for (const k of ['valor', 'investing', 'outras']) {
-      const next = queues[k].shift()
-      if (next && out.length < limit) out.push(next)
-    }
+// Google Tradutor (endpoint público, sem chave), vários títulos por chamada, um por linha.
+export const GTX = 'https://translate.googleapis.com/translate_a/single'
+export const gtxBody = (titles) =>
+  new URLSearchParams({ client: 'gtx', sl: 'auto', tl: 'pt', dt: 't', q: titles.join('\n') }).toString()
+
+// Resposta: [[[traduzido, original, ...], ...], null, idioma]. Reagrupa os trechos em uma linha por título.
+export function splitBatch(data, count) {
+  const segs = Array.isArray(data?.[0]) ? data[0] : []
+  const lines = ['']
+  for (const seg of segs) {
+    const tr = String(seg?.[0] ?? '')
+    const src = String(seg?.[1] ?? '')
+    lines[lines.length - 1] += tr.replace(/\n+$/, '')
+    if (/\n$/.test(src) || /\n$/.test(tr)) lines.push('')
   }
-  return out.sort((a, b) => b.t - a.t)
+  while (lines.length > count && lines[lines.length - 1] === '') lines.pop()
+  return lines.length === count && lines.every((l) => l.trim()) ? lines.map((l) => l.trim()) : null
 }
+
+// Reservas, uma manchete por vez.
+export const lingvaUrl = (t) => `https://lingva.ml/api/v1/en/pt/${encodeURIComponent(t)}`
+export const myMemoryUrl = (t) => `https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=en|pt-BR`
+export const fromLingva = (d) => String(d?.translation ?? '').trim()
+export const fromMyMemory = (d) => (d?.responseStatus === 200 ? String(d?.responseData?.translatedText ?? '').trim() : '')

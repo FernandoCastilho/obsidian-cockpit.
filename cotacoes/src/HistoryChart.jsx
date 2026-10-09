@@ -86,7 +86,7 @@ function Plot({ points, width, color, code, intraday }) {
         </defs>
         {g.yTicks.map((v) => (
           <g key={v}>
-            <line x1={M.l} x2={width - M.r} y1={g.y(v)} y2={g.y(v)} className="grid" />
+            <line x1={M.l} x2={width - M.r} y1={g.y(v)} y2={g.y(v)} className="gridline" />
             <text x={M.l - 8} y={g.y(v)} dy="0.32em" textAnchor="end" className="tick">
               {v.toLocaleString('pt-BR', { minimumFractionDigits: g.dec, maximumFractionDigits: g.dec })}
             </text>

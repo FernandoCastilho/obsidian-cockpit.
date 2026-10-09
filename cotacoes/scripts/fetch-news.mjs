@@ -1,6 +1,6 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { balance, canonicalSource, googleUrl, parseRss, parseTranslation, pick, translateUrl } from './news-lib.mjs'
+import { GTX, balance, canonicalSource, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, splitBatch } from './news-lib.mjs'
 
 const SITES = {
   valor: 'site:valor.globo.com',
@@ -33,19 +33,66 @@ async function get(url) {
 const errors = []
 const news = {}
 
-// Traduz títulos que não estejam em português; mantém o original se a tradução falhar.
-const cache = new Map()
-async function toPortuguese(title) {
-  if (cache.has(title)) return cache.get(title)
-  let out = { title }
-  try {
-    const { text, lang } = parseTranslation(JSON.parse(await get(translateUrl(title))))
-    if (text && !lang.startsWith('pt')) out = { title: text, original: title }
-  } catch (e) {
-    errors.push(`traducao: ${e.message}`)
+const HEADERS = { 'user-agent': 'Mozilla/5.0 (cotacoes-news)' }
+
+async function withRetry(fn, tries = 3) {
+  let last
+  for (let i = 0; i < tries; i++) {
+    try {
+      return await fn()
+    } catch (e) {
+      last = e
+      await sleep(2000 * (i + 1) ** 2)
+    }
   }
-  cache.set(title, out)
-  await sleep(150)
+  throw last
+}
+
+async function postBatch(titles) {
+  const res = await fetch(GTX, {
+    method: 'POST',
+    headers: { ...HEADERS, 'content-type': 'application/x-www-form-urlencoded' },
+    body: gtxBody(titles),
+    signal: AbortSignal.timeout(20000),
+  })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const lines = splitBatch(await res.json(), titles.length)
+  if (!lines) throw new Error('resposta fora do formato')
+  return lines
+}
+
+// Traduz títulos em inglês: lote único no Google Tradutor; se falhar, uma manchete por vez em serviços de reserva.
+async function translateAll(titles) {
+  const out = new Map()
+  const todo = [...new Set(titles.filter(isEnglish))]
+  if (!todo.length) return out
+  try {
+    const lines = await withRetry(() => postBatch(todo))
+    todo.forEach((t, i) => out.set(t, lines[i]))
+    console.log('traducao: lote Google,', todo.length, 'títulos')
+    return out
+  } catch (e) {
+    errors.push(`traducao (lote): ${e.message}`)
+  }
+  const backups = [
+    ['lingva', lingvaUrl, fromLingva],
+    ['mymemory', myMemoryUrl, fromMyMemory],
+  ]
+  for (const t of todo) {
+    for (const [name, url, parse] of backups) {
+      try {
+        const text = parse(JSON.parse(await get(url(t))))
+        if (text && text.toLowerCase() !== t.toLowerCase()) {
+          out.set(t, text)
+          break
+        }
+      } catch (e) {
+        errors.push(`traducao (${name}): ${e.message}`)
+      }
+    }
+    await sleep(300)
+  }
+  console.log('traducao: reservas,', out.size, 'de', todo.length)
   return out
 }
 
@@ -63,12 +110,14 @@ for (const [code, [pt, en]] of Object.entries(TOPICS)) {
     }
     for (const it of pick(items, g.limit)) all.push({ title: it.title, link: it.link, source: canonicalSource(it), t: it.t, via: g.id })
   }
-  news[code] = []
-  for (const it of balance(all, 5)) {
-    const tr = await toPortuguese(it.title)
-    news[code].push({ title: tr.title, original: tr.original, link: it.link, source: it.source, t: it.t })
-  }
+  news[code] = balance(all, 5).map((it) => ({ title: it.title, link: it.link, source: it.source, t: it.t }))
   console.log(code, news[code].length, 'manchetes')
+}
+
+const translated = await translateAll(Object.values(news).flat().map((n) => n.title))
+for (const n of Object.values(news).flat()) {
+  const tr = translated.get(n.title)
+  if (tr) Object.assign(n, { original: n.title, title: tr })
 }
 
 const total = Object.values(news).reduce((n, a) => n + a.length, 0)
@@ -80,4 +129,4 @@ if (!total && process.env.NEWS_STRICT === 'true') {
 
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(new URL('../public/news.json', import.meta.url), JSON.stringify({ generatedAt: Date.now(), news, errors }))
-console.log('news.json gravado:', total, 'manchetes;', [...cache.values()].filter((v) => v.original).length, 'traduzidas')
+console.log('news.json gravado:', total, 'manchetes;', translated.size, 'traduzidas')
