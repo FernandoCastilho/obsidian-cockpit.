@@ -4,17 +4,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Curva DI na B3 (sistemaswebb3-derivativos)
+      - name: Curva DI na B3 (rotas da API)
         run: |
           UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
           H=https://sistemaswebb3-derivativos.b3.com.br
-          curl -sSL -m 40 -A "$UA" -o /tmp/p.html -w "page -> %{http_code} %{size_download}B\n" "$H/referenceRatesPage/all?language=pt-br"
-          grep -oE "(src|href)=\"[^\"]+\.js\"" /tmp/p.html | head
-          for js in $(grep -oE "(src)=\"[^\"]+\.js\"" /tmp/p.html | sed 's/src="//;s/"$//'); do
-            case "$js" in http*) U="$js";; /*) U="$H$js";; *) U="$H/referenceRatesPage/$js";; esac
-            curl -sSL -m 40 -A "$UA" -o /tmp/s.js -w "$U -> %{http_code} %{size_download}B\n" "$U"
-            grep -oE "[\"'\`][^\"'\`]*(referenceRates|ReferenceRates|Proxy)[^\"'\`]*[\"'\`]" /tmp/s.js | sort -u | head -30
-          done
-          for u in "$H/referenceRatesProxy/ReferenceRates/GetReferenceRates" "$H/referenceRatesProxy/ReferenceRates/GetTypeRates"; do
-            curl -sSL -m 30 -A "$UA" -o /tmp/d.out -w "$u -> %{http_code} %{content_type}\n" "$u"; head -c 400 /tmp/d.out; echo
-          done
+          curl -sSL -m 60 -A "$UA" -o /tmp/m.js "$H/referenceRatesPage/main-SNKCZLWW.js"
+          echo "== rotas"
+          grep -oE "[A-Za-z]*[Rr]eferenceRates[A-Za-z/]*" /tmp/m.js | sort | uniq -c | head -30
+          echo "== contexto"
+          grep -oE ".{250}referenceRatesProxy/.{500}" /tmp/m.js | head -3
+          grep -oE ".{200}ReferenceRatesDiIPCA_.{200}" /tmp/m.js | head -2
+          grep -oE "(get|post)\([^)]{0,160}(Rates|rates)[^)]{0,100}\)" /tmp/m.js | head -20
