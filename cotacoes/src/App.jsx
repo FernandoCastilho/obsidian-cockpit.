@@ -3,6 +3,7 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import News from './News.jsx'
+import { buildMessage, whatsappUrl } from './whatsapp.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -123,6 +124,33 @@ function Card({ currency, quote, dir, err }) {
   )
 }
 
+function Share({ quotes, updatedAt }) {
+  const [msg, setMsg] = useState('')
+  const text = buildMessage(quotes, updatedAt ?? new Date())
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setMsg('Texto copiado.')
+    } catch {
+      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
+    }
+    setTimeout(() => setMsg(''), 3000)
+  }
+  return (
+    <div className="share">
+      {text ? (
+        <a className="btn wa" href={whatsappUrl(text)} target="_blank" rel="noopener noreferrer">
+          Enviar no WhatsApp
+        </a>
+      ) : (
+        <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
+      )}
+      <button type="button" className="btn" disabled={!text} onClick={copy}>Copiar texto</button>
+      <span className="status" role="status">{msg}</span>
+    </div>
+  )
+}
+
 export default function App() {
   const { quotes, direction, error, errors, updatedAt } = useQuotes(5000)
   const [preset, setPreset] = useState('30')
@@ -164,6 +192,7 @@ export default function App() {
             ? `Atualizado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada 5 s`
             : 'Carregando…'}
       </p>
+      <Share quotes={quotes} updatedAt={updatedAt} />
       <section className="grid">
         {CURRENCIES.map((c) => (
           <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} />
