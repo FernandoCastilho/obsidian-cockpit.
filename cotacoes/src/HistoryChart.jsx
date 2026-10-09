@@ -182,21 +182,26 @@ export default function HistoryChart({ currency, color, start, end, day }) {
             <small>{h.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} />}
+        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} label={intraday ? 'Cotação' : undefined} />}
       </div>
+      {pts && intraday && (
+        <p className="status">
+          Barras de 5 min · atualizado às {new Date(h.data.generatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} (a cada hora) · Fonte: Yahoo Finance
+        </p>
+      )}
       {pts && (
         <details className="table">
-          <summary>Ver tabela ({pts.length} {intraday ? 'cotações' : 'dias'})</summary>
+          <summary>Ver tabela ({pts.length} {intraday ? 'barras de 5 min' : 'dias'})</summary>
           <div className="scroll">
             <table>
               <thead>
-                {intraday ? <tr><th>Hora</th><th>Compra</th><th>Venda</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>}
+                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>}
               </thead>
               <tbody>
                 {[...pts].reverse().map((p) => (
                   <tr key={p.t}>
                     {intraday ? (
-                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.ask)}</td></>
+                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
                     ) : (
                       <><td>{fmtDate(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
                     )}

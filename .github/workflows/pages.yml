@@ -43,6 +43,10 @@ jobs:
         timeout-minutes: 15
         env:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
+      - name: Coletar intraday (barras de 5 min)
+        run: node scripts/fetch-intraday.mjs
+        env:
+          INTRADAY_STRICT: ${{ github.event_name == 'schedule' }}
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

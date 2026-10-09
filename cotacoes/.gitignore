@@ -2,3 +2,4 @@ node_modules
 dist
 public/news.json
 public/macro.json
+public/intraday.json
