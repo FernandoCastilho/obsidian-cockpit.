@@ -4,16 +4,18 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Curva DI na B3 (parâmetros da API)
+      - name: Curva DI na B3 (produtos e dados)
         run: |
           UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
           H=https://sistemaswebb3-derivativos.b3.com.br
           curl -sSL -m 60 -A "$UA" -o /tmp/m.js "$H/referenceRatesPage/main-SNKCZLWW.js"
-          echo "== usos"
-          grep -oE ".{400}\.(getList|getDate|getDownload)\(.{400}" /tmp/m.js | grep -v "^.*getList(t){return" | head -6
-          echo "== tentativas"
-          t() { b=$(printf '%s' "$1" | base64 -w0); echo "$2 $1"; curl -sSL -m 30 -A "$UA" -w "\n-> %{http_code}\n" "$H/referenceRatesProxy/Search/$2/$b" | head -c 700; echo; }
-          D=$(date -d 'yesterday' +%d/%m/%Y)
-          t '{"language":"pt-br"}' GetDate
-          t '{"pageNumber":1,"pageSize":20,"language":"pt-br","product":"DI","date":"'"$D"'"}' GetList
-          t '{"pageNumber":1,"pageSize":20,"language":"pt-br"}' GetList
+          echo "== rotas"
+          grep -oE "this\.baseUrl\+\"[A-Za-z/]+\"[^)]{0,60}" /tmp/m.js | sort -u
+          echo "== produtos"
+          grep -oE "Search/[A-Za-z]+/?\"" /tmp/m.js | sort -u
+          g() { echo "GET $1"; curl -sSL -m 30 -A "$UA" -w "\n-> %{http_code}\n" "$H/referenceRatesProxy/$1" | head -c "${2:-900}"; echo; }
+          b() { printf '%s' "$1" | base64 -w0; }
+          g "Search/GetDate/$(b '{"language":"pt-br"}')" 400
+          for r in GetListProducts GetProducts GetProduct GetListProduct GetProductList GetMenu GetListMenu GetCategories; do
+            g "Search/$r/$(b '{"language":"pt-br"}')" 700
+          done
