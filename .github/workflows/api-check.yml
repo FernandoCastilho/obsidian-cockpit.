@@ -1,4 +1,4 @@
-name: Checagem temporária de fontes (curva de juros)
+name: Checagem temporária de fontes (B3)
 
 on:
   workflow_dispatch:
@@ -7,28 +7,25 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: B3, ANBIMA, debit.com.br e Tesouro dos EUA
+      - name: Endereços de dados nas páginas da B3
         continue-on-error: true
         run: |
-          show() {
-            echo "== $1"
-            for i in 1 2; do
-              code=$(curl -sSL -m 30 -D /tmp/h.txt -o /tmp/r.bin -w '%{http_code} %{content_type} %{size_download}B' -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36' "$1" || echo "000")
-              echo "tentativa $i: $code"
-              case "$code" in 200*) break;; esac
-              sleep 5
-            done
-            grep -i 'access-control-allow-origin' /tmp/h.txt | head -1 || echo "(sem CORS)"
-            head -c 600 /tmp/r.bin | tr -c '[:print:]\n' '?' | tr '\n' ' ' ; echo
-          }
-          # B3: taxas referenciais DI x Pré e ajustes do pregão (endereços clássicos da BM&FBOVESPA)
-          show "https://www2.bmf.com.br/pages/portal/bmfbovespa/boletim1/TxRef1.asp"
-          show "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-ajustes-do-pregao-ptBR.asp"
-          show "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-referenciais/taxas-referenciais-bm-fbovespa/"
-          show "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-de-ajuste/"
-          # ANBIMA: estrutura a termo
-          show "https://www.anbima.com.br/informacoes/est-termo/default.asp"
-          # debit.com.br
-          show "https://www.debit.com.br/"
-          # EUA: curva do Tesouro (CSV aberto)
-          show "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          fetch() { curl -sSL -m 40 -A "$UA" -o "$2" -w "$1 -> %{http_code} %{content_type} %{size_download}B\n" "$1" || echo "$1 -> falhou"; }
+          fetch "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-referenciais/taxas-referenciais-bm-fbovespa/" /tmp/a.html
+          fetch "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-de-ajuste/" /tmp/b.html
+          fetch "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-ajustes-do-pregao-ptBR.asp" /tmp/c.html
+          for f in a b c; do
+            echo "== links de dados em $f.html"
+            grep -oiE "(https?:)?//[a-z0-9./_?=&%:-]*(arquivos|download|api|\.csv|\.json|\.zip|\.txt|\.asp|\.xls|tabelas|taxa|ajuste)[a-z0-9./_?=&%:-]*" /tmp/$f.html | sort -u | head -40
+            echo "-- iframes/forms"
+            grep -oiE "<(iframe|form)[^>]*(src|action)=[\"'][^\"']+" /tmp/$f.html | head -10
+          done
+          echo "== candidatos diretos"
+          for u in \
+            "https://www2.bmf.com.br/pages/portal/bmfbovespa/lumis/lum-taxas-referenciais-bmf-ptBR.asp" \
+            "https://arquivos.b3.com.br/api/channels" \
+            "https://arquivos.b3.com.br/tabelas/TaxaReferencial" \
+            "https://arquivos.b3.com.br/tabelas/AjustePregao" ; do
+            fetch "$u" /tmp/d.out; head -c 300 /tmp/d.out | tr -c '[:print:]\n' '?' | tr '\n' ' '; echo
+          done
