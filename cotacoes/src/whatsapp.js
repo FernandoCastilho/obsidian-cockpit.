@@ -1,20 +1,28 @@
 import { CURRENCIES } from './useQuotes.js'
+import { liveParity } from './parity.js'
 
 const num = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
 const arrow = (v) => (v > 0 ? '🔺' : v < 0 ? '🔻' : '➖')
 
-export const DISCLAIMER = 'Valores ilustrativos, em reais (BRL). Para cotações reais, consulte a Tesouraria do Itaú.'
+export const DISCLAIMER = 'Valores ilustrativos, em reais (paridade em euros). Para cotações reais, consulte a Tesouraria do Itaú.'
 
 const stampOf = (when) =>
   `${when.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${when.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`
 
 // Só a cotação do momento e a variação do dia, sem compra/venda/máx./mín.
 function rows(quotes) {
-  return CURRENCIES.filter((c) => quotes?.[c.code]).map((c) => {
+  const list = CURRENCIES.filter((c) => quotes?.[c.code]).map((c) => {
     const q = quotes[c.code]
     return { key: c.code, country: [...c.flag].map((ch) => String.fromCharCode(ch.codePointAt(0) - 0x1f1e6 + 65)).join(''), icon: c.flag, code: q.source ?? c.code, price: `R$ ${num(q.bid)}`, trend: `${arrow(q.pct)} ${pct(q.pct)}` }
   })
+  const par = liveParity(quotes?.USD, quotes?.EUR)
+  if (par) {
+    const usd = CURRENCIES.find((c) => c.code === 'USD')
+    const eur = CURRENCIES.find((c) => c.code === 'EUR')
+    list.push({ key: 'USD', pair: ['USD', 'EUR'], country: 'USEU', icon: `${usd.flag}${eur.flag}`, code: 'USD/EUR', price: `€ ${num(par.main)}`, trend: `${arrow(par.pct)} ${pct(par.pct)}` })
+  }
+  return list
 }
 
 // WhatsApp: *negrito*, _itálico_.
@@ -37,8 +45,8 @@ export function buildHtml(quotes, when = new Date(), pngs = {}) {
   if (!r.length) return ''
   const lines = r
     .map((x) => {
-      const png = pngs[x.key]
-      const flag = png ? `<img src="${png}" width="18" height="12" alt="${x.country}" style="vertical-align:middle">` : x.icon
+      const img = (k, alt) => (pngs[k] ? `<img src="${pngs[k]}" width="18" height="12" alt="${alt}" style="vertical-align:middle">` : '')
+      const flag = x.pair ? img('USD', 'US') + img('EUR', 'EU') || x.icon : img(x.key, x.country) || x.icon
       return `${flag}&nbsp;<b>${x.code}</b>&nbsp;&nbsp;${x.price}&nbsp;&nbsp;${x.trend}`
     })
     .join('<br>')

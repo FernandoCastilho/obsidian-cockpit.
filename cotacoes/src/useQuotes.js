@@ -61,8 +61,10 @@ export function useQuotes(intervalMs = 5000) {
       const next = {}
       const errs = {}
       const dir = {}
+      let fresh = 0
       for (const [code, r] of Object.entries(results)) {
         if (r.quote) {
+          fresh += 1
           next[code] = r.quote
           const p = prev.current[code]?.bid
           if (p !== undefined && r.quote.bid !== p) dir[code] = r.quote.bid > p ? 'up' : 'down'
@@ -76,8 +78,9 @@ export function useQuotes(intervalMs = 5000) {
       setDirection(dir)
       setQuotes(next)
       setErrors(errs)
-      if (Object.keys(next).length) setUpdatedAt(new Date())
-      setError(null)
+      if (fresh) setUpdatedAt(new Date())
+      // todas falharam (ex.: limite da API): não afirmar que está atualizado
+      setError(fresh ? null : Object.values(errs)[0] ?? 'sem resposta da fonte')
     } catch (e) {
       if (e.name !== 'AbortError') setError(e.message)
     }
