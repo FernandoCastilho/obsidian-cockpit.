@@ -1,0 +1,21 @@
+name: Checagem temporária da API de cotações
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testar endpoints da AwesomeAPI
+        run: |
+          B=https://economia.awesomeapi.com.br/json
+          S=$(date -d '-10 days' +%Y%m%d); E=$(date +%Y%m%d); T=$(date +%Y%m%d)
+          show() { echo "== $1"; code=$(curl -sS -m 30 -o /tmp/r.json -w '%{http_code}' "$1"); echo "HTTP $code"; head -c 400 /tmp/r.json; echo; jq -r 'if type=="array" then "itens: \(length)" else "chaves: \(keys|join(","))" end' /tmp/r.json 2>/dev/null; }
+          show "$B/last/USD-BRL,EUR-BRL,JPY-BRL,CNH-BRL"
+          show "$B/last/USD-EUR"
+          show "$B/last/EUR-USD"
+          show "$B/daily/USD-BRL/8?start_date=$S&end_date=$E"
+          show "$B/daily/USD-EUR/8?start_date=$S&end_date=$E"
+          show "$B/USD-BRL/360?start_date=$T&end_date=$T"
+          show "$B/USD-EUR/360?start_date=$T&end_date=$T"
