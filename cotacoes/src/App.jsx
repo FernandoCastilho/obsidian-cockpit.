@@ -246,10 +246,10 @@ export default function App() {
         </div>
         {notice && <p className="status">{notice}</p>}
         <div className="charts">
-          {CURRENCIES.map((c) => [
-            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />,
-            c.code === 'EUR' && <ParityChart key="PAR" color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />,
-          ])}
+          {CURRENCIES.map((c) => (
+            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+          ))}
+          <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
         </div>
       </section>
       <Macro />
