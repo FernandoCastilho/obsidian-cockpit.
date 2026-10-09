@@ -1,0 +1,19 @@
+name: Checagem temporária de fontes (SOFR)
+on: workflow_dispatch
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SOFR histórica e futura
+        run: |
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          t() { echo "== $1"; curl -sSL -m 30 -A "$UA" -D /tmp/h -w "\n-> %{http_code} %{content_type} %{size_download}B\n" "$1" | head -c "${2:-500}"; echo; grep -i "access-control-allow-origin" /tmp/h || echo "(sem CORS)"; }
+          t "https://markets.newyorkfed.org/api/rates/secured/sofr/last/5.json" 700
+          t "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json?startDate=2026-09-01&endDate=2026-10-08" 300
+          t "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&cosd=2026-09-25" 400
+          t "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&cosd=2018-04-01" 120
+          t "https://markets.newyorkfed.org/api/rates/secured/sofr/last/1.csv" 300
+          for s in SR3Z26.CME SR3H27.CME SR3M27.CME SR3Z27.CME SR3U26.CME "SR3=F" ZQZ26.CBT; do
+            t "https://query1.finance.yahoo.com/v8/finance/chart/$s?interval=1d&range=5d" 350
+          done
+          t "https://www.cmegroup.com/CmeWS/mvc/Quotes/Future/8463/G" 300
