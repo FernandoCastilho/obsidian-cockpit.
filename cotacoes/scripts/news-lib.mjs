@@ -84,3 +84,18 @@ export const lingvaUrl = (t) => `https://lingva.ml/api/v1/en/pt/${encodeURICompo
 export const myMemoryUrl = (t) => `https://api.mymemory.translated.net/get?q=${encodeURIComponent(t)}&langpair=en|pt-BR`
 export const fromLingva = (d) => String(d?.translation ?? '').trim()
 export const fromMyMemory = (d) => (d?.responseStatus === 200 ? String(d?.responseData?.translatedText ?? '').trim() : '')
+
+// Escolhe até `limit` manchetes alternando as fontes (Valor, Investing, demais), mais recentes primeiro.
+export function balance(items, limit) {
+  const kind = (s) => (s === 'Valor Econômico' ? 'valor' : s === 'Investing.com' ? 'investing' : 'outras')
+  const queues = { valor: [], investing: [], outras: [] }
+  for (const it of pick(items, items.length)) queues[kind(it.source)].push(it)
+  const out = []
+  while (out.length < limit && Object.values(queues).some((q) => q.length)) {
+    for (const k of ['valor', 'investing', 'outras']) {
+      const next = queues[k].shift()
+      if (next && out.length < limit) out.push(next)
+    }
+  }
+  return out.sort((a, b) => b.t - a.t)
+}
