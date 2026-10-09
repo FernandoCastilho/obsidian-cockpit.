@@ -3,7 +3,8 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import News from './News.jsx'
-import { buildHtml, buildMessage, buildPlain, defaultIcons, whatsappUrl } from './whatsapp.js'
+import { buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
+import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -66,7 +67,7 @@ function Card({ currency, quote, dir, err }) {
     <article className="card" style={{ '--series': COLORS[currency.code] }}>
       {dir && <span key={quote?.bid} className={`flash flash-${dir}`} aria-hidden="true" />}
       <header>
-        <span className="flag">{currency.flag}</span>
+        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="36" height="24"') }} />
         <div>
           <h2>{quote?.source ?? currency.code}/BRL</h2>
           <p>{currency.name}</p>
@@ -126,31 +127,17 @@ function Card({ currency, quote, dir, err }) {
 
 function Share({ quotes, updatedAt }) {
   const [msg, setMsg] = useState('')
-  const [icons, setIcons] = useState(() => {
-    try {
-      return localStorage.getItem('wa-icons') || defaultIcons()
-    } catch {
-      return defaultIcons()
-    }
-  })
-  const pick = (v) => {
-    setIcons(v)
-    try {
-      localStorage.setItem('wa-icons', v)
-    } catch {
-      /* sem armazenamento: vale só nesta visita */
-    }
-  }
-  const text = buildMessage(quotes, updatedAt ?? new Date(), icons)
+  const text = buildMessage(quotes, updatedAt ?? new Date())
   const copy = async () => {
     const when = updatedAt ?? new Date()
-    const plain = buildPlain(quotes, when, icons)
+    const plain = buildPlain(quotes, when)
     try {
       if (window.ClipboardItem) {
-        // formatado (negrito) para e-mail/Teams, com texto simples de reserva
+        // formatado (negrito) e bandeiras como imagem para e-mail/Teams, com texto simples de reserva
+        const pngs = await flagPngs()
         await navigator.clipboard.write([
           new ClipboardItem({
-            'text/html': new Blob([buildHtml(quotes, when, icons)], { type: 'text/html' }),
+            'text/html': new Blob([buildHtml(quotes, when, pngs)], { type: 'text/html' }),
             'text/plain': new Blob([plain], { type: 'text/plain' }),
           }),
         ])
@@ -172,13 +159,9 @@ function Share({ quotes, updatedAt }) {
       ) : (
         <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
       )}
-      <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada para colar no e-mail ou no Teams">
+      <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada, com as bandeiras, para colar no e-mail ou no Teams">
         Copiar para e-mail ou Teams
       </button>
-      <div className="seg small" role="group" aria-label="Ícone da mensagem">
-        <button type="button" aria-pressed={icons === 'bandeira'} onClick={() => pick('bandeira')}>Ícone: bandeira</button>
-        <button type="button" aria-pressed={icons === 'moeda'} onClick={() => pick('moeda')}>Ícone: moeda</button>
-      </div>
       <span className="status" role="status">{msg}</span>
     </div>
   )

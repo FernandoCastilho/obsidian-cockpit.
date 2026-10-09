@@ -12,7 +12,6 @@ const ago = (t) => {
 export default function News({ colors }) {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
-  const [tab, setTab] = useState(CURRENCIES[0].code)
 
   useEffect(() => {
     const ctrl = new AbortController()
@@ -26,52 +25,54 @@ export default function News({ colors }) {
     return () => ctrl.abort()
   }, [])
 
-  const items = data?.news?.[tab] ?? []
   const generated = data?.generatedAt && new Date(data.generatedAt)
 
   return (
     <section className="news">
       <div className="history-head">
         <h2>Notícias</h2>
-        <div className="seg" role="tablist" aria-label="Moeda das notícias">
-          {CURRENCIES.map((c) => (
-            <button
-              key={c.code}
-              type="button"
-              role="tab"
-              id={`tab-${c.code}`}
-              aria-selected={tab === c.code}
-              aria-controls="news-panel"
-              style={{ '--series': colors[c.code] }}
-              onClick={() => setTab(c.code)}
-            >
-              <i className="swatch" /> {c.code}
-            </button>
-          ))}
+      </div>
+      {!data && !error && <p className="status">Carregando notícias…</p>}
+      {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}
+      {data && (
+        <div className="charts">
+          {CURRENCIES.map((c) => {
+            const items = data.news?.[c.code] ?? []
+            return (
+              <article key={c.code} className="chart news-box" style={{ '--series': colors[c.code] }}>
+                <header>
+                  <h3>
+                    <i className="swatch" /> {c.code}
+                    <small>{c.name}</small>
+                  </h3>
+                </header>
+                {items.length ? (
+                  <ul className="news-bullets" tabIndex={0} aria-label={`Notícias de ${c.code}`}>
+                    {items.map((n) => (
+                      <li key={n.link}>
+                        <a href={n.link} target="_blank" rel="noopener noreferrer" title={n.original ? `Original: ${n.original}` : undefined}>
+                          {n.title}
+                        </a>
+                        <span className="meta">
+                          {n.source} · {ago(n.t)}
+                          {n.original && ' · traduzida do inglês'}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="status">Nenhuma manchete encontrada.</p>
+                )}
+              </article>
+            )
+          })}
         </div>
-      </div>
-      <div id="news-panel" role="tabpanel" aria-labelledby={`tab-${tab}`} className="news-list">
-        {!data && !error && <p className="status">Carregando notícias…</p>}
-        {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}
-        {data && !items.length && <p className="status">Nenhuma manchete encontrada para esta moeda.</p>}
-        <ul className="news-cards" tabIndex={0} aria-label={`Notícias de ${tab}, role para o lado`}>
-          {items.map((n) => (
-            <li key={n.link} className="news-card" style={{ '--series': colors[tab] }}>
-              <span className="meta">
-                <b>{n.source}</b> · {ago(n.t)}
-              </span>
-              <a href={n.link} target="_blank" rel="noopener noreferrer" title={n.original ? `Original: ${n.original}` : n.title}>
-                {n.title}
-              </a>
-              {n.original && <span className="meta">traduzida do inglês</span>}
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
       {generated && (
         <p className="status">
           Atualizado às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · a cada hora · Google
-          Notícias, Valor Econômico e Investing.com. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem às fontes.
+          Notícias, Valor Econômico e Investing.com. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem às
+          fontes.
         </p>
       )}
     </section>
