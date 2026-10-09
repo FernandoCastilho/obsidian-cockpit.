@@ -13,8 +13,14 @@ export const fromInput = (s) => {
   return new Date(y, m - 1, d)
 }
 
-async function fetchSeries(from, startYmd, endYmd, signal) {
-  const url = `${BASE}/${from}-BRL/?start_date=${startYmd}&end_date=${endYmd}`
+// O endpoint devolve só 1 registro se a quantidade não for informada: /{par}/{quantidade}?start_date&end_date
+export function historyUrl(from, start, end) {
+  const days = Math.round((end - start) / 864e5) + 1
+  return `${BASE}/${from}-BRL/${Math.min(days, 360)}?start_date=${toYmd(start)}&end_date=${toYmd(end)}`
+}
+
+async function fetchSeries(from, start, end, signal) {
+  const url = historyUrl(from, start, end)
   const res = await fetch(url, { signal })
   if (!res.ok) throw new Error(`${from}: HTTP ${res.status}`)
   const rows = await res.json()
@@ -27,11 +33,11 @@ async function fetchSeries(from, startYmd, endYmd, signal) {
   return { source: from, points: [...byDay.values()].sort((a, b) => a.t - b.t) }
 }
 
-async function fetchHistory(currency, startYmd, endYmd, signal) {
+async function fetchHistory(currency, start, end, signal) {
   const errors = []
   for (const from of currency.sources) {
     try {
-      return await fetchSeries(from, startYmd, endYmd, signal)
+      return await fetchSeries(from, start, end, signal)
     } catch (e) {
       if (e.name === 'AbortError') throw e
       errors.push(e.message)
@@ -54,7 +60,7 @@ export function useHistory(code, start, end) {
     }
     const ctrl = new AbortController()
     setState({ key, status: 'loading' })
-    fetchHistory(CURRENCIES.find((c) => c.code === code), startYmd, endYmd, ctrl.signal)
+    fetchHistory(CURRENCIES.find((c) => c.code === code), start, end, ctrl.signal)
       .then((data) => {
         cache.set(key, data)
         setState({ key, status: 'ok', data })
@@ -63,7 +69,7 @@ export function useHistory(code, start, end) {
         if (e.name !== 'AbortError') setState({ key, status: 'error', error: e.message })
       })
     return () => ctrl.abort()
-  }, [key, code, startYmd, endYmd])
+  }, [key, code, start, end]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return state.key === key ? state : { key, status: 'loading' }
 }
