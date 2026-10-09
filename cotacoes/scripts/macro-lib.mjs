@@ -64,3 +64,10 @@ export function focusRelease(dateStr) {
   while (d.getUTCDay() !== 1)
   return d.toISOString().slice(0, 10)
 }
+
+// NY Fed: { refRates: [{ effectiveDate: 'AAAA-MM-DD', percentRate }] } -> [[ms, taxa % a.a.]] (SOFR overnight, sem média nem suavização)
+export const parseSofr = (json) =>
+  (json?.refRates ?? [])
+    .map((r) => [Date.parse(`${r.effectiveDate}T12:00:00Z`), Number(r.percentRate)])
+    .filter(([t, v]) => Number.isFinite(t) && Number.isFinite(v))
+    .sort((a, b) => a[0] - b[0])
