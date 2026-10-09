@@ -57,11 +57,12 @@ export default function News({ colors }) {
         <ul>
           {items.map((n) => (
             <li key={n.link}>
-              <a href={n.link} target="_blank" rel="noopener noreferrer">
+              <a href={n.link} target="_blank" rel="noopener noreferrer" title={n.original ? `Original: ${n.original}` : undefined}>
                 {n.title}
               </a>
               <span className="meta">
                 {n.source} · {ago(n.t)}
+                {n.original && ' · traduzida do inglês'}
               </span>
             </li>
           ))}
@@ -70,7 +71,7 @@ export default function News({ colors }) {
       {generated && (
         <p className="status">
           Atualizado às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · a cada hora · Google
-          Notícias, Valor Econômico e Investing.com. As matérias pertencem às fontes.
+          Notícias, Valor Econômico e Investing.com. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem às fontes.
         </p>
       )}
     </section>
