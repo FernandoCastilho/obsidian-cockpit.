@@ -13,6 +13,7 @@ import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
+const POLL_MS = 15000 // consulta a cada 15 s (a API gratuita tem limite de uso)
 const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
@@ -170,6 +171,16 @@ function Share({ quotes, updatedAt }) {
       if (err?.name !== 'AbortError') window.open(whatsappUrl(text), '_blank', 'noopener')
     })
   }
+  // Texto com a marcação do WhatsApp (*negrito*, _itálico_) e emoji, para colar direto na conversa.
+  const copyWa = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setMsg('Copiado. Cole no WhatsApp.')
+    } catch {
+      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
+    }
+    setTimeout(() => setMsg(''), 3000)
+  }
   const copy = async () => {
     const when = updatedAt ?? new Date()
     const plain = buildPlain(quotes, when)
@@ -201,6 +212,9 @@ function Share({ quotes, updatedAt }) {
       ) : (
         <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
       )}
+      <button type="button" className="btn" disabled={!text} onClick={copyWa} title="Copia o texto já formatado para colar no WhatsApp">
+        Copiar para WhatsApp
+      </button>
       <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada, com as bandeiras, para colar no e-mail ou no Teams">
         Copiar para e-mail ou Teams
       </button>
@@ -263,7 +277,7 @@ function ParityCard({ quotes }) {
 }
 
 export default function App() {
-  const { quotes, direction, error, errors, updatedAt } = useQuotes(5000)
+  const { quotes, direction, error, errors, updatedAt } = useQuotes(POLL_MS)
   const macro = useMacro()
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
@@ -301,7 +315,7 @@ export default function App() {
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Consultado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada 5 s · veja o horário da cotação em cada card`
+            ? `Consultado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada ${POLL_MS / 1000} s · veja o horário da cotação em cada card`
             : 'Carregando…'}
       </p>
       <Share quotes={quotes} updatedAt={updatedAt} />
