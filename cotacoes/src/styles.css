@@ -93,3 +93,15 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:2px s
 .chart.wide { grid-column: 1 / -1; }
 .parity-actions { display:flex; align-items:flex-start; gap:12px; }
 .btn.small { padding:5px 10px; font-size:.78rem; }
+dl .span2 { grid-column: 1 / -1; }
+dd .muted { color:var(--mut); font-size:.72rem; }
+.macro { margin-top:40px; }
+.macro .charts > .status { margin:0; align-self:center; }
+.focus-table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.focus-table th, .focus-table td { padding:8px 10px; text-align:right; border-bottom:1px solid var(--line); }
+.focus-table thead th { color:var(--mut); font-weight:500; font-size:.8rem; }
+.focus-table tbody th { text-align:left; font-weight:600; }
+.focus-table td { cursor:default; }
+.chart .scroll { overflow-x:auto; }
+.chart > .status { margin:8px 0 0; font-size:.78rem; }
+.chart-actions { margin:4px 0 8px; }
