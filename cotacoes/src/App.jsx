@@ -3,7 +3,7 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 const brl = (v, digits = 4) =>
   v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: digits, maximumFractionDigits: digits })
 
-function Card({ currency, quote, dir }) {
+function Card({ currency, quote, dir, err }) {
   const pct = quote?.pct ?? 0
   const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
   return (
@@ -11,7 +11,7 @@ function Card({ currency, quote, dir }) {
       <header>
         <span className="flag">{currency.flag}</span>
         <div>
-          <h2>{currency.code}/BRL</h2>
+          <h2>{quote?.source ?? currency.code}/BRL</h2>
           <p>{currency.name}</p>
         </div>
       </header>
@@ -29,14 +29,18 @@ function Card({ currency, quote, dir }) {
           </dl>
         </>
       ) : (
-        <div className="price skeleton">—</div>
+        <>
+          <div className="price skeleton">—</div>
+          {err && <p className="card-error">{err}</p>}
+        </>
       )}
+      {quote && err && <p className="card-error">Desatualizado: {err}</p>}
     </article>
   )
 }
 
 export default function App() {
-  const { quotes, direction, error, updatedAt } = useQuotes(5000)
+  const { quotes, direction, error, errors, updatedAt } = useQuotes(5000)
   return (
     <main>
       <h1>Cotações em tempo real</h1>
@@ -50,10 +54,10 @@ export default function App() {
       </p>
       <section className="grid">
         {CURRENCIES.map((c) => (
-          <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} />
+          <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} />
         ))}
       </section>
-      <footer>Fonte: AwesomeAPI · valores em reais (BRL) · CNH = yuan offshore</footer>
+      <footer>Fonte: AwesomeAPI · valores em reais (BRL) · CNH = yuan offshore (CNY se indisponível)</footer>
     </main>
   )
 }
