@@ -84,3 +84,11 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:2px s
 .news-list a:focus-visible { outline:2px solid #58a6ff; outline-offset:2px; }
 .news-list .meta { color:var(--mut); font-size:.78rem; }
 .news > .status { margin-top:12px; font-size:.78rem; }
+.share { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:-8px 0 20px; }
+.share .status { margin:0; font-size:.8rem; }
+.btn { display:inline-flex; align-items:center; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:7px 14px; font:inherit; font-size:.85rem; text-decoration:none; cursor:pointer; }
+.btn:hover:not(:disabled) { border-color:var(--mut); }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.btn.wa { background:#1f6f43; border-color:#2a8f58; color:#fff; font-weight:600; }
+.btn.wa:disabled { background:var(--card); border-color:var(--line); color:var(--mut); }
+.btn:focus-visible { outline:2px solid #58a6ff; outline-offset:2px; }
