@@ -1,7 +1,7 @@
 :root { color-scheme: dark; --bg:#0d1117; --card:#161b22; --line:#30363d; --fg:#e6edf3; --mut:#8b949e; --up:#3fb950; --down:#f85149; }
 * { box-sizing: border-box; }
 body { margin:0; background:var(--bg); color:var(--fg); font-family: system-ui, sans-serif; }
-main { max-width: 960px; margin: 0 auto; padding: 32px 16px; }
+main { max-width: 1200px; margin: 0 auto; padding: 32px 16px; }
 h1 { margin:0 0 8px; font-size: 1.6rem; }
 .status { color:var(--mut); display:flex; align-items:center; gap:8px; margin:0 0 24px; }
 .dot { width:8px; height:8px; border-radius:50%; background:var(--mut); }
@@ -105,3 +105,9 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 .chart .scroll { overflow-x:auto; }
 .chart > .status { margin:8px 0 0; font-size:.78rem; }
 .chart-actions { margin:4px 0 8px; }
+
+/* Histórico em 3 colunas em telas largas: USD, EUR, JPY / CNH ao lado da paridade (2 colunas) */
+@media (min-width: 1000px) {
+  .history .charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .history .chart.wide { grid-column: span 2; }
+}
