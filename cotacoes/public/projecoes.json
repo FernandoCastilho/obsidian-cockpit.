@@ -1,6 +1,366 @@
 {
-  "_como_editar": "Preencha 'source', 'date' e 'tables'. Cada tabela tem title, unit (opcional), columns (cabeçalhos) e rows ([{label, values}] com um valor por coluna; use null para vazio). O painel só aparece quando há tabelas.",
-  "source": "Itaú BBA",
-  "date": "",
-  "tables": []
+ "_como_editar": "Preencha 'source', 'date' e 'tables'. Cada tabela: title, unit (opcional), note (opcional), columns (texto ou {label, group, strong}), e rows [{label, decimals, values}] ou sections [{title, rows}]. Use null para célula vazia. O painel só aparece quando há tabelas.",
+ "source": "Itaú BBA",
+ "date": "",
+ "tables": [
+  {
+   "title": "Cenário macroeconômico do Brasil",
+   "unit": "P = projeção · atual x anterior",
+   "wide": true,
+   "columns": [
+    {
+     "label": "2022"
+    },
+    {
+     "label": "2023"
+    },
+    {
+     "label": "2024"
+    },
+    {
+     "label": "2025"
+    },
+    {
+     "label": "Atual",
+     "group": "2026P",
+     "strong": true
+    },
+    {
+     "label": "Anterior",
+     "group": "2026P"
+    },
+    {
+     "label": "Atual",
+     "group": "2027P",
+     "strong": true
+    },
+    {
+     "label": "Anterior",
+     "group": "2027P"
+    }
+   ],
+   "sections": [
+    {
+     "title": "Atividade econômica",
+     "rows": [
+      {
+       "label": "Crescimento real do PIB (%)",
+       "decimals": 1,
+       "values": [
+        3.0,
+        3.2,
+        3.4,
+        2.3,
+        1.7,
+        1.9,
+        1.2,
+        1.5
+       ]
+      },
+      {
+       "label": "PIB nominal (R$ bi)",
+       "decimals": 0,
+       "values": [
+        10080,
+        10943,
+        11779,
+        12739,
+        13529,
+        13469,
+        14318,
+        14284
+       ]
+      },
+      {
+       "label": "PIB nominal (US$ bi)",
+       "decimals": 0,
+       "values": [
+        1951,
+        2192,
+        2186,
+        2278,
+        2615,
+        2600,
+        2647,
+        2641
+       ]
+      },
+      {
+       "label": "População (milhões)",
+       "decimals": 1,
+       "values": [
+        210.9,
+        211.7,
+        212.6,
+        213.4,
+        214.2,
+        214.2,
+        215.0,
+        215.0
+       ]
+      },
+      {
+       "label": "PIB per capita (US$)",
+       "decimals": 0,
+       "values": [
+        9255,
+        10356,
+        10281,
+        10676,
+        12205,
+        12138,
+        12316,
+        12287
+       ]
+      },
+      {
+       "label": "Taxa de desemprego nacional, média do ano (%)",
+       "decimals": 1,
+       "values": [
+        9.5,
+        8.0,
+        6.9,
+        5.9,
+        5.5,
+        5.5,
+        6.0,
+        6.0
+       ]
+      },
+      {
+       "label": "Taxa de desemprego nacional, fim do ano (%) (*)",
+       "decimals": 1,
+       "values": [
+        8.4,
+        7.8,
+        6.5,
+        5.4,
+        5.7,
+        5.7,
+        6.2,
+        6.1
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Inflação",
+     "rows": [
+      {
+       "label": "IPCA (%)",
+       "decimals": 1,
+       "values": [
+        5.8,
+        4.6,
+        4.8,
+        4.3,
+        5.1,
+        5.1,
+        4.6,
+        4.4
+       ]
+      },
+      {
+       "label": "IGP-M (%)",
+       "decimals": 1,
+       "values": [
+        5.5,
+        -3.2,
+        6.5,
+        -1.0,
+        4.5,
+        4.2,
+        3.5,
+        4.4
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Juros",
+     "rows": [
+      {
+       "label": "Selic, fim de período (%)",
+       "decimals": 2,
+       "values": [
+        13.75,
+        11.75,
+        12.25,
+        15.0,
+        13.75,
+        13.75,
+        12.5,
+        12.5
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Setor externo",
+     "rows": [
+      {
+       "label": "R$/US$, fim de período",
+       "decimals": 2,
+       "values": [
+        5.28,
+        4.86,
+        6.18,
+        5.47,
+        5.3,
+        5.3,
+        5.5,
+        5.5
+       ]
+      },
+      {
+       "label": "R$/US$, média",
+       "decimals": 2,
+       "values": [
+        5.17,
+        4.99,
+        5.39,
+        5.59,
+        5.17,
+        5.18,
+        5.41,
+        5.41
+       ]
+      },
+      {
+       "label": "Balança comercial (US$ bi)",
+       "decimals": 0,
+       "values": [
+        62,
+        99,
+        75,
+        68,
+        89,
+        84,
+        84,
+        80
+       ]
+      },
+      {
+       "label": "Transações correntes (% do PIB)",
+       "decimals": 1,
+       "values": [
+        -2.2,
+        -1.2,
+        -3.0,
+        -2.9,
+        -2.4,
+        -2.5,
+        -2.8,
+        -2.7
+       ]
+      },
+      {
+       "label": "Investimento direto no país (% do PIB)",
+       "decimals": 1,
+       "values": [
+        4.0,
+        2.9,
+        3.4,
+        3.4,
+        3.5,
+        3.5,
+        3.9,
+        3.9
+       ]
+      },
+      {
+       "label": "Reservas internacionais (US$ bi)",
+       "decimals": 0,
+       "values": [
+        325,
+        355,
+        330,
+        358,
+        370,
+        370,
+        370,
+        370
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Finanças públicas",
+     "rows": [
+      {
+       "label": "Resultado primário (% do PIB)",
+       "decimals": 1,
+       "values": [
+        1.2,
+        -2.3,
+        -0.4,
+        -0.4,
+        -0.5,
+        -0.5,
+        -0.6,
+        -0.6
+       ]
+      },
+      {
+       "label": "Resultado nominal (% do PIB)",
+       "decimals": 1,
+       "values": [
+        -4.6,
+        -8.8,
+        -8.5,
+        -8.3,
+        -9.1,
+        -9.0,
+        -8.9,
+        -8.9
+       ]
+      },
+      {
+       "label": "Dívida bruta (% do PIB)",
+       "decimals": 1,
+       "values": [
+        71.7,
+        73.8,
+        76.3,
+        78.6,
+        83.0,
+        83.2,
+        87.4,
+        87.4
+       ]
+      },
+      {
+       "label": "Dívida líquida (% do PIB)",
+       "decimals": 1,
+       "values": [
+        56.1,
+        60.4,
+        61.3,
+        65.2,
+        70.4,
+        70.6,
+        75.0,
+        75.0
+       ]
+      },
+      {
+       "label": "Crescimento do gasto público (% real a.a.) (**)",
+       "decimals": 1,
+       "values": [
+        6.0,
+        7.6,
+        3.2,
+        4.2,
+        5.5,
+        5.4,
+        0.4,
+        1.2
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "Fontes: IBGE, FGV, BCB e Itaú. (*) Taxa de desemprego nacional medida pela PNADC, com ajuste sazonal. (**) Não considera o pagamento extraordinário de precatórios em 2023; incluindo-o, o gasto cresceu 12,5% em 2023 e caiu 0,9% em 2024."
+  }
+ ]
 }
