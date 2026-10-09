@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
+import Help from './Help.jsx'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -50,7 +51,8 @@ function Card({ currency, quote, dir, err }) {
   const pct = quote?.pct ?? 0
   const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
   return (
-    <article className={`card ${dir ? `flash-${dir}` : ''}`} key={quote?.bid} style={{ '--series': COLORS[currency.code] }}>
+    <article className="card" style={{ '--series': COLORS[currency.code] }}>
+      {dir && <span key={quote?.bid} className={`flash flash-${dir}`} aria-hidden="true" />}
       <header>
         <span className="flag">{currency.flag}</span>
         <div>
@@ -65,10 +67,38 @@ function Card({ currency, quote, dir, err }) {
             {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {pct.toFixed(2).replace('.', ',')}%
           </div>
           <dl>
-            <div><dt>Compra</dt><dd>{brl(quote.bid)}</dd></div>
-            <div><dt>Venda</dt><dd>{brl(quote.ask)}</dd></div>
-            <div><dt>Máx.</dt><dd>{brl(quote.high)}</dd></div>
-            <div><dt>Mín.</dt><dd>{brl(quote.low)}</dd></div>
+            <div>
+              <dt>
+                Compra
+                <Help label="O que é compra">
+                  Preço a que o banco <b>compra</b> a moeda de você. Vale quando você <b>recebe de fora</b> e converte em reais.
+                </Help>
+              </dt>
+              <dd>{brl(quote.bid)}</dd>
+            </div>
+            <div>
+              <dt>
+                Venda
+                <Help label="O que é venda" align="right">
+                  Preço a que o banco <b>vende</b> a moeda para você. Vale quando você <b>paga fora</b>: importação, remessa, fornecedor.
+                </Help>
+              </dt>
+              <dd>{brl(quote.ask)}</dd>
+            </div>
+            <div>
+              <dt>
+                Máx.
+                <Help label="O que é máxima">Maior cotação de compra atingida hoje, até agora. Muda durante o dia.</Help>
+              </dt>
+              <dd>{brl(quote.high)}</dd>
+            </div>
+            <div>
+              <dt>
+                Mín.
+                <Help label="O que é mínima" align="right">Menor cotação de compra atingida hoje, até agora. Muda durante o dia.</Help>
+              </dt>
+              <dd>{brl(quote.low)}</dd>
+            </div>
           </dl>
         </>
       ) : (
@@ -122,6 +152,17 @@ export default function App() {
           <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} />
         ))}
       </section>
+      <aside className="concept">
+        <h2>Compra e venda</h2>
+        <p>
+          A <b>venda</b> é sempre maior que a <b>compra</b>. A diferença entre as duas é o <b>spread</b>, que é o custo de
+          girar a moeda. Para uma PJ, o que importa é o sentido da operação. Quem <b>paga fora</b> olha a <b>venda</b>, e
+          quem <b>recebe de fora</b> olha a <b>compra</b>.
+        </p>
+        <p className="muted">
+          Valores de referência. A taxa do seu banco inclui spread próprio e tributos, como o IOF quando aplicável.
+        </p>
+      </aside>
       <section className="history">
         <div className="history-head">
           <h2>Histórico</h2>
