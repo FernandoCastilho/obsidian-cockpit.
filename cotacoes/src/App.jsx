@@ -252,7 +252,7 @@ export default function App() {
           ])}
         </div>
       </section>
-      <Macro range={range} day={preset === 'day'} />
+      <Macro />
       <News colors={COLORS} />
       <footer>
         <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>

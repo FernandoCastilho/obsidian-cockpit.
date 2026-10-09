@@ -55,3 +55,12 @@ export function ptaxFrom(rows) {
   const r = list.find((x) => /fechamento/i.test(x.tipoBoletim ?? '')) ?? list[list.length - 1]
   return { buy: r.cotacaoCompra, sell: r.cotacaoVenda, at: r.dataHoraCotacao, kind: r.tipoBoletim }
 }
+
+// O Focus é divulgado às segundas-feiras com as expectativas coletadas até a sexta anterior.
+// Devolve a primeira segunda-feira depois da data de coleta ("YYYY-MM-DD").
+export function focusRelease(dateStr) {
+  const d = new Date(`${dateStr}T12:00:00Z`)
+  do d.setUTCDate(d.getUTCDate() + 1)
+  while (d.getUTCDay() !== 1)
+  return d.toISOString().slice(0, 10)
+}
