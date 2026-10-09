@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useHistory } from './useHistory.js'
+import { useHistory, useIntraday } from './useHistory.js'
 
 const H = 240
 const M = { t: 12, r: 16, b: 28, l: 58 }
 
 const fmtDate = (t, long) =>
   new Date(t).toLocaleDateString('pt-BR', long ? { day: '2-digit', month: 'short', year: 'numeric' } : { day: '2-digit', month: '2-digit' })
+const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' })
 const fmtMonth = (t) => new Date(t).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }).replace('.', '')
 const brl = (v, d = 4) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
 
@@ -22,7 +23,7 @@ function useWidth() {
   return [ref, w]
 }
 
-function Plot({ points, width, color, code }) {
+function Plot({ points, width, color, code, intraday }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -73,7 +74,7 @@ function Plot({ points, width, color, code }) {
         width="100%"
         height={H}
         role="img"
-        aria-label={`Gráfico de linha de ${code}/BRL, de ${fmtDate(g.t0, true)} a ${fmtDate(g.t1, true)}`}
+        aria-label={`Gráfico de linha de ${code}/BRL, de ${intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
         onPointerMove={onMove}
         onPointerDown={onMove}
       >
@@ -99,7 +100,7 @@ function Plot({ points, width, color, code }) {
             textAnchor={i === 0 ? 'start' : i === g.xTicks.length - 1 ? 'end' : 'middle'}
             className="tick"
           >
-            {g.long ? fmtMonth(t) : fmtDate(t)}
+            {intraday ? fmtTime(t) : g.long ? fmtMonth(t) : fmtDate(t)}
           </text>
         ))}
         <path d={g.area} fill={`url(#${gid})`} />
@@ -114,17 +115,31 @@ function Plot({ points, width, color, code }) {
       </svg>
       {hp && (
         <div className="tip" style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
-          <strong>{fmtDate(hp.t, true)}</strong>
-          <span>Fechamento {brl(hp.bid)}</span>
-          <span>Máx. {brl(hp.high)} · Mín. {brl(hp.low)}</span>
+          <strong>{intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
+          {intraday ? (
+            <span>Compra {brl(hp.bid)} · Venda {brl(hp.ask)}</span>
+          ) : (
+            <>
+              <span>Fechamento {brl(hp.bid)}</span>
+              <span>Máx. {brl(hp.high)} · Mín. {brl(hp.low)}</span>
+            </>
+          )}
         </div>
       )}
     </div>
   )
 }
 
-export default function HistoryChart({ currency, color, start, end }) {
-  const h = useHistory(currency.code, start, end)
+function useSeries(currency, start, end, day) {
+  // hooks sempre chamados; só um deles usado por modo
+  const daily = useHistory(currency.code, start, end, !!day)
+  const intra = useIntraday(currency.code, day ?? start, !day)
+  return day ? intra : daily
+}
+
+export default function HistoryChart({ currency, color, start, end, day }) {
+  const intraday = !!day
+  const h = useSeries(currency, start, end, day)
   const [ref, width] = useWidth()
   const pts = h.status === 'ok' ? h.data.points : null
   const first = pts?.[0]
@@ -142,7 +157,7 @@ export default function HistoryChart({ currency, color, start, end }) {
         {pct != null && (
           <div className={`pct ${trend}`}>
             {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {pct.toFixed(2).replace('.', ',')}%
-            <small>no período</small>
+            <small>{intraday ? 'no dia' : 'no período'}</small>
           </div>
         )}
       </header>
@@ -154,20 +169,24 @@ export default function HistoryChart({ currency, color, start, end }) {
             <small>{h.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={currency.code} />}
+        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} />}
       </div>
       {pts && (
         <details className="table">
-          <summary>Ver tabela ({pts.length} dias)</summary>
+          <summary>Ver tabela ({pts.length} {intraday ? 'cotações' : 'dias'})</summary>
           <div className="scroll">
             <table>
               <thead>
-                <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>
+                {intraday ? <tr><th>Hora</th><th>Compra</th><th>Venda</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>}
               </thead>
               <tbody>
                 {[...pts].reverse().map((p) => (
                   <tr key={p.t}>
-                    <td>{fmtDate(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td>
+                    {intraday ? (
+                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.ask)}</td></>
+                    ) : (
+                      <><td>{fmtDate(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
+                    )}
                   </tr>
                 ))}
               </tbody>
