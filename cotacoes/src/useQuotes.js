@@ -10,11 +10,16 @@ export const CURRENCIES = [
 
 const BASE = 'https://economia.awesomeapi.com.br/json/last'
 
+async function fetchRaw(from, to, signal) {
+  const res = await fetch(`${BASE}/${from}-${to}`, { signal })
+  if (!res.ok) throw new Error(`${from}-${to}: HTTP ${res.status}`)
+  const q = (await res.json())[`${from}${to}`]
+  if (!q) throw new Error(`${from}-${to}: resposta sem cotação`)
+  return q
+}
+
 async function fetchPair(from, signal) {
-  const res = await fetch(`${BASE}/${from}-BRL`, { signal })
-  if (!res.ok) throw new Error(`${from}: HTTP ${res.status}`)
-  const q = (await res.json())[`${from}BRL`]
-  if (!q) throw new Error(`${from}: resposta sem cotação`)
+  const q = await fetchRaw(from, 'BRL', signal)
   return {
     source: from,
     bid: Number(q.bid),
@@ -26,17 +31,47 @@ async function fetchPair(from, signal) {
   }
 }
 
-async function fetchCurrency({ sources }, signal) {
+// Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH (o CNH negocia durante os feriados chineses, o CNY onshore não).
+async function fetchCnhCross(signal) {
+  const [brl, cnh] = await Promise.all([fetchRaw('USD', 'BRL', signal), fetchRaw('USD', 'CNH', signal)])
+  const n = Number
+  return {
+    source: 'CNH',
+    cross: true,
+    bid: n(brl.bid) / n(cnh.ask),
+    ask: n(brl.ask) / n(cnh.bid),
+    high: n(brl.high) / n(cnh.low),
+    low: n(brl.low) / n(cnh.high),
+    pct: n(brl.pctChange) - n(cnh.pctChange),
+    timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,
+  }
+}
+
+const STALE_MS = 6 * 3600e3
+
+async function fetchCurrency({ code, sources }, signal) {
   const errors = []
+  let quote = null
   for (const from of sources) {
     try {
-      return { quote: await fetchPair(from, signal) }
+      quote = await fetchPair(from, signal)
+      break
     } catch (e) {
       if (e.name === 'AbortError') throw e
       errors.push(e.message)
     }
   }
-  return { error: errors.join(' · ') }
+  // CNH sem cotação fresca (ex.: mercado onshore fechado por feriado): tenta o cruzamento
+  if (code === 'CNH' && (!quote || Date.now() - quote.timestamp > STALE_MS)) {
+    try {
+      const cross = await fetchCnhCross(signal)
+      if (!quote || cross.timestamp > quote.timestamp) quote = cross
+    } catch (e) {
+      if (e.name === 'AbortError') throw e
+      errors.push(e.message)
+    }
+  }
+  return quote ? { quote } : { error: errors.join(' · ') }
 }
 
 async function fetchQuotes(signal) {
