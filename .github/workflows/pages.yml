@@ -4,6 +4,8 @@ on:
   push:
     branches: [main, claude/obsidian-plugin-analysis-bagjz3]
     paths: ['cotacoes/**']
+  schedule:
+    - cron: '17 * * * *' # notícias: atualização de hora em hora
   workflow_dispatch:
 
 permissions:
@@ -32,6 +34,10 @@ jobs:
           cache: npm
           cache-dependency-path: cotacoes/package-lock.json
       - run: npm ci
+      - name: Coletar notícias
+        run: node scripts/fetch-news.mjs
+        env:
+          NEWS_STRICT: ${{ github.event_name == 'schedule' }}
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
