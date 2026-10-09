@@ -3,12 +3,13 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import News from './News.jsx'
+import ParityChart from './ParityChart.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
-const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500' }
+const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
@@ -231,9 +232,10 @@ export default function App() {
         </div>
         {notice && <p className="status">{notice}</p>}
         <div className="charts">
-          {CURRENCIES.map((c) => (
-            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
-          ))}
+          {CURRENCIES.map((c) => [
+            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />,
+            c.code === 'EUR' && <ParityChart key="PAR" color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />,
+          ])}
         </div>
       </section>
       <News colors={COLORS} />

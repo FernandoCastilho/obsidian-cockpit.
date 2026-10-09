@@ -4,13 +4,13 @@ import { useHistory, useIntraday } from './useHistory.js'
 const H = 240
 const M = { t: 12, r: 16, b: 28, l: 58 }
 
-const fmtDate = (t, long) =>
+export const fmtDate = (t, long) =>
   new Date(t).toLocaleDateString('pt-BR', long ? { day: '2-digit', month: 'short', year: 'numeric' } : { day: '2-digit', month: '2-digit' })
-const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' })
+export const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' })
 const fmtMonth = (t) => new Date(t).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }).replace('.', '')
 const brl = (v, d = 4) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
 
-function useWidth() {
+export function useWidth() {
   const ref = useRef(null)
   const [w, setW] = useState(480)
   useEffect(() => {
@@ -23,7 +23,7 @@ function useWidth() {
   return [ref, w]
 }
 
-function Plot({ points, width, color, code, intraday }) {
+export function Plot({ points, width, color, code, intraday, fmt, label }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -74,7 +74,7 @@ function Plot({ points, width, color, code, intraday }) {
         width="100%"
         height={H}
         role="img"
-        aria-label={`Gráfico de linha de ${code}/BRL, de ${intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
+        aria-label={`Gráfico de linha de ${label ?? `${code}/BRL`}, de ${intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
         onPointerMove={onMove}
         onPointerDown={onMove}
       >
@@ -116,7 +116,9 @@ function Plot({ points, width, color, code, intraday }) {
       {hp && (
         <div className="tip" style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
           <strong>{intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
-          {intraday ? (
+          {fmt ? (
+            <span>{label} {fmt(hp.bid)}</span>
+          ) : intraday ? (
             <span>Compra {brl(hp.bid)} · Venda {brl(hp.ask)}</span>
           ) : (
             <>
