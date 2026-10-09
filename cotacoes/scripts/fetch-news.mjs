@@ -1,6 +1,6 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { GTX, balance, canonicalSource, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, splitBatch } from './news-lib.mjs'
+import { GTX, balance, canonicalSource, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, pick, splitBatch } from './news-lib.mjs'
 
 const SITES = {
   valor: 'site:valor.globo.com',
