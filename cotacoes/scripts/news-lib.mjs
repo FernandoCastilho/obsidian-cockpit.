@@ -53,3 +53,28 @@ export const googleUrl = (q, lang) => {
   const p = lang === 'en' ? 'hl=en-US&gl=US&ceid=US:en' : 'hl=pt-BR&gl=BR&ceid=BR:pt-419'
   return `https://news.google.com/rss/search?q=${encodeURIComponent(`${q} when:7d`)}&${p}`
 }
+
+// Tradução para português (Brasil) via endpoint público do Google Tradutor, sem chave.
+export const translateUrl = (text) =>
+  `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=pt&dt=t&q=${encodeURIComponent(text)}`
+
+// Resposta: [[[traduzido, original, ...], ...], null, idiomaDetectado, ...]
+export function parseTranslation(data) {
+  const text = Array.isArray(data?.[0]) ? data[0].map((s) => s?.[0] ?? '').join('').trim() : ''
+  return { text, lang: String(data?.[2] ?? '') }
+}
+
+// Escolhe até `limit` manchetes alternando as fontes (Valor, Investing, demais), mais recentes primeiro.
+export function balance(items, limit) {
+  const kind = (s) => (s === 'Valor Econômico' ? 'valor' : s === 'Investing.com' ? 'investing' : 'outras')
+  const queues = { valor: [], investing: [], outras: [] }
+  for (const it of pick(items, items.length)) queues[kind(it.source)].push(it)
+  const out = []
+  while (out.length < limit && Object.values(queues).some((q) => q.length)) {
+    for (const k of ['valor', 'investing', 'outras']) {
+      const next = queues[k].shift()
+      if (next && out.length < limit) out.push(next)
+    }
+  }
+  return out.sort((a, b) => b.t - a.t)
+}

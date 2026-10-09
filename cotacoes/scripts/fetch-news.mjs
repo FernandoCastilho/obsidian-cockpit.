@@ -1,6 +1,6 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { canonicalSource, googleUrl, parseRss, pick } from './news-lib.mjs'
+import { balance, canonicalSource, googleUrl, parseRss, parseTranslation, pick, translateUrl } from './news-lib.mjs'
 
 const SITES = {
   valor: 'site:valor.globo.com',
@@ -32,6 +32,23 @@ async function get(url) {
 
 const errors = []
 const news = {}
+
+// Traduz títulos que não estejam em português; mantém o original se a tradução falhar.
+const cache = new Map()
+async function toPortuguese(title) {
+  if (cache.has(title)) return cache.get(title)
+  let out = { title }
+  try {
+    const { text, lang } = parseTranslation(JSON.parse(await get(translateUrl(title))))
+    if (text && !lang.startsWith('pt')) out = { title: text, original: title }
+  } catch (e) {
+    errors.push(`traducao: ${e.message}`)
+  }
+  cache.set(title, out)
+  await sleep(150)
+  return out
+}
+
 for (const [code, [pt, en]] of Object.entries(TOPICS)) {
   const all = []
   for (const g of groups(pt, en)) {
@@ -46,7 +63,11 @@ for (const [code, [pt, en]] of Object.entries(TOPICS)) {
     }
     for (const it of pick(items, g.limit)) all.push({ title: it.title, link: it.link, source: canonicalSource(it), t: it.t, via: g.id })
   }
-  news[code] = pick(all, 12).map((it) => ({ title: it.title, link: it.link, source: it.source, t: it.t }))
+  news[code] = []
+  for (const it of balance(all, 5)) {
+    const tr = await toPortuguese(it.title)
+    news[code].push({ title: tr.title, original: tr.original, link: it.link, source: it.source, t: it.t })
+  }
   console.log(code, news[code].length, 'manchetes')
 }
 
@@ -59,4 +80,4 @@ if (!total && process.env.NEWS_STRICT === 'true') {
 
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(new URL('../public/news.json', import.meta.url), JSON.stringify({ generatedAt: Date.now(), news, errors }))
-console.log('news.json gravado:', total, 'manchetes')
+console.log('news.json gravado:', total, 'manchetes;', [...cache.values()].filter((v) => v.original).length, 'traduzidas')
