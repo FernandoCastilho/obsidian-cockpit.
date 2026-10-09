@@ -19,3 +19,12 @@ jobs:
           show "$B/daily/USD-EUR/8?start_date=$S&end_date=$E"
           show "$B/USD-BRL/360?start_date=$T&end_date=$T"
           show "$B/USD-EUR/360?start_date=$T&end_date=$T"
+      - name: Testar APIs do Banco Central (CDI, Selic, Focus) e CORS
+        run: |
+          show() { echo "== $1"; code=$(curl -sS -m 40 -H 'Origin: https://fernandocastilho.github.io' -D /tmp/h.txt -o /tmp/r.json -w '%{http_code}' "$1"); echo "HTTP $code"; grep -i 'access-control-allow-origin' /tmp/h.txt || echo "(sem cabeçalho CORS)"; head -c 500 /tmp/r.json; echo; jq -r 'if type=="array" then "itens: \(length)" else "chaves: \(keys|join(","))" end' /tmp/r.json 2>/dev/null; }
+          show "https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/5?formato=json"
+          show "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json&dataInicial=01/01/2024&dataFinal=31/12/2025"
+          show "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json&dataInicial=01/01/1999&dataFinal=31/12/2008"
+          show "https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados?formato=json&dataInicial=01/01/2015&dataFinal=31/12/2025"
+          show "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?\$top=6&\$filter=Indicador%20eq%20'Selic'&\$orderby=Data%20desc&\$format=json"
+          echo "== indicadores do Focus"; curl -sS -m 40 "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?\$top=2000&\$orderby=Data%20desc&\$format=json" | jq -r '[.value[].Indicador]|unique|join(" | ")'
