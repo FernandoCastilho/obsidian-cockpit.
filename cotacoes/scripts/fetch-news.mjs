@@ -1,6 +1,6 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { canonicalSource, googleUrl, parseRss, parseTranslation, pick, translateUrl } from './news-lib.mjs'
+import { balance, canonicalSource, googleUrl, parseRss, parseTranslation, pick, translateUrl } from './news-lib.mjs'
 
 const SITES = {
   valor: 'site:valor.globo.com',
@@ -64,7 +64,7 @@ for (const [code, [pt, en]] of Object.entries(TOPICS)) {
     for (const it of pick(items, g.limit)) all.push({ title: it.title, link: it.link, source: canonicalSource(it), t: it.t, via: g.id })
   }
   news[code] = []
-  for (const it of pick(all, 12)) {
+  for (const it of balance(all, 5)) {
     const tr = await toPortuguese(it.title)
     news[code].push({ title: tr.title, original: tr.original, link: it.link, source: it.source, t: it.t })
   }

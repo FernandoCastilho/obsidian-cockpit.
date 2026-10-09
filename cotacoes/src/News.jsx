@@ -54,16 +54,16 @@ export default function News({ colors }) {
         {!data && !error && <p className="status">Carregando notícias…</p>}
         {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}
         {data && !items.length && <p className="status">Nenhuma manchete encontrada para esta moeda.</p>}
-        <ul>
+        <ul className="news-cards" tabIndex={0} aria-label={`Notícias de ${tab}, role para o lado`}>
           {items.map((n) => (
-            <li key={n.link}>
-              <a href={n.link} target="_blank" rel="noopener noreferrer" title={n.original ? `Original: ${n.original}` : undefined}>
+            <li key={n.link} className="news-card" style={{ '--series': colors[tab] }}>
+              <span className="meta">
+                <b>{n.source}</b> · {ago(n.t)}
+              </span>
+              <a href={n.link} target="_blank" rel="noopener noreferrer" title={n.original ? `Original: ${n.original}` : n.title}>
                 {n.title}
               </a>
-              <span className="meta">
-                {n.source} · {ago(n.t)}
-                {n.original && ' · traduzida do inglês'}
-              </span>
+              {n.original && <span className="meta">traduzida do inglês</span>}
             </li>
           ))}
         </ul>
