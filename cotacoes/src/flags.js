@@ -47,13 +47,14 @@ export function flagPngs() {
           const img = new Image()
           img.onload = () => {
             const c = document.createElement('canvas')
-            c.width = 60
-            c.height = 40
-            c.getContext('2d').drawImage(img, 0, 0, 60, 40)
+            // tamanho natural pequeno (como um emoji): e-mail/Teams podem ignorar width/height e usar o natural
+            c.width = 18
+            c.height = 12
+            c.getContext('2d').drawImage(img, 0, 0, 18, 12)
             resolve([code, c.toDataURL('image/png')])
           }
           img.onerror = () => resolve([code, null])
-          img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(flagSvg(code, 'width="60" height="40"'))}`
+          img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(flagSvg(code, 'width="18" height="12"'))}`
         }),
     ),
   ).then(Object.fromEntries)

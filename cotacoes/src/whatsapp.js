@@ -38,7 +38,7 @@ export function buildHtml(quotes, when = new Date(), pngs = {}) {
   const lines = r
     .map((x) => {
       const png = pngs[x.key]
-      const flag = png ? `<img src="${png}" width="24" height="16" alt="${x.country}" style="vertical-align:middle">` : x.icon
+      const flag = png ? `<img src="${png}" width="18" height="12" alt="${x.country}" style="vertical-align:middle">` : x.icon
       return `${flag}&nbsp;<b>${x.code}</b>&nbsp;&nbsp;${x.price}&nbsp;&nbsp;${x.trend}`
     })
     .join('<br>')
