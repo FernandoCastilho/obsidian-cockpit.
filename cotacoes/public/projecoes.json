@@ -1,0 +1,6 @@
+{
+  "_como_editar": "Preencha 'source', 'date' e 'tables'. Cada tabela tem title, unit (opcional), columns (cabeçalhos) e rows ([{label, values}] com um valor por coluna; use null para vazio). O painel só aparece quando há tabelas.",
+  "source": "Itaú BBA",
+  "date": "",
+  "tables": []
+}

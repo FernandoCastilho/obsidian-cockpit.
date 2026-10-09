@@ -111,3 +111,5 @@ dd .muted { color:var(--mut); font-size:.72rem; }
   .history .charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .history .chart.wide { grid-column: span 2; }
 }
+.projecoes { margin-top:40px; }
+.projecoes > .status { margin-top:12px; font-size:.78rem; }
