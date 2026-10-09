@@ -4,6 +4,7 @@ import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
+import Clock from './Clock.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
 import ParityChart from './ParityChart.jsx'
@@ -322,9 +323,15 @@ export default function App() {
       <Share quotes={quotes} updatedAt={updatedAt} />
       <section className="grid">
         {CURRENCIES.map((c) => (
-          <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} />
+          <div className="slot" key={c.code}>
+            <Clock codes={[c.code]} />
+            <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} />
+          </div>
         ))}
-        <ParityCard quotes={quotes} />
+        <div className="slot">
+          <Clock codes={['USD', 'EUR']} />
+          <ParityCard quotes={quotes} />
+        </div>
       </section>
       <section className="history">
         <div className="history-head">
