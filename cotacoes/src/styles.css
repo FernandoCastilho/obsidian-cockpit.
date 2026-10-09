@@ -93,3 +93,4 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:2px s
 .btn.wa { background:#1f6f43; border-color:#2a8f58; color:#fff; font-weight:600; }
 .btn.wa:disabled { background:var(--card); border-color:var(--line); color:var(--mut); }
 .btn:focus-visible { outline:2px solid #58a6ff; outline-offset:2px; }
+.seg.small button { padding:6px 10px; }

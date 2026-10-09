@@ -3,7 +3,7 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import News from './News.jsx'
-import { buildMessage, whatsappUrl } from './whatsapp.js'
+import { buildHtml, buildMessage, buildPlain, defaultIcons, whatsappUrl } from './whatsapp.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -126,11 +126,38 @@ function Card({ currency, quote, dir, err }) {
 
 function Share({ quotes, updatedAt }) {
   const [msg, setMsg] = useState('')
-  const text = buildMessage(quotes, updatedAt ?? new Date())
-  const copy = async () => {
+  const [icons, setIcons] = useState(() => {
     try {
-      await navigator.clipboard.writeText(text)
-      setMsg('Texto copiado.')
+      return localStorage.getItem('wa-icons') || defaultIcons()
+    } catch {
+      return defaultIcons()
+    }
+  })
+  const pick = (v) => {
+    setIcons(v)
+    try {
+      localStorage.setItem('wa-icons', v)
+    } catch {
+      /* sem armazenamento: vale só nesta visita */
+    }
+  }
+  const text = buildMessage(quotes, updatedAt ?? new Date(), icons)
+  const copy = async () => {
+    const when = updatedAt ?? new Date()
+    const plain = buildPlain(quotes, when, icons)
+    try {
+      if (window.ClipboardItem) {
+        // formatado (negrito) para e-mail/Teams, com texto simples de reserva
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([buildHtml(quotes, when, icons)], { type: 'text/html' }),
+            'text/plain': new Blob([plain], { type: 'text/plain' }),
+          }),
+        ])
+      } else {
+        await navigator.clipboard.writeText(plain)
+      }
+      setMsg('Copiado. Cole no e-mail ou no Teams.')
     } catch {
       setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
     }
@@ -145,7 +172,13 @@ function Share({ quotes, updatedAt }) {
       ) : (
         <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
       )}
-      <button type="button" className="btn" disabled={!text} onClick={copy}>Copiar texto</button>
+      <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada para colar no e-mail ou no Teams">
+        Copiar para e-mail ou Teams
+      </button>
+      <div className="seg small" role="group" aria-label="Ícone da mensagem">
+        <button type="button" aria-pressed={icons === 'bandeira'} onClick={() => pick('bandeira')}>Ícone: bandeira</button>
+        <button type="button" aria-pressed={icons === 'moeda'} onClick={() => pick('moeda')}>Ícone: moeda</button>
+      </div>
       <span className="status" role="status">{msg}</span>
     </div>
   )
