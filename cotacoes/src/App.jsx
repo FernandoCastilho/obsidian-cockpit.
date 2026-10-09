@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
+import News from './News.jsx'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -81,7 +82,7 @@ function Card({ currency, quote, dir, err }) {
               <dt>
                 Compra
                 <Help label="O que é compra">
-                  Preço a que o banco <b>compra</b> a moeda de você. Vale para o <b>exportador</b>, que <b>recebe de fora</b> e converte em reais. A venda é sempre maior que a compra; a diferença é o <b>spread</b>, o custo de girar a moeda.
+                  Preço a que o banco <b>compra</b> a moeda. É a taxa do <b>exportador</b>: ele <b>recebe de fora</b>, vende a moeda ao banco e recebe reais.
                 </Help>
               </dt>
               <dd>{brl(quote.bid)}</dd>
@@ -90,7 +91,7 @@ function Card({ currency, quote, dir, err }) {
               <dt>
                 Venda
                 <Help label="O que é venda" align="right">
-                  Preço a que o banco <b>vende</b> a moeda para você. Vale para o <b>importador</b>, que <b>paga fora</b>: fornecedor, remessa. A venda é sempre maior que a compra; a diferença é o <b>spread</b>, o custo de girar a moeda.
+                  Preço a que o banco <b>vende</b> a moeda. É a taxa do <b>importador</b>: ele <b>paga fora</b>, compra a moeda do banco e paga em reais. A venda é sempre maior que a compra; a diferença é o <b>spread</b>, o custo de girar a moeda.
                 </Help>
               </dt>
               <dd>{brl(quote.ask)}</dd>
@@ -180,6 +181,7 @@ export default function App() {
           ))}
         </div>
       </section>
+      <News colors={COLORS} />
       <footer>Fonte: AwesomeAPI · valores em reais (BRL) · CNH = yuan offshore (CNY se indisponível)</footer>
     </main>
   )
