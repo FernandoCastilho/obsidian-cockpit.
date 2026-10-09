@@ -3,7 +3,7 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import News from './News.jsx'
-import { buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
+import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
@@ -237,7 +237,10 @@ export default function App() {
         </div>
       </section>
       <News colors={COLORS} />
-      <footer>Fonte: AwesomeAPI · valores em reais (BRL) · CNH = yuan offshore (CNY se indisponível)</footer>
+      <footer>
+        <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>
+        <p><i>{DISCLAIMER}</i></p>
+      </footer>
     </main>
   )
 }

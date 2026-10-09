@@ -4,6 +4,8 @@ const num = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximum
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
 const arrow = (v) => (v > 0 ? '🔺' : v < 0 ? '🔻' : '➖')
 
+export const DISCLAIMER = 'Valores ilustrativos, em reais (BRL). Para cotações reais, consulte a Tesouraria do Itaú.'
+
 const stampOf = (when) =>
   `${when.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${when.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`
 
@@ -19,14 +21,14 @@ function rows(quotes) {
 export function buildMessage(quotes, when = new Date()) {
   const r = rows(quotes)
   if (!r.length) return ''
-  return [`*Cotações* · ${stampOf(when)}`, '', ...r.map((x) => `${x.icon} *${x.code}* ${x.price} ${x.trend}`), '', '_Valores em reais (BRL)_'].join('\n')
+  return [`*Cotações* · ${stampOf(when)}`, '', ...r.map((x) => `${x.icon} *${x.code}* ${x.price} ${x.trend}`), '', `_${DISCLAIMER}_`].join('\n')
 }
 
 // E-mail / Teams: texto simples, sem marcação.
 export function buildPlain(quotes, when = new Date()) {
   const r = rows(quotes)
   if (!r.length) return ''
-  return [`Cotações · ${stampOf(when)}`, '', ...r.map((x) => `${x.icon} ${x.code}  ${x.price}  ${x.trend}`), '', 'Valores em reais (BRL)'].join('\n')
+  return [`Cotações · ${stampOf(when)}`, '', ...r.map((x) => `${x.icon} ${x.code}  ${x.price}  ${x.trend}`), '', DISCLAIMER].join('\n')
 }
 
 // E-mail / Teams: versão formatada (negrito) com a bandeira como imagem; `pngs` = { USD: dataURI, ... }.
@@ -40,7 +42,7 @@ export function buildHtml(quotes, when = new Date(), pngs = {}) {
       return `${flag}&nbsp;<b>${x.code}</b>&nbsp;&nbsp;${x.price}&nbsp;&nbsp;${x.trend}`
     })
     .join('<br>')
-  return `<p><b>Cotações</b> · ${stampOf(when)}</p><p>${lines}</p><p><i>Valores em reais (BRL)</i></p>`
+  return `<p><b>Cotações</b> · ${stampOf(when)}</p><p>${lines}</p><p><i>${DISCLAIMER}</i></p>`
 }
 
 export const whatsappUrl = (text) => `https://wa.me/?text=${encodeURIComponent(text)}`
