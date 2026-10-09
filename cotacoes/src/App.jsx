@@ -81,7 +81,7 @@ function Card({ currency, quote, dir, err }) {
               <dt>
                 Compra
                 <Help label="O que é compra">
-                  Preço a que o banco <b>compra</b> a moeda de você. Vale quando você <b>recebe de fora</b> e converte em reais.
+                  Preço a que o banco <b>compra</b> a moeda de você. Vale para o <b>exportador</b>, que <b>recebe de fora</b> e converte em reais. A venda é sempre maior que a compra; a diferença é o <b>spread</b>, o custo de girar a moeda.
                 </Help>
               </dt>
               <dd>{brl(quote.bid)}</dd>
@@ -90,7 +90,7 @@ function Card({ currency, quote, dir, err }) {
               <dt>
                 Venda
                 <Help label="O que é venda" align="right">
-                  Preço a que o banco <b>vende</b> a moeda para você. Vale quando você <b>paga fora</b>: importação, remessa, fornecedor.
+                  Preço a que o banco <b>vende</b> a moeda para você. Vale para o <b>importador</b>, que <b>paga fora</b>: fornecedor, remessa. A venda é sempre maior que a compra; a diferença é o <b>spread</b>, o custo de girar a moeda.
                 </Help>
               </dt>
               <dd>{brl(quote.ask)}</dd>
@@ -168,17 +168,6 @@ export default function App() {
           <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} />
         ))}
       </section>
-      <aside className="concept">
-        <h2>Compra e venda</h2>
-        <p>
-          A <b>venda</b> é sempre maior que a <b>compra</b>. A diferença entre as duas é o <b>spread</b>, que é o custo de
-          girar a moeda. Para uma PJ, o que importa é o sentido da operação. Quem <b>paga fora</b> olha a <b>venda</b>, e
-          quem <b>recebe de fora</b> olha a <b>compra</b>.
-        </p>
-        <p className="muted">
-          Valores de referência. A taxa do seu banco inclui spread próprio e tributos, como o IOF quando aplicável.
-        </p>
-      </aside>
       <section className="history">
         <div className="history-head">
           <h2>Histórico</h2>
