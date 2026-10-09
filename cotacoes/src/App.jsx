@@ -3,6 +3,7 @@ import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
+import Curves from './Curves.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
 import ParityChart from './ParityChart.jsx'
@@ -339,6 +340,7 @@ export default function App() {
         </div>
       </section>
       <Macro />
+      <Curves />
       <Projecoes />
       <News colors={COLORS} />
       <footer>

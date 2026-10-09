@@ -124,3 +124,7 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 .quote-time { margin:10px 0 0; font-size:.72rem; color:var(--mut); }
 .quote-time.old { color:#d29922; }
 .status.stale { color:#d29922; }
+.curve-legend { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; }
+.curve-legend button { display:flex; align-items:center; gap:6px; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:999px; padding:4px 10px; font:inherit; font-size:.8rem; cursor:pointer; }
+.curve-legend button small { color:var(--mut); }
+.curve-legend button.off { opacity:.45; }
