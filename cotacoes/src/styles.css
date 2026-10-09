@@ -12,7 +12,7 @@ h1 { margin:0 0 8px; font-size: 1.6rem; }
 .card header { display:flex; gap:12px; align-items:center; }
 .card h2 { margin:0; font-size:1rem; }
 .card header p { margin:0; color:var(--mut); font-size:.8rem; }
-.flag { font-size:1.8rem; }
+.flag { display:inline-flex; line-height:0; }
 .price { font-size:1.8rem; font-weight:700; margin:16px 0 4px; font-variant-numeric: tabular-nums; }
 .pct { font-weight:600; }
 .pct.up { color:var(--up); } .pct.down { color:var(--down); } .pct.flat { color:var(--mut); }
@@ -20,8 +20,8 @@ dl { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:16px 0 0; }
 dl div { display:flex; flex-direction:column; }
 dt { color:var(--mut); font-size:.75rem; }
 dd { margin:0; font-size:.85rem; font-variant-numeric: tabular-nums; }
-.card { position: relative; }
-.flash { position:absolute; inset:0; border-radius:inherit; pointer-events:none; }
+.card { position: relative; isolation: isolate; }
+.flash { position:absolute; inset:0; z-index:-1; border-radius:inherit; pointer-events:none; }
 .flash-up { animation: fup 1s forwards; } .flash-down { animation: fdown 1s forwards; }
 @keyframes fup { from { background:#1b4721; } to { background:transparent; } }
 @keyframes fdown { from { background:#5a1d1a; } to { background:transparent; } }
@@ -49,7 +49,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:2px s
 .swatch { display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--series); }
 .plot { position:relative; }
 .plot svg { display:block; touch-action:pan-y; }
-.grid { stroke:var(--line); stroke-width:1; opacity:.6; }
+.gridline { stroke:var(--line); stroke-width:1; opacity:.6; }
 .tick { fill:var(--mut); font-size:11px; font-variant-numeric:tabular-nums; }
 .cross { stroke:var(--mut); stroke-width:1; }
 .ring { stroke:var(--card); stroke-width:2; }

@@ -67,7 +67,7 @@ function Card({ currency, quote, dir, err }) {
     <article className="card" style={{ '--series': COLORS[currency.code] }}>
       {dir && <span key={quote?.bid} className={`flash flash-${dir}`} aria-hidden="true" />}
       <header>
-        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="36" height="24"') }} />
+        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="24" height="16"') }} />
         <div>
           <h2>{quote?.source ?? currency.code}/BRL</h2>
           <p>{currency.name}</p>
