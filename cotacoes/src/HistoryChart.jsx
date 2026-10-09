@@ -23,7 +23,7 @@ export function useWidth() {
   return [ref, w]
 }
 
-export function Plot({ points, width, color, code, intraday, fmt, label }) {
+export function Plot({ points, width, color, code, intraday, fmt, label, nice }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -34,18 +34,29 @@ export function Plot({ points, width, color, code, intraday, fmt, label }) {
     const pad = (hi - lo || hi * 0.01) * 0.12
     lo -= pad
     hi += pad
+    let stepNice = 0
+    let decNice = 0
+    if (nice) {
+      // eixo com valores redondos (juros): passo 1, 2, 2,5 ou 5 × 10^k
+      const raw = (hi - lo) / 4
+      const mag = 10 ** Math.floor(Math.log10(raw))
+      stepNice = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((st) => st >= raw)
+      decNice = Math.max(0, -Math.floor(Math.log10(mag)) + (Math.abs(stepNice / mag - 2.5) < 1e-9 ? 1 : 0))
+      lo = Math.floor(lo / stepNice) * stepNice
+      hi = Math.ceil(hi / stepNice) * stepNice
+    }
     const iw = width - M.l - M.r
     const ih = H - M.t - M.b
     const x = (t) => M.l + (t1 === t0 ? iw / 2 : ((t - t0) / (t1 - t0)) * iw)
     const y = (v) => M.t + (1 - (v - lo) / (hi - lo)) * ih
-    const dec = Math.min(5, Math.max(2, Math.ceil(-Math.log10((hi - lo) / 4)) + 1))
-    const yTicks = Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
+    const dec = nice ? decNice : Math.min(5, Math.max(2, Math.ceil(-Math.log10((hi - lo) / 4)) + 1))
+    const yTicks = nice ? Array.from({ length: Math.round((hi - lo) / stepNice) + 1 }, (_, i) => lo + i * stepNice) : Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
     const nx = width < 420 ? 3 : 5
     const xTicks = Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
     const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.bid).toFixed(1)}`).join('')
     const base = H - M.b
     const area = `${line}L${x(t1).toFixed(1)},${base}L${x(t0).toFixed(1)},${base}Z`
-    return { t0, t1, x, y, dec, yTicks, xTicks, line, area, base, long: t1 - t0 > 200 * 864e5 }
+    return { t0, t1, x, y, dec, yTicks, xTicks, line, area, base, long: t1 - t0 > 200 * 864e5, years: t1 - t0 > 3 * 365 * 864e5 }
   }, [points, width])
 
   const onMove = (e) => {
@@ -100,7 +111,7 @@ export function Plot({ points, width, color, code, intraday, fmt, label }) {
             textAnchor={i === 0 ? 'start' : i === g.xTicks.length - 1 ? 'end' : 'middle'}
             className="tick"
           >
-            {intraday ? fmtTime(t) : g.long ? fmtMonth(t) : fmtDate(t)}
+            {intraday ? fmtTime(t) : g.years ? new Date(t).getFullYear() : g.long ? fmtMonth(t) : fmtDate(t)}
           </text>
         ))}
         <path d={g.area} fill={`url(#${gid})`} />

@@ -1,0 +1,57 @@
+// Utilitários da coleta de dados macro do Banco Central (sem dependências).
+
+// "dd/MM/yyyy" -> ms (meio-dia UTC, para não trocar de dia por fuso)
+export const brDate = (s) => {
+  const [d, m, y] = s.split('/').map(Number)
+  return Date.UTC(y, m - 1, d, 12)
+}
+export const toBr = (ms) => {
+  const d = new Date(ms)
+  return `${String(d.getUTCDate()).padStart(2, '0')}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${d.getUTCFullYear()}`
+}
+
+// SGS: [{data:"dd/MM/yyyy", valor:"13.65"}] -> [[ms, valor]]
+export const parseSgs = (rows) =>
+  (Array.isArray(rows) ? rows : [])
+    .map((r) => [brDate(r.data), Number(r.valor)])
+    .filter(([t, v]) => Number.isFinite(t) && Number.isFinite(v))
+    .sort((a, b) => a[0] - b[0])
+
+// Série diária -> só os pontos em que o valor muda, mais o último dia.
+export function changePoints(points) {
+  const out = []
+  for (const p of points) if (!out.length || p[1] !== out[out.length - 1][1]) out.push(p)
+  const last = points[points.length - 1]
+  if (last && out[out.length - 1][0] !== last[0]) out.push(last)
+  return out
+}
+
+// Janelas de até 10 anos (limite do SGS para séries diárias).
+export function windows(fromYear, to = new Date()) {
+  const out = []
+  for (let y = fromYear; y <= to.getUTCFullYear(); y += 10) {
+    const end = Math.min(y + 9, to.getUTCFullYear())
+    out.push([`01/01/${y}`, end === to.getUTCFullYear() ? toBr(to.getTime()) : `31/12/${end}`])
+  }
+  return out
+}
+
+// Focus: linhas do Olinda (mais recentes primeiro) -> { date, years, values: {ano: {median, min, max, n}} }
+export function focusFor(rows) {
+  const list = (Array.isArray(rows) ? rows : []).filter((r) => r.Mediana != null)
+  if (!list.length) return null
+  const date = list.reduce((m, r) => (r.Data > m ? r.Data : m), '')
+  const values = {}
+  for (const r of list.filter((x) => x.Data === date)) {
+    values[r.DataReferencia] = { median: r.Mediana, min: r.Minimo, max: r.Maximo, n: r.numeroRespondentes }
+  }
+  return { date, values }
+}
+
+// PTAX: [{cotacaoCompra, cotacaoVenda, tipoBoletim, dataHoraCotacao}] -> último boletim (Fechamento, se houver)
+export function ptaxFrom(rows) {
+  const list = Array.isArray(rows) ? rows.filter((r) => r.cotacaoVenda != null) : []
+  if (!list.length) return null
+  const r = list.find((x) => /fechamento/i.test(x.tipoBoletim ?? '')) ?? list[list.length - 1]
+  return { buy: r.cotacaoCompra, sell: r.cotacaoVenda, at: r.dataHoraCotacao, kind: r.tipoBoletim }
+}

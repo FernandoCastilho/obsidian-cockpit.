@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
+import Macro from './Macro.jsx'
 import News from './News.jsx'
+import { useMacro } from './useMacro.js'
 import ParityChart from './ParityChart.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
@@ -61,7 +63,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
 const brl = (v, digits = 4) =>
   v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: digits, maximumFractionDigits: digits })
 
-function Card({ currency, quote, dir, err }) {
+function Card({ currency, quote, dir, err, ptax }) {
   const pct = quote?.pct ?? 0
   const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
   return (
@@ -113,6 +115,17 @@ function Card({ currency, quote, dir, err }) {
               </dt>
               <dd>{brl(quote.low)}</dd>
             </div>
+            {ptax && (
+              <div className="span2">
+                <dt>
+                  PTAX
+                  <Help label="O que é PTAX" align="right">
+                    Taxa de referência do Banco Central, calculada a partir das cotações do mercado de câmbio. Divulgada em dias úteis; último boletim em <b>{new Date(`${ptax.date}T12:00:00`).toLocaleDateString('pt-BR')}</b>. Compra {brl(ptax.buy)} · Venda {brl(ptax.sell)}.
+                  </Help>
+                </dt>
+                <dd>{brl(ptax.sell)} <span className="muted">venda · {new Date(`${ptax.date}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</span></dd>
+              </div>
+            )}
           </dl>
         </>
       ) : (
@@ -180,6 +193,7 @@ function Share({ quotes, updatedAt }) {
 
 export default function App() {
   const { quotes, direction, error, errors, updatedAt } = useQuotes(5000)
+  const macro = useMacro()
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
@@ -222,7 +236,7 @@ export default function App() {
       <Share quotes={quotes} updatedAt={updatedAt} />
       <section className="grid">
         {CURRENCIES.map((c) => (
-          <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} />
+          <Card key={c.code} currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} />
         ))}
       </section>
       <section className="history">
@@ -238,6 +252,7 @@ export default function App() {
           ])}
         </div>
       </section>
+      <Macro range={range} day={preset === 'day'} />
       <News colors={COLORS} />
       <footer>
         <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>

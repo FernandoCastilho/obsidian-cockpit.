@@ -38,6 +38,11 @@ jobs:
         run: node scripts/fetch-news.mjs
         env:
           NEWS_STRICT: ${{ github.event_name == 'schedule' }}
+      - name: Coletar dados do Banco Central (CDI, Selic, Focus, PTAX)
+        run: node scripts/fetch-macro.mjs
+        timeout-minutes: 15
+        env:
+          MACRO_STRICT: ${{ github.event_name == 'schedule' }}
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
