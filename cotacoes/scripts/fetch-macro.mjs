@@ -1,6 +1,6 @@
 // Coleta CDI, Selic, PTAX e Boletim Focus (Banco Central) e grava public/macro.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { brDate, changePoints, focusFor, parseSgs, ptaxFrom, toBr, windows } from './macro-lib.mjs'
+import { changePoints, focusFor, focusRelease, parseSgs, ptaxFrom, toBr, windows } from './macro-lib.mjs'
 
 const SGS = (code, a, b) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados?formato=json&dataInicial=${a}&dataFinal=${b}`
 const OLINDA = 'https://olinda.bcb.gov.br/olinda/servico'
@@ -27,9 +27,9 @@ async function getJson(url, label, tries = 5) {
 const now = new Date()
 const out = { generatedAt: Date.now(), cdi: [], selic: [], focus: null, ptax: {}, errors }
 
-// CDI anualizado (SGS 4389, B3): últimos ~400 dias
+// CDI anualizado (SGS 4389, B3): últimos 10 anos (limite do SGS para séries diárias)
 {
-  const from = new Date(now.getTime() - 400 * 864e5)
+  const from = new Date(now.getTime() - 3640 * 864e5)
   const rows = await getJson(SGS(4389, toBr(from.getTime()), toBr(now.getTime())), 'cdi')
   out.cdi = parseSgs(rows)
   console.log('CDI:', out.cdi.length, 'pontos')
@@ -58,8 +58,8 @@ const out = { generatedAt: Date.now(), cdi: [], selic: [], focus: null, ptax: {}
       if (f.date > date) date = f.date
     } else errors.push(`focus ${indicator}: sem dados`)
   }
-  out.focus = rowsOut.length ? { date, rows: rowsOut } : null
-  console.log('Focus:', rowsOut.length, 'indicadores', date)
+  out.focus = rowsOut.length ? { date, release: focusRelease(date), rows: rowsOut } : null
+  console.log('Focus:', rowsOut.length, 'indicadores; coleta até', date, '; divulgação', date && focusRelease(date))
 }
 
 // PTAX (USD, EUR, JPY): último dia útil com boletim

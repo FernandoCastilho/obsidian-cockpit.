@@ -44,10 +44,61 @@ function RateChart({ id, title, subtitle, color, points, fmt, label, note, actio
   )
 }
 
-function CdiChart({ macro, range, day }) {
-  // CDI é diário: no modo intraday mostra os últimos 30 dias.
-  const [from, to] = day ? [Date.now() - 30 * DAY, Date.now()] : [range.start.getTime(), range.end.getTime() + DAY]
+const toInput = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+const fromInput = (v) => {
+  const [y, m, d] = v.split('-').map(Number)
+  return new Date(y, m - 1, d)
+}
+const startOfToday = () => {
+  const d = new Date()
+  d.setHours(0, 0, 0, 0)
+  return d
+}
+
+// Períodos só dos juros (independentes do câmbio). days: 0 = desde 1999.
+const PRESETS = [
+  { id: '30', label: '30 dias', days: 30 },
+  { id: '90', label: '90 dias', days: 90 },
+  { id: '180', label: '6 meses', days: 180 },
+  { id: '365', label: '1 ano', days: 365 },
+  { id: '1825', label: '5 anos', days: 1825 },
+  { id: '3650', label: '10 anos', days: 3650 },
+  { id: 'all', label: 'Desde 1999', days: 0 },
+]
+const rangeFor = (days) => {
+  const end = startOfToday()
+  const start = days ? new Date(end.getTime() - days * DAY) : new Date(1999, 0, 1)
+  return { start, end }
+}
+
+function RatesPeriod({ range, preset, onPreset, onDates }) {
+  const today = toInput(new Date())
+  return (
+    <div className="period">
+      <div className="seg" role="group" aria-label="Período dos juros">
+        {PRESETS.map((p) => (
+          <button key={p.id} type="button" aria-pressed={preset === p.id} onClick={() => onPreset(p)}>
+            {p.label}
+          </button>
+        ))}
+      </div>
+      <label>
+        De
+        <input type="date" id="juros-de" max={toInput(range.end)} value={toInput(range.start)} onChange={(e) => e.target.value && onDates(e.target.value, toInput(range.end))} />
+      </label>
+      <label>
+        Até
+        <input type="date" id="juros-ate" max={today} min={toInput(range.start)} value={toInput(range.end)} onChange={(e) => e.target.value && onDates(toInput(range.start), e.target.value)} />
+      </label>
+    </div>
+  )
+}
+
+function CdiChart({ macro, range }) {
+  const from = range.start.getTime()
+  const to = range.end.getTime() + DAY
   const points = useMemo(() => macro.cdi.filter(([t]) => t >= from && t <= to).map(([t, v]) => ({ t, bid: v })), [macro, from, to])
+  const first = macro.cdi[0]
   const last = macro.cdi[macro.cdi.length - 1]
   return (
     <RateChart
@@ -58,24 +109,26 @@ function CdiChart({ macro, range, day }) {
       points={points}
       fmt={rate}
       label="CDI"
-      note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${day ? 'Série diária: exibindo os últimos 30 dias · ' : ''}Fonte: B3, via Banco Central (SGS 4389).`}
+      note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${first ? `Série disponível desde ${fmtDate(first[0], true)} · ` : ''}Fonte: B3, via Banco Central (SGS 4389).`}
     />
   )
 }
 
-const SELIC_RANGES = [[5, '5 anos'], [10, '10 anos'], [0, 'Desde 1999']]
-
-function SelicChart({ macro }) {
-  const [years, setYears] = useState(10)
+// Meta Selic só registra os dias de mudança: recorta no período e desenha em degraus.
+function SelicChart({ macro, range }) {
   const all = macro.selic
+  const from = range.start.getTime()
+  const to = range.end.getTime() + DAY
   const points = useMemo(() => {
-    const from = years ? Date.now() - years * 365 * DAY : 0
-    // mantém o degrau vigente no início do recorte
-    let start = all.findLastIndex(([t]) => t <= from)
-    start = Math.max(0, start)
-    const cut = all.slice(start).map(([t, v], i) => ({ t: i === 0 ? Math.max(t, from) : t, bid: v }))
-    return stepify(cut)
-  }, [all, years])
+    const start = Math.max(0, all.findLastIndex(([t]) => t <= from))
+    const cut = all.slice(start).filter(([t], i) => i === 0 || t <= to)
+    if (!cut.length) return []
+    const pts = cut.map(([t, v], i) => ({ t: i === 0 ? Math.max(t, from) : t, bid: v }))
+    // estende o degrau vigente até o fim do período (ou até hoje)
+    const end = Math.min(to - DAY, Date.now())
+    if (pts[pts.length - 1].t < end) pts.push({ t: end, bid: pts[pts.length - 1].bid })
+    return stepify(pts)
+  }, [all, from, to])
   const last = all[all.length - 1]
   return (
     <RateChart
@@ -87,15 +140,6 @@ function SelicChart({ macro }) {
       fmt={rate}
       label="Meta Selic"
       note={`${last ? `Atual: ${rate(last[1])} · ` : ''}Fonte: Banco Central (SGS 432).`}
-      actions={
-        <div className="seg small" role="group" aria-label="Período da Selic">
-          {SELIC_RANGES.map(([y, label]) => (
-            <button key={y} type="button" aria-pressed={years === y} onClick={() => setYears(y)}>
-              {label}
-            </button>
-          ))}
-        </div>
-      }
     />
   )
 }
@@ -109,13 +153,14 @@ const FOCUS_FMT = {
 
 function FocusTable({ focus }) {
   const years = [...new Set(focus.rows.flatMap((r) => Object.keys(r.values)))].sort().slice(0, 4)
-  const date = new Date(`${focus.date}T12:00:00`).toLocaleDateString('pt-BR')
+  const fmt = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('pt-BR')
+  const release = focus.release ?? focus.date
   return (
     <article className="chart wide">
       <header>
         <h3>
           Boletim Focus
-          <small>mediana das expectativas de mercado · {date}</small>
+          <small>divulgado na segunda-feira, {fmt(release)} · mediana das expectativas</small>
         </h3>
       </header>
       <div className="scroll">
@@ -143,24 +188,40 @@ function FocusTable({ focus }) {
           </tbody>
         </table>
       </div>
-      <p className="status">Selic e IPCA em % a.a. no fim do ano; PIB em % de crescimento. Fonte: Banco Central do Brasil (Pesquisa Focus).</p>
+      <p className="status">
+        O Focus sai às segundas-feiras com as expectativas coletadas até a sexta anterior{focus.release ? ` (aqui, até ${fmt(focus.date)})` : ''}. Selic e IPCA em % a.a. no fim do ano; PIB em % de crescimento. Fonte: Banco Central do Brasil.
+      </p>
     </article>
   )
 }
 
-export default function Macro({ range, day }) {
+export default function Macro() {
   const m = useMacro()
+  const [preset, setPreset] = useState('365')
+  const [range, setRange] = useState(() => rangeFor(365))
+  const onPreset = (p) => {
+    setPreset(p.id)
+    setRange(rangeFor(p.days))
+  }
+  const onDates = (a, b) => {
+    let start = fromInput(a)
+    let end = fromInput(b)
+    if (start > end) [start, end] = [end, start]
+    setPreset('custom')
+    setRange({ start, end })
+  }
   return (
     <section className="macro">
       <div className="history-head">
         <h2>Juros e expectativas</h2>
+        <RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
       </div>
       {m.status === 'loading' && <p className="status">Carregando dados do Banco Central…</p>}
       {m.status === 'error' && <p className="status">Dados do Banco Central indisponíveis no momento ({m.error}).</p>}
       {m.status === 'ok' && (
         <div className="charts">
-          {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} day={day} /> : <p className="status">CDI indisponível no momento.</p>}
-          {m.data.selic?.length ? <SelicChart macro={m.data} /> : <p className="status">Selic indisponível no momento.</p>}
+          {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} /> : <p className="status">CDI indisponível no momento.</p>}
+          {m.data.selic?.length ? <SelicChart macro={m.data} range={range} /> : <p className="status">Selic indisponível no momento.</p>}
           {m.data.focus ? <FocusTable focus={m.data.focus} /> : <p className="status">Boletim Focus indisponível no momento.</p>}
         </div>
       )}
