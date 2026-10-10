@@ -4,6 +4,7 @@ import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
+import CdiFuturo from './CdiFuturo.jsx'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
@@ -497,6 +498,7 @@ export default function App() {
       {tab === 'juros' && (
         <>
           <Macro />
+          <CdiFuturo curves={curves} macro={macro.data} />
           <Curves curves={curves} />
         </>
       )}

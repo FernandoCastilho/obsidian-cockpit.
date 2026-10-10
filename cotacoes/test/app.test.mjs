@@ -141,3 +141,15 @@ test('resumo: tiles de juros e manchetes mais recentes', async () => {
   assert.ok(periodChange([{ bid: 5 }, { bid: 5.5 }]) > 9.9)
   assert.equal(periodChange([{ bid: 5 }]), null)
 })
+
+import { forwardCurve, horizonTable } from '../src/cdiFuturo.js'
+test('CDI futuro: taxa a termo da curva DI', () => {
+  // curva plana em 10% => a termo também 10%
+  for (const f of forwardCurve([[63, 10], [126, 10], [252, 10]])) assert.ok(Math.abs(f.rate - 10) < 1e-9)
+  // 1a a 10% e 2a a 11% => a termo 1a-2a = 1,11^2/1,10 − 1 = 12,0091%
+  const [f] = forwardCurve([[252, 10], [504, 11]])
+  assert.ok(Math.abs(f.rate - (1.11 ** 2 / 1.1 - 1) * 100) < 1e-9)
+  const t = horizonTable([[63, 14], [252, 14.5], [504, 14.8]])
+  assert.deepEqual(t.map((r) => r.label), ['3 meses', '1 ano', '2 anos'])
+  assert.equal(t[0].fwd, null)
+})
