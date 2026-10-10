@@ -204,3 +204,23 @@ test('glossário: toda explicação tem as quatro partes e todo id usado no app 
   for (const id of used) assert.ok(GLOSSARY[id], `id sem texto: ${id}`)
   for (const id of ['selic', 'cdi', 'sofr', 'di1', 'ust10']) assert.ok(GLOSSARY[id]) // quadros de juros do Resumo usam r.key
 })
+
+import { compare, parseNum } from '../src/calc.js'
+test('calculadora: parse de números e comparação com a curva DI', () => {
+  assert.equal(parseNum('1.000.000,50'), 1000000.5)
+  assert.equal(parseNum('14,5'), 14.5)
+  assert.equal(parseNum('1.000'), 1000)
+  assert.ok(Number.isNaN(parseNum('abc')))
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  // curva plana em 10%: 100% do CDI = DI; pré 10% = DI; 110% do CDI rende mais; CDI + 1% rende mais
+  const base = { pts: flat, d: 252, value: 1000 }
+  const di = compare({ ...base, mode: 'cdi', rate: 100 })
+  assert.ok(Math.abs(di.diff) < 1e-6 && Math.abs(di.op.fv - 1100) < 1e-6)
+  assert.ok(Math.abs(compare({ ...base, mode: 'pre', rate: 10 }).diff) < 1e-6)
+  const c110 = compare({ ...base, mode: 'cdi', rate: 110 })
+  assert.ok(c110.diff > 0 && c110.good && Math.abs(c110.cdiEquivalent - 110) < 1e-6)
+  assert.ok(compare({ ...base, mode: 'spread', rate: 1 }).diffBps > 99)
+  assert.equal(compare({ ...base, mode: 'cdi', rate: 110, side: 'borrow' }).good, false) // paga mais que o DI
+  assert.match(compare({ pts: flat, d: 900, value: 1000, mode: 'pre', rate: 10 }).error, /fora da curva/)
+  assert.match(compare({ ...base, value: NaN, mode: 'pre', rate: 10 }).error, /Preencha/)
+})

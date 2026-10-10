@@ -121,4 +121,10 @@ export const GLOSSARY = {
     b: '"+2 bps" = subiu 0,02 ponto percentual desde o pregão anterior (100 bps = 1 ponto percentual). Passe o mouse para pausar.',
     c: 'Toque para abrir a aba Juros: lá cada indicador e gráfico tem o seu "?" com a explicação completa.',
   },
+  calculadora: {
+    t: 'Calculadora: operação × DI',
+    a: 'Compara uma operação com a alternativa de deixar o mesmo dinheiro no DI, pelo mesmo prazo.',
+    b: 'R$ 1 milhão por 1 ano a 105% do CDI. Se o DI projeta 13,9% ao ano, o CDI do período é ~13,9%, e 105% disso rende ~14,6%. A diferença em reais é o ganho sobre o DI.',
+    c: '"Equivale a % do CDI" traduz qualquer taxa para a régua do CDI. Se for maior que 100%, a operação paga mais que a curva já precifica.',
+  },
 }
