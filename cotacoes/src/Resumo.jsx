@@ -157,6 +157,17 @@ function MoedasPanel({ quotes, ptax, onOpen }) {
   )
 }
 
+// Faixa de juros fixa no topo do app (todas as abas): rótulo com "?" e os indicadores rolando.
+export function RatesTop({ macro, curves, onOpen }) {
+  const rates = rateTiles(macro.data, curves.data)
+  return (
+    <div className="rates-top">
+      <span className="rates-label">Juros <Explain id="faixaJuros" /></span>
+      <RatesBar rates={rates} onOpen={onOpen} />
+    </div>
+  )
+}
+
 // Faixa rolante dos juros: valor e variação (bps) de cada indicador; toque abre a aba Juros.
 function RatesBar({ rates, onOpen }) {
   if (!rates.length) return <p className="status">Juros indisponíveis no momento.</p>
@@ -187,7 +198,6 @@ function RatesBar({ rates, onOpen }) {
 
 export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colors }) {
   const news = useNews()
-  const rates = rateTiles(macro.data, curves.data)
   const heads = topHeadlines(news.data)
   const events = upcoming(new Date(), 14).slice(0, 3)
   const fmtDay = (t) => new Date(t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }).replace('.', '')
@@ -196,14 +206,6 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
   return (
     <div className="resumo">
       <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} />
-
-      <section aria-labelledby="r-juros">
-        <div className="sec-head">
-          <h2 id="r-juros">Juros <Explain id="faixaJuros" /></h2>
-          <button type="button" className="more" onClick={() => goto('juros')}>Ver curvas ›</button>
-        </div>
-        <RatesBar rates={rates} onOpen={() => goto('juros')} />
-      </section>
 
       <section aria-labelledby="r-move">
         <div className="sec-head">

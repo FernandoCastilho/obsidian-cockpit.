@@ -10,7 +10,7 @@ import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
-import Resumo from './Resumo.jsx'
+import Resumo, { RatesTop } from './Resumo.jsx'
 import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
@@ -426,6 +426,8 @@ export default function App() {
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
 
   return (
+    <>
+    <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
     <main className="app">
       <header className="top">
         <div>
@@ -539,5 +541,6 @@ export default function App() {
         </Sheet>
       )}
     </main>
+    </>
   )
 }
