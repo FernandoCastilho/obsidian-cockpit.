@@ -230,3 +230,26 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .resumo + .share, .share { margin-top: 20px; }
 @media (min-width: 700px) { .tile-price { font-size: 1.35rem; } .tile-spark { max-width: 48%; } }
 .cdif-result { margin:10px 0; font-size:.95rem; line-height:1.4; }
+
+/* Notícias estilo terminal: faixa rolante + fila única por horário */
+.wire { overflow:hidden; background:var(--card); border:1px solid var(--line); border-radius:10px; margin:0 0 14px; white-space:nowrap; }
+.wire-track { display:inline-flex; width:max-content; animation:wire-scroll 60s linear infinite; }
+.wire:hover .wire-track, .wire:focus-within .wire-track { animation-play-state:paused; }
+.wire-set { display:inline-flex; }
+.wire a { color:var(--fg); text-decoration:none; padding:9px 22px; border-right:1px solid var(--line); font-size:.9rem; }
+.wire a:hover { background:#1c2330; }
+.wire a small { color:var(--mut); margin-left:6px; }
+@keyframes wire-scroll { to { transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .wire { overflow-x:auto; } .wire-track { animation:none; } .wire-set[aria-hidden] { display:none; } }
+.tk { display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.04em; color:#0d1117; background:var(--tk, var(--mut)); border-radius:4px; padding:1px 6px; margin-right:4px; }
+.feed-filter { margin:0 0 10px; width:max-content; max-width:100%; flex-wrap:wrap; }
+.feed { list-style:none; margin:0; padding:0; background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.feed li { display:grid; grid-template-columns:3.2rem 7.4rem 1fr; gap:10px; align-items:start; padding:10px 14px; border-top:1px solid var(--line); }
+.feed li:first-child { border-top:0; }
+.feed-time { color:var(--mut); font-variant-numeric:tabular-nums; font-size:.85rem; padding-top:2px; }
+.feed-tk { display:flex; flex-wrap:wrap; gap:3px; padding-top:1px; }
+.feed-tk .tk { margin:0; }
+.feed-body { display:flex; flex-direction:column; gap:2px; min-width:0; }
+.feed-body a { color:var(--fg); text-decoration:none; line-height:1.4; overflow-wrap:anywhere; }
+.feed-body a:hover { text-decoration:underline; }
+@media (max-width: 560px) { .feed li { grid-template-columns:3rem 1fr; } .feed-tk { grid-column:2; grid-row:1; } .feed-time { grid-row:1; } .feed-body { grid-column:1 / -1; } }
