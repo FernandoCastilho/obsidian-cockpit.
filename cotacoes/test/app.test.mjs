@@ -392,3 +392,36 @@ test('calculadora: empréstimo a 1,20% ao mês por 180 dias corridos contra a ap
   const eq = compare({ ...base, monthBase: 'cal', rate: cal.breakeven })
   assert.ok(Math.abs(eq.diff) < 1e-6)
 })
+
+import { irRate, iofRate, taxOnYield } from '../src/calc.js'
+test('calculadora: IR regressivo, IOF e empréstimo × aplicação líquida', () => {
+  assert.deepEqual([180, 181, 360, 361, 720, 721].map(irRate), [22.5, 20, 20, 17.5, 17.5, 15])
+  assert.deepEqual([0, 1, 29, 30].map(iofRate), [0, 96, 3, 0])
+  const tx = taxOnYield(10000, 120)
+  assert.ok(Math.abs(tx.ir - 2250) < 1e-9 && tx.iof === 0 && Math.abs(tx.total - 2250) < 1e-9)
+  const t10 = taxOnYield(1000, 10) // 10 dias: IOF 66%, IR 22,5% sobre o que sobra
+  assert.ok(Math.abs(t10.iof - 660) < 1e-9 && Math.abs(t10.ir - 340 * 0.225) < 1e-9)
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  const base = { pts: flat, d: 123, value: 1000000, mode: 'pre', unit: 'am', rate: 0.5, side: 'borrow', calDays: 180, monthBase: 'du' }
+  const gross = compare({ ...base })
+  const liq = compare({ ...base, net: true })
+  const G = 1.1 ** (123 / 252) - 1
+  assert.ok(Math.abs(gross.app.gross.gain - 1e6 * G) < 1)
+  assert.ok(Math.abs(liq.app.net.gain - 1e6 * G * (1 - 0.225)) < 1) // 180 dias: 22,5%
+  assert.ok(liq.app.tax.irPct === 22.5 && liq.refGain < gross.refGain)
+  // o IR reduz o rendimento líquido que se mantém ao não resgatar: o empréstimo fica relativamente mais caro que no bruto
+  assert.ok(liq.diff > gross.diff)
+  // rendimento já acumulado de R$ 100 mil com 100 dias de aplicação: hoje 22,5%; ao fim de 280 dias 20%: o IR economizado ao esperar é R$ 2.500
+  const acc = compare({ ...base, net: true, ageDays: 100, accrued: 100000 })
+  assert.equal(acc.app.tax.taxNow.irPct, 22.5)
+  assert.equal(acc.app.tax.taxLater.irPct, 20)
+  assert.ok(Math.abs(acc.app.tax.savings - 2500) < 1e-6)
+  assert.ok(Math.abs(acc.app.net.gain - (1e6 * G * (1 - 0.2) + 2500)) < 1) // período tributado a 20% (100 + 180 dias) mais a economia
+  // 100% do CDI = curva; 110% do CDI rende mais
+  assert.ok(compare({ ...base, appPct: 110 }).app.gross.gain > gross.app.gross.gain)
+  // equilíbrio: empréstimo na taxa de equilíbrio empata com o rendimento líquido
+  const eq = compare({ ...base, net: true, rate: liq.breakeven })
+  assert.ok(Math.abs(eq.diff) < 1e-6)
+  // tempo já aplicado muda a faixa do IR (181+ dias passa para 20%)
+  assert.equal(compare({ ...base, net: true, ageDays: 30 }).app.tax.irPct, 20)
+})
