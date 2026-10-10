@@ -27,8 +27,16 @@ async function getJson(url0, label, tries = 4) {
 
 const PAIRS = { USD: 'USD-BRL', EUR: 'EUR-BRL', JPY: 'JPY-BRL', CNH: 'CNY-BRL' }
 const series = {}
+let blocked = false
 for (const [code, symbol] of Object.entries(SYMBOLS)) {
+  if (blocked) {
+    // Yahoo respondeu 429 no símbolo anterior: insistir nos demais só gasta tempo do deploy.
+    errors.push(`intraday ${code}: ignorado (Yahoo bloqueado)`)
+    continue
+  }
+  const before = errors.length
   const points = parseYahoo(await getJson(yahooUrl(symbol), `intraday ${code}`))
+  if (!points.length && errors.length > before && /429/.test(errors[errors.length - 1])) blocked = true
   if (points.length) series[code] = { symbol, points }
   console.log(code, symbol, points.length, 'barras')
   await sleep(300)
