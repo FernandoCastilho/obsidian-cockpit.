@@ -24,3 +24,11 @@ export function rangeStats(points, now = Date.now()) {
   }
   return { week: chg(closeAt(pts, last.t - 7 * DAY)), month: chg(closeAt(pts, last.t - 30 * DAY)), year: chg(prevYearEnd), vol, asOf: last.t }
 }
+
+// Variação % entre o primeiro e o último ponto de um período ([{ bid }]).
+export function periodChange(points) {
+  if (!points || points.length < 2) return null
+  const a = points[0].bid
+  const b = points[points.length - 1].bid
+  return a > 0 ? ((b - a) / a) * 100 : null
+}
