@@ -6,6 +6,7 @@ import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
+import InstallApp from './InstallApp.jsx'
 import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
@@ -387,6 +388,7 @@ export default function App() {
             : 'Carregando…'}
       </p>
       <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
+      <InstallApp />
       <section className="grid">
         {CURRENCIES.map((c) => (
           <div className="slot" key={c.code}>

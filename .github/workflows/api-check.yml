@@ -1,0 +1,41 @@
+name: Checagem temporária de fontes (B3 via Node e intraday)
+on: workflow_dispatch
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: B3 pelo Node (variações) e intraday alternativo
+        run: |
+          cat > /tmp/b3.mjs <<'JS'
+          const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64')
+          const url = `https://sistemaswebb3-derivativos.b3.com.br/referenceRatesProxy/Search/GetDate/${b64({ language: 'pt-br', id: 'PRE' })}`
+          const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
+          const variants = {
+            'sem cabeçalhos': {},
+            'só UA': { 'user-agent': UA },
+            'UA + accept json': { 'user-agent': UA, accept: 'application/json, text/csv, */*' },
+            'UA + accept-language': { 'user-agent': UA, 'accept-language': 'pt-BR,pt;q=0.9' },
+            'UA + referer da B3': { 'user-agent': UA, referer: 'https://sistemaswebb3-derivativos.b3.com.br/referenceRatesPage/all?language=pt-br', accept: 'application/json, text/plain, */*' },
+          }
+          for (const [name, headers] of Object.entries(variants)) {
+            try {
+              const r = await fetch(url, { headers })
+              const t = await r.text()
+              console.log(name.padEnd(24), r.status, r.headers.get('content-type'), t.length, 'B', t.slice(0, 60))
+            } catch (e) { console.log(name, 'erro', e.message) }
+          }
+          JS
+          node /tmp/b3.mjs
+          echo "--- curl de referência"; curl -sS -m 30 -A 'Mozilla/5.0' "https://sistemaswebb3-derivativos.b3.com.br/referenceRatesProxy/Search/GetDate/$(printf '%s' '{"language":"pt-br","id":"PRE"}' | base64 -w0)" | head -c 80; echo
+          echo "=== intraday alternativo"
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          t() { echo "--- $1"; curl -sSL -m 30 -A "$UA" -w "\n-> %{http_code} %{size_download}B\n" "$1" | head -c 400; echo; }
+          t "https://stooq.com/q/d/l/?s=usdbrl&i=5"
+          t "https://stooq.com/q/l/?s=usdbrl&f=sd2t2ohlcv&h&e=csv"
+          t "https://economia.awesomeapi.com.br/json/last/USD-BRL"
+          t "https://open.er-api.com/v6/latest/USD"
+          t "https://api.frankfurter.dev/v1/latest?base=USD&symbols=BRL"

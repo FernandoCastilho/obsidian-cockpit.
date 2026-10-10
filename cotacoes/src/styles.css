@@ -156,3 +156,4 @@ dd .muted { color:var(--mut); font-size:.72rem; }
   .fold > summary::after { content:'▸'; float:right; color:var(--mut); }
   .fold[open] > summary::after { content:'▾'; }
 }
+.install-ios { display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px; margin:8px 0; }
