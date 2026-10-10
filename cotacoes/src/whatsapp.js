@@ -54,3 +54,79 @@ export function buildHtml(quotes, when = new Date(), pngs = {}) {
 }
 
 export const whatsappUrl = (text) => `https://wa.me/?text=${encodeURIComponent(text)}`
+
+// ---- Resumo de mercado (câmbio + juros + curvas + Focus), no formato do WhatsApp ----
+const p2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })
+const bps = (d) => `${d > 0 ? '+' : d < 0 ? '−' : ''}${Math.abs(Math.round(d * 100))} bps`
+const last = (a) => (a?.length ? a[a.length - 1] : null)
+
+// Vértice mais próximo de `target` numa curva [[x, taxa, ...]].
+const nearest = (pts, target) => pts?.reduce((b, p) => (b && Math.abs(b[0] - target) <= Math.abs(p[0] - target) ? b : p), null)
+const dayAgo = (c) => c?.compare?.find((x) => x.id === 'd1')
+const latest = (c) => c?.compare?.find((x) => x.id === 'hoje')
+
+function brLines(curves) {
+  const now = latest(curves?.br)
+  if (!now) return []
+  const prev = dayAgo(curves.br)
+  const out = [`*DI x pré* · ${dm(now.date + 'T12:00:00Z')}`]
+  const parts = [[63, '3m'], [126, '6m'], [252, '1a'], [504, '2a'], [1260, '5a']].map(([d, label]) => {
+    const a = nearest(curves.br.curves[now.date], d)
+    const b = prev && nearest(curves.br.curves[prev.date], d)
+    return a ? `${label} ${p2(a[1])}%${b ? ` (${bps(a[1] - b[1])})` : ''}` : null
+  })
+  out.push(parts.filter(Boolean).join(' · '))
+  return out
+}
+
+function usLines(macro, curves) {
+  const out = []
+  const sofr = last(macro?.sofr)
+  const now = latest(curves?.us)
+  const prev = dayAgo(curves?.us)
+  const parts = []
+  if (sofr) parts.push(`SOFR ${p2(sofr[1])}% (${dm(sofr[0])})`)
+  for (const lbl of ['2 Yr', '10 Yr']) {
+    const a = now && curves.us.curves[now.date]?.find((p) => p[2] === lbl)
+    const b = prev && curves.us.curves[prev.date]?.find((p) => p[2] === lbl)
+    if (a) parts.push(`UST ${lbl.replace(' Yr', 'a')} ${p2(a[1])}%${b ? ` (${bps(a[1] - b[1])})` : ''}`)
+  }
+  if (parts.length) out.push('*EUA*', parts.join(' · '))
+  return out
+}
+
+function brRatesLines(macro) {
+  const cdi = last(macro?.cdi)
+  const selic = last(macro?.selic)
+  const parts = []
+  if (selic) parts.push(`Selic meta ${p2(selic[1])}%`)
+  if (cdi) parts.push(`CDI ${p2(cdi[1])}%`)
+  const px = macro?.ptax?.USD
+  if (px) parts.push(`PTAX ${num(px.sell)} (${dm(px.date + 'T12:00:00Z')})`)
+  return parts.length ? ['*Brasil*', parts.join(' · ')] : []
+}
+
+function focusLines(macro) {
+  const f = macro?.focus
+  if (!f) return []
+  const years = [...new Set(f.rows.flatMap((r) => Object.keys(r.values)))].sort().slice(0, 2)
+  const fmt = { Selic: (v) => `${p2(v)}%`, IPCA: (v) => `${p2(v)}%`, PIB: (v) => `${p2(v)}%`, Câmbio: (v) => `R$ ${p2(v)}` }
+  const parts = f.rows.map((r) => `${r.label} ${years.map((y) => (r.values[y] ? (fmt[r.label] ?? p2)(r.values[y].median) : '—')).join(' / ')}`)
+  return [`*Focus* (${years.join(' / ')}) · ${dm((f.release ?? f.date) + 'T12:00:00Z')}`, parts.join(' · ')]
+}
+
+export function buildSummary({ quotes, macro, curves, when = new Date() }) {
+  const fx = rows(quotes)
+  const blocks = [
+    [`*Resumo de mercado* · ${stampOf(when)}`],
+    fx.length ? ['*Câmbio*', ...fx.map((x) => `${x.icon} *${x.code}* ${x.price} ${x.trend}`)] : [],
+    brRatesLines(macro),
+    brLines(curves),
+    usLines(macro, curves),
+    focusLines(macro),
+    [`_${DISCLAIMER}_`],
+  ].filter((b) => b.length)
+  if (blocks.length <= 2) return ''
+  return blocks.map((b) => b.join('\n')).join('\n\n')
+}

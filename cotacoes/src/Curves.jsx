@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { useWidth } from './HistoryChart.jsx'
-import { useCurves } from './useCurves.js'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
@@ -112,13 +111,15 @@ function CurveChart({ title, subtitle, data, mode, source }) {
   )
 }
 
-export default function Curves() {
-  const c = useCurves()
+export default function Curves({ curves: c }) {
   const d = c.data
   return (
     <section className="macro" aria-labelledby="curves-h">
       <h2 id="curves-h">Curvas de juros</h2>
       {c.status === 'loading' && <div className="placeholder">Carregando curvas…</div>}
+      {c.status === 'ok' && c.data.generatedAt && Date.now() - c.data.generatedAt > 3 * 3600e3 && (
+        <p className="status stale">Atenção: as curvas foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
+      )}
       {c.status === 'error' && <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>}
       {c.status === 'ok' && (
         <div className="charts">

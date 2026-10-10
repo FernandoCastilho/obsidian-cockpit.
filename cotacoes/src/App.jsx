@@ -7,10 +7,11 @@ import Curves from './Curves.jsx'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
+import { useCurves } from './useCurves.js'
 import ParityChart from './ParityChart.jsx'
 import { liveParity } from './parity.js'
 import Projecoes from './Projecoes.jsx'
-import { DISCLAIMER, buildHtml, buildMessage, buildPlain, whatsappUrl } from './whatsapp.js'
+import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
 
@@ -126,14 +127,14 @@ function Card({ currency, quote, dir, err, ptax }) {
                 Máx.
                 <Help label="O que é máxima">Maior cotação de compra atingida hoje, até agora. Muda durante o dia.</Help>
               </dt>
-              <dd>{brl(quote.high)}</dd>
+              <dd>{Number.isFinite(quote.high) ? brl(quote.high) : '—'}</dd>
             </div>
             <div>
               <dt>
                 Mín.
                 <Help label="O que é mínima" align="right">Menor cotação de compra atingida hoje, até agora. Muda durante o dia.</Help>
               </dt>
-              <dd>{brl(quote.low)}</dd>
+              <dd>{Number.isFinite(quote.low) ? brl(quote.low) : '—'}</dd>
             </div>
             {ptax && (
               <div className="span2">
@@ -154,26 +155,37 @@ function Card({ currency, quote, dir, err, ptax }) {
           {err && <p className="card-error">{err}</p>}
         </>
       )}
+      {quote?.fallback && <p className="card-error">Fonte principal indisponível: referência diária do BCE, sem compra/venda separadas.</p>}
       {quote && <QuoteTime t={quote.timestamp} />}
       {quote && err && <p className="card-error">Desatualizado: {err}</p>}
     </article>
   )
 }
 
-function Share({ quotes, updatedAt }) {
+function Share({ quotes, updatedAt, macro, curves }) {
   const [msg, setMsg] = useState('')
   const text = buildMessage(quotes, updatedAt ?? new Date())
+  const summary = buildSummary({ quotes, macro: macro?.data, curves: curves?.data, when: updatedAt ?? new Date() })
   // No celular, o compartilhamento nativo leva o texto sem passar por endereço de internet,
   // que perdia os emojis (bandeiras e setas). Sem suporte, abre o link do WhatsApp.
-  const send = (e) => {
+  const send = (e, body = text) => {
     const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
     if (!mobile || !navigator.share) return
     e.preventDefault()
-    navigator.share({ text }).catch((err) => {
-      if (err?.name !== 'AbortError') window.open(whatsappUrl(text), '_blank', 'noopener')
+    navigator.share({ text: body }).catch((err) => {
+      if (err?.name !== 'AbortError') window.open(whatsappUrl(body), '_blank', 'noopener')
     })
   }
   // Texto com a marcação do WhatsApp (*negrito*, _itálico_) e emoji, para colar direto na conversa.
+  const copyText = async (body) => {
+    try {
+      await navigator.clipboard.writeText(body)
+      setMsg('Copiado. Cole no WhatsApp ou no Teams.')
+    } catch {
+      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
+    }
+    setTimeout(() => setMsg(''), 3000)
+  }
   const copyWa = async () => {
     try {
       await navigator.clipboard.writeText(text)
@@ -214,6 +226,14 @@ function Share({ quotes, updatedAt }) {
       ) : (
         <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
       )}
+      {summary && (
+        <a className="btn wa" href={whatsappUrl(summary)} target="_blank" rel="noopener noreferrer" onClick={(e) => send(e, summary)} title="Câmbio, juros, curva DI, SOFR, Treasuries e Focus numa mensagem só. No celular, escolha o grupo na lista de compartilhamento.">
+          Resumo do dia no WhatsApp
+        </a>
+      )}
+      <button type="button" className="btn" disabled={!summary} onClick={() => copyText(summary)} title="Copia o resumo do dia já formatado para colar no WhatsApp ou no Teams">
+        Copiar resumo
+      </button>
       <button type="button" className="btn" disabled={!text} onClick={copyWa} title="Copia o texto já formatado para colar no WhatsApp">
         Copiar para WhatsApp
       </button>
@@ -281,6 +301,7 @@ function ParityCard({ quotes }) {
 export default function App() {
   const { quotes, direction, error, errors, updatedAt } = useQuotes(POLL_MS)
   const macro = useMacro()
+  const curves = useCurves()
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
@@ -320,7 +341,7 @@ export default function App() {
             ? `Consultado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada ${POLL_MS / 1000} s · veja o horário da cotação em cada card`
             : 'Carregando…'}
       </p>
-      <Share quotes={quotes} updatedAt={updatedAt} />
+      <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
       <section className="grid">
         {CURRENCIES.map((c) => (
           <div className="slot" key={c.code}>
@@ -347,7 +368,7 @@ export default function App() {
         </div>
       </section>
       <Macro />
-      <Curves />
+      <Curves curves={curves} />
       <Projecoes />
       <News colors={COLORS} />
       <footer>
