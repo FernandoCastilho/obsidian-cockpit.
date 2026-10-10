@@ -44,7 +44,7 @@ function OperacaoDi({ curves, hol }) {
   const [unit, setUnit] = useState('am')
   const [monthBase, setMonthBase] = useState('du')
   const [appPct, setAppPct] = useState('100')
-  const [net, setNet] = useState(false)
+  const [net, setNet] = useState(true)
   const [ageTxt, setAgeTxt] = useState('0')
   const [accTxt, setAccTxt] = useState('0')
   const [daysTxt, setDaysTxt] = useState('180')
@@ -159,32 +159,62 @@ function OperacaoDi({ curves, hol }) {
                 <>
                   <p className={`calc-verdict ${r.good ? 'up' : 'down'}`}>
                     {r.good
-                      ? `Vale manter a aplicação e usar o empréstimo: o rendimento ${net ? 'líquido' : 'bruto'} (${brl(r.refGain)}) supera o custo do empréstimo (${brl(r.op.gain)}) em ${brl(Math.abs(r.diff))}`
-                      : `Resgatar a aplicação sai mais barato: o empréstimo custa ${brl(r.op.gain)}, e o rendimento ${net ? 'líquido' : 'bruto'} que você perderia é ${brl(r.refGain)} (empréstimo ${brl(Math.abs(r.diff))} mais caro)`}
-                    <small> · prazo {calDays} dias corridos = {r.d} dias úteis até {dm(end)}; tomar o empréstimo e manter a aplicação: resultado de {brl(-r.diff)}</small>
+                      ? `Mais barato: manter a aplicação e tomar o empréstimo (economia de ${brl(Math.abs(r.diff))})`
+                      : `Mais barato: resgatar a aplicação hoje (economia de ${brl(Math.abs(r.diff))})`}
+                    <small> · custo de resgatar {brl(r.refGain)} × custo do empréstimo {brl(r.op.gain)} · prazo {calDays} dias corridos = {r.d} dias úteis até {dm(end)}</small>
                   </p>
-                  <div className="scroll">
-                    <table className="focus-table">
-                      <thead>
-                        <tr><th></th><th>Empréstimo</th><th>Aplicação ({pct(parseNum(appPct), 0)} do CDI) bruta</th>{net && <th>Aplicação líquida de IR</th>}</tr>
-                      </thead>
-                      <tbody>
-                        <tr><td>Taxa no período ({calDays} dias corridos, {r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.app.gross.period)}</td>{net && <td>{pct(r.app.net.period)}</td>}</tr>
-                        <tr><td>Taxa efetiva a.a.</td><td>{pct(r.op.aa)}</td><td>{pct(r.app.gross.aa)}</td>{net && <td>{pct(r.app.net.aa)}</td>}</tr>
-                        <tr><td>Taxa equivalente ao mês</td><td>{pct(r.op.am)}</td><td>{pct(r.app.gross.am)}</td>{net && <td>{pct(r.app.net.am)}</td>}</tr>
-                        <tr><td>Custo (empréstimo) / rendimento no prazo</td><td>{brl(r.op.gain)}</td><td>{brl(r.app.gross.gain)}</td>{net && <td>{brl(r.app.net.gain)}</td>}</tr>
+                  <div className="options">
+                    <section className={`opt${r.good ? '' : ' win'}`}>
+                      <h4>Resgatar a aplicação hoje</h4>
+                      <dl>
+                        <dt>Rendimento que deixa de ganhar em {calDays} dias ({pct(parseNum(appPct), 0)} do CDI)</dt>
+                        <dd>{brl(r.app.gross.gain)}</dd>
                         {net && (
                           <>
-                            <tr><td>IR sobre o rendimento do prazo ({pct(r.app.tax.irPct, 1)}){r.app.tax.iofPct > 0 ? ` e IOF (${r.app.tax.iofPct}%)` : ''}</td><td>—</td><td>—</td><td>−{brl(r.app.tax.total)}</td></tr>
-                            {r.app.tax.accrued > 0 && (
-                              <tr><td>IR economizado sobre o rendimento já acumulado ({pct(r.app.tax.taxNow.irPct, 1)} hoje → {pct(r.app.tax.taxLater.irPct, 1)} no vencimento)</td><td>—</td><td>—</td><td>+{brl(r.app.tax.savings)}</td></tr>
-                            )}
+                            <dt>IR que incidiria sobre ele ({pct(r.app.tax.irPct, 1)}{r.app.tax.iofPct > 0 ? ` + IOF ${r.app.tax.iofPct}%` : ''}, tabela regressiva)</dt>
+                            <dd>−{brl(r.app.tax.total)}</dd>
+                            <dt>Rendimento líquido perdido</dt>
+                            <dd>{brl(r.app.gross.gain - r.app.tax.total)}</dd>
+                            <dt>IR pago hoje sobre o rendimento já acumulado de {brl(r.app.tax.accrued)} ({pct(r.app.tax.taxNow.irPct, 1)}{r.app.tax.taxNow.iofPct > 0 ? ` + IOF ${r.app.tax.taxNow.iofPct}%` : ''})</dt>
+                            <dd>{brl(r.app.tax.taxNow.total)}</dd>
+                            <dt>IR que pagaria no vencimento sobre o mesmo rendimento ({pct(r.app.tax.taxLater.irPct, 1)})</dt>
+                            <dd>−{brl(r.app.tax.taxLater.total)}</dd>
+                            <dt>IR antecipado ao resgatar hoje</dt>
+                            <dd>{brl(r.app.tax.savings)}</dd>
                           </>
                         )}
-                        <tr><td>Valor a pagar / valor resgatado</td><td>{brl(r.op.fv)}</td><td>{brl(r.app.gross.fv)}</td>{net && <td>{brl(r.app.net.fv)}</td>}</tr>
-                      </tbody>
-                    </table>
+                      </dl>
+                      <p className="opt-total">Custo de resgatar <b>{brl(r.refGain)}</b></p>
+                    </section>
+                    <section className={`opt${r.good ? ' win' : ''}`}>
+                      <h4>Manter a aplicação e tomar o empréstimo</h4>
+                      <dl>
+                        <dt>Juros do empréstimo ({pct(r.op.am)} ao mês = {pct(r.op.period)} em {calDays} dias)</dt>
+                        <dd>{brl(r.op.gain)}</dd>
+                        <dt>Total a pagar no vencimento</dt>
+                        <dd>{brl(r.op.fv)}</dd>
+                      </dl>
+                      <p className="opt-total">Custo do empréstimo <b>{brl(r.op.gain)}</b></p>
+                    </section>
                   </div>
+                  {net && r.app.tax.accrued === 0 && (
+                    <p className="status stale">O IR pago hoje depende do rendimento já acumulado: informe o valor e os dias já aplicados para ver a antecipação do imposto. Zerado, só o rendimento dos {calDays} dias entra na conta.</p>
+                  )}
+                  <details className="table">
+                    <summary>Taxas comparadas</summary>
+                    <div className="scroll">
+                      <table className="focus-table">
+                        <thead>
+                          <tr><th></th><th>Empréstimo</th><th>Aplicação ({pct(parseNum(appPct), 0)} do CDI) bruta</th>{net && <th>Aplicação líquida de IR</th>}</tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Taxa no período ({calDays} dias corridos, {r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.app.gross.period)}</td>{net && <td>{pct(r.app.net.period)}</td>}</tr>
+                          <tr><td>Taxa efetiva a.a.</td><td>{pct(r.op.aa)}</td><td>{pct(r.app.gross.aa)}</td>{net && <td>{pct(r.app.net.aa)}</td>}</tr>
+                          <tr><td>Taxa equivalente ao mês</td><td>{pct(r.op.am)}</td><td>{pct(r.app.gross.am)}</td>{net && <td>{pct(r.app.net.am)}</td>}</tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
                 </>
               ) : (
                 <>
@@ -222,7 +252,7 @@ function OperacaoDi({ curves, hol }) {
                 </p>
               )}
               <p className="status">
-                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
+                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
             </>
           ) : null}

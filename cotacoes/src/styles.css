@@ -313,3 +313,13 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .holiday-notice .status { margin:6px 0 0; font-size:.8rem; }
 .date-check { display:block; color:#e3b341; font-size:.78rem; line-height:1.4; margin-top:4px; max-width:340px; }
 .link { background:none; border:0; padding:0; color:#58a6ff; font:inherit; cursor:pointer; text-decoration:underline; }
+
+.options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:8px 0 12px; }
+@media (max-width: 700px) { .options { grid-template-columns:1fr; } }
+.opt { background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+.opt.win { border-color:var(--up); box-shadow:0 0 0 1px var(--up) inset; }
+.opt h4 { margin:0 0 8px; font-size:.95rem; }
+.opt dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:.85rem; }
+.opt dt { color:var(--mut); }
+.opt dd { margin:0; text-align:right; font-variant-numeric:tabular-nums; }
+.opt-total { margin:10px 0 0; padding-top:8px; border-top:1px solid var(--line); font-size:.95rem; }
