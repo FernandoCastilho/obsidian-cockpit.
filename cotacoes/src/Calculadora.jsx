@@ -8,10 +8,16 @@ const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
 const dm = (iso) => iso.split('-').reverse().join('/')
 const MODES = [
-  { id: 'pre', label: 'Pré (% a.a.)', ph: '14,50' },
+  { id: 'pre', label: 'Pré-fixada', ph: '14,50' },
   { id: 'cdi', label: '% do CDI', ph: '105' },
   { id: 'spread', label: 'CDI + spread', ph: '1,20' },
 ]
+const UNITS = [
+  { id: 'aa', label: 'ao ano' },
+  { id: 'am', label: 'ao mês' },
+  { id: 'periodo', label: 'no período' },
+]
+const PH = { aa: '14,50', am: '1,15', periodo: '7,20' }
 const TERMS = [
   { label: '3 meses', days: 91 },
   { label: '6 meses', days: 182 },
@@ -33,9 +39,10 @@ function OperacaoDi({ curves }) {
   const [mode, setMode] = useState('cdi')
   const [rate, setRate] = useState('105')
   const [side, setSide] = useState('invest')
+  const [unit, setUnit] = useState('aa')
   const end = due && base ? (due < base ? base : due > maxIso ? maxIso : due) : base ? iso(365) : ''
   const d = base ? busDays(base, end) : 0
-  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), side }) : null), [pts, d, value, mode, rate, side])
+  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side }) : null), [pts, d, value, mode, rate, unit, side])
   const m = MODES.find((x) => x.id === mode)
 
   return (
@@ -64,13 +71,22 @@ function OperacaoDi({ curves }) {
           <div className="calc-form">
             <div className="seg" role="group" aria-label="Tipo de taxa da operação">
               {MODES.map((x) => (
-                <button key={x.id} type="button" aria-pressed={mode === x.id} onClick={() => (setMode(x.id), setRate(x.ph))}>
+                <button key={x.id} type="button" aria-pressed={mode === x.id} onClick={() => (setMode(x.id), setUnit(x.id === 'spread' && unit === 'periodo' ? 'aa' : unit), setRate(x.id === 'pre' ? PH[unit] : x.ph))}>
                   {x.label}
                 </button>
               ))}
             </div>
+            {mode !== 'cdi' && (
+              <div className="seg" role="group" aria-label="Unidade da taxa">
+                {UNITS.filter((u) => mode === 'pre' || u.id !== 'periodo').map((u) => (
+                  <button key={u.id} type="button" aria-pressed={unit === u.id} onClick={() => (setUnit(u.id), mode === 'pre' && setRate(PH[u.id]))}>
+                    {u.label}
+                  </button>
+                ))}
+              </div>
+            )}
             <label>
-              Taxa da operação ({mode === 'cdi' ? '% do CDI' : '% a.a.'})
+              Taxa da operação ({mode === 'cdi' ? '% do CDI' : `% ${UNITS.find((u) => u.id === unit).label}`})
               <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder={m.ph} />
             </label>
             <div className="seg" role="group" aria-label="Sentido da operação">
@@ -94,15 +110,22 @@ function OperacaoDi({ curves }) {
                     <tr><th></th><th>Operação</th><th>DI (curva)</th></tr>
                   </thead>
                   <tbody>
+                    <tr><td>Taxa no período ({r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.di.period)}</td></tr>
                     <tr><td>Taxa efetiva a.a.</td><td>{pct(r.op.aa)}</td><td>{pct(r.di.aa)}</td></tr>
+                    <tr><td>Taxa equivalente ao mês</td><td>{pct(r.op.am)}</td><td>{pct(r.di.am)}</td></tr>
                     <tr><td>{side === 'invest' ? 'Rendimento' : 'Custo'} no prazo</td><td>{brl(r.op.gain)}</td><td>{brl(r.di.gain)}</td></tr>
                     <tr><td>Valor no vencimento</td><td>{brl(r.op.fv)}</td><td>{brl(r.di.fv)}</td></tr>
-                    <tr><td>Equivale a % do CDI</td><td>{r.cdiEquivalent != null ? pct(r.cdiEquivalent, 1) : '—'}</td><td>100,0%</td></tr>
+                    <tr><td>% do CDI do período</td><td>{r.cdiEquivalent != null ? pct(r.cdiEquivalent, 1) : '—'}</td><td>100,0%</td></tr>
                   </tbody>
                 </table>
               </div>
+              {mode !== 'cdi' && r.cdiEquivalent != null && (
+                <p className="calc-conv">
+                  {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> no período ({r.d} d.u.) = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                </p>
+              )}
               <p className="status">
-                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} a.a.` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o DI). O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis contados de segunda a sexta, sem feriados.
+                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o DI). Taxa ao mês é composta e 1 mês = 21 dias úteis (252 ÷ 12). "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis contados de segunda a sexta, sem feriados.
               </p>
             </>
           ) : null}
