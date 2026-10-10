@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { DECIMALS, simulate, toTsv } from './finimp.js'
 import { parseNum } from './calc.js'
 import Explain from './Explain.jsx'
+import Pracas from './Pracas.jsx'
+import DateCheck from './DateCheck.jsx'
 
 const dm = (iso) => iso.split('-').reverse().join('/')
 const EXAMPLE = {
@@ -31,7 +33,7 @@ function Rows({ items, setItems, blank, render, addLabel }) {
   )
 }
 
-export default function Finimp() {
+export default function Finimp({ hol }) {
   const [currency, setCurrency] = useState('USD')
   const [disb, setDisb] = useState([{ date: '', amount: '' }])
   const [structure, setStructure] = useState('')
@@ -94,6 +96,7 @@ export default function Finimp() {
       <p className="status stale">
         Simulação com dados informados por você: nada é buscado nem presumido. O resultado é uma estimativa, não é CET regulatório nem confirma conformidade.
       </p>
+      <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
       <div className="calc-form">
         <label>
           Moeda
@@ -112,7 +115,7 @@ export default function Finimp() {
         addLabel="desembolso"
         render={(it, up) => (
           <>
-            <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>
+            <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>
             <label>Valor ({currency})<input inputMode="decimal" value={it.amount} onChange={(e) => up({ amount: e.target.value })} /></label>
           </>
         )}
@@ -125,11 +128,11 @@ export default function Finimp() {
       {structure === 'amort' && <p className="status">Os juros são pagos junto de cada amortização. A soma das amortizações deve igualar o principal; o último pagamento é o vencimento.</p>}
       {structure && structure !== 'amort' && (
         <div className="calc-form">
-          <label>Vencimento<input type="date" value={maturity} onChange={(e) => setMaturity(e.target.value)} /></label>
+          <label>Vencimento<input type="date" value={maturity} onChange={(e) => setMaturity(e.target.value)} /><DateCheck date={maturity} hol={hol} onUse={setMaturity} /></label>
         </div>
       )}
       {structure === 'periodic' && (
-        <Rows items={interest} setItems={setInterest} blank={{ date: '' }} addLabel="data de juros" render={(it, up) => <label>Data de pagamento de juros<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>} />
+        <Rows items={interest} setItems={setInterest} blank={{ date: '' }} addLabel="data de juros" render={(it, up) => <label>Data de pagamento de juros<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>} />
       )}
       {structure === 'amort' && (
         <Rows
@@ -139,7 +142,7 @@ export default function Finimp() {
           addLabel="amortização"
           render={(it, up) => (
             <>
-              <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>
+              <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>
               <label>
                 Tipo
                 <select value={it.kind} onChange={(e) => up({ kind: e.target.value })}>
@@ -231,7 +234,7 @@ export default function Finimp() {
               </table>
             </div>
             <p className="status">
-              Frações de período em dias corridos efetivos ÷ {res.base} ({dayCount}), contadas desde o início de cada período de juros (último pagamento de juros). Precisão interna total; {round ? `os juros pagos foram arredondados a ${dec} casas por pagamento` : 'sem arredondamento interno, só na exibição'}. Datas informadas são usadas como estão: o app não ajusta feriados nem dias não úteis. Entradas: taxa {rate}% a.a. informada por você.
+              Frações de período em dias corridos efetivos ÷ {res.base} ({dayCount}), contadas desde o início de cada período de juros (último pagamento de juros). Precisão interna total; {round ? `os juros pagos foram arredondados a ${dec} casas por pagamento` : 'sem arredondamento interno, só na exibição'}. Datas informadas são usadas como estão: o app avisa feriados nas praças escolhidas, mas não ajusta datas sozinho. Entradas: taxa {rate}% a.a. informada por você.
             </p>
           </details>
         </>

@@ -7,6 +7,9 @@ import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
 import CdiFuturo from './CdiFuturo.jsx'
 import Calculadora from './Calculadora.jsx'
+import HolidayNotice from './HolidayNotice.jsx'
+import Pracas from './Pracas.jsx'
+import { useHolidays } from './useHolidays.js'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
@@ -381,6 +384,7 @@ export default function App() {
   const { quotes, direction, error, errors, updatedAt, via, reload, refresh, refreshing, limits } = useQuotes(POLL_MS)
   const macro = useMacro()
   const curves = useCurves()
+  const hol = useHolidays()
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
@@ -464,6 +468,7 @@ export default function App() {
 
       {tab === 'resumo' && (
         <>
+          <HolidayNotice hol={hol} />
           <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={setOpen} goto={goto} colors={COLORS} />
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
@@ -503,19 +508,24 @@ export default function App() {
       {tab === 'juros' && (
         <>
           <Macro />
-          <CdiFuturo curves={curves} macro={macro.data} />
+          <CdiFuturo curves={curves} macro={macro.data} hol={hol} />
           <Curves curves={curves} />
         </>
       )}
 
       {tab === 'cenarios' && (
         <>
+          <section className="macro" aria-labelledby="fer-h">
+            <h2 id="fer-h">Feriados nas praças</h2>
+            <Pracas pracas={hol.pracas} onChange={hol.setPracas} />
+            <HolidayNotice hol={hol} days={60} list />
+          </section>
           <Agenda />
           <Projecoes />
         </>
       )}
 
-      {tab === 'calculadora' && <Calculadora curves={curves} />}
+      {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} />}
 
       {tab === 'noticias' && <News colors={COLORS} />}
 

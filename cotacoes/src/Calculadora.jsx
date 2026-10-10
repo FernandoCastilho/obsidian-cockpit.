@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
-import { busDays } from './cdiFuturo.js'
+import { busDaysIn } from './holidays.js'
+import Pracas from './Pracas.jsx'
+import DateCheck from './DateCheck.jsx'
 import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
 import Finimp from './Finimp.jsx'
@@ -26,7 +28,7 @@ const TERMS = [
   { label: '3 anos', days: 1095 },
 ]
 
-function OperacaoDi({ curves }) {
+function OperacaoDi({ curves, hol }) {
   const br = curves.data?.br
   const today = br?.compare?.find((c) => c.id === 'hoje')
   const pts = today ? br.curves[today.date] : null
@@ -41,7 +43,7 @@ function OperacaoDi({ curves }) {
   const [side, setSide] = useState('invest')
   const [unit, setUnit] = useState('aa')
   const end = due && base ? (due < base ? base : due > maxIso ? maxIso : due) : base ? iso(365) : ''
-  const d = base ? busDays(base, end) : 0
+  const d = base ? busDaysIn(base, end, ['BR'], hol.ctx) : 0 // dias úteis do DI: calendário nacional (B3/ANBIMA)
   const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side }) : null), [pts, d, value, mode, rate, unit, side])
   const m = MODES.find((x) => x.id === mode)
 
@@ -51,6 +53,7 @@ function OperacaoDi({ curves }) {
       {curves.status !== 'loading' && !pts && <p className="status">Calculadora indisponível: depende da curva DI x pré da B3, que não veio na última atualização.</p>}
       {pts && (
         <article className="chart">
+          <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado)" />
           <div className="calc-form">
             <label>
               Valor (R$)
@@ -59,6 +62,7 @@ function OperacaoDi({ curves }) {
             <label>
               Vencimento
               <input type="date" min={base} max={maxIso} value={end} onChange={(e) => e.target.value && setDue(e.target.value)} />
+              <DateCheck date={end} hol={hol} onUse={setDue} />
             </label>
             <div className="seg" role="group" aria-label="Atalhos de prazo">
               {TERMS.map((t) => (
@@ -125,7 +129,7 @@ function OperacaoDi({ curves }) {
                 </p>
               )}
               <p className="status">
-                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o DI). Taxa ao mês é composta e 1 mês = 21 dias úteis (252 ÷ 12). "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis contados de segunda a sexta, sem feriados.
+                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o DI). Taxa ao mês é composta e 1 mês = 21 dias úteis (252 ÷ 12). "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
             </>
           ) : null}
@@ -135,7 +139,7 @@ function OperacaoDi({ curves }) {
   )
 }
 
-export default function Calculadora({ curves }) {
+export default function Calculadora({ curves, hol }) {
   const [mode, setMode] = useState('di')
   return (
     <section className="macro calc" aria-labelledby="calc-h">
@@ -148,7 +152,7 @@ export default function Calculadora({ curves }) {
           <button type="button" aria-pressed={mode === 'finimp'} onClick={() => setMode('finimp')}>FINIMP</button>
         </div>
       </div>
-      {mode === 'di' ? <OperacaoDi curves={curves} /> : <Finimp />}
+      {mode === 'di' ? <OperacaoDi curves={curves} hol={hol} /> : <Finimp hol={hol} />}
     </section>
   )
 }

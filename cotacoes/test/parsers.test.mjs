@@ -78,3 +78,12 @@ test('intraday: amostras horárias acrescentam sem duplicar e descartam o que pa
   assert.equal(mergeSnapshots(m, { USD: [now, 5.2] }, 5 * 864e5, now).USD.points.length, 2)
   assert.equal(mergeSnapshots(m, { USD: [now + 1, NaN] }, 5 * 864e5, now).USD.points.length, 2)
 })
+
+import { parseHolidayCn } from '../scripts/holidays-lib.mjs'
+test('feriados da China: lê feriados e compensações, traduz o nome e trata ano ainda não publicado', () => {
+  const r = parseHolidayCn({ papers: ['x'], days: [{ name: '春节', date: '2026-02-17', isOffDay: true }, { name: '春节', date: '2026-02-14', isOffDay: false }, { name: 'x', date: 'ruim', isOffDay: true }] })
+  assert.equal(r.days.length, 2)
+  assert.equal(r.days[0].nameEn, 'Festival da Primavera')
+  assert.equal(parseHolidayCn({ year: 2027, papers: [], days: [] }), null)
+  assert.equal(parseHolidayCn(null), null)
+})
