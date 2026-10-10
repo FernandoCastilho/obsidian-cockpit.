@@ -127,4 +127,22 @@ export const GLOSSARY = {
     b: 'R$ 1 milhão por 1 ano a 105% do CDI. Se o DI projeta 13,9% ao ano, o CDI do período é ~13,9%, e 105% disso rende ~14,6%. A diferença em reais é o ganho sobre o DI.',
     c: '"Equivale a % do CDI" traduz qualquer taxa para a régua do CDI. Se for maior que 100%, a operação paga mais que a curva já precifica.',
   },
+  finimp: {
+    t: 'FINIMP',
+    a: 'Financiamento em moeda estrangeira para pagar uma importação. Você recebe (ou o fornecedor recebe) em dólar, euro ou iene e devolve com juros em data combinada.',
+    b: 'US$ 1 milhão por 180 dias a 6% ao ano, ACT/360: juros de US$ 30 mil (1 milhão × 6% × 180/360). Sem derivativo, o custo em reais depende do câmbio no pagamento.',
+    c: 'Aqui você informa a taxa e as datas; o app calcula os juros e o cronograma na moeda original. É uma simulação, não o contrato.',
+  },
+  regraJuros: {
+    t: 'Juros proporcionais × compostos',
+    a: 'Proporcional (linear): juros = saldo × taxa × fração do ano. Composta: juros = saldo × [(1+taxa)^fração − 1].',
+    b: '6% ao ano por meio ano: linear dá 3,00% do saldo; composta dá 2,96%.',
+    c: 'A regra vem do contrato. A diferença cresce com o prazo e com a taxa.',
+  },
+  convencao: {
+    t: 'ACT/360 × ACT/365F',
+    a: 'Como contar o tempo: dias corridos efetivos divididos por 360 ou por 365 (sempre 365, mesmo em ano bissexto).',
+    b: '180 dias a 6% ao ano: ACT/360 dá 3,000% de juros; ACT/365F dá 2,959%.',
+    c: 'ACT/360 cobra um pouco mais para o mesmo prazo. Use a que está no contrato; o app não escolhe por você.',
+  },
 }

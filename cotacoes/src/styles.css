@@ -286,3 +286,18 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .calc-verdict.up { color:var(--up); } .calc-verdict.down { color:var(--down); }
 .calc-verdict small { display:block; color:var(--mut); font-weight:400; font-size:.8rem; margin-top:2px; }
 .calc td:first-child { text-align:left; color:var(--mut); }
+
+.calc-sub { margin:18px 0 8px; font-size:.95rem; }
+.rows { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+.rows .row { display:flex; flex-wrap:wrap; gap:10px 14px; align-items:flex-end; }
+.rows .row label { display:flex; flex-direction:column; gap:4px; font-size:.8rem; color:var(--mut); }
+.rows .x { background:none; border:1px solid var(--line); color:var(--mut); border-radius:8px; width:32px; height:34px; cursor:pointer; font-size:1.1rem; }
+.finimp select, .calc-form select { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; }
+.finimp input[type=date], .finimp input[inputmode] { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; min-width:140px; }
+.finimp .lbl { display:block; font-size:.8rem; color:var(--mut); margin-bottom:4px; }
+.finimp .chk { flex-direction:row; align-items:center; gap:8px; }
+.miss { margin:6px 0 10px; padding-left:20px; font-size:.9rem; line-height:1.5; }
+.calc-block { margin-top:14px; }
+.fin-table td, .fin-table th { white-space:nowrap; }
+.fin-table td:first-child { text-align:left; }
+.finimp .btn.small { font-size:.8rem; padding:6px 10px; }
