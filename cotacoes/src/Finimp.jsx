@@ -2,8 +2,10 @@ import { useMemo, useState } from 'react'
 import { DECIMALS, simulate, toTsv } from './finimp.js'
 import { parseNum } from './calc.js'
 import Explain from './Explain.jsx'
+import ResultBar from './ResultBar.jsx'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
+import { nextBusinessDay } from './holidays.js'
 
 const dm = (iso) => iso.split('-').reverse().join('/')
 const EXAMPLE = {
@@ -45,6 +47,7 @@ export default function Finimp({ hol }) {
   const [dayCount, setDayCount] = useState('')
   const [round, setRound] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [more, setMore] = useState(false)
 
   const res = useMemo(
     () =>
@@ -64,12 +67,14 @@ export default function Finimp({ hol }) {
   )
   const dec = DECIMALS[currency]
   const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency, minimumFractionDigits: dec, maximumFractionDigits: dec })
+  const bar = res.ok ? { main: `Juros ${fmt(res.totals.interest)}`, sub: `principal ${fmt(res.totals.disbursed)} · total pago ${fmt(res.totals.paid)}` } : null
   const fill = () => {
-    const a = addDays(10)
+    const nb = (n) => nextBusinessDay(addDays(n), hol.pracas, hol.ctx) // exemplo sempre em dia útil comum às praças
+    const a = nb(10)
     setCurrency(EXAMPLE.currency)
     setDisb([{ date: a, amount: EXAMPLE.disb[0].amount }])
     setStructure('bullet')
-    setMaturity(addDays(190))
+    setMaturity(nb(190))
     setRate(EXAMPLE.rate)
     setRule('prop')
     setDayCount('ACT/360')
@@ -92,10 +97,9 @@ export default function Finimp({ hol }) {
   )
 
   return (
-    <article className="chart finimp">
-      <p className="status stale">
-        Simulação com dados informados por você: nada é buscado nem presumido. O resultado é uma estimativa, não é CET regulatório nem confirma conformidade.
-      </p>
+    <article className="chart finimp calc-split">
+      <div className="calc-in">
+      <p className="status note">Estimativa com os dados que você informa; nada é buscado nem presumido. Não é CET regulatório.</p>
       <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
       <div className="calc-form">
         <label>
@@ -170,6 +174,8 @@ export default function Finimp({ hol }) {
         <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
       </div>
 
+</div>
+<div className="calc-out" id="calc-out">
       {!res.ok ? (
         <div className="calc-block">
           {res.missing.length > 0 && (
@@ -187,21 +193,30 @@ export default function Finimp({ hol }) {
             <small> · principal {fmt(res.totals.disbursed)} · total pago {fmt(res.totals.paid)} · {res.rows.at(-1).date > res.first ? `prazo de ${Math.round((Date.parse(res.maturity) - Date.parse(res.first)) / 864e5)} dias corridos` : ''} · {dayCount}, {rule === 'comp' ? 'juros compostos' : 'juros proporcionais'}</small>
           </p>
           <div className="scroll">
-            <table className="focus-table fin-table">
+            <table className="focus-table fin-table cards">
               <thead>
-                <tr><th>Data</th><th>Saldo inicial</th><th>Desembolso</th><th>Juros do trecho</th><th>Juros pagos</th><th>Amortização</th><th>Saldo final</th><th>Fluxo (tomador)</th></tr>
+                <tr>
+                  <th>Data</th>
+                  {more && <th>Saldo inicial</th>}
+                  {more && <th>Desembolso</th>}
+                  {more && <th>Juros do trecho</th>}
+                  <th>Juros pagos</th>
+                  <th>Amortização</th>
+                  {more && <th>Saldo final</th>}
+                  <th>Fluxo (tomador)</th>
+                </tr>
               </thead>
               <tbody>
                 {res.rows.map((r) => (
                   <tr key={r.date}>
-                    <td>{dm(r.date)}</td>
-                    <td>{fmt(r.opening)}</td>
-                    <td>{r.disbursement ? fmt(r.disbursement) : '—'}</td>
-                    <td>{r.accrued ? fmt(r.accrued) : '—'}</td>
-                    <td>{r.interestPaid ? fmt(r.interestPaid) : '—'}</td>
-                    <td>{r.amortization ? fmt(r.amortization) : '—'}</td>
-                    <td>{fmt(r.closing)}</td>
-                    <td className={r.flow >= 0 ? 'up' : 'down'}>{fmt(r.flow)}</td>
+                    <td data-label="Data">{dm(r.date)}</td>
+                    {more && <td data-label="Saldo inicial">{fmt(r.opening)}</td>}
+                    {more && <td data-label="Desembolso">{r.disbursement ? fmt(r.disbursement) : '—'}</td>}
+                    {more && <td data-label="Juros do trecho">{r.accrued ? fmt(r.accrued) : '—'}</td>}
+                    <td data-label="Juros pagos">{r.interestPaid ? fmt(r.interestPaid) : '—'}</td>
+                    <td data-label="Amortização">{r.amortization ? fmt(r.amortization) : '—'}</td>
+                    {more && <td data-label="Saldo final">{fmt(r.closing)}</td>}
+                    <td data-label="Fluxo (tomador)">{r.flow >= 0 ? '+' : '−'}{fmt(Math.abs(r.flow))}</td>
                   </tr>
                 ))}
               </tbody>
@@ -209,6 +224,7 @@ export default function Finimp({ hol }) {
           </div>
           <div className="calc-form">
             <button type="button" className="btn small" onClick={copy}>{copied ? 'Copiado' : 'Copiar cronograma (Excel)'}</button>
+            <button type="button" className="btn small" aria-pressed={more} onClick={() => setMore((v) => !v)}>{more ? 'Menos colunas' : 'Mais colunas'}</button>
           </div>
           <details className="table">
             <summary>Memória de cálculo e reconciliação</summary>
@@ -216,18 +232,18 @@ export default function Finimp({ hol }) {
               {res.checks.map((c) => <li key={c.label}>{c.ok ? '✓' : '✗'} {c.label}</li>)}
             </ul>
             <div className="scroll">
-              <table className="focus-table fin-table">
+              <table className="focus-table fin-table cards">
                 <thead><tr><th>Trecho</th><th>Dias</th><th>Saldo</th><th>Fração início</th><th>Fração fim</th><th>Fórmula</th><th>Juros</th></tr></thead>
                 <tbody>
                   {res.memo.map((m) => (
                     <tr key={m.from + m.to}>
-                      <td>{dm(m.from)} → {dm(m.to)}</td>
-                      <td>{m.days}</td>
-                      <td>{fmt(m.balance)}</td>
-                      <td>{m.f0.toFixed(6)}</td>
-                      <td>{m.f1.toFixed(6)}</td>
-                      <td>{m.formula}</td>
-                      <td>{fmt(m.interest)}</td>
+                      <td data-label="Trecho">{dm(m.from)} → {dm(m.to)}</td>
+                      <td data-label="Dias">{m.days}</td>
+                      <td data-label="Saldo">{fmt(m.balance)}</td>
+                      <td data-label="Fração início">{m.f0.toFixed(6)}</td>
+                      <td data-label="Fração fim">{m.f1.toFixed(6)}</td>
+                      <td data-label="Fórmula">{m.formula}</td>
+                      <td data-label="Juros">{fmt(m.interest)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -239,6 +255,8 @@ export default function Finimp({ hol }) {
           </details>
         </>
       )}
+</div>
+      <ResultBar targetId="calc-out" main={bar?.main} sub={bar?.sub} />
     </article>
   )
 }

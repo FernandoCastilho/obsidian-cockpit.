@@ -493,3 +493,12 @@ test('aplicação financeira: CDB líquido de IR regressivo, ativo isento e equi
   assert.ok(curto.tax.iofPct > 0 && curto.tax.total > curto.tax.ir)
   assert.match(investment({ ...base, value: 0 }).error, /Preencha/)
 })
+
+import { CALC_OPTIONS } from '../src/calcOptions.js'
+test('calculadoras: ids únicos (viram endereço) e todas têm explicação no glossário', () => {
+  assert.equal(new Set(CALC_OPTIONS.map((o) => o.id)).size, CALC_OPTIONS.length)
+  for (const o of CALC_OPTIONS) {
+    assert.match(o.id, /^[a-z]+$/)
+    assert.ok(GLOSSARY[o.help], `sem glossário: ${o.help}`)
+  }
+})

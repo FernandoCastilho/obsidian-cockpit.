@@ -1,6 +1,6 @@
 // Service worker: abre o app sem rede (último conteúdo) e mantém os dados no cache.
 // Versão do cache: troque ao mudar a estratégia; os arquivos com hash do Vite se renovam sozinhos.
-const CACHE = 'cotacoes-v2'
+const CACHE = 'cotacoes-v3'
 const SHELL = ['./', './manifest.webmanifest', './favicon.svg', './icon-192.png', './icon-512.png']
 
 self.addEventListener('install', (event) => {

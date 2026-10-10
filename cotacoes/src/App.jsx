@@ -388,6 +388,12 @@ export default function App() {
   const macro = useMacro()
   const curves = useCurves()
   const hol = useHolidays()
+  const [update, setUpdate] = useState(false)
+  useEffect(() => {
+    const on = () => setUpdate(true)
+    window.addEventListener('app-update', on)
+    return () => window.removeEventListener('app-update', on)
+  }, [])
   const [preset, setPreset] = useState('30')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
@@ -416,15 +422,28 @@ export default function App() {
     setPreset('custom')
     setRange({ start, end })
   }
-  const [tab, setTab] = useState(() => {
-    const h = window.location.hash.replace('#', '')
-    return TABS.some((t) => t.id === h) ? h : 'resumo'
-  })
+  // Endereço da tela: #aba ou #calculadora/finimp (calculadora aberta direto, que dá para favoritar e enviar).
+  const readHash = () => {
+    const [h, sub = ''] = window.location.hash.replace('#', '').split('/')
+    return { tab: TABS.some((t) => t.id === h) ? h : 'resumo', sub }
+  }
+  const [tab, setTab] = useState(() => readHash().tab)
+  const [sub, setSub] = useState(() => readHash().sub)
+  useEffect(() => {
+    const onHash = () => {
+      const h = readHash()
+      setTab(h.tab)
+      setSub(h.sub)
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
-  const goto = (id) => {
+  const goto = (id, to = '') => {
     setTab(id)
+    setSub(to)
     try {
-      window.history.replaceState(null, '', `#${id}`)
+      window.history.replaceState(null, '', `#${id}${to ? `/${to}` : ''}`)
     } catch {
       /* sem histórico (ex.: arquivo local) */
     }
@@ -437,6 +456,12 @@ export default function App() {
     <>
     <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
     <main className="app">
+      {update && (
+        <div className="update-notice" role="status">
+          Nova versão disponível.{' '}
+          <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
+        </div>
+      )}
       <header className="top">
         <div>
           <h1>Painel de mercado</h1>
@@ -467,7 +492,7 @@ export default function App() {
             ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'} · fonte: AwesomeAPI e BCB`
             : 'Carregando…'}
       </p>
-      <Nav tab={tab} onTab={goto} />
+      <Nav tab={tab} onTab={(id) => goto(id)} />
 
       {tab === 'resumo' && (
         <>
@@ -528,7 +553,7 @@ export default function App() {
         </>
       )}
 
-      {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} />}
+      {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} view={sub} onView={(v) => goto('calculadora', v)} />}
 
       {tab === 'noticias' && <News colors={COLORS} />}
 

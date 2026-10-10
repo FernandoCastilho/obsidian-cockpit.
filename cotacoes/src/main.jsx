@@ -11,5 +11,8 @@ createRoot(document.getElementById('root')).render(
 
 // Service worker só em produção (no desenvolvimento atrapalha o recarregamento).
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  // Se uma versão nova assumir o controle enquanto o app está aberto, a tela avisa (evento "app-update").
+  const hadController = !!navigator.serviceWorker.controller
+  navigator.serviceWorker.addEventListener('controllerchange', () => hadController && window.dispatchEvent(new Event('app-update')))
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}))
 }

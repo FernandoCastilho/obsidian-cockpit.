@@ -9,6 +9,7 @@ import { rateTiles, topHeadlines } from './snapshot.js'
 import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
+import { CALC_OPTIONS } from './calcOptions.js'
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
@@ -206,6 +207,20 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
   return (
     <div className="resumo">
       <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} />
+
+      <section aria-labelledby="r-calc">
+        <div className="sec-head">
+          <h2 id="r-calc">Calculadoras</h2>
+          <button type="button" className="more" onClick={() => goto('calculadora')}>Ver todas ›</button>
+        </div>
+        <div className="calc-shortcuts">
+          {CALC_OPTIONS.map((o) => (
+            <button key={o.id} type="button" onClick={() => goto('calculadora', o.id)}>
+              <span aria-hidden="true">{o.chip}</span> {o.title}
+            </button>
+          ))}
+        </div>
+      </section>
 
       <section aria-labelledby="r-move">
         <div className="sec-head">
