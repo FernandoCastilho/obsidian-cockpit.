@@ -229,3 +229,4 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .tile-spark { max-width: 42%; }
 .resumo + .share, .share { margin-top: 20px; }
 @media (min-width: 700px) { .tile-price { font-size: 1.35rem; } .tile-spark { max-width: 48%; } }
+.cdif-result { margin:10px 0; font-size:.95rem; line-height:1.4; }
