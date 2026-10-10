@@ -323,3 +323,12 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .opt dt { color:var(--mut); }
 .opt dd { margin:0; text-align:right; font-variant-numeric:tabular-nums; }
 .opt-total { margin:10px 0 0; padding-top:8px; border-top:1px solid var(--line); font-size:.95rem; }
+
+.start-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; }
+@media (max-width: 640px) { .start-grid { grid-template-columns:1fr; } }
+.start-card { text-align:left; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:14px; padding:16px; font:inherit; cursor:pointer; display:flex; flex-direction:column; gap:8px; min-height:150px; }
+.start-card:hover, .start-card:focus-visible { border-color:var(--mut); background:#1c2330; }
+.start-card b { font-size:1.1rem; }
+.start-chip { width:38px; height:38px; border-radius:10px; background:#21262d; display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#58a6ff; }
+.start-desc { color:var(--mut); font-size:.88rem; line-height:1.45; flex:1; }
+.start-go { color:#58a6ff; font-size:.85rem; font-weight:600; }

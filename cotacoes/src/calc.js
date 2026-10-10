@@ -18,7 +18,7 @@ export const rateFactor = (rate, unit, d, cal = null, base = 'du') =>
   unit === 'periodo' ? 1 + rate / 100 : unit === 'am' ? (1 + rate / 100) ** (base === 'cal' && cal ? cal / 30 : d / 21) : (1 + rate / 100) ** (d / 252)
 
 // % do CDI pela convenção de mercado: cada dia rende p × CDI do dia, composto dia a dia, com o CDI diário implícito na curva.
-function cdiPercentFactor(pts, d, p) {
+export function cdiPercentFactor(pts, d, p) {
   let f = 1
   let prev = 1
   for (let i = 1; i <= d; i++) {
@@ -49,8 +49,8 @@ export function taxOnYield(gain, holdDays) {
 // calDays = dias corridos do prazo; monthBase = base do "ao mês": 'cal' (30 dias corridos) ou 'du' (21 dias úteis).
 // Empréstimo ('borrow'): compara o custo com o rendimento da aplicação (appPct % do CDI), bruto ou, com net, líquido de IOF e IR (tabela regressiva
 // pelos dias corridos do prazo mais ageDays já aplicados). Quem decide é a diferença: rendimento que se perde ao resgatar × custo do empréstimo.
-export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest', calDays = null, monthBase = 'du', appPct = 100, net = false, ageDays = 0, accrued = 0 }) {
-  if (!(value > 0) || !(d > 0) || !Number.isFinite(rate)) return { error: 'Preencha valor, prazo e taxa.' }
+// Fator de capitalização da taxa informada ao longo do prazo, e o fator do DI (curva) no mesmo prazo. { F, G } ou { error }.
+export function opFactor({ pts, d, value, mode, rate, unit = 'aa', calDays = null, monthBase = 'du' }) {
   const G = growthAt(pts, d)
   if (G == null) return { error: 'Prazo fora da curva DI (vai até o último vértice).' }
   let F
@@ -62,6 +62,44 @@ export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest
   else if (mode === 'cdi') F = cdiPercentFactor(pts, d, rate)
   else F = G * rateFactor(rate, unit === 'periodo' ? 'aa' : unit, d, calDays, monthBase)
   if (!Number.isFinite(F) || F <= 0) return { error: 'Taxa inválida.' }
+  return { F, G }
+}
+
+// Aplicação financeira: rendimento bruto e líquido. kind 'cdb' (CDB/RDB: IOF e IR regressivo pelos dias corridos, mais ageDays já aplicados) ou
+// 'isento' (ex.: LCI/LCA para pessoa física: sem IR). A taxa é lida pela curva DI (mode/unit/monthBase como em compare).
+export function investment({ pts, d, calDays, value, mode, rate, unit = 'aa', monthBase = 'du', kind = 'cdb', ageDays = 0 }) {
+  if (!(value > 0) || !(d > 0) || !Number.isFinite(rate)) return { error: 'Preencha valor, prazo e rentabilidade.' }
+  const f = opFactor({ pts, d, value, mode, rate, unit, calDays, monthBase })
+  if (f.error) return f
+  const { F, G } = f
+  const block = (x) => ({ fv: value * x, aa: aa(x, d), am: am(x, d, calDays, monthBase), period: (x - 1) * 100, gain: value * (x - 1) })
+  const gross = block(F)
+  const cdi = block(G)
+  const holdDays = (calDays ?? 0) + (Number.isFinite(ageDays) ? Math.max(0, ageDays) : 0)
+  const tax = kind === 'cdb' ? taxOnYield(gross.gain, holdDays) : { iofPct: 0, iof: 0, irPct: 0, ir: 0, total: 0, holdDays }
+  const net = block(1 + (gross.gain - tax.total) / value)
+  const cdiP = G - 1
+  const pct = (x) => (cdiP > 0 ? (x / 100 / cdiP) * 100 : null)
+  // Equivalências: um CDB que rende líquido o mesmo que um ativo isento precisa pagar mais (gross-up); e o contrário.
+  const irEq = irRate(holdDays) / 100
+  const cdbNeeded = kind === 'isento' ? gross.period / (1 - irEq) : null
+  return {
+    d,
+    gross,
+    net,
+    cdi,
+    tax,
+    pctCdiGross: pct(gross.period),
+    pctCdiNet: pct(net.period),
+    equivalent: kind === 'isento' ? { cdbPeriod: cdbNeeded, cdbPctCdi: pct(cdbNeeded), irPct: irEq * 100 } : null,
+  }
+}
+
+export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest', calDays = null, monthBase = 'du', appPct = 100, net = false, ageDays = 0, accrued = 0 }) {
+  if (!(value > 0) || !(d > 0) || !Number.isFinite(rate)) return { error: 'Preencha valor, prazo e taxa.' }
+  const fo = opFactor({ pts, d, value, mode, rate, unit, calDays, monthBase })
+  if (fo.error) return fo
+  const { F, G } = fo
   const block = (f) => ({ fv: value * f, aa: aa(f, d), am: am(f, d, calDays, monthBase), period: (f - 1) * 100, gain: value * (f - 1) })
   const op = value * F
   const di = value * G

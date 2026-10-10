@@ -198,7 +198,7 @@ test('glossário: toda explicação tem as quatro partes e todo id usado no app 
     assert.ok(g.a.length + g.b.length + g.c.length < 520, `${id} longo demais para um popover`)
   }
   const used = new Set()
-  for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News', 'Calculadora', 'Finimp']) {
+  for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News', 'Calculadora', 'Finimp', 'Giro', 'Aplicacao']) {
     for (const m of readFileSync(new URL(`../src/${f}.jsx`, import.meta.url), 'utf8').matchAll(/<Explain id="(\w+)"/g)) used.add(m[1])
   }
   for (const id of used) assert.ok(GLOSSARY[id], `id sem texto: ${id}`)
@@ -440,4 +440,56 @@ test('calculadora: valor total pago deduz a taxa, o equivalente ao mês e o % do
   // equilíbrio em R$: pagar esse total empata com o rendimento da aplicação
   const eq = compare({ ...base, mode: 'total', rate: viaTotal.breakeven })
   assert.ok(Math.abs(eq.diff) < 1e-6)
+})
+
+import { addMonths, giro, giroVsCdi } from '../src/giro.js'
+import { investment } from '../src/calc.js'
+test('capital de giro: Price, SAC, bullet, custo efetivo com despesas e comparação com o DI', () => {
+  assert.equal(addMonths('2026-01-31', 1), '2026-02-28')
+  assert.equal(addMonths('2028-01-31', 1), '2028-02-29')
+  assert.equal(addMonths('2026-11-15', 3), '2027-02-15')
+  const base = { value: 100000, n: 12, rate: 2, unit: 'am', start: '2026-10-15' }
+  const pr = giro({ ...base, structure: 'price' })
+  const pmt = (100000 * 0.02) / (1 - 1.02 ** -12)
+  assert.ok(Math.abs(pr.rows[0].payment - pmt) < 1e-6 && Math.abs(pr.rows[11].payment - pmt) < 1e-6)
+  assert.equal(pr.rows.at(-1).balance, 0)
+  assert.ok(Math.abs(pr.totalPaid - pmt * 12) < 1e-6)
+  assert.ok(Math.abs(pr.cost.am - 2) < 1e-6) // sem despesas, custo efetivo = taxa
+  const sac = giro({ ...base, structure: 'sac' })
+  assert.ok(Math.abs(sac.rows[0].amort - 100000 / 12) < 1e-9 && sac.rows[0].interest === 2000)
+  assert.ok(sac.totalInterest < pr.totalInterest) // SAC paga menos juros que Price
+  const bu = giro({ ...base, structure: 'bullet' })
+  assert.ok(Math.abs(bu.totalPaid - 100000 * 1.02 ** 12) < 1e-6)
+  assert.equal(bu.rows.slice(0, 11).every((r) => r.payment === 0), true)
+  assert.ok(Math.abs(bu.avgLife - 12) < 1e-9)
+  // taxa ao ano convertida: 12,6825% a.a. = 1% a.m.
+  assert.ok(Math.abs(giro({ ...base, rate: (1.01 ** 12 - 1) * 100, unit: 'aa', structure: 'price' }).i - 1) < 1e-9)
+  // despesas à vista aumentam o custo efetivo acima da taxa
+  assert.ok(giro({ ...base, structure: 'price', fees: 3000 }).cost.am > 2)
+  // taxa zero
+  assert.ok(Math.abs(giro({ ...base, rate: 0, structure: 'price' }).totalInterest) < 1e-9)
+  // validação: faltas listadas, sem inventar valores
+  assert.deepEqual(giro({ value: NaN, n: 12, structure: '', rate: 1, start: '2026-10-15' }).missing, ['valor', 'estrutura de pagamento'])
+  // comparação com o DI no prazo médio (curva plana 10%): custo de 2% a.m. (26,8% a.a.) = 268% do CDI
+  const cmp = giroVsCdi([[63, 10], [252, 10], [504, 10]], pr)
+  assert.ok(Math.abs(cmp.diAa - 10) < 1e-6 && Math.abs(cmp.pctCdi - pr.cost.aa / 10 * 100) < 1e-6)
+})
+test('aplicação financeira: CDB líquido de IR regressivo, ativo isento e equivalência', () => {
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  const base = { pts: flat, d: 252, calDays: 365, value: 100000, mode: 'cdi', rate: 100 }
+  const cdb = investment({ ...base, kind: 'cdb' })
+  assert.ok(Math.abs(cdb.gross.gain - 10000) < 1e-6) // 10% em 1 ano
+  assert.equal(cdb.tax.irPct, 17.5) // 365 dias: faixa de 361 a 720
+  assert.ok(Math.abs(cdb.net.gain - 8250) < 1e-6)
+  assert.ok(Math.abs(cdb.pctCdiNet - 82.5) < 1e-6 && Math.abs(cdb.pctCdiGross - 100) < 1e-6)
+  const iso = investment({ ...base, kind: 'isento', rate: 90 })
+  assert.equal(iso.tax.total, 0)
+  assert.ok(iso.net.gain > 8900 && iso.net.gain < 9100)
+  // um CDB precisa pagar o líquido dividido por (1 − 17,5%) para empatar com o isento
+  assert.ok(Math.abs(iso.equivalent.cdbPeriod - iso.gross.period / (1 - 0.175)) < 1e-9)
+  assert.ok(iso.equivalent.cdbPctCdi > 100) // 90% isento equivale a mais de 100% do CDI em CDB
+  // até 30 dias: IOF regressivo antes do IR
+  const curto = investment({ ...base, d: 14, calDays: 20, kind: 'cdb' })
+  assert.ok(curto.tax.iofPct > 0 && curto.tax.total > curto.tax.ir)
+  assert.match(investment({ ...base, value: 0 }).error, /Preencha/)
 })
