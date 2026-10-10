@@ -56,7 +56,6 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
           VITE_DATA_BASE: https://raw.githubusercontent.com/${{ github.repository }}/data
       - uses: actions/upload-pages-artifact@v3
         with:

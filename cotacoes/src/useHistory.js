@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { CURRENCIES, DATA_BASE, friendlyError, withKey } from './useQuotes.js'
+import { DATA_BASE, friendlyError } from './useQuotes.js'
 
-const BASE = 'https://economia.awesomeapi.com.br/json/daily'
 export const MAX_DAYS = 360 // limite do endpoint diário da AwesomeAPI
 const cache = new Map()
 
@@ -13,24 +12,34 @@ export const fromInput = (s) => {
   return new Date(y, m - 1, d)
 }
 
-// O endpoint devolve só 1 registro se a quantidade não for informada: /{par}/{quantidade}?start_date&end_date
-export function historyUrl(from, start, end) {
-  const days = Math.round((end - start) / 864e5) + 1
-  return `${BASE}/${from}-BRL/${Math.min(days, 360)}?start_date=${toYmd(start)}&end_date=${toYmd(end)}`
+// Histórico diário (360 dias) coletado pelo robô do GitHub (history.json, branch `data`): a chave da API não sai de lá.
+let centralPromise = null
+let centralAt = 0
+function loadCentralHistory() {
+  if (!DATA_BASE) return Promise.reject(new Error('coleta central não configurada'))
+  if (!centralPromise || Date.now() - centralAt > 600000) {
+    centralAt = Date.now()
+    centralPromise = fetch(`${DATA_BASE}/history.json?t=${Math.floor(Date.now() / 600000)}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .catch((e) => {
+        centralPromise = null
+        throw e
+      })
+  }
+  return centralPromise
 }
 
-async function fetchSeries(from, start, end, signal) {
-  const url = historyUrl(from, start, end)
-  const res = await fetch(withKey(url), { signal })
-  if (!res.ok) throw new Error(`${from}: HTTP ${res.status}`)
-  const rows = await res.json()
-  if (!Array.isArray(rows) || !rows.length) throw new Error(`${from}: sem dados no período`)
-  const byDay = new Map()
-  for (const r of rows) {
-    const t = Number(r.timestamp) * 1000
-    byDay.set(toYmd(new Date(t)), { t, bid: Number(r.bid), high: Number(r.high), low: Number(r.low) })
-  }
-  return { source: from, points: [...byDay.values()].sort((a, b) => a.t - b.t) }
+// Recorte do arquivo central; só vale se ele cobre o início do período pedido.
+export function pickCentral(file, code, start, end) {
+  const s = file?.series?.[code]
+  if (!s?.points?.length) throw new Error(`${code}: histórico central sem dados`)
+  if (s.points[0].t > start.getTime() + 5 * 864e5) throw new Error(`${code}: período maior que o histórico central`)
+  const points = sliceRange(s.points, start, end)
+  if (!points.length) throw new Error(`${code}: sem dados no período`)
+  return { source: s.source, points }
 }
 
 // Reserva: referências diárias do BCE (Frankfurter), sem máxima/mínima. { rates: { 'AAAA-MM-DD': { BRL: n } } } -> pontos.
@@ -54,16 +63,13 @@ async function fetchEcbHistory(code, start, end, signal) {
 
 async function fetchHistory(currency, start, end, signal) {
   const errors = []
-  for (const from of currency.sources) {
-    try {
-      return await fetchSeries(from, start, end, signal)
-    } catch (e) {
-      if (e.name === 'AbortError') throw e
-      errors.push(e.message)
-    }
+  try {
+    return pickCentral(await loadCentralHistory(), currency.code, start, end)
+  } catch (e) {
+    errors.push(e.message)
   }
   try {
-    return await fetchEcbHistory(currency.code, start, end, signal)
+    return await fetchEcbHistory(currency.code, start, end, signal) // reserva e períodos longos: referência diária do BCE
   } catch (e) {
     if (e.name === 'AbortError') throw e
     errors.push(e.message)
@@ -130,7 +136,7 @@ export function useHistory(code, start, end, skip = false) {
     setState({ key, status: 'loading' })
     let p = inflight.get(fkey)
     if (!p) {
-      p = fetchHistory(CURRENCIES.find((c) => c.code === code), full ? win.start : start, full ? win.end : end, undefined)
+      p = fetchHistory({ code }, full ? win.start : start, full ? win.end : end, undefined)
         .then((data) => {
           cache.set(fkey, data)
           if (full) writeStore(fkey, data)

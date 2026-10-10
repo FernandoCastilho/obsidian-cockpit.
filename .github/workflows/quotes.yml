@@ -1,6 +1,6 @@
 name: Cotações (coleta central)
 
-# Um único robô consulta a AwesomeAPI e publica quotes.json e intraday.json na branch `data`.
+# Um único robô consulta a AwesomeAPI e publica quotes.json, intraday.json e history.json na branch `data`.
 # Todos os usuários leem esses arquivos: a cota da API não depende de quantas pessoas abrem a página.
 on:
   schedule:
@@ -29,7 +29,7 @@ jobs:
           mkdir -p /tmp/data
           if git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
             git fetch --depth=1 origin data
-            for f in quotes.json intraday.json; do git show FETCH_HEAD:$f > /tmp/data/$f 2>/dev/null || true; done
+            for f in quotes.json intraday.json history.json; do git show FETCH_HEAD:$f > /tmp/data/$f 2>/dev/null || true; done
           fi
       - name: Coletar
         run: node cotacoes/scripts/fetch-quotes.mjs
