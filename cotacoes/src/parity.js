@@ -1,4 +1,4 @@
-// Paridade dólar/euro calculada a partir das séries USD/BRL e EUR/BRL (sem consultar outro par).
+// Paridade EUR/USD calculada a partir das séries USD/BRL e EUR/BRL (sem consultar outro par). invert=false: USD/EUR; invert=true: EUR/USD.
 const day = (t) => {
   const d = new Date(t)
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
@@ -25,10 +25,10 @@ export function mergeTicks(usd, eur, invert = false) {
   return out
 }
 
-// Paridade ao vivo (euros por 1 dólar) a partir das cotações USD/BRL e EUR/BRL.
-// compra = dólar compra ÷ euro venda; venda = dólar venda ÷ euro compra; principal = dólar compra ÷ euro compra.
+// Paridade ao vivo EUR/USD (dólares por 1 euro, convenção de mercado) a partir das cotações USD/BRL e EUR/BRL.
+// compra = euro compra ÷ dólar venda; venda = euro venda ÷ dólar compra; principal = euro compra ÷ dólar compra.
 export function liveParity(usd, eur) {
   if (!usd || !eur || !(usd.bid > 0) || !(eur.bid > 0) || !(eur.ask > 0) || !(usd.ask > 0)) return null
-  const pct = ((1 + usd.pct / 100) / (1 + eur.pct / 100) - 1) * 100
-  return { main: usd.bid / eur.bid, buy: usd.bid / eur.ask, sell: usd.ask / eur.bid, pct: Number.isFinite(pct) ? pct : 0 }
+  const pct = ((1 + eur.pct / 100) / (1 + usd.pct / 100) - 1) * 100
+  return { main: eur.bid / usd.bid, buy: eur.bid / usd.ask, sell: eur.ask / usd.bid, pct: Number.isFinite(pct) ? pct : 0 }
 }

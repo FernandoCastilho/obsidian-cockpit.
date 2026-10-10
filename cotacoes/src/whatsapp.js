@@ -6,7 +6,7 @@ const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).
 // verde = alta, vermelho = queda (o triângulo vermelho dos emojis de seta parecia queda nos dois sentidos)
 const arrow = (v) => (v > 0 ? '🟢' : v < 0 ? '🔴' : '⚪')
 
-export const DISCLAIMER = 'Valores ilustrativos, em reais (paridade em euros). Para cotações reais, consulte a Tesouraria do Itaú.'
+export const DISCLAIMER = 'Valores ilustrativos, em reais (paridade em dólares por euro). Para cotações reais, consulte a Tesouraria do Itaú.'
 
 const stampOf = (when) =>
   `${when.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${when.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`
@@ -21,7 +21,7 @@ function rows(quotes) {
   if (par) {
     const usd = CURRENCIES.find((c) => c.code === 'USD')
     const eur = CURRENCIES.find((c) => c.code === 'EUR')
-    list.push({ key: 'USD', pair: ['USD', 'EUR'], country: 'USEU', icon: `${usd.flag}${eur.flag}`, code: 'USD/EUR', price: `€ ${num(par.main)}`, trend: `${arrow(par.pct)} ${pct(par.pct)}` })
+    list.push({ key: 'EUR', pair: ['EUR', 'USD'], country: 'EUUS', icon: `${eur.flag}${usd.flag}`, code: 'EUR/USD', price: `US$ ${num(par.main)}`, trend: `${arrow(par.pct)} ${pct(par.pct)}` })
   }
   return list
 }
@@ -47,7 +47,7 @@ export function buildHtml(quotes, when = new Date(), pngs = {}) {
   const lines = r
     .map((x) => {
       const img = (k, alt) => (pngs[k] ? `<img src="${pngs[k]}" width="18" height="12" alt="${alt}" style="vertical-align:middle">` : '')
-      const flag = x.pair ? img('USD', 'US') + img('EUR', 'EU') || x.icon : img(x.key, x.country) || x.icon
+      const flag = x.pair ? x.pair.map((k) => img(k, k)).join('') || x.icon : img(x.key, x.country) || x.icon
       return `${flag}&nbsp;<b>${x.code}</b>&nbsp;&nbsp;${x.price}&nbsp;&nbsp;${x.trend}`
     })
     .join('<br>')

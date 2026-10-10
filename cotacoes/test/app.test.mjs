@@ -37,9 +37,12 @@ test('variações por intervalo e volatilidade', () => {
   assert.equal(rangeStats(undefined), null)
 })
 
-test('paridade: dólar ÷ euro, nos dois sentidos', () => {
+test('paridade EUR/USD: euro ÷ dólar (padrão de mercado) e inversão no histórico', () => {
   const p = liveParity({ bid: 5.3, ask: 5.31, pct: 0 }, { bid: 6.1, ask: 6.12, pct: 0 })
-  assert.ok(Math.abs(p.main - 5.3 / 6.1) < 1e-12)
+  assert.ok(Math.abs(p.main - 6.1 / 5.3) < 1e-12)
+  assert.ok(p.main > 1) // dólares por euro
+  assert.ok(Math.abs(p.buy - 6.1 / 5.31) < 1e-12 && Math.abs(p.sell - 6.12 / 5.3) < 1e-12)
+  assert.ok(p.buy < p.sell)
   assert.equal(liveParity(null, { bid: 1, ask: 1 }), null)
   const t0 = new Date('2026-10-08T12:00:00').getTime()
   assert.equal(mergeDaily([{ t: t0, bid: 5 }], [{ t: t0, bid: 10 }]).at(0).bid, 0.5)
@@ -50,7 +53,9 @@ test('paridade: dólar ÷ euro, nos dois sentidos', () => {
 test('mensagem do WhatsApp e resumo do dia', () => {
   const q = (b, p) => ({ bid: b, ask: b, pct: p })
   const quotes = { USD: q(5.3, 0.4), EUR: q(6.1, -0.2) }
-  assert.match(buildMessage(quotes, new Date('2026-10-10T12:00:00')), /\*USD\* R\$ 5,3000 🟢/)
+  const msg = buildMessage(quotes, new Date('2026-10-10T12:00:00'))
+  assert.match(msg, /\*USD\* R\$ 5,3000 🟢/)
+  assert.match(msg, /\*EUR\/USD\* US\$ 1,1509/)
   const br = { compare: [{ id: 'hoje', date: '2026-10-08' }, { id: 'd1', date: '2026-10-07' }], curves: { '2026-10-08': [[252, 13.8]], '2026-10-07': [[252, 13.85]] } }
   const text = buildSummary({ quotes, macro: { sofr: [[Date.UTC(2026, 9, 8, 12), 3.87]], cdi: [[0, 14.9]], selic: [[0, 15]] }, curves: { br } })
   assert.match(text, /DI x pré/)
