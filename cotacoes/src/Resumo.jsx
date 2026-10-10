@@ -19,6 +19,7 @@ const SPARK = [
   { id: 'month', label: 'Mês', days: 30 },
   { id: 'year', label: 'Ano', days: 359 },
 ]
+const toneOf = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat')
 const NAMES = { USD: 'Dólar', EUR: 'Euro', JPY: 'Iene', CNH: 'Yuan' }
 const ago = (t) => {
   const min = Math.max(0, Math.round((Date.now() - t) / 60000))
@@ -44,8 +45,9 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
   const s = spark.intraday ? i : h
   const pts = s.status === 'ok' ? s.data.points : []
   const change = periodChange(pts)
-  const day = quote?.pct ?? 0
-  const trend = day > 0 ? 'up' : day < 0 ? 'down' : 'flat'
+  const hasDay = !!quote && !quote.fallback // a fonte reserva (BCE) não traz a variação do dia
+  const day = hasDay ? quote.pct ?? 0 : 0
+  const trend = toneOf(hasDay ? day : change)
   const cur = CURRENCIES.find((c) => c.code === code)
   return (
     <button type="button" className={`tile${wide ? ' wide' : ''}`} onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
@@ -58,10 +60,12 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
       <span className="tile-body">
         <span className="tile-num">
           <span className="tile-price">{quote ? brl(quote.bid) : '—'}</span>
-          {quote && (
+          {hasDay ? (
             <span className={`pct ${trend}`}>
               <Arrow v={day} /> {pct(day)}
             </span>
+          ) : (
+            quote && <small className="muted">var. do dia indisponível</small>
           )}
           {ptax && <small className="muted">PTAX: {brl(ptax.sell)}</small>}
         </span>
@@ -89,7 +93,8 @@ function ParityTile({ quotes, spark, onOpen }) {
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
   const p = liveParity(quotes?.USD, quotes?.EUR)
-  const trend = (p?.pct ?? 0) > 0 ? 'up' : (p?.pct ?? 0) < 0 ? 'down' : 'flat'
+  const hasDay = !!p && !quotes.USD.fallback && !quotes.EUR.fallback
+  const trend = toneOf(hasDay ? p.pct : change)
   return (
     <button type="button" className="tile wide" onClick={() => onOpen('PAR')} aria-label="Paridade EUR/USD: detalhes">
       <span className="tile-head">
@@ -104,10 +109,12 @@ function ParityTile({ quotes, spark, onOpen }) {
       <span className="tile-body">
         <span className="tile-num">
           <span className="tile-price">{p ? `US$ ${p.main.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}` : '—'}</span>
-          {p && (
+          {hasDay ? (
             <span className={`pct ${trend}`}>
               <Arrow v={p.pct} /> {pct(p.pct)}
             </span>
+          ) : (
+            p && <small className="muted">var. do dia indisponível</small>
           )}
           <small className="muted">dólares por 1 euro</small>
         </span>
