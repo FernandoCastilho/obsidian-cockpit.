@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
+import { CURRENCIES, REFRESH_DAILY_MAX, seriesName, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
@@ -130,7 +130,7 @@ function Card({ currency, quote, dir, err, ptax, onRetry }) {
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="24" height="16"') }} />
         <div>
           <h2>{quote?.source ?? currency.code}/BRL</h2>
-          <p>{currency.name}</p>
+          <p>{seriesName(currency, quote?.source)}</p>
         </div>
       </header>
       {quote ? (
@@ -514,7 +514,7 @@ export default function App() {
 
       <Novidades />
       <footer>
-        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · CNH = yuan offshore (CNY se indisponível)</p>
+        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNY/BRL (onshore); CNH (offshore) por cruzamento quando o CNY está parado</p>
         <p><i>{DISCLAIMER}</i></p>
       </footer>
 
