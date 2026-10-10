@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { busDays } from './cdiFuturo.js'
 import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
+import Finimp from './Finimp.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
@@ -19,7 +20,7 @@ const TERMS = [
   { label: '3 anos', days: 1095 },
 ]
 
-export default function Calculadora({ curves }) {
+function OperacaoDi({ curves }) {
   const br = curves.data?.br
   const today = br?.compare?.find((c) => c.id === 'hoje')
   const pts = today ? br.curves[today.date] : null
@@ -38,10 +39,7 @@ export default function Calculadora({ curves }) {
   const m = MODES.find((x) => x.id === mode)
 
   return (
-    <section className="macro calc" aria-labelledby="calc-h">
-      <h2 id="calc-h">
-        Calculadora: operação × DI <Explain id="calculadora" />
-      </h2>
+    <>
       {curves.status === 'loading' && <div className="placeholder">Carregando curva DI…</div>}
       {curves.status !== 'loading' && !pts && <p className="status">Calculadora indisponível: depende da curva DI x pré da B3, que não veio na última atualização.</p>}
       {pts && (
@@ -110,6 +108,24 @@ export default function Calculadora({ curves }) {
           ) : null}
         </article>
       )}
+    </>
+  )
+}
+
+export default function Calculadora({ curves }) {
+  const [mode, setMode] = useState('di')
+  return (
+    <section className="macro calc" aria-labelledby="calc-h">
+      <div className="history-head">
+        <h2 id="calc-h">
+          Calculadora <Explain id={mode === 'di' ? 'calculadora' : 'finimp'} />
+        </h2>
+        <div className="seg" role="group" aria-label="Tipo de cálculo">
+          <button type="button" aria-pressed={mode === 'di'} onClick={() => setMode('di')}>Operação × DI</button>
+          <button type="button" aria-pressed={mode === 'finimp'} onClick={() => setMode('finimp')}>FINIMP</button>
+        </div>
+      </div>
+      {mode === 'di' ? <OperacaoDi curves={curves} /> : <Finimp />}
     </section>
   )
 }

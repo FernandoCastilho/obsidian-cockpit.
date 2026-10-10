@@ -1,5 +1,6 @@
 // Registro de mudanças para a equipe. Acrescente as novas entradas no topo.
 const ENTRIES = [
+  { date: '10/10/2026', items: ['Calculadora FINIMP (fase 1): simulação de juros e cronograma na moeda original (USD, EUR, JPY) com taxa informada por você, ACT/360 ou ACT/365F, juros proporcionais ou compostos e estruturas bullet, juros periódicos e amortizações. Memória de cálculo, reconciliação e cópia do cronograma para Excel.'] },
   { date: '10/10/2026', items: ['Nova aba Calculadora: compara uma operação (pré, % do CDI ou CDI + spread) com aplicar no DI pelo mesmo prazo, usando a curva DI x pré da B3. Mostra taxa efetiva, rendimento, diferença em R$ e em bps, e o equivalente em % do CDI.', 'Faixa de juros fixa no topo de todas as abas.'] },
   { date: '10/10/2026', items: ['Botão "?" em gráficos e indicadores (cotações, histórico, paridade, Selic, CDI, SOFR, DI, Treasury, curvas, CDI futuro, Focus, agenda, notícias) com explicação curta: o que é, exemplo e uso na prática.'] },
   { date: '10/10/2026', items: ['CDI futuro: taxa a termo implícita na curva DI x pré da B3, em gráfico e tabela por horizonte (3 meses a 5 anos), na aba Juros.'] },

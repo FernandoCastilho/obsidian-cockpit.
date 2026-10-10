@@ -198,7 +198,7 @@ test('glossário: toda explicação tem as quatro partes e todo id usado no app 
     assert.ok(g.a.length + g.b.length + g.c.length < 520, `${id} longo demais para um popover`)
   }
   const used = new Set()
-  for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News']) {
+  for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News', 'Calculadora', 'Finimp']) {
     for (const m of readFileSync(new URL(`../src/${f}.jsx`, import.meta.url), 'utf8').matchAll(/<Explain id="(\w+)"/g)) used.add(m[1])
   }
   for (const id of used) assert.ok(GLOSSARY[id], `id sem texto: ${id}`)
@@ -223,4 +223,76 @@ test('calculadora: parse de números e comparação com a curva DI', () => {
   assert.equal(compare({ ...base, mode: 'cdi', rate: 110, side: 'borrow' }).good, false) // paga mais que o DI
   assert.match(compare({ pts: flat, d: 900, value: 1000, mode: 'pre', rate: 10 }).error, /fora da curva/)
   assert.match(compare({ ...base, value: NaN, mode: 'pre', rate: 10 }).error, /Preencha/)
+})
+
+import { daysBetween, simulate, toTsv } from '../src/finimp.js'
+const FI = { currency: 'USD', disb: [{ date: '2026-01-15', amount: 1000000 }], structure: 'bullet', maturity: '2026-07-14', rate: 6, rule: 'prop', dayCount: 'ACT/360' }
+test('FINIMP: bloqueia sem convenção/regra/taxa e lista só o que falta; ausente não vira zero', () => {
+  const r = simulate({ ...FI, dayCount: '', rule: '', rate: NaN })
+  assert.equal(r.ok, false)
+  assert.equal(r.missing.length, 3)
+  assert.ok(r.missing.some((m) => /convenção/.test(m)) && r.missing.some((m) => /regra/.test(m)) && r.missing.some((m) => /taxa/.test(m)))
+  assert.equal(simulate({ ...FI, rate: 0 }).ok, true) // zero informado é diferente de ausente
+})
+test('FINIMP: taxa zero, proporcional ACT/360 e ACT/365F, e bullet sem capitalização', () => {
+  assert.equal(simulate({ ...FI, rate: 0 }).totals.interest, 0)
+  const d = daysBetween('2026-01-15', '2026-07-14') // 180 dias
+  assert.equal(d, 180)
+  const a = simulate(FI)
+  assert.ok(Math.abs(a.totals.interest - 1e6 * 0.06 * (180 / 360)) < 1e-6) // 30.000
+  const b = simulate({ ...FI, dayCount: 'ACT/365F' })
+  assert.ok(Math.abs(b.totals.interest - 1e6 * 0.06 * (180 / 365)) < 1e-6)
+  assert.ok(a.totals.interest > b.totals.interest)
+  assert.equal(a.rows.length, 2) // desembolso e vencimento: juros pagos só no vencimento, sem capitalizar
+  assert.equal(a.rows[1].amortization, 1e6)
+  assert.ok(a.checks.every((c) => c.ok))
+})
+test('FINIMP: composta × proporcional e ano bissexto (ACT/365F usa 365 mesmo em 366 dias)', () => {
+  const c = simulate({ ...FI, rule: 'comp' })
+  assert.ok(Math.abs(c.totals.interest - 1e6 * (1.06 ** (180 / 360) - 1)) < 1e-6)
+  assert.ok(c.totals.interest < simulate(FI).totals.interest + 1) // composta em fração < 1 é menor que a linear
+  const leap = simulate({ ...FI, disb: [{ date: '2024-01-01', amount: 1000 }], maturity: '2025-01-01', dayCount: 'ACT/365F' })
+  assert.equal(daysBetween('2024-01-01', '2025-01-01'), 366)
+  assert.ok(Math.abs(leap.totals.interest - 1000 * 0.06 * (366 / 365)) < 1e-9)
+})
+test('FINIMP: juros periódicos, períodos irregulares e composta aditiva entre trechos', () => {
+  const one = simulate({ ...FI, rule: 'comp' })
+  // juros pagos em data intermediária: a composta de cada período parte do início do período, sem capitalizar
+  const per = simulate({ ...FI, rule: 'comp', structure: 'periodic', interestDates: ['2026-04-15'] })
+  assert.equal(per.rows.filter((r) => r.interestPaid > 0).length, 2)
+  const d1 = daysBetween('2026-01-15', '2026-04-15')
+  const d2 = daysBetween('2026-04-15', '2026-07-14')
+  assert.ok(Math.abs(per.totals.interest - 1e6 * ((1.06 ** (d1 / 360) - 1) + (1.06 ** (d2 / 360) - 1))) < 1e-6)
+  assert.ok(per.checks.every((c) => c.ok) && one.checks.every((c) => c.ok))
+  // desembolso no meio do período: soma dos trechos (composta aditiva) = fórmula fechada para saldo constante
+  const split = simulate({ ...FI, rule: 'comp', disb: [{ date: '2026-01-15', amount: 500000 }, { date: '2026-03-01', amount: 500000 }] })
+  const f = (a, b) => daysBetween(a, b) / 360
+  const exp = 500000 * (1.06 ** f('2026-01-15', '2026-07-14') - 1) + 500000 * (1.06 ** f('2026-01-15', '2026-07-14') - 1.06 ** f('2026-01-15', '2026-03-01'))
+  assert.ok(Math.abs(split.totals.interest - exp) < 1e-6)
+})
+test('FINIMP: amortização parcial por valor e por percentual, soma e saldo validados', () => {
+  const base = { ...FI, structure: 'amort', rule: 'prop' }
+  const ok = simulate({ ...base, amort: [{ date: '2026-04-15', kind: 'pct', amount: 40 }, { date: '2026-07-14', kind: 'value', amount: 600000 }] })
+  assert.equal(ok.ok, true)
+  assert.equal(ok.maturity, '2026-07-14')
+  const first = ok.rows.find((r) => r.date === '2026-04-15')
+  assert.equal(first.amortization, 400000)
+  const j1 = 1e6 * 0.06 * (daysBetween('2026-01-15', '2026-04-15') / 360)
+  const j2 = 600000 * 0.06 * (daysBetween('2026-04-15', '2026-07-14') / 360)
+  assert.ok(Math.abs(ok.totals.interest - (j1 + j2)) < 1e-6)
+  assert.ok(ok.checks.every((c) => c.ok))
+  assert.match(simulate({ ...base, amort: [{ date: '2026-07-14', kind: 'value', amount: 900000 }] }).errors[0], /soma das amortizações/)
+  assert.match(simulate({ ...base, amort: [{ date: '2026-04-15', kind: 'value', amount: 1000000 }, { date: '2026-07-14', kind: 'value', amount: 1 }] }).errors.join(' '), /soma das amortizações|Saldo negativo/)
+})
+test('FINIMP: arredondamento explícito por parcela, JPY sem casas e cópia para Excel', () => {
+  const r = simulate({ ...FI, disb: [{ date: '2026-01-15', amount: 123456.78 }], round: true })
+  assert.equal(r.rows[1].interestPaid, Math.round(r.rows[1].interestPaid * 100) / 100)
+  const jpy = simulate({ ...FI, currency: 'JPY', disb: [{ date: '2026-01-15', amount: 100000000 }], round: true })
+  assert.equal(jpy.dec, 0)
+  assert.equal(jpy.rows[1].interestPaid, Math.round(jpy.rows[1].interestPaid))
+  assert.match(toTsv(r), /^Data\tSaldo inicial/)
+})
+test('FINIMP: validações de datas', () => {
+  assert.match(simulate({ ...FI, maturity: '2026-01-15' }).errors.join(' '), /posterior/)
+  assert.match(simulate({ ...FI, structure: 'periodic', interestDates: ['2027-01-01'] }).errors.join(' '), /fora do prazo/)
 })
