@@ -301,3 +301,4 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .fin-table td, .fin-table th { white-space:nowrap; }
 .fin-table td:first-child { text-align:left; }
 .finimp .btn.small { font-size:.8rem; padding:6px 10px; }
+.calc-conv { margin:0 0 10px; font-size:.92rem; line-height:1.5; }

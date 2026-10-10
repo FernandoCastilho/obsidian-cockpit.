@@ -218,7 +218,7 @@ test('calculadora: parse de números e comparação com a curva DI', () => {
   assert.ok(Math.abs(di.diff) < 1e-6 && Math.abs(di.op.fv - 1100) < 1e-6)
   assert.ok(Math.abs(compare({ ...base, mode: 'pre', rate: 10 }).diff) < 1e-6)
   const c110 = compare({ ...base, mode: 'cdi', rate: 110 })
-  assert.ok(c110.diff > 0 && c110.good && Math.abs(c110.cdiEquivalent - 110) < 1e-6)
+  assert.ok(c110.diff > 0 && c110.good && Math.abs(c110.cdiEquivalent - 110.532) < 0.01)
   assert.ok(compare({ ...base, mode: 'spread', rate: 1 }).diffBps > 99)
   assert.equal(compare({ ...base, mode: 'cdi', rate: 110, side: 'borrow' }).good, false) // paga mais que o DI
   assert.match(compare({ pts: flat, d: 900, value: 1000, mode: 'pre', rate: 10 }).error, /fora da curva/)
@@ -295,4 +295,26 @@ test('FINIMP: arredondamento explícito por parcela, JPY sem casas e cópia para
 test('FINIMP: validações de datas', () => {
   assert.match(simulate({ ...FI, maturity: '2026-01-15' }).errors.join(' '), /posterior/)
   assert.match(simulate({ ...FI, structure: 'periodic', interestDates: ['2027-01-01'] }).errors.join(' '), /fora do prazo/)
+})
+
+import { rateFactor } from '../src/calc.js'
+test('calculadora: taxa ao mês, no período e % do CDI do período', () => {
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  const base = { pts: flat, d: 252, value: 1000, mode: 'pre' }
+  // 1% ao mês composto por 12 meses (252 d.u.) = 12,6825% no período e a.a.
+  const m = compare({ ...base, unit: 'am', rate: 1 })
+  assert.ok(Math.abs(m.op.period - (1.01 ** 12 - 1) * 100) < 1e-9)
+  assert.ok(Math.abs(m.op.aa - m.op.period) < 1e-9)
+  assert.ok(Math.abs(m.op.am - 1) < 1e-9)
+  // mesma taxa expressa ao ano ou no período dá o mesmo resultado
+  const a = compare({ ...base, unit: 'aa', rate: (1.01 ** 12 - 1) * 100 })
+  const p = compare({ ...base, unit: 'periodo', rate: (1.01 ** 12 - 1) * 100 })
+  assert.ok(Math.abs(a.op.fv - m.op.fv) < 1e-6 && Math.abs(p.op.fv - m.op.fv) < 1e-6)
+  // prazo de 126 d.u. (meio ano): 1% a.m. rende (1,01^6 − 1); CDI do período = 1,10^0,5 − 1
+  const h = compare({ ...base, d: 126, unit: 'am', rate: 1 })
+  assert.ok(Math.abs(h.op.period - (1.01 ** 6 - 1) * 100) < 1e-9)
+  assert.ok(Math.abs(h.cdiEquivalent - ((1.01 ** 6 - 1) / (1.1 ** 0.5 - 1)) * 100) < 1e-6)
+  assert.ok(Math.abs(rateFactor(10, 'am', 21) - 1.1) < 1e-12)
+  // % do CDI composto dia a dia: 100% = DI exato
+  assert.ok(Math.abs(compare({ ...base, mode: 'cdi', rate: 100 }).diff) < 1e-6)
 })

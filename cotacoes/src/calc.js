@@ -10,17 +10,34 @@ export const parseNum = (s) => {
 }
 
 const aa = (factor, d) => (factor ** (252 / d) - 1) * 100
+const am = (factor, d) => (factor ** (21 / d) - 1) * 100 // 1 mês = 21 dias úteis (252 ÷ 12)
 
-// mode: 'pre' (rate = % a.a.), 'cdi' (rate = % do CDI), 'spread' (rate = CDI + % a.a.)
+// Fator da taxa informada ao longo de d dias úteis. Unidades: 'aa' (ao ano, base 252), 'am' (ao mês composto, 21 d.u.), 'periodo' (taxa total do prazo).
+export const rateFactor = (rate, unit, d) => (unit === 'periodo' ? 1 + rate / 100 : unit === 'am' ? (1 + rate / 100) ** (d / 21) : (1 + rate / 100) ** (d / 252))
+
+// % do CDI pela convenção de mercado: cada dia rende p × CDI do dia, composto dia a dia, com o CDI diário implícito na curva.
+function cdiPercentFactor(pts, d, p) {
+  let f = 1
+  let prev = 1
+  for (let i = 1; i <= d; i++) {
+    const g = growthAt(pts, i)
+    if (g == null) return null
+    f *= 1 + (p / 100) * (g / prev - 1)
+    prev = g
+  }
+  return f
+}
+
+// mode: 'pre' (rate na unidade escolhida), 'cdi' (rate = % do CDI), 'spread' (rate = spread sobre o CDI, na unidade escolhida; aa ou am)
 // side: 'invest' (a operação rende) ou 'borrow' (a operação custa). d = dias úteis até o vencimento.
-export function compare({ pts, d, value, mode, rate, side = 'invest' }) {
+export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest' }) {
   if (!(value > 0) || !(d > 0) || !Number.isFinite(rate)) return { error: 'Preencha valor, prazo e taxa.' }
   const G = growthAt(pts, d)
   if (G == null) return { error: 'Prazo fora da curva DI (vai até o último vértice).' }
   let F
-  if (mode === 'pre') F = (1 + rate / 100) ** (d / 252)
-  else if (mode === 'cdi') F = G ** (rate / 100)
-  else F = G * (1 + rate / 100) ** (d / 252)
+  if (mode === 'pre') F = rateFactor(rate, unit, d)
+  else if (mode === 'cdi') F = cdiPercentFactor(pts, d, rate)
+  else F = G * rateFactor(rate, unit === 'periodo' ? 'aa' : unit, d)
   if (!Number.isFinite(F) || F <= 0) return { error: 'Taxa inválida.' }
   const op = value * F
   const di = value * G
@@ -28,12 +45,12 @@ export function compare({ pts, d, value, mode, rate, side = 'invest' }) {
   const good = side === 'invest' ? diff >= 0 : diff <= 0
   return {
     d,
-    di: { fv: di, aa: aa(G, d), gain: di - value },
-    op: { fv: op, aa: aa(F, d), gain: op - value },
+    di: { fv: di, aa: aa(G, d), am: am(G, d), period: (G - 1) * 100, gain: di - value },
+    op: { fv: op, aa: aa(F, d), am: am(F, d), period: (F - 1) * 100, gain: op - value },
     diff,
     diffBps: (aa(F, d) - aa(G, d)) * 100,
-    cdiEquivalent: G > 1 ? (Math.log(F) / Math.log(G)) * 100 : null,
+    cdiEquivalent: G > 1 ? ((F - 1) / (G - 1)) * 100 : null, // taxa da operação no período ÷ CDI da curva no período
     good,
-    breakeven: mode === 'pre' ? aa(G, d) : mode === 'cdi' ? 100 : 0,
+    breakeven: mode === 'pre' ? (unit === 'periodo' ? (G - 1) * 100 : unit === 'am' ? am(G, d) : aa(G, d)) : mode === 'cdi' ? 100 : 0,
   }
 }
