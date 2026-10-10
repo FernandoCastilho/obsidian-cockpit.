@@ -394,3 +394,48 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .pop-close { display:block; width:100%; margin-top:10px; min-height:44px; background:var(--surface-2); color:var(--fg); border:1px solid var(--line); border-radius:10px; font:inherit; cursor:pointer; }
 .help button.pop-close { width:100%; height:auto; min-height:44px; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); color:var(--fg); font:inherit; font-size:.9rem; display:block; cursor:pointer; }
 .help button.pop-close::after { display:none; }
+
+/* ===== Piloto "neon discreto" (Resumo) e navegação ===== */
+:root { --c-usd:#3987e5; --c-eur:#d95926; --c-jpy:#199e70; --c-cnh:#a371f7; --c-par:#d55181; --r-card:12px; --bar-w:3px; --area-opacity:.18; }
+.tile { border-left:var(--bar-w) solid var(--series, var(--line)); border-radius:var(--r-card); }
+.tile-price { font-size:clamp(1.1rem, 5.2vw, 1.3rem); }
+@media (min-width: 700px) { .tile-price { font-size:1.5rem; } .tile.wide { grid-column:span 2; } }
+.tile .pct small.muted { font-weight:400; }
+.resumo-chart { margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:var(--r-card); padding:12px 14px; }
+.resumo-chart h3 { margin:0; font-size:1rem; }
+.resumo-chart .chips button { min-height:32px; padding:3px 10px; }
+/* efeitos opcionais: desligados por padrão (chave "Efeitos" no rodapé) */
+:root[data-fx="neon"] .spark path.line, :root[data-fx="neon"] .plot path.line { filter:drop-shadow(0 0 4px currentColor); }
+@media (prefers-reduced-motion: reduce) { :root[data-fx="neon"] .spark path.line, :root[data-fx="neon"] .plot path.line { filter:none; } }
+@media print { :root[data-fx="neon"] .spark path.line, :root[data-fx="neon"] .plot path.line { filter:none; } }
+.fx-toggle { background:none; border:1px solid var(--line); color:var(--mut); border-radius:999px; padding:6px 12px; font:inherit; font-size:.8rem; cursor:pointer; min-height:32px; }
+.fx-toggle[aria-pressed="true"] { color:var(--fg); border-color:var(--accent); }
+/* faixa de juros: pausa e rótulo mais legível */
+.rates-pause { background:none; border:1px solid var(--line); color:var(--mut); border-radius:8px; width:32px; height:32px; font-size:.7rem; cursor:pointer; position:relative; flex:none; }
+.rates-pause::after { content:''; position:absolute; inset:-6px; }
+.rates-label { color:var(--fg); }
+.wire.paused .wire-track { animation-play-state:paused; }
+/* aviso de feriado compacto */
+.holiday-notice.compact { padding:8px 14px; }
+.holiday-notice.compact summary { cursor:pointer; font-size:.88rem; line-height:1.4; }
+.holiday-notice.compact ul { margin-top:8px; }
+/* "Mais" nas abas: só no celular */
+.more-tab { display:none; position:relative; }
+@media (max-width: 699px) {
+  .tabs button.sec { display:none; }
+  .more-tab { display:flex; flex:1; }
+  .more-tab > button { flex:1; }
+  .more-sheet { position:absolute; right:0; bottom:calc(100% + 10px); background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:6px; min-width:180px; box-shadow:0 8px 24px rgba(0,0,0,.5); display:flex; flex-direction:column; z-index:50; }
+  .more-sheet button { flex-direction:row; justify-content:flex-start; gap:12px; font-size:.95rem; min-height:48px; padding:8px 12px; }
+  /* cabeçalho enxuto */
+  .top { align-items:center; margin-bottom:2px; }
+  .top h1 { font-size:1.25rem; white-space:nowrap; }
+  .top .sub { display:none; }
+  .top-right { gap:8px; }
+  .brt small { display:none; }
+  .brt b { font-size:.8rem; }
+  .src-more { display:none; }
+  .status.src { margin:2px 0 8px; font-size:.82rem; }
+}
+.tile-spark small { white-space:nowrap; }
+@media (max-width: 699px) { .tile-price { font-size:clamp(1.05rem, 4.9vw, 1.25rem); } .tile-spark { max-width:38%; } }

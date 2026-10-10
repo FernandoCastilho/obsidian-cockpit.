@@ -19,12 +19,12 @@ export default function Sparkline({ points, tone, height = 44 }) {
     <svg viewBox={`0 0 ${W} ${height}`} className="spark" preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor={color} stopOpacity="0.28" />
+          <stop offset="0" stopColor={color} stopOpacity="0.18" />
           <stop offset="1" stopColor={color} stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={`${line}L${W},${height}L0,${height}Z`} fill={`url(#${gid})`} />
-      <path d={line} fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path className="line" style={{ color }} d={line} fill="none" stroke={color} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
     </svg>
   )
 }

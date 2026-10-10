@@ -98,7 +98,7 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice, l
       >
         <defs>
           <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor={color} stopOpacity="0.28" />
+            <stop offset="0" stopColor={color} stopOpacity="0.18" />
             <stop offset="1" stopColor={color} stopOpacity="0" />
           </linearGradient>
         </defs>
@@ -122,7 +122,7 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice, l
           </text>
         ))}
         <path d={g.area} fill={`url(#${gid})`} />
-        <path d={g.line} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <path className="line" style={{ color }} d={g.line} fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={g.x(last.t)} cy={g.y(last.bid)} r="4" fill={color} className="ring" />
         {labels && fmt && marks.map((i) => {
           const p = points[i]

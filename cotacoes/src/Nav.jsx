@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 // Navegação por abas: barra inferior no celular, barra superior no computador (a posição muda só no CSS).
 const Icon = ({ d }) => (
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -14,15 +15,49 @@ export const TABS = [
   { id: 'noticias', label: 'Notícias', icon: ['M6 3h9l4 4v14H6z', 'M14 3v5h5', 'M9 12h6M9 16h6'] },
 ]
 
+const PRIMARY = ['resumo', 'moedas', 'juros', 'calculadora']
+const DOTS = ['M5 12h.01M12 12h.01M19 12h.01']
+
+// No celular, as 4 abas de uso diário ficam na barra e as demais entram em "Mais"; no computador aparecem todas.
 export default function Nav({ tab, onTab }) {
+  const [more, setMore] = useState(false)
+  const ref = useRef(null)
+  const secondary = TABS.filter((t) => !PRIMARY.includes(t.id))
+  useEffect(() => {
+    if (!more) return
+    const onDown = (e) => !ref.current?.contains(e.target) && setMore(false)
+    const onKey = (e) => e.key === 'Escape' && setMore(false)
+    document.addEventListener('pointerdown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [more])
   return (
-    <nav className="tabs" aria-label="Seções">
+    <nav className="tabs" aria-label="Seções" ref={ref}>
       {TABS.map((t) => (
-        <button key={t.id} type="button" className={t.id === tab ? 'on' : ''} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)}>
+        <button key={t.id} type="button" className={`${t.id === tab ? 'on' : ''}${PRIMARY.includes(t.id) ? '' : ' sec'}`} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)}>
           <Icon d={t.icon} />
           <span>{t.label}</span>
         </button>
       ))}
+      <div className="more-tab">
+        <button type="button" className={secondary.some((t) => t.id === tab) ? 'on' : ''} aria-expanded={more} aria-haspopup="menu" onClick={() => setMore((m) => !m)}>
+          <Icon d={DOTS} />
+          <span>Mais</span>
+        </button>
+        {more && (
+          <div className="more-sheet" role="menu">
+            {secondary.map((t) => (
+              <button key={t.id} type="button" role="menuitem" className={t.id === tab ? 'on' : ''} onClick={() => (setMore(false), onTab(t.id))}>
+                <Icon d={t.icon} />
+                <span>{t.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </nav>
   )
 }
