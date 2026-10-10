@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
 
 const H = 260
@@ -8,7 +9,7 @@ const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maxi
 const day = (iso) => iso.split('-').reverse().join('/')
 
 // Eixo X: BR em anos úteis (day252 / 252), EUA em posições iguais por vencimento.
-function CurveChart({ title, subtitle, data, mode, source }) {
+function CurveChart({ title, subtitle, data, mode, source, help }) {
   const [ref, width] = useWidth()
   const [off, setOff] = useState(() => new Set())
   const [hover, setHover] = useState(null)
@@ -63,6 +64,7 @@ function CurveChart({ title, subtitle, data, mode, source }) {
         <h3>
           {title}
           <small>{subtitle}</small>
+          <Explain id={help} />
         </h3>
       </header>
       <div className="curve-legend">
@@ -129,17 +131,17 @@ export default function Curves({ curves: c }) {
       {c.status === 'ok' && (
         <div className="charts">
           {d.br ? (
-            <CurveChart title="Brasil · DI x pré" subtitle="B3, taxa % a.a. por prazo em dias úteis" data={d.br} mode="br" source="Fonte: B3, Taxas referenciais (DI x pré), calculadas a partir dos ajustes dos futuros de DI. Atualizado a cada hora; a B3 publica após o fechamento do pregão." />
+            <CurveChart help="curvaDi" title="Brasil · DI x pré" subtitle="B3, taxa % a.a. por prazo em dias úteis" data={d.br} mode="br" source="Fonte: B3, Taxas referenciais (DI x pré), calculadas a partir dos ajustes dos futuros de DI. Atualizado a cada hora; a B3 publica após o fechamento do pregão." />
           ) : (
             <p className="status">Curva DI indisponível nesta atualização.</p>
           )}
           {d.cc ? (
-            <CurveChart title="Brasil · Cupom cambial" subtitle="B3, DI x dólar, % a.a. por prazo em dias úteis" data={d.cc} mode="br" source="Fonte: B3, Taxas referenciais (DI x dólar), cupom cambial a partir dos ajustes dos futuros. Vértices curtos (menos de 1 mês) omitidos por serem muito ruidosos. Atualizado a cada hora; a B3 publica após o fechamento." />
+            <CurveChart help="cupom" title="Brasil · Cupom cambial" subtitle="B3, DI x dólar, % a.a. por prazo em dias úteis" data={d.cc} mode="br" source="Fonte: B3, Taxas referenciais (DI x dólar), cupom cambial a partir dos ajustes dos futuros. Vértices curtos (menos de 1 mês) omitidos por serem muito ruidosos. Atualizado a cada hora; a B3 publica após o fechamento." />
           ) : (
             <p className="status">Curva do cupom cambial indisponível nesta atualização.</p>
           )}
           {d.us ? (
-            <CurveChart title="EUA · Treasuries" subtitle="Par yield curve, % a.a. por vencimento" data={d.us} mode="us" source="Fonte: Departamento do Tesouro dos EUA (Daily Treasury Par Yield Curve Rates). É a curva de títulos públicos, não de futuros; fechamento do dia anterior ou do dia, conforme a divulgação." />
+            <CurveChart help="treasuries" title="EUA · Treasuries" subtitle="Par yield curve, % a.a. por vencimento" data={d.us} mode="us" source="Fonte: Departamento do Tesouro dos EUA (Daily Treasury Par Yield Curve Rates). É a curva de títulos públicos, não de futuros; fechamento do dia anterior ou do dia, conforme a divulgação." />
           ) : (
             <p className="status">Curva dos EUA indisponível nesta atualização.</p>
           )}

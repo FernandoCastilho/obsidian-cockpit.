@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
 import { busDays, forwardBetween, forwardSeries, horizonTable } from './cdiFuturo.js'
 
@@ -46,6 +47,7 @@ export default function CdiFuturo({ curves, macro }) {
           <header>
             <h3>
               CDI a termo implícito
+              <Explain id="cdiFuturo" />
               <small>% a.a., taxa a termo do DI no intervalo que você escolher</small>
             </h3>
             <button type="button" className="mode-btn" onClick={() => setLight((v) => !v)} aria-pressed={light} aria-label="Gráfico em modo claro" title="Gráfico em modo claro (útil para copiar para apresentações)">

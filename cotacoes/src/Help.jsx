@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 
 // Ícone "?" com explicação: abre ao passar o mouse, ao focar pelo teclado ou ao tocar/clicar (fixa).
-export default function Help({ label, align = 'left', children }) {
+export default function Help({ label, align = 'left', wide = false, children }) {
   const [pinned, setPinned] = useState(false)
   const [hover, setHover] = useState(false)
   const ref = useRef(null)
@@ -39,7 +39,7 @@ export default function Help({ label, align = 'left', children }) {
         ?
       </button>
       {show && (
-        <span role="tooltip" id={id} className={`pop ${align}`}>
+        <span role="tooltip" id={id} className={`pop ${align}${wide ? ' wide' : ''}`}>
           {children}
         </span>
       )}

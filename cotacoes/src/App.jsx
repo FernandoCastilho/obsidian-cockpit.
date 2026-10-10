@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, seriesName, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
@@ -116,6 +117,7 @@ function Stats({ code }) {
       <span title="Volatilidade realizada: desvio-padrão dos retornos diários dos últimos 21 pregões, anualizado">
         Vol. 30d <b>{st.vol == null ? '—' : `${st.vol.toFixed(1).replace('.', ',')}%`}</b>
       </span>
+      <Explain id="variacao" align="right" />
     </p>
   )
 }
@@ -130,7 +132,7 @@ function Card({ currency, quote, dir, err, ptax, onRetry }) {
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="24" height="16"') }} />
         <div>
           <h2>{quote?.source ?? currency.code}/BRL</h2>
-          <p>{seriesName(currency, quote?.source)}</p>
+          <p>{seriesName(currency, quote?.source)}<Explain id="cotacao" /></p>
         </div>
       </header>
       {quote ? (
@@ -299,7 +301,7 @@ function ParityCard({ quotes }) {
         </span>
         <div>
           <h2>EUR/USD</h2>
-          <p>Paridade euro/dólar</p>
+          <p>Paridade euro/dólar<Explain id="paridade" /></p>
         </div>
       </header>
       {p ? (

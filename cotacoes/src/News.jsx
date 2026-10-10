@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { CURRENCIES } from './useQuotes.js'
 import { useNews } from './useNews.js'
 import { buildFeed } from './feed.js'
@@ -29,7 +30,7 @@ export default function News({ colors }) {
   return (
     <section className="news">
       <div className="history-head">
-        <h2>Notícias</h2>
+        <h2>Notícias <Explain id="noticias" /></h2>
       </div>
       {!data && !error && <p className="status">Carregando notícias…</p>}
       {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}

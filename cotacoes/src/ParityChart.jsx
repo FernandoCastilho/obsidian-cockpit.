@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { Plot, fmtDate, fmtTime, useWidth } from './HistoryChart.jsx'
 import { mergeDaily, mergeTicks } from './parity.js'
 import { useHistory, useIntraday } from './useHistory.js'
@@ -38,6 +39,7 @@ export default function ParityChart({ color, start, end, day }) {
         <h3>
           <i className="swatch" /> {label}
           <small>{invert ? 'Dólares por 1 euro' : 'Euros por 1 dólar'} · paridade</small>
+          <Explain id="paridade" />
         </h3>
         <div className="parity-actions">
           <button type="button" className="btn small" onClick={() => setInvert((v) => !v)} title="Inverte a paridade">
