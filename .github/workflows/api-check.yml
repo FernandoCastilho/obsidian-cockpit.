@@ -1,18 +1,23 @@
-name: Checagem temporária de fontes (Debit)
+name: Checagem temporária de fontes (Debit 2)
 on: workflow_dispatch
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Debit.com.br indicadores
+      - name: Conteúdo das páginas de indicadores e moedas do Debit
         run: |
           UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
-          g() { echo; echo "=== $1"; curl -sSL -m 40 -A "$UA" -H 'Accept-Language: pt-BR,pt;q=0.9' -o /tmp/p.html -w "-> %{http_code} %{url_effective} %{size_download}B\n" "$1"; }
-          g "https://share.google/gohcMoCoAaSIh9aqo"
-          sed 's/<[^>]*>/ /g' /tmp/p.html | tr -s ' \n' | head -c 500; echo
-          cp /tmp/p.html /tmp/share.html
-          for u in "https://www.debit.com.br/indicadores-economicos" "https://www.debit.com.br/"; do
-            g "$u"
-            sed 's/<title>/\nTITLE: /;s/<\/title>/\n/' /tmp/p.html | grep -m1 "^TITLE" 
-            grep -oiE "href=\"[^\"]*(indicador|selic|cdi|ipca|igp|taxa|juros|dolar|euro|di-|futuro|curva|tabela)[^\"]*\"" /tmp/p.html | sort -u | head -60
+          for u in "https://www.debit.com.br/tabelas/indicadores-economicos" "https://www.debit.com.br/tabelas/moedas"; do
+            echo; echo "=== $u"
+            curl -sSL -m 40 -A "$UA" -H 'Accept-Language: pt-BR,pt;q=0.9' -o /tmp/p.html -w "-> %{http_code} %{size_download}B\n" "$u"
+            python3 - <<'PY'
+          import re,html
+          s=open('/tmp/p.html',encoding='utf-8',errors='ignore').read()
+          s=re.sub(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>','',s)
+          t=html.unescape(re.sub(r'<[^>]+>',' ',s)); t=re.sub(r'\s+',' ',t)
+          print(len(t),'chars de texto'); print(t[:2600])
+          for k in ['futuro','curva',' DI ','SOFR','Treasury','Selic','CDI','IPCA','IGP','TR ','dólar','Dólar','Euro','iene','Iene','yuan','Yuan','atualiza']:
+              print(k.strip(),':',len(re.findall(re.escape(k),t)))
+          PY
+            grep -oiE "(api|json)[a-z0-9/._-]{0,60}" /tmp/p.html | sort -u | head -12
           done
