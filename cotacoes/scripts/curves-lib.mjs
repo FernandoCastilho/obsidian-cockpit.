@@ -32,10 +32,10 @@ export function pickDates(available, offsets = OFFSETS) {
 const num = (s) => Number(String(s).replace('.', '').replace(',', '.'))
 
 // Resposta de GetList da B3 -> [[anos úteis (252), taxa % a.a.]]
-export function parseB3(rows) {
+export function parseB3(rows, minDays = 1) {
   return (rows ?? [])
     .map((r) => [Number(r.day252), num(r.rate)])
-    .filter(([d, v]) => Number.isFinite(d) && Number.isFinite(v) && d > 0)
+    .filter(([d, v]) => Number.isFinite(d) && Number.isFinite(v) && d >= minDays)
     .sort((a, b) => a[0] - b[0])
 }
 
