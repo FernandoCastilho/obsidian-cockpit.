@@ -38,13 +38,25 @@ function OperacaoDi({ curves, hol }) {
   const maxIso = base ? iso(Math.floor((maxD / 252) * 365)) : ''
   const [value, setValue] = useState('1.000.000,00')
   const [due, setDue] = useState('')
-  const [mode, setMode] = useState('cdi')
-  const [rate, setRate] = useState('105')
-  const [side, setSide] = useState('invest')
-  const [unit, setUnit] = useState('aa')
-  const end = due && base ? (due < base ? base : due > maxIso ? maxIso : due) : base ? iso(365) : ''
+  const [mode, setMode] = useState('pre')
+  const [rate, setRate] = useState('1,20')
+  const [side, setSide] = useState('borrow')
+  const [unit, setUnit] = useState('am')
+  const [monthBase, setMonthBase] = useState('cal')
+  const [daysTxt, setDaysTxt] = useState('180')
+  const end = due && base ? (due < base ? base : due > maxIso ? maxIso : due) : base ? iso(Math.min(180, Math.floor((maxD / 252) * 365))) : ''
+  const calDays = base && end ? Math.round((Date.parse(`${end}T12:00:00Z`) - Date.parse(`${base}T12:00:00Z`)) / 864e5) : 0
+  const pickDue = (s) => {
+    setDue(s)
+    setDaysTxt(String(Math.round((Date.parse(`${s}T12:00:00Z`) - Date.parse(`${base}T12:00:00Z`)) / 864e5)))
+  }
+  const typeDays = (v) => {
+    setDaysTxt(v)
+    const n = parseInt(v, 10)
+    if (n > 0) setDue(iso(Math.min(n, Math.floor((maxD / 252) * 365))))
+  }
   const d = base ? busDaysIn(base, end, ['BR'], hol.ctx) : 0 // dias úteis do DI: calendário nacional (B3/ANBIMA)
-  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side }) : null), [pts, d, value, mode, rate, unit, side])
+  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side, calDays, monthBase }) : null), [pts, d, value, mode, rate, unit, side, calDays, monthBase])
   const m = MODES.find((x) => x.id === mode)
 
   return (
@@ -61,12 +73,16 @@ function OperacaoDi({ curves, hol }) {
             </label>
             <label>
               Vencimento
-              <input type="date" min={base} max={maxIso} value={end} onChange={(e) => e.target.value && setDue(e.target.value)} />
-              <DateCheck date={end} hol={hol} onUse={setDue} />
+              <input type="date" min={base} max={maxIso} value={end} onChange={(e) => e.target.value && pickDue(e.target.value)} />
+              <DateCheck date={end} hol={hol} onUse={pickDue} />
+            </label>
+            <label>
+              Prazo (dias corridos)
+              <input inputMode="numeric" value={daysTxt} onChange={(e) => typeDays(e.target.value)} />
             </label>
             <div className="seg" role="group" aria-label="Atalhos de prazo">
               {TERMS.map((t) => (
-                <button key={t.label} type="button" onClick={() => setDue(iso(Math.min(t.days, Math.floor((maxD / 252) * 365))))}>
+                <button key={t.label} type="button" onClick={() => pickDue(iso(Math.min(t.days, Math.floor((maxD / 252) * 365))))}>
                   {t.label}
                 </button>
               ))}
@@ -89,13 +105,19 @@ function OperacaoDi({ curves, hol }) {
                 ))}
               </div>
             )}
+            {mode !== 'cdi' && unit === 'am' && (
+              <div className="seg" role="group" aria-label="Base do mês">
+                <button type="button" aria-pressed={monthBase === 'cal'} title="Mês de 30 dias corridos: prazo ÷ 30" onClick={() => setMonthBase('cal')}>mês = 30 dias corridos</button>
+                <button type="button" aria-pressed={monthBase === 'du'} title="Mês de 21 dias úteis (252 ÷ 12), convenção do mercado de DI" onClick={() => setMonthBase('du')}>mês = 21 dias úteis</button>
+              </div>
+            )}
             <label>
               Taxa da operação ({mode === 'cdi' ? '% do CDI' : `% ${UNITS.find((u) => u.id === unit).label}`})
               <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder={m.ph} />
             </label>
             <div className="seg" role="group" aria-label="Sentido da operação">
-              <button type="button" aria-pressed={side === 'invest'} onClick={() => setSide('invest')}>Eu recebo</button>
-              <button type="button" aria-pressed={side === 'borrow'} onClick={() => setSide('borrow')}>Eu pago</button>
+              <button type="button" aria-pressed={side === 'invest'} onClick={() => setSide('invest')}>Aplicação (eu recebo)</button>
+              <button type="button" aria-pressed={side === 'borrow'} onClick={() => setSide('borrow')}>Empréstimo (eu pago)</button>
             </div>
           </div>
           {r?.error ? (
@@ -104,32 +126,37 @@ function OperacaoDi({ curves, hol }) {
             <>
               <p className={`calc-verdict ${r.good ? 'up' : 'down'}`}>
                 {side === 'invest'
-                  ? `A operação rende ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais' : 'a menos'} que aplicar no DI`
-                  : `A operação custa ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais' : 'a menos'} que o DI`}
-                <small> · {Math.abs(r.diffBps).toFixed(0)} bps a.a. {r.diffBps >= 0 ? 'acima' : 'abaixo'} · prazo {r.d} dias úteis até {dm(end)}</small>
+                  ? `A operação rende ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais' : 'a menos'} que aplicar no CDI`
+                  : `O empréstimo custa ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais do que' : 'a menos do que'} a aplicação no CDI rende`}
+                <small>
+                  {side === 'borrow'
+                    ? ` · pagar ${brl(r.op.fv)} em ${calDays} dias (custo de ${brl(r.op.gain)}); aplicar ${brl(parseNum(value))} no CDI rende ${brl(r.di.gain)}. Tomar o empréstimo e aplicar no CDI: resultado de ${brl(-r.diff)}.`
+                    : ` · ${Math.abs(r.diffBps).toFixed(0)} bps a.a. ${r.diffBps >= 0 ? 'acima' : 'abaixo'} do CDI`}
+                  {' '}· prazo {calDays} dias corridos = {r.d} dias úteis até {dm(end)}
+                </small>
               </p>
               <div className="scroll">
                 <table className="focus-table">
                   <thead>
-                    <tr><th></th><th>Operação</th><th>DI (curva)</th></tr>
+                    <tr><th></th><th>{side === 'borrow' ? 'Empréstimo' : 'Operação'}</th><th>Aplicação no CDI (curva)</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Taxa no período ({r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.di.period)}</td></tr>
+                    <tr><td>Taxa no período ({calDays} dias corridos, {r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.di.period)}</td></tr>
                     <tr><td>Taxa efetiva a.a.</td><td>{pct(r.op.aa)}</td><td>{pct(r.di.aa)}</td></tr>
                     <tr><td>Taxa equivalente ao mês</td><td>{pct(r.op.am)}</td><td>{pct(r.di.am)}</td></tr>
-                    <tr><td>{side === 'invest' ? 'Rendimento' : 'Custo'} no prazo</td><td>{brl(r.op.gain)}</td><td>{brl(r.di.gain)}</td></tr>
-                    <tr><td>Valor no vencimento</td><td>{brl(r.op.fv)}</td><td>{brl(r.di.fv)}</td></tr>
+                    <tr><td>{side === 'invest' ? 'Rendimento' : 'Custo (empréstimo) / rendimento (CDI)'} no prazo</td><td>{brl(r.op.gain)}</td><td>{brl(r.di.gain)}</td></tr>
+                    <tr><td>{side === 'borrow' ? 'Valor a pagar / valor resgatado' : 'Valor no vencimento'}</td><td>{brl(r.op.fv)}</td><td>{brl(r.di.fv)}</td></tr>
                     <tr><td>% do CDI do período</td><td>{r.cdiEquivalent != null ? pct(r.cdiEquivalent, 1) : '—'}</td><td>100,0%</td></tr>
                   </tbody>
                 </table>
               </div>
               {mode !== 'cdi' && r.cdiEquivalent != null && (
                 <p className="calc-conv">
-                  {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> no período ({r.d} d.u.) = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                  {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
                 </p>
               )}
               <p className="status">
-                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o DI). Taxa ao mês é composta e 1 mês = 21 dias úteis (252 ÷ 12). "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
+                Ponto de equilíbrio: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} (a operação empata com o CDI). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. Valores brutos, sem impostos, custos ou IOF; dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
             </>
           ) : null}

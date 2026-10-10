@@ -374,3 +374,21 @@ test('feriados: próximo dia útil comum às praças e lista de próximos feriad
   assert.deepEqual(up.map((u) => `${u.date} ${u.cal}`), ['2026-11-26 NY'])
   assert.equal(hAdd('2026-12-31', 1), '2027-01-01')
 })
+
+test('calculadora: empréstimo a 1,20% ao mês por 180 dias corridos contra a aplicação no CDI', () => {
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  const base = { pts: flat, d: 123, value: 1000000, mode: 'pre', unit: 'am', rate: 1.2, side: 'borrow', calDays: 180 }
+  const cal = compare({ ...base, monthBase: 'cal' })
+  assert.ok(Math.abs(cal.op.period - (1.012 ** 6 - 1) * 100) < 1e-9) // 180 dias = 6 meses de 30 dias
+  assert.ok(Math.abs(cal.op.am - 1.2) < 1e-9)
+  assert.ok(Math.abs(cal.di.period - (1.1 ** (123 / 252) - 1) * 100) < 1e-9) // CDI: dias úteis da curva
+  // custo do empréstimo (≈ 7,42%) maior que o rendimento do CDI (≈ 4,8%): não compensa tomar para aplicar
+  assert.ok(cal.diff > 0 && cal.good === false)
+  assert.ok(Math.abs(cal.diff - (cal.op.gain - cal.di.gain)) < 1e-6)
+  // com mês de 21 dias úteis o mesmo 1,20% rende menos no período (123/21 = 5,86 meses)
+  const du = compare({ ...base, monthBase: 'du' })
+  assert.ok(du.op.period < cal.op.period && Math.abs(du.op.period - (1.012 ** (123 / 21) - 1) * 100) < 1e-9)
+  // equilíbrio: taxa mensal que iguala o CDI do período
+  const eq = compare({ ...base, monthBase: 'cal', rate: cal.breakeven })
+  assert.ok(Math.abs(eq.diff) < 1e-6)
+})
