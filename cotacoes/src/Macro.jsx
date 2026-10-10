@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Plot, fmtDate, useWidth } from './HistoryChart.jsx'
 import { useMacro } from './useMacro.js'
+import SofrChart from './Sofr.jsx'
 
 const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const rate = (v) => `${n2(v)}% a.a.`
 const DAY = 864e5
-const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6', SOFR: '#e6b34a' }
+const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
@@ -140,27 +141,6 @@ function SelicChart({ macro, range }) {
       fmt={rate}
       label="Meta Selic"
       note={`${last ? `Atual: ${rate(last[1])} · ` : ''}Fonte: Banco Central (SGS 432).`}
-    />
-  )
-}
-
-// SOFR crua: taxa overnight do dia, sem média nem suavização.
-function SofrChart({ macro, range }) {
-  const from = range.start.getTime()
-  const to = range.end.getTime() + DAY
-  const points = useMemo(() => macro.sofr.filter(([t]) => t >= from && t <= to).map(([t, v]) => ({ t, bid: v })), [macro, from, to])
-  const first = macro.sofr[0]
-  const last = macro.sofr[macro.sofr.length - 1]
-  return (
-    <RateChart
-      id="SOFR"
-      title="SOFR"
-      subtitle="EUA · overnight, taxa do dia"
-      color={COLORS.SOFR}
-      points={points}
-      fmt={rate}
-      label="SOFR"
-      note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${first ? `Série desde ${fmtDate(first[0], true)} · ` : ''}Taxa crua do dia, sem média. Fonte: Federal Reserve Bank of New York.`}
     />
   )
 }
