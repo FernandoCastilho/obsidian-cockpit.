@@ -278,3 +278,11 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .rates-top .qb { padding:6px 16px; font-size:.85rem; }
 @media (max-width: 560px) { .rates-top { padding:6px 10px; gap:6px; } }
 .pop { white-space:normal; }
+
+.calc-form { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:flex-end; margin-bottom:12px; }
+.calc-form label { display:flex; flex-direction:column; gap:4px; font-size:.8rem; color:var(--mut); }
+.calc-form input { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; min-width:140px; }
+.calc-verdict { margin:6px 0 12px; font-size:1.05rem; font-weight:700; }
+.calc-verdict.up { color:var(--up); } .calc-verdict.down { color:var(--down); }
+.calc-verdict small { display:block; color:var(--mut); font-weight:400; font-size:.8rem; margin-top:2px; }
+.calc td:first-child { text-align:left; color:var(--mut); }

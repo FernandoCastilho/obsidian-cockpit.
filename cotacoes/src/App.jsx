@@ -6,6 +6,7 @@ import Help from './Help.jsx'
 import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
 import CdiFuturo from './CdiFuturo.jsx'
+import Calculadora from './Calculadora.jsx'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
@@ -513,6 +514,8 @@ export default function App() {
           <Projecoes />
         </>
       )}
+
+      {tab === 'calculadora' && <Calculadora curves={curves} />}
 
       {tab === 'noticias' && <News colors={COLORS} />}
 
