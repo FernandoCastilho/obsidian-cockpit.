@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { fmtDate, useWidth } from './HistoryChart.jsx'
 
 const H = 260
@@ -99,6 +100,7 @@ export default function SofrChart({ macro, range }) {
         <h3>
           <i className="swatch" /> SOFR
           <small>EUA · overnight, taxa do dia</small>
+          <Explain id="sofr" />
         </h3>
       </header>
       <div className="curve-legend">

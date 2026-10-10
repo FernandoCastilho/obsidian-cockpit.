@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Explain from './Explain.jsx'
 
 const fmtDate = (d) => (d ? new Date(`${d}T12:00:00`).toLocaleDateString('pt-BR') : '')
 const cell = (v, decimals = 2) =>
@@ -38,6 +39,7 @@ function ProjTable({ t }) {
         <h3>
           {t.title}
           {t.unit && <small>{t.unit}</small>}
+          <Explain id="projecoes" />
         </h3>
       </header>
       <div className="scroll">

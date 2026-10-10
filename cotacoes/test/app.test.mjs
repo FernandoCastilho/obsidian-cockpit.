@@ -189,3 +189,18 @@ test('rótulo do yuan acompanha a série realmente usada', () => {
   assert.match(seriesName(cnh, undefined), /onshore/)
   assert.equal(seriesName(CURRENCIES[0], 'USD'), CURRENCIES[0].name)
 })
+
+import { GLOSSARY } from '../src/glossary.js'
+import { readFileSync } from 'node:fs'
+test('glossário: toda explicação tem as quatro partes e todo id usado no app existe', () => {
+  for (const [id, g] of Object.entries(GLOSSARY)) {
+    for (const k of ['t', 'a', 'b', 'c']) assert.ok(g[k] && g[k].length > (k === 't' ? 2 : 10), `${id}.${k}`)
+    assert.ok(g.a.length + g.b.length + g.c.length < 520, `${id} longo demais para um popover`)
+  }
+  const used = new Set()
+  for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News']) {
+    for (const m of readFileSync(new URL(`../src/${f}.jsx`, import.meta.url), 'utf8').matchAll(/<Explain id="(\w+)"/g)) used.add(m[1])
+  }
+  for (const id of used) assert.ok(GLOSSARY[id], `id sem texto: ${id}`)
+  for (const id of ['selic', 'cdi', 'sofr', 'di1', 'ust10']) assert.ok(GLOSSARY[id]) // quadros de juros do Resumo usam r.key
+})

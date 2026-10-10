@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Explain from './Explain.jsx'
 import { CHECKED, upcoming } from './agenda.js'
 
 const fmtDay = (t) => new Date(t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }).replace('.', '')
@@ -10,7 +11,7 @@ export default function Agenda() {
   const today = dayKey(Date.now())
   return (
     <section className="agenda" aria-labelledby="agenda-h">
-      <h2 id="agenda-h">Agenda de mercado <small>próximos 21 dias · horário de Brasília</small></h2>
+      <h2 id="agenda-h">Agenda de mercado <small>próximos 21 dias · horário de Brasília</small> <Explain id="agenda" /></h2>
       {events.length ? (
         <ul>
           {events.map((e) => (

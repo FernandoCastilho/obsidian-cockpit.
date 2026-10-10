@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
 
@@ -182,6 +183,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
         <h3>
           <i className="swatch" /> {h.data?.source ?? currency.code}/BRL
           <small>{seriesName(currency, h.data?.source)}</small>
+          <Explain id="historico" />
         </h3>
         {pct != null && (
           <div className={`pct ${trend}`}>

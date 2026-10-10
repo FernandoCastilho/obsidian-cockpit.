@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Explain from './Explain.jsx'
 import { Plot, fmtDate, useWidth } from './HistoryChart.jsx'
 import { useMacro } from './useMacro.js'
 import SofrChart from './Sofr.jsx'
@@ -11,7 +12,7 @@ const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
 
-function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions }) {
+function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help }) {
   const [ref, width] = useWidth()
   const ok = points && points.length > 1
   const diff = ok ? points[points.length - 1].bid - points[0].bid : 0
@@ -22,6 +23,7 @@ function RateChart({ id, title, subtitle, color, points, fmt, label, note, actio
         <h3>
           <i className="swatch" /> {title}
           <small>{subtitle}</small>
+          {help && <Explain id={help} />}
         </h3>
         <div className="parity-actions">
           {ok && (
@@ -105,6 +107,7 @@ function CdiChart({ macro, range }) {
     <RateChart
       id="CDI"
       title="CDI"
+      help="cdi"
       subtitle="B3 · taxa anualizada"
       color={COLORS.CDI}
       points={points}
@@ -135,6 +138,7 @@ function SelicChart({ macro, range }) {
     <RateChart
       id="SELIC"
       title="Selic"
+      help="selic"
       subtitle="Meta definida pelo Copom"
       color={COLORS.SELIC}
       points={points}
@@ -161,6 +165,7 @@ function FocusTable({ focus }) {
       <header>
         <h3>
           Boletim Focus
+          <Explain id="focus" />
           <small>divulgado na segunda-feira, {fmt(release)} · mediana das expectativas</small>
         </h3>
       </header>

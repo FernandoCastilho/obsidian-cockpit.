@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, useHistory, useIntraday } from './useHistory.js'
 import { liveParity, mergeDaily, mergeTicks } from './parity.js'
@@ -137,7 +138,7 @@ export function MoedasPanel({ quotes, ptax, onOpen }) {
   return (
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Panorama</h2>
+          <h2 id="r-moedas">Panorama <Explain id="minigrafico" /></h2>
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
               <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => setSparkId(s.id)}>
@@ -201,7 +202,7 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
     <div className="resumo">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Moedas</h2>
+          <h2 id="r-moedas">Moedas <Explain id="faixaMoedas" /></h2>
           <button type="button" className="more" onClick={() => goto('moedas')}>Ver moedas ›</button>
         </div>
         <QuoteBar quotes={quotes} onOpen={() => goto('moedas')} />
@@ -215,11 +216,11 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
         <div className="rate-tiles">
           {rates.length ? (
             rates.map((r) => (
-              <button type="button" key={r.key} className="rate" onClick={() => goto('juros')}>
-                <small>{r.label}</small>
+              <div key={r.key} className="rate">
+                <small>{r.label} <Explain id={r.key} /></small>
                 <b>{p2(r.value)}<i>%</i></b>
                 <small className="muted">{r.delta != null ? `${bps(r.delta)} · ${r.sub}` : r.sub}</small>
-              </button>
+              </div>
             ))
           ) : (
             <p className="status">Juros indisponíveis no momento.</p>
@@ -229,7 +230,7 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
 
       <section aria-labelledby="r-move">
         <div className="sec-head">
-          <h2 id="r-move">O que move o mercado</h2>
+          <h2 id="r-move">O que move o mercado <Explain id="noticias" /></h2>
           <button type="button" className="more" onClick={() => goto('noticias')}>Ver todas ›</button>
         </div>
         <ul className="list">
@@ -253,7 +254,7 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
 
       <section aria-labelledby="r-agenda">
         <div className="sec-head">
-          <h2 id="r-agenda">Agenda econômica</h2>
+          <h2 id="r-agenda">Agenda econômica <Explain id="agenda" /></h2>
           <button type="button" className="more" onClick={() => goto('cenarios')}>Ver agenda ›</button>
         </div>
         <ul className="list">
