@@ -4,6 +4,7 @@ import { useTerm } from './useTerm.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import Explain from './Explain.jsx'
+import ResultBar from './ResultBar.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => (v == null ? '—' : `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`)
@@ -39,10 +40,12 @@ export default function Aplicacao({ curves, hol }) {
     [t.pts, t.d, t.calDays, value, mode, rate, unit, monthBase, kind, ageTxt],
   )
 
+  const bar = r && !r.error ? { main: `Líquido ${brl(r.net.fv)} em ${t.calDays} dias`, sub: `rendimento ${brl(r.net.gain)} · ${pct(r.pctCdiNet, 1)} do CDI` } : null
   if (curves.status === 'loading') return <div className="placeholder">Carregando curva DI…</div>
   if (!t.pts) return <p className="status">Calculadora indisponível: depende da curva DI x pré da B3, que não veio na última atualização.</p>
   return (
-    <article className="chart">
+    <article className="chart calc-split">
+      <div className="calc-in">
       <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças (avisos de feriado no vencimento)" />
       <div className="calc-form">
         <label>
@@ -103,11 +106,13 @@ export default function Aplicacao({ curves, hol }) {
           <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} />
         </label>
       </div>
+</div>
+<div className="calc-out" id="calc-out">
       {r?.error ? (
         <p className="status stale">{r.error}</p>
       ) : r ? (
         <>
-          <p className="calc-verdict up">
+          <p className="calc-verdict">
             Você recebe {brl(r.net.fv)} líquidos em {t.calDays} dias
             <small>
               {' '}· rendimento líquido de {brl(r.net.gain)} ({pct(r.net.period)} no período = {pct(r.pctCdiNet, 1)} do CDI do período) · bruto {brl(r.gross.gain)}
@@ -136,11 +141,16 @@ export default function Aplicacao({ curves, hol }) {
               ? <>Este CDB, líquido de IR, equivale a um ativo isento que pague <b>{pct(r.pctCdiNet, 1)}</b> do CDI do período.</>
               : <>Para render o mesmo líquido, um CDB com IR de {pct(r.equivalent.irPct, 1)} precisaria pagar <b>{pct(r.equivalent.cdbPctCdi, 1)}</b> do CDI do período ({pct(r.equivalent.cdbPeriod)} no período).</>}
           </p>
+          <details className="premissas">
+            <summary>Premissas e método</summary>
           <p className="status">
             O CDI do período é o implícito na curva DI da B3 de {dm(t.today.date)}, e não o realizado. IR pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); IOF só até o 29º dia. A isenção vale para pessoa física em LCI/LCA; confirme o regime do seu caso. Não considera marcação a mercado, carência, liquidez nem tarifas. {parseNum(value) > 250000 ? 'Valores acima do limite do FGC (R$ 250 mil por instituição) têm risco de crédito do emissor.' : ''}
           </p>
+          </details>
         </>
       ) : null}
+</div>
+      <ResultBar targetId="calc-out" main={bar?.main} sub={bar?.sub} />
     </article>
   )
 }

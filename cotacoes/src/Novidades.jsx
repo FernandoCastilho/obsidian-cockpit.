@@ -1,5 +1,6 @@
 // Registro de mudanças para a equipe. Acrescente as novas entradas no topo.
 const ENTRIES = [
+  { date: '10/10/2026', items: ['Aba "Calculadoras": lista compacta, endereço próprio por calculadora (#calculadora/finimp) e atalhos no Resumo. Formulário à esquerda e resultado fixo à direita no computador; no celular, barra de resultado acima das abas. Cronogramas viram cartões no celular. Veredito neutro com selo "Melhor", alvos de toque de 44 px, mais contraste, aviso de nova versão e botão Fechar nas explicações.'] },
   { date: '10/10/2026', items: ['Calculadora com tela inicial "Vamos começar": FINIMP 4131, capital de giro (Price, SAC e bullet, custo efetivo e % do CDI), comparar operações e aplicação financeira (CDB com IR regressivo ou ativo isento, bruto e líquido).'] },
   { date: '10/10/2026', items: ['Cotações coletadas a cada 5 minutos das 9h30 às 18h (Brasília), de segunda a sexta; fora desse horário, 1 vez por hora em dias úteis.'] },
   { date: '10/10/2026', items: ['As coletas automáticas (cotações, juros, curvas, notícias, feriados) não rodam mais no sábado e no domingo; o app mostra o último dado de sexta e o aviso "mercado fechado (fim de semana)", sem alertas de dado desatualizado.'] },

@@ -4,6 +4,7 @@ import { parseNum } from './calc.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import Explain from './Explain.jsx'
+import ResultBar from './ResultBar.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => (v == null ? '—' : `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`)
@@ -33,6 +34,7 @@ export default function Giro({ curves, hol }) {
     return today ? curves.data.br.curves[today.date] : null
   })()
   const cmp = res.ok && pts ? giroVsCdi(pts, res) : null
+  const bar = res.ok ? { main: structure === 'bullet' ? `Pagar ${brl(res.totalPaid)}` : `1ª parcela ${brl(res.rows[0].payment)}`, sub: `juros ${brl(res.totalInterest)} · custo ${res.cost ? pct(res.cost.aa) : '—'} a.a.` } : null
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(giroTsv(res))
@@ -44,8 +46,9 @@ export default function Giro({ curves, hol }) {
   }
 
   return (
-    <article className="chart">
-      <p className="status stale">Simulação com os dados que você informa: tarifas e impostos não são presumidos. É uma estimativa, não é CET regulatório.</p>
+    <article className="chart calc-split">
+      <div className="calc-in">
+      <p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p>
       <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças (avisos de feriado nas datas)" />
       <div className="calc-form">
         <label>
@@ -85,6 +88,8 @@ export default function Giro({ curves, hol }) {
           <input inputMode="decimal" value={fees} onChange={(e) => setFees(e.target.value)} />
         </label>
       </div>
+</div>
+<div className="calc-out" id="calc-out">
       {!res.ok ? (
         <div className="calc-block">
           {res.missing?.length > 0 && (
@@ -134,17 +139,17 @@ export default function Giro({ curves, hol }) {
           <details className="table" open={res.rows.length <= 14}>
             <summary>Cronograma de pagamentos ({res.rows.length} parcelas)</summary>
             <div className="scroll">
-              <table className="focus-table fin-table">
+              <table className="focus-table fin-table cards">
                 <thead><tr><th>Parcela</th><th>Data</th><th>Pagamento</th><th>Juros</th><th>Amortização</th><th>Saldo devedor</th></tr></thead>
                 <tbody>
                   {res.rows.map((r) => (
                     <tr key={r.k}>
-                      <td>{r.k}</td>
-                      <td>{dm(r.date)}</td>
-                      <td>{r.payment ? brl(r.payment) : '—'}</td>
-                      <td>{r.interest ? brl(r.interest) : '—'}</td>
-                      <td>{r.amort ? brl(r.amort) : '—'}</td>
-                      <td>{brl(r.balance)}</td>
+                      <td data-label="Parcela">{r.k}</td>
+                      <td data-label="Data">{dm(r.date)}</td>
+                      <td data-label="Pagamento">{r.payment ? brl(r.payment) : '—'}</td>
+                      <td data-label="Juros">{r.interest ? brl(r.interest) : '—'}</td>
+                      <td data-label="Amortização">{r.amort ? brl(r.amort) : '—'}</td>
+                      <td data-label="Saldo devedor">{brl(r.balance)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -154,11 +159,16 @@ export default function Giro({ curves, hol }) {
           <div className="calc-form">
             <button type="button" className="btn small" onClick={copy}>{copied ? 'Copiado' : 'Copiar cronograma (Excel)'}</button>
           </div>
+          <details className="premissas">
+            <summary>Premissas e método</summary>
           <p className="status">
             Juros compostos mensais, parcelas mensais sem ajuste de feriado (o app só avisa) e IOF e tarifas só entram se você informar em "Despesas à vista". O custo efetivo é a taxa que zera o valor presente dos fluxos. A comparação com o CDI usa o DI da curva da B3 no prazo médio (21 dias úteis por mês), não o CDI realizado.
           </p>
+          </details>
         </>
       )}
+</div>
+      <ResultBar targetId="calc-out" main={bar?.main} sub={bar?.sub} />
     </article>
   )
 }

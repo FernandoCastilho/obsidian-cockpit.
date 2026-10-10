@@ -4,9 +4,11 @@ import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
+import ResultBar from './ResultBar.jsx'
 import Finimp from './Finimp.jsx'
 import Giro from './Giro.jsx'
 import Aplicacao from './Aplicacao.jsx'
+import { CALC_OPTIONS } from './calcOptions.js'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
@@ -66,12 +68,18 @@ function OperacaoDi({ curves, hol }) {
   const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side, calDays, monthBase, appPct: parseNum(appPct), net, ageDays: parseNum(ageTxt) || 0, accrued: parseNum(accTxt) || 0 }) : null), [pts, d, value, mode, rate, unit, side, calDays, monthBase, appPct, net, ageTxt, accTxt])
   const m = MODES.find((x) => x.id === mode)
 
+  const bar = r && !r.error
+    ? side === 'borrow'
+      ? { main: r.good ? 'Manter a aplicação e tomar o empréstimo' : 'Resgatar a aplicação hoje', sub: `economia de ${brl(Math.abs(r.diff))} · empréstimo ${brl(r.op.gain)} × resgate ${brl(r.refGain)}` }
+      : { main: `A operação rende ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais' : 'a menos'} que o CDI`, sub: `${Math.abs(r.diffBps).toFixed(0)} bps a.a. ${r.diffBps >= 0 ? 'acima' : 'abaixo'}` }
+    : null
   return (
     <>
       {curves.status === 'loading' && <div className="placeholder">Carregando curva DI…</div>}
       {curves.status !== 'loading' && !pts && <p className="status">Calculadora indisponível: depende da curva DI x pré da B3, que não veio na última atualização.</p>}
       {pts && (
-        <article className="chart">
+        <article className="chart calc-split">
+          <div className="calc-in">
           <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado)" />
           <div className="calc-form">
             <label>
@@ -154,13 +162,15 @@ function OperacaoDi({ curves, hol }) {
               )}
             </div>
           )}
+</div>
+<div className="calc-out" id="calc-out">
           {r?.error ? (
             <p className="status stale">{r.error}</p>
           ) : r ? (
             <>
               {side === 'borrow' ? (
                 <>
-                  <p className={`calc-verdict ${r.good ? 'up' : 'down'}`}>
+                  <p className="calc-verdict">
                     {r.good
                       ? `Mais barato: manter a aplicação e tomar o empréstimo (economia de ${brl(Math.abs(r.diff))})`
                       : `Mais barato: resgatar a aplicação hoje (economia de ${brl(Math.abs(r.diff))})`}
@@ -168,7 +178,7 @@ function OperacaoDi({ curves, hol }) {
                   </p>
                   <div className="options">
                     <section className={`opt${r.good ? '' : ' win'}`}>
-                      <h4>Resgatar a aplicação hoje</h4>
+                      <h4>Resgatar a aplicação hoje{!r.good && <span className="badge-best">Melhor</span>}</h4>
                       <dl>
                         <dt>Rendimento que deixa de ganhar em {calDays} dias ({pct(parseNum(appPct), 0)} do CDI)</dt>
                         <dd>{brl(r.app.gross.gain)}</dd>
@@ -190,7 +200,7 @@ function OperacaoDi({ curves, hol }) {
                       <p className="opt-total">Custo de resgatar <b>{brl(r.refGain)}</b></p>
                     </section>
                     <section className={`opt${r.good ? ' win' : ''}`}>
-                      <h4>Manter a aplicação e tomar o empréstimo</h4>
+                      <h4>Manter a aplicação e tomar o empréstimo{r.good && <span className="badge-best">Melhor</span>}</h4>
                       <dl>
                         <dt>Juros do empréstimo ({pct(r.op.am)} ao mês = {pct(r.op.period)} em {calDays} dias)</dt>
                         <dd>{brl(r.op.gain)}</dd>
@@ -221,7 +231,7 @@ function OperacaoDi({ curves, hol }) {
                 </>
               ) : (
                 <>
-                  <p className={`calc-verdict ${r.good ? 'up' : 'down'}`}>
+                  <p className="calc-verdict">
                 {side === 'invest'
                   ? `A operação rende ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais' : 'a menos'} que aplicar no CDI`
                   : `O empréstimo custa ${brl(Math.abs(r.diff))} ${r.diff >= 0 ? 'a mais do que' : 'a menos do que'} a aplicação no CDI rende`}
@@ -262,43 +272,40 @@ function OperacaoDi({ curves, hol }) {
                   )}
                 </p>
               )}
+              <details className="premissas">
+                <summary>Premissas e método</summary>
               <p className="status">
                 {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'total' ? `valor total de ${brl(r.breakeven)}` : mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
+              </details>
             </>
           ) : null}
+</div>
+          <ResultBar targetId="calc-out" main={bar?.main} sub={bar?.sub} />
         </article>
       )}
     </>
   )
 }
 
-const OPTIONS = [
-  { id: 'finimp', chip: 'US$', title: 'FINIMP 4131', desc: 'Financiamento em moeda estrangeira: juros, cronograma e custo na moeda original (USD, EUR, JPY).' },
-  { id: 'giro', chip: 'R$', title: 'Capital de giro', desc: 'Empréstimo em reais: parcelas, juros totais, custo efetivo e quanto isso representa do CDI.' },
-  { id: 'comparar', chip: '⇄', title: 'Comparar operações', desc: 'Empréstimo × aplicação no CDI, e resgatar × manter a aplicação e tomar o empréstimo, com IR do CDB.' },
-  { id: 'aplicacao', chip: '%', title: 'Aplicação financeira', desc: 'Quanto rende um CDB, uma LCI/LCA ou um título pré-fixado: bruto, IR, líquido e % do CDI.' },
-]
-const HELP = { finimp: 'finimp', giro: 'giro', comparar: 'calculadora', aplicacao: 'aplicacao' }
-
-export default function Calculadora({ curves, hol }) {
-  const [view, setView] = useState('home')
-  const opt = OPTIONS.find((o) => o.id === view)
+export default function Calculadora({ curves, hol, view = '', onView }) {
+  const opt = CALC_OPTIONS.find((o) => o.id === view)
   return (
     <section className="macro calc" aria-labelledby="calc-h">
-      {view === 'home' ? (
+      {!opt ? (
         <>
           <div className="history-head">
-            <h2 id="calc-h">Vamos começar</h2>
+            <h2 id="calc-h">Calculadoras de operação</h2>
           </div>
-          <p className="status">O que você quer calcular?</p>
-          <div className="start-grid">
-            {OPTIONS.map((o) => (
-              <button key={o.id} type="button" className="start-card" onClick={() => setView(o.id)}>
+          <div className="calc-list">
+            {CALC_OPTIONS.map((o) => (
+              <button key={o.id} type="button" className="calc-item" onClick={() => onView(o.id)}>
                 <span className="start-chip" aria-hidden="true">{o.chip}</span>
-                <b>{o.title}</b>
-                <span className="start-desc">{o.desc}</span>
-                <span className="start-go">Começar ›</span>
+                <span className="calc-item-text">
+                  <b>{o.title}</b>
+                  <small>{o.desc}</small>
+                </span>
+                <span className="calc-item-go" aria-hidden="true">›</span>
               </button>
             ))}
           </div>
@@ -307,9 +314,9 @@ export default function Calculadora({ curves, hol }) {
         <>
           <div className="history-head">
             <h2 id="calc-h">
-              {opt.title} <Explain id={HELP[view]} />
+              {opt.title} <Explain id={opt.help} />
             </h2>
-            <button type="button" className="more" onClick={() => setView('home')}>‹ Outras calculadoras</button>
+            <button type="button" className="more" onClick={() => onView('')}>‹ Outras calculadoras</button>
           </div>
           {view === 'finimp' && <Finimp hol={hol} />}
           {view === 'giro' && <Giro curves={curves} hol={hol} />}

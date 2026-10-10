@@ -8,6 +8,7 @@ export default function Help({ label, align = 'left', wide = false, children }) 
   const id = useId()
   const show = pinned || hover
   const popRef = useRef(null)
+  const mobile = typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 560px)').matches
   const [shift, setShift] = useState(0)
 
   // Mantém o balão dentro da janela (perto da borda direita ou esquerda ele deslocava para fora da tela).
@@ -50,9 +51,11 @@ export default function Help({ label, align = 'left', wide = false, children }) 
       >
         ?
       </button>
+      {show && pinned && mobile && <span className="pop-backdrop" onClick={() => setPinned(false)} aria-hidden="true" />}
       {show && (
         <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={shift ? { transform: `translateX(${shift}px)` } : undefined}>
           {children}
+          {pinned && mobile && <button type="button" className="pop-close" onClick={() => setPinned(false)}>Fechar</button>}
         </span>
       )}
     </span>
