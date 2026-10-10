@@ -64,8 +64,8 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
           {ptax && <small className="muted">PTAX: {brl(ptax.sell)}</small>}
         </span>
         <span className="tile-spark">
-          <Sparkline points={pts} />
-          <small className={change == null ? 'muted' : change >= 0 ? 'up' : 'down'}>
+          <Sparkline points={pts} tone={trend} />
+          <small className="muted">
             {spark.label}
             {change != null && ` ${pct(change)}`}
           </small>
@@ -106,8 +106,8 @@ function ParityTile({ quotes, spark, onOpen }) {
           <small className="muted">dólares por 1 euro</small>
         </span>
         <span className="tile-spark">
-          <Sparkline points={pts} />
-          <small className={change == null ? 'muted' : change >= 0 ? 'up' : 'down'}>
+          <Sparkline points={pts} tone={trend} />
+          <small className="muted">
             {spark.label}
             {change != null && ` ${pct(change)}`}
           </small>

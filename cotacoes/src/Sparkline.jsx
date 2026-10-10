@@ -1,8 +1,9 @@
 import { useId } from 'react'
 import { periodChange } from './stats.js'
 
-// Minigráfico de linha: verde se o período subiu, vermelho se caiu (cores do app), cinza se não há dados.
-export default function Sparkline({ points, height = 44 }) {
+// Minigráfico de linha. A cor vem de `tone` (a mesma variação mostrada no quadro): verde se subiu, vermelho se caiu, cinza se estável.
+// Sem `tone`, usa a variação do próprio período.
+export default function Sparkline({ points, tone, height = 44 }) {
   const gid = useId().replace(/:/g, '')
   const W = 120
   if (!points || points.length < 2) return <svg viewBox={`0 0 ${W} ${height}`} className="spark" aria-hidden="true" />
@@ -12,8 +13,8 @@ export default function Sparkline({ points, height = 44 }) {
   const x = (i) => (i / (points.length - 1)) * W
   const y = (v) => 3 + (1 - (v - lo) / (hi - lo || 1)) * (height - 6)
   const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.bid).toFixed(1)}`).join('')
-  const up = periodChange(points) >= 0
-  const color = up ? 'var(--up)' : 'var(--down)'
+  const t = tone ?? (periodChange(points) >= 0 ? 'up' : 'down')
+  const color = t === 'up' ? 'var(--up)' : t === 'down' ? 'var(--down)' : 'var(--mut)'
   return (
     <svg viewBox={`0 0 ${W} ${height}`} className="spark" preserveAspectRatio="none" aria-hidden="true">
       <defs>
