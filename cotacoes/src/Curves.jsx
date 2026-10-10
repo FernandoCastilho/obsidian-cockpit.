@@ -128,6 +128,11 @@ export default function Curves({ curves: c }) {
           ) : (
             <p className="status">Curva DI indisponível nesta atualização.</p>
           )}
+          {d.cc ? (
+            <CurveChart title="Brasil · Cupom cambial" subtitle="B3, DI x dólar, % a.a. por prazo em dias úteis" data={d.cc} mode="br" source="Fonte: B3, Taxas referenciais (DI x dólar), cupom cambial a partir dos ajustes dos futuros. Vértices curtos (menos de 1 mês) omitidos por serem muito ruidosos. Atualizado a cada hora; a B3 publica após o fechamento." />
+          ) : (
+            <p className="status">Curva do cupom cambial indisponível nesta atualização.</p>
+          )}
           {d.us ? (
             <CurveChart title="EUA · Treasuries" subtitle="Par yield curve, % a.a. por vencimento" data={d.us} mode="us" source="Fonte: Departamento do Tesouro dos EUA (Daily Treasury Par Yield Curve Rates). É a curva de títulos públicos, não de futuros; fechamento do dia anterior ou do dia, conforme a divulgação." />
           ) : (

@@ -35,6 +35,8 @@ jobs:
           cache: npm
           cache-dependency-path: cotacoes/package-lock.json
       - run: npm ci
+      - name: Testes (parsers e lógica)
+        run: npm test
       - name: Coletar notícias
         run: node scripts/fetch-news.mjs
         env:

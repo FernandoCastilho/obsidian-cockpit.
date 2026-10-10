@@ -10,6 +10,17 @@ export const CURRENCIES = [
 
 const BASE = 'https://economia.awesomeapi.com.br/json/last'
 
+// Mensagens técnicas da API/rede -> texto que o usuário entende.
+export function friendlyError(msg) {
+  const m = String(msg)
+  if (/HTTP 429/.test(m)) return 'limite de consultas da fonte atingido; tentando de novo em instantes'
+  if (/HTTP 5\d\d/.test(m)) return 'a fonte de cotações está instável'
+  if (/HTTP 404/.test(m)) return 'a fonte não tem esta cotação agora'
+  if (/Failed to fetch|NetworkError|Load failed|network/i.test(m)) return 'sem conexão com a fonte de cotações'
+  if (/sem cotação|sem dados/.test(m)) return 'a fonte não devolveu cotação'
+  return m
+}
+
 async function fetchRaw(from, to, signal) {
   const res = await fetch(`${BASE}/${from}-${to}`, { signal })
   if (!res.ok) throw new Error(`${from}-${to}: HTTP ${res.status}`)
@@ -90,7 +101,7 @@ async function fetchCurrency({ code, sources }, signal) {
       errors.push(e.message)
     }
   }
-  return quote ? { quote } : { error: errors.join(' · ') }
+  return quote ? { quote } : { error: [...new Set(errors.map(friendlyError))].join(' · ') }
 }
 
 async function fetchQuotes(signal) {
@@ -136,7 +147,7 @@ export function useQuotes(intervalMs = 5000) {
       // todas falharam (ex.: limite da API): não afirmar que está atualizado
       setError(fresh ? null : Object.values(errs)[0] ?? 'sem resposta da fonte')
     } catch (e) {
-      if (e.name !== 'AbortError') setError(e.message)
+      if (e.name !== 'AbortError') setError(friendlyError(e.message))
     }
   }, [])
 
@@ -158,5 +169,5 @@ export function useQuotes(intervalMs = 5000) {
     }
   }, [load, intervalMs])
 
-  return { quotes, direction, error, errors, updatedAt }
+  return { quotes, direction, error, errors, updatedAt, reload: load }
 }

@@ -22,26 +22,28 @@ async function get(url, label, text = false, tries = 4) {
   return null
 }
 
-const out = { generatedAt: Date.now(), br: null, us: null, errors }
+const out = { generatedAt: Date.now(), br: null, cc: null, us: null, errors }
 
-// Brasil: DI x pré (B3 > Taxas referenciais)
-{
-  const dates = await get(b3Url('GetDate', { language: 'pt-br', id: 'PRE' }), 'B3 datas')
+// Brasil (B3, Taxas referenciais): PRE = DI x pré; DOL = DI x dólar (cupom cambial). minDays corta os vértices curtos, muito ruidosos no cupom.
+async function b3Curve(id, minDays) {
+  const dates = await get(b3Url('GetDate', { language: 'pt-br', id }), `B3 ${id} datas`)
   const picks = pickDates(dates ?? [])
   const curves = {}
   for (const p of picks) {
     const pts = []
     for (let page = 1; page <= 5; page++) {
-      const r = await get(b3Url('GetList', { language: 'pt-br', id: 'PRE', pageNumber: page, pageSize: 100, date: p.date }), `B3 ${p.date} p${page}`)
-      pts.push(...parseB3(r?.results))
+      const r = await get(b3Url('GetList', { language: 'pt-br', id, pageNumber: page, pageSize: 100, date: p.date }), `B3 ${id} ${p.date} p${page}`)
+      pts.push(...parseB3(r?.results, minDays))
       if (!r || page >= (r.page?.totalPages ?? 0)) break
     }
     if (pts.length) curves[p.date] = pts
   }
   const compare = picks.filter((p) => curves[p.date])
-  out.br = compare.length ? { compare, curves } : null
-  console.log('Curva DI:', compare.map((p) => p.date).join(', ') || 'sem dados')
+  console.log(`B3 ${id}:`, compare.map((p) => p.date).join(', ') || 'sem dados')
+  return compare.length ? { compare, curves } : null
 }
+out.br = await b3Curve('PRE', 1)
+out.cc = await b3Curve('DOL', 21)
 
 // EUA: Treasury par yield curve (Tesouro dos EUA)
 {

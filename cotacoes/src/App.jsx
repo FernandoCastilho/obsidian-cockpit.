@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { CURRENCIES, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
+import Agenda from './Agenda.jsx'
+import Novidades from './Novidades.jsx'
+import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
 import { useMacro } from './useMacro.js'
@@ -13,7 +16,7 @@ import { liveParity } from './parity.js'
 import Projecoes from './Projecoes.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
-import { MAX_DAYS, fromInput, toInput } from './useHistory.js'
+import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 15000 // consulta a cada 15 s (a API gratuita tem limite de uso)
@@ -84,7 +87,36 @@ function QuoteTime({ t }) {
   )
 }
 
-function Card({ currency, quote, dir, err, ptax }) {
+const sgn = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
+
+// Variação em 1 semana, 1 mês e no ano, e volatilidade realizada de 30 dias, a partir do histórico diário.
+function Stats({ code }) {
+  const range = useMemo(() => {
+    const end = new Date()
+    end.setHours(0, 0, 0, 0)
+    return { end, start: new Date(end.getTime() - 359 * 864e5) }
+  }, [])
+  const h = useHistory(code, range.start, range.end)
+  const st = h.status === 'ok' ? rangeStats(h.data.points) : null
+  if (!st) return h.status === 'loading' ? <p className="stats muted">carregando variações…</p> : null
+  const item = (label, v, title) => (
+    <span className={v == null ? 'muted' : v > 0 ? 'up' : v < 0 ? 'down' : ''} title={title}>
+      {label} <b>{v == null ? '—' : sgn(v)}</b>
+    </span>
+  )
+  return (
+    <p className="stats" aria-label="Variações no período">
+      {item('Sem.', st.week, 'Variação em 7 dias, pelo fechamento diário')}
+      {item('Mês', st.month, 'Variação em 30 dias, pelo fechamento diário')}
+      {item('Ano', st.year, 'Variação desde o último fechamento do ano anterior')}
+      <span title="Volatilidade realizada: desvio-padrão dos retornos diários dos últimos 21 pregões, anualizado">
+        Vol. 30d <b>{st.vol == null ? '—' : `${st.vol.toFixed(1).replace('.', ',')}%`}</b>
+      </span>
+    </p>
+  )
+}
+
+function Card({ currency, quote, dir, err, ptax, onRetry }) {
   const pct = quote?.pct ?? 0
   const trend = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat'
   return (
@@ -153,10 +185,12 @@ function Card({ currency, quote, dir, err, ptax }) {
         <>
           <div className="price skeleton">—</div>
           {err && <p className="card-error">{err}</p>}
+          {err && onRetry && <button type="button" className="btn small" onClick={onRetry}>Tentar de novo</button>}
         </>
       )}
       {quote?.fallback && <p className="card-error">Fonte principal indisponível: referência diária do BCE, sem compra/venda separadas.</p>}
       {quote && <QuoteTime t={quote.timestamp} />}
+      {quote && !quote.fallback && <Stats code={currency.code} />}
       {quote && err && <p className="card-error">Desatualizado: {err}</p>}
     </article>
   )
@@ -298,8 +332,19 @@ function ParityCard({ quotes }) {
   )
 }
 
+// No celular as seções longas começam recolhidas; no computador ficam sempre abertas (o título só aparece no celular).
+function Fold({ title, children }) {
+  const [open, setOpen] = useState(() => typeof window === 'undefined' || !window.matchMedia || window.matchMedia('(min-width: 700px)').matches)
+  return (
+    <details className="fold" open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary>{title}</summary>
+      {children}
+    </details>
+  )
+}
+
 export default function App() {
-  const { quotes, direction, error, errors, updatedAt } = useQuotes(POLL_MS)
+  const { quotes, direction, error, errors, updatedAt, reload } = useQuotes(POLL_MS)
   const macro = useMacro()
   const curves = useCurves()
   const [preset, setPreset] = useState('30')
@@ -346,7 +391,7 @@ export default function App() {
         {CURRENCIES.map((c) => (
           <div className="slot" key={c.code}>
             <Clock codes={[c.code]} />
-            <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} />
+            <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} onRetry={reload} />
           </div>
         ))}
         <div className="slot">
@@ -354,6 +399,8 @@ export default function App() {
           <ParityCard quotes={quotes} />
         </div>
       </section>
+      <Agenda />
+      <Fold title="Histórico">
       <section className="history">
         <div className="history-head">
           <h2>Histórico</h2>
@@ -367,10 +414,12 @@ export default function App() {
           <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
         </div>
       </section>
-      <Macro />
-      <Curves curves={curves} />
-      <Projecoes />
-      <News colors={COLORS} />
+      </Fold>
+      <Fold title="Juros e expectativas"><Macro /></Fold>
+      <Fold title="Curvas de juros"><Curves curves={curves} /></Fold>
+      <Fold title="Projeções de terceiros"><Projecoes /></Fold>
+      <Fold title="Notícias"><News colors={COLORS} /></Fold>
+      <Novidades />
       <footer>
         <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>
         <p><i>{DISCLAIMER}</i></p>
