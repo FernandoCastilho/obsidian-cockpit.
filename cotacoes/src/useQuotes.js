@@ -4,9 +4,12 @@ export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
   { code: 'EUR', name: 'Euro', flag: '🇪🇺', sources: ['EUR'] },
   { code: 'JPY', name: 'Iene japonês', flag: '🇯🇵', sources: ['JPY'] },
-  // Yuan offshore; se a API não listar CNH, cai para o yuan onshore (CNY)
-  { code: 'CNH', name: 'Yuan offshore', flag: '🇨🇳', sources: ['CNH', 'CNY'] },
+  // Código interno CNH; a série usada de fato é o CNY (onshore), ou o CNH (offshore) por cruzamento quando o CNY está parado
+  { code: 'CNH', name: 'Yuan', flag: '🇨🇳', sources: ['CNH', 'CNY'] },
 ]
+
+// Nome conforme a série realmente usada: CNY é o yuan onshore; CNH, o offshore (calculado por cruzamento).
+export const seriesName = (currency, source) => (currency.code === 'CNH' ? (source === 'CNH' ? 'Yuan offshore (CNH, por cruzamento)' : 'Yuan onshore (CNY)') : currency.name)
 
 const BASE = 'https://economia.awesomeapi.com.br/json/last'
 
@@ -87,7 +90,7 @@ async function fetchEcb(code, signal) {
   const j = await res.json()
   const rate = Number(j?.rates?.BRL)
   if (!(rate > 0) || !j.date) throw new Error(`BCE ${from}: resposta sem cotação`)
-  const quote = { source: code, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
+  const quote = { source: from, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
   ecbCache.set(code, { at: Date.now(), quote })
   return quote
 }

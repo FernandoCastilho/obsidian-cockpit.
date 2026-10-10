@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CURRENCIES } from './useQuotes.js'
+import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, useHistory, useIntraday } from './useHistory.js'
 import { liveParity, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
@@ -54,7 +54,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
       <span className="tile-head">
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="26" height="18"') }} />
         <span className="tile-name">
-          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL</small>
+          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL{code === 'CNH' && (quote?.source === 'CNH' ? ' offshore' : ' onshore')}</small>
         </span>
       </span>
       <span className="tile-body">

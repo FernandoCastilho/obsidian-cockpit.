@@ -180,3 +180,12 @@ test('fila de notícias: une a mesma matéria em vários tickers, ordena por hor
   assert.equal(buildFeed(news, 'ALL', 1).length, 1)
   assert.deepEqual(buildFeed(undefined), [])
 })
+
+import { CURRENCIES, seriesName } from '../src/useQuotes.js'
+test('rótulo do yuan acompanha a série realmente usada', () => {
+  const cnh = CURRENCIES.find((c) => c.code === 'CNH')
+  assert.match(seriesName(cnh, 'CNY'), /onshore \(CNY\)/)
+  assert.match(seriesName(cnh, 'CNH'), /offshore/)
+  assert.match(seriesName(cnh, undefined), /onshore/)
+  assert.equal(seriesName(CURRENCIES[0], 'USD'), CURRENCIES[0].name)
+})

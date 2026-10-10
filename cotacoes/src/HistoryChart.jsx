@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory, useIntraday } from './useHistory.js'
+import { seriesName } from './useQuotes.js'
 
 const H = 240
 const M = { t: 12, r: 16, b: 28, l: 58 }
@@ -165,7 +166,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       <header>
         <h3>
           <i className="swatch" /> {h.data?.source ?? currency.code}/BRL
-          <small>{currency.name}</small>
+          <small>{seriesName(currency, h.data?.source)}</small>
         </h3>
         {pct != null && (
           <div className={`pct ${trend}`}>
