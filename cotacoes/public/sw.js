@@ -1,6 +1,6 @@
 // Service worker: abre o app sem rede (último conteúdo) e mantém os dados no cache.
 // Versão do cache: troque ao mudar a estratégia; os arquivos com hash do Vite se renovam sozinhos.
-const CACHE = 'cotacoes-v1'
+const CACHE = 'cotacoes-v2'
 const SHELL = ['./', './manifest.webmanifest', './favicon.svg', './icon-192.png', './icon-512.png']
 
 self.addEventListener('install', (event) => {
@@ -22,7 +22,8 @@ const put = async (req, res) => {
 }
 
 // Rede primeiro, com o cache como reserva (páginas e arquivos de dados: sempre o mais novo possível).
-const networkFirst = (req) => fetch(req).then((res) => put(req, res)).catch(() => caches.match(req, { ignoreSearch: true }))
+// cache: 'no-cache' revalida no servidor: sem isso, o cache HTTP do GitHub Pages (10 min) pode entregar a página antiga logo após um deploy.
+const networkFirst = (req) => fetch(req, { cache: 'no-cache' }).then((res) => put(req, res)).catch(() => caches.match(req, { ignoreSearch: true }))
 
 // Cache primeiro (arquivos estáticos com hash no nome).
 const cacheFirst = async (req) => (await caches.match(req)) ?? fetch(req).then((res) => put(req, res))
