@@ -145,6 +145,12 @@ export const GLOSSARY = {
     b: '180 dias a 6% ao ano: ACT/360 dá 3,000% de juros; ACT/365F dá 2,959%.',
     c: 'ACT/360 cobra um pouco mais para o mesmo prazo. Use a que está no contrato; o app não escolhe por você.',
   },
+  irRegressivo: {
+    t: 'IR regressivo do CDB',
+    a: 'Imposto sobre o rendimento: quanto mais tempo o dinheiro fica aplicado, menor a alíquota. Até 180 dias 22,5%; 181 a 360 dias 20%; 361 a 720 dias 17,5%; acima de 720 dias 15%.',
+    b: 'Rendeu R$ 10 mil em 120 dias: o IR é R$ 2.250 e você fica com R$ 7.750. Resgatar antes de 30 dias ainda paga IOF sobre o rendimento.',
+    c: 'Resgatar para cobrir uma necessidade de caixa perde o rendimento futuro e fixa o imposto. Compare com o custo do empréstimo: se o rendimento líquido é maior, vale manter a aplicação e tomar o empréstimo.',
+  },
   feriados: {
     t: 'Praças e feriados',
     a: 'Cada praça tem o seu calendário: onde é feriado, o mercado fecha e o dinheiro não liquida.',
