@@ -29,3 +29,18 @@ test('service worker: não intercepta outros domínios nem métodos que não sej
   assert.match(sw, /req\.method !== 'GET'\) return/)
   assert.match(sw, /url\.origin !== self\.location\.origin\) return/)
 })
+
+import { readFileSync as rf } from 'node:fs'
+import { isWeekendBR } from '../src/market.js'
+test('coleta automática só de segunda a sexta (horário de Brasília) e app reconhece o fim de semana', () => {
+  for (const f of ['pages.yml', 'quotes.yml']) {
+    const crons = [...rf(new URL(`../../.github/workflows/${f}`, import.meta.url), 'utf8').matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
+    assert.ok(crons.length >= 1)
+    for (const c of crons) assert.notEqual(c.split(' ')[4], '*', `${f}: o agendamento "${c}" roda no fim de semana`)
+  }
+  // sexta 21h (Brasília) = sábado 00h UTC: ainda sexta; sábado e domingo ao meio-dia: fim de semana
+  assert.equal(isWeekendBR(Date.parse('2026-10-10T15:00:00Z')), true) // sábado
+  assert.equal(isWeekendBR(Date.parse('2026-10-11T15:00:00Z')), true) // domingo
+  assert.equal(isWeekendBR(Date.parse('2026-10-10T01:00:00Z')), false) // sexta 22h em Brasília
+  assert.equal(isWeekendBR(Date.parse('2026-10-12T12:00:00Z')), false) // segunda
+})

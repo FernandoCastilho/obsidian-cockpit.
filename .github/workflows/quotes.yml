@@ -5,7 +5,9 @@ name: Cotações (coleta central)
 on:
   schedule:
     - cron: '*/5 12-21 * * 1-5' # a cada 5 min no horário comercial (9h-18h em Brasília), dias úteis
-    - cron: '7 * * * *' # a cada hora nos demais horários
+    # Fora do horário comercial, 1 vez por hora, mas só de segunda a sexta (horário de Brasília); nada no sábado e no domingo.
+    - cron: '7 3-23 * * 1-5'
+    - cron: '7 0-2 * * 2-6'
   workflow_dispatch:
 
 concurrency:

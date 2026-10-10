@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { CURRENCIES } from './useQuotes.js'
 import { useNews } from './useNews.js'
@@ -86,7 +87,7 @@ export default function News({ colors }) {
           )}
         </>
       )}
-      {generated && Date.now() - generated.getTime() > 3 * 3600e3 && (
+      {generated && (Date.now() - generated.getTime() > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: as notícias foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
       {generated && (
