@@ -65,9 +65,20 @@ export function focusRelease(dateStr) {
   return d.toISOString().slice(0, 10)
 }
 
-// NY Fed: { refRates: [{ effectiveDate: 'AAAA-MM-DD', percentRate }] } -> [[ms, taxa % a.a.]] (SOFR overnight, sem média nem suavização)
+const nfNum = (v) => (v === null || v === undefined || v === '' ? null : Number.isFinite(Number(v)) ? Number(v) : null)
+const nfDay = (r) => Date.parse(`${r.effectiveDate}T12:00:00Z`)
+
+// NY Fed SOFR: { refRates: [{ effectiveDate, percentRate, percentPercentile1, percentPercentile99 }] }
+// -> [[ms, taxa % a.a., percentil 1, percentil 99]] (overnight, taxa do dia, sem média)
 export const parseSofr = (json) =>
   (json?.refRates ?? [])
-    .map((r) => [Date.parse(`${r.effectiveDate}T12:00:00Z`), Number(r.percentRate)])
-    .filter(([t, v]) => Number.isFinite(t) && Number.isFinite(v))
+    .map((r) => [nfDay(r), nfNum(r.percentRate), nfNum(r.percentPercentile1), nfNum(r.percentPercentile99)])
+    .filter(([t, v]) => Number.isFinite(t) && v !== null)
+    .sort((a, b) => a[0] - b[0])
+
+// NY Fed SOFR Averages (tipo SOFRAI): médias compostas de 30, 90 e 180 dias -> [[ms, m30, m90, m180]]
+export const parseSofrAvg = (json) =>
+  (json?.refRates ?? [])
+    .map((r) => [nfDay(r), nfNum(r.average30day), nfNum(r.average90day), nfNum(r.average180day)])
+    .filter(([t, a, b, c]) => Number.isFinite(t) && (a !== null || b !== null || c !== null))
     .sort((a, b) => a[0] - b[0])

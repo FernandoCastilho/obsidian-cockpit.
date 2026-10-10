@@ -1,6 +1,6 @@
 // Coleta CDI, Selic, PTAX e Boletim Focus (Banco Central) e grava public/macro.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { changePoints, focusFor, focusRelease, parseSgs, parseSofr, ptaxFrom, toBr, windows } from './macro-lib.mjs'
+import { changePoints, focusFor, focusRelease, parseSgs, parseSofr, parseSofrAvg, ptaxFrom, toBr, windows } from './macro-lib.mjs'
 
 const SGS = (code, a, b) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados?formato=json&dataInicial=${a}&dataFinal=${b}`
 const OLINDA = 'https://olinda.bcb.gov.br/olinda/servico'
@@ -25,7 +25,7 @@ async function getJson(url, label, tries = 5) {
 }
 
 const now = new Date()
-const out = { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], focus: null, ptax: {}, errors }
+const out = { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], sofrAvg: [], focus: null, ptax: {}, errors }
 
 // CDI anualizado (SGS 4389, B3): últimos 10 anos (limite do SGS para séries diárias)
 {
@@ -49,6 +49,9 @@ const out = { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], focus: null
   const data = await getJson(`https://markets.newyorkfed.org/api/rates/secured/sofr/search.json?startDate=2018-04-02&endDate=${end}`, 'sofr')
   out.sofr = parseSofr(data)
   console.log('SOFR:', out.sofr.length, 'pontos')
+  const avg = await getJson(`https://markets.newyorkfed.org/api/rates/secured/sofrai/search.json?startDate=2018-04-02&endDate=${end}`, 'sofr médias')
+  out.sofrAvg = parseSofrAvg(avg)
+  console.log('SOFR médias:', out.sofrAvg.length, 'pontos')
 }
 
 // Boletim Focus: expectativas anuais (mediana)
