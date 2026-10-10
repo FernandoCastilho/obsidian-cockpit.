@@ -44,3 +44,30 @@ test('coleta automática só de segunda a sexta (horário de Brasília) e app re
   assert.equal(isWeekendBR(Date.parse('2026-10-10T01:00:00Z')), false) // sexta 22h em Brasília
   assert.equal(isWeekendBR(Date.parse('2026-10-12T12:00:00Z')), false) // segunda
 })
+
+// expande um campo de cron (minuto ou hora): n, a-b, */s, a-b/s
+const field = (f, min, max) => {
+  const out = []
+  for (const part of f.split(',')) {
+    const [range, step = '1'] = part.split('/')
+    const [a, b] = range === '*' ? [min, max] : range.includes('-') ? range.split('-').map(Number) : [Number(range), step === '1' ? Number(range) : max]
+    for (let v = a; v <= b; v += Number(step)) out.push(v)
+  }
+  return out
+}
+test('coleta de 5 em 5 minutos só entre 9h30 e 18h de Brasília (12h30 a 21h00 UTC)', () => {
+  const crons = [...rf(new URL('../../.github/workflows/quotes.yml', import.meta.url), 'utf8').matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
+  const frequent = crons.filter((c) => c.split(' ')[0].includes('/'))
+  assert.ok(frequent.length >= 2)
+  const times = frequent.flatMap((c) => {
+    const [m, h] = c.split(' ')
+    return field(h, 0, 23).flatMap((hh) => field(m, 0, 59).map((mm) => hh * 60 + mm))
+  })
+  assert.equal(Math.min(...times), 12 * 60 + 30) // 9h30 em Brasília
+  assert.ok(Math.max(...times) <= 21 * 60) // até 18h
+  // nenhuma coleta horária cai dentro da janela de 5 minutos (evita rodar duas vezes)
+  for (const c of crons.filter((x) => !x.split(' ')[0].includes('/'))) {
+    const [m, h] = c.split(' ')
+    for (const hh of field(h, 0, 23)) for (const mm of field(m, 0, 59)) assert.ok(hh * 60 + mm < 12 * 60 + 30 || hh * 60 + mm > 21 * 60 || c.split(' ')[0] === '0', `coleta horária ${c} dentro da janela`)
+  }
+})

@@ -4,9 +4,13 @@ name: Cotações (coleta central)
 # Todos os usuários leem esses arquivos: a cota da API não depende de quantas pessoas abrem a página.
 on:
   schedule:
-    - cron: '*/5 12-21 * * 1-5' # a cada 5 min no horário comercial (9h-18h em Brasília), dias úteis
-    # Fora do horário comercial, 1 vez por hora, mas só de segunda a sexta (horário de Brasília); nada no sábado e no domingo.
-    - cron: '7 3-23 * * 1-5'
+    # Horário de Brasília = UTC-3. A cada 5 min das 9h30 às 18h, de segunda a sexta (12h30 às 21h00 UTC).
+    - cron: '30-55/5 12 * * 1-5'
+    - cron: '*/5 13-20 * * 1-5'
+    - cron: '0 21 * * 1-5'
+    # Fora dessa janela, 1 vez por hora, só de segunda a sexta: 0h07 às 9h07 e 18h07 às 23h07 de Brasília. Nada no sábado e no domingo.
+    - cron: '7 3-12 * * 1-5'
+    - cron: '7 21-23 * * 1-5'
     - cron: '7 0-2 * * 2-6'
   workflow_dispatch:
 
