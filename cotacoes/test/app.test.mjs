@@ -166,3 +166,17 @@ test('CDI futuro por datas: dias úteis, interpolação e taxa a termo', () => {
   assert.equal(growthAt(pts, 600), null) // além do último vértice
   assert.ok(forwardSeries(pts, 10, 500).length >= 2)
 })
+
+import { buildFeed } from '../src/feed.js'
+test('fila de notícias: une a mesma matéria em vários tickers, ordena por horário e filtra', () => {
+  const news = {
+    USD: [{ link: 'a', title: 'A', t: 100 }, { link: 'b', title: 'B', t: 300 }],
+    EUR: [{ link: 'a', title: 'A', t: 100 }, { link: 'c', title: 'C', t: 200 }],
+  }
+  const all = buildFeed(news)
+  assert.deepEqual(all.map((n) => n.link), ['b', 'c', 'a'])
+  assert.deepEqual(all[2].codes, ['USD', 'EUR'])
+  assert.deepEqual(buildFeed(news, 'EUR').map((n) => n.link), ['c', 'a'])
+  assert.equal(buildFeed(news, 'ALL', 1).length, 1)
+  assert.deepEqual(buildFeed(undefined), [])
+})
