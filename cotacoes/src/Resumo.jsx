@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { CURRENCIES } from './useQuotes.js'
-import { fullWindow, useHistory } from './useHistory.js'
-import { mergeDaily } from './parity.js'
-import { liveParity } from './parity.js'
+import { fullWindow, useHistory, useIntraday } from './useHistory.js'
+import { liveParity, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
 import { rateTiles, topHeadlines } from './snapshot.js'
@@ -15,6 +14,7 @@ const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).
 const p2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const bps = (d) => `${d > 0 ? '+' : d < 0 ? '−' : ''}${Math.abs(Math.round(d * 100))} bps`
 const SPARK = [
+  { id: 'day', label: 'Dia', days: 1, intraday: true },
   { id: 'week', label: 'Semana', days: 7 },
   { id: 'month', label: 'Mês', days: 30 },
   { id: 'year', label: 'Ano', days: 359 },
@@ -39,8 +39,10 @@ function Arrow({ v }) {
 
 function Tile({ code, quote, ptax, spark, onOpen, wide }) {
   const w = useWindow(spark.days)
-  const h = useHistory(code, w.start, w.end)
-  const pts = h.status === 'ok' ? h.data.points : []
+  const h = useHistory(code, w.start, w.end, !!spark.intraday)
+  const i = useIntraday(code, new Date(), !spark.intraday)
+  const s = spark.intraday ? i : h
+  const pts = s.status === 'ok' ? s.data.points : []
   const change = periodChange(pts)
   const day = quote?.pct ?? 0
   const trend = day > 0 ? 'up' : day < 0 ? 'down' : 'flat'
@@ -67,7 +69,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
           <Sparkline points={pts} tone={trend} />
           <small className="muted">
             {spark.label}
-            {change != null && ` ${pct(change)}`}
+            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
       </span>
@@ -78,9 +80,13 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
 // Paridade EUR/USD: valor ao vivo (cotações) e minigráfico do histórico diário de USD e EUR.
 function ParityTile({ quotes, spark, onOpen }) {
   const w = useWindow(spark.days)
-  const u = useHistory('USD', w.start, w.end)
-  const e = useHistory('EUR', w.start, w.end)
-  const pts = u.status === 'ok' && e.status === 'ok' ? mergeDaily(u.data.points, e.data.points, true) : []
+  const dia = !!spark.intraday
+  const u = useHistory('USD', w.start, w.end, dia)
+  const e = useHistory('EUR', w.start, w.end, dia)
+  const ui = useIntraday('USD', new Date(), !dia)
+  const ei = useIntraday('EUR', new Date(), !dia)
+  const [a, b] = dia ? [ui, ei] : [u, e]
+  const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
   const p = liveParity(quotes?.USD, quotes?.EUR)
   const trend = (p?.pct ?? 0) > 0 ? 'up' : (p?.pct ?? 0) < 0 ? 'down' : 'flat'
@@ -109,7 +115,7 @@ function ParityTile({ quotes, spark, onOpen }) {
           <Sparkline points={pts} tone={trend} />
           <small className="muted">
             {spark.label}
-            {change != null && ` ${pct(change)}`}
+            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
       </span>
