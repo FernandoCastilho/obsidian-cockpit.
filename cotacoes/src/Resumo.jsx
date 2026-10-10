@@ -9,6 +9,7 @@ import { rateTiles, topHeadlines } from './snapshot.js'
 import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
+import { Plot, useWidth } from './HistoryChart.jsx'
 import { CALC_OPTIONS } from './calcOptions.js'
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
@@ -40,7 +41,7 @@ function Arrow({ v }) {
   return <span aria-hidden="true">{v > 0 ? '▲' : v < 0 ? '▼' : '■'}</span>
 }
 
-function Tile({ code, quote, ptax, spark, onOpen, wide }) {
+function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
   const w = useWindow(spark.days)
   const h = useHistory(code, w.start, w.end, !!spark.intraday)
   const i = useIntraday(code, new Date(), !spark.intraday)
@@ -52,7 +53,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
   const trend = toneOf(hasDay ? day : change)
   const cur = CURRENCIES.find((c) => c.code === code)
   return (
-    <button type="button" className={`tile${wide ? ' wide' : ''}`} onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
+    <button type="button" style={{ '--series': color }} className={`tile${wide ? ' wide' : ''}`} onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
       <span className="tile-head">
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="26" height="18"') }} />
         <span className="tile-name">
@@ -64,7 +65,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
           <span className="tile-price">{quote ? brl(quote.bid) : '—'}</span>
           {hasDay ? (
             <span className={`pct ${trend}`}>
-              <Arrow v={day} /> {pct(day)}
+              <Arrow v={day} /> {pct(day)}<small className="muted"> hoje</small>
             </span>
           ) : (
             quote && <small className="muted">var. do dia indisponível</small>
@@ -84,7 +85,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
 }
 
 // Paridade EUR/USD: valor ao vivo (cotações) e minigráfico do histórico diário de USD e EUR.
-function ParityTile({ quotes, spark, onOpen }) {
+function ParityTile({ quotes, spark, onOpen, color }) {
   const w = useWindow(spark.days)
   const dia = !!spark.intraday
   const u = useHistory('USD', w.start, w.end, dia)
@@ -98,7 +99,7 @@ function ParityTile({ quotes, spark, onOpen }) {
   const hasDay = !!p && !quotes.USD.fallback && !quotes.EUR.fallback
   const trend = toneOf(hasDay ? p.pct : change)
   return (
-    <button type="button" className="tile wide" onClick={() => onOpen('PAR')} aria-label="Paridade EUR/USD: detalhes">
+    <button type="button" style={{ '--series': color }} className="tile wide" onClick={() => onOpen('PAR')} aria-label="Paridade EUR/USD: detalhes">
       <span className="tile-head">
         <span className="flag pair" aria-hidden="true">
           <span dangerouslySetInnerHTML={{ __html: flagSvg('EUR', 'width="26" height="18"') }} />
@@ -113,7 +114,7 @@ function ParityTile({ quotes, spark, onOpen }) {
           <span className="tile-price">{p ? `US$ ${p.main.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}` : '—'}</span>
           {hasDay ? (
             <span className={`pct ${trend}`}>
-              <Arrow v={p.pct} /> {pct(p.pct)}
+              <Arrow v={p.pct} /> {pct(p.pct)}<small className="muted"> hoje</small>
             </span>
           ) : (
             p && <small className="muted">var. do dia indisponível</small>
@@ -132,8 +133,38 @@ function ParityTile({ quotes, spark, onOpen }) {
   )
 }
 
+// Gráfico de cotação do Resumo: últimos 60 pregões da moeda escolhida, em linha reta (sem suavização), a partir do histórico em cache.
+function ResumoChart({ colors }) {
+  const [code, setCode] = useState('USD')
+  const w = useWindow(100)
+  const h = useHistory(code, w.start, w.end)
+  const [ref, width] = useWidth()
+  const pts = h.status === 'ok' ? h.data.points.slice(-60) : null
+  const chg = pts && pts.length > 1 ? (pts[pts.length - 1].bid / pts[0].bid - 1) * 100 : null
+  const label = `${h.data?.source ?? code}/BRL`
+  return (
+    <div className="resumo-chart">
+      <div className="sec-head">
+        <h3>{label} <small className="muted">· 60 pregões</small>{chg != null && <span className={`pct ${toneOf(chg)}`}> {pct(chg)}</span>}</h3>
+        <div className="chips" role="group" aria-label="Moeda do gráfico">
+          {CURRENCIES.map((c) => (
+            <button key={c.code} type="button" aria-pressed={code === c.code} onClick={() => setCode(c.code)}>{c.code}</button>
+          ))}
+        </div>
+      </div>
+      <div ref={ref}>
+        {pts ? (
+          <Plot points={pts} width={width} color={colors?.[code]} code={`rs-${code}`} fmt={(v) => brl(v)} label={label} />
+        ) : (
+          <div className="placeholder" style={{ height: 120 }}>{h.status === 'error' ? 'Histórico indisponível no momento.' : 'Carregando…'}</div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [sparkId, setSparkId] = useState('month')
   const spark = SPARK.find((s) => s.id === sparkId)
   return (
@@ -150,10 +181,11 @@ function MoedasPanel({ quotes, ptax, onOpen }) {
         </div>
         <div className="tiles">
           {CURRENCIES.map((c) => (
-            <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={onOpen} />
+            <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={onOpen} color={colors?.[c.code]} />
           ))}
-          <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} />
+          <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} color={colors?.PAR} />
         </div>
+        <ResumoChart colors={colors} />
       </section>
   )
 }
@@ -161,21 +193,23 @@ function MoedasPanel({ quotes, ptax, onOpen }) {
 // Faixa de juros fixa no topo do app (todas as abas): rótulo com "?" e os indicadores rolando.
 export function RatesTop({ macro, curves, onOpen }) {
   const rates = rateTiles(macro.data, curves.data)
+  const [paused, setPaused] = useState(false)
   return (
     <div className="rates-top">
       <span className="rates-label">Juros <Explain id="faixaJuros" /></span>
-      <RatesBar rates={rates} onOpen={onOpen} />
+      <RatesBar rates={rates} onOpen={onOpen} paused={paused} />
+      <button type="button" className="rates-pause" aria-pressed={paused} aria-label={paused ? 'Retomar a rolagem dos juros' : 'Pausar a rolagem dos juros'} onClick={() => setPaused((p) => !p)}>{paused ? '▶' : '❚❚'}</button>
     </div>
   )
 }
 
 // Faixa rolante dos juros: valor e variação (bps) de cada indicador; toque abre a aba Juros.
-function RatesBar({ rates, onOpen }) {
+function RatesBar({ rates, onOpen, paused }) {
   if (!rates.length) return <p className="status">Juros indisponíveis no momento.</p>
   const set = rates.length < 8 ? [...rates, ...rates] : rates
   const seconds = Math.max(30, set.length * 6)
   return (
-    <div className="wire quote-bar" role="region" aria-label="Juros em rolagem (pausa ao passar o mouse)">
+    <div className={`wire quote-bar${paused ? ' paused' : ''}`} role="region" aria-label="Juros em rolagem (pausa ao passar o mouse ou no botão)">
       <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
         {[0, 1].map((k) => (
           <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>
@@ -206,7 +240,7 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
 
   return (
     <div className="resumo">
-      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} />
+      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} />
 
       <section aria-labelledby="r-calc">
         <div className="sec-head">

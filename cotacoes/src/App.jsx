@@ -30,7 +30,7 @@ import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
-const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500', PAR: '#d55181' }
+const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
@@ -346,6 +346,28 @@ function ParityCard({ quotes }) {
 }
 
 const BRT = { timeZone: 'America/Sao_Paulo' }
+// Efeitos visuais opcionais (brilho discreto nas linhas): desligados por padrão; a escolha fica só neste navegador.
+const FX_KEY = 'cotacoes-fx'
+function useFx() {
+  const [fx, setFx] = useState(() => {
+    try {
+      return localStorage.getItem(FX_KEY) === 'neon' ? 'neon' : 'off'
+    } catch {
+      return 'off'
+    }
+  })
+  useEffect(() => {
+    if (fx === 'neon') document.documentElement.dataset.fx = 'neon'
+    else delete document.documentElement.dataset.fx
+    try {
+      localStorage.setItem(FX_KEY, fx)
+    } catch {
+      /* sem armazenamento: vale só nesta sessão */
+    }
+  }, [fx])
+  return [fx, setFx]
+}
+
 function BrasiliaClock() {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
@@ -388,6 +410,7 @@ export default function App() {
   const macro = useMacro()
   const curves = useCurves()
   const hol = useHolidays()
+  const [fx, setFx] = useFx()
   const [update, setUpdate] = useState(false)
   useEffect(() => {
     const on = () => setUpdate(true)
@@ -489,8 +512,9 @@ export default function App() {
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'} · fonte: AwesomeAPI e BCB`
+            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
             : 'Carregando…'}
+        {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
       </p>
       <Nav tab={tab} onTab={(id) => goto(id)} />
 
@@ -561,6 +585,11 @@ export default function App() {
       <footer>
         <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNY/BRL (onshore); CNH (offshore) por cruzamento quando o CNY está parado</p>
         <p><i>{DISCLAIMER}</i></p>
+        <p>
+          <button type="button" className="fx-toggle" aria-pressed={fx === 'neon'} onClick={() => setFx(fx === 'neon' ? 'off' : 'neon')} title="Brilho discreto nas linhas dos gráficos (desligado por padrão)">
+            Efeitos: {fx === 'neon' ? 'brilho ligado' : 'desligados'}
+          </button>
+        </p>
       </footer>
 
       {open && (

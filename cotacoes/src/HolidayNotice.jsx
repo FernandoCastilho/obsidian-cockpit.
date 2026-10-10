@@ -14,23 +14,34 @@ export default function HolidayNotice({ hol, days = 5, list = false }) {
   const y = Number(t.slice(0, 4))
   const missing = hol.pracas.includes('CN') && hol.loaded ? cnMissingYears([y, y + 1], hol.ctx) : []
   if (!up.length && !missing.length) return list ? <p className="status">Nenhum feriado nas praças escolhidas nos próximos {days} dias.</p> : null
+  const items = (
+    <ul>
+      {up.map((u) => (
+        <li key={u.date + u.cal}>
+          <b>{when(u.date, t)}</b> · feriado em <b>{calLabel(u.cal)}</b>: {u.name}
+          {u.cal === 'NY' && ' (sem liquidação em USD)'}
+        </li>
+      ))}
+    </ul>
+  )
+  const note = missing.length > 0 && (
+    <p className="status stale">
+      China: o calendário oficial de {missing.join(' e ')} ainda não foi publicado pelo governo (costuma sair em novembro). Esses anos aparecem só com fins de semana; confira antes de fechar datas.
+    </p>
+  )
+  if (list) return <div className="holiday-notice" role="status">{up.length > 0 && items}{note}</div>
+  // Resumo: uma linha com o primeiro dia de feriado e as praças; o resto fica recolhido
+  const first = up[0]
+  const same = first ? up.filter((u) => u.date === first.date).map((u) => calLabel(u.cal)) : []
+  const rest = first ? up.length - same.length : 0
   return (
-    <div className="holiday-notice" role="status">
-      {up.length > 0 && (
-        <ul>
-          {up.map((u) => (
-            <li key={u.date + u.cal}>
-              <b>{when(u.date, t)}</b> · feriado em <b>{calLabel(u.cal)}</b>: {u.name}
-              {u.cal === 'NY' && ' (sem liquidação em USD)'}
-            </li>
-          ))}
-        </ul>
-      )}
-      {missing.length > 0 && (
-        <p className="status stale">
-          China: o calendário oficial de {missing.join(' e ')} ainda não foi publicado pelo governo (costuma sair em novembro). Esses anos aparecem só com fins de semana; confira antes de fechar datas.
-        </p>
-      )}
-    </div>
+    <details className="holiday-notice compact">
+      <summary>
+        {first ? <><b>{when(first.date, t)}</b> · feriado em {same.join(', ')}{rest > 0 ? ` · +${rest} nos próximos dias` : ''}</> : 'Calendário da China: ano ainda não publicado'}
+        {first && missing.length > 0 && ' · aviso China'}
+      </summary>
+      {up.length > 0 && items}
+      {note}
+    </details>
   )
 }
