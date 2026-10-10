@@ -153,3 +153,16 @@ test('CDI futuro: taxa a termo da curva DI', () => {
   assert.deepEqual(t.map((r) => r.label), ['3 meses', '1 ano', '2 anos'])
   assert.equal(t[0].fwd, null)
 })
+
+import { busDays, forwardBetween, forwardSeries, growthAt } from '../src/cdiFuturo.js'
+test('CDI futuro por datas: dias úteis, interpolação e taxa a termo', () => {
+  assert.equal(busDays('2026-10-09', '2026-10-16'), 5) // sex -> sex seguinte: seg a sex
+  assert.equal(busDays('2026-10-16', '2026-10-09'), 0)
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  assert.ok(Math.abs(forwardBetween(flat, 30, 400) - 10) < 1e-9)
+  assert.ok(Math.abs(forwardBetween(flat, 0, 252) - 10) < 1e-9)
+  const pts = [[252, 10], [504, 11]]
+  assert.ok(Math.abs(forwardBetween(pts, 252, 504) - (1.11 ** 2 / 1.1 - 1) * 100) < 1e-6)
+  assert.equal(growthAt(pts, 600), null) // além do último vértice
+  assert.ok(forwardSeries(pts, 10, 500).length >= 2)
+})
