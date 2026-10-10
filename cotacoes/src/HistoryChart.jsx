@@ -24,7 +24,7 @@ export function useWidth() {
   return [ref, w]
 }
 
-export function Plot({ points, width, color, code, intraday, fmt, label, nice }) {
+export function Plot({ points, width, color, code, intraday, fmt, label, nice, labels, light }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -76,11 +76,16 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice })
   }
 
   const last = points[points.length - 1]
+  // rótulos de valor: pontos espaçados por igual (sem encavalar), incluindo o primeiro e o último
+  const marks = useMemo(() => {
+    const n = Math.min(points.length, width < 420 ? 4 : 7)
+    return n < 2 ? [0] : [...new Set(Array.from({ length: n }, (_, i) => Math.round((i * (points.length - 1)) / (n - 1))))]
+  }, [points, width])
   const hp = hover != null ? points[hover] : null
   const gid = `a-${code}`
 
   return (
-    <div className="plot" onPointerLeave={() => setHover(null)}>
+    <div className={`plot${light ? ' light' : ''}`} onPointerLeave={() => setHover(null)}>
       <svg
         viewBox={`0 0 ${width} ${H}`}
         width="100%"
@@ -118,6 +123,16 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice })
         <path d={g.area} fill={`url(#${gid})`} />
         <path d={g.line} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={g.x(last.t)} cy={g.y(last.bid)} r="4" fill={color} className="ring" />
+        {labels && fmt && marks.map((i) => {
+          const p = points[i]
+          const anchor = i === 0 ? 'start' : i === points.length - 1 ? 'end' : 'middle'
+          return (
+            <g key={p.t} pointerEvents="none">
+              <circle cx={g.x(p.t)} cy={g.y(p.bid)} r="2.5" fill={color} />
+              <text x={g.x(p.t)} y={g.y(p.bid) - 9} textAnchor={anchor} className="vlabel">{fmt(p.bid)}</text>
+            </g>
+          )
+        })}
         {hp && (
           <g pointerEvents="none">
             <line x1={g.x(hp.t)} x2={g.x(hp.t)} y1={M.t} y2={g.base} className="cross" />
