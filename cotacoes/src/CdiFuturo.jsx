@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
-import { busDays, forwardBetween, forwardSeries, horizonTable } from './cdiFuturo.js'
+import { busDaysIn } from './holidays.js'
+import { forwardBetween, forwardSeries, horizonTable } from './cdiFuturo.js'
 
 const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 const dm = (iso) => iso.split('-').reverse().join('/')
 
 // CDI futuro: taxa a termo implícita nos futuros de DI (curva DI x pré da B3), em % a.a., por data.
-export default function CdiFuturo({ curves, macro }) {
+export default function CdiFuturo({ curves, macro, hol }) {
   const [ref, width] = useWidth()
   const br = curves.data?.br
   const today = br?.compare?.find((c) => c.id === 'hoje')
@@ -25,8 +26,8 @@ export default function CdiFuturo({ curves, macro }) {
   const from = base ? clamp(rawFrom) : rawFrom
   const to = base ? clamp(rawTo) : rawTo
   const adjusted = base && (from !== rawFrom || to !== rawTo)
-  const d1 = base ? busDays(base, from) : 0
-  const d2 = base ? busDays(base, to) : 0
+  const d1 = base ? busDaysIn(base, from, ['BR'], hol?.ctx) : 0
+  const d2 = base ? busDaysIn(base, to, ['BR'], hol?.ctx) : 0
   const series = useMemo(() => {
     if (!pts || d2 <= d1) return null
     const t0 = Date.parse(`${base}T12:00:00Z`)
@@ -69,7 +70,7 @@ export default function CdiFuturo({ curves, macro }) {
             <p className="cdif-result">
               CDI a termo de {dm(from)} a {dm(to)}: <b>{pct(term)}</b> a.a.
               {d1 > 0 && avgToEnd != null && <> · CDI médio de hoje até {dm(to)}: <b>{pct(avgToEnd)}</b></>}
-              <small className="muted"> ({d2 - d1} dias úteis, sem feriados)</small>
+              <small className="muted"> ({d2 - d1} dias úteis, feriados nacionais)</small>
             </p>
           ) : (
             <p className="status stale">Escolha um intervalo dentro da curva (até {dm(maxIso)}), com “Até” depois de “De”.</p>

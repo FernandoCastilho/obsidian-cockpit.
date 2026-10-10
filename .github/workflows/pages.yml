@@ -50,6 +50,9 @@ jobs:
         run: node scripts/fetch-curves.mjs
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
+      - name: Coletar feriados da China (dados oficiais)
+        run: node scripts/fetch-holidays.mjs
+        continue-on-error: true
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true

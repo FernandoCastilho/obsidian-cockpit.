@@ -145,4 +145,10 @@ export const GLOSSARY = {
     b: '180 dias a 6% ao ano: ACT/360 dá 3,000% de juros; ACT/365F dá 2,959%.',
     c: 'ACT/360 cobra um pouco mais para o mesmo prazo. Use a que está no contrato; o app não escolhe por você.',
   },
+  feriados: {
+    t: 'Praças e feriados',
+    a: 'Cada praça tem o seu calendário: onde é feriado, o mercado fecha e o dinheiro não liquida.',
+    b: 'Pagar em USD numa quinta de Thanksgiving não funciona: Nova York fecha. Um pagamento marcado para essa data só entra no dia útil seguinte.',
+    c: 'Marque as praças da sua operação. O app avisa quando uma data cai em feriado e sugere o próximo dia útil comum, mas nunca muda a data sozinho.',
+  },
 }

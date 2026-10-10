@@ -318,3 +318,59 @@ test('calculadora: taxa ao mês, no período e % do CDI do período', () => {
   // % do CDI composto dia a dia: 100% = DI exato
   assert.ok(Math.abs(compare({ ...base, mode: 'cdi', rate: 100 }).diff) < 1e-6)
 })
+
+import { addDays as hAdd, busDaysIn, buildCn, cnMissingYears, easter, holidayMap, isBusinessDay, nextBusinessDay, nthWeekday, offReasons, upcomingHolidays } from '../src/holidays.js'
+test('feriados: Páscoa, Brasil (Carnaval, Sexta Santa, Corpus Christi) e dias úteis do DI', () => {
+  assert.equal(easter(2026), '2026-04-05')
+  assert.equal(easter(2027), '2027-03-28')
+  const br = holidayMap('BR', 2026)
+  assert.equal(br.get('2026-02-16'), 'Carnaval (segunda)')
+  assert.ok(br.has('2026-04-03') && br.has('2026-06-04') && br.has('2026-11-20'))
+  assert.ok(!holidayMap('BR', 2023).has('2023-11-20')) // Consciência Negra só é nacional desde 2024
+  // 04/04/2026 (sábado) a 13/04/2026: segunda 6, 7, 8, 9, 10 e 13 = 6 dias úteis; 21/04 é Tiradentes
+  assert.equal(busDaysIn('2026-04-03', '2026-04-13', ['BR']), 6)
+  assert.equal(busDaysIn('2026-04-20', '2026-04-22', ['BR']), 1)
+})
+test('feriados: Nova York (sábado não compensado, domingo vira segunda) e Thanksgiving', () => {
+  const ny = holidayMap('NY', 2026)
+  assert.ok(!ny.has('2026-07-03') && !ny.has('2026-07-04')) // 4/jul/2026 é sábado: a Fed abre na sexta
+  assert.equal(holidayMap('NY', 2027).get('2027-07-05'), 'Independência dos EUA (observado)') // 4/jul/2027 é domingo
+  assert.equal(ny.get('2026-11-26'), 'Thanksgiving')
+  assert.equal(nthWeekday(2026, 5, 1, -1), '2026-05-25')
+  assert.ok(ny.has('2026-06-19') && ny.has('2026-12-25'))
+})
+test('feriados: zona do euro, Londres (Boxing Day compensado) e Japão (Semana Dourada, Silver Week, domingo)', () => {
+  const eu = holidayMap('EU', 2026)
+  assert.ok(eu.has('2026-04-03') && eu.has('2026-04-06') && eu.has('2026-12-26'))
+  const uk = holidayMap('UK', 2026)
+  assert.ok(uk.has('2026-12-25') && uk.has('2026-12-28') && !uk.has('2026-12-26')) // 26/12/2026 é sábado
+  assert.ok(uk.has('2026-05-04') && uk.has('2026-05-25') && uk.has('2026-08-31'))
+  const jp = holidayMap('JP', 2026)
+  assert.ok(jp.has('2026-03-20') && jp.has('2026-09-23')) // equinócios
+  assert.equal(jp.get('2026-09-22'), 'Feriado dos cidadãos') // entre 21/09 e 23/09
+  assert.ok(jp.has('2026-05-06')) // 3/mai/2026 é domingo: compensado em 6/mai
+  assert.ok(jp.has('2026-12-31') && jp.has('2026-01-02'))
+})
+test('feriados: China usa dados oficiais, com dia de compensação útil e aviso de ano sem dado', () => {
+  const ctx = {
+    cn: buildCn({ years: { 2026: { days: [
+      { name: '春节', nameEn: 'Spring Festival', date: '2026-02-17', isOffDay: true },
+      { name: '春节', nameEn: 'Spring Festival', date: '2026-02-14', isOffDay: false },
+    ] } } }),
+  }
+  assert.equal(isBusinessDay('2026-02-17', 'CN', ctx), false) // terça: feriado
+  assert.equal(isBusinessDay('2026-02-14', 'CN', ctx), true) // sábado de compensação
+  assert.equal(isBusinessDay('2026-02-14', 'BR', ctx), false) // no Brasil continua fim de semana
+  assert.equal(offReasons('2026-02-17', ['BR', 'CN'], ctx).length, 2) // Carnaval no Brasil e Festival da Primavera na China
+  assert.deepEqual(offReasons('2026-02-14', ['BR', 'CN'], ctx).map((r) => r.cal), ['BR']) // sábado de compensação: só o Brasil fecha
+  assert.deepEqual(cnMissingYears([2026, 2027], ctx), [2027])
+  assert.equal(holidayMap('CN', 2027, ctx).size, 0)
+})
+test('feriados: próximo dia útil comum às praças e lista de próximos feriados', () => {
+  const ctx = { cn: {} }
+  // Sexta-feira Santa 3/4/2026 fecha Brasil e zona do euro; sábado, domingo e 6/4 (Páscoa) fecham o euro: próximo comum é 7/4
+  assert.equal(nextBusinessDay('2026-04-03', ['BR', 'EU'], ctx), '2026-04-07')
+  const up = upcomingHolidays('2026-11-23', 7, ['NY', 'BR'], ctx)
+  assert.deepEqual(up.map((u) => `${u.date} ${u.cal}`), ['2026-11-26 NY'])
+  assert.equal(hAdd('2026-12-31', 1), '2027-01-01')
+})
