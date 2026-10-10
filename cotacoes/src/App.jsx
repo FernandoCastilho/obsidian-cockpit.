@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
+import { isWeekendBR } from './market.js'
 import { CURRENCIES, REFRESH_DAILY_MAX, seriesName, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
@@ -87,11 +88,13 @@ function QuoteTime({ t }) {
   const d = new Date(t)
   const sameDay = d.toDateString() === new Date().toDateString()
   const text = sameDay ? d.toLocaleTimeString('pt-BR') : `${d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`
-  const old = Date.now() - t > 15 * 60000
+  const weekend = isWeekendBR()
+  const old = !weekend && Date.now() - t > 15 * 60000
   return (
     <p className={`quote-time${old ? ' old' : ''}`} title={old ? 'Cotação com mais de 15 minutos: mercado fechado ou fonte atrasada.' : 'Horário da cotação informado pela fonte.'}>
       cotação de {text}
       {old && ' · defasada'}
+      {weekend && ' · mercado fechado (fim de semana)'}
     </p>
   )
 }

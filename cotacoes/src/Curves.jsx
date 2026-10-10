@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
 
@@ -119,7 +120,7 @@ export default function Curves({ curves: c }) {
     <section className="macro" aria-labelledby="curves-h">
       <h2 id="curves-h">Curvas de juros</h2>
       {c.status === 'loading' && <div className="placeholder">Carregando curvas…</div>}
-      {c.status === 'ok' && c.data.generatedAt && Date.now() - c.data.generatedAt > 3 * 3600e3 && (
+      {c.status === 'ok' && c.data.generatedAt && (Date.now() - c.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: as curvas foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
       {c.status === 'ok' && Object.keys(c.data.stale ?? {}).length > 0 && (

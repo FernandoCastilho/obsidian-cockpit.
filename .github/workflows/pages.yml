@@ -5,7 +5,9 @@ on:
     branches: [main, claude/obsidian-plugin-analysis-bagjz3]
     paths: ['cotacoes/**']
   schedule:
-    - cron: '17 * * * *' # notícias: atualização de hora em hora
+    # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.
+    - cron: '17 3-23 * * 1-5' # segunda a sexta, 0h a 20h de Brasília
+    - cron: '17 0-2 * * 2-6' # terça a sábado UTC = segunda a sexta, 21h a 23h de Brasília
   workflow_dispatch:
 
 permissions:
