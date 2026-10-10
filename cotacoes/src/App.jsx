@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
@@ -7,6 +7,8 @@ import Curves from './Curves.jsx'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
+import Nav, { TABS } from './Nav.jsx'
+import Resumo from './Resumo.jsx'
 import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
@@ -71,7 +73,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
 }
 
 const brl = (v, digits = 4) =>
-  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: digits, maximumFractionDigits: digits })
+  Number.isFinite(v) ? v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: digits, maximumFractionDigits: digits }) : '—'
 
 // Horário da própria cotação (vem da fonte), não o da consulta.
 function QuoteTime({ t }) {
@@ -333,14 +335,41 @@ function ParityCard({ quotes }) {
   )
 }
 
-// No celular as seções longas começam recolhidas; no computador ficam sempre abertas (o título só aparece no celular).
-function Fold({ title, children }) {
-  const [open, setOpen] = useState(() => typeof window === 'undefined' || !window.matchMedia || window.matchMedia('(min-width: 700px)').matches)
+const BRT = { timeZone: 'America/Sao_Paulo' }
+function BrasiliaClock() {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 15000)
+    return () => clearInterval(id)
+  }, [])
   return (
-    <details className="fold" open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
-      <summary>{title}</summary>
-      {children}
-    </details>
+    <div className="brt">
+      <small>Horário de Brasília</small>
+      <b>
+        {now.toLocaleDateString('pt-BR', { ...BRT, day: '2-digit', month: '2-digit', year: 'numeric' })} • {now.toLocaleTimeString('pt-BR', { ...BRT, hour: '2-digit', minute: '2-digit' })}
+      </b>
+    </div>
+  )
+}
+
+// Detalhes de uma moeda (toque no quadro do resumo): o card completo, com compra/venda, máx./mín., PTAX e variações.
+function Sheet({ onClose, children }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey)
+    document.body.classList.add('no-scroll')
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.classList.remove('no-scroll')
+    }
+  }, [onClose])
+  return (
+    <div className="sheet-backdrop" onClick={onClose}>
+      <div className="sheet" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+        <button type="button" className="sheet-close" onClick={onClose} aria-label="Fechar">×</button>
+        {children}
+      </div>
+    </div>
   )
 }
 
@@ -376,65 +405,135 @@ export default function App() {
     setPreset('custom')
     setRange({ start, end })
   }
+  const [tab, setTab] = useState(() => {
+    const h = window.location.hash.replace('#', '')
+    return TABS.some((t) => t.id === h) ? h : 'resumo'
+  })
+  const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
+  const goto = (id) => {
+    setTab(id)
+    try {
+      window.history.replaceState(null, '', `#${id}`)
+    } catch {
+      /* sem histórico (ex.: arquivo local) */
+    }
+    window.scrollTo({ top: 0 })
+  }
+  const openCurrency = CURRENCIES.find((c) => c.code === open)
+  const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
+
   return (
-    <main>
-      <h1>Cotações de mercado</h1>
-      <p className="status">
+    <main className="app">
+      <header className="top">
+        <div>
+          <h1>Painel de mercado</h1>
+          <p className="sub">{TABS.find((t) => t.id === tab).label === 'Resumo' ? 'Visão geral' : TABS.find((t) => t.id === tab).label}</p>
+        </div>
+        <div className="top-right">
+          <BrasiliaClock />
+          <button
+            type="button"
+            className="round"
+            onClick={refresh}
+            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
+            aria-label={`Atualizar cotações agora${wait}`}
+            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
+              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
+              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <p className="status src">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'} · o horário da cotação aparece em cada card`
-            : 'Carregando…'}{' '}
-        <button
-          type="button"
-          className="btn small"
-          onClick={refresh}
-          disabled={refreshing || limits.wait > 0 || limits.left <= 0}
-          title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Consulta a fonte agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
-        >
-          {refreshing ? 'Atualizando…' : limits.wait > 0 ? `Atualizar em ${limits.wait}s` : 'Atualizar agora'}
-        </button>
+            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'} · fonte: AwesomeAPI e BCB`
+            : 'Carregando…'}
       </p>
-      <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
-      <InstallApp />
-      <section className="grid">
-        {CURRENCIES.map((c) => (
-          <div className="slot" key={c.code}>
-            <Clock codes={[c.code]} />
-            <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} onRetry={reload} />
-          </div>
-        ))}
-        <div className="slot">
-          <Clock codes={['EUR', 'USD']} />
-          <ParityCard quotes={quotes} />
-        </div>
-      </section>
-      <Agenda />
-      <Fold title="Histórico">
-      <section className="history">
-        <div className="history-head">
-          <h2>Histórico</h2>
-          <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
-        </div>
-        {notice && <p className="status">{notice}</p>}
-        <div className="charts">
-          {CURRENCIES.map((c) => (
-            <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
-          ))}
-          <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
-        </div>
-      </section>
-      </Fold>
-      <Fold title="Juros e expectativas"><Macro /></Fold>
-      <Fold title="Curvas de juros"><Curves curves={curves} /></Fold>
-      <Fold title="Projeções de terceiros"><Projecoes /></Fold>
-      <Fold title="Notícias"><News colors={COLORS} /></Fold>
+      <Nav tab={tab} onTab={goto} />
+
+      {tab === 'resumo' && (
+        <>
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={setOpen} goto={goto} colors={COLORS} />
+          <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
+          <InstallApp />
+        </>
+      )}
+
+      {tab === 'moedas' && (
+        <>
+          <section className="grid">
+            {CURRENCIES.map((c) => (
+              <div className="slot" key={c.code}>
+                <Clock codes={[c.code]} />
+                <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} onRetry={reload} />
+              </div>
+            ))}
+            <div className="slot">
+              <Clock codes={['EUR', 'USD']} />
+              <ParityCard quotes={quotes} />
+            </div>
+          </section>
+          <section className="history">
+            <div className="history-head">
+              <h2>Histórico</h2>
+              <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
+            </div>
+            {notice && <p className="status">{notice}</p>}
+            <div className="charts">
+              {CURRENCIES.map((c) => (
+                <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+              ))}
+              <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+            </div>
+          </section>
+        </>
+      )}
+
+      {tab === 'juros' && (
+        <>
+          <Macro />
+          <Curves curves={curves} />
+        </>
+      )}
+
+      {tab === 'cenarios' && (
+        <>
+          <Agenda />
+          <Projecoes />
+        </>
+      )}
+
+      {tab === 'noticias' && <News colors={COLORS} />}
+
       <Novidades />
       <footer>
-        <p>Fonte: AwesomeAPI · CNH = yuan offshore (CNY se indisponível)</p>
+        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · CNH = yuan offshore (CNY se indisponível)</p>
         <p><i>{DISCLAIMER}</i></p>
       </footer>
+
+      {open && (
+        <Sheet onClose={() => setOpen(null)}>
+          {open === 'PAR' ? (
+            <>
+              <Clock codes={['EUR', 'USD']} />
+              <ParityCard quotes={quotes} />
+            </>
+          ) : (
+            openCurrency && (
+              <>
+                <Clock codes={[openCurrency.code]} />
+                <Card currency={openCurrency} quote={quotes?.[openCurrency.code]} dir={direction[openCurrency.code]} err={errors[openCurrency.code]} ptax={macro.data?.ptax?.[openCurrency.code]} onRetry={reload} />
+              </>
+            )
+          )}
+          <button type="button" className="btn" onClick={() => { setOpen(null); goto('moedas') }}>Ver histórico</button>
+        </Sheet>
+      )}
     </main>
   )
 }

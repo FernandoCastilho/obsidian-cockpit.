@@ -125,3 +125,19 @@ test('cotações: lê a coleta central sem consultar a API; arquivo velho cai pa
   assert.ok(Math.abs(central.collectedAt - (Date.now() - 4 * 60000)) < 2000)
   globalThis.fetch = real
 })
+
+test('resumo: tiles de juros e manchetes mais recentes', async () => {
+  const { rateTiles, topHeadlines } = await import('../src/snapshot.js')
+  const { periodChange } = await import('../src/stats.js')
+  const br = { compare: [{ id: 'hoje', date: '2026-10-08' }, { id: 'd1', date: '2026-10-07' }], curves: { '2026-10-08': [[252, 13.8]], '2026-10-07': [[252, 13.85]] } }
+  const us = { compare: [{ id: 'hoje', date: '2026-10-08' }], curves: { '2026-10-08': [[10, 4.2, '10 Yr']] } }
+  const t = rateTiles({ selic: [[0, 15]], cdi: [[Date.UTC(2026, 9, 8, 12), 14.9]], sofr: [[Date.UTC(2026, 9, 8, 12), 3.87]] }, { br, us })
+  assert.deepEqual(t.map((x) => x.key), ['selic', 'cdi', 'sofr', 'di1', 'ust10'])
+  assert.ok(Math.abs(t.find((x) => x.key === 'di1').delta - -0.05) < 1e-9)
+  assert.equal(t.find((x) => x.key === 'ust10').delta, null)
+  assert.deepEqual(rateTiles(null, null), [])
+  const h = topHeadlines({ news: { USD: [{ title: 'a', t: 1 }, { title: 'b', t: 5 }], EUR: [], JPY: [{ title: 'c', t: 2 }] } })
+  assert.deepEqual(h.map((x) => `${x.code}:${x.title}`), ['USD:b', 'JPY:c'])
+  assert.ok(periodChange([{ bid: 5 }, { bid: 5.5 }]) > 9.9)
+  assert.equal(periodChange([{ bid: 5 }]), null)
+})

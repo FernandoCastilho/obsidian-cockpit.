@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { CURRENCIES } from './useQuotes.js'
+import { useNews } from './useNews.js'
 
 const ago = (t) => {
   const min = Math.max(0, Math.round((Date.now() - t) / 60000))
@@ -10,20 +10,7 @@ const ago = (t) => {
 }
 
 export default function News({ colors }) {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    const ctrl = new AbortController()
-    fetch(`./news.json?t=${Math.floor(Date.now() / 600000)}`, { signal: ctrl.signal })
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json()
-      })
-      .then(setData)
-      .catch((e) => e.name !== 'AbortError' && setError(e.message))
-    return () => ctrl.abort()
-  }, [])
+  const { data, error } = useNews()
 
   const generated = data?.generatedAt && new Date(data.generatedAt)
 
