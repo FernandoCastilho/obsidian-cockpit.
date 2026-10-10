@@ -425,3 +425,19 @@ test('calculadora: IR regressivo, IOF e empréstimo × aplicação líquida', ()
   // tempo já aplicado muda a faixa do IR (181+ dias passa para 20%)
   assert.equal(compare({ ...base, net: true, ageDays: 30 }).app.tax.irPct, 20)
 })
+
+test('calculadora: valor total pago deduz a taxa, o equivalente ao mês e o % do CDI', () => {
+  const flat = [[63, 10], [252, 10], [504, 10]]
+  const base = { pts: flat, d: 123, value: 1000000, side: 'borrow', calDays: 180, monthBase: 'du', net: false }
+  const viaRate = compare({ ...base, mode: 'pre', unit: 'am', rate: 1.2 })
+  const viaTotal = compare({ ...base, mode: 'total', rate: viaRate.op.fv })
+  assert.ok(Math.abs(viaTotal.op.period - viaRate.op.period) < 1e-9)
+  assert.ok(Math.abs(viaTotal.op.am - 1.2) < 1e-9)
+  assert.ok(Math.abs(viaTotal.cdiEquivalent - viaRate.cdiEquivalent) < 1e-9)
+  assert.equal(viaTotal.op.gain.toFixed(2), viaRate.op.gain.toFixed(2))
+  // total igual ou menor que o valor tomado não tem taxa: erro claro
+  assert.match(compare({ ...base, mode: 'total', rate: 1000000 }).error, /maior que o valor inicial/)
+  // equilíbrio em R$: pagar esse total empata com o rendimento da aplicação
+  const eq = compare({ ...base, mode: 'total', rate: viaTotal.breakeven })
+  assert.ok(Math.abs(eq.diff) < 1e-6)
+})
