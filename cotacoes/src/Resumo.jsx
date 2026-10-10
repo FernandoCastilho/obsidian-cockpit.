@@ -65,15 +65,16 @@ function Tile({ code, quote, ptax, spark, onOpen, wide }) {
               <Arrow v={day} /> {pct(day)}
             </span>
           ) : (
-            quote && <small className="muted">dia indisponível</small>
+            quote && <small className="muted">var. do dia indisponível</small>
           )}
-          <span className={`pct period ${toneOf(change)}`}>
-            {spark.label} {change != null ? pct(change) : spark.intraday ? 'sem pontos hoje' : '…'}
-          </span>
           {ptax && <small className="muted">PTAX: {brl(ptax.sell)}</small>}
         </span>
         <span className="tile-spark">
           <Sparkline points={pts} tone={trend} />
+          <small className="muted">
+            {spark.label}
+            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
+          </small>
         </span>
       </span>
     </button>
@@ -113,15 +114,16 @@ function ParityTile({ quotes, spark, onOpen }) {
               <Arrow v={p.pct} /> {pct(p.pct)}
             </span>
           ) : (
-            p && <small className="muted">dia indisponível</small>
+            p && <small className="muted">var. do dia indisponível</small>
           )}
-          <span className={`pct period ${toneOf(change)}`}>
-            {spark.label} {change != null ? pct(change) : spark.intraday ? 'sem pontos hoje' : '…'}
-          </span>
           <small className="muted">dólares por 1 euro</small>
         </span>
         <span className="tile-spark">
           <Sparkline points={pts} tone={trend} />
+          <small className="muted">
+            {spark.label}
+            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
+          </small>
         </span>
       </span>
     </button>
