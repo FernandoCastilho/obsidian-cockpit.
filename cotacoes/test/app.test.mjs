@@ -65,7 +65,44 @@ test('mensagem do WhatsApp e resumo do dia', () => {
 })
 
 test('erros técnicos viram texto em português', () => {
-  assert.match(friendlyError('USD-BRL: HTTP 429'), /limite de consultas/)
+  assert.match(friendlyError('USD-BRL: HTTP 429'), /cota de consultas/)
   assert.match(friendlyError('Failed to fetch'), /sem conexão/)
   assert.match(friendlyError('USD-BRL: HTTP 503'), /instável/)
+})
+
+test('cotações: uma única consulta para as quatro moedas (poupa a cota da API)', async () => {
+  const { fetchQuotes } = await import('../src/useQuotes.js')
+  const now = Math.floor(Date.now() / 1000)
+  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b + 0.1), low: String(b - 0.1), pctChange: '0.5', timestamp: String(now) })
+  const calls = []
+  const real = globalThis.fetch
+  globalThis.fetch = async (url) => {
+    calls.push(String(url))
+    return { ok: true, status: 200, json: async () => ({ USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), CNYBRL: q(0.74) }) }
+  }
+  const r = await fetchQuotes()
+  globalThis.fetch = real
+  assert.equal(calls.length, 1)
+  assert.match(calls[0], /USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL/)
+  assert.equal(r.USD.quote.bid, 5.3)
+  assert.equal(r.CNH.quote.source, 'CNY')
+})
+
+test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () => {
+  const { fetchQuotes } = await import('../src/useQuotes.js')
+  const calls = []
+  const real = globalThis.fetch
+  globalThis.fetch = async (url) => {
+    calls.push(String(url))
+    if (String(url).includes('frankfurter')) return { ok: true, status: 200, json: async () => ({ date: '2026-10-09', rates: { BRL: 5.0 } }) }
+    return { ok: false, status: 429 }
+  }
+  const r = await fetchQuotes()
+  const awesome = calls.filter((u) => u.includes('awesomeapi')).length
+  await fetchQuotes() // dentro dos 60 s: nem chega a consultar a AwesomeAPI de novo
+  globalThis.fetch = real
+  assert.equal(awesome, 1)
+  assert.equal(calls.filter((u) => u.includes('awesomeapi')).length, 1)
+  assert.equal(r.USD.quote.fallback, true)
+  assert.equal(r.USD.quote.bid, 5)
 })

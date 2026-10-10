@@ -48,6 +48,8 @@ jobs:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar intraday (barras de 5 min)
         run: node scripts/fetch-intraday.mjs
+        env:
+          AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
       - name: Coletar curvas de juros (DI x pré e Treasuries)
         run: node scripts/fetch-curves.mjs
         env:
@@ -55,7 +57,10 @@ jobs:
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true
-      - run: npm run build
+      - name: Build
+        run: npm run build
+        env:
+          VITE_AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: cotacoes/dist

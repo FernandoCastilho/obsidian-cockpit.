@@ -53,7 +53,8 @@ if (!total) {
   const prev = owner ? await getJson(`https://${owner.toLowerCase()}.github.io/${repo}/intraday.json`, 'intraday publicado', 2) : null
   const snaps = {}
   for (const [code, pair] of Object.entries(PAIRS)) {
-    const j = await getJson(`https://economia.awesomeapi.com.br/json/last/${pair}`, `amostra ${code}`, 3)
+    const key = process.env.AWESOMEAPI_KEY
+    const j = await getJson(`https://economia.awesomeapi.com.br/json/last/${pair}${key ? `?token=${encodeURIComponent(key)}` : ''}`, `amostra ${code}`, 3)
     const q = j?.[pair.replace('-', '')]
     if (q) snaps[code] = [Number(q.timestamp) * 1000, Number(q.bid)]
   }
