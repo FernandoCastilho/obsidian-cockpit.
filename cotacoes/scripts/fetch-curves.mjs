@@ -2,7 +2,7 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { b3Url, parseB3, parseTreasury, pickDates } from './curves-lib.mjs'
 
-const UA = { 'user-agent': 'Mozilla/5.0 (cotacoes-curvas)' }
+const UA = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', accept: 'application/json, text/csv, */*' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const errors = []
 
@@ -12,7 +12,9 @@ async function get(url, label, text = false, tries = 4) {
     try {
       const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(30000) })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return text ? await res.text() : await res.json()
+      const body = await res.text()
+      if (!body.trim()) throw new Error(`resposta vazia (HTTP ${res.status})`)
+      return text ? body : JSON.parse(body)
     } catch (e) {
       last = e
       await sleep(2000 * i)

@@ -48,8 +48,6 @@ jobs:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar intraday (barras de 5 min)
         run: node scripts/fetch-intraday.mjs
-        env:
-          INTRADAY_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar curvas de juros (DI x pré e Treasuries)
         run: node scripts/fetch-curves.mjs
         env:
