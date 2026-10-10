@@ -15,6 +15,7 @@ export default function CdiFuturo({ curves, macro }) {
   const maxD = pts ? Math.max(...pts.map((p) => p[0])) : 0
   const isoPlus = (days) => new Date(Date.parse(`${base}T12:00:00Z`) + days * 864e5).toISOString().slice(0, 10)
   const maxIso = base ? isoPlus(Math.floor((maxD / 252) * 365)) : ''
+  const [light, setLight] = useState(false)
   const [pick, setPick] = useState({ from: '', to: '' })
   const clamp = (v) => (v < base ? base : v > maxIso ? maxIso : v)
   const rawFrom = pick.from || base
@@ -47,6 +48,9 @@ export default function CdiFuturo({ curves, macro }) {
               CDI a termo implícito
               <small>% a.a., taxa a termo do DI no intervalo que você escolher</small>
             </h3>
+            <button type="button" className="mode-btn" onClick={() => setLight((v) => !v)} aria-pressed={light} aria-label="Gráfico em modo claro" title="Gráfico em modo claro (útil para copiar para apresentações)">
+              {light ? '☾' : '☀'}
+            </button>
           </header>
           <div className="period">
             <label>
@@ -68,7 +72,7 @@ export default function CdiFuturo({ curves, macro }) {
           ) : (
             <p className="status stale">Escolha um intervalo dentro da curva (até {dm(maxIso)}), com “Até” depois de “De”.</p>
           )}
-          <div ref={ref}>{series && <Plot points={series} width={width} color="#4aa3a2" code="cdif" fmt={pct} label="CDI a termo" nice />}</div>
+          <div ref={ref}>{series && <Plot points={series} width={width} color="#4aa3a2" code="cdif" fmt={pct} label="CDI a termo" nice labels light={light} />}</div>
           <details className="table" open>
             <summary>Tabela por horizonte</summary>
             <div className="scroll">

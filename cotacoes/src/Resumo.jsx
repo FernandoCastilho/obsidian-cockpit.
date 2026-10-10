@@ -130,21 +130,14 @@ function ParityTile({ quotes, spark, onOpen }) {
   )
 }
 
-export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colors }) {
+// Painel das moedas (aba Moedas): quadros com minigráfico e seletor de período, só para câmbio.
+export function MoedasPanel({ quotes, ptax, onOpen }) {
   const [sparkId, setSparkId] = useState('month')
   const spark = SPARK.find((s) => s.id === sparkId)
-  const news = useNews()
-  const rates = rateTiles(macro.data, curves.data)
-  const heads = topHeadlines(news.data)
-  const events = upcoming(new Date(), 14).slice(0, 3)
-  const fmtDay = (t) => new Date(t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }).replace('.', '')
-  const fmtTime = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
-
   return (
-    <div className="resumo">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Moedas</h2>
+          <h2 id="r-moedas">Panorama</h2>
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
               <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => setSparkId(s.id)}>
@@ -159,6 +152,59 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
           ))}
           <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} />
         </div>
+      </section>
+  )
+}
+
+// Faixa rolante no topo do Resumo: preço e variação do dia de cada moeda (toque abre a aba Moedas).
+function QuoteBar({ quotes, onOpen }) {
+  const items = CURRENCIES.map((c) => {
+    const q = quotes?.[c.code]
+    return q ? { key: c.code, label: `${q.source ?? c.code}/BRL`, price: brl(q.bid, c.code === 'JPY' ? 4 : 4), pct: q.fallback ? null : q.pct } : null
+  }).filter(Boolean)
+  const p = liveParity(quotes?.USD, quotes?.EUR)
+  if (p) items.push({ key: 'PAR', label: 'EUR/USD', price: `US$ ${p.main.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`, pct: quotes.USD.fallback || quotes.EUR.fallback ? null : p.pct })
+  if (!items.length) return <p className="status">Cotações indisponíveis no momento.</p>
+  const set = items.length < 8 ? [...items, ...items] : items
+  const seconds = Math.max(30, set.length * 6)
+  return (
+    <div className="wire quote-bar" role="region" aria-label="Cotações em rolagem (pausa ao passar o mouse)">
+      <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
+        {[0, 1].map((k) => (
+          <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>
+            {set.map((it, n) => (
+              <button type="button" key={`${it.key}-${n}`} className="qb" onClick={onOpen} tabIndex={k === 1 ? -1 : undefined}>
+                <b className="tk" style={{ '--tk': it.key === 'PAR' ? '#d55181' : undefined }}>{it.label}</b> {it.price}
+                {it.pct != null && (
+                  <span className={`pct ${toneOf(it.pct)}`}>
+                    {' '}<Arrow v={it.pct} /> {pct(it.pct)}
+                  </span>
+                )}
+              </button>
+            ))}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colors }) {
+  const news = useNews()
+  const rates = rateTiles(macro.data, curves.data)
+  const heads = topHeadlines(news.data)
+  const events = upcoming(new Date(), 14).slice(0, 3)
+  const fmtDay = (t) => new Date(t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }).replace('.', '')
+  const fmtTime = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
+
+  return (
+    <div className="resumo">
+      <section aria-labelledby="r-moedas">
+        <div className="sec-head">
+          <h2 id="r-moedas">Moedas</h2>
+          <button type="button" className="more" onClick={() => goto('moedas')}>Ver moedas ›</button>
+        </div>
+        <QuoteBar quotes={quotes} onOpen={() => goto('moedas')} />
       </section>
 
       <section aria-labelledby="r-juros">

@@ -253,3 +253,14 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .feed-body a { color:var(--fg); text-decoration:none; line-height:1.4; overflow-wrap:anywhere; }
 .feed-body a:hover { text-decoration:underline; }
 @media (max-width: 560px) { .feed li { grid-template-columns:3rem 1fr; } .feed-tk { grid-column:2; grid-row:1; } .feed-time { grid-row:1; } .feed-body { grid-column:1 / -1; } }
+
+.quote-bar { margin:0 0 4px; }
+.qb { background:none; border:0; color:var(--fg); font:inherit; font-size:.92rem; padding:10px 20px; border-right:1px solid var(--line); cursor:pointer; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.qb:hover { background:#1c2330; }
+.qb .tk { background:#3d4653; color:var(--fg); }
+
+.vlabel { fill:var(--fg); font-size:10.5px; font-variant-numeric:tabular-nums; paint-order:stroke; stroke:var(--card); stroke-width:3px; stroke-linejoin:round; }
+.plot.light { background:#fff; border-radius:8px; --fg:#0f172a; --mut:#475569; --line:#cbd5e1; --card:#fff; }
+.plot.light .tip { background:#fff; color:#0f172a; }
+.mode-btn { margin-left:auto; background:none; border:0; color:var(--mut); opacity:.45; font-size:.95rem; cursor:pointer; padding:2px 6px; border-radius:6px; line-height:1; }
+.mode-btn:hover, .mode-btn:focus-visible { opacity:1; }
