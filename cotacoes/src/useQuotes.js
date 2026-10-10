@@ -13,7 +13,7 @@ const BASE = 'https://economia.awesomeapi.com.br/json/last'
 // Mensagens técnicas da API/rede -> texto que o usuário entende.
 export function friendlyError(msg) {
   const m = String(msg)
-  if (/HTTP 429/.test(m)) return 'limite de consultas da fonte atingido; tentando de novo em instantes'
+  if (/HTTP 429/.test(m)) return 'cota de consultas da fonte atingida; usando a reserva e tentando de novo em instantes'
   if (/HTTP 5\d\d/.test(m)) return 'a fonte de cotações está instável'
   if (/HTTP 404/.test(m)) return 'a fonte não tem esta cotação agora'
   if (/Failed to fetch|NetworkError|Load failed|network/i.test(m)) return 'sem conexão com a fonte de cotações'
@@ -21,30 +21,47 @@ export function friendlyError(msg) {
   return m
 }
 
-async function fetchRaw(from, to, signal) {
-  const res = await fetch(`${BASE}/${from}-${to}`, { signal })
-  if (!res.ok) throw new Error(`${from}-${to}: HTTP ${res.status}`)
-  const q = (await res.json())[`${from}${to}`]
-  if (!q) throw new Error(`${from}-${to}: resposta sem cotação`)
-  return q
+// Chave da AwesomeAPI (plano gratuito: 100 mil consultas/mês com chave). Vem do segredo AWESOMEAPI_KEY do GitHub, na hora do build.
+const KEY = import.meta.env?.VITE_AWESOMEAPI_KEY
+export const withKey = (url) => (KEY ? `${url}${url.includes('?') ? '&' : '?'}token=${encodeURIComponent(KEY)}` : url)
+
+// Uma única consulta traz as quatro moedas (antes eram quatro): o yuan vem pelo CNY e só é trocado pelo cruzamento se estiver parado.
+const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'CNYBRL' }
+const SOURCE = { USD: 'USD', EUR: 'EUR', JPY: 'JPY', CNH: 'CNY' }
+const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL'
+
+// Se a fonte devolveu 429 (cota), não insiste por 60 s: as reservas atendem enquanto isso.
+let blockedUntil = 0
+let blockedMsg = ''
+
+async function getJson(url, label, signal) {
+  if (Date.now() < blockedUntil) throw new Error(blockedMsg)
+  const res = await fetch(withKey(url), { signal })
+  if (!res.ok) {
+    const err = new Error(`${label}: HTTP ${res.status}`)
+    if (res.status === 429) {
+      blockedUntil = Date.now() + 60000
+      blockedMsg = err.message
+    }
+    throw err
+  }
+  return res.json()
 }
 
-async function fetchPair(from, signal) {
-  const q = await fetchRaw(from, 'BRL', signal)
-  return {
-    source: from,
-    bid: Number(q.bid),
-    ask: Number(q.ask),
-    high: Number(q.high),
-    low: Number(q.low),
-    pct: Number(q.pctChange),
-    timestamp: Number(q.timestamp) * 1000,
-  }
-}
+const toQuote = (q, source) => ({
+  source,
+  bid: Number(q.bid),
+  ask: Number(q.ask),
+  high: Number(q.high),
+  low: Number(q.low),
+  pct: Number(q.pctChange),
+  timestamp: Number(q.timestamp) * 1000,
+})
 
 // Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH (o CNH negocia durante os feriados chineses, o CNY onshore não).
-async function fetchCnhCross(signal) {
-  const [brl, cnh] = await Promise.all([fetchRaw('USD', 'BRL', signal), fetchRaw('USD', 'CNH', signal)])
+async function fetchCnhCross(brl, signal) {
+  const cnh = (await getJson(`${BASE}/USD-CNH`, 'USD-CNH', signal)).USDCNH
+  if (!cnh) throw new Error('USD-CNH: resposta sem cotação')
   const n = Number
   return {
     source: 'CNH',
@@ -61,32 +78,31 @@ async function fetchCnhCross(signal) {
 const STALE_MS = 6 * 3600e3
 
 // Reserva quando a fonte principal falha (ex.: limite de requisições): referência diária do BCE, sem compra/venda separadas.
+// Guardada por 30 min: o BCE só atualiza uma vez por dia.
+const ecbCache = new Map()
 async function fetchEcb(code, signal) {
+  const hit = ecbCache.get(code)
+  if (hit && Date.now() - hit.at < 30 * 60000) return hit.quote
   const from = code === 'CNH' ? 'CNY' : code
   const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=${from}&symbols=BRL`, { signal })
   if (!res.ok) throw new Error(`BCE ${from}: HTTP ${res.status}`)
   const j = await res.json()
   const rate = Number(j?.rates?.BRL)
   if (!(rate > 0) || !j.date) throw new Error(`BCE ${from}: resposta sem cotação`)
-  return { source: code, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
+  const quote = { source: code, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
+  ecbCache.set(code, { at: Date.now(), quote })
+  return quote
 }
 
-async function fetchCurrency({ code, sources }, signal) {
-  const errors = []
-  let quote = null
-  for (const from of sources) {
-    try {
-      quote = await fetchPair(from, signal)
-      break
-    } catch (e) {
-      if (e.name === 'AbortError') throw e
-      errors.push(e.message)
-    }
-  }
+async function complete(code, batch, batchError, signal) {
+  const errors = batchError ? [batchError] : []
+  const raw = batch?.[PAIRS[code]]
+  let quote = raw ? toQuote(raw, SOURCE[code] === 'CNY' ? 'CNY' : code) : null
+  if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação`)
   // CNH sem cotação fresca (ex.: mercado onshore fechado por feriado): tenta o cruzamento
-  if (code === 'CNH' && (!quote || Date.now() - quote.timestamp > STALE_MS)) {
+  if (code === 'CNH' && batch?.USDBRL && (!quote || Date.now() - quote.timestamp > STALE_MS)) {
     try {
-      const cross = await fetchCnhCross(signal)
+      const cross = await fetchCnhCross(batch.USDBRL, signal)
       if (!quote || cross.timestamp > quote.timestamp) quote = cross
     } catch (e) {
       if (e.name === 'AbortError') throw e
@@ -104,8 +120,16 @@ async function fetchCurrency({ code, sources }, signal) {
   return quote ? { quote } : { error: [...new Set(errors.map(friendlyError))].join(' · ') }
 }
 
-async function fetchQuotes(signal) {
-  const results = await Promise.all(CURRENCIES.map((c) => fetchCurrency(c, signal)))
+export async function fetchQuotes(signal) {
+  let batch = null
+  let batchError = null
+  try {
+    batch = await getJson(`${BASE}/${ALL}`, 'cotações', signal)
+  } catch (e) {
+    if (e.name === 'AbortError') throw e
+    batchError = e.message
+  }
+  const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal)))
   return Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]]))
 }
 

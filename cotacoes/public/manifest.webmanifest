@@ -1,0 +1,18 @@
+{
+  "name": "Cotações em tempo real",
+  "short_name": "Cotações",
+  "description": "Câmbio (USD, EUR, JPY, CNH), juros, curvas, SOFR, Focus e agenda de mercado.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "categories": ["finance", "business"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

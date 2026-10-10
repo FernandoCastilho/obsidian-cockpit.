@@ -6,6 +6,7 @@ import Macro from './Macro.jsx'
 import Curves from './Curves.jsx'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
+import InstallApp from './InstallApp.jsx'
 import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
@@ -19,7 +20,7 @@ import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
-const POLL_MS = 15000 // consulta a cada 15 s (a API gratuita tem limite de uso)
+const POLL_MS = 30000 // consulta a cada 30 s, em uma única requisição (a API gratuita tem cota mensal)
 const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
@@ -387,6 +388,7 @@ export default function App() {
             : 'Carregando…'}
       </p>
       <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
+      <InstallApp />
       <section className="grid">
         {CURRENCIES.map((c) => (
           <div className="slot" key={c.code}>

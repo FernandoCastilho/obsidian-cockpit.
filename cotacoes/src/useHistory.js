@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CURRENCIES, friendlyError } from './useQuotes.js'
+import { CURRENCIES, friendlyError, withKey } from './useQuotes.js'
 
 const BASE = 'https://economia.awesomeapi.com.br/json/daily'
 export const MAX_DAYS = 360 // limite do endpoint diário da AwesomeAPI
@@ -21,7 +21,7 @@ export function historyUrl(from, start, end) {
 
 async function fetchSeries(from, start, end, signal) {
   const url = historyUrl(from, start, end)
-  const res = await fetch(url, { signal })
+  const res = await fetch(withKey(url), { signal })
   if (!res.ok) throw new Error(`${from}: HTTP ${res.status}`)
   const rows = await res.json()
   if (!Array.isArray(rows) || !rows.length) throw new Error(`${from}: sem dados no período`)

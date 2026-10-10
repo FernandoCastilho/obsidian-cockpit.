@@ -27,8 +27,16 @@ async function getJson(url0, label, tries = 4) {
 
 const PAIRS = { USD: 'USD-BRL', EUR: 'EUR-BRL', JPY: 'JPY-BRL', CNH: 'CNY-BRL' }
 const series = {}
+let blocked = false
 for (const [code, symbol] of Object.entries(SYMBOLS)) {
+  if (blocked) {
+    // Yahoo respondeu 429 no símbolo anterior: insistir nos demais só gasta tempo do deploy.
+    errors.push(`intraday ${code}: ignorado (Yahoo bloqueado)`)
+    continue
+  }
+  const before = errors.length
   const points = parseYahoo(await getJson(yahooUrl(symbol), `intraday ${code}`))
+  if (!points.length && errors.length > before && /429/.test(errors[errors.length - 1])) blocked = true
   if (points.length) series[code] = { symbol, points }
   console.log(code, symbol, points.length, 'barras')
   await sleep(300)
@@ -45,7 +53,8 @@ if (!total) {
   const prev = owner ? await getJson(`https://${owner.toLowerCase()}.github.io/${repo}/intraday.json`, 'intraday publicado', 2) : null
   const snaps = {}
   for (const [code, pair] of Object.entries(PAIRS)) {
-    const j = await getJson(`https://economia.awesomeapi.com.br/json/last/${pair}`, `amostra ${code}`, 3)
+    const key = process.env.AWESOMEAPI_KEY
+    const j = await getJson(`https://economia.awesomeapi.com.br/json/last/${pair}${key ? `?token=${encodeURIComponent(key)}` : ''}`, `amostra ${code}`, 3)
     const q = j?.[pair.replace('-', '')]
     if (q) snaps[code] = [Number(q.timestamp) * 1000, Number(q.bid)]
   }

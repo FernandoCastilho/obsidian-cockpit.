@@ -52,3 +52,13 @@ test('BCE: série diária vira pontos ordenados, ignorando valores inválidos', 
   assert.equal(p[0].high, 5.3)
   assert.deepEqual(parseEcbSeries(undefined), [])
 })
+
+test('alerta: só entra o que está reaproveitado há mais de 6 horas', async () => {
+  const { staleReport } = await import('../scripts/stale-lib.mjs')
+  const now = 100 * 36e5
+  const r = staleReport({ macro: { stale: { cdi: now - 2 * 36e5, selic: now - 7 * 36e5, sofr: null } }, curves: { stale: { br: now - 30 * 36e5 } }, news: {} }, now, 6)
+  assert.deepEqual(r.map((i) => i.label).sort(), ['DI x pré', 'SOFR', 'Selic'])
+  assert.equal(r.find((i) => i.label === 'Selic').hours, 7)
+  assert.equal(r.find((i) => i.label === 'SOFR').hours, null) // data desconhecida conta como antiga
+  assert.deepEqual(staleReport(null), [])
+})
