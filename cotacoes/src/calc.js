@@ -44,7 +44,7 @@ export function taxOnYield(gain, holdDays) {
   return { iofPct, iof, irPct, ir, total: iof + ir, holdDays }
 }
 
-// mode: 'pre' (rate na unidade escolhida), 'cdi' (rate = % do CDI), 'spread' (rate = spread sobre o CDI, na unidade escolhida; aa ou am)
+// mode: 'total' (rate = valor total no vencimento, em R$; a taxa é deduzida), 'pre' (rate na unidade escolhida), 'cdi' (rate = % do CDI), 'spread' (rate = spread sobre o CDI, na unidade escolhida; aa ou am)
 // side: 'invest' (a operação rende) ou 'borrow' (a operação custa). d = dias úteis até o vencimento.
 // calDays = dias corridos do prazo; monthBase = base do "ao mês": 'cal' (30 dias corridos) ou 'du' (21 dias úteis).
 // Empréstimo ('borrow'): compara o custo com o rendimento da aplicação (appPct % do CDI), bruto ou, com net, líquido de IOF e IR (tabela regressiva
@@ -54,7 +54,11 @@ export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest
   const G = growthAt(pts, d)
   if (G == null) return { error: 'Prazo fora da curva DI (vai até o último vértice).' }
   let F
-  if (mode === 'pre') F = rateFactor(rate, unit, d, calDays, monthBase)
+  if (mode === 'total') {
+    // valor total pago (ou recebido) no vencimento: a taxa implícita sai da razão entre ele e o valor inicial
+    if (!(rate > value)) return { error: 'O valor total no vencimento deve ser maior que o valor inicial.' }
+    F = rate / value
+  } else if (mode === 'pre') F = rateFactor(rate, unit, d, calDays, monthBase)
   else if (mode === 'cdi') F = cdiPercentFactor(pts, d, rate)
   else F = G * rateFactor(rate, unit === 'periodo' ? 'aa' : unit, d, calDays, monthBase)
   if (!Number.isFinite(F) || F <= 0) return { error: 'Taxa inválida.' }
@@ -96,6 +100,6 @@ export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest
     diffBps: (aa(F, d) - aa(refF, d)) * 100,
     cdiEquivalent: G > 1 ? ((F - 1) / (G - 1)) * 100 : null, // taxa da operação no período ÷ CDI da curva no período
     good,
-    breakeven: mode === 'pre' ? beRate(refF) : mode === 'cdi' ? 100 : 0,
+    breakeven: mode === 'total' ? value * refF : mode === 'pre' ? beRate(refF) : mode === 'cdi' ? 100 : 0,
   }
 }

@@ -13,6 +13,7 @@ const MODES = [
   { id: 'pre', label: 'Pré-fixada', ph: '14,50' },
   { id: 'cdi', label: '% do CDI', ph: '105' },
   { id: 'spread', label: 'CDI + spread', ph: '1,20' },
+  { id: 'total', label: 'Valor total pago', ph: '1.074.000,00' },
 ]
 const UNITS = [
   { id: 'aa', label: 'ao ano' },
@@ -100,7 +101,7 @@ function OperacaoDi({ curves, hol }) {
                 </button>
               ))}
             </div>
-            {mode !== 'cdi' && (
+            {mode !== 'cdi' && mode !== 'total' && (
               <div className="seg" role="group" aria-label="Unidade da taxa">
                 {UNITS.filter((u) => mode === 'pre' || u.id !== 'periodo').map((u) => (
                   <button key={u.id} type="button" aria-pressed={unit === u.id} onClick={() => (setUnit(u.id), mode === 'pre' && setRate(PH[u.id]))}>
@@ -109,14 +110,14 @@ function OperacaoDi({ curves, hol }) {
                 ))}
               </div>
             )}
-            {mode !== 'cdi' && unit === 'am' && (
+            {mode !== 'cdi' && mode !== 'total' && unit === 'am' && (
               <div className="seg" role="group" aria-label="Base do mês">
                 <button type="button" aria-pressed={monthBase === 'cal'} title="Mês de 30 dias corridos: prazo ÷ 30" onClick={() => setMonthBase('cal')}>mês = 30 dias corridos</button>
                 <button type="button" aria-pressed={monthBase === 'du'} title="Mês de 21 dias úteis (252 ÷ 12), convenção do mercado de DI" onClick={() => setMonthBase('du')}>mês = 21 dias úteis</button>
               </div>
             )}
             <label>
-              Taxa da operação ({mode === 'cdi' ? '% do CDI' : `% ${UNITS.find((u) => u.id === unit).label}`})
+              {mode === 'total' ? `Valor total ${side === 'borrow' ? 'pago' : 'recebido'} no vencimento (R$)` : `Taxa da operação (${mode === 'cdi' ? '% do CDI' : `% ${UNITS.find((u) => u.id === unit).label}`})`}
               <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder={m.ph} />
             </label>
             <div className="seg" role="group" aria-label="Sentido da operação">
@@ -248,11 +249,19 @@ function OperacaoDi({ curves, hol }) {
               )}
               {mode !== 'cdi' && r.cdiEquivalent != null && (
                 <p className="calc-conv">
-                  {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                  {mode === 'total' ? (
+                    <>
+                      {brl(parseNum(rate))} sobre {brl(parseNum(value))} = juros de <b>{brl(r.op.gain)}</b> = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.op.am)}</b> ao mês = <b>{pct(r.op.aa)}</b> ao ano = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                    </>
+                  ) : (
+                    <>
+                      {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                    </>
+                  )}
                 </p>
               )}
               <p className="status">
-                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
+                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'total' ? `valor total de ${brl(r.breakeven)}` : mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
             </>
           ) : null}
