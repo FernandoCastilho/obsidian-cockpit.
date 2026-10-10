@@ -49,6 +49,17 @@ async function fetchCnhCross(signal) {
 
 const STALE_MS = 6 * 3600e3
 
+// Reserva quando a fonte principal falha (ex.: limite de requisições): referência diária do BCE, sem compra/venda separadas.
+async function fetchEcb(code, signal) {
+  const from = code === 'CNH' ? 'CNY' : code
+  const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=${from}&symbols=BRL`, { signal })
+  if (!res.ok) throw new Error(`BCE ${from}: HTTP ${res.status}`)
+  const j = await res.json()
+  const rate = Number(j?.rates?.BRL)
+  if (!(rate > 0) || !j.date) throw new Error(`BCE ${from}: resposta sem cotação`)
+  return { source: code, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
+}
+
 async function fetchCurrency({ code, sources }, signal) {
   const errors = []
   let quote = null
@@ -66,6 +77,14 @@ async function fetchCurrency({ code, sources }, signal) {
     try {
       const cross = await fetchCnhCross(signal)
       if (!quote || cross.timestamp > quote.timestamp) quote = cross
+    } catch (e) {
+      if (e.name === 'AbortError') throw e
+      errors.push(e.message)
+    }
+  }
+  if (!quote) {
+    try {
+      quote = await fetchEcb(code, signal)
     } catch (e) {
       if (e.name === 'AbortError') throw e
       errors.push(e.message)
