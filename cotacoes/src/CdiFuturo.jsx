@@ -16,8 +16,13 @@ export default function CdiFuturo({ curves, macro }) {
   const isoPlus = (days) => new Date(Date.parse(`${base}T12:00:00Z`) + days * 864e5).toISOString().slice(0, 10)
   const maxIso = base ? isoPlus(Math.floor((maxD / 252) * 365)) : ''
   const [pick, setPick] = useState({ from: '', to: '' })
-  const from = pick.from || base
-  const to = pick.to || (base ? (isoPlus(365) < maxIso ? isoPlus(365) : maxIso) : '')
+  const clamp = (v) => (v < base ? base : v > maxIso ? maxIso : v)
+  const rawFrom = pick.from || base
+  const rawTo = pick.to || (base ? (isoPlus(365) < maxIso ? isoPlus(365) : maxIso) : '')
+  // a curva vale a partir da data-base: datas fora do intervalo são ajustadas e o aviso aparece na tela
+  const from = base ? clamp(rawFrom) : rawFrom
+  const to = base ? clamp(rawTo) : rawTo
+  const adjusted = base && (from !== rawFrom || to !== rawTo)
   const d1 = base ? busDays(base, from) : 0
   const d2 = base ? busDays(base, to) : 0
   const series = useMemo(() => {
@@ -46,13 +51,14 @@ export default function CdiFuturo({ curves, macro }) {
           <div className="period">
             <label>
               De
-              <input type="date" id="cdif-de" min={base} max={to} value={from} onChange={(e) => e.target.value && setPick((p) => ({ ...p, from: e.target.value }))} />
+              <input type="date" id="cdif-de" min={base} max={maxIso} value={rawFrom} onChange={(e) => e.target.value && setPick((p) => ({ ...p, from: e.target.value }))} />
             </label>
             <label>
               Até
-              <input type="date" id="cdif-ate" min={from} max={maxIso} value={to} onChange={(e) => e.target.value && setPick((p) => ({ ...p, to: e.target.value }))} />
+              <input type="date" id="cdif-ate" min={base} max={maxIso} value={rawTo} onChange={(e) => e.target.value && setPick((p) => ({ ...p, to: e.target.value }))} />
             </label>
           </div>
+          {adjusted && <p className="status stale">Datas ajustadas: a curva vale de {dm(base)} (data-base) a {dm(maxIso)} (último vértice). Mostrando {dm(from)} a {dm(to)}.</p>}
           {term != null ? (
             <p className="cdif-result">
               CDI a termo de {dm(from)} a {dm(to)}: <b>{pct(term)}</b> a.a.
