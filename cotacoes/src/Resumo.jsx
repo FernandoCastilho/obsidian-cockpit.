@@ -131,14 +131,14 @@ function ParityTile({ quotes, spark, onOpen }) {
   )
 }
 
-// Painel das moedas (aba Moedas): quadros com minigráfico e seletor de período, só para câmbio.
-export function MoedasPanel({ quotes, ptax, onOpen }) {
+// Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
+function MoedasPanel({ quotes, ptax, onOpen }) {
   const [sparkId, setSparkId] = useState('month')
   const spark = SPARK.find((s) => s.id === sparkId)
   return (
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Panorama <Explain id="minigrafico" /></h2>
+          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /></h2>
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
               <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => setSparkId(s.id)}>
@@ -157,30 +157,25 @@ export function MoedasPanel({ quotes, ptax, onOpen }) {
   )
 }
 
-// Faixa rolante no topo do Resumo: preço e variação do dia de cada moeda (toque abre a aba Moedas).
-function QuoteBar({ quotes, onOpen }) {
-  const items = CURRENCIES.map((c) => {
-    const q = quotes?.[c.code]
-    return q ? { key: c.code, label: `${q.source ?? c.code}/BRL`, price: brl(q.bid, c.code === 'JPY' ? 4 : 4), pct: q.fallback ? null : q.pct } : null
-  }).filter(Boolean)
-  const p = liveParity(quotes?.USD, quotes?.EUR)
-  if (p) items.push({ key: 'PAR', label: 'EUR/USD', price: `US$ ${p.main.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`, pct: quotes.USD.fallback || quotes.EUR.fallback ? null : p.pct })
-  if (!items.length) return <p className="status">Cotações indisponíveis no momento.</p>
-  const set = items.length < 8 ? [...items, ...items] : items
+// Faixa rolante dos juros: valor e variação (bps) de cada indicador; toque abre a aba Juros.
+function RatesBar({ rates, onOpen }) {
+  if (!rates.length) return <p className="status">Juros indisponíveis no momento.</p>
+  const set = rates.length < 8 ? [...rates, ...rates] : rates
   const seconds = Math.max(30, set.length * 6)
   return (
-    <div className="wire quote-bar" role="region" aria-label="Cotações em rolagem (pausa ao passar o mouse)">
+    <div className="wire quote-bar" role="region" aria-label="Juros em rolagem (pausa ao passar o mouse)">
       <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
         {[0, 1].map((k) => (
           <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>
-            {set.map((it, n) => (
-              <button type="button" key={`${it.key}-${n}`} className="qb" onClick={onOpen} tabIndex={k === 1 ? -1 : undefined}>
-                <b className="tk" style={{ '--tk': it.key === 'PAR' ? '#d55181' : undefined }}>{it.label}</b> {it.price}
-                {it.pct != null && (
-                  <span className={`pct ${toneOf(it.pct)}`}>
-                    {' '}<Arrow v={it.pct} /> {pct(it.pct)}
+            {set.map((r, n) => (
+              <button type="button" key={`${r.key}-${n}`} className="qb" onClick={onOpen} tabIndex={k === 1 ? -1 : undefined} title={r.sub}>
+                <b className="tk">{r.label}</b> {p2(r.value)}%
+                {r.delta != null && (
+                  <span className={`pct ${toneOf(r.delta)}`}>
+                    {' '}<Arrow v={r.delta} /> {bps(r.delta)}
                   </span>
                 )}
+                <small className="muted"> {r.sub}</small>
               </button>
             ))}
           </span>
@@ -200,32 +195,14 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
 
   return (
     <div className="resumo">
-      <section aria-labelledby="r-moedas">
-        <div className="sec-head">
-          <h2 id="r-moedas">Moedas <Explain id="faixaMoedas" /></h2>
-          <button type="button" className="more" onClick={() => goto('moedas')}>Ver moedas ›</button>
-        </div>
-        <QuoteBar quotes={quotes} onOpen={() => goto('moedas')} />
-      </section>
+      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} />
 
       <section aria-labelledby="r-juros">
         <div className="sec-head">
-          <h2 id="r-juros">Juros</h2>
+          <h2 id="r-juros">Juros <Explain id="faixaJuros" /></h2>
           <button type="button" className="more" onClick={() => goto('juros')}>Ver curvas ›</button>
         </div>
-        <div className="rate-tiles">
-          {rates.length ? (
-            rates.map((r) => (
-              <div key={r.key} className="rate">
-                <small>{r.label} <Explain id={r.key} /></small>
-                <b>{p2(r.value)}<i>%</i></b>
-                <small className="muted">{r.delta != null ? `${bps(r.delta)} · ${r.sub}` : r.sub}</small>
-              </div>
-            ))
-          ) : (
-            <p className="status">Juros indisponíveis no momento.</p>
-          )}
-        </div>
+        <RatesBar rates={rates} onOpen={() => goto('juros')} />
       </section>
 
       <section aria-labelledby="r-move">

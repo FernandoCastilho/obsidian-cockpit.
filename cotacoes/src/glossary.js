@@ -115,10 +115,10 @@ export const GLOSSARY = {
     b: 'Uma notícia sobre o Fed leva o ticker USD. Se tem dois tickers, vale para as duas moedas.',
     c: 'O ticker indica o tema, não a direção do preço. As manchetes em inglês são traduzidas automaticamente.',
   },
-  faixaMoedas: {
-    t: 'Faixa de cotações',
-    a: 'As moedas passando em fila: preço atual e variação do dia.',
-    b: 'Passe o mouse para pausar. Toque em uma moeda para abrir a aba Moedas, com gráficos e detalhes.',
-    c: 'Visão de relance, no estilo de um painel de corretora.',
+  faixaJuros: {
+    t: 'Faixa de juros',
+    a: 'Os juros-chave passando em fila: Selic, CDI, SOFR, DI de 1 ano e Treasury de 10 anos.',
+    b: '"+2 bps" = subiu 0,02 ponto percentual desde o pregão anterior (100 bps = 1 ponto percentual). Passe o mouse para pausar.',
+    c: 'Toque para abrir a aba Juros: lá cada indicador e gráfico tem o seu "?" com a explicação completa.',
   },
 }
