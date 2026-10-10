@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 
 // Ícone "?" com explicação: abre ao passar o mouse, ao focar pelo teclado ou ao tocar/clicar (fixa).
 export default function Help({ label, align = 'left', wide = false, children }) {
@@ -7,6 +7,18 @@ export default function Help({ label, align = 'left', wide = false, children }) 
   const ref = useRef(null)
   const id = useId()
   const show = pinned || hover
+  const popRef = useRef(null)
+  const [shift, setShift] = useState(0)
+
+  // Mantém o balão dentro da janela (perto da borda direita ou esquerda ele deslocava para fora da tela).
+  useLayoutEffect(() => {
+    if (!show || !popRef.current) return setShift(0)
+    const r = popRef.current.getBoundingClientRect()
+    const base = r.left - shift
+    const w = r.width
+    const max = window.innerWidth - 8
+    setShift(base + w > max ? max - (base + w) : base < 8 ? 8 - base : 0)
+  }, [show]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!pinned) return
@@ -39,7 +51,7 @@ export default function Help({ label, align = 'left', wide = false, children }) 
         ?
       </button>
       {show && (
-        <span role="tooltip" id={id} className={`pop ${align}${wide ? ' wide' : ''}`}>
+        <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={shift ? { transform: `translateX(${shift}px)` } : undefined}>
           {children}
         </span>
       )}
