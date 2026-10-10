@@ -1,6 +1,6 @@
 // Coleta barras de 5 min (últimos 5 dias úteis) de USD, EUR, JPY e CNH em reais e grava public/intraday.json.
 import { mkdir, writeFile } from 'node:fs/promises'
-import { SYMBOLS, parseYahoo, yahooUrl } from './intraday-lib.mjs'
+import { SYMBOLS, mergeSnapshots, parseYahoo, yahooUrl } from './intraday-lib.mjs'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const errors = []
@@ -25,6 +25,7 @@ async function getJson(url0, label, tries = 4) {
   return null
 }
 
+const PAIRS = { USD: 'USD-BRL', EUR: 'EUR-BRL', JPY: 'JPY-BRL', CNH: 'CNY-BRL' }
 const series = {}
 for (const [code, symbol] of Object.entries(SYMBOLS)) {
   const points = parseYahoo(await getJson(yahooUrl(symbol), `intraday ${code}`))
@@ -35,21 +36,26 @@ for (const [code, symbol] of Object.entries(SYMBOLS)) {
 
 const total = Object.values(series).reduce((n, s) => n + s.points.length, 0)
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
+
+let out = { generatedAt: Date.now(), source: 'Yahoo Finance', resolution: '5 min', series, errors }
 if (!total) {
-  // Sem barras novas: reaproveita o intraday.json já publicado, para não apagar o histórico do dia nem travar o deploy.
+  // Yahoo indisponível: parte do intraday.json já publicado e acrescenta uma amostra por hora da AwesomeAPI.
+  // Nunca derruba o deploy: o intraday é um complemento e as demais coletas precisam seguir.
   const [owner, repo] = (process.env.GITHUB_REPOSITORY ?? '').split('/')
   const prev = owner ? await getJson(`https://${owner.toLowerCase()}.github.io/${repo}/intraday.json`, 'intraday publicado', 2) : null
-  if (prev?.series && Object.keys(prev.series).length) {
-    await mkdir(new URL('../public/', import.meta.url), { recursive: true })
-    await writeFile(new URL('../public/intraday.json', import.meta.url), JSON.stringify(prev))
-    console.log('Yahoo indisponível; mantido o intraday.json publicado anteriormente (gerado em', new Date(prev.generatedAt).toISOString() + ')')
-    process.exit(0)
+  const snaps = {}
+  for (const [code, pair] of Object.entries(PAIRS)) {
+    const j = await getJson(`https://economia.awesomeapi.com.br/json/last/${pair}`, `amostra ${code}`, 3)
+    const q = j?.[pair.replace('-', '')]
+    if (q) snaps[code] = [Number(q.timestamp) * 1000, Number(q.bid)]
   }
-  if (process.env.INTRADAY_STRICT === 'true') {
-    console.error('Nenhuma barra coletada e nenhum intraday anterior disponível; abortando.')
-    process.exit(1)
-  }
+  const merged = mergeSnapshots(prev?.series, snaps)
+  const n = Object.values(merged).reduce((k, s) => k + s.points.length, 0)
+  const hourly = Object.values(merged).some((s) => s.hourly) || Object.keys(snaps).length > 0
+  for (const c of Object.keys(snaps)) if (merged[c]) merged[c].hourly = true
+  out = { generatedAt: Date.now(), source: hourly ? 'AwesomeAPI (1 amostra por hora; Yahoo indisponível)' : (prev?.source ?? 'Yahoo Finance'), resolution: hourly ? '1 h' : (prev?.resolution ?? '5 min'), series: merged, errors }
+  console.log('Yahoo indisponível; amostras horárias:', Object.keys(snaps).join(',') || 'nenhuma', '·', n, 'pontos no total')
 }
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
-await writeFile(new URL('../public/intraday.json', import.meta.url), JSON.stringify({ generatedAt: Date.now(), source: 'Yahoo Finance', series, errors }))
-console.log('intraday.json gravado:', total, 'barras')
+await writeFile(new URL('../public/intraday.json', import.meta.url), JSON.stringify(out))
+console.log('intraday.json gravado')

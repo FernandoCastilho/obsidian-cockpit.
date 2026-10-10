@@ -16,3 +16,17 @@ export function parseYahoo(json) {
     .map(([t, c]) => [t, Number(c.toPrecision(6))])
     .sort((a, b) => a[0] - b[0])
 }
+
+// Quando o Yahoo bloqueia (429), o intraday vira uma amostra por hora: acrescenta a cotação atual de cada moeda
+// ao histórico já publicado, mantendo só os últimos `keepMs`. snaps = { USD: [ms, bid], ... }.
+export function mergeSnapshots(prev, snaps, keepMs = 5 * 864e5, now = Date.now()) {
+  const out = {}
+  const codes = new Set([...Object.keys(prev ?? {}), ...Object.keys(snaps ?? {})])
+  for (const code of codes) {
+    const old = (prev?.[code]?.points ?? []).filter(([t]) => now - t <= keepMs)
+    const snap = snaps?.[code]
+    const points = snap && Number.isFinite(snap[0]) && snap[1] > 0 && (!old.length || snap[0] > old[old.length - 1][0]) ? [...old, snap] : old
+    if (points.length) out[code] = { ...(prev?.[code] ?? {}), points }
+  }
+  return out
+}

@@ -66,3 +66,15 @@ test('Yahoo: descarta barras vazias e ordena', () => {
   assert.deepEqual(r, [[10000, 5.1], [20000, 5.2]])
   assert.deepEqual(parseYahoo({}), [])
 })
+
+test('intraday: amostras horárias acrescentam sem duplicar e descartam o que passou de 5 dias', async () => {
+  const { mergeSnapshots } = await import('../scripts/intraday-lib.mjs')
+  const now = 10 * 864e5
+  const prev = { USD: { points: [[1, 5.0], [now - 2 * 864e5, 5.1]] } }
+  const m = mergeSnapshots(prev, { USD: [now, 5.2], EUR: [now, 6.0] }, 5 * 864e5, now)
+  assert.deepEqual(m.USD.points.map((p) => p[1]), [5.1, 5.2])
+  assert.deepEqual(m.EUR.points, [[now, 6.0]])
+  // mesma amostra de novo não duplica; amostra inválida é ignorada
+  assert.equal(mergeSnapshots(m, { USD: [now, 5.2] }, 5 * 864e5, now).USD.points.length, 2)
+  assert.equal(mergeSnapshots(m, { USD: [now + 1, NaN] }, 5 * 864e5, now).USD.points.length, 2)
+})

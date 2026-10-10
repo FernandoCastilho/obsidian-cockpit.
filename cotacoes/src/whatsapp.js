@@ -3,7 +3,8 @@ import { liveParity } from './parity.js'
 
 const num = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
-const arrow = (v) => (v > 0 ? '🔺' : v < 0 ? '🔻' : '➖')
+// verde = alta, vermelho = queda (o triângulo vermelho dos emojis de seta parecia queda nos dois sentidos)
+const arrow = (v) => (v > 0 ? '🟢' : v < 0 ? '🔴' : '⚪')
 
 export const DISCLAIMER = 'Valores ilustrativos, em reais (paridade em euros). Para cotações reais, consulte a Tesouraria do Itaú.'
 

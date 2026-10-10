@@ -111,10 +111,10 @@ export function useIntraday(code, day, skip = false) {
         const serie = file.series?.[code]
         const points = (serie?.points ?? []).filter(([t]) => sameDay(t, day)).map(([t, v]) => ({ t, bid: v }))
         if (points.length < 2) {
-          setState({ key, status: 'error', error: 'sem barras de 5 min para este dia (há dados dos últimos 5 dias úteis)' })
+          setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias úteis e é atualizado a cada hora)' })
           return
         }
-        setState({ key, status: 'ok', data: { source: code === 'CNH' ? 'CNY' : code, points, generatedAt: file.generatedAt } })
+        setState({ key, status: 'ok', data: { source: code === 'CNH' ? 'CNY' : code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       })
       .catch((e) => alive && setState({ key, status: 'error', error: `intraday indisponível (${e.message})` }))
     return () => {

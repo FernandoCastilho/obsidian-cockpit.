@@ -50,7 +50,7 @@ test('paridade: dólar ÷ euro, nos dois sentidos', () => {
 test('mensagem do WhatsApp e resumo do dia', () => {
   const q = (b, p) => ({ bid: b, ask: b, pct: p })
   const quotes = { USD: q(5.3, 0.4), EUR: q(6.1, -0.2) }
-  assert.match(buildMessage(quotes, new Date('2026-10-10T12:00:00')), /\*USD\* R\$ 5,3000/)
+  assert.match(buildMessage(quotes, new Date('2026-10-10T12:00:00')), /\*USD\* R\$ 5,3000 🟢/)
   const br = { compare: [{ id: 'hoje', date: '2026-10-08' }, { id: 'd1', date: '2026-10-07' }], curves: { '2026-10-08': [[252, 13.8]], '2026-10-07': [[252, 13.85]] } }
   const text = buildSummary({ quotes, macro: { sofr: [[Date.UTC(2026, 9, 8, 12), 3.87]], cdi: [[0, 14.9]], selic: [[0, 15]] }, curves: { br } })
   assert.match(text, /DI x pré/)
