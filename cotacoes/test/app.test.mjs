@@ -80,7 +80,7 @@ test('cotações: uma única consulta para as quatro moedas (poupa a cota da API
     calls.push(String(url))
     return { ok: true, status: 200, json: async () => ({ USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), CNYBRL: q(0.74) }) }
   }
-  const r = await fetchQuotes()
+  const { results: r } = await fetchQuotes()
   globalThis.fetch = real
   assert.equal(calls.length, 1)
   assert.match(calls[0], /USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL/)
@@ -97,7 +97,7 @@ test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () =>
     if (String(url).includes('frankfurter')) return { ok: true, status: 200, json: async () => ({ date: '2026-10-09', rates: { BRL: 5.0 } }) }
     return { ok: false, status: 429 }
   }
-  const r = await fetchQuotes()
+  const { results: r } = await fetchQuotes(undefined, { direct: true })
   const awesome = calls.filter((u) => u.includes('awesomeapi')).length
   await fetchQuotes() // dentro dos 60 s: nem chega a consultar a AwesomeAPI de novo
   globalThis.fetch = real
@@ -105,4 +105,23 @@ test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () =>
   assert.equal(calls.filter((u) => u.includes('awesomeapi')).length, 1)
   assert.equal(r.USD.quote.fallback, true)
   assert.equal(r.USD.quote.bid, 5)
+})
+
+test('cotações: lê a coleta central sem consultar a API; arquivo velho cai para a consulta direta', async () => {
+  const { fetchQuotes } = await import('../src/useQuotes.js')
+  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b), low: String(b), pctChange: '0', timestamp: String(Math.floor(Date.now() / 1000)) })
+  const quotes = { USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), CNYBRL: q(0.74), USDCNH: q(7.1) }
+  const calls = []
+  const real = globalThis.fetch
+  globalThis.fetch = async (url) => {
+    calls.push(String(url))
+    return { ok: true, status: 200, json: async () => ({ generatedAt: Date.now() - 4 * 60000, quotes }) }
+  }
+  const central = await fetchQuotes(undefined, { base: 'https://x/data' })
+  assert.equal(central.via, 'central')
+  assert.equal(calls.length, 1)
+  assert.match(calls[0], /^https:\/\/x\/data\/quotes\.json\?t=\d+$/)
+  assert.equal(central.results.EUR.quote.bid, 6.1)
+  assert.ok(Math.abs(central.collectedAt - (Date.now() - 4 * 60000)) < 2000)
+  globalThis.fetch = real
 })

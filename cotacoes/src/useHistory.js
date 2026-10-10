@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CURRENCIES, friendlyError, withKey } from './useQuotes.js'
+import { CURRENCIES, DATA_BASE, friendlyError, withKey } from './useQuotes.js'
 
 const BASE = 'https://economia.awesomeapi.com.br/json/daily'
 export const MAX_DAYS = 360 // limite do endpoint diário da AwesomeAPI
@@ -71,6 +71,43 @@ async function fetchHistory(currency, start, end, signal) {
   throw new Error(errors.map(friendlyError).filter((m, i, a) => a.indexOf(m) === i).join(' · '))
 }
 
+// Uma única janela de 360 dias por moeda atende os gráficos, as variações dos cards e a paridade: as demais
+// consultas viram recortes dessa janela (e ela fica guardada no navegador por 6 h), poupando a cota da API.
+const FULL_DAYS = 359
+const dayStart = (d) => {
+  const x = new Date(d)
+  x.setHours(0, 0, 0, 0)
+  return x
+}
+export const fullWindow = (now = new Date()) => {
+  const end = dayStart(now)
+  return { start: new Date(end.getTime() - FULL_DAYS * 864e5), end }
+}
+export const sliceRange = (points, start, end) => points.filter((p) => p.t >= start.getTime() && p.t < end.getTime() + 864e5)
+
+const STORE = 'cotacoes-hist-v1'
+const STORE_TTL = 6 * 3600e3
+const readStore = (fkey) => {
+  try {
+    const e = JSON.parse(localStorage.getItem(STORE) ?? '{}')[fkey]
+    return e && Date.now() - e.at < STORE_TTL ? e.data : null
+  } catch {
+    return null
+  }
+}
+const writeStore = (fkey, data) => {
+  try {
+    const all = JSON.parse(localStorage.getItem(STORE) ?? '{}')
+    const day = fkey.split('|')[2]
+    for (const k of Object.keys(all)) if (k.split('|')[2] !== day) delete all[k] // descarta dias anteriores
+    all[fkey] = { at: Date.now(), data }
+    localStorage.setItem(STORE, JSON.stringify(all))
+  } catch {
+    /* sem armazenamento (modo privado) ou cheio: segue só com a memória */
+  }
+}
+const inflight = new Map()
+
 export function useHistory(code, start, end, skip = false) {
   const startYmd = toYmd(start)
   const endYmd = toYmd(end)
@@ -79,22 +116,33 @@ export function useHistory(code, start, end, skip = false) {
 
   useEffect(() => {
     if (skip) return
-    const hit = cache.get(key)
+    const win = fullWindow()
+    const full = start >= win.start && end <= win.end
+    const fkey = full ? `${code}|full|${toYmd(win.end)}` : key
+    const view = (data) => (full ? { ...data, points: sliceRange(data.points, start, end) } : data)
+    const hit = cache.get(fkey) ?? (full ? readStore(fkey) : null)
     if (hit) {
-      setState({ key, status: 'ok', data: hit })
+      cache.set(fkey, hit)
+      setState({ key, status: 'ok', data: view(hit) })
       return
     }
-    const ctrl = new AbortController()
+    let alive = true
     setState({ key, status: 'loading' })
-    fetchHistory(CURRENCIES.find((c) => c.code === code), start, end, ctrl.signal)
-      .then((data) => {
-        cache.set(key, data)
-        setState({ key, status: 'ok', data })
-      })
-      .catch((e) => {
-        if (e.name !== 'AbortError') setState({ key, status: 'error', error: e.message })
-      })
-    return () => ctrl.abort()
+    let p = inflight.get(fkey)
+    if (!p) {
+      p = fetchHistory(CURRENCIES.find((c) => c.code === code), full ? win.start : start, full ? win.end : end, undefined)
+        .then((data) => {
+          cache.set(fkey, data)
+          if (full) writeStore(fkey, data)
+          return data
+        })
+        .finally(() => inflight.delete(fkey))
+      inflight.set(fkey, p)
+    }
+    p.then((data) => alive && setState({ key, status: 'ok', data: view(data) })).catch((e) => alive && setState({ key, status: 'error', error: e.message }))
+    return () => {
+      alive = false
+    }
   }, [key, code, start, end, skip]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return state.key === key ? state : { key, status: 'loading' }
@@ -109,7 +157,8 @@ function loadIntraday() {
   // o arquivo é renovado a cada hora; recarrega a cada 10 min
   if (!intradayPromise || Date.now() - intradayAt > 600000) {
     intradayAt = Date.now()
-    intradayPromise = fetch(`./intraday.json?t=${Math.floor(Date.now() / 600000)}`)
+    // dados da coleta central (branch `data`); sem ela configurada, tenta o arquivo do próprio site
+    intradayPromise = fetch(`${DATA_BASE ? `${DATA_BASE}/` : './'}intraday.json?t=${Math.floor(Date.now() / 60000)}`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
@@ -136,7 +185,7 @@ export function useIntraday(code, day, skip = false) {
         const serie = file.series?.[code]
         const points = (serie?.points ?? []).filter(([t]) => sameDay(t, day)).map(([t, v]) => ({ t, bid: v }))
         if (points.length < 2) {
-          setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias úteis e é atualizado a cada hora)' })
+          setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos no horário comercial)' })
           return
         }
         setState({ key, status: 'ok', data: { source: code === 'CNH' ? 'CNY' : code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })

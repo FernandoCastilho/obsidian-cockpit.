@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { CURRENCIES, useQuotes } from './useQuotes.js'
+import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
@@ -20,7 +20,7 @@ import { flagPngs, flagSvg } from './flags.js'
 import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
-const POLL_MS = 30000 // consulta a cada 30 s, em uma única requisição (a API gratuita tem cota mensal)
+const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
 const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#c98500', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
@@ -345,7 +345,7 @@ function Fold({ title, children }) {
 }
 
 export default function App() {
-  const { quotes, direction, error, errors, updatedAt, reload } = useQuotes(POLL_MS)
+  const { quotes, direction, error, errors, updatedAt, via, reload, refresh, refreshing, limits } = useQuotes(POLL_MS)
   const macro = useMacro()
   const curves = useCurves()
   const [preset, setPreset] = useState('30')
@@ -378,14 +378,23 @@ export default function App() {
   }
   return (
     <main>
-      <h1>Cotações em tempo real</h1>
+      <h1>Cotações de mercado</h1>
       <p className="status">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Consultado às ${updatedAt.toLocaleTimeString('pt-BR')} · a cada ${POLL_MS / 1000} s · veja o horário da cotação em cada card`
-            : 'Carregando…'}
+            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'} · o horário da cotação aparece em cada card`
+            : 'Carregando…'}{' '}
+        <button
+          type="button"
+          className="btn small"
+          onClick={refresh}
+          disabled={refreshing || limits.wait > 0 || limits.left <= 0}
+          title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Consulta a fonte agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
+        >
+          {refreshing ? 'Atualizando…' : limits.wait > 0 ? `Atualizar em ${limits.wait}s` : 'Atualizar agora'}
+        </button>
       </p>
       <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
       <InstallApp />
