@@ -279,9 +279,9 @@ function Share({ quotes, updatedAt, macro, curves }) {
   )
 }
 
-const eur4 = (v) => `€ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`
+const usd4 = (v) => `US$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`
 
-// Card da paridade dólar/euro, calculado a partir dos cards de USD/BRL e EUR/BRL.
+// Card da paridade EUR/USD (dólares por 1 euro), calculado a partir dos cards de USD/BRL e EUR/BRL.
 function ParityCard({ quotes }) {
   const p = liveParity(quotes?.USD, quotes?.EUR)
   const pct = p?.pct ?? 0
@@ -290,17 +290,17 @@ function ParityCard({ quotes }) {
     <article className="card" style={{ '--series': COLORS.PAR }}>
       <header>
         <span className="flag pair" aria-hidden="true">
-          <span dangerouslySetInnerHTML={{ __html: flagSvg('USD', 'width="24" height="16"') }} />
           <span dangerouslySetInnerHTML={{ __html: flagSvg('EUR', 'width="24" height="16"') }} />
+          <span dangerouslySetInnerHTML={{ __html: flagSvg('USD', 'width="24" height="16"') }} />
         </span>
         <div>
-          <h2>USD/EUR</h2>
-          <p>Paridade dólar/euro</p>
+          <h2>EUR/USD</h2>
+          <p>Paridade euro/dólar</p>
         </div>
       </header>
       {p ? (
         <>
-          <div className="price">{eur4(p.main)}</div>
+          <div className="price">{usd4(p.main)}</div>
           <div className={`pct ${trend}`}>
             {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {pct.toFixed(2).replace('.', ',')}%
           </div>
@@ -309,19 +309,19 @@ function ParityCard({ quotes }) {
               <dt>
                 Compra
                 <Help label="O que é compra na paridade" align="right">
-                  Euros que se obtêm por 1 dólar ao vender dólar e comprar euro. Cálculo: dólar compra ÷ euro venda.
+                  Dólares que se obtêm por 1 euro ao vender euro e comprar dólar. Cálculo: euro compra ÷ dólar venda.
                 </Help>
               </dt>
-              <dd>{eur4(p.buy)}</dd>
+              <dd>{usd4(p.buy)}</dd>
             </div>
             <div>
               <dt>
                 Venda
                 <Help label="O que é venda na paridade" align="right">
-                  Euros por 1 dólar no sentido contrário. Cálculo: dólar venda ÷ euro compra. É uma referência calculada, não uma cotação de mesa.
+                  Dólares por 1 euro no sentido contrário. Cálculo: euro venda ÷ dólar compra. É uma referência calculada, não uma cotação de mesa.
                 </Help>
               </dt>
-              <dd>{eur4(p.sell)}</dd>
+              <dd>{usd4(p.sell)}</dd>
             </div>
           </dl>
         </>
@@ -395,7 +395,7 @@ export default function App() {
           </div>
         ))}
         <div className="slot">
-          <Clock codes={['USD', 'EUR']} />
+          <Clock codes={['EUR', 'USD']} />
           <ParityCard quotes={quotes} />
         </div>
       </section>

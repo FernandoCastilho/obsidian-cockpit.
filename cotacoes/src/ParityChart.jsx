@@ -21,7 +21,7 @@ function useParity(start, end, day, invert) {
 }
 
 export default function ParityChart({ color, start, end, day }) {
-  const [invert, setInvert] = useState(false)
+  const [invert, setInvert] = useState(true) // padrão de mercado: EUR/USD (dólares por 1 euro)
   const s = useParity(start, end, day, invert)
   const [ref, width] = useWidth()
   const intraday = !!day
