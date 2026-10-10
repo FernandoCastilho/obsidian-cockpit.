@@ -21,9 +21,7 @@ export function friendlyError(msg) {
   return m
 }
 
-// Chave da AwesomeAPI (plano gratuito: 100 mil consultas/mês com chave). Vem do segredo AWESOMEAPI_KEY do GitHub, na hora do build.
-const KEY = import.meta.env?.VITE_AWESOMEAPI_KEY
-export const withKey = (url) => (KEY ? `${url}${url.includes('?') ? '&' : '?'}token=${encodeURIComponent(KEY)}` : url)
+// A chave da AwesomeAPI fica só no robô do GitHub (coleta central); o navegador não a usa, e a consulta direta (botão Atualizar) usa a cota anônima.
 
 // Uma única consulta traz as quatro moedas (antes eram quatro): o yuan vem pelo CNY e só é trocado pelo cruzamento se estiver parado.
 const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'CNYBRL' }
@@ -36,7 +34,7 @@ let blockedMsg = ''
 
 async function getJson(url, label, signal) {
   if (Date.now() < blockedUntil) throw new Error(blockedMsg)
-  const res = await fetch(withKey(url), { signal })
+  const res = await fetch(url, { signal })
   if (!res.ok) {
     const err = new Error(`${label}: HTTP ${res.status}`)
     if (res.status === 429) {
