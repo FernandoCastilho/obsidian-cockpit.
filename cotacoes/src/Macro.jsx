@@ -196,6 +196,9 @@ function FocusTable({ focus }) {
   )
 }
 
+const STALE_LABELS = { cdi: 'CDI', selic: 'Selic', sofr: 'SOFR', sofrAvg: 'médias da SOFR', focus: 'Boletim Focus', ptax: 'PTAX' }
+const stamp = (t) => (t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida')
+
 export default function Macro() {
   const m = useMacro()
   const [preset, setPreset] = useState('365')
@@ -221,6 +224,11 @@ export default function Macro() {
       {m.status === 'error' && <p className="status">Dados do Banco Central indisponíveis no momento ({m.error}).</p>}
       {m.status === 'ok' && m.data.generatedAt && Date.now() - m.data.generatedAt > 3 * 3600e3 && (
         <p className="status stale">Atenção: os dados do Banco Central foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
+      )}
+      {m.status === 'ok' && Object.keys(m.data.stale ?? {}).length > 0 && (
+        <p className="status stale">
+          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(m.data.stale).map(([k, t]) => `${STALE_LABELS[k] ?? k} (coletado em ${stamp(t)})`).join(', ')}.
+        </p>
       )}
       {m.status === 'ok' && (
         <div className="charts">

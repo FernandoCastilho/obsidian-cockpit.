@@ -1,5 +1,6 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
+import { fillNewsFromPrevious, loadPrevious } from './prev-lib.mjs'
 import { GTX, balance, canonicalSource, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, pick, splitBatch } from './news-lib.mjs'
 
 const SITES = {
@@ -120,6 +121,9 @@ for (const n of Object.values(news).flat()) {
   if (tr) Object.assign(n, { original: n.title, title: tr })
 }
 
+// Moeda sem manchetes novas: mantém as anteriores (e avisa na tela).
+const stale = fillNewsFromPrevious(news, await loadPrevious('news.json'))
+if (Object.keys(stale).length) console.log('Manchetes mantidas do último publicado:', Object.keys(stale).join(', '))
 const total = Object.values(news).reduce((n, a) => n + a.length, 0)
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
 if (!total && process.env.NEWS_STRICT === 'true') {
@@ -128,5 +132,5 @@ if (!total && process.env.NEWS_STRICT === 'true') {
 }
 
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
-await writeFile(new URL('../public/news.json', import.meta.url), JSON.stringify({ generatedAt: Date.now(), news, errors }))
+await writeFile(new URL('../public/news.json', import.meta.url), JSON.stringify({ generatedAt: Date.now(), news, stale, errors }))
 console.log('news.json gravado:', total, 'manchetes;', translated.size, 'traduzidas')

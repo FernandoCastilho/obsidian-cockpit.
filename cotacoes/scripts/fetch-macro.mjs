@@ -1,5 +1,6 @@
 // Coleta CDI, Selic, PTAX e Boletim Focus (Banco Central) e grava public/macro.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
+import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
 import { changePoints, focusFor, focusRelease, parseSgs, parseSofr, parseSofrAvg, ptaxFrom, toBr, windows } from './macro-lib.mjs'
 
 const SGS = (code, a, b) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados?formato=json&dataInicial=${a}&dataFinal=${b}`
@@ -90,6 +91,9 @@ for (const moeda of ['USD', 'EUR', 'JPY']) {
 console.log('PTAX:', Object.keys(out.ptax).join(','))
 
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
+// Fonte que falhou: mantém o último dado publicado (e avisa na tela) em vez de apagar o bloco ou travar o deploy.
+fillFromPrevious(out, await loadPrevious('macro.json'), ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax'])
+if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 const ok = out.cdi.length && out.selic.length
 if (!ok && process.env.MACRO_STRICT === 'true') {
   console.error('CDI/Selic não coletados; abortando para manter os dados anteriores no ar.')
