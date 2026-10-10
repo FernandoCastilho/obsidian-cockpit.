@@ -120,6 +120,11 @@ export default function Curves({ curves: c }) {
       {c.status === 'ok' && c.data.generatedAt && Date.now() - c.data.generatedAt > 3 * 3600e3 && (
         <p className="status stale">Atenção: as curvas foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
+      {c.status === 'ok' && Object.keys(c.data.stale ?? {}).length > 0 && (
+        <p className="status stale">
+          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(c.data.stale).map(([k, t]) => `${{ br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' }[k] ?? k} (coletado em ${t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'})`).join(', ')}.
+        </p>
+      )}
       {c.status === 'error' && <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>}
       {c.status === 'ok' && (
         <div className="charts">

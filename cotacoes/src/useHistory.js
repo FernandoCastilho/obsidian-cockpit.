@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CURRENCIES } from './useQuotes.js'
+import { CURRENCIES, friendlyError } from './useQuotes.js'
 
 const BASE = 'https://economia.awesomeapi.com.br/json/daily'
 export const MAX_DAYS = 360 // limite do endpoint diário da AwesomeAPI
@@ -33,6 +33,25 @@ async function fetchSeries(from, start, end, signal) {
   return { source: from, points: [...byDay.values()].sort((a, b) => a.t - b.t) }
 }
 
+// Reserva: referências diárias do BCE (Frankfurter), sem máxima/mínima. { rates: { 'AAAA-MM-DD': { BRL: n } } } -> pontos.
+export function parseEcbSeries(json) {
+  return Object.entries(json?.rates ?? {})
+    .map(([d, r]) => ({ t: Date.parse(`${d}T15:00:00Z`), bid: Number(r?.BRL) }))
+    .filter((p) => Number.isFinite(p.t) && p.bid > 0)
+    .map((p) => ({ ...p, high: p.bid, low: p.bid }))
+    .sort((a, b) => a.t - b.t)
+}
+
+async function fetchEcbHistory(code, start, end, signal) {
+  const from = code === 'CNH' ? 'CNY' : code
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  const res = await fetch(`https://api.frankfurter.dev/v1/${iso(start)}..${iso(end)}?base=${from}&symbols=BRL`, { signal })
+  if (!res.ok) throw new Error(`BCE ${from}: HTTP ${res.status}`)
+  const points = parseEcbSeries(await res.json())
+  if (!points.length) throw new Error(`BCE ${from}: sem dados no período`)
+  return { source: from, points, feed: 'BCE (referência diária)' }
+}
+
 async function fetchHistory(currency, start, end, signal) {
   const errors = []
   for (const from of currency.sources) {
@@ -43,7 +62,13 @@ async function fetchHistory(currency, start, end, signal) {
       errors.push(e.message)
     }
   }
-  throw new Error(errors.join(' · '))
+  try {
+    return await fetchEcbHistory(currency.code, start, end, signal)
+  } catch (e) {
+    if (e.name === 'AbortError') throw e
+    errors.push(e.message)
+  }
+  throw new Error(errors.map(friendlyError).filter((m, i, a) => a.indexOf(m) === i).join(' · '))
 }
 
 export function useHistory(code, start, end, skip = false) {

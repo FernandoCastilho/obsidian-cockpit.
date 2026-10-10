@@ -34,6 +34,11 @@ export default function News({ colors }) {
       </div>
       {!data && !error && <p className="status">Carregando notícias…</p>}
       {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}
+      {data && Object.keys(data.stale ?? {}).length > 0 && (
+        <p className="status stale">
+          Sem manchetes novas para {Object.keys(data.stale).join(', ')}; mantidas as da última coleta bem-sucedida.
+        </p>
+      )}
       {data && (
         <div className="charts">
           {CURRENCIES.map((c) => {

@@ -1,5 +1,6 @@
 // Coleta as curvas de juros (DI x pré da B3 e Treasuries dos EUA) e grava public/curves.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
+import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
 import { b3Url, parseB3, parseTreasury, pickDates } from './curves-lib.mjs'
 
 const UA = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', accept: 'application/json, text/csv, */*' }
@@ -61,7 +62,9 @@ out.cc = await b3Curve('DOL', 21)
   console.log('Treasuries:', picks.map((p) => p.date).join(', ') || 'sem dados')
 }
 
-if (!out.br && !out.us && process.env.CURVES_STRICT) {
+fillFromPrevious(out, await loadPrevious('curves.json'), ['br', 'cc', 'us'])
+if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
+if (!out.br && !out.us && process.env.CURVES_STRICT === 'true') {
   console.error('Nenhuma curva coletada:', errors)
   process.exit(1)
 }
