@@ -157,4 +157,16 @@ export const GLOSSARY = {
     b: 'Pagar em USD numa quinta de Thanksgiving não funciona: Nova York fecha. Um pagamento marcado para essa data só entra no dia útil seguinte.',
     c: 'Marque as praças da sua operação. O app avisa quando uma data cai em feriado e sugere o próximo dia útil comum, mas nunca muda a data sozinho.',
   },
+  giro: {
+    t: 'Capital de giro',
+    a: 'Empréstimo em reais para financiar a operação do dia a dia. Você recebe o valor e devolve em parcelas, com juros.',
+    b: 'R$ 500 mil em 12 meses a 1,8% ao mês: Price tem parcelas iguais; SAC começa com parcela maior e cai; bullet paga tudo no fim. Tarifas e IOF aumentam o custo efetivo acima da taxa.',
+    c: 'Compare pelo custo efetivo ao ano e pelo % do CDI, não só pela taxa mensal: é isso que permite comparar com outra proposta.',
+  },
+  aplicacao: {
+    t: 'Aplicação financeira',
+    a: 'Quanto um investimento rende até o vencimento: bruto, descontado o imposto, e o que isso representa do CDI.',
+    b: 'Um CDB de 100% do CDI por 1 ano, com CDI de 10%, rende 10% bruto e 8,25% líquido (IR de 17,5%). Uma LCI isenta que pague 90% do CDI rende 9% líquido, mais que o CDB.',
+    c: 'Para comparar ativos com impostos diferentes, olhe o líquido e o % do CDI líquido.',
+  },
 }

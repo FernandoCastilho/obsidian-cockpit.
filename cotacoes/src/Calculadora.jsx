@@ -5,6 +5,8 @@ import DateCheck from './DateCheck.jsx'
 import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
 import Finimp from './Finimp.jsx'
+import Giro from './Giro.jsx'
+import Aplicacao from './Aplicacao.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
@@ -271,20 +273,50 @@ function OperacaoDi({ curves, hol }) {
   )
 }
 
+const OPTIONS = [
+  { id: 'finimp', chip: 'US$', title: 'FINIMP 4131', desc: 'Financiamento em moeda estrangeira: juros, cronograma e custo na moeda original (USD, EUR, JPY).' },
+  { id: 'giro', chip: 'R$', title: 'Capital de giro', desc: 'Empréstimo em reais: parcelas, juros totais, custo efetivo e quanto isso representa do CDI.' },
+  { id: 'comparar', chip: '⇄', title: 'Comparar operações', desc: 'Empréstimo × aplicação no CDI, e resgatar × manter a aplicação e tomar o empréstimo, com IR do CDB.' },
+  { id: 'aplicacao', chip: '%', title: 'Aplicação financeira', desc: 'Quanto rende um CDB, uma LCI/LCA ou um título pré-fixado: bruto, IR, líquido e % do CDI.' },
+]
+const HELP = { finimp: 'finimp', giro: 'giro', comparar: 'calculadora', aplicacao: 'aplicacao' }
+
 export default function Calculadora({ curves, hol }) {
-  const [mode, setMode] = useState('di')
+  const [view, setView] = useState('home')
+  const opt = OPTIONS.find((o) => o.id === view)
   return (
     <section className="macro calc" aria-labelledby="calc-h">
-      <div className="history-head">
-        <h2 id="calc-h">
-          Calculadora <Explain id={mode === 'di' ? 'calculadora' : 'finimp'} />
-        </h2>
-        <div className="seg" role="group" aria-label="Tipo de cálculo">
-          <button type="button" aria-pressed={mode === 'di'} onClick={() => setMode('di')}>Operação × DI</button>
-          <button type="button" aria-pressed={mode === 'finimp'} onClick={() => setMode('finimp')}>FINIMP</button>
-        </div>
-      </div>
-      {mode === 'di' ? <OperacaoDi curves={curves} hol={hol} /> : <Finimp hol={hol} />}
+      {view === 'home' ? (
+        <>
+          <div className="history-head">
+            <h2 id="calc-h">Vamos começar</h2>
+          </div>
+          <p className="status">O que você quer calcular?</p>
+          <div className="start-grid">
+            {OPTIONS.map((o) => (
+              <button key={o.id} type="button" className="start-card" onClick={() => setView(o.id)}>
+                <span className="start-chip" aria-hidden="true">{o.chip}</span>
+                <b>{o.title}</b>
+                <span className="start-desc">{o.desc}</span>
+                <span className="start-go">Começar ›</span>
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="history-head">
+            <h2 id="calc-h">
+              {opt.title} <Explain id={HELP[view]} />
+            </h2>
+            <button type="button" className="more" onClick={() => setView('home')}>‹ Outras calculadoras</button>
+          </div>
+          {view === 'finimp' && <Finimp hol={hol} />}
+          {view === 'giro' && <Giro curves={curves} hol={hol} />}
+          {view === 'comparar' && <OperacaoDi curves={curves} hol={hol} />}
+          {view === 'aplicacao' && <Aplicacao curves={curves} hol={hol} />}
+        </>
+      )}
     </section>
   )
 }
