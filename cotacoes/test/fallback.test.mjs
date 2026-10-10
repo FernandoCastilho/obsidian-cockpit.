@@ -62,3 +62,16 @@ test('alerta: só entra o que está reaproveitado há mais de 6 horas', async ()
   assert.equal(r.find((i) => i.label === 'SOFR').hours, null) // data desconhecida conta como antiga
   assert.deepEqual(staleReport(null), [])
 })
+
+test('histórico: a janela de 360 dias atende os recortes dos gráficos', async () => {
+  const { fullWindow, sliceRange } = await import('../src/useHistory.js')
+  const win = fullWindow(new Date(2026, 9, 10, 15, 30))
+  assert.equal(win.end.getHours(), 0)
+  assert.equal(Math.round((win.end - win.start) / 864e5), 359)
+  const day = 864e5
+  const pts = Array.from({ length: 360 }, (_, i) => ({ t: win.start.getTime() + i * day + 12 * 36e5, bid: 5 + i / 1000 }))
+  const last30 = sliceRange(pts, new Date(win.end.getTime() - 29 * day), win.end)
+  assert.equal(last30.length, 30)
+  assert.equal(last30.at(-1).t, pts.at(-1).t)
+  assert.equal(sliceRange(pts, win.start, win.end).length, 360)
+})

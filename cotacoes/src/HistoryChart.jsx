@@ -186,7 +186,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       </div>
       {pts && intraday && (
         <p className="status">
-          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Barras de 5 min'} · atualizado às {new Date(h.data.generatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} (a cada hora) · Fonte: {h.data.feed ?? 'Yahoo Finance'}
+          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Pontos a cada 5 min no horário comercial'} · atualizado às {new Date(h.data.generatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · Fonte: {h.data.feed ?? 'Yahoo Finance'}
         </p>
       )}
       {pts && !intraday && h.data?.feed && (

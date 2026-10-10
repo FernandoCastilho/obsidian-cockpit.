@@ -46,10 +46,6 @@ jobs:
         timeout-minutes: 15
         env:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
-      - name: Coletar intraday (barras de 5 min)
-        run: node scripts/fetch-intraday.mjs
-        env:
-          AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
       - name: Coletar curvas de juros (DI x pré e Treasuries)
         run: node scripts/fetch-curves.mjs
         env:
@@ -61,6 +57,7 @@ jobs:
         run: npm run build
         env:
           VITE_AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
+          VITE_DATA_BASE: https://raw.githubusercontent.com/${{ github.repository }}/data
       - uses: actions/upload-pages-artifact@v3
         with:
           path: cotacoes/dist
