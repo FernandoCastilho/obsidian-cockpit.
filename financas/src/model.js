@@ -67,6 +67,9 @@ export function buildData(tabs = {}) {
     apelido: String(c.apelido || c.conta_id),
     tipo: strip(c.tipo),
     fechamento: isSim(c.entra_no_fechamento),
+    pessoa: String(c.pessoa_id || ''),
+    saldoInicial: String(c.saldo_inicial ?? '').trim() === '' ? null : toNumber(c.saldo_inicial),
+    dataSaldo: toIsoDate(c.data_saldo_inicial),
     banco: bancos.get(String(c.banco_id)) ?? null,
   }))
   const categorias = rowsToObjects(tabs.Categorias)
@@ -109,7 +112,51 @@ export function buildData(tabs = {}) {
     .map((o) => ({ mes: toMonth(o.mes), sub: String(o.subcategoria_id), pessoa: String(o.pessoa_id), valor: toNumber(o.valor_planejado) }))
     .filter((o) => o.mes && o.sub)
 
-  return { pessoas, contas, bancos, categorias, subcategorias, lancamentos, orcamento, catById, subById }
+  const ativa = (r) => r.ativa === '' || isSim(r.ativa)
+  const recorrencias = rowsToObjects(tabs.Recorrencias)
+    .filter(ativa)
+    .map((r) => {
+      const sub = subById.get(String(r.subcategoria_id))
+      return {
+        id: String(r.recorrencia_id),
+        desc: String(r.descricao || sub?.nome || r.recorrencia_id),
+        sub: sub?.id ?? '',
+        conta: String(r.conta_id),
+        pessoa: String(r.pessoa_id),
+        valor: toNumber(r.valor),
+        dia: Math.min(31, Math.max(1, Math.round(toNumber(r.dia_mes)) || 1)),
+        periodicidade: strip(r.periodicidade) || 'mensal',
+        inicio: toIsoDate(r.inicio),
+        fim: toIsoDate(r.fim),
+        icone: sub ? iconFor(sub.icone, catById.get(sub.categoria)?.icone, sub.categoria) : 'alert',
+      }
+    })
+    .filter((r) => r.valor !== 0)
+
+  const metas = rowsToObjects(tabs.Metas)
+    .map((m) => ({ id: String(m.meta_id), nome: String(m.nome), alvo: toNumber(m.valor_alvo), atual: toNumber(m.valor_atual), prazo: toIsoDate(m.prazo), pessoa: String(m.pessoa_id), status: strip(m.status), obs: String(m.obs || '') }))
+    .filter((m) => m.nome && m.alvo > 0 && m.status !== 'cancelada')
+
+  const dividas = rowsToObjects(tabs.Dividas)
+    .map((d) => ({
+      id: String(d.divida_id),
+      descricao: String(d.descricao),
+      credor: String(d.credor || ''),
+      pessoa: String(d.pessoa_id),
+      saldo: String(d.saldo_devedor ?? '').trim() === '' ? null : toNumber(d.saldo_devedor),
+      taxa: toNumber(d.taxa_mensal),
+      parcela: toNumber(d.parcela),
+      restantes: Math.round(toNumber(d.parcelas_restantes)),
+      dia: Math.round(toNumber(d.dia_vencimento)),
+      status: strip(d.status),
+    }))
+    .filter((d) => d.descricao && d.status !== 'quitada')
+
+  const posicoes = rowsToObjects(tabs.Posicoes)
+    .map((p) => ({ conta: String(p.conta_id), pessoa: String(p.pessoa_id), data: toIsoDate(p.data_ref), ativo: String(p.ativo || ''), classe: String(p.classe || ''), bruto: toNumber(p.saldo_bruto), liquido: String(p.saldo_liquido ?? '').trim() === '' ? toNumber(p.saldo_bruto) : toNumber(p.saldo_liquido) }))
+    .filter((p) => p.data)
+
+  return { pessoas, contas, bancos, categorias, subcategorias, lancamentos, orcamento, recorrencias, metas, dividas, posicoes, catById, subById }
 }
 
 const zero = () => ({ realizado: 0, pendente: 0, planejado: 0 })
