@@ -1,7 +1,8 @@
+// Só apaga caches 'financas-*': a página cotacoes divide a mesma origem.
 // Abre o app sem rede (última versão). Nunca guarda chamadas ao Google: os dados vêm do cache local do app.
 const CACHE = 'financas-v1'
 self.addEventListener('install', (e) => e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', './manifest.webmanifest', './favicon.svg'])).then(() => self.skipWaiting())))
-self.addEventListener('activate', (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())))
+self.addEventListener('activate', (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('financas-') && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())))
 self.addEventListener('fetch', (e) => {
   const req = e.request
   const url = new URL(req.url)

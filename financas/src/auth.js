@@ -53,3 +53,12 @@ export async function getToken(clientId) {
     client.requestAccessToken({ prompt: '' })
   })
 }
+
+// Revoga o acesso concedido neste aparelho (melhor esforço: ignora falhas de rede).
+export function revoke() {
+  const t = read()
+  clearToken()
+  try {
+    if (t && window.google?.accounts?.oauth2) window.google.accounts.oauth2.revoke(t, () => {})
+  } catch {}
+}

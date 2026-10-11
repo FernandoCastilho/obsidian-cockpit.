@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { buildData, monthsWithData } from './model.js'
-import { clearToken, getToken, hasToken } from './auth.js'
+import { clearToken, getToken, hasToken, revoke } from './auth.js'
 import { fetchTabs } from './sheets.js'
 import { demoTabs } from './demo.js'
 import { currentMonth, monthName, shiftMonth } from './format.js'
@@ -88,6 +88,18 @@ export default function App() {
     setAjustes(false)
   }
 
+  // Apaga do aparelho os dados financeiros guardados e encerra o acesso ao Google.
+  const limpar = () => {
+    revoke()
+    setCache(null)
+    setDemo(false)
+    setError('')
+    try {
+      localStorage.removeItem('financas:cache')
+    } catch {}
+    setAjustes(false)
+  }
+
   const pessoas = data ? [{ id: 'TODOS', nome: 'Todos' }, ...data.pessoas] : []
   const vazio = !data || data.lancamentos.length === 0
 
@@ -158,7 +170,7 @@ export default function App() {
         {demo && <button className="link" onClick={() => setDemo(false)}>Sair do exemplo</button>}
       </footer>
 
-      {ajustes && <Ajustes cfg={cfg} onSave={salvar} onClose={() => setAjustes(false)} />}
+      {ajustes && <Ajustes cfg={cfg} onSave={salvar} onClose={() => setAjustes(false)} onClear={limpar} />}
     </div>
   )
 }

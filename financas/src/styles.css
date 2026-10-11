@@ -146,3 +146,4 @@ footer { color: var(--mut); font-size: .75rem; margin-top: 24px; }
 .bank { display: inline-grid; place-items: center; border-radius: 50%; font-weight: 700; letter-spacing: -.03em; vertical-align: -4px; margin-right: 2px; flex: none; line-height: 1; }
 img.bank.logo { object-fit: contain; background: #fff; border: 1px solid var(--line); }
 .grid th .cat { display: inline-flex; }
+.sep { border: 0; border-top: 1px solid var(--line); margin: 4px 0; width: 100%; }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Ajustes({ cfg, onSave, onClose }) {
+export default function Ajustes({ cfg, onSave, onClose, onClear }) {
   const [clientId, setClientId] = useState(cfg.clientId)
   const [sheetId, setSheetId] = useState(cfg.sheetId)
   return (
@@ -27,6 +27,9 @@ export default function Ajustes({ cfg, onSave, onClose }) {
           <button type="submit" className="primary">Salvar</button>
           <button type="button" onClick={onClose}>Fechar</button>
         </div>
+        <hr className="sep" />
+        <p className="mut small">Em aparelho compartilhado, apague os dados guardados aqui. Eles voltam ao tocar em Atualizar dados.</p>
+        <button type="button" onClick={onClear}>Sair e apagar dados deste aparelho</button>
       </form>
     </div>
   )
