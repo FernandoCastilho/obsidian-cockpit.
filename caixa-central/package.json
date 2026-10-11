@@ -1,0 +1,13 @@
+{
+  "name": "caixa-central",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Importador de extratos da Caixa Central (Drive) para a planilha-base",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
