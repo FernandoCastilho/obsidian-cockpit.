@@ -524,6 +524,19 @@ export default function App() {
         <>
           <HolidayNotice hol={hol} />
           <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={setOpen} goto={goto} colors={COLORS} />
+          <section className="history">
+            <div className="history-head">
+              <h2>Histórico</h2>
+              <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
+            </div>
+            {notice && <p className="status">{notice}</p>}
+            <div className="charts">
+              {CURRENCIES.map((c) => (
+                <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+              ))}
+              <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+            </div>
+          </section>
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
         </>
@@ -541,19 +554,6 @@ export default function App() {
             <div className="slot">
               <Clock codes={['EUR', 'USD']} />
               <ParityCard quotes={quotes} />
-            </div>
-          </section>
-          <section className="history">
-            <div className="history-head">
-              <h2>Histórico</h2>
-              <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
-            </div>
-            {notice && <p className="status">{notice}</p>}
-            <div className="charts">
-              {CURRENCIES.map((c) => (
-                <HistoryChart key={c.code} currency={c} color={COLORS[c.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
-              ))}
-              <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
             </div>
           </section>
         </>
