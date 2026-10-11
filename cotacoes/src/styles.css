@@ -480,3 +480,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   .ficha th { font-size:.78rem; color:var(--mut); font-weight:500; padding:0; white-space:normal; }
   .ficha td { padding:2px 0 0; font-size:1rem; overflow-wrap:anywhere; }
 }
+
+.pair-tile { cursor:default; }
+.pair-tile:hover { border-color:var(--line); }
+.pair-sel { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:4px 8px; font:inherit; font-weight:700; min-height:32px; }
+.pair-slash { color:var(--mut); }
+.pair-tile .more { margin-left:auto; }
