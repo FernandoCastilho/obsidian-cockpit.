@@ -583,8 +583,11 @@ export default function App() {
 
       <Novidades />
       <footer>
-        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNY/BRL (onshore); CNH (offshore) por cruzamento quando o CNY está parado</p>
-        <p><i>{DISCLAIMER}</i></p>
+        <details className="premissas">
+          <summary>Fontes e avisos</summary>
+          <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNY/BRL (onshore); CNH (offshore) por cruzamento quando o CNY está parado</p>
+          <p><i>{DISCLAIMER}</i></p>
+        </details>
         <p>
           <button type="button" className="fx-toggle" aria-pressed={fx === 'neon'} onClick={() => setFx(fx === 'neon' ? 'off' : 'neon')} title="Brilho discreto nas linhas dos gráficos (desligado por padrão)">
             Efeitos: {fx === 'neon' ? 'brilho ligado' : 'desligados'}

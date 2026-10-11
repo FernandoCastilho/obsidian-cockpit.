@@ -4,6 +4,7 @@ import { useTerm } from './useTerm.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import Explain from './Explain.jsx'
+import HBars from './HBars.jsx'
 import ResultBar from './ResultBar.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -120,6 +121,14 @@ export default function Aplicacao({ curves, hol }) {
               {' '}· até {dm(t.end)} ({r.d} dias úteis)
             </small>
           </p>
+          <HBars
+            title="Rendimento em reais"
+            rows={[
+              { label: 'Bruto', value: r.gross.gain, text: brl(r.gross.gain) },
+              { label: 'Líquido', value: r.net.gain, text: brl(r.net.gain), strong: true },
+              { label: 'CDI (curva, 100%)', value: r.cdi.gain, text: brl(r.cdi.gain) },
+            ]}
+          />
           <div className="scroll">
             <table className="focus-table">
               <thead>

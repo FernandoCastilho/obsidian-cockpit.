@@ -209,7 +209,7 @@ function RatesBar({ rates, onOpen, paused }) {
   const set = rates.length < 8 ? [...rates, ...rates] : rates
   const seconds = Math.max(30, set.length * 6)
   return (
-    <div className={`wire quote-bar${paused ? ' paused' : ''}`} role="region" aria-label="Juros em rolagem (pausa ao passar o mouse ou no botão)">
+    <div className={`wire quote-bar${paused ? ' paused' : ''}`} role="region" aria-label={`Juros: ${rates.map((r) => `${r.label} ${p2(r.value)}%`).join('; ')}. A faixa rola e pausa ao passar o mouse ou no botão.`}>
       <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
         {[0, 1].map((k) => (
           <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>

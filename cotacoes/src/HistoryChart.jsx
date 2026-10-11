@@ -12,17 +12,19 @@ export const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ?
 const fmtMonth = (t) => new Date(t).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }).replace('.', '')
 const brl = (v, d = 4) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
 
+// Largura do contêiner do gráfico. Usa "ref de função" para medir também quando o elemento aparece depois (dados que chegam tarde):
+// com um ref comum, o gráfico ficava preso na largura inicial (480 px).
 export function useWidth() {
-  const ref = useRef(null)
+  const [el, setEl] = useState(null)
   const [w, setW] = useState(480)
   useEffect(() => {
-    const el = ref.current
     if (!el || typeof ResizeObserver === 'undefined') return
+    setW(Math.max(260, Math.floor(el.getBoundingClientRect().width)))
     const ro = new ResizeObserver(([e]) => setW(Math.max(260, Math.floor(e.contentRect.width))))
     ro.observe(el)
     return () => ro.disconnect()
-  }, [])
-  return [ref, w]
+  }, [el])
+  return [setEl, w]
 }
 
 export function Plot({ points, width, color, code, intraday, fmt, label, nice, labels, light }) {
@@ -33,6 +35,13 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice, l
     const vals = points.map((p) => p.bid)
     let lo = Math.min(...vals)
     let hi = Math.max(...vals)
+    // amplitude mínima: série (quase) constante não ganha zoom que sugere oscilação inexistente (Selic parada, por exemplo)
+    const mid = (hi + lo) / 2
+    const minSpan = nice ? 0.5 : Math.abs(mid) * 0.003
+    if (hi - lo < minSpan) {
+      lo = mid - minSpan / 2
+      hi = mid + minSpan / 2
+    }
     const pad = (hi - lo || hi * 0.01) * 0.12
     lo -= pad
     hi += pad
@@ -77,11 +86,15 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice, l
   }
 
   const last = points[points.length - 1]
-  // rótulos de valor: pontos espaçados por igual (sem encavalar), incluindo o primeiro e o último
+  // rótulos de valor: ver abaixo
+  // rótulos de valor só onde importam: último, primeiro, máximo e mínimo, sem encavalar (mínimo de 64 px entre eles)
   const marks = useMemo(() => {
-    const n = Math.min(points.length, width < 420 ? 4 : 7)
-    return n < 2 ? [0] : [...new Set(Array.from({ length: n }, (_, i) => Math.round((i * (points.length - 1)) / (n - 1))))]
-  }, [points, width])
+    const vals = points.map((p) => p.bid)
+    const cand = [points.length - 1, 0, vals.indexOf(Math.max(...vals)), vals.indexOf(Math.min(...vals))]
+    const kept = []
+    for (const i of cand) if (!kept.some((k) => Math.abs(g.x(points[k].t) - g.x(points[i].t)) < 64 || points[k].bid === points[i].bid)) kept.push(i) // sem repetir o mesmo valor
+    return kept.sort((a, b) => a - b)
+  }, [points, g])
   const hp = hover != null ? points[hover] : null
   const gid = `a-${code}`
 
@@ -195,7 +208,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       <div ref={ref}>
         {h.status === 'loading' && <div className="placeholder" style={{ height: H }}>Carregando…</div>}
         {h.status === 'error' && (
-          <div className="placeholder err" style={{ height: H }}>
+          <div className="placeholder err" style={{ height: 120 }}>
             Não foi possível carregar o histórico.<br />
             <small>{h.error}</small>
           </div>
