@@ -2,6 +2,7 @@ import { summarizeMonth } from './model.js'
 import { money } from './format.js'
 import { Bar } from './Mes.jsx'
 import Money from './Money.jsx'
+import { Tile, Icon } from './Icon.jsx'
 
 export default function Orcamento({ data, month, pessoa }) {
   const s = summarizeMonth(data, { month, pessoa })
@@ -24,10 +25,10 @@ export default function Orcamento({ data, month, pessoa }) {
               <details>
                 <summary>
                   <div className="line">
-                    <span className={c.id === '_sem' ? 'warn-text' : ''}>{c.id === '_sem' ? 'Sem categoria' : c.nome}</span>
-                    <span className={`num ${resto < 0 ? 'neg-text' : ''}`}>{c.orcado > 0 ? `${resto < 0 ? '−' : ''}${money(Math.abs(resto))} ${resto < 0 ? 'acima' : 'restam'}` : 'sem orçamento'}</span>
+                    <span className={`cat ${c.id === '_sem' ? 'warn-text' : ''}`}><Tile name={c.icone} size={30} warn={c.id === '_sem'} />{c.id === '_sem' ? 'Sem categoria' : c.nome}</span>
+                    <span className={`num ${resto < 0 && c.id !== '_sem' ? 'neg-text' : ''}`}>{c.orcado > 0 ? `${resto < 0 ? '−' : ''}${money(Math.abs(resto))} ${resto < 0 ? 'acima' : 'restam'}` : 'sem orçamento'}</span>
                   </div>
-                  <Bar value={c.realizado} max={c.orcado || c.realizado} over={resto < 0} warn={c.id === '_sem'} />
+                  <Bar value={c.realizado} max={c.orcado || c.realizado} over={resto < 0 && c.id !== '_sem'} warn={c.id === '_sem'} />
                   <small className="mut">
                     {money(c.realizado)} realizado · {money(c.orcado)} orçado{c.pendente + c.planejado > 0 ? ` · ${money(c.pendente + c.planejado)} a vencer` : ''}
                   </small>
@@ -35,7 +36,7 @@ export default function Orcamento({ data, month, pessoa }) {
                 <ul className="rows tight sub">
                   {c.subs.map((x) => (
                     <li key={x.id} className="line">
-                      <span>{x.nome}</span>
+                      <span className="cat sm"><Icon name={x.icone} size={16} />{x.nome}</span>
                       <span className="num">{money(x.realizado)}{x.orcado > 0 && <em> de {money(x.orcado)}</em>}</span>
                     </li>
                   ))}

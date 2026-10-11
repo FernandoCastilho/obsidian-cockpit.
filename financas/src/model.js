@@ -1,6 +1,8 @@
 // Lógica pura do Caixa Central: lê as abas da planilha e calcula os totais.
 // Sem React e sem rede, para poder ser testada com `npm test`.
 
+import { iconFor } from './icons.js'
+
 const strip = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase()
 
 export const toNumber = (v) => {
@@ -49,21 +51,29 @@ export const statusOf = (s) => {
   return k === 'pendente' || k === 'planejado' ? k : 'realizado'
 }
 
+const TIPO_ICONE = { transferencia: 'transfer', pagto_fatura: 'card', investimento: 'trend', reembolso: 'undo' }
 export const TIPOS = ['receita', 'despesa', 'reembolso', 'transferencia', 'pagto_fatura', 'investimento']
 
 export function buildData(tabs = {}) {
   const pessoas = rowsToObjects(tabs.Pessoas).map((p) => ({ id: String(p.pessoa_id), nome: String(p.nome) })).filter((p) => p.id)
+  const bancos = new Map(
+    rowsToObjects(tabs.Bancos).map((b) => {
+      const nome = String(b.nome || b.banco_id)
+      return [String(b.banco_id), { id: String(b.banco_id), nome, sigla: String(b.sigla || '').trim() || nome.slice(0, 2).toUpperCase(), cor: String(b.cor || '').trim(), logo: String(b.logo_url || '').trim() }]
+    }),
+  )
   const contas = rowsToObjects(tabs.Contas).map((c) => ({
     id: String(c.conta_id),
     apelido: String(c.apelido || c.conta_id),
     tipo: strip(c.tipo),
     fechamento: isSim(c.entra_no_fechamento),
+    banco: bancos.get(String(c.banco_id)) ?? null,
   }))
   const categorias = rowsToObjects(tabs.Categorias)
-    .map((c) => ({ id: String(c.categoria_id), nome: String(c.nome), tipo: strip(c.tipo), ordem: toNumber(c.ordem) }))
+    .map((c) => ({ id: String(c.categoria_id), nome: String(c.nome), tipo: strip(c.tipo), ordem: toNumber(c.ordem), icone: String(c.icone || '') }))
     .sort((a, b) => a.ordem - b.ordem)
   const catById = new Map(categorias.map((c) => [c.id, c]))
-  const subcategorias = rowsToObjects(tabs.Subcategorias).map((s) => ({ id: String(s.subcategoria_id), categoria: String(s.categoria_id), nome: String(s.nome) }))
+  const subcategorias = rowsToObjects(tabs.Subcategorias).map((s) => ({ id: String(s.subcategoria_id), categoria: String(s.categoria_id), nome: String(s.nome), icone: String(s.icone || '') }))
   const subById = new Map(subcategorias.map((s) => [s.id, s]))
   const contaById = new Map(contas.map((c) => [c.id, c]))
 
@@ -88,6 +98,8 @@ export function buildData(tabs = {}) {
         status: statusOf(l.status),
         parcela: l.parcela_total ? `${l.parcela_n}/${l.parcela_total}` : '',
         contaNome: contaById.get(String(l.conta_id))?.apelido ?? String(l.conta_id),
+        banco: contaById.get(String(l.conta_id))?.banco ?? null,
+        icone: sub ? iconFor(sub.icone, catById.get(sub.categoria)?.icone, sub.categoria) : TIPO_ICONE[strip(l.tipo)] ?? 'alert',
       }
     })
     .filter(Boolean)
@@ -97,7 +109,7 @@ export function buildData(tabs = {}) {
     .map((o) => ({ mes: toMonth(o.mes), sub: String(o.subcategoria_id), pessoa: String(o.pessoa_id), valor: toNumber(o.valor_planejado) }))
     .filter((o) => o.mes && o.sub)
 
-  return { pessoas, contas, categorias, subcategorias, lancamentos, orcamento, catById, subById }
+  return { pessoas, contas, bancos, categorias, subcategorias, lancamentos, orcamento, catById, subById }
 }
 
 const zero = () => ({ realizado: 0, pendente: 0, planejado: 0 })
@@ -113,11 +125,11 @@ export function summarizeMonth(data, { month, pessoa = 'TODOS' }) {
   const reembolsos = zero()
   const cats = new Map()
   const catOf = (id, nome) => {
-    if (!cats.has(id)) cats.set(id, { id, nome, ...zero(), orcado: 0, subs: new Map() })
+    if (!cats.has(id)) cats.set(id, { id, nome, icone: iconFor(null, data.catById.get(id)?.icone, id), ...zero(), orcado: 0, subs: new Map() })
     return cats.get(id)
   }
   const subOf = (c, id, nome) => {
-    if (!c.subs.has(id)) c.subs.set(id, { id, nome, ...zero(), orcado: 0 })
+    if (!c.subs.has(id)) c.subs.set(id, { id, nome, icone: iconFor(data.subById.get(id)?.icone, c.icone, c.id), ...zero(), orcado: 0 })
     return c.subs.get(id)
   }
 
@@ -180,13 +192,15 @@ export function summarizeYear(data, { year, pessoa = 'TODOS' }) {
   const ms = months(year)
   const por = ms.map((month) => summarizeMonth(data, { month, pessoa }))
   const catIds = new Map()
-  por.forEach((s) => s.categorias.forEach((c) => catIds.set(c.id, c.nome)))
+  const catIcon = new Map()
+  por.forEach((s) => s.categorias.forEach((c) => { catIds.set(c.id, c.nome); catIcon.set(c.id, c.icone) }))
   const ordem = new Map(data.categorias.map((c, i) => [c.id, i]))
   const linhas = [...catIds.entries()]
     .sort((a, b) => (ordem.get(a[0]) ?? 99) - (ordem.get(b[0]) ?? 99))
     .map(([id, nome]) => ({
       id,
       nome,
+      icone: catIcon.get(id),
       celulas: por.map((s) => {
         const c = s.categorias.find((x) => x.id === id)
         return { r: c?.realizado ?? 0, p: (c?.pendente ?? 0) + (c?.planejado ?? 0) }

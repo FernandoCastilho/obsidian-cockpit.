@@ -1,5 +1,6 @@
 import { summarizeYear } from './model.js'
 import { wholeNumber as plain, monthShort } from './format.js'
+import { Icon } from './Icon.jsx'
 
 const sum = (a) => a.reduce((x, y) => x + y, 0)
 
@@ -22,7 +23,7 @@ export default function Anual({ data, year, pessoa }) {
           <tbody>
             {y.linhas.map((l) => (
               <tr key={l.id}>
-                <th className={l.id === '_sem' ? 'warn-text' : ''}>{l.id === '_sem' ? 'Sem categoria' : l.nome}</th>
+                <th className={l.id === '_sem' ? 'warn-text' : ''}><span className="cat sm"><Icon name={l.icone} size={15} />{l.id === '_sem' ? 'Sem categoria' : l.nome}</span></th>
                 {l.celulas.map((c, i) => (
                   <td key={i}>
                     {c.r ? plain(c.r) : '·'}

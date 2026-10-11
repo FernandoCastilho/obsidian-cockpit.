@@ -1,5 +1,5 @@
 // Leitura da planilha "Caixa Central - Base de Dados" pela API do Google Sheets.
-export const TABS = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Lancamentos', 'Orcamento']
+export const TABS = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Bancos', 'Lancamentos', 'Orcamento']
 
 export async function fetchTabs(sheetId, token) {
   const q = TABS.map((t) => `ranges=${encodeURIComponent(t)}`).join('&')

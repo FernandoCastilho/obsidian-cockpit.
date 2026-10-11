@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { dayLabel } from './format.js'
 import Money from './Money.jsx'
+import { Tile, BankBadge } from './Icon.jsx'
 
 const TIPO_LABEL = { transferencia: 'Transferência', pagto_fatura: 'Fatura', investimento: 'Investimento', reembolso: 'Reembolso' }
 
@@ -42,14 +43,17 @@ export default function Lancamentos({ data, month, pessoa }) {
           <ul className="rows tight">
             {ls.map((l) => (
               <li key={l.id} className="lanc">
-                <div>
-                  <div>{l.desc || '(sem descrição)'}</div>
-                  <small className="mut">
-                    {TIPO_LABEL[l.tipo] ? `${TIPO_LABEL[l.tipo]} · ` : ''}
-                    {l.subNome || 'Sem categoria'} · {l.contaNome}
-                    {l.parcela ? ` · ${l.parcela}` : ''}
-                    {l.status !== 'realizado' ? ` · ${l.status}` : ''}
-                  </small>
+                <div className="lanc-main">
+                  <Tile name={l.icone} size={36} warn={!l.sub && (l.tipo === 'receita' || l.tipo === 'despesa')} />
+                  <div>
+                    <div>{l.desc || '(sem descrição)'}</div>
+                    <small className="mut">
+                      {TIPO_LABEL[l.tipo] ? `${TIPO_LABEL[l.tipo]} · ` : ''}
+                      {l.subNome || 'Sem categoria'} · <BankBadge banco={l.banco} size={17} /> {l.contaNome}
+                      {l.parcela ? ` · ${l.parcela}` : ''}
+                      {l.status !== 'realizado' ? ` · ${l.status}` : ''}
+                    </small>
+                  </div>
                 </div>
                 <span className={`num ${l.valor < 0 ? '' : 'pos'} ${l.tipo === 'transferencia' || l.tipo === 'pagto_fatura' || l.tipo === 'investimento' ? 'mut' : ''}`}><Money v={l.valor} /></span>
               </li>

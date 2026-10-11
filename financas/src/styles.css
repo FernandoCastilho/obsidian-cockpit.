@@ -74,7 +74,7 @@ small { font-size: .78rem; }
 /* Listas e barras: tinta neutra; cor só quando há significado. */
 .rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
 .rows.tight { gap: 10px; }
-.line { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.line { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .bar-track { height: 5px; background: var(--track); border-radius: 3px; margin: 7px 0 4px; overflow: hidden; }
 .bar-fill { height: 100%; background: var(--ink); border-radius: 3px; }
 .bar-fill.over { background: var(--neg); }
@@ -92,7 +92,8 @@ summary::-webkit-details-marker { display: none; }
 .stats dd { margin: 2px 0 0; font-size: 1.25rem; font-weight: 600; }
 
 .filters { display: grid; grid-template-columns: 1fr 190px; gap: 8px; margin-bottom: 8px; }
-.day h3 { margin: 18px 0 8px; font-size: .75rem; color: var(--mut); font-weight: 600; text-transform: capitalize; letter-spacing: .02em; }
+.day h3 { margin: 18px 0 8px; font-size: .75rem; color: var(--mut); font-weight: 600; letter-spacing: .02em; }
+.day h3::first-letter { text-transform: uppercase; }
 .lanc { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .lanc:last-child { border-bottom: 0; }
 
@@ -133,3 +134,15 @@ footer { color: var(--mut); font-size: .75rem; margin-top: 24px; }
   .chips { overflow-x: auto; scrollbar-width: none; }
   .scroll { margin: 0 -20px; padding: 0 20px; }
 }
+
+/* Ícones: monocromáticos; âmbar só em itens que pedem atenção. */
+.ico { display: block; flex: none; }
+.tile { display: inline-grid; place-items: center; border-radius: 10px; background: var(--track); color: var(--ink); flex: none; }
+.tile.warn { background: var(--warn-bg); color: var(--warn); }
+.cat { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+.cat.sm { gap: 8px; }
+.cat.sm .ico { color: var(--mut); }
+.lanc-main { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.bank { display: inline-grid; place-items: center; border-radius: 50%; font-weight: 700; letter-spacing: -.03em; vertical-align: -4px; margin-right: 2px; flex: none; line-height: 1; }
+img.bank.logo { object-fit: contain; background: #fff; border: 1px solid var(--line); }
+.grid th .cat { display: inline-flex; }

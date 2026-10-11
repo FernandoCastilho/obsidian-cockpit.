@@ -100,3 +100,41 @@ test('abas ausentes não quebram', () => {
   const s = summarizeMonth(d, { month: '2026-10' })
   assert.equal(s.resultado.realizado, 0)
 })
+
+test('ícones: subcategoria, depois categoria, depois padrão; banco com sigla e cor', () => {
+  const t = {
+    ...tabs,
+    Bancos: [['banco_id', 'nome', 'sigla', 'cor', 'logo_url'], ['ITAU', 'Itaú Unibanco', 'IT', '#EC7000', '']],
+    Contas: [
+      ['conta_id', 'banco_id', 'apelido', 'tipo', 'entra_no_fechamento'],
+      ['CC', 'ITAU', 'Conta', 'corrente', 'Sim'],
+      ['CARD', 'XX', 'Cartão', 'cartao', 'Não'],
+    ],
+    Categorias: [['categoria_id', 'nome', 'tipo', 'ordem', 'icone'], ['MOR', 'Moradia', 'despesa', 1, 'home'], ['SAL', 'Salário', 'receita', 2, ''], ['INT', 'Interna', 'interna', 3, ''], ['REE', 'Reembolsos', 'reembolso', 4, '']],
+    Subcategorias: [
+      ['subcategoria_id', 'categoria_id', 'nome', 'icone'],
+      ['MOR-01', 'MOR', 'Água', 'droplet'],
+      ['MOR-02', 'MOR', 'Energia', ''],
+      ['SAL-01', 'SAL', 'Salário', 'inexistente'],
+      ['INT-02', 'INT', 'Pagamento de fatura', ''],
+      ['REE-01', 'REE', 'Reembolso', ''],
+    ],
+  }
+  const d = buildData(t)
+  const por = (id) => d.lancamentos.find((l) => l.id === id)
+  assert.equal(por('2').icone, 'droplet') // da subcategoria
+  assert.equal(por('3').icone, 'home') // herdado da categoria
+  assert.equal(por('1').icone, 'tag') // nome de ícone desconhecido cai no padrão
+  assert.equal(por('4').icone, 'transfer') // sem ícone na planilha: padrão da categoria
+  assert.equal(por('2').banco.sigla, 'IT')
+  assert.equal(por('3').banco, null) // banco inexistente não quebra
+  const s = summarizeMonth(d, { month: '2026-10' })
+  assert.equal(s.categorias[0].icone, 'home')
+  assert.equal(s.categorias[0].subs.find((x) => x.nome === 'Água').icone, 'droplet')
+})
+
+test('ícone padrão de lançamento sem categoria e de tipos internos', () => {
+  const t = { ...tabs, Lancamentos: [...tabs.Lancamentos, ['9', 'CC', 'P01', '03/10/2026', '03/10/2026', -10, 'Sem regra', '', 'despesa', 'realizado']] }
+  const x = buildData(t).lancamentos.find((l) => l.id === '9')
+  assert.equal(x.icone, 'alert')
+})

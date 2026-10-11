@@ -1,6 +1,7 @@
 import { summarizeMonth } from './model.js'
 import { money, shiftMonth } from './format.js'
 import Money from './Money.jsx'
+import { Tile } from './Icon.jsx'
 
 export const Bar = ({ value, max, over, warn }) => (
   <div className="bar-track" aria-hidden="true">
@@ -53,7 +54,7 @@ export default function Mes({ data, month, pessoa }) {
             return (
               <li key={c.id}>
                 <div className="line">
-                  <span className={sem ? 'warn-text' : ''}>{sem ? 'Sem categoria' : c.nome}</span>
+                  <span className={`cat ${sem ? 'warn-text' : ''}`}><Tile name={c.icone} size={30} warn={sem} />{sem ? 'Sem categoria' : c.nome}</span>
                   <span className="num">
                     <Money v={gasto} cents={false} />
                     {c.orcado > 0 && <em> de <Money v={c.orcado} cents={false} /></em>}
