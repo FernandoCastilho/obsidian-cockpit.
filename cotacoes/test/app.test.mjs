@@ -504,3 +504,32 @@ test('calculadoras: ids únicos (viram endereço) e todas têm explicação no g
     assert.ok(GLOSSARY[o.help], `sem glossário: ${o.help}`)
   }
 })
+
+import { finimpSwap, swapTsv } from '../src/finimpSwap.js'
+test('FINIMP + swap: reproduz a cotação do banco (60x, 6 de carência, 6,48% + IR 15%, BR+NY)', () => {
+  const pts = [[21, 13.65], [63, 13.4], [126, 13.3], [252, 13.5], [504, 13.8], [756, 13.9], [1260, 14]]
+  const r = finimpSwap({ start: '2026-10-02', usd: 2879963.14, brl: 15000000, n: 60, grace: 6, step: 30, ratePct: 6.48, irPct: 15, spreadPct: 2.5, pts, base: '2026-10-01', cals: ['BR', 'NY'], ctx: {} })
+  assert.equal(r.ok, true)
+  assert.equal(r.rows.length, 60)
+  // datas (próximo dia útil comum BR+NY), dias corridos e dias úteis, conforme a planilha
+  const exp = [['2026-11-03', 32, 20], ['2026-12-01', 60, 19], ['2026-12-31', 90, 21], ['2027-02-01', 122, 21], ['2027-03-01', 150, 18], ['2027-03-31', 180, 21], ['2027-06-01', 242, 21], ['2027-12-27', 451, 21]]
+  const idx = [0, 1, 2, 3, 4, 5, 7, 14]
+  idx.forEach((i, j) => assert.deepEqual([r.rows[i].end, r.rows[i].dc, r.rows[i].du], exp[j], `parcela ${i + 1}`))
+  assert.equal(r.rows[59].end, '2031-09-08')
+  assert.equal(r.rows[59].dc, 1802)
+  // juros, IR e parcela em USD
+  const near = (a, b) => assert.ok(Math.abs(a - b) < 0.005, `${a} ≠ ${b}`)
+  near(r.rows[0].juros, 16588.59); near(r.rows[0].ir, 2927.4); near(r.rows[0].parcelaUsd, 19515.99)
+  near(r.rows[1].parcelaUsd, 17076.49) // soma sem arredondar juros e IR
+  near(r.rows[6].amUsd, 53332.65); near(r.rows[6].parcelaUsd, 71628.89); near(r.rows[7].balUsd, 2826630.49)
+  near(r.rows[59].amUsd, 53332.69); near(r.rows[59].parcelaUsd, 53694.1)
+  near(r.allIn, 7.6235); near(r.spreadAm, 0.206)
+  // perna em reais: amortização de R$ 15 mi em 54 parcelas; carência só com juros
+  near(r.rows[6].amBrl, 277777.78); assert.equal(r.rows[0].amBrl, 0)
+  assert.ok(r.checks.every((c) => c.ok))
+  assert.match(swapTsv(r), /^#\tInício\tData Final\tDC\tDU Intra\tSaldo devedor USD/)
+  // CDI fixo substitui a curva
+  const f = finimpSwap({ start: '2026-10-02', usd: 1e6, brl: 5e6, n: 12, grace: 0, ratePct: 6, irPct: 15, spreadPct: 2, flatCdi: 14, cals: ['BR'], ctx: {} })
+  assert.equal(f.ok, true)
+  assert.equal(finimpSwap({ start: '', usd: 0 }).ok, false)
+})

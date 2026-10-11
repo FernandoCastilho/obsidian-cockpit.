@@ -512,3 +512,16 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .qb-old { color:#d29922; font-size:.72rem; }
 .rates-grid .qb small { font-size:.75rem; }
 @media (min-width: 700px) { .nav-top .tabs { justify-content:center; } }
+.swap-table td.yel, .swap-table th.yel { background:rgba(210,153,34,.14); }
+.swap-table { font-size:.8rem; font-variant-numeric:tabular-nums; }
+.swap-table tfoot th, .swap-table tfoot td { font-weight:700; border-top:2px solid var(--line); }
+.formulas { display:grid; gap:8px; margin:8px 0; }
+.formulas dt { font-weight:700; }
+.formulas dd { margin:0; color:var(--mut); }
+/* tabela larga (11 colunas): formulário em cima, resultado embaixo, em toda a largura */
+@media (min-width: 700px) {
+  .calc-split.stack { display:block; }
+  .calc-split.stack .calc-out { position:static; max-height:none; overflow:visible; margin-top:20px; }
+  .calc-split.stack .calc-form { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:flex-end; }
+  .calc-split.stack .calc-form label { flex:1 1 220px; }
+}
