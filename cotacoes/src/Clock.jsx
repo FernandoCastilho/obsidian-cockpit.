@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 // Relógio de cada país, no fuso do mercado que representa a moeda.
 export const ZONES = {
   USD: { city: 'Nova York', tz: 'America/New_York' },
-  EUR: { city: 'Frankfurt', tz: 'Europe/Berlin' },
   JPY: { city: 'Tóquio', tz: 'Asia/Tokyo' },
   CNH: { city: 'Xangai', tz: 'Asia/Shanghai' },
 }
@@ -33,8 +32,10 @@ function One({ zone, now }) {
   )
 }
 
-export default function Clock({ codes }) {
+export default function Clock({ codes: all }) {
   const now = useNow()
+  const codes = all.filter((c) => ZONES[c])
+  if (!codes.length) return null
   return (
     <div className="clock" role="timer" aria-label={codes.map((c) => ZONES[c].city).join(' e ')}>
       {codes.map((c) => (

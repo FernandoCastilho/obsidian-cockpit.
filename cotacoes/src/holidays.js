@@ -1,4 +1,4 @@
-// Calendários de feriados por praça. Brasil, Nova York (Federal Reserve), Zona do Euro (TARGET), Londres e Japão são calculados por regra;
+// Calendários de feriados por praça. Brasil, Nova York (Federal Reserve), Londres e Japão são calculados por regra;
 // a China vem de dados oficiais (ato do Conselho de Estado, via holiday-cn), porque muda todo ano e tem dias de compensação.
 // Datas em 'AAAA-MM-DD'. Nenhum feriado é inventado: sem dado para um ano da China, o app avisa em vez de supor.
 
@@ -84,11 +84,6 @@ function newYork(y) {
   )
 }
 
-function target(y) {
-  const e = easter(y)
-  return sortMap([[iso(y, 1, 1), 'Ano Novo'], [addDays(e, -2), 'Sexta-feira Santa'], [addDays(e, 1), 'Segunda-feira de Páscoa'], [iso(y, 5, 1), 'Dia do Trabalho'], [iso(y, 12, 25), 'Natal'], [iso(y, 12, 26), 'Dia seguinte ao Natal']])
-}
-
 // Reino Unido: feriado de fim de semana passa para o próximo dia útil, sem colidir com outro feriado.
 function london(y) {
   const e = easter(y)
@@ -150,7 +145,6 @@ export const CALENDARS = [
   { id: 'BR', label: 'Brasil (B3/ANBIMA)', short: 'Brasil', rule: brazil },
   { id: 'SP', label: 'São Paulo (cidade e estado)', short: 'São Paulo', rule: saoPaulo },
   { id: 'NY', label: 'Nova York (Federal Reserve)', short: 'Nova York', rule: newYork },
-  { id: 'EU', label: 'Zona do Euro (TARGET)', short: 'Frankfurt/TARGET', rule: target },
   { id: 'UK', label: 'Londres', short: 'Londres', rule: london },
   { id: 'JP', label: 'Tóquio', short: 'Tóquio', rule: japan },
   { id: 'CN', label: 'China (continental)', short: 'China', rule: null },
