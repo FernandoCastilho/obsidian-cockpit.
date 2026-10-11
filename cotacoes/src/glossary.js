@@ -133,6 +133,18 @@ export const GLOSSARY = {
     b: 'US$ 1 milhão por 180 dias a 6% ao ano, ACT/360: juros de US$ 30 mil (1 milhão × 6% × 180/360). Sem derivativo, o custo em reais depende do câmbio no pagamento.',
     c: 'Aqui você informa a taxa e as datas; o app calcula os juros e o cronograma na moeda original. É uma simulação, não o contrato.',
   },
+  finimpswap: {
+    t: 'FINIMP com swap para CDI',
+    a: 'Você toma o empréstimo em dólar e troca, por um swap, o custo para CDI + spread em reais. A cotação do banco mostra as duas pernas lado a lado.',
+    b: 'US$ 2,88 milhões (R$ 15 milhões) em 60 parcelas, 6 de carência: o dólar paga juros de 6,48% a.a. mais o IR; em reais você paga CDI + 2,50% a.a. sobre R$ 15 milhões.',
+    c: 'O IR sobre a remessa é pago por você (gross-up), então o custo em dólar é a taxa ÷ (1 − 15%). A coluna em reais é uma expectativa: depende do CDI futuro da curva DI.',
+  },
+  irGrossUp: {
+    t: 'IR gross-up',
+    a: 'Imposto de renda sobre os juros enviados ao exterior. No gross-up, quem toma o empréstimo paga o imposto além dos juros, para o banco receber a taxa cheia.',
+    b: 'Juros de 100 com IR de 15%: o imposto é 100 × 15 ÷ 85 = 17,65. Você paga 117,65.',
+    c: 'Por isso o custo total do ativo é a taxa ÷ (1 − alíquota): 6,48% vira 7,62% ao ano.',
+  },
   regraJuros: {
     t: 'Juros proporcionais × compostos',
     a: 'Proporcional (linear): juros = saldo × taxa × fração do ano. Composta: juros = saldo × [(1+taxa)^fração − 1].',

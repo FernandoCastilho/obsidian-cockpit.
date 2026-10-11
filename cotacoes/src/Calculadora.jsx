@@ -7,6 +7,7 @@ import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
 import HBars from './HBars.jsx'
 import Finimp from './Finimp.jsx'
+import FinimpSwap from './FinimpSwap.jsx'
 import Giro from './Giro.jsx'
 import Aplicacao from './Aplicacao.jsx'
 import { CALC_OPTIONS } from './calcOptions.js'
@@ -327,6 +328,7 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
             <button type="button" className="more" onClick={() => onView('')}>‹ Outras calculadoras</button>
           </div>
           {view === 'finimp' && <Finimp hol={hol} />}
+          {view === 'finimpswap' && <FinimpSwap curves={curves} hol={hol} />}
           {view === 'giro' && <Giro curves={curves} hol={hol} />}
           {view === 'comparar' && <OperacaoDi curves={curves} hol={hol} />}
           {view === 'aplicacao' && <Aplicacao curves={curves} hol={hol} />}
