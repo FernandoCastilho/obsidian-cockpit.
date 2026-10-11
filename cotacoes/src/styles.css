@@ -471,3 +471,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   .clocks-top .clock-one small { display:none; }
   .clocks-top .clock-one b { font-size:.82rem; }
 }
+/* calculadoras: cronograma completo (sem caixa de rolagem interna) e ficha empilhada no celular */
+.calc-out .table .scroll { max-height:none; overflow-x:auto; }
+.finimp .chk input { width:auto; flex:none; }
+@media (max-width: 699px) {
+  .ficha, .ficha tbody, .ficha tr, .ficha th, .ficha td { display:block; width:auto; }
+  .ficha tr { padding:8px 0; border-bottom:1px solid var(--line); }
+  .ficha th { font-size:.78rem; color:var(--mut); font-weight:500; padding:0; white-space:normal; }
+  .ficha td { padding:2px 0 0; font-size:1rem; overflow-wrap:anywhere; }
+}

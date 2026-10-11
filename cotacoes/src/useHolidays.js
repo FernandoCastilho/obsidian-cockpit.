@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { buildCn } from './holidays.js'
 
 const KEY = 'cotacoes-pracas'
-export const DEFAULT_PRACAS = ['BR', 'NY', 'CN']
+export const DEFAULT_PRACAS = ['BR']
 const read = () => {
   try {
     const v = JSON.parse(localStorage.getItem(KEY) ?? 'null')
