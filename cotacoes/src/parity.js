@@ -32,3 +32,10 @@ export function liveParity(usd, eur) {
   const pct = ((1 + eur.pct / 100) / (1 + usd.pct / 100) - 1) * 100
   return { main: eur.bid / usd.bid, buy: eur.bid / usd.ask, sell: eur.ask / usd.bid, pct: Number.isFinite(pct) ? pct : 0 }
 }
+
+// Cruzamento genérico base/cotada (unidades da cotada por 1 da base), a partir das cotações em reais de cada moeda.
+export function liveCross(base, quote) {
+  if (!base || !quote || !(base.bid > 0) || !(quote.bid > 0)) return null
+  const pct = ((1 + base.pct / 100) / (1 + quote.pct / 100) - 1) * 100
+  return { main: base.bid / quote.bid, pct: Number.isFinite(pct) ? pct : 0 }
+}

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, useHistory, useIntraday } from './useHistory.js'
-import { liveParity, mergeDaily, mergeTicks } from './parity.js'
+import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
 import { rateTiles, topHeadlines } from './snapshot.js'
@@ -83,34 +83,55 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
   )
 }
 
-// Paridade EUR/USD: valor ao vivo (cotações) e minigráfico do histórico diário de USD e EUR.
+// Paridade entre duas moedas à escolha: base à esquerda, cotada à direita (padrão EUR/USD, convenção de mercado).
+// Valor ao vivo e minigráfico saem das séries em reais de cada moeda.
+const cross = (v, q) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: v >= 100 ? 2 : v >= 1 ? 4 : 6, maximumFractionDigits: v >= 100 ? 2 : v >= 1 ? 4 : 6 })} ${q}`
+function PairSelect({ value, onChange, label }) {
+  return (
+    <select className="pair-sel" aria-label={label} value={value} onChange={(e) => onChange(e.target.value)}>
+      {CURRENCIES.map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}
+    </select>
+  )
+}
 function ParityTile({ quotes, spark, onOpen, color }) {
+  const [base, setBase] = useState('EUR')
+  const [quote, setQuote] = useState('USD')
+  const pick = (which, v) => {
+    // moedas iguais não fazem paridade: troca a outra ponta
+    if (which === 'base') {
+      if (v === quote) setQuote(base)
+      setBase(v)
+    } else {
+      if (v === base) setBase(quote)
+      setQuote(v)
+    }
+  }
   const w = useWindow(spark.days)
   const dia = !!spark.intraday
-  const u = useHistory('USD', w.start, w.end, dia)
-  const e = useHistory('EUR', w.start, w.end, dia)
-  const ui = useIntraday('USD', new Date(), !dia)
-  const ei = useIntraday('EUR', new Date(), !dia)
-  const [a, b] = dia ? [ui, ei] : [u, e]
+  const bh = useHistory(base, w.start, w.end, dia)
+  const qh = useHistory(quote, w.start, w.end, dia)
+  const bi = useIntraday(base, new Date(), !dia)
+  const qi = useIntraday(quote, new Date(), !dia)
+  const [a, b] = dia ? [qi, bi] : [qh, bh]
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
-  const p = liveParity(quotes?.USD, quotes?.EUR)
-  const hasDay = !!p && !quotes.USD.fallback && !quotes.EUR.fallback
+  const p = liveCross(quotes?.[base], quotes?.[quote])
+  const hasDay = !!p && !quotes[base].fallback && !quotes[quote].fallback
   const trend = toneOf(hasDay ? p.pct : change)
+  const eurUsd = base === 'EUR' && quote === 'USD'
   return (
-    <button type="button" style={{ '--series': color }} className="tile wide" onClick={() => onOpen('PAR')} aria-label="Paridade EUR/USD: detalhes">
+    <div style={{ '--series': color }} className="tile wide pair-tile">
       <span className="tile-head">
-        <span className="flag pair" aria-hidden="true">
-          <span dangerouslySetInnerHTML={{ __html: flagSvg('EUR', 'width="26" height="18"') }} />
-          <span dangerouslySetInnerHTML={{ __html: flagSvg('USD', 'width="26" height="18"') }} />
-        </span>
-        <span className="tile-name">
-          <b>Euro/Dólar</b> <small>· EUR/USD</small>
-        </span>
+        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(base, 'width="26" height="18"') }} />
+        <PairSelect value={base} onChange={(v) => pick('base', v)} label="Moeda base" />
+        <span className="pair-slash" aria-hidden="true">/</span>
+        <PairSelect value={quote} onChange={(v) => pick('quote', v)} label="Moeda cotada" />
+        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(quote, 'width="26" height="18"') }} />
+        {eurUsd && <button type="button" className="more" onClick={() => onOpen('PAR')}>Detalhes ›</button>}
       </span>
       <span className="tile-body">
         <span className="tile-num">
-          <span className="tile-price">{p ? `US$ ${p.main.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}` : '—'}</span>
+          <span className="tile-price">{p ? cross(p.main, quote) : '—'}</span>
           {hasDay ? (
             <span className={`pct ${trend}`}>
               <Arrow v={p.pct} /> {pct(p.pct)}<small className="muted"> hoje</small>
@@ -118,7 +139,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           ) : (
             p && <small className="muted">var. do dia indisponível</small>
           )}
-          <small className="muted">dólares por 1 euro</small>
+          <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}</small>
         </span>
         <span className="tile-spark">
           <Sparkline points={pts} tone={trend} />
@@ -128,7 +149,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           </small>
         </span>
       </span>
-    </button>
+    </div>
   )
 }
 
