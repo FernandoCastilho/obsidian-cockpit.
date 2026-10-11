@@ -10,7 +10,6 @@ import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
-import { CALC_OPTIONS } from './calcOptions.js'
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
@@ -315,7 +314,16 @@ function RatesBar({ rates, onOpen, paused }) {
   )
 }
 
-export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colors }) {
+export default function Resumo({ quotes, ptax, onOpen, colors }) {
+  return (
+    <div className="resumo">
+      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} />
+    </div>
+  )
+}
+
+// "O que move o mercado" e "Agenda econômica": ficam na aba Notícias.
+export function MoveAgenda({ goto, colors }) {
   const news = useNews()
   const heads = topHeadlines(news.data)
   const events = upcoming(new Date(), 14).slice(0, 3)
@@ -324,26 +332,9 @@ export default function Resumo({ quotes, macro, curves, ptax, onOpen, goto, colo
 
   return (
     <div className="resumo">
-      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} />
-
-      <section aria-labelledby="r-calc">
-        <div className="sec-head">
-          <h2 id="r-calc">Calculadoras</h2>
-          <button type="button" className="more" onClick={() => goto('calculadora')}>Ver todas ›</button>
-        </div>
-        <div className="calc-shortcuts">
-          {CALC_OPTIONS.map((o) => (
-            <button key={o.id} type="button" onClick={() => goto('calculadora', o.id)}>
-              <span aria-hidden="true">{o.chip}</span> {o.title}
-            </button>
-          ))}
-        </div>
-      </section>
-
       <section aria-labelledby="r-move">
         <div className="sec-head">
           <h2 id="r-move">O que move o mercado <Explain id="noticias" /></h2>
-          <button type="button" className="more" onClick={() => goto('noticias')}>Ver todas ›</button>
         </div>
         <ul className="list">
           {heads.length ? (
