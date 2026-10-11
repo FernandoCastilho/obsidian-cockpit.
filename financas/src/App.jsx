@@ -7,13 +7,15 @@ import { currentMonth, monthName, shiftMonth } from './format.js'
 import { DEFAULT_CLIENT_ID, DEFAULT_SHEET_ID } from './config.js'
 import Mes from './Mes.jsx'
 import Lancamentos from './Lancamentos.jsx'
-import Orcamento from './Orcamento.jsx'
-import Anual from './Anual.jsx'
+import Planejar, { usaMes } from './Planejar.jsx'
+import Patrimonio from './Patrimonio.jsx'
+import Revisar from './Revisar.jsx'
+import { revisao } from './analise.js'
 import Ajustes from './Ajustes.jsx'
 
 const DEFAULT_SHEET = import.meta.env.VITE_SHEET_ID || DEFAULT_SHEET_ID
 const DEFAULT_CLIENT = import.meta.env.VITE_GOOGLE_CLIENT_ID || DEFAULT_CLIENT_ID
-const VIEWS = [['mes', 'Mês'], ['lanc', 'Lançamentos'], ['orc', 'Orçamento'], ['ano', 'Anual']]
+const VIEWS = [['mes', 'Mês'], ['lanc', 'Lançamentos'], ['plan', 'Planejar'], ['pat', 'Patrimônio'], ['rev', 'Revisar']]
 
 const store = {
   get: (k, d) => {
@@ -37,6 +39,7 @@ export default function App() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [view, setView] = useState('mes')
+  const [secao, setSecao] = useState('orc')
   const [month, setMonth] = useState(currentMonth)
   const [pessoa, setPessoa] = useState('TODOS')
   const [ajustes, setAjustes] = useState(false)
@@ -104,6 +107,8 @@ export default function App() {
 
   const pessoas = data ? [{ id: 'TODOS', nome: 'Todos' }, ...data.pessoas] : []
   const vazio = !data || data.lancamentos.length === 0
+  const pendentes = useMemo(() => (data ? revisao(data, { pessoa }).linhas : 0), [data, pessoa])
+  const mostraMes = view === 'mes' || view === 'lanc' || (view === 'plan' && usaMes(secao))
 
   return (
     <div className="app">
@@ -113,6 +118,7 @@ export default function App() {
           {VIEWS.map(([id, nome]) => (
             <button key={id} className={view === id ? 'on' : ''} onClick={() => setView(id)}>
               {nome}
+              {id === 'rev' && pendentes > 0 && <i className="badge">{pendentes}</i>}
             </button>
           ))}
         </nav>
@@ -128,11 +134,15 @@ export default function App() {
 
       {data && (
         <div className="bar">
-          <div className="months">
-            <button onClick={() => setMonth(shiftMonth(month, -1))} aria-label="Mês anterior">‹</button>
-            <strong>{view === 'ano' ? month.slice(0, 4) : monthName(month)}</strong>
-            <button onClick={() => setMonth(shiftMonth(month, 1))} aria-label="Próximo mês">›</button>
-          </div>
+          {mostraMes ? (
+            <div className="months">
+              <button onClick={() => setMonth(shiftMonth(month, view === 'plan' && secao === 'ano' ? -12 : -1))} aria-label="Mês anterior">‹</button>
+              <strong>{view === 'plan' && secao === 'ano' ? month.slice(0, 4) : monthName(month)}</strong>
+              <button onClick={() => setMonth(shiftMonth(month, view === 'plan' && secao === 'ano' ? 12 : 1))} aria-label="Próximo mês">›</button>
+            </div>
+          ) : (
+            <div />
+          )}
           <div className="chips" role="group" aria-label="Pessoa">
             {pessoas.map((p) => (
               <button key={p.id} className={pessoa === p.id ? 'chip on' : 'chip'} onClick={() => setPessoa(p.id)}>
@@ -159,10 +169,12 @@ export default function App() {
           <Mes data={data} month={month} pessoa={pessoa} />
         ) : view === 'lanc' ? (
           <Lancamentos data={data} month={month} pessoa={pessoa} />
-        ) : view === 'orc' ? (
-          <Orcamento data={data} month={month} pessoa={pessoa} />
+        ) : view === 'plan' ? (
+          <Planejar data={data} month={month} pessoa={pessoa} secao={secao} onSecao={setSecao} />
+        ) : view === 'pat' ? (
+          <Patrimonio data={data} pessoa={pessoa} />
         ) : (
-          <Anual data={data} year={Number(month.slice(0, 4))} pessoa={pessoa} />
+          <Revisar data={data} pessoa={pessoa} />
         )}
       </main>
 

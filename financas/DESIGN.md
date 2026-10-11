@@ -42,3 +42,8 @@ no modo claro e no escuro. Capturas com dados reais nunca vão para o repositór
   no celular, tabela anual cortada. Corrigidos na versão 2.
 - **Revisão 2 (ícones).** Ícones por categoria, subcategoria e banco. Ajustes: alinhamento vertical dos valores,
   datas em caixa de frase, selo do banco maior, "Sem categoria" no Orçamento em âmbar (não vermelho).
+- **Revisão 3 (planejar, patrimônio, revisar).** Navegação em 5 abas (Mês, Lançamentos, Planejar, Patrimônio, Revisar).
+  Apontados e corrigidos: vencimento duplicado (recorrência + lançamento agendado do mesmo item), fluxo projetado
+  otimista demais (passou a estimar gasto variável pela média de 3 meses e a avisar que faltam as faturas de cartão),
+  controle segmentado cortado no celular (agora ocupa a largura), fila de revisão longa (20 maiores, com opção de ver todos).
+  Cor: âmbar só em itens pendentes de classificação e atrasados; verde só em entradas.

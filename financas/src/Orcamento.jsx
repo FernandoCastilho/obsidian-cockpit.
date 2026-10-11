@@ -1,4 +1,5 @@
 import { summarizeMonth } from './model.js'
+import { sugestaoOrcamento } from './analise.js'
 import { money } from './format.js'
 import { Bar } from './Mes.jsx'
 import Money from './Money.jsx'
@@ -8,6 +9,7 @@ export default function Orcamento({ data, month, pessoa }) {
   const s = summarizeMonth(data, { month, pessoa })
   const cats = s.categorias.filter((c) => c.orcado > 0 || c.realizado > 0 || c.pendente > 0)
   const totalGasto = cats.reduce((a, c) => a + c.realizado, 0)
+  const sug = s.orcado === 0 ? sugestaoOrcamento(data, { month, pessoa }) : null
   return (
     <section className="panel">
       <h2>Planejado × realizado</h2>
@@ -17,6 +19,17 @@ export default function Orcamento({ data, month, pessoa }) {
         <div><dt>Diferença</dt><dd className={s.orcado - totalGasto < 0 ? 'neg-text' : ''}><Money v={s.orcado - totalGasto} cents={false} /></dd></div>
       </dl>
       {s.orcado === 0 && <p className="mut small">Nenhum valor planejado para este mês na aba Orcamento.</p>}
+      {sug && sug.itens.length > 0 && (
+        <details className="sugestao">
+          <summary>Sugestão: {money(sug.total)} por mês, pela média de {sug.meses.length} {sug.meses.length === 1 ? 'mês' : 'meses'}</summary>
+          <ul className="rows tight sub">
+            {sug.itens.map((c) => (
+              <li key={c.id} className="line"><span className="cat sm"><Icon name={c.icone} size={16} />{c.nome}</span><span className="num">{money(c.media)}</span></li>
+            ))}
+          </ul>
+          <p className="mut small">Copie os valores para a aba Orcamento (mês, subcategoria, pessoa, valor_planejado) para virarem meta.</p>
+        </details>
+      )}
       <ul className="rows">
         {cats.map((c) => {
           const resto = c.orcado - c.realizado

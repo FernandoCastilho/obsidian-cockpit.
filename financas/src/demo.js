@@ -2,10 +2,10 @@
 const H = {
   Pessoas: [['pessoa_id', 'nome'], ['FAM', 'Família'], ['P01', 'Fernando'], ['P02', 'Iris']],
   Contas: [
-    ['conta_id', 'apelido', 'tipo', 'entra_no_fechamento'],
-    ['CC1', 'Conta corrente (Fernando)', 'corrente', 'Sim'],
-    ['CC2', 'Conta corrente (Iris)', 'corrente', 'Sim'],
-    ['CARD', 'Cartão', 'cartao', 'Não'],
+    ['conta_id', 'apelido', 'pessoa_id', 'tipo', 'entra_no_fechamento', 'saldo_inicial', 'data_saldo_inicial'],
+    ['CC1', 'Conta corrente (Fernando)', 'P01', 'corrente', 'Sim', 8000, '2000-01-01'],
+    ['CC2', 'Conta corrente (Iris)', 'P02', 'corrente', 'Sim', 3000, '2000-01-01'],
+    ['CARD', 'Cartão', 'P01', 'cartao', 'Não', '', ''],
   ],
   Categorias: [
     ['categoria_id', 'nome', 'tipo', 'ordem'],
@@ -58,5 +58,14 @@ export function demoTabs(today = new Date()) {
     add({ y: yy, m: mm, d: 20 }, 'CC1', 'P01', -(2300 + s(500)), 'Pagamento da fatura', 'INT-02', 'pagto_fatura', st(20))
     for (const [sub, p, v] of [['MOR-03', 'FAM', 3900], ['MOR-04', 'FAM', 1300], ['MOR-06', 'FAM', 300], ['SUP-02', 'FAM', 1900], ['TRA-04', 'P01', 400], ['SAU-12', 'FAM', 1850], ['EXT-13', 'FAM', 300]]) orc.push([mes, sub, p, v])
   }
-  return { ...H, Lancamentos: lanc, Orcamento: orc }
+  const rec = [
+    ['recorrencia_id', 'descricao', 'subcategoria_id', 'conta_id', 'pessoa_id', 'valor', 'dia_mes', 'periodicidade', 'inicio', 'fim', 'ativa'],
+    ['R1', 'Folha de pagamento', 'SAL-01', 'CC1', 'P01', 11500, 5, 'mensal', '2000-01-01', '', 'Sim'],
+    ['R2', 'Financiamento imobiliário', 'MOR-03', 'CC1', 'FAM', -3900, 8, 'mensal', '2000-01-01', '', 'Sim'],
+    ['R3', 'Condomínio', 'MOR-04', 'CC1', 'FAM', -1300, 9, 'mensal', '2000-01-01', '', 'Sim'],
+    ['R4', 'Plano de saúde', 'SAU-12', 'CC1', 'FAM', -1850, 10, 'mensal', '2000-01-01', '', 'Sim'],
+  ]
+  const metas = [['meta_id', 'nome', 'valor_alvo', 'valor_atual', 'prazo', 'pessoa_id', 'status'], ['M1', 'Reserva de emergência', 60000, 24000, `${y + 1}-06-30`, 'FAM', 'ativa']]
+  const dividas = [['divida_id', 'descricao', 'credor', 'pessoa_id', 'saldo_devedor', 'taxa_mensal', 'parcela', 'parcelas_restantes', 'dia_vencimento', 'status'], ['D1', 'Financiamento imobiliário', 'Banco', 'FAM', 380000, 0.009, 3900, 120, 8, 'ativa']]
+  return { ...H, Lancamentos: lanc, Orcamento: orc, Recorrencias: rec, Metas: metas, Dividas: dividas }
 }
