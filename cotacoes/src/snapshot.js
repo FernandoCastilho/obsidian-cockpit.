@@ -1,5 +1,7 @@
 // Números do resumo: juros (Selic, CDI, SOFR, DI 1 ano, Treasury 10 anos) a partir de macro.json e curves.json.
 const last = (a) => (a?.length ? a[a.length - 1] : null)
+const before = (a) => (a?.length > 1 ? a[a.length - 2] : null) // publicação anterior
+const diff = (a, b) => (a && b ? a[1] - b[1] : null)
 const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })
 const nearest = (pts, target) => pts?.reduce((b, p) => (b && Math.abs(b[0] - target) <= Math.abs(p[0] - target) ? b : p), null)
 const at = (c, id) => c?.compare?.find((x) => x.id === id)
@@ -9,9 +11,9 @@ export function rateTiles(macro, curves) {
   const selic = last(macro?.selic)
   const cdi = last(macro?.cdi)
   const sofr = last(macro?.sofr)
-  if (selic) out.push({ key: 'selic', label: 'Selic', value: selic[1], sub: 'meta a.a.', short: 'meta a.a.', at: selic[0] })
-  if (cdi) out.push({ key: 'cdi', label: 'CDI', value: cdi[1], sub: `a.a. · ${dm(cdi[0])}`, short: 'a.a.', at: cdi[0] })
-  if (sofr) out.push({ key: 'sofr', label: 'SOFR', value: sofr[1], sub: `EUA · ${dm(sofr[0])}`, short: 'EUA', at: sofr[0] })
+  if (selic) out.push({ key: 'selic', label: 'Selic', value: selic[1], delta: diff(selic, before(macro?.selic)), prevAt: before(macro?.selic)?.[0], sub: 'meta a.a.', short: 'meta a.a.', at: selic[0] })
+  if (cdi) out.push({ key: 'cdi', label: 'CDI', value: cdi[1], delta: diff(cdi, before(macro?.cdi)), prevAt: before(macro?.cdi)?.[0], sub: `a.a. · ${dm(cdi[0])}`, short: 'a.a.', at: cdi[0] })
+  if (sofr) out.push({ key: 'sofr', label: 'SOFR', value: sofr[1], delta: diff(sofr, before(macro?.sofr)), prevAt: before(macro?.sofr)?.[0], sub: `EUA · ${dm(sofr[0])}`, short: 'EUA', at: sofr[0] })
 
   const brNow = at(curves?.br, 'hoje')
   if (brNow) {

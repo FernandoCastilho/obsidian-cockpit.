@@ -137,6 +137,10 @@ test('resumo: tiles de juros e manchetes mais recentes', async () => {
   assert.ok(Math.abs(t.find((x) => x.key === 'di1').delta - -0.05) < 1e-9)
   assert.equal(t.find((x) => x.key === 'ust10').delta, null)
   assert.deepEqual(rateTiles(null, null), [])
+  const v = rateTiles({ selic: [[0, 15.25], [1, 15]], cdi: [[0, 14.9], [1, 14.9]], sofr: [[0, 3.85], [1, 3.87]] }, null)
+  assert.ok(Math.abs(v.find((x) => x.key === 'selic').delta - -0.25) < 1e-9) // variação sobre a publicação anterior
+  assert.equal(v.find((x) => x.key === 'cdi').delta, 0)
+  assert.ok(Math.abs(v.find((x) => x.key === 'sofr').delta - 0.02) < 1e-9)
   const h = topHeadlines({ news: { USD: [{ title: 'a', t: 1 }, { title: 'b', t: 5 }], EUR: [], JPY: [{ title: 'c', t: 2 }] } })
   assert.deepEqual(h.map((x) => `${x.code}:${x.title}`), ['USD:b', 'JPY:c'])
   assert.ok(periodChange([{ bid: 5 }, { bid: 5.5 }]) > 9.9)
