@@ -1,0 +1,95 @@
+// Biblioteca de ícones de traço único (grade 24x24). Cada ícone é um caminho SVG.
+// Desenhados para este app; não reproduzem nenhuma marca.
+export const GLYPHS = {
+  home: 'M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6',
+  cap: 'M2 9l10-5 10 5-10 5-10-5zM6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5',
+  book: 'M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3V4zM5 17a3 3 0 013-3h10',
+  pencil: 'M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3',
+  laptop: 'M5 6h14v9H5zM3 18h18',
+  monitor: 'M3 5h18v11H3zM9 20h6M12 16v4M10.500 8.500l4 2.500-4 2.500z',
+  globe: 'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
+  award: 'M12 3a6 6 0 100 12 6 6 0 000-12zM8.500 14l-1.500 7 5-3 5 3-1.500-7',
+  bus: 'M5 4h14a1 1 0 011 1v11H4V5a1 1 0 011-1zM4 11h16M7 19v2M17 19v2M7.500 15.500h.01M16.500 15.500h.01',
+  shirt: 'M8 4L3 7l2 4 3-1v10h8V10l3 1 2-4-5-3a4 4 0 01-8 0z',
+  users: 'M9 11a3 3 0 100-6 3 3 0 000 6zM3 20c0-3 3-5 6-5s6 2 6 5M17 11a2.500 2.500 0 100-5M16 15c3 0 5 1.500 5 4',
+  repeat: 'M4 11V9a3 3 0 013-3h12M16 3l3 3-3 3M20 13v2a3 3 0 01-3 3H5M8 21l-3-3 3-3',
+  bag: 'M5 8h14l-1 12H6L5 8zM9 8a3 3 0 016 0',
+  gift: 'M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7C10 7 8 6 8 4.500S10 3 12 7c2-4 4-3 4-.5S14 7 12 7z',
+  file: 'M6 3h8l5 5v13H6zM14 3v5h5M9 13h6M9 17h6',
+  cake: 'M4 20h16M5 20v-7h14v7M5 16c2 1.500 3 1.500 5 0s3-1.500 5 0 2.500 1 4 0M9 13V9M12 13V8M15 13V9',
+  percent: 'M19 5L5 19M7 9a2 2 0 100-4 2 2 0 000 4zM17 19a2 2 0 100-4 2 2 0 000 4z',
+  alert: 'M12 4l9 16H3zM12 10v4M12 17h.01',
+  wrench: 'M15 4a5 5 0 00-4.500 7L4 17.500 6.500 20l6.500-6.500A5 5 0 0020 9l-3 3-3-1-1-3z',
+  dots: 'M6 12h.01M12 12h.01M18 12h.01',
+  utensils: 'M6 3v8a2 2 0 002 2v8M10 3v8M6 7h4M17 3c-2 1-3 4-3 8h3v10',
+  landmark: 'M3 10l9-6 9 6zM5 10v8M9 10v8M15 10v8M19 10v8M3 20h18',
+  droplet: 'M12 3c4 5 6 8 6 11a6 6 0 01-12 0c0-3 2-6 6-11z',
+  key: 'M8 11a4 4 0 100 8 4 4 0 000-8zM11 12l9-9M16 7l3 3M14 9l2 2',
+  building: 'M5 21V5a1 1 0 011-1h8a1 1 0 011 1v16M15 9h3a1 1 0 011 1v11M3 21h18M9 8h2M9 12h2M9 16h2',
+  plug: 'M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4',
+  zap: 'M13 3L5 14h6l-1 7 8-11h-6z',
+  flame: 'M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3 0-6 1-9z',
+  wifi: 'M3 9a13 13 0 0118 0M6 12.500a9 9 0 0112 0M9 16a4.500 4.500 0 016 0M12 19.500h.01',
+  sparkles: 'M12 3l1.800 5.200L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800zM19 16l.8 2.200L22 19l-2.200.8L19 22l-.8-2.200L16 19l2.200-.8z',
+  armchair: 'M5 11V8a3 3 0 013-3h8a3 3 0 013 3v3M3 13a2 2 0 014 0v2h10v-2a2 2 0 014 0v5H3zM6 18v2M18 18v2',
+  shield: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z',
+  shieldcheck: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM9 12l2 2 4-4',
+  phone: 'M7 3h10v18H7zM11 18h2',
+  waves: 'M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0',
+  dumbbell: 'M6 8v8M3 10v4M18 8v8M21 10v4M6 12h12',
+  stethoscope: 'M6 3v6a4 4 0 008 0V3M10 13v2a4 4 0 008 0v-1M18 11a2 2 0 100 4 2 2 0 000-4z',
+  smile: 'M12 3a9 9 0 100 18 9 9 0 000-18zM8 14c1 2 3 3 4 3s3-1 4-3M9 9h.01M15 9h.01',
+  heart: 'M12 20s-8-5-8-11a4.500 4.500 0 018-2.500A4.500 4.500 0 0120 9c0 6-8 11-8 11z',
+  activity: 'M3 12h4l3-8 4 16 3-8h4',
+  clipboard: 'M9 4h6v3H9zM7 5H5v16h14V5h-2M9 12h6M9 16h4',
+  pill: 'M10 20a5 5 0 01-7-7l7-7a5 5 0 017 7zM8.500 8.500l7 7',
+  apple: 'M12 7c-3-2-8 0-8 6 0 4 3 8 6 8 1 0 1-.5 2-.5s1 .5 2 .5c3 0 6-4 6-8 0-6-5-8-8-6zM12 7c0-2 1-3 3-4',
+  glasses: 'M3 12a4 4 0 108 0 4 4 0 00-8 0zM13 12a4 4 0 108 0 4 4 0 00-8 0zM11 12h2',
+  message: 'M4 5h16v11H9l-5 4z',
+  syringe: 'M14 4l6 6M16 6l-9 9-3 3 2 2 3-3 9-9M10 10l4 4',
+  plus: 'M4 4h16v16H4zM12 8v8M8 12h8',
+  wheat: 'M12 21V9M12 9c-3 0-4-2-4-4 3 0 4 2 4 4zM12 9c3 0 4-2 4-4-3 0-4 2-4 4zM12 14c-3 0-4-2-4-4 3 0 4 2 4 4zM12 14c3 0 4-2 4-4-3 0-4 2-4 4zM12 19c-3 0-4-2-4-4 3 0 4 2 4 4zM12 19c3 0 4-2 4-4-3 0-4 2-4 4z',
+  package: 'M3 8l9-5 9 5v8l-9 5-9-5zM3 8l9 5 9-5M12 13v8',
+  cup: 'M6 4h12l-1.500 16h-9zM7 10h10',
+  fish: 'M3 12c3-4 8-5 12-2l5-3v10l-5-3c-4 3-9 2-12-2zM8 11h.01',
+  cart: 'M3 4h3l2.500 11h10L21 8H7M9 20h.01M17 20h.01',
+  cookie: 'M12 3a9 9 0 109 9 4 4 0 01-4-4 4 4 0 01-5-5zM8 12h.01M12 16h.01M15 12h.01',
+  paw: 'M12 12c-3 0-5 3-5 5.500 0 2 1.500 2.500 3 2 1.500-.5 2.500-.5 4 0 1.500.5 3 0 3-2 0-2.500-2-5.500-5-5.500zM5.500 10a1.500 1.500 0 103 0 1.500 1.500 0 10-3 0zM9.500 6.500a1.500 1.500 0 103 0 1.500 1.500 0 10-3 0zM12.500 6.500a1.500 1.500 0 103 0 1.500 1.500 0 10-3 0zM15.500 10a1.500 1.500 0 103 0 1.500 1.500 0 10-3 0z',
+  bread: 'M4 12a4 4 0 012-7h12a4 4 0 012 7v7H4zM9 12v3M12 12v3M15 12v3',
+  snow: 'M12 3v18M4 7.500l16 9M4 16.500l16-9M9 4l3 2 3-2M9 20l3-2 3 2',
+  truck: 'M3 6h11v10H3zM14 9h4l3 3v4h-7M7 19h.01M17 19h.01',
+  car: 'M4 11l2-5h12l2 5v7H4zM4 11h16M7 15h.01M17 15h.01',
+  bike: 'M6 18a3 3 0 100-6 3 3 0 000 6zM18 18a3 3 0 100-6 3 3 0 000 6zM6 15l4-8h4l4 8M10 7H8M12 11l-3 4',
+  fuel: 'M5 20V5a1 1 0 011-1h7a1 1 0 011 1v15M3 20h13M14 9h3a2 2 0 012 2v5a1.500 1.500 0 003 0V8l-3-3M7 8h5',
+  parking: 'M5 3h14v18H5zM10 17V8h3a2.500 2.500 0 010 5h-3',
+  road: 'M7 3L4 21M17 3l3 18M12 4v3M12 11v3M12 18v3',
+  tire: 'M12 3a9 9 0 100 18 9 9 0 000-18zM12 9a3 3 0 100 6 3 3 0 000-6z',
+  train: 'M7 3h10a2 2 0 012 2v11a3 3 0 01-3 3H8a3 3 0 01-3-3V5a2 2 0 012-2zM5 12h14M8 16h.01M16 16h.01M8 19l-2 2M16 19l2 2',
+  user: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6',
+  wallet: 'M4 7h14a2 2 0 012 2v10H5a1 1 0 01-1-1zM4 7V6a2 2 0 012-2h10v3M16 13h.01',
+  coins: 'M12 3a7 3 0 100 6 7 3 0 000-6zM5 6v6c0 1.700 3 3 7 3s7-1.300 7-3V6M5 12v6c0 1.700 3 3 7 3s7-1.300 7-3v-6',
+  trend: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+  sun: 'M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M19 5l-1.500 1.500M6.500 17.500L5 19',
+  transfer: 'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4',
+  card: 'M3 6h18v12H3zM3 10h18M7 15h4',
+  download: 'M12 4v11M7 11l5 5 5-5M5 20h14',
+  upload: 'M12 20V9M7 13l5-5 5 5M5 4h14',
+  undo: 'M4 9h10a6 6 0 010 12H8M8 5L4 9l4 4',
+  trophy: 'M8 4h8v6a4 4 0 01-8 0zM8 6H5v2a3 3 0 003 3M16 6h3v2a3 3 0 01-3 3M12 14v4M8 21h8M9 18h6',
+  star: 'M12 3l2.800 5.700 6.200.9-4.500 4.400 1.100 6.200L12 17.200 6.400 20.200l1.100-6.200L3 9.600l6.200-.9z',
+  tag: 'M3 12V4h8l10 10-8 8zM7.500 8h.01',
+}
+
+// Reserva usada quando a planilha ainda não traz a coluna "icone".
+export const CATEGORY_DEFAULT = { EDU: 'cap', EXT: 'star', MOR: 'home', SAU: 'heart', SUP: 'cart', TRA: 'car', SAL: 'wallet', REX: 'coins', INT: 'transfer', REE: 'undo', _sem: 'alert' }
+export const glyph = (name) => (GLYPHS[name] ? name : 'tag')
+export const iconFor = (subIcon, catIcon, catId) => glyph(subIcon || catIcon || CATEGORY_DEFAULT[catId] || 'tag')
+
+// Cor do texto (claro ou escuro) sobre um fundo hexadecimal.
+export const textOn = (hex) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim())
+  if (!m) return '#ffffff'
+  const n = parseInt(m[1], 16)
+  const l = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255
+  return l > 0.62 ? '#111111' : '#ffffff'
+}
