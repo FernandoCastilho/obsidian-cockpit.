@@ -194,7 +194,7 @@ export function useIntraday(code, day, skip = false) {
           setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)' })
           return
         }
-        setState({ key, status: 'ok', data: { source: code === 'CNH' ? 'CNY' : code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
+        setState({ key, status: 'ok', data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       })
       .catch((e) => alive && setState({ key, status: 'error', error: `intraday indisponível (${e.message})` }))
     return () => {

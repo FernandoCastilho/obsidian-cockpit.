@@ -76,6 +76,7 @@ test('histórico: grava history.json por moeda e não consulta de novo antes de 
   const file = JSON.parse(await readFile(join(dir, 'history.json'), 'utf8'))
   assert.deepEqual(Object.keys(file.series).sort(), ['CNH', 'EUR', 'JPY', 'USD'])
   assert.equal(file.series.USD.source, 'USD')
+  assert.equal(file.series.CNH.source, 'CNH')
   const again = await collectHistory({ dir, key: 'k', fetchFn: f, now: now + 3600e3 })
   assert.equal(again.skipped, true)
   assert.equal(calls, 4)
