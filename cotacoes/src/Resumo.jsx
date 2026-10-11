@@ -316,11 +316,12 @@ export function RatesTop({ macro, curves, onOpen }) {
             <button type="button" key={r.key} className="qb" onClick={onOpen} title={r.sub}>
               <b className="tk">{r.label}</b> {p2(r.value)}%
               {r.delta != null && (
-                <span className={`pct ${toneOf(r.delta)}`}>
-                  {' '}<Arrow v={r.delta} /> {bps(r.delta)}
+                <span className="qb-delta">
+                  {' '}{Math.round(r.delta * 100) === 0 ? '= 0 bps' : <><Arrow v={r.delta} /> {bps(r.delta)}</>}
                 </span>
               )}
-              <small className="muted"> {r.sub}</small>
+              <small className="muted"> {r.short ?? r.sub}</small>
+              {Date.now() - r.at > 4 * 864e5 && <small className="qb-old"> · {new Date(r.at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })}</small>}
             </button>
           ))}
         </div>

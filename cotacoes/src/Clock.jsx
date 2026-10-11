@@ -11,7 +11,7 @@ export const ZONES = {
 function useNow() {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000)
+    const id = setInterval(() => setNow(new Date()), 10000)
     return () => clearInterval(id)
   }, [])
   return now
@@ -25,7 +25,7 @@ function One({ zone, now }) {
   return (
     <span className="clock-one" title={`${zone.city} (${zone.tz})`}>
       <span aria-hidden="true">{day ? '☀' : '☾'}</span>
-      <b>{part(now, zone.tz, { hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' })}</b>
+      <b>{part(now, zone.tz, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}</b>
       <small>
         {zone.city} · {part(now, zone.tz, { weekday: 'short', day: '2-digit', month: '2-digit' }).replace('.', '')}
       </small>
