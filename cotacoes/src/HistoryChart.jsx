@@ -28,7 +28,7 @@ export function useWidth() {
   return [setEl, w]
 }
 
-export function Plot({ points, width, color, code, intraday, fmt, label, nice, labels, light }) {
+export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -138,13 +138,13 @@ export function Plot({ points, width, color, code, intraday, fmt, label, nice, l
         <path d={g.area} fill={`url(#${gid})`} />
         <path className="line" style={{ color }} d={g.line} fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={g.x(last.t)} cy={g.y(last.bid)} r="4" fill={color} className="ring" />
-        {labels && fmt && marks.map((i) => {
+        {labels && (vfmt ?? fmt) && marks.map((i) => {
           const p = points[i]
           const anchor = i === 0 ? 'start' : i === points.length - 1 ? 'end' : 'middle'
           return (
             <g key={p.t} pointerEvents="none">
               <circle cx={g.x(p.t)} cy={g.y(p.bid)} r="2.5" fill={color} />
-              <text x={g.x(p.t)} y={g.y(p.bid) - 9} textAnchor={anchor} className="vlabel">{fmt(p.bid)}</text>
+              <text x={g.x(p.t)} y={g.y(p.bid) - 9} textAnchor={anchor} className="vlabel">{(vfmt ?? fmt)(p.bid)}</text>
             </g>
           )
         })}
@@ -181,6 +181,9 @@ function useSeries(currency, start, end, day) {
   return day ? intra : daily
 }
 
+// valor dos rótulos dentro do gráfico: 4 casas (5 para o iene, que vale centavos de real)
+const quoteFmt = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })
+
 export default function HistoryChart({ currency, color, start, end, day }) {
   const intraday = !!day
   const h = useSeries(currency, start, end, day)
@@ -214,7 +217,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
             <small>{h.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} label={intraday ? 'Cotação' : undefined} />}
+        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} vfmt={quoteFmt} labels label={intraday ? 'Cotação' : undefined} />}
       </div>
       {pts && intraday && (
         <p className="status">

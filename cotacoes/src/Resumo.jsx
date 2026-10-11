@@ -153,10 +153,17 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   )
 }
 
+// Último valor (%) no fim de cada linha, afastado na vertical para os rótulos não se sobreporem.
+function endLabels(norm, y) {
+  const items = norm.map((s) => ({ code: s.code, color: s.color, y: y(s.pts.at(-1).v), text: pct(s.pts.at(-1).v) })).sort((a, b) => a.y - b.y)
+  for (let i = 1; i < items.length; i++) if (items[i].y - items[i - 1].y < 13) items[i].y = items[i - 1].y + 13
+  return items
+}
+
 // Linhas sobrepostas em variação % desde o início do período (escalas diferentes ficam comparáveis).
 function MultiPlot({ series, width, intraday }) {
   const H = 240
-  const M = { t: 12, r: 16, b: 28, l: 52 }
+  const M = { t: 12, r: 64, b: 28, l: 52 }
   const [hover, setHover] = useState(null)
   const norm = series.map((s) => ({ ...s, pts: s.points.map((p) => ({ t: p.t, v: (p.bid / s.points[0].bid - 1) * 100 })) }))
   const all = norm.flatMap((s) => s.pts)
@@ -195,6 +202,9 @@ function MultiPlot({ series, width, intraday }) {
       ))}
       {norm.map((s) => (
         <path key={s.code} d={s.pts.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join('')} fill="none" stroke={s.color} strokeWidth="2" strokeLinejoin="round" />
+      ))}
+      {endLabels(norm, y).map((l) => (
+        <text key={l.code} x={width - M.r + 6} y={l.y} dy="0.32em" fontSize="11" fontWeight="700" fill={l.color} pointerEvents="none">{l.text}</text>
       ))}
       {hover != null && (
         <g>
@@ -253,7 +263,7 @@ function ResumoChart({ colors, spark }) {
       <div ref={ref}>
         {ready.length === rows.length ? (
           one ? (
-            <Plot points={r0.points} width={width} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} label={`${r0.source ?? r0.code}/BRL`} />
+            <Plot points={r0.points} width={width} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
           ) : (
             <MultiPlot series={rows} width={width} intraday={dia} />
           )
