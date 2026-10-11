@@ -1,9 +1,9 @@
-name: Deploy cotacoes (GitHub Pages)
+name: Deploy cotacoes e financas (GitHub Pages)
 
 on:
   push:
     branches: [main, claude/obsidian-plugin-analysis-bagjz3]
-    paths: ['cotacoes/**']
+    paths: ['cotacoes/**', 'financas/**', '.github/workflows/pages.yml']
   schedule:
     # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.
     - cron: '17 3-23 * * 1-5' # segunda a sexta, 0h a 20h de Brasília
@@ -35,7 +35,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: cotacoes/package-lock.json
+          cache-dependency-path: |
+            cotacoes/package-lock.json
+            financas/package-lock.json
       - run: npm ci
       - name: Testes (parsers e lógica)
         run: npm test
@@ -62,6 +64,15 @@ jobs:
         run: npm run build
         env:
           VITE_DATA_BASE: https://raw.githubusercontent.com/${{ github.repository }}/data
+      - name: App de finanças (testes, build e junção em /financas)
+        run: |
+          cd ../financas
+          npm ci
+          npm test
+          npm run build
+          cd ../cotacoes
+          mkdir -p dist/financas
+          cp -R ../financas/dist/. dist/financas/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: cotacoes/dist
