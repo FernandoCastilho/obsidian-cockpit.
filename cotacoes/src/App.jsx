@@ -15,7 +15,7 @@ import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
-import Resumo, { RatesTop } from './Resumo.jsx'
+import Resumo, { MoveAgenda, RatesTop } from './Resumo.jsx'
 import { rangeStats } from './stats.js'
 import Clock from './Clock.jsx'
 import News from './News.jsx'
@@ -478,6 +478,10 @@ export default function App() {
   return (
     <>
     <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
+    <div className="clocks-top">
+      <BrasiliaClock />
+      <Clock codes={['USD', 'EUR', 'JPY', 'CNH']} />
+    </div>
     <main className="app">
       {update && (
         <div className="update-notice" role="status">
@@ -487,11 +491,9 @@ export default function App() {
       )}
       <header className="top">
         <div>
-          <h1>Painel de mercado</h1>
-          <p className="sub">{TABS.find((t) => t.id === tab).label === 'Resumo' ? 'Visão geral' : TABS.find((t) => t.id === tab).label}</p>
+          <h1>{TABS.find((t) => t.id === tab).label === 'Resumo' ? 'Visão geral' : TABS.find((t) => t.id === tab).label}</h1>
         </div>
         <div className="top-right">
-          <BrasiliaClock />
           <button
             type="button"
             className="round"
@@ -579,7 +581,12 @@ export default function App() {
 
       {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} view={sub} onView={(v) => goto('calculadora', v)} />}
 
-      {tab === 'noticias' && <News colors={COLORS} />}
+      {tab === 'noticias' && (
+        <>
+          <News colors={COLORS} />
+          <MoveAgenda goto={goto} colors={COLORS} />
+        </>
+      )}
 
       <Novidades />
       <footer>
