@@ -1,7 +1,7 @@
 // Núcleo do importador: movimentos de um extrato -> linhas de Lancamentos e Importacoes.
 // Sem E/S: recebe o estado da planilha (regras, chaves existentes, importações) e devolve o que gravar.
 import { classificar } from './regras.js';
-import { isoParaBr, limparDescricao, valorBr } from './texto.js';
+import { isoParaBr, limparDescricao, normalizar, valorBr } from './texto.js';
 
 export const COLUNAS_LANCAMENTOS = [
   'lancamento_id', 'conta_id', 'pessoa_id', 'data', 'data_caixa', 'valor', 'descricao_original', 'descricao_limpa',
@@ -26,7 +26,7 @@ export function proximoIdImportacao(importacoes) {
 function chaves(movs, contaId) {
   const vistos = new Map();
   return movs.map((m) => {
-    const desc = limparDescricao(m.descricao) || m.descricao;
+    const desc = normalizar(limparDescricao(m.descricao) || m.descricao);
     const base = `${m.dataIso}|${m.valor.toFixed(2)}|${contaId}|${desc}`;
     const n = (vistos.get(base) ?? 0) + 1;
     vistos.set(base, n);
@@ -86,7 +86,7 @@ export function importar({ extrato, arquivo, conta, regras, existentes, importac
       chave_dedup: chave,
       importacao_id: id,
       revisado: 'Não',
-      obs: c.semRegra ? 'sem regra' : '',
+      obs: c.semRegra ? 'sem regra' : `regra ${c.regra_id}`,
     });
   });
 
