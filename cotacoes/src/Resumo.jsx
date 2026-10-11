@@ -133,30 +133,114 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   )
 }
 
-// Gráfico de cotação do Resumo: últimos 60 pregões da moeda escolhida, em linha reta (sem suavização), a partir do histórico em cache.
-function ResumoChart({ colors }) {
-  const [code, setCode] = useState('USD')
-  const w = useWindow(100)
-  const h = useHistory(code, w.start, w.end)
+// Linhas sobrepostas em variação % desde o início do período (escalas diferentes ficam comparáveis).
+function MultiPlot({ series, width, intraday }) {
+  const H = 240
+  const M = { t: 12, r: 16, b: 28, l: 52 }
+  const [hover, setHover] = useState(null)
+  const norm = series.map((s) => ({ ...s, pts: s.points.map((p) => ({ t: p.t, v: (p.bid / s.points[0].bid - 1) * 100 })) }))
+  const all = norm.flatMap((s) => s.pts)
+  const t0 = Math.min(...all.map((p) => p.t))
+  const t1 = Math.max(...all.map((p) => p.t))
+  let lo = Math.min(0, ...all.map((p) => p.v))
+  let hi = Math.max(0, ...all.map((p) => p.v))
+  const pad = Math.max(hi - lo, 0.2) * 0.12
+  lo -= pad
+  hi += pad
+  const iw = width - M.l - M.r
+  const ih = H - M.t - M.b
+  const x = (t) => M.l + (t1 === t0 ? iw / 2 : ((t - t0) / (t1 - t0)) * iw)
+  const y = (v) => M.t + (1 - (v - lo) / (hi - lo)) * ih
+  const yTicks = Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
+  const nx = width < 420 ? 3 : 5
+  const xTicks = Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
+  const fmtX = (t) => (intraday ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }))
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = ((e.clientX - r.left) / r.width) * width
+    setHover(t0 + ((px - M.l) / iw) * (t1 - t0))
+  }
+  const at = (s, t) => s.pts.reduce((b, p) => (Math.abs(p.t - t) < Math.abs(b.t - t) ? p : b), s.pts[0])
+  return (
+    <svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" aria-label="Variação percentual das moedas selecionadas no período" onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
+      {yTicks.map((v) => (
+        <g key={v}>
+          <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke="var(--line)" />
+          <text x={M.l - 8} y={y(v) + 4} textAnchor="end" fontSize="11" fill="var(--mut)">{pct(v)}</text>
+        </g>
+      ))}
+      <line x1={M.l} x2={width - M.r} y1={y(0)} y2={y(0)} stroke="var(--mut)" strokeDasharray="4 3" />
+      {xTicks.map((t, i) => (
+        <text key={i} x={x(t)} y={H - 8} textAnchor={i === 0 ? 'start' : i === nx - 1 ? 'end' : 'middle'} fontSize="11" fill="var(--mut)">{fmtX(t)}</text>
+      ))}
+      {norm.map((s) => (
+        <path key={s.code} d={s.pts.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join('')} fill="none" stroke={s.color} strokeWidth="2" strokeLinejoin="round" />
+      ))}
+      {hover != null && (
+        <g>
+          <line x1={x(hover)} x2={x(hover)} y1={M.t} y2={H - M.b} stroke="var(--mut)" />
+          {norm.map((s) => {
+            const p = at(s, hover)
+            return <circle key={s.code} cx={x(p.t)} cy={y(p.v)} r="3.5" fill={s.color} />
+          })}
+        </g>
+      )}
+    </svg>
+  )
+}
+
+// Gráfico do Resumo: moedas escolhidas nos botões (várias ao mesmo tempo) e o período dos botões Dia/Semana/Mês/Ano.
+function ResumoChart({ colors, spark }) {
+  const [sel, setSel] = useState(['USD'])
+  const w = useWindow(spark.days)
+  const dia = !!spark.intraday
+  // hooks em número fixo (uma consulta por moeda; ficam em cache)
+  const hs = CURRENCIES.map((c) => useHistory(c.code, w.start, w.end, dia)) // eslint-disable-line react-hooks/rules-of-hooks
+  const is = CURRENCIES.map((c) => useIntraday(c.code, new Date(), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
   const [ref, width] = useWidth()
-  const pts = h.status === 'ok' ? h.data.points.slice(-60) : null
-  const chg = pts && pts.length > 1 ? (pts[pts.length - 1].bid / pts[0].bid - 1) * 100 : null
-  const label = `${h.data?.source ?? code}/BRL`
+  const toggle = (code) => setSel((s) => (s.includes(code) ? (s.length > 1 ? s.filter((c) => c !== code) : s) : CURRENCIES.map((c) => c.code).filter((c) => c === code || s.includes(c))))
+  const rows = CURRENCIES.map((c, k) => {
+    const st = dia ? is[k] : hs[k]
+    return { code: c.code, color: colors?.[c.code], st, points: st.status === 'ok' ? st.data.points : [], source: st.data?.source }
+  }).filter((r) => sel.includes(r.code))
+  const ready = rows.filter((r) => r.points.length > 1)
+  const failed = rows.every((r) => r.st.status === 'error')
+  const one = rows.length === 1
+  const r0 = rows[0]
+  const chg = (r) => periodChange(r.points)
   return (
     <div className="resumo-chart">
       <div className="sec-head">
-        <h3>{label} <small className="muted">· 60 pregões</small>{chg != null && <span className={`pct ${toneOf(chg)}`}> {pct(chg)}</span>}</h3>
-        <div className="chips" role="group" aria-label="Moeda do gráfico">
+        <h3>
+          {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
+        </h3>
+        <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
           {CURRENCIES.map((c) => (
-            <button key={c.code} type="button" aria-pressed={code === c.code} onClick={() => setCode(c.code)}>{c.code}</button>
+            <button key={c.code} type="button" aria-pressed={sel.includes(c.code)} style={sel.includes(c.code) ? { borderColor: colors?.[c.code] } : undefined} onClick={() => toggle(c.code)}>
+              {sel.includes(c.code) && <i className="chip-dot" style={{ background: colors?.[c.code] }} aria-hidden="true" />}
+              {c.code}
+            </button>
           ))}
         </div>
       </div>
+      {!one && (
+        <p className="chart-legend">
+          {rows.map((r) => (
+            <span key={r.code}><i className="chip-dot" style={{ background: r.color }} aria-hidden="true" />{r.code} {chg(r) != null && <b className={`pct ${toneOf(chg(r))}`}>{pct(chg(r))}</b>}</span>
+          ))}
+        </p>
+      )}
       <div ref={ref}>
-        {pts ? (
-          <Plot points={pts} width={width} color={colors?.[code]} code={`rs-${code}`} fmt={(v) => brl(v)} label={label} />
+        {ready.length === rows.length ? (
+          one ? (
+            <Plot points={r0.points} width={width} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} label={`${r0.source ?? r0.code}/BRL`} />
+          ) : (
+            <MultiPlot series={rows} width={width} intraday={dia} />
+          )
         ) : (
-          <div className="placeholder" style={{ height: 120 }}>{h.status === 'error' ? 'Histórico indisponível no momento.' : 'Carregando…'}</div>
+          <div className="placeholder" style={{ height: 120 }}>
+            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos de hoje ainda (a coleta roda de segunda a sexta, a partir das 9h30).' : 'Histórico indisponível no momento.'}
+          </div>
         )}
       </div>
     </div>
@@ -185,7 +269,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           ))}
           <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} color={colors?.PAR} />
         </div>
-        <ResumoChart colors={colors} />
+        <ResumoChart colors={colors} spark={spark} />
       </section>
   )
 }
