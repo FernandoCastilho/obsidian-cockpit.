@@ -455,3 +455,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 
 .chip-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
 .chart-legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 2px; font-size:.85rem; color:var(--mut); }
+
+.ficha th { text-align:left; white-space:nowrap; width:1%; padding-right:18px; }
+.ficha td { text-align:left; }

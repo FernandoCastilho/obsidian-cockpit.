@@ -48,6 +48,10 @@ export default function Finimp({ hol }) {
   const [round, setRound] = useState(false)
   const [copied, setCopied] = useState(false)
   const [more, setMore] = useState(false)
+  const [empresa, setEmpresa] = useState('')
+  const [cnpj, setCnpj] = useState('')
+  const [deriv, setDeriv] = useState('')
+  const [copiedQ, setCopiedQ] = useState(false)
 
   const res = useMemo(
     () =>
@@ -88,6 +92,35 @@ export default function Finimp({ hol }) {
       /* sem permissão de área de transferência */
     }
   }
+  // Ficha da cotação: Empresa, CNPJ, Valor, Moeda, Prazo total, Cronograma, Derivativo, Taxa, Vl Final
+  const dash = (v) => (v === '' || v == null ? '—' : v)
+  const sched = !res.ok
+    ? '—'
+    : structure === 'amort'
+      ? res.rows.filter((r) => r.amortization).map((r) => `${dm(r.date)}: ${fmt(r.amortization)}`).join(' · ')
+      : structure === 'periodic'
+        ? `Principal em ${dm(res.maturity)}; juros em ${res.rows.filter((r) => r.interestPaid).map((r) => dm(r.date)).join(', ')}`
+        : `Bullet: principal e juros em ${dm(res.maturity)}`
+  const ficha = [
+    ['Empresa', dash(empresa)],
+    ['CNPJ', dash(cnpj)],
+    ['Valor', res.ok ? fmt(res.totals.disbursed) : '—'],
+    ['Moeda', currency],
+    ['Prazo total', res.ok ? `${Math.round((Date.parse(res.maturity) - Date.parse(res.first)) / 864e5)} dias corridos` : '—'],
+    ['Cronograma de amortização', sched],
+    ['Derivativo', dash(deriv)],
+    ['Taxa', rate === '' ? '—' : `${rate}% a.a. (${dayCount || 'convenção a definir'}${rule ? `, ${rule === 'comp' ? 'composta' : 'proporcional'}` : ''})`],
+    ['Vl Final', res.ok ? fmt(res.totals.paid) : '—'],
+  ]
+  const copyQ = async () => {
+    try {
+      await navigator.clipboard.writeText(ficha.map(([k, v]) => `${k}\t${v}`).join('\n'))
+      setCopiedQ(true)
+      setTimeout(() => setCopiedQ(false), 2000)
+    } catch {
+      /* sem permissão de área de transferência */
+    }
+  }
   const seg = (value, set, options, label) => (
     <div className="seg" role="group" aria-label={label}>
       {options.map(([id, text]) => (
@@ -109,6 +142,13 @@ export default function Finimp({ hol }) {
           </select>
         </label>
         <button type="button" className="btn small" onClick={fill}>Preencher exemplo</button>
+      </div>
+
+      <h3 className="calc-sub">Identificação</h3>
+      <div className="calc-form">
+        <label>Empresa<input value={empresa} onChange={(e) => setEmpresa(e.target.value)} autoComplete="organization" /></label>
+        <label>CNPJ<input inputMode="numeric" value={cnpj} onChange={(e) => setCnpj(e.target.value)} placeholder="00.000.000/0000-00" /></label>
+        <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
       </div>
 
       <h3 className="calc-sub">Desembolsos</h3>
@@ -176,6 +216,19 @@ export default function Finimp({ hol }) {
 
 </div>
 <div className="calc-out" id="calc-out">
+      <h3 className="calc-sub">Ficha da cotação</h3>
+      <div className="scroll">
+        <table className="focus-table fin-table ficha">
+          <tbody>
+            {ficha.map(([k, v]) => (
+              <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="calc-form">
+        <button type="button" className="btn small" onClick={copyQ}>{copiedQ ? 'Copiado' : 'Copiar ficha (Excel)'}</button>
+      </div>
       {!res.ok ? (
         <div className="calc-block">
           {res.missing.length > 0 && (
