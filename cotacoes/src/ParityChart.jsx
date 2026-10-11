@@ -3,6 +3,7 @@ import Explain from './Explain.jsx'
 import { Plot, fmtDate, fmtTime, useWidth } from './HistoryChart.jsx'
 import { mergeDaily, mergeTicks } from './parity.js'
 import { useHistory, useIntraday } from './useHistory.js'
+import { flagSvg } from './flags.js'
 
 const num = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
 
@@ -37,7 +38,9 @@ export default function ParityChart({ color, start, end, day }) {
     <article className="chart wide" style={{ '--series': color }}>
       <header>
         <h3>
-          <i className="swatch" /> {label}
+          <span className="flag pair" aria-hidden="true">
+            {(invert ? ['EUR', 'USD'] : ['USD', 'EUR']).map((c) => <span key={c} dangerouslySetInnerHTML={{ __html: flagSvg(c, 'width="24" height="16"') }} />)}
+          </span> {label}
           <small>{invert ? 'Dólares por 1 euro' : 'Euros por 1 dólar'} · paridade</small>
           <Explain id="paridade" />
         </h3>

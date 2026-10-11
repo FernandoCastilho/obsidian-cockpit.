@@ -486,3 +486,4 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .pair-sel { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:4px 8px; font:inherit; font-weight:700; min-height:32px; }
 .pair-slash { color:var(--mut); }
 .pair-tile .more { margin-left:auto; }
+.chart h3 .flag { vertical-align:middle; margin-right:2px; }
