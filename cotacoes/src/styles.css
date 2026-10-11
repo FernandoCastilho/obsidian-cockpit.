@@ -503,3 +503,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   .rates-grid { width:100%; }
   .rates-grid .qb { font-size:.78rem; padding:5px 9px; }
 }
+
+/* topo: relógios discretos (só Brasília em destaque), juros sem cor de bom/ruim */
+.clocks-top .clock-one b { color:var(--mut); font-weight:500; font-size:.85rem; }
+.clocks-top .clock-one small { font-size:.75rem; }
+.clocks-top .brt b { color:var(--fg); font-weight:600; font-size:.95rem; }
+.qb-delta { color:var(--mut); }
+.qb-old { color:#d29922; font-size:.72rem; }
+.rates-grid .qb small { font-size:.75rem; }
+@media (min-width: 700px) { .nav-top .tabs { justify-content:center; } }
