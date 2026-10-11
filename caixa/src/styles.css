@@ -11,7 +11,7 @@
   --ambar-fundo: #fbf0d9;
   --vermelho: #b42318;
   --raio: 14px;
-  --titulo: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --titulo: 'Fredoka Variable', 'Fredoka', -apple-system, 'Segoe UI', system-ui, sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -39,10 +39,10 @@ b { font-weight: 600; }
 .app { max-width: 640px; margin: 0 auto; min-height: 100dvh; padding: 0 16px calc(84px + env(safe-area-inset-bottom)); }
 .topo { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--papel) 92%, transparent); backdrop-filter: blur(12px); padding: calc(10px + env(safe-area-inset-top)) 0 10px; display: grid; gap: 10px; }
 .topo-linha { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
-.logo { font-family: var(--titulo); font-weight: 800; letter-spacing: -0.04em; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+.logo { font-family: var(--titulo); font-weight: 700; letter-spacing: 0; font-size: 22px; display: flex; align-items: center; gap: 8px; }
 .logo em { font: 600 11px/1 inherit; font-style: normal; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ambar); background: var(--ambar-fundo); padding: 4px 7px; border-radius: 99px; }
 .topo-acoes, .meses { display: flex; align-items: center; gap: 2px; }
-.meses b { font-family: var(--titulo); font-weight: 700; letter-spacing: -0.02em; font-size: 16px; min-width: 8.5em; text-align: center; }
+.meses b { font-family: var(--titulo); font-weight: 600; letter-spacing: 0; font-size: 16px; min-width: 8.5em; text-align: center; }
 .meses-fixo { font-size: 15px; }
 .icone { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 99px; color: var(--suave); }
 .icone:hover:not(:disabled) { color: var(--tinta); background: color-mix(in srgb, var(--tinta) 6%, transparent); }
@@ -61,8 +61,8 @@ b { font-weight: 600; }
 .din-int { font-weight: 600; }
 .din-sinal { margin-right: 0.12em; font-weight: 500; color: var(--acento); }
 .din.neg .din-sinal { color: inherit; }
-.din.grande { font-family: var(--titulo); font-size: clamp(46px, 14vw, 68px); line-height: 1; letter-spacing: -0.04em; display: block; }
-.din.grande .din-int { font-weight: 800; }
+.din.grande { font-family: var(--titulo); font-size: clamp(46px, 14vw, 68px); line-height: 1; letter-spacing: 0.01em; display: block; }
+.din.grande .din-int { font-weight: 700; }
 /* Marca-texto: um único destaque por tela, no resultado do mês. */
 .destaque { display: inline-block; justify-self: start; background: #ffd400; color: #14161a; padding: 4px 14px 8px; border-radius: 12px; }
 .destaque .din-rs, .destaque .din-cent { color: rgb(20 22 26 / 0.62); }
@@ -86,7 +86,7 @@ b { font-weight: 600; }
 /* Blocos e listas */
 .bloco { display: grid; gap: 10px; }
 .bloco-topo { display: flex; justify-content: space-between; align-items: baseline; }
-.bloco h2 { font-family: var(--titulo); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--suave); }
+.bloco h2 { font-family: var(--titulo); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--suave); }
 .link { color: var(--acento); font-size: 14px; font-weight: 600; }
 .lista { list-style: none; padding: 0; }
 .lista > li, .lista > li > .linha { border-bottom: 1px solid var(--linha); }
@@ -172,7 +172,7 @@ small.atraso { color: var(--ambar); }
 /* Entrada */
 .entrada { max-width: 420px; margin: 0 auto; min-height: 100dvh; padding: 0 24px; display: grid; align-content: center; gap: 16px; }
 .marca { width: 56px; height: 56px; color: var(--tinta); display: block; }
-.entrada h1 { font-family: var(--titulo); font-weight: 800; font-size: 56px; letter-spacing: -0.05em; line-height: 0.95; margin-top: 8px; }
+.entrada h1 { font-family: var(--titulo); font-weight: 700; font-size: 56px; letter-spacing: -0.01em; line-height: 0.95; margin-top: 8px; }
 .entrada-texto { color: var(--suave); font-size: 17px; line-height: 1.5; }
 .primario, .secundario { height: 52px; border-radius: 99px; font-weight: 600; text-align: center; }
 .primario { background: var(--tinta); color: var(--papel); margin-top: 8px; }
