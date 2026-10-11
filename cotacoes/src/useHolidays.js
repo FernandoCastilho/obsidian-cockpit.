@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { buildCn } from './holidays.js'
+import { buildCn, CALENDARS } from './holidays.js'
 
 const KEY = 'cotacoes-pracas'
 export const DEFAULT_PRACAS = ['BR']
 const read = () => {
   try {
     const v = JSON.parse(localStorage.getItem(KEY) ?? 'null')
-    return Array.isArray(v) && v.length ? v : DEFAULT_PRACAS
+    const ok = Array.isArray(v) ? v.filter((id) => CALENDARS.some((c) => c.id === id)) : [] // ignora praças que não existem mais (ex.: zona do euro)
+    return ok.length ? ok : DEFAULT_PRACAS
   } catch {
     return DEFAULT_PRACAS
   }

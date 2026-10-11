@@ -343,9 +343,7 @@ test('feriados: Nova York (sábado não compensado, domingo vira segunda) e Than
   assert.equal(nthWeekday(2026, 5, 1, -1), '2026-05-25')
   assert.ok(ny.has('2026-06-19') && ny.has('2026-12-25'))
 })
-test('feriados: zona do euro, Londres (Boxing Day compensado) e Japão (Semana Dourada, Silver Week, domingo)', () => {
-  const eu = holidayMap('EU', 2026)
-  assert.ok(eu.has('2026-04-03') && eu.has('2026-04-06') && eu.has('2026-12-26'))
+test('feriados: Londres (Boxing Day compensado) e Japão (Semana Dourada, Silver Week, domingo)', () => {
   const uk = holidayMap('UK', 2026)
   assert.ok(uk.has('2026-12-25') && uk.has('2026-12-28') && !uk.has('2026-12-26')) // 26/12/2026 é sábado
   assert.ok(uk.has('2026-05-04') && uk.has('2026-05-25') && uk.has('2026-08-31'))
@@ -372,8 +370,8 @@ test('feriados: China usa dados oficiais, com dia de compensação útil e aviso
 })
 test('feriados: próximo dia útil comum às praças e lista de próximos feriados', () => {
   const ctx = { cn: {} }
-  // Sexta-feira Santa 3/4/2026 fecha Brasil e zona do euro; sábado, domingo e 6/4 (Páscoa) fecham o euro: próximo comum é 7/4
-  assert.equal(nextBusinessDay('2026-04-03', ['BR', 'EU'], ctx), '2026-04-07')
+  // Sexta-feira Santa 3/4/2026 fecha Brasil e Londres; sábado, domingo e 6/4 (Páscoa) fecham Londres: próximo comum é 7/4
+  assert.equal(nextBusinessDay('2026-04-03', ['BR', 'UK'], ctx), '2026-04-07')
   const up = upcomingHolidays('2026-11-23', 7, ['NY', 'BR'], ctx)
   assert.deepEqual(up.map((u) => `${u.date} ${u.cal}`), ['2026-11-26 NY'])
   assert.equal(hAdd('2026-12-31', 1), '2027-01-01')

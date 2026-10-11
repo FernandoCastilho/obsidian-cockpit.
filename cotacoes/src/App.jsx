@@ -480,7 +480,7 @@ export default function App() {
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     <div className="clocks-top">
       <BrasiliaClock />
-      <Clock codes={['USD', 'EUR', 'JPY', 'CNH']} />
+      <Clock codes={['USD', 'JPY', 'CNH']} />
     </div>
     <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
     <main className="app">
@@ -552,7 +552,7 @@ export default function App() {
               </div>
             ))}
             <div className="slot">
-              <Clock codes={['EUR', 'USD']} />
+              <Clock codes={['USD']} />
               <ParityCard quotes={quotes} />
             </div>
           </section>
@@ -606,7 +606,7 @@ export default function App() {
         <Sheet onClose={() => setOpen(null)}>
           {open === 'PAR' ? (
             <>
-              <Clock codes={['EUR', 'USD']} />
+              <Clock codes={['USD']} />
               <ParityCard quotes={quotes} />
             </>
           ) : (
