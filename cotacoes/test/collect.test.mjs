@@ -7,7 +7,7 @@ import { join } from 'node:path'
 import { collect } from '../scripts/quotes-lib.mjs'
 
 const q = (b, ts) => ({ bid: String(b), ask: String(b + 0.01), high: String(b), low: String(b), pctChange: '0', timestamp: String(ts) })
-const api = (ts, b = 5.3) => async () => ({ ok: true, status: 200, json: async () => ({ USDBRL: q(b, ts), EURBRL: q(6.1, ts), JPYBRL: q(0.035, ts), CNYBRL: q(0.74, ts), USDCNH: q(7.1, ts) }) })
+const api = (ts, b = 5.3) => async () => ({ ok: true, status: 200, json: async () => ({ USDBRL: q(b, ts), EURBRL: q(6.1, ts), JPYBRL: q(0.035, ts), USDCNH: q(7.1, ts) }) })
 
 test('coleta: grava quotes.json e intraday.json', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'q-'))
@@ -47,7 +47,7 @@ test('coleta: usa a chave quando existe', async () => {
   let url = ''
   await collect({ dir, key: 'abc 123', fetchFn: async (u) => ((url = String(u)), { ok: false, status: 500 }), tries: 1 })
   assert.match(url, /\?token=abc%20123$/)
-  assert.match(url, /USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL,USD-CNH/)
+  assert.match(url, /USD-BRL,EUR-BRL,JPY-BRL,USD-CNH/)
 })
 
 import { collectHistory, parseDaily } from '../scripts/quotes-lib.mjs'

@@ -5,8 +5,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { mergeSnapshots } from './intraday-lib.mjs'
 
-export const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL,USD-CNH'
-const SNAP = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'CNYBRL' }
+export const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
+const SNAP = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function readJson(file) {
@@ -44,6 +44,10 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
   for (const [code, pair] of Object.entries(SNAP)) {
     const q = quotes[pair]
     if (q) snaps[code] = [Number(q.timestamp) * 1000, Number(q.bid)]
+  }
+  // Yuan offshore: USD/BRL ÷ USD/CNH
+  if (quotes.USDBRL && quotes.USDCNH) {
+    snaps.CNH = [Math.min(Number(quotes.USDBRL.timestamp), Number(quotes.USDCNH.timestamp)) * 1000, Number(quotes.USDBRL.bid) / Number(quotes.USDCNH.ask)]
   }
   const series = mergeSnapshots(prev?.series, snaps, 5 * 864e5, now)
   await writeFile(join(dir, 'intraday.json'), JSON.stringify({ generatedAt: now, source: 'AwesomeAPI (coleta central a cada 5 min)', resolution: '5 min', series }))

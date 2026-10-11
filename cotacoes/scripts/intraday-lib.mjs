@@ -1,5 +1,5 @@
 // Intraday por barras de 5 minutos (Yahoo Finance), coletado no GitHub porque o Yahoo não libera acesso direto do navegador.
-export const SYMBOLS = { USD: 'USDBRL=X', EUR: 'EURBRL=X', JPY: 'JPYBRL=X', CNH: 'CNYBRL=X' }
+export const SYMBOLS = { USD: 'USDBRL=X', EUR: 'EURBRL=X', JPY: 'JPYBRL=X', CNH: 'CNHBRL=X' }
 
 export const yahooUrl = (symbol) =>
   `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=5m&range=5d`
