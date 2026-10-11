@@ -317,7 +317,7 @@ export function RatesTop({ macro, curves, onOpen }) {
               <b className="tk">{r.label}</b> {p2(r.value)}%
               {r.delta != null && (
                 <span className="qb-delta">
-                  {' '}{Math.round(r.delta * 100) === 0 ? '= 0 bps' : <><Arrow v={r.delta} /> {bps(r.delta)}</>}
+                  {' '}{Math.round(r.delta * 100) === 0 ? <span title="sem variação">=</span> : <><Arrow v={r.delta} /> {bps(r.delta)}</>}
                 </span>
               )}
               <small className="muted"> {r.short ?? r.sub}</small>

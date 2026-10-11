@@ -495,13 +495,14 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 }
 .rates-top { position:static; max-width:1200px; margin:0 auto; border-bottom:0; align-items:flex-start; padding:8px 16px 0; }
 .rates-grid { display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
-.rates-grid .qb { border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:.82rem; background:var(--card); white-space:normal; }
+.rates-grid .qb { border:1px solid var(--line); border-radius:999px; padding:5px 12px; font-size:.82rem; background:var(--card); white-space:nowrap; }
 .rates-label { padding-top:8px; }
 @media (max-width: 699px) {
   .rates-top { flex-direction:column; gap:4px; }
   .rates-label { padding-top:0; }
   .rates-grid { width:100%; }
-  .rates-grid .qb { font-size:.78rem; padding:5px 9px; }
+  .rates-grid .qb { font-size:.82rem; padding:5px 12px; min-height:40px; }
+  .rates-grid .qb small.muted { display:none; }
 }
 
 /* topo: relógios discretos (só Brasília em destaque), juros sem cor de bom/ruim */
