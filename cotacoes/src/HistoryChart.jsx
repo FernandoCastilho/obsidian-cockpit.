@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
+import { flagSvg } from './flags.js'
 
 const H = 240
 const M = { t: 12, r: 16, b: 28, l: 58 }
@@ -194,7 +195,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
     <article className="chart" style={{ '--series': color }}>
       <header>
         <h3>
-          <i className="swatch" /> {h.data?.source ?? currency.code}/BRL
+          <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(currency.code, 'width="24" height="16"') }} /> {h.data?.source ?? currency.code}/BRL
           <small>{seriesName(currency, h.data?.source)}</small>
           <Explain id="historico" />
         </h3>
