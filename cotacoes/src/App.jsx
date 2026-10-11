@@ -477,11 +477,12 @@ export default function App() {
 
   return (
     <>
-    <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
+    <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     <div className="clocks-top">
       <BrasiliaClock />
       <Clock codes={['USD', 'EUR', 'JPY', 'CNH']} />
     </div>
+    <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
     <main className="app">
       {update && (
         <div className="update-notice" role="status">
@@ -518,7 +519,6 @@ export default function App() {
             : 'Carregando…'}
         {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
       </p>
-      <Nav tab={tab} onTab={(id) => goto(id)} />
 
       {tab === 'resumo' && (
         <>

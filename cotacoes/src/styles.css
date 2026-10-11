@@ -487,3 +487,19 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .pair-slash { color:var(--mut); }
 .pair-tile .more { margin-left:auto; }
 .chart h3 .flag { vertical-align:middle; margin-right:2px; }
+
+/* topo: menu fixo, depois relógios e juros (parados, cabendo na tela) */
+@media (min-width: 700px) {
+  .nav-top { position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid var(--line); }
+  .nav-top .tabs { position:static; max-width:1200px; margin:0 auto; padding:4px 16px; border:0; }
+}
+.rates-top { position:static; max-width:1200px; margin:0 auto; border-bottom:0; align-items:flex-start; padding:8px 16px 0; }
+.rates-grid { display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
+.rates-grid .qb { border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-size:.82rem; background:var(--card); white-space:normal; }
+.rates-label { padding-top:8px; }
+@media (max-width: 699px) {
+  .rates-top { flex-direction:column; gap:4px; }
+  .rates-label { padding-top:0; }
+  .rates-grid { width:100%; }
+  .rates-grid .qb { font-size:.78rem; padding:5px 9px; }
+}
