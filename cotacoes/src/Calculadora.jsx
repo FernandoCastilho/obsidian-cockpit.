@@ -5,6 +5,7 @@ import DateCheck from './DateCheck.jsx'
 import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
+import HBars from './HBars.jsx'
 import Finimp from './Finimp.jsx'
 import Giro from './Giro.jsx'
 import Aplicacao from './Aplicacao.jsx'
@@ -176,6 +177,13 @@ function OperacaoDi({ curves, hol }) {
                       : `Mais barato: resgatar a aplicação hoje (economia de ${brl(Math.abs(r.diff))})`}
                     <small> · custo de resgatar {brl(r.refGain)} × custo do empréstimo {brl(r.op.gain)} · prazo {calDays} dias corridos = {r.d} dias úteis até {dm(end)}</small>
                   </p>
+                  <HBars
+                    title="Custo de cada caminho em reais"
+                    rows={[
+                      { label: 'Resgatar a aplicação', value: r.refGain, text: brl(r.refGain), strong: !r.good },
+                      { label: 'Tomar o empréstimo', value: r.op.gain, text: brl(r.op.gain), strong: r.good },
+                    ]}
+                  />
                   <div className="options">
                     <section className={`opt${r.good ? '' : ' win'}`}>
                       <h4>Resgatar a aplicação hoje{!r.good && <span className="badge-best">Melhor</span>}</h4>

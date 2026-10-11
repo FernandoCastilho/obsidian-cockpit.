@@ -40,7 +40,7 @@ function RateChart({ id, title, subtitle, color, points, fmt, label, note, actio
         {ok ? (
           <Plot points={points} width={width} color={color} code={id} fmt={fmt} label={label} nice />
         ) : (
-          <div className="placeholder" style={{ height: 240 }}>Sem dados no período.</div>
+          <div className="placeholder" style={{ height: 120 }}>Sem dados no período.</div>
         )}
       </div>
       {note && <p className="status">{note}</p>}

@@ -91,7 +91,16 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
               {g.series.map((s) => {
                 const color = SHADES[compare.findIndex((c) => c.date === s.date) % SHADES.length]
                 const d = s.pts.map((p, i) => `${i ? 'L' : 'M'}${g.X(p).toFixed(1)},${g.Y(p[1]).toFixed(1)}`).join('')
-                return <path key={s.date} d={d} fill="none" stroke={color} strokeWidth={s.id === 'hoje' ? 2.5 : 1.6} strokeLinejoin="round" strokeLinecap="round" opacity={s.id === 'hoje' ? 1 : 0.85} />
+                const lastP = s.pts[s.pts.length - 1]
+                return (
+                  <g key={s.date}>
+                    <path d={d} fill="none" stroke={color} strokeWidth={s.id === 'hoje' ? 2.5 : 1.6} strokeLinejoin="round" strokeLinecap="round" opacity={s.id === 'hoje' ? 1 : 0.85} />
+                    {s.id === 'hoje' && s.pts.map((p) => <circle key={p[0]} cx={g.X(p)} cy={g.Y(p[1])} r="2.6" fill={color} />)}
+                    {s.id === 'hoje' && lastP && (
+                      <text x={g.X(lastP)} y={g.Y(lastP[1]) - 9} textAnchor="end" className="vlabel">{pct(lastP[1])}</text>
+                    )}
+                  </g>
+                )
               })}
               {hp && <line x1={g.X(hp)} x2={g.X(hp)} y1={M.t} y2={H - M.b} className="cross" pointerEvents="none" />}
             </svg>
