@@ -304,43 +304,29 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   )
 }
 
-// Faixa de juros fixa no topo do app (todas as abas): rótulo com "?" e os indicadores rolando.
+// Faixa de juros no topo do app (todas as abas): rótulo com "?" e os indicadores parados, todos visíveis na tela (quebram de linha se faltar espaço).
 export function RatesTop({ macro, curves, onOpen }) {
   const rates = rateTiles(macro.data, curves.data)
-  const [paused, setPaused] = useState(false)
   return (
     <div className="rates-top">
       <span className="rates-label">Juros <Explain id="faixaJuros" /></span>
-      <RatesBar rates={rates} onOpen={onOpen} paused={paused} />
-      <button type="button" className="rates-pause" aria-pressed={paused} aria-label={paused ? 'Retomar a rolagem dos juros' : 'Pausar a rolagem dos juros'} onClick={() => setPaused((p) => !p)}>{paused ? '▶' : '❚❚'}</button>
-    </div>
-  )
-}
-
-// Faixa rolante dos juros: valor e variação (bps) de cada indicador; toque abre a aba Juros.
-function RatesBar({ rates, onOpen, paused }) {
-  if (!rates.length) return <p className="status">Juros indisponíveis no momento.</p>
-  const set = rates.length < 8 ? [...rates, ...rates] : rates
-  const seconds = Math.max(30, set.length * 6)
-  return (
-    <div className={`wire quote-bar${paused ? ' paused' : ''}`} role="region" aria-label={`Juros: ${rates.map((r) => `${r.label} ${p2(r.value)}%`).join('; ')}. A faixa rola e pausa ao passar o mouse ou no botão.`}>
-      <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
-        {[0, 1].map((k) => (
-          <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>
-            {set.map((r, n) => (
-              <button type="button" key={`${r.key}-${n}`} className="qb" onClick={onOpen} tabIndex={k === 1 ? -1 : undefined} title={r.sub}>
-                <b className="tk">{r.label}</b> {p2(r.value)}%
-                {r.delta != null && (
-                  <span className={`pct ${toneOf(r.delta)}`}>
-                    {' '}<Arrow v={r.delta} /> {bps(r.delta)}
-                  </span>
-                )}
-                <small className="muted"> {r.sub}</small>
-              </button>
-            ))}
-          </span>
-        ))}
-      </div>
+      {rates.length ? (
+        <div className="rates-grid" role="region" aria-label={`Juros: ${rates.map((r) => `${r.label} ${p2(r.value)}%`).join('; ')}`}>
+          {rates.map((r) => (
+            <button type="button" key={r.key} className="qb" onClick={onOpen} title={r.sub}>
+              <b className="tk">{r.label}</b> {p2(r.value)}%
+              {r.delta != null && (
+                <span className={`pct ${toneOf(r.delta)}`}>
+                  {' '}<Arrow v={r.delta} /> {bps(r.delta)}
+                </span>
+              )}
+              <small className="muted"> {r.sub}</small>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="status">Juros indisponíveis no momento.</p>
+      )}
     </div>
   )
 }
