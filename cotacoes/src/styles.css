@@ -452,3 +452,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .hbar-track i.strong { background:var(--accent); }
 .hbar-val { font-variant-numeric:tabular-nums; min-width:96px; text-align:right; }
 @media (max-width: 560px) { .hbar { grid-template-columns:1fr auto; } .hbar-track { grid-column:1 / -1; order:3; } }
+
+.chip-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.chart-legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 2px; font-size:.85rem; color:var(--mut); }
