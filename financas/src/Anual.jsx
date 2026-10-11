@@ -1,5 +1,5 @@
 import { summarizeYear } from './model.js'
-import { plain, monthShort } from './format.js'
+import { wholeNumber as plain, monthShort } from './format.js'
 
 const sum = (a) => a.reduce((x, y) => x + y, 0)
 
@@ -9,7 +9,7 @@ export default function Anual({ data, year, pessoa }) {
   return (
     <section className="panel">
       <h2>{year}: realizado por mês</h2>
-      <p className="mut small">Despesas por categoria. O valor menor abaixo é o que ainda vai vencer.</p>
+      <p className="mut small">Valores em reais, sem centavos. Despesas por categoria; o valor menor abaixo é o que ainda vai vencer.</p>
       <div className="scroll">
         <table className="grid">
           <thead>
@@ -22,7 +22,7 @@ export default function Anual({ data, year, pessoa }) {
           <tbody>
             {y.linhas.map((l) => (
               <tr key={l.id}>
-                <th>{l.nome}</th>
+                <th className={l.id === '_sem' ? 'warn-text' : ''}>{l.id === '_sem' ? 'Sem categoria' : l.nome}</th>
                 {l.celulas.map((c, i) => (
                   <td key={i}>
                     {c.r ? plain(c.r) : '·'}

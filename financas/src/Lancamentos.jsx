@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { money, dayLabel } from './format.js'
+import { dayLabel } from './format.js'
+import Money from './Money.jsx'
 
 const TIPO_LABEL = { transferencia: 'Transferência', pagto_fatura: 'Fatura', investimento: 'Investimento', reembolso: 'Reembolso' }
 
@@ -50,7 +51,7 @@ export default function Lancamentos({ data, month, pessoa }) {
                     {l.status !== 'realizado' ? ` · ${l.status}` : ''}
                   </small>
                 </div>
-                <span className={`num ${l.valor < 0 ? '' : 'pos'} ${l.tipo === 'transferencia' || l.tipo === 'pagto_fatura' || l.tipo === 'investimento' ? 'mut' : ''}`}>{money(l.valor)}</span>
+                <span className={`num ${l.valor < 0 ? '' : 'pos'} ${l.tipo === 'transferencia' || l.tipo === 'pagto_fatura' || l.tipo === 'investimento' ? 'mut' : ''}`}><Money v={l.valor} /></span>
               </li>
             ))}
           </ul>

@@ -15,3 +15,12 @@ export const shiftMonth = (m, d) => {
   return `${t.getUTCFullYear()}-${String(t.getUTCMonth() + 1).padStart(2, '0')}`
 }
 export const currentMonth = () => new Date().toISOString().slice(0, 7)
+const int = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 })
+export const wholeNumber = (v) => int.format(Math.round(v || 0))
+const group = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 })
+// Partes do valor, para dar menos peso ao "R$" e aos centavos.
+export const moneyParts = (v) => {
+  const abs = Math.abs(v || 0)
+  const [i, c] = abs.toFixed(2).split('.')
+  return { neg: (v || 0) < 0 && abs >= 0.005, whole: group.format(Number(i)), cents: c }
+}

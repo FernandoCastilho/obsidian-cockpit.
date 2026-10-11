@@ -103,10 +103,10 @@ export default function App() {
           ))}
         </nav>
         <div className="actions">
-          <button className="primary" onClick={atualizar} disabled={busy}>
+          <button onClick={atualizar} disabled={busy}>
             {busy ? 'Atualizando…' : 'Atualizar dados'}
           </button>
-          <button onClick={() => setAjustes(true)} aria-label="Ajustes">
+          <button className="ghost" onClick={() => setAjustes(true)} aria-label="Ajustes">
             Ajustes
           </button>
         </div>
