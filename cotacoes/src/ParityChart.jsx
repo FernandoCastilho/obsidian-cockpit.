@@ -64,7 +64,7 @@ export default function ParityChart({ color, start, end, day }) {
             <small>{s.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={label} intraday={intraday} fmt={fmt} label={label} />}
+        {pts && <Plot points={pts} width={width} color={color} code={label} intraday={intraday} fmt={fmt} vfmt={num} labels label={label} />}
       </div>
       {pts && (
         <details className="table">
