@@ -585,7 +585,7 @@ export default function App() {
       <footer>
         <details className="premissas">
           <summary>Fontes e avisos</summary>
-          <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNY/BRL (onshore); CNH (offshore) por cruzamento quando o CNY está parado</p>
+          <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
           <p><i>{DISCLAIMER}</i></p>
         </details>
         <p>

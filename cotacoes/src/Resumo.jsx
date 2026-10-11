@@ -57,7 +57,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
       <span className="tile-head">
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="26" height="18"') }} />
         <span className="tile-name">
-          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL{code === 'CNH' && (quote?.source === 'CNH' ? ' offshore' : ' onshore')}</small>
+          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL{code === 'CNH' && quote?.source === 'CNH' && ' offshore'}</small>
         </span>
       </span>
       <span className="tile-body">

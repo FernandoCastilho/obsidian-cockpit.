@@ -4,12 +4,12 @@ export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
   { code: 'EUR', name: 'Euro', flag: '🇪🇺', sources: ['EUR'] },
   { code: 'JPY', name: 'Iene japonês', flag: '🇯🇵', sources: ['JPY'] },
-  // Código interno CNH; a série usada de fato é o CNY (onshore), ou o CNH (offshore) por cruzamento quando o CNY está parado
-  { code: 'CNH', name: 'Yuan', flag: '🇨🇳', sources: ['CNH', 'CNY'] },
+  // Yuan offshore (CNH): calculado pelo cruzamento USD/BRL ÷ USD/CNH. O CNY onshore não é mais usado.
+  { code: 'CNH', name: 'Yuan', flag: '🇨🇳', sources: ['CNH'] },
 ]
 
-// Nome conforme a série realmente usada: CNY é o yuan onshore; CNH, o offshore (calculado por cruzamento).
-export const seriesName = (currency, source) => (currency.code === 'CNH' ? (source === 'CNH' ? 'Yuan offshore (CNH, por cruzamento)' : 'Yuan onshore (CNY)') : currency.name)
+// Nome conforme a série realmente usada: o yuan é sempre o offshore (CNH); o histórico antigo pode vir do CNY.
+export const seriesName = (currency, source) => (currency.code === 'CNH' ? (source === 'CNY' ? 'Yuan (CNY, histórico)' : 'Yuan offshore (CNH)') : currency.name)
 
 const BASE = 'https://economia.awesomeapi.com.br/json/last'
 
@@ -26,10 +26,9 @@ export function friendlyError(msg) {
 
 // A chave da AwesomeAPI fica só no robô do GitHub (coleta central); o navegador não a usa, e a consulta direta (botão Atualizar) usa a cota anônima.
 
-// Uma única consulta traz as quatro moedas (antes eram quatro): o yuan vem pelo CNY e só é trocado pelo cruzamento se estiver parado.
-const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'CNYBRL' }
-const SOURCE = { USD: 'USD', EUR: 'EUR', JPY: 'JPY', CNH: 'CNY' }
-const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL,USD-CNH'
+// Uma única consulta traz as quatro moedas; o yuan (CNH) sai do cruzamento USD/BRL ÷ USD/CNH.
+const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
+const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 
 // Se a fonte devolveu 429 (cota), não insiste por 60 s: as reservas atendem enquanto isso.
 let blockedUntil = 0
@@ -59,7 +58,7 @@ const toQuote = (q, source) => ({
   timestamp: Number(q.timestamp) * 1000,
 })
 
-// Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH (o CNH negocia durante os feriados chineses, o CNY onshore não).
+// Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH.
 async function fetchCnhCross(brl, preloaded, signal) {
   const cnh = preloaded ?? (await getJson(`${BASE}/USD-CNH`, 'USD-CNH', signal)).USDCNH
   if (!cnh) throw new Error('USD-CNH: resposta sem cotação')
@@ -75,8 +74,6 @@ async function fetchCnhCross(brl, preloaded, signal) {
     timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,
   }
 }
-
-const STALE_MS = 6 * 3600e3
 
 // Reserva quando a fonte principal falha (ex.: limite de requisições): referência diária do BCE, sem compra/venda separadas.
 // Guardada por 30 min: o BCE só atualiza uma vez por dia.
@@ -97,18 +94,20 @@ async function fetchEcb(code, signal) {
 
 async function complete(code, batch, batchError, signal) {
   const errors = batchError ? [batchError] : []
-  const raw = batch?.[PAIRS[code]]
-  let quote = raw ? toQuote(raw, SOURCE[code] === 'CNY' ? 'CNY' : code) : null
-  if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação`)
-  // CNH sem cotação fresca (ex.: mercado onshore fechado por feriado): tenta o cruzamento
-  if (code === 'CNH' && batch?.USDBRL && (!quote || Date.now() - quote.timestamp > STALE_MS)) {
-    try {
-      const cross = await fetchCnhCross(batch.USDBRL, batch.USDCNH, signal)
-      if (!quote || cross.timestamp > quote.timestamp) quote = cross
-    } catch (e) {
-      if (e.name === 'AbortError') throw e
-      errors.push(e.message)
+  let quote = null
+  if (code === 'CNH') {
+    if (batch?.USDBRL) {
+      try {
+        quote = await fetchCnhCross(batch.USDBRL, batch.USDCNH, signal)
+      } catch (e) {
+        if (e.name === 'AbortError') throw e
+        errors.push(e.message)
+      }
     }
+  } else {
+    const raw = batch?.[PAIRS[code]]
+    quote = raw ? toQuote(raw, code) : null
+    if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação`)
   }
   if (!quote) {
     try {

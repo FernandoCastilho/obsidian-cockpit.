@@ -78,14 +78,15 @@ test('cotações: uma única consulta para as quatro moedas (poupa a cota da API
   const real = globalThis.fetch
   globalThis.fetch = async (url) => {
     calls.push(String(url))
-    return { ok: true, status: 200, json: async () => ({ USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), CNYBRL: q(0.74) }) }
+    return { ok: true, status: 200, json: async () => ({ USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), USDCNH: q(7.1) }) }
   }
   const { results: r } = await fetchQuotes()
   globalThis.fetch = real
   assert.equal(calls.length, 1)
-  assert.match(calls[0], /USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL/)
+  assert.match(calls[0], /USD-BRL,EUR-BRL,JPY-BRL,USD-CNH/)
   assert.equal(r.USD.quote.bid, 5.3)
-  assert.equal(r.CNH.quote.source, 'CNY')
+  assert.equal(r.CNH.quote.source, 'CNH')
+  assert.ok(Math.abs(r.CNH.quote.bid - 5.3 / 7.11) < 1e-9)
 })
 
 test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () => {
@@ -110,7 +111,7 @@ test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () =>
 test('cotações: lê a coleta central sem consultar a API; arquivo velho cai para a consulta direta', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js')
   const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b), low: String(b), pctChange: '0', timestamp: String(Math.floor(Date.now() / 1000)) })
-  const quotes = { USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), CNYBRL: q(0.74), USDCNH: q(7.1) }
+  const quotes = { USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), USDCNH: q(7.1) }
   const calls = []
   const real = globalThis.fetch
   globalThis.fetch = async (url) => {
@@ -184,9 +185,8 @@ test('fila de notícias: une a mesma matéria em vários tickers, ordena por hor
 import { CURRENCIES, seriesName } from '../src/useQuotes.js'
 test('rótulo do yuan acompanha a série realmente usada', () => {
   const cnh = CURRENCIES.find((c) => c.code === 'CNH')
-  assert.match(seriesName(cnh, 'CNY'), /onshore \(CNY\)/)
   assert.match(seriesName(cnh, 'CNH'), /offshore/)
-  assert.match(seriesName(cnh, undefined), /onshore/)
+  assert.match(seriesName(cnh, undefined), /offshore/)
   assert.equal(seriesName(CURRENCIES[0], 'USD'), CURRENCIES[0].name)
 })
 
