@@ -17,7 +17,7 @@ export default function Hoje({ data, mes, pessoa, irPara }) {
     <div className="tela">
       <section className="heroi">
         <p className="rotulo">Resultado de {nomeMes(mes)}</p>
-        <Dinheiro valor={r.resultado} grande sinal />
+        <span className="destaque"><Dinheiro valor={r.resultado} grande sinal /></span>
         <p className="heroi-sub">
           Entrou <b><Dinheiro valor={r.receitas} /></b> · Saiu <b><Dinheiro valor={r.despesasLiquidas} /></b>
         </p>
