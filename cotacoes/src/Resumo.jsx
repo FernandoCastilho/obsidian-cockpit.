@@ -313,7 +313,7 @@ export function RatesTop({ macro, curves, onOpen }) {
       {rates.length ? (
         <div className="rates-grid" role="region" aria-label={`Juros: ${rates.map((r) => `${r.label} ${p2(r.value)}%`).join('; ')}`}>
           {rates.map((r) => (
-            <button type="button" key={r.key} className="qb" onClick={onOpen} title={r.sub}>
+            <button type="button" key={r.key} className="qb" onClick={onOpen} title={`${r.sub}${r.delta != null && r.prevAt ? ` · variação sobre a publicação anterior (${new Date(r.prevAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })})` : ''}`}>
               <b className="tk">{r.label}</b> {p2(r.value)}%
               {r.delta != null && (
                 <span className="qb-delta">
