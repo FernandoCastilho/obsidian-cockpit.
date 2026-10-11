@@ -55,7 +55,7 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
 }
 
 // ---- Histórico diário (360 dias) por moeda: lido por todos os usuários; a chave da API fica só aqui ----
-const HIST_SOURCES = { USD: ['USD'], EUR: ['EUR'], JPY: ['JPY'], CNH: ['CNH', 'CNY'] }
+const HIST_SOURCES = { USD: ['USD'], EUR: ['EUR'], JPY: ['JPY'] } // o yuan (CNH) sai do cruzamento USD/BRL ÷ USD/CNH
 export const HISTORY_TTL = 6 * 3600e3
 const ymd = (t) => new Date(t).toISOString().slice(0, 10)
 
@@ -74,7 +74,7 @@ export function parseDaily(rows) {
 export async function collectHistory({ dir, key, fetchFn = fetch, now = Date.now(), ttl = HISTORY_TTL }) {
   const file = join(dir, 'history.json')
   const prev = await readJson(file)
-  if (prev?.generatedAt && now - prev.generatedAt < ttl) return { ok: true, skipped: true }
+  if (prev?.generatedAt && now - prev.generatedAt < ttl && prev.series?.CNH?.source === 'CNH') return { ok: true, skipped: true }
   const series = { ...(prev?.series ?? {}) }
   const errors = []
   for (const [code, sources] of Object.entries(HIST_SOURCES)) {
@@ -92,6 +92,23 @@ export async function collectHistory({ dir, key, fetchFn = fetch, now = Date.now
       }
     }
     await sleep(500)
+  }
+  // Yuan offshore: dólar em reais ÷ dólar em yuan (CNH), dia a dia
+  try {
+    const url = `https://economia.awesomeapi.com.br/json/daily/USD-CNH/360${key ? `?token=${encodeURIComponent(key)}` : ''}`
+    const res = await fetchFn(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
+    if (!res.ok) throw new Error(`USD-CNH: HTTP ${res.status}`)
+    const cnh = new Map(parseDaily(await res.json()).map((p) => [ymd(p.t), p]))
+    const points = (series.USD?.points ?? [])
+      .filter((p) => cnh.has(ymd(p.t)))
+      .map((p) => {
+        const c = cnh.get(ymd(p.t))
+        return { t: p.t, bid: p.bid / c.bid, high: p.high / c.low, low: p.low / c.high }
+      })
+    if (points.length < 30) throw new Error('CNH: poucos dados')
+    series.CNH = { source: 'CNH', points }
+  } catch (e) {
+    errors.push(e.message)
   }
   if (!Object.keys(series).length) return { ok: false, error: errors.join(' | ') }
   await mkdir(dir, { recursive: true })
