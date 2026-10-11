@@ -21,3 +21,12 @@ test('manifesto instalável e com caminhos relativos (a página fica em /financa
   assert.equal(manifest.display, 'standalone')
   for (const i of manifest.icons) assert.ok(!i.src.startsWith('/'), i.src)
 })
+
+test('config pública: ID de cliente no formato do Google e sem chave secreta no código', async () => {
+  const { DEFAULT_CLIENT_ID, DEFAULT_SHEET_ID } = await import('../src/config.js')
+  assert.match(DEFAULT_CLIENT_ID, /^\d+-[a-z0-9]+\.apps\.googleusercontent\.com$/)
+  assert.match(DEFAULT_SHEET_ID, /^[\w-]{20,}$/)
+  const todos = ['../src/App.jsx', '../src/auth.js', '../src/config.js', '../src/sheets.js'].map((f) => rf(new URL(f, import.meta.url), 'utf8')).join('\n')
+  assert.ok(!/GOCSPX-/.test(todos), 'chave secreta do cliente OAuth não pode estar no código')
+  assert.ok(!/client_secret/i.test(todos))
+})

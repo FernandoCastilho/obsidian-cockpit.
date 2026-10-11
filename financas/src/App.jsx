@@ -4,13 +4,15 @@ import { clearToken, getToken, hasToken, revoke } from './auth.js'
 import { fetchTabs } from './sheets.js'
 import { demoTabs } from './demo.js'
 import { currentMonth, monthName, shiftMonth } from './format.js'
+import { DEFAULT_CLIENT_ID, DEFAULT_SHEET_ID } from './config.js'
 import Mes from './Mes.jsx'
 import Lancamentos from './Lancamentos.jsx'
 import Orcamento from './Orcamento.jsx'
 import Anual from './Anual.jsx'
 import Ajustes from './Ajustes.jsx'
 
-const DEFAULT_SHEET = import.meta.env.VITE_SHEET_ID || '1jPVxzkRRyS-vrYd5sL50sL70itA3hUSyXfaJ0CxlD9o'
+const DEFAULT_SHEET = import.meta.env.VITE_SHEET_ID || DEFAULT_SHEET_ID
+const DEFAULT_CLIENT = import.meta.env.VITE_GOOGLE_CLIENT_ID || DEFAULT_CLIENT_ID
 const VIEWS = [['mes', 'Mês'], ['lanc', 'Lançamentos'], ['orc', 'Orçamento'], ['ano', 'Anual']]
 
 const store = {
@@ -29,7 +31,7 @@ const store = {
 }
 
 export default function App() {
-  const [cfg, setCfg] = useState(() => ({ clientId: store.get('clientId', import.meta.env.VITE_GOOGLE_CLIENT_ID || ''), sheetId: store.get('sheetId', DEFAULT_SHEET) }))
+  const [cfg, setCfg] = useState(() => ({ clientId: store.get('clientId', '') || DEFAULT_CLIENT, sheetId: store.get('sheetId', '') || DEFAULT_SHEET }))
   const [cache, setCache] = useState(() => store.get('cache', null))
   const [demo, setDemo] = useState(false)
   const [busy, setBusy] = useState(false)

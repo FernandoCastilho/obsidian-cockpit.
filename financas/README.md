@@ -43,6 +43,6 @@ depois do login Google. O aparelho guarda uma cópia local (para abrir sem rede)
 3. Em *Origens JavaScript autorizadas*, adicione só a origem (sem caminho): `https://fernandocastilho.github.io` e, para testar, `http://localhost:5173`.
 4. Na tela de consentimento (tipo *Externo*, em modo de teste), adicione como **usuários de teste** o seu e-mail e o da Iris.
    A Iris também precisa de acesso de leitura à planilha: compartilhe a planilha com ela no Drive.
-5. No app, abra **Ajustes**, cole o ID do cliente e salve. O escopo pedido é só leitura (`spreadsheets.readonly`).
+5. O ID do cliente fica em `src/config.js` (não é segredo; o app não usa chave secreta). Em **Ajustes** é possível trocá-lo neste aparelho. O escopo pedido é só leitura (`spreadsheets.readonly`).
 
 O ID da planilha já vem preenchido. Para outro valor, use Ajustes ou `VITE_SHEET_ID` e `VITE_GOOGLE_CLIENT_ID` no build.
