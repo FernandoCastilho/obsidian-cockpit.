@@ -20,4 +20,4 @@ Em cada app: `npm test` (`node --test test/*.test.mjs`). `cotacoes` e `caixa` ta
 ## Convenções
 
 - Texto de interface, commits e comentários em português do Brasil.
-- Testes de `caixa-central` usam dados fictícios; não commite extratos reais.
+- Testes de `caixa-central` usam dados fictícios. Extratos reais não vão para o git; `caixa-central/.local/` está no `.gitignore` para arquivos locais.
