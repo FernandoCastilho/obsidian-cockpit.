@@ -2,7 +2,7 @@ name: Deploy cotacoes e caixa (GitHub Pages)
 
 on:
   push:
-    branches: [main]
+    branches: [claude/obsidian-plugin-analysis-bagjz3]
     paths: ['cotacoes/**', 'caixa/**', '.github/workflows/pages.yml']
   schedule:
     # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.

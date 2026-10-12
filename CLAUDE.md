@@ -15,7 +15,7 @@ Em cada app: `npm test` (`node --test test/*.test.mjs`). `cotacoes` e `caixa` ta
 
 ## Deploy
 
-`.github/workflows/pages.yml` roda em push na `main` (só se mudar `cotacoes/`, `caixa/` ou o próprio workflow) e por cron em dias úteis. Ele testa, coleta dados, builda os dois apps e publica no GitHub Pages. Mudou o fluxo de build de um app: confira o passo "App Caixa" no workflow.
+`.github/workflows/pages.yml` roda em push no branch padrão (`claude/obsidian-plugin-analysis-bagjz3`; o repositório não tem `main`) (só se mudar `cotacoes/`, `caixa/` ou o próprio workflow) e por cron em dias úteis. Ele testa, coleta dados, builda os dois apps e publica no GitHub Pages. Mudou o fluxo de build de um app: confira o passo "App Caixa" no workflow.
 
 ## Convenções
 
