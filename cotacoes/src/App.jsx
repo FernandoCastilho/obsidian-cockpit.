@@ -603,7 +603,6 @@ export default function App() {
             )
           )}
           <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
-          <button type="button" className="btn" onClick={() => { setOpen(null); goto('moedas') }}>Ver todas as moedas</button>
         </Sheet>
       )}
     </main>
