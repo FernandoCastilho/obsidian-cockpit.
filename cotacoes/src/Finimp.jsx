@@ -38,13 +38,13 @@ function Rows({ items, setItems, blank, render, addLabel }) {
 export default function Finimp({ hol }) {
   const [currency, setCurrency] = useState('USD')
   const [disb, setDisb] = useState([{ date: '', amount: '' }])
-  const [structure, setStructure] = useState('')
+  const [structure, setStructure] = useState('bullet')
   const [maturity, setMaturity] = useState('')
   const [interest, setInterest] = useState([{ date: '' }])
   const [amort, setAmort] = useState([{ date: '', kind: 'pct', amount: '' }])
   const [rate, setRate] = useState('')
-  const [rule, setRule] = useState('')
-  const [dayCount, setDayCount] = useState('')
+  const [rule, setRule] = useState('prop')
+  const [dayCount, setDayCount] = useState('ACT/360')
   const [round, setRound] = useState(false)
   const [copied, setCopied] = useState(false)
   const [more, setMore] = useState(false)
@@ -132,26 +132,13 @@ export default function Finimp({ hol }) {
   return (
     <article className="chart finimp calc-split">
       <div className="calc-in">
-      <p className="status note">Estimativa com os dados que você informa; nada é buscado nem presumido. Não é CET regulatório.</p>
-      <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
-      <div className="calc-form">
-        <label>
-          Moeda
-          <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-            {['USD', 'EUR', 'JPY'].map((c) => <option key={c}>{c}</option>)}
-          </select>
-        </label>
-        <button type="button" className="btn small" onClick={fill}>Preencher exemplo</button>
+      <div className="fin-step">
+      <div className="fin-step-head">
+        <h3 className="calc-sub"><span className="fin-n">1</span> Moeda e valor</h3>
+        <button type="button" className="btn small ghost" onClick={fill}>Exemplo</button>
       </div>
+      {seg(currency, setCurrency, [['USD', 'USD'], ['EUR', 'EUR'], ['JPY', 'JPY']], 'Moeda')}
 
-      <h3 className="calc-sub">Identificação</h3>
-      <div className="calc-form">
-        <label>Empresa<input value={empresa} onChange={(e) => setEmpresa(e.target.value)} autoComplete="organization" /></label>
-        <label>CNPJ<input inputMode="numeric" value={cnpj} onChange={(e) => setCnpj(e.target.value)} placeholder="00.000.000/0000-00" /></label>
-        <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
-      </div>
-
-      <h3 className="calc-sub">Desembolsos</h3>
       <Rows
         items={disb}
         setItems={setDisb}
@@ -165,7 +152,10 @@ export default function Finimp({ hol }) {
         )}
       />
 
-      <h3 className="calc-sub">Estrutura de pagamento</h3>
+      </div>
+
+      <div className="fin-step">
+      <h3 className="calc-sub"><span className="fin-n">2</span> Pagamento</h3>
       {seg(structure, setStructure, [['bullet', 'Bullet'], ['periodic', 'Juros periódicos'], ['amort', 'Amortizações']], 'Estrutura')}
       {structure === 'bullet' && <p className="status">Principal e juros pagos no vencimento. Os juros ficam acumulados a pagar; não são somados ao principal.</p>}
       {structure === 'periodic' && <p className="status">Principal no vencimento; juros pagos nas datas abaixo e no vencimento.</p>}
@@ -200,7 +190,10 @@ export default function Finimp({ hol }) {
         />
       )}
 
-      <h3 className="calc-sub">Taxa e regra de juros</h3>
+      </div>
+
+      <div className="fin-step">
+      <h3 className="calc-sub"><span className="fin-n">3</span> Taxa</h3>
       <div className="calc-form">
         <label>Taxa final (% a.a.)<input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder="ex.: 6,50" /></label>
         <div>
@@ -211,9 +204,22 @@ export default function Finimp({ hol }) {
           <span className="lbl">Convenção de dias <Explain id="convencao" /></span>
           {seg(dayCount, setDayCount, [['ACT/360', 'ACT/360'], ['ACT/365F', 'ACT/365F']], 'Convenção de contagem de dias')}
         </div>
-        <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
       </div>
 
+      </div>
+
+      <details className="fin-more">
+        <summary>Identificação e ajustes (opcional)</summary>
+        <div className="calc-form">
+        <label>Empresa<input value={empresa} onChange={(e) => setEmpresa(e.target.value)} autoComplete="organization" /></label>
+        <label>CNPJ<input inputMode="numeric" value={cnpj} onChange={(e) => setCnpj(e.target.value)} placeholder="00.000.000/0000-00" /></label>
+        <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
+      </div>
+        <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
+        </div>
+        <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
+        <p className="status note">Estimativa com os dados informados. Não é CET regulatório.</p>
+      </details>
 </div>
 <div className="calc-out" id="calc-out">
       <h3 className="calc-sub">Ficha da cotação</h3>
