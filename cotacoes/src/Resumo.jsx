@@ -5,6 +5,7 @@ import { fullWindow, useHistory, useIntraday } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
+import { shareQuotesImage } from './shareImage.js'
 import { rateTiles, topHeadlines } from './snapshot.js'
 import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
@@ -284,7 +285,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   return (
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /></h2>
+          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
               <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => setSparkId(s.id)}>
