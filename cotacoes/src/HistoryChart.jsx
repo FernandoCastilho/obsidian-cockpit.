@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMacro } from './useMacro.js'
 import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
@@ -189,6 +190,8 @@ export default function HistoryChart({ currency, color, start, end, day }) {
   const h = useSeries(currency, start, end, day)
   const [ref, width] = useWidth()
   const pts = h.status === 'ok' ? h.data.points : null
+  const macroH = useMacro()
+  const ptaxH = macroH.data?.ptaxHist?.[currency.code]
   const first = pts?.[0]
   const last = pts?.[pts.length - 1]
   const pct = first && last ? ((last.bid - first.bid) / first.bid) * 100 : null
@@ -233,7 +236,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
           <div className="scroll">
             <table>
               <thead>
-                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>}
+                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th><th>PTAX</th></tr>}
               </thead>
               <tbody>
                 {[...pts].reverse().map((p) => (
@@ -241,7 +244,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
                     {intraday ? (
                       <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
                     ) : (
-                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
+                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td><td>{ptaxH?.[new Date(p.t).toISOString().slice(0, 10)] ? brl(ptaxH[new Date(p.t).toISOString().slice(0, 10)]) : '—'}</td></>
                     )}
                   </tr>
                 ))}
