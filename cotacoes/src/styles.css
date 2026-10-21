@@ -568,3 +568,5 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .ficha-list dd { margin:0; text-align:right; font-size:.9rem; }
 .fin-step .calc-form > div { display:flex; flex-direction:column; align-items:stretch; gap:6px; text-align:left; }
 .fin-step .lbl { display:flex; align-items:center; gap:6px; }
+
+.img-share { background:none; border:1px solid var(--line); color:inherit; border-radius:8px; width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; margin-left:6px; vertical-align:middle; cursor:pointer; }
