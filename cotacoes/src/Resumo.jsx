@@ -166,7 +166,7 @@ function MultiPlot({ series, width, intraday }) {
   const H = 240
   const M = { t: 12, r: 64, b: 28, l: 52 }
   const [hover, setHover] = useState(null)
-  const norm = series.map((s) => ({ ...s, pts: s.points.map((p) => ({ t: p.t, v: (p.bid / s.points[0].bid - 1) * 100 })) }))
+  const norm = series.map((s) => ({ ...s, pts: s.points.map((p) => ({ t: p.t, v: (p.bid / s.points[0].bid - 1) * 100, bid: p.bid })) }))
   const all = norm.flatMap((s) => s.pts)
   const t0 = Math.min(...all.map((p) => p.t))
   const t1 = Math.max(...all.map((p) => p.t))
@@ -190,7 +190,7 @@ function MultiPlot({ series, width, intraday }) {
   }
   const at = (s, t) => s.pts.reduce((b, p) => (Math.abs(p.t - t) < Math.abs(b.t - t) ? p : b), s.pts[0])
   return (
-    <svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" aria-label="Variação percentual das moedas selecionadas no período" onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
+    <svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" aria-label="Variação percentual das moedas selecionadas no período" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
       {yTicks.map((v) => (
         <g key={v}>
           <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke="var(--line)" />
@@ -214,6 +214,29 @@ function MultiPlot({ series, width, intraday }) {
             const p = at(s, hover)
             return <circle key={s.code} cx={x(p.t)} cy={y(p.v)} r="3.5" fill={s.color} />
           })}
+          {(() => {
+            const bw = 150, bh = 22 + norm.length * 18
+            const hx = x(hover)
+            const bx = hx + 10 + bw > width - 4 ? hx - 10 - bw : hx + 10
+            const p0 = at(norm[0], hover)
+            return (
+              <g pointerEvents="none">
+                <rect x={bx} y={M.t} width={bw} height={bh} rx="8" fill="var(--card, #161b22)" stroke="var(--line)" opacity="0.96" />
+                <text x={bx + 10} y={M.t + 16} fontSize="11" fill="var(--mut)">{intraday ? new Date(p0.t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : new Date(p0.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</text>
+                {norm.map((s, k) => {
+                  const p = at(s, hover)
+                  const d = s.code === 'JPY' ? 4 : 4
+                  return (
+                    <text key={s.code} x={bx + 10} y={M.t + 34 + k * 18} fontSize="12" fill="var(--txt, #e6edf3)">
+                      <tspan fill={s.color} fontWeight="700">{s.code}</tspan>
+                      <tspan dx="6">{p.bid.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}</tspan>
+                      <tspan dx="6" fill={p.v > 0 ? '#3fb950' : p.v < 0 ? '#f85149' : 'var(--mut)'}>{pct(p.v)}</tspan>
+                    </text>
+                  )
+                })}
+              </g>
+            )
+          })()}
         </g>
       )}
     </svg>
