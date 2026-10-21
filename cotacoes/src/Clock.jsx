@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
+import { flagSvg } from './flags.js'
 
 // Relógio de cada praça, no fuso do mercado que representa.
 // open/close: horário aproximado de negociação local (dias úteis).
 export const ZONES = {
-  BRL: { city: 'São Paulo', short: 'SP', tz: 'America/Sao_Paulo', open: 9, close: 18 },
-  USD: { city: 'Nova York', short: 'NY', tz: 'America/New_York', open: 8, close: 17 },
-  GBP: { city: 'Londres', short: 'LDN', tz: 'Europe/London', open: 8, close: 17 },
-  JPY: { city: 'Tóquio', short: 'TYO', tz: 'Asia/Tokyo', open: 9, close: 17 },
-  CNH: { city: 'Xangai', short: 'SHA', tz: 'Asia/Shanghai', open: 9, close: 17 },
+  BRL: { flag: 'BRL', city: 'São Paulo', short: 'SP', tz: 'America/Sao_Paulo', open: 9, close: 18 },
+  USD: { flag: 'USD', city: 'Nova York', short: 'NY', tz: 'America/New_York', open: 8, close: 17 },
+  GBP: { flag: 'GBP', city: 'Londres', short: 'LDN', tz: 'Europe/London', open: 8, close: 17 },
+  JPY: { flag: 'JPY', city: 'Tóquio', short: 'TYO', tz: 'Asia/Tokyo', open: 9, close: 17 },
+  CNH: { flag: 'CNH', city: 'Xangai', short: 'SHA', tz: 'Asia/Shanghai', open: 9, close: 17 },
 }
 
 function useNow() {
@@ -34,13 +35,13 @@ function One({ zone, now }) {
     <span
       className="clock-one"
       title={`${zone.city} — mercado ${open ? 'aberto' : 'fechado'}`}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 4, whiteSpace: 'nowrap' }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 3, whiteSpace: 'nowrap' }}
     >
       <span
         aria-hidden="true"
         style={{ width: 7, height: 7, borderRadius: '50%', background: open ? '#22c55e' : '#9ca3af', display: 'inline-block' }}
       />
-      <small>{zone.short}</small>
+      <span className="clock-flag" aria-hidden="true" style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: flagSvg(zone.flag, 'width="18" height="12"') }} />
       <b>{part(now, zone.tz, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}</b>
     </span>
   )
@@ -55,7 +56,7 @@ export default function Clock({ codes: all }) {
       className="clock"
       role="timer"
       aria-label={codes.map((c) => ZONES[c].city).join(', ')}
-      style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between', gap: 8, overflowX: 'auto', fontSize: '0.8rem' }}
+      style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between', gap: 4, overflow: 'hidden', fontSize: '0.78rem' }}
     >
       {codes.map((c) => (
         <One key={c} zone={ZONES[c]} now={now} />
