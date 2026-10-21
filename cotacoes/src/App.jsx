@@ -571,6 +571,8 @@ export default function App() {
         </>
       )}
 
+      {tab === 'config' && (
+ <>
       <Novidades />
       <footer>
         <details className="premissas">
@@ -584,6 +586,8 @@ export default function App() {
           </button>
         </p>
       </footer>
+        </>
+      )}
 
       {open && (
         <Sheet onClose={() => setOpen(null)}>
