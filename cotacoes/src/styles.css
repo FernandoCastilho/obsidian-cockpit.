@@ -621,3 +621,10 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .scenario-scroll:focus-visible { outline:2px solid var(--blue, #557dff); outline-offset:3px; }
 .scenario-table caption { text-align:left; color:var(--mut); font-size:.75rem; padding:0 0 8px; }
 .scenarios .status { display:block; font-size:.8rem; line-height:1.5; margin:12px 0; }
+
+/* Brent é commodity em USD/barril, separado dos cinco quadros de câmbio. */
+.oil-tile { --series:#ca9c49; cursor:default; }
+.oil-source { color:var(--mut); font-size:.75rem; }
+.oil-tile .pct small { display:block; }
+@media (min-width:700px) { .tiles .pair-tile { grid-column:auto; } }
+@media (max-width:699px) { .tiles .oil-tile { grid-column:1 / -1; } }

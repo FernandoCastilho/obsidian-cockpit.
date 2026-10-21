@@ -1,4 +1,5 @@
 import Expandable from './Expandable.jsx'
+import OilTile from './OilTile.jsx'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
@@ -394,6 +395,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
             <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={onOpen} color={colors?.[c.code]} />
           ))}
           <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} color={colors?.PAR} />
+          <OilTile spark={spark} />
         </div>
         <ResumoChart colors={colors} spark={spark} />
       </section>
