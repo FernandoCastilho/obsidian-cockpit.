@@ -8,7 +8,7 @@ export default function Pracas({ pracas, onChange, label = 'Praças' }) {
     <div className="pracas">
       <span className="lbl">{label} <Explain id="feriados" /></span>
       <div className="chips" role="group" aria-label={label}>
-        {CALENDARS.map((c) => (
+        {CALENDARS.filter((c) => !c.hidden).map((c) => (
           <button key={c.id} type="button" aria-pressed={pracas.includes(c.id)} title={c.label} onClick={() => toggle(c.id)}>
             {c.short}
           </button>
