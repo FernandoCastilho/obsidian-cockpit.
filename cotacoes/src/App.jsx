@@ -12,7 +12,6 @@ import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
 import Feriados from './Feriados.jsx'
 import { useHolidays } from './useHolidays.js'
-import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
@@ -317,10 +316,7 @@ export default function App() {
       )}
 
       {tab === 'cenarios' && (
-        <>
-          <Agenda />
-          <Projecoes />
-        </>
+        <Projecoes macro={macro} />
       )}
 
       {tab === 'feriados' && <Feriados hol={hol} />}

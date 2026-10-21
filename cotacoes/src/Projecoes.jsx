@@ -1,105 +1,52 @@
 import { useEffect, useState } from 'react'
-import Explain from './Explain.jsx'
+import { INDICATORS, INSTITUTIONS, scenarioValue } from './scenarios.js'
 
-const fmtDate = (d) => (d ? new Date(`${d}T12:00:00`).toLocaleDateString('pt-BR') : '')
-const cell = (v, decimals = 2) =>
-  v === null || v === undefined || v === ''
-    ? '—'
-    : typeof v === 'number'
-      ? v.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
-      : String(v)
+const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value ?? '') ? value.split('-').reverse().join('/') : 'data não informada'
+const format = (value) => value === null ? '—' : value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
-const col = (c) => (typeof c === 'string' ? { label: c } : c)
-
-function Row({ r, cols }) {
-  return (
-    <tr>
-      <th scope="row">{r.label}</th>
-      {cols.map((c, i) => (
-        <td key={i} className={c.strong ? 'strong' : undefined}>{cell(r.values?.[i], r.decimals)}</td>
-      ))}
-    </tr>
-  )
-}
-
-function ProjTable({ t }) {
-  const cols = t.columns.map(col)
-  const sections = t.sections ?? [{ rows: t.rows ?? [] }]
-  // cabeçalho em dois níveis quando as colunas têm "group" (ex.: 2026P → Atual | Anterior)
-  const groups = []
-  cols.forEach((c) => {
-    const last = groups[groups.length - 1]
-    if (last && c.group && last.name === c.group) last.span += 1
-    else groups.push({ name: c.group ?? '', span: 1 })
-  })
-  const grouped = cols.some((c) => c.group)
-  return (
-    <article className={`chart${t.wide ? ' wide' : ''}`}>
-      <header>
-        <h3>
-          {t.title}
-          {t.unit && <small>{t.unit}</small>}
-          <Explain id="projecoes" />
-        </h3>
-      </header>
-      <div className="scroll">
-        <table className="focus-table proj-table">
-          <thead>
-            {grouped && (
-              <tr>
-                <th />
-                {groups.map((g, i) => <th key={i} colSpan={g.span} className={g.name ? 'group' : undefined}>{g.name}</th>)}
-              </tr>
-            )}
-            <tr>
-              <th />
-              {cols.map((c, i) => <th key={i} className={c.strong ? 'strong' : undefined}>{c.label}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {sections.map((s, si) => [
-              s.title && (
-                <tr key={`s${si}`} className="section">
-                  <th colSpan={cols.length + 1}>{s.title}</th>
-                </tr>
-              ),
-              ...s.rows.map((r) => <Row key={`${si}-${r.label}`} r={r} cols={cols} />),
-            ])}
-          </tbody>
-        </table>
-      </div>
-      {t.note && <p className="status">{t.note}</p>}
-    </article>
-  )
-}
-
-// Projeções de terceiros (ex.: Itaú BBA) lidas de projecoes.json, em tabelas de qualquer formato.
-export default function Projecoes() {
-  const [data, setData] = useState(null)
-
+export default function Projecoes({ macro }) {
+  const [year, setYear] = useState('2026')
+  const [banks, setBanks] = useState(null)
+  const [failed, setFailed] = useState(false)
   useEffect(() => {
     const ctrl = new AbortController()
-    fetch(`./projecoes.json?t=${Math.floor(Date.now() / 600000)}`, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setData)
-      .catch(() => {})
+    fetch(`./cenarios.json?t=${Math.floor(Date.now() / 600000)}`, { signal: ctrl.signal })
+      .then((response) => { if (!response.ok) throw new Error('Dados indisponíveis'); return response.json() })
+      .then(setBanks)
+      .catch((error) => { if (error.name !== 'AbortError') setFailed(true) })
     return () => ctrl.abort()
   }, [])
-
-  const tables = Array.isArray(data?.tables) ? data.tables.filter((t) => t?.rows?.length || t?.sections?.length) : []
-  if (!tables.length) return null
-
+  const focus = macro?.data?.focus
   return (
-    <section className="projecoes">
+    <section className="scenarios" aria-labelledby="scenarios-heading">
       <div className="history-head">
-        <h2>Projeções {data.source}</h2>
+        <h2 id="scenarios-heading">Cenário econômico</h2>
+        <label className="scenario-year">Ano <select value={year} onChange={(event) => setYear(event.target.value)} aria-label="Ano das projeções">
+          <option value="2026">2026</option><option value="2027">2027</option>
+        </select></label>
       </div>
-      <div className="charts">
-        {tables.map((t) => <ProjTable key={t.title} t={t} />)}
-      </div>
-      <p className="status">
-        Projeções de terceiros{data.date ? `, de ${fmtDate(data.date)}` : ''}, sujeitas a revisão. Fonte: {data.source}. Não constituem recomendação.
-      </p>
+      <article className="chart">
+        <div className="scroll scenario-scroll" tabIndex={0} role="region" aria-label={`Comparação das projeções para ${year}`}>
+          <table className="focus-table scenario-table">
+            <caption >Projeções para {year}, por instituição. Valores ausentes indicados por travessão.</caption>
+            <thead><tr><th scope="col">Indicador</th>{INSTITUTIONS.map((name) => <th scope="col" key={name}>{name}</th>)}</tr></thead>
+            <tbody>{INDICATORS.map((indicator) => <tr key={indicator.id}>
+              <th scope="row">{indicator.label}<small>{indicator.unit}</small></th>
+              {INSTITUTIONS.map((name) => <td key={name}>{format(scenarioValue(name, indicator, year, focus, banks))}</td>)}
+            </tr>)}</tbody>
+          </table>
+        </div>
+        <p className="status">USD: <a href="https://www.bcb.gov.br/controleinflacao/relatoriofocus" target="_blank" rel="noopener noreferrer">Focus = média de dezembro</a>; bancos = fim do ano. As medidas não são idênticas. — = projeção não verificada ou indisponível, nunca zero.</p>
+        <div className="scenario-sources">
+          <p><a href="https://www.bcb.gov.br/publicacoes/focus" target="_blank" rel="noopener noreferrer">FOCUS · Banco Central</a>: {focus ? `coleta até ${date(focus.date)}` : 'indisponível'}{macro?.data?.stale?.focus ? ' · dado de reserva' : ''}.</p>
+          {INSTITUTIONS.slice(1).map((name) => {
+            const bank = banks?.institutions?.find((item) => item.name === name)
+            return <p key={name}>{bank?.url ? <a href={bank.url} target="_blank" rel="noopener noreferrer">{name}</a> : name}: {bank?.date ? date(bank.date) : 'fonte pendente'}{bank?.note ? ` · ${bank.note}` : ''}.</p>
+          })}
+          <p>Focus acompanha a coleta do painel. Projeções dos bancos são revisadas manualmente; datas e metodologias podem diferir.{banks?.reviewedAt ? ` Conferidas em ${date(banks.reviewedAt)}.` : ''} Sujeitas a revisão, não constituem recomendação.</p>
+          {failed && <p role="status">Não foi possível carregar as projeções dos bancos.</p>}
+        </div>
+      </article>
     </section>
   )
 }
