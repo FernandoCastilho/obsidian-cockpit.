@@ -470,7 +470,6 @@ export default function App() {
       <BrasiliaClock />
       <Clock codes={['USD', 'JPY', 'CNH']} />
     </div>
-    <RatesTop macro={macro} curves={curves} onOpen={() => goto('juros')} />
     <main className="app">
       {update && (
         <div className="update-notice" role="status">
