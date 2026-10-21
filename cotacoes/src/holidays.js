@@ -67,7 +67,7 @@ const fixed = (list) => (y) => sortMap(list.map(([m, d, n]) => [iso(y, m, d), n]
 const spEstado = fixed([[7, 9, 'Revolução Constitucionalista']])
 const spCidade = fixed([[1, 25, 'Aniversário de São Paulo']])
 const sorocaba = fixed([[8, 15, 'Aniversário de Sorocaba']])
-const barueri = fixed([[3, 26, 'Aniversário de Barueri']])
+const barueri = fixed([[3, 26, 'Aniversário de Barueri'], [6, 24, 'São João Batista (padroeiro)']])
 const cascavel = fixed([[11, 14, 'Aniversário de Cascavel']])
 const londrina = fixed([[12, 10, 'Aniversário de Londrina']])
 const maringa = fixed([[5, 10, 'Aniversário de Maringá']])
