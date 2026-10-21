@@ -192,6 +192,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
   const pts = h.status === 'ok' ? h.data.points : null
   const macroH = useMacro()
   const ptaxH = macroH.data?.ptaxHist?.[currency.code]
+  const td = currency.code === 'JPY' ? 4 : 2 // iene vale centavos: precisa de mais casas
   const first = pts?.[0]
   const last = pts?.[pts.length - 1]
   const pct = first && last ? ((last.bid - first.bid) / first.bid) * 100 : null
@@ -242,9 +243,9 @@ export default function HistoryChart({ currency, color, start, end, day }) {
                 {pts.map((p, i) => ({ ...p, prevBid: i > 0 ? pts[i - 1].bid : null })).reverse().map((p) => (
                   <tr key={p.t}>
                     {intraday ? (
-                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
+                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid, td)}</td></>
                     ) : (
-                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td style={p.prevBid == null || p.bid === p.prevBid ? undefined : { color: p.bid > p.prevBid ? '#f85149' : '#3fb950', fontWeight: 600 }}>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td><td>{ptaxH?.[new Date(p.t).toISOString().slice(0, 10)] ? brl(ptaxH[new Date(p.t).toISOString().slice(0, 10)]) : '—'}</td></>
+                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td style={p.prevBid == null || p.bid === p.prevBid ? undefined : { color: p.bid > p.prevBid ? '#f85149' : '#3fb950', fontWeight: 600 }}>{brl(p.bid, td)}</td><td>{brl(p.high, td)}</td><td>{brl(p.low, td)}</td><td>{ptaxH?.[new Date(p.t).toISOString().slice(0, 10)] ? brl(ptaxH[new Date(p.t).toISOString().slice(0, 10)]) : '—'}</td></>
                     )}
                   </tr>
                 ))}
