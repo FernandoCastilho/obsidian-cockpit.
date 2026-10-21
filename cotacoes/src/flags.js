@@ -12,6 +12,8 @@ function star(cx, cy, r, angle) {
 }
 
 const body = {
+  BRL: () => '<rect width="30" height="20" fill="#009c3b"/><polygon points="15,2.5 27.5,10 15,17.5 2.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="4.2" fill="#002776"/><path d="M10.9 9.2q4.3-1.2 8.2 1.6" stroke="#fff" stroke-width=".8" fill="none"/>',
+  GBP: () => '<rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#c8102e" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.6"/>',
   USD: () => {
     const h = 20 / 13
     const stripes = Array.from({ length: 13 }, (_, i) => `<rect y="${f(i * h)}" width="30" height="${f(h)}" fill="${i % 2 ? '#fff' : '#b22234'}"/>`).join('')
