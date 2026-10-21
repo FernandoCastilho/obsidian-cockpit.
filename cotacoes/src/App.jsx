@@ -596,19 +596,14 @@ export default function App() {
       {open && (
         <Sheet onClose={() => setOpen(null)}>
           {open === 'PAR' ? (
-            <>
-              <Clock codes={['USD']} />
-              <ParityCard quotes={quotes} />
-            </>
+            <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
           ) : (
             openCurrency && (
-              <>
-                <Clock codes={[openCurrency.code]} />
-                <Card currency={openCurrency} quote={quotes?.[openCurrency.code]} dir={direction[openCurrency.code]} err={errors[openCurrency.code]} ptax={macro.data?.ptax?.[openCurrency.code]} onRetry={reload} />
-              </>
+              <HistoryChart key={openCurrency.code} currency={openCurrency} color={COLORS[openCurrency.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
             )
           )}
-          <button type="button" className="btn" onClick={() => { setOpen(null); goto('moedas') }}>Ver histórico</button>
+          <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
+          <button type="button" className="btn" onClick={() => { setOpen(null); goto('moedas') }}>Ver todas as moedas</button>
         </Sheet>
       )}
     </main>
