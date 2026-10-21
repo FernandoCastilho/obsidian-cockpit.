@@ -62,6 +62,15 @@ function brazil(y) {
 const saoPaulo = (y) => sortMap([[iso(y, 1, 25), 'Aniversário da cidade de São Paulo'], [iso(y, 7, 9), 'Revolução Constitucionalista (estadual SP)']])
 // Minas Gerais: o feriado estadual (21/04) já é nacional; entram os municipais de Belo Horizonte.
 const minasGerais = (y) => sortMap([[iso(y, 8, 15), 'Assunção de Nossa Senhora (Belo Horizonte)'], [iso(y, 12, 8), 'Imaculada Conceição (Belo Horizonte)']])
+// Feriados municipais (aniversários e padroeiros fixos). Datas móveis como Corpus Christi já estão no calendário nacional (B3).
+const fixed = (list) => (y) => sortMap(list.map(([m, d, n]) => [iso(y, m, d), n]))
+const spEstado = fixed([[7, 9, 'Revolução Constitucionalista']])
+const spCidade = fixed([[1, 25, 'Aniversário de São Paulo']])
+const sorocaba = fixed([[8, 15, 'Aniversário de Sorocaba']])
+const barueri = fixed([[3, 26, 'Aniversário de Barueri']])
+const cascavel = fixed([[11, 14, 'Aniversário de Cascavel']])
+const londrina = fixed([[12, 10, 'Aniversário de Londrina']])
+const maringa = fixed([[5, 10, 'Aniversário de Maringá']])
 
 // Federal Reserve: domingo vira segunda; sábado não é compensado (os bancos abrem na sexta).
 function newYork(y) {
@@ -148,6 +157,13 @@ export const CALENDARS = [
   { id: 'SP', label: 'São Paulo (cidade e estado)', short: 'São Paulo', rule: saoPaulo },
   { id: 'MG', label: 'Minas Gerais (Belo Horizonte)', short: 'Minas Gerais', rule: minasGerais },
   { id: 'NY', label: 'Nova York (Federal Reserve)', short: 'Nova York', rule: newYork },
+  { id: 'SPE', label: 'Estado de São Paulo', short: 'Estado SP', rule: spEstado, hidden: true },
+  { id: 'SPC', label: 'Cidade de São Paulo', short: 'São Paulo (cidade)', rule: spCidade, hidden: true },
+  { id: 'SOR', label: 'Sorocaba', short: 'Sorocaba', rule: sorocaba, hidden: true },
+  { id: 'BAR', label: 'Barueri (Alphaville)', short: 'Barueri', rule: barueri, hidden: true },
+  { id: 'CVL', label: 'Cascavel', short: 'Cascavel', rule: cascavel, hidden: true },
+  { id: 'LDA', label: 'Londrina', short: 'Londrina', rule: londrina, hidden: true },
+  { id: 'MGA', label: 'Maringá', short: 'Maringá', rule: maringa, hidden: true },
   { id: 'UK', label: 'Londres', short: 'Londres', rule: london },
   { id: 'JP', label: 'Tóquio', short: 'Tóquio', rule: japan },
   { id: 'CN', label: 'China (continental)', short: 'China', rule: null },
