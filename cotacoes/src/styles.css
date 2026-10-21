@@ -33,7 +33,9 @@ footer p { margin:0 0 4px; }
 .history { margin-top: 40px; }
 .history-head { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; justify-content:space-between; margin-bottom:16px; }
 .history h2 { margin:0; font-size:1.2rem; }
-.period { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.period { display:flex; flex-direction:column; gap:12px; align-items:flex-start; }
+.period > .seg { max-width:100%; }
+.period-dates { display:flex; flex-wrap:wrap; gap:12px; max-width:100%; }
 .period label { display:flex; align-items:center; gap:6px; color:var(--mut); font-size:.85rem; }
 .period input { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font:inherit; }
 .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex-wrap:wrap; }

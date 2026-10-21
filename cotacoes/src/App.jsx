@@ -57,6 +57,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
           </button>
         ))}
       </div>
+      <div className="period-dates">
       {preset === 'day' ? (
         <label>
           Dia
@@ -74,6 +75,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
       </label>
         </>
       )}
+      </div>
     </div>
   )
 }
@@ -192,7 +194,7 @@ export default function App() {
     window.addEventListener('app-update', on)
     return () => window.removeEventListener('app-update', on)
   }, [])
-  const [preset, setPreset] = useState('30')
+  const [preset, setPreset] = useState('day')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
   const [day, setDay] = useState(() => {
