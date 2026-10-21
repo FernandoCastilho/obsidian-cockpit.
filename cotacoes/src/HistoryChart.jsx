@@ -65,7 +65,7 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
     const dec = nice ? decNice : Math.min(5, Math.max(2, Math.ceil(-Math.log10((hi - lo) / 4)) + 1))
     const yTicks = nice ? Array.from({ length: Math.round((hi - lo) / stepNice) + 1 }, (_, i) => lo + i * stepNice) : Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
     const nx = width < 420 ? 3 : 5
-    const xTicks = Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
+    const xTicks = t0 === t1 ? [t0] : Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
     const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.bid).toFixed(1)}`).join('')
     const base = H - M.b
     const area = `${line}L${x(t1).toFixed(1)},${base}L${x(t0).toFixed(1)},${base}Z`

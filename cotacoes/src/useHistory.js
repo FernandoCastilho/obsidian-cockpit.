@@ -8,8 +8,17 @@ export const toYmd = (d) =>
   `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`
 export const toInput = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 export const fromInput = (s) => {
+  if (typeof s !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return new Date(NaN)
   const [y, m, d] = s.split('-').map(Number)
-  return new Date(y, m - 1, d)
+  const date = new Date(y, m - 1, d)
+  // Date normaliza silenciosamente 31/02 para março; não aceite uma data diferente da selecionada.
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d ? date : new Date(NaN)
+}
+
+export function historyRangeError(start, end) {
+  if (!Number.isFinite(start?.getTime()) || !Number.isFinite(end?.getTime())) return 'Selecione datas válidas.'
+  if (start > end) return 'A data inicial deve ser anterior ou igual à data final.'
+  return ''
 }
 
 // Histórico diário (360 dias) coletado pelo robô do GitHub (history.json, branch `data`): a chave da API não sai de lá.
@@ -87,9 +96,17 @@ const dayStart = (d) => {
 }
 export const fullWindow = (now = new Date()) => {
   const end = dayStart(now)
-  return { start: new Date(end.getTime() - FULL_DAYS * 864e5), end }
+  const start = new Date(end)
+  start.setDate(start.getDate() - FULL_DAYS)
+  return { start, end }
 }
-export const sliceRange = (points, start, end) => points.filter((p) => p.t >= start.getTime() && p.t < end.getTime() + 864e5)
+export const sliceRange = (points, start, end) => {
+  if (historyRangeError(start, end)) return []
+  const first = dayStart(start)
+  const after = dayStart(end)
+  after.setDate(after.getDate() + 1) // dia civil inclusivo, inclusive nas mudanças de horário de verão
+  return points.filter((p) => p.t >= first.getTime() && p.t < after.getTime())
+}
 
 const STORE = 'cotacoes-hist-v1'
 const STORE_TTL = 6 * 3600e3
@@ -115,28 +132,43 @@ const writeStore = (fkey, data) => {
 const inflight = new Map()
 
 export function useHistory(code, start, end, skip = false) {
-  const startYmd = toYmd(start)
-  const endYmd = toYmd(end)
+  const startYmd = toInput(start)
+  const endYmd = toInput(end)
   const key = `${code}|${startYmd}|${endYmd}`
   const [state, setState] = useState({ key: null, status: 'loading' })
 
   useEffect(() => {
     if (skip) return
+    // Os cards criam novos objetos Date a cada render. Dependa do dia, não da identidade
+    // desses objetos, para que um acerto de cache não provoque um loop de renderização.
+    const rangeStart = fromInput(startYmd)
+    const rangeEnd = fromInput(endYmd)
+    const error = historyRangeError(rangeStart, rangeEnd)
+    if (error) {
+      setState({ key, status: 'error', error })
+      return
+    }
     const win = fullWindow()
-    const full = start >= win.start && end <= win.end
+    const full = rangeStart >= win.start && rangeEnd <= win.end
     const fkey = full ? `${code}|full|${toYmd(win.end)}` : key
-    const view = (data) => (full ? { ...data, points: sliceRange(data.points, start, end) } : data)
+    const view = (data) => {
+      // Recorta também respostas diretas/reservas: a fonte pode incluir uma referência anterior.
+      const points = sliceRange(data.points, rangeStart, rangeEnd)
+      return points.length
+        ? { key, status: 'ok', data: { ...data, points } }
+        : { key, status: 'error', error: 'Sem cotações no período selecionado. Escolha outro intervalo.' }
+    }
     const hit = cache.get(fkey) ?? (full ? readStore(fkey) : null)
     if (hit) {
       cache.set(fkey, hit)
-      setState({ key, status: 'ok', data: view(hit) })
+      setState(view(hit))
       return
     }
     let alive = true
     setState({ key, status: 'loading' })
     let p = inflight.get(fkey)
     if (!p) {
-      p = fetchHistory({ code }, full ? win.start : start, full ? win.end : end, undefined)
+      p = fetchHistory({ code }, full ? win.start : rangeStart, full ? win.end : rangeEnd, undefined)
         .then((data) => {
           cache.set(fkey, data)
           if (full) writeStore(fkey, data)
@@ -145,17 +177,16 @@ export function useHistory(code, start, end, skip = false) {
         .finally(() => inflight.delete(fkey))
       inflight.set(fkey, p)
     }
-    p.then((data) => alive && setState({ key, status: 'ok', data: view(data) })).catch((e) => alive && setState({ key, status: 'error', error: e.message }))
+    p.then((data) => alive && setState(view(data))).catch((e) => alive && setState({ key, status: 'error', error: e.message }))
     return () => {
       alive = false
     }
-  }, [key, code, start, end, skip]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [key, code, startYmd, endYmd, skip])
 
   return state.key === key ? state : { key, status: 'loading' }
 }
 
 // ---- Intraday: barras de 5 minutos coletadas no GitHub (intraday.json), últimos 5 dias úteis ----
-const sameDay = (t, day) => toYmd(new Date(t)) === toYmd(day)
 let intradayPromise = null
 let intradayAt = 0
 
@@ -178,18 +209,23 @@ function loadIntraday() {
 }
 
 export function useIntraday(code, day, skip = false) {
-  const key = `${code}|${toYmd(day)}`
+  const dayYmd = toInput(day)
+  const key = `${code}|${dayYmd}`
   const [state, setState] = useState({ key: null, status: 'loading' })
 
   useEffect(() => {
     if (skip) return
+    if (!Number.isFinite(fromInput(dayYmd).getTime())) {
+      setState({ key, status: 'error', error: 'Selecione uma data válida.' })
+      return
+    }
     let alive = true
     setState((s) => (s.key === key ? s : { key, status: 'loading' }))
     loadIntraday()
       .then((file) => {
         if (!alive) return
         const serie = file.series?.[code]
-        const points = (serie?.points ?? []).filter(([t]) => sameDay(t, day)).map(([t, v]) => ({ t, bid: v }))
+        const points = (serie?.points ?? []).filter(([t]) => toInput(new Date(t)) === dayYmd).map(([t, v]) => ({ t, bid: v }))
         if (points.length < 2) {
           setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)' })
           return
@@ -200,7 +236,7 @@ export function useIntraday(code, day, skip = false) {
     return () => {
       alive = false
     }
-  }, [key, skip, code, day]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [key, skip, code, dayYmd])
 
   return state.key === key ? state : { key, status: 'loading' }
 }

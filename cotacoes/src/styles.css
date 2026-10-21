@@ -488,10 +488,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .pair-tile .more { margin-left:auto; }
 .chart h3 .flag { vertical-align:middle; margin-right:2px; }
 
-/* topo: menu fixo, depois relógios e juros (parados, cabendo na tela) */
+/* Desktop: navegação inferior fixa; o conteúdo mantém espaço livre abaixo. */
 @media (min-width: 700px) {
-  .nav-top { position:sticky; top:0; z-index:50; background:var(--bg); border-bottom:1px solid var(--line); }
-  .nav-top .tabs { position:static; max-width:1200px; margin:0 auto; padding:4px 16px; border:0; }
+  .nav-top { position:fixed; inset:auto 0 0; z-index:30; background:var(--bg); border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom); }
+  .nav-top .tabs { position:static; max-width:1200px; margin:0 auto; padding:4px 16px; border:0; overflow-x:auto; min-height:56px; }
+  .nav-top .tabs button { flex-shrink:0; white-space:nowrap; }
+  main.app { padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
 }
 .rates-top { position:static; max-width:1200px; margin:0 auto; border-bottom:0; align-items:flex-start; padding:8px 16px 0; }
 .rates-grid { display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
@@ -512,7 +514,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .qb-delta { color:var(--mut); }
 .qb-old { color:#d29922; font-size:.72rem; }
 .rates-grid .qb small { font-size:.75rem; }
-@media (min-width: 700px) { .nav-top .tabs { justify-content:center; } }
+@media (min-width: 700px) { .nav-top .tabs { justify-content:safe center; } }
 .swap-table td.yel, .swap-table th.yel { background:rgba(210,153,34,.14); }
 .swap-table { font-size:.8rem; font-variant-numeric:tabular-nums; }
 .swap-table tfoot th, .swap-table tfoot td { font-weight:700; border-top:2px solid var(--line); }
@@ -595,3 +597,11 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .fer-body { flex:1; display:flex; flex-direction:column; min-width:0; }
 .fer-left { white-space:nowrap; font-size:.85rem; color:var(--mut); }
 .fer-left.soon { color:#f0b429; font-weight:600; }
+
+/* Ampliação acessível: mantém os filtros montados e usa o foco modal nativo. */
+.expandable-panel { position:static; margin:0; padding:0; width:100%; max-width:none; max-height:none; border:0; background:transparent; color:var(--fg); overflow:visible; }
+.expandable-controls { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.expandable-panel.is-dialog { position:fixed; inset:0; margin:auto; width:min(700px, calc(100% - 24px)); max-height:92dvh; overflow:auto; padding:16px; border:1px solid var(--line); border-radius:18px; background:var(--bg); }
+.expandable-panel::backdrop { background:rgba(0,0,0,.65); }
+.expandable-panel.is-full { width:100%; height:100dvh; max-height:100dvh; border-radius:0; padding:16px 16px calc(16px + env(safe-area-inset-bottom)); }
+.expandable-panel.is-dialog > .expandable-controls { position:sticky; top:-16px; background:var(--bg); z-index:5; padding:8px 0; }
