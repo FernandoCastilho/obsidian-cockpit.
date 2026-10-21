@@ -301,7 +301,7 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={setOpen} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
         </>

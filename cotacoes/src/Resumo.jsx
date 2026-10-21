@@ -1,9 +1,10 @@
 import Expandable from './Expandable.jsx'
 import OilTile from './OilTile.jsx'
+import { selectedPeriod } from './summaryPeriod.js'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
-import { fullWindow, useHistory, useIntraday } from './useHistory.js'
+import { fullWindow, toInput, useHistory, useIntraday } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
@@ -34,7 +35,9 @@ const ago = (t) => {
 }
 
 // Janela do minigráfico: recorte do histórico de 360 dias que já está em cache (sem consulta nova).
-function useWindow(days) {
+function useWindow(spark) {
+  if (spark.range) return spark.range
+  const days = spark.days
   const win = fullWindow()
   return { start: new Date(win.end.getTime() - days * 864e5), end: win.end }
 }
@@ -44,7 +47,7 @@ function Arrow({ v }) {
 }
 
 function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
-  const w = useWindow(spark.days)
+  const w = useWindow(spark)
   const h = useHistory(code, w.start, w.end, !!spark.intraday)
   const i = useIntraday(code, new Date(), !spark.intraday)
   const s = spark.intraday ? i : h
@@ -109,7 +112,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
       setQuote(v)
     }
   }
-  const w = useWindow(spark.days)
+  const w = useWindow(spark)
   const dia = !!spark.intraday
   const bh = useHistory(base, w.start, w.end, dia)
   const qh = useHistory(quote, w.start, w.end, dia)
@@ -284,7 +287,7 @@ function Wide({ render }) {
 
 function ResumoChart({ colors, spark }) {
   const [sel, setSel] = useState(['USD'])
-  const w = useWindow(spark.days)
+  const w = useWindow(spark)
   const dia = !!spark.intraday
   // hooks em número fixo (uma consulta por moeda; ficam em cache)
   const hs = CURRENCIES.map((c) => useHistory(c.code, w.start, w.end, dia)) // eslint-disable-line react-hooks/rules-of-hooks
@@ -376,25 +379,50 @@ function ResumoChart({ colors, spark }) {
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [sparkId, setSparkId] = useState('day')
-  const spark = SPARK.find((s) => s.id === sparkId)
+  const [custom, setCustom] = useState(null)
+  const [dates, setDates] = useState(() => ({ start: toInput(new Date()), end: toInput(new Date()) }))
+  const [dateError, setDateError] = useState('')
+  const spark = sparkId === 'custom' ? custom : SPARK.find((s) => s.id === sparkId)
+  const limits = fullWindow()
+  const choosePreset = (s) => {
+    setSparkId(s.id); setDateError('')
+    const end = limits.end, start = new Date(end)
+    if (!s.intraday) start.setDate(start.getDate() - s.days)
+    setDates({ start: toInput(start), end: toInput(end) })
+  }
+  const chooseDate = (key, value) => {
+    const next = { ...dates, [key]: value }; setDates(next)
+    const selection = selectedPeriod(next.start, next.end)
+    setDateError(selection.error || '')
+    if (!selection.error) { setCustom(selection); setSparkId('custom') }
+  }
+  const openSelected = (code) => onOpen(code, spark)
   return (
       <Expandable label="card das moedas">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
           <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+          <div className="summary-period-controls">
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
-              <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => setSparkId(s.id)}>
+              <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => choosePreset(s)}>
                 {s.label}
               </button>
             ))}
           </div>
+          <div className="summary-dates">
+            <label>De <input aria-label="Data inicial dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.start} onChange={(e) => chooseDate('start', e.target.value)} /></label>
+            <label>Até <input aria-label="Data final dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => chooseDate('end', e.target.value)} /></label>
+          </div>
+          </div>
         </div>
+        <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. Valores principais são as últimas cotações, não o histórico filtrado.</small>
+        {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
         <div className="tiles">
           {CURRENCIES.map((c) => (
-            <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={onOpen} color={colors?.[c.code]} />
+            <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={openSelected} color={colors?.[c.code]} />
           ))}
-          <ParityTile quotes={quotes} spark={spark} onOpen={onOpen} color={colors?.PAR} />
+          <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
           <OilTile spark={spark} />
         </div>
         <ResumoChart colors={colors} spark={spark} />

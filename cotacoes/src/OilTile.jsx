@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Sparkline from './Sparkline.jsx'
+import { oilPeriodPoints } from './summaryPeriod.js'
 
 const SOURCE = 'https://www.eia.gov/dnav/pet/hist/RBRTED.htm'
 const dateLabel = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? date.split('-').reverse().join('/') : '—'
@@ -29,8 +30,7 @@ export default function OilTile({ spark }) {
   const last = points.at(-1)
   const previous = points.at(-2)
   const change = last && previous ? (last.value / previous.value - 1) * 100 : null
-  const cutoff = Date.now() - spark.days * 864e5
-  const chart = spark.intraday ? [] : points.filter((p) => Date.parse(p.date + 'T00:00:00Z') >= cutoff).map((p) => ({ bid: p.value }))
+  const chart = oilPeriodPoints(points, spark).map((p) => ({ bid: p.value }))
   const overdue = data?.nextReleaseDate && new Date().toISOString().slice(0, 10) > data.nextReleaseDate
   return (
     <article className="tile oil-tile" aria-label="Petróleo Brent spot">
@@ -41,7 +41,7 @@ export default function OilTile({ spark }) {
           <small>por barril</small>
           {change != null && <span className={`pct ${change > 0 ? 'up' : change < 0 ? 'down' : 'flat'}`}>{change > 0 ? '+' : ''}{change.toFixed(2).replace('.', ',')}% <small className="muted">vs. última observação</small></span>}
         </div>
-        {!spark.intraday && <span className="tile-spark"><Sparkline points={chart} /><small className="muted">{spark.label} · diário</small></span>}
+        {!spark.intraday && <span className="tile-spark"><Sparkline points={chart} /><small className="muted">{chart.length > 1 ? `${spark.label} · diário` : 'Sem série suficiente no período'}</small></span>}
       </div>
       <small className="muted">Referência: {dateLabel(last?.date)} · sem intraday</small>
       <small className="muted">Divulgação EIA: {dateLabel(data?.releaseDate)}</small>
