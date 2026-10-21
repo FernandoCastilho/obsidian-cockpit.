@@ -229,29 +229,25 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       )}
       {pts && (
         <details className="table">
-          <summary>Ver histórico ({pts.length} {intraday ? 'barras de 5 min' : 'dias'})</summary>
+          <summary>Ver tabela ({pts.length} {intraday ? 'barras de 5 min' : 'dias'})</summary>
           <div className="scroll">
             <table>
               <thead>
-                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Abertura</th><th>Fechamento</th><th>Var. dia</th></tr>}
+                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th></tr>}
               </thead>
               <tbody>
-                {pts.map((p, i) => ({ p, prev: i > 0 ? pts[i - 1] : null })).reverse().map(({ p, prev }) => {
-                  const v = prev ? ((p.bid - prev.bid) / prev.bid) * 100 : null
-                  return (
-                    <tr key={p.t}>
-                      {intraday ? (
-                        <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
-                      ) : (
-                        <><td>{fmtDate(p.t, true)}</td><td>{prev ? brl(prev.bid) : '—'}</td><td>{brl(p.bid)}</td><td className={v == null ? '' : v >= 0 ? 'up' : 'down'}>{v == null ? '—' : `${v >= 0 ? '+' : '−'}${Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`}</td></>
-                      )}
-                    </tr>
-                  )
-                })}
+                {[...pts].reverse().map((p) => (
+                  <tr key={p.t}>
+                    {intraday ? (
+                      <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
+                    ) : (
+                      <><td>{fmtDate(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
+                    )}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          {!intraday && <p className="status note">Abertura = fechamento do dia útil anterior (a fonte não informa a abertura do pregão).</p>}
         </details>
       )}
     </article>
