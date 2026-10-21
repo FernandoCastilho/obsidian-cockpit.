@@ -214,7 +214,6 @@ export default function Finimp({ hol }) {
         <label>Empresa<input value={empresa} onChange={(e) => setEmpresa(e.target.value)} autoComplete="organization" /></label>
         <label>CNPJ<input inputMode="numeric" value={cnpj} onChange={(e) => setCnpj(e.target.value)} placeholder="00.000.000/0000-00" /></label>
         <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
-      </div>
         <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
         </div>
         <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
