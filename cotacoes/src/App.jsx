@@ -476,26 +476,11 @@ export default function App() {
           <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
         </div>
       )}
-      <header className="top">
-        <div>
-          {tab !== 'resumo' && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
-        </div>
-        <div className="top-right">
-          <button
-            type="button"
-            className="round"
-            onClick={refresh}
-            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
-            aria-label={`Atualizar cotações agora${wait}`}
-            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
-          >
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
-              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
-              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
-            </svg>
-          </button>
-        </div>
-      </header>
+      {tab !== 'resumo' && (
+        <header className="top">
+          <h1>{TABS.find((t) => t.id === tab).label}</h1>
+        </header>
+      )}
       <p className="status src">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
@@ -504,6 +489,20 @@ export default function App() {
             ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
             : 'Carregando…'}
         {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
+          <button
+            type="button"
+            className="refresh-mini"
+            style={{ background: "none", border: "none", padding: 2, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
+            onClick={refresh}
+            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
+            aria-label={`Atualizar cotações agora${wait}`}
+            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
+              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
+              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
+            </svg>
+          </button>
       </p>
 
       {tab === 'resumo' && (
