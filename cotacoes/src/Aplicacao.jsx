@@ -47,7 +47,6 @@ export default function Aplicacao({ curves, hol }) {
   return (
     <article className="chart calc-split">
       <div className="calc-in">
-      <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças (avisos de feriado no vencimento)" />
       <div className="calc-form">
         <label>
           Valor aplicado (R$)
@@ -56,7 +55,7 @@ export default function Aplicacao({ curves, hol }) {
         <label>
           Vencimento
           <input type="date" min={t.base} max={t.maxIso} value={t.end} onChange={(e) => e.target.value && t.pickDue(e.target.value)} />
-          <DateCheck date={t.end} hol={hol} onUse={t.pickDue} />
+          
         </label>
         <label>
           Prazo (dias corridos)
