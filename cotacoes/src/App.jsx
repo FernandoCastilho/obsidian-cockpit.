@@ -467,7 +467,6 @@ export default function App() {
     <>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     <div className="clocks-top">
-      <BrasiliaClock />
       <Clock codes={['USD', 'JPY', 'CNH']} />
     </div>
     <main className="app">
@@ -479,7 +478,7 @@ export default function App() {
       )}
       <header className="top">
         <div>
-          <h1>{TABS.find((t) => t.id === tab).label === 'Resumo' ? 'Visão geral' : TABS.find((t) => t.id === tab).label}</h1>
+          {tab !== 'resumo' && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
         </div>
         <div className="top-right">
           <button
