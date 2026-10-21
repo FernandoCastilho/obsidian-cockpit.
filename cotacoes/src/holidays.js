@@ -60,6 +60,8 @@ function brazil(y) {
 }
 
 const saoPaulo = (y) => sortMap([[iso(y, 1, 25), 'Aniversário da cidade de São Paulo'], [iso(y, 7, 9), 'Revolução Constitucionalista (estadual SP)']])
+// Minas Gerais: o feriado estadual (21/04) já é nacional; entram os municipais de Belo Horizonte.
+const minasGerais = (y) => sortMap([[iso(y, 8, 15), 'Assunção de Nossa Senhora (Belo Horizonte)'], [iso(y, 12, 8), 'Imaculada Conceição (Belo Horizonte)']])
 
 // Federal Reserve: domingo vira segunda; sábado não é compensado (os bancos abrem na sexta).
 function newYork(y) {
@@ -144,6 +146,7 @@ function japan(y) {
 export const CALENDARS = [
   { id: 'BR', label: 'Brasil (B3/ANBIMA)', short: 'Brasil', rule: brazil },
   { id: 'SP', label: 'São Paulo (cidade e estado)', short: 'São Paulo', rule: saoPaulo },
+  { id: 'MG', label: 'Minas Gerais (Belo Horizonte)', short: 'Minas Gerais', rule: minasGerais },
   { id: 'NY', label: 'Nova York (Federal Reserve)', short: 'Nova York', rule: newYork },
   { id: 'UK', label: 'Londres', short: 'Londres', rule: london },
   { id: 'JP', label: 'Tóquio', short: 'Tóquio', rule: japan },
