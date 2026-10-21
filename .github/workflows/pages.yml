@@ -57,6 +57,9 @@ jobs:
       - name: Coletar feriados da China (dados oficiais)
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
+      - name: Coletar referência diária de petróleo Brent (EIA)
+        run: node scripts/fetch-oil.mjs
+        timeout-minutes: 2
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true
