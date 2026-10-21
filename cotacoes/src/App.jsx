@@ -466,7 +466,7 @@ export default function App() {
   return (
     <>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
-    {tab !== 'calculadora' && (
+    {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
       </div>
