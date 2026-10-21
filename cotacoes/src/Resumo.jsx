@@ -130,7 +130,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
         <span className="pair-slash" aria-hidden="true">/</span>
         <PairSelect value={quote} onChange={(v) => pick('quote', v)} label="Moeda cotada" />
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(quote, 'width="26" height="18"') }} />
-        {eurUsd && <button type="button" className="more" onClick={() => onOpen('PAR')}>Detalhes ›</button>}
+        <button type="button" className="more" onClick={() => (eurUsd ? onOpen('PAR') : pts.length > 1 && setBig(true))}>Detalhes ›</button>
       </span>
       <span className="tile-body">
         <span className="tile-num">
