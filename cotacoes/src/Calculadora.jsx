@@ -82,7 +82,6 @@ function OperacaoDi({ curves, hol }) {
       {pts && (
         <article className="chart calc-split">
           <div className="calc-in">
-          <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado)" />
           <div className="calc-form">
             <label>
               Valor (R$)
@@ -91,7 +90,7 @@ function OperacaoDi({ curves, hol }) {
             <label>
               Vencimento
               <input type="date" min={base} max={maxIso} value={end} onChange={(e) => e.target.value && pickDue(e.target.value)} />
-              <DateCheck date={end} hol={hol} onUse={pickDue} />
+              
             </label>
             <label>
               Prazo (dias corridos)
