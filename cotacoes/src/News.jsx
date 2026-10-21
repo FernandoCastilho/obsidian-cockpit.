@@ -38,21 +38,6 @@ export default function News({ colors }) {
       {data && Object.keys(data.stale ?? {}).length > 0 && (
         <p className="status stale">Sem manchetes novas para {Object.keys(data.stale).join(', ')}; mantidas as da última coleta bem-sucedida.</p>
       )}
-      {strip.length > 0 && (
-        <div className="wire" role="region" aria-label="Manchetes em rolagem (pausa ao passar o mouse)">
-          <div className="wire-track" style={{ animationDuration: `${seconds}s` }}>
-            {[0, 1].map((k) => (
-              <span key={k} className="wire-set" aria-hidden={k === 1 ? 'true' : undefined}>
-                {strip.map((n) => (
-                  <a key={n.link} href={n.link} target="_blank" rel="noopener noreferrer" tabIndex={k === 1 ? -1 : undefined}>
-                    <Tickers codes={n.codes} colors={colors} /> {n.title} <small>{stamp(n.t)}</small>
-                  </a>
-                ))}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
       {data && (
         <>
           <div className="seg feed-filter" role="group" aria-label="Filtrar por moeda">
