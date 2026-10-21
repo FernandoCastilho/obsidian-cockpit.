@@ -587,3 +587,11 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .fer-table td { padding:6px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
 .fer-table td:first-child { white-space:nowrap; width:1%; padding-right:12px; }
 .fer-table tr.past { opacity:.5; }
+
+.fer-list { list-style:none; margin:0; padding:0; }
+.fer-list li { display:flex; align-items:center; gap:12px; padding:10px 2px; border-bottom:1px solid var(--line); }
+.fer-date { display:flex; flex-direction:column; min-width:64px; }
+.fer-date small, .fer-body small { color:var(--mut); font-size:.78rem; }
+.fer-body { flex:1; display:flex; flex-direction:column; min-width:0; }
+.fer-left { white-space:nowrap; font-size:.85rem; color:var(--mut); }
+.fer-left.soon { color:#f0b429; font-weight:600; }
