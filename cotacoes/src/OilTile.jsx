@@ -37,6 +37,7 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
   return (
     <>
     <article className="tile oil-tile" aria-label="Petróleo Brent spot">
+      <button type="button" className="oil-card-trigger" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)} />
       <div className="tile-head"><span aria-hidden="true">🛢</span><span className="tile-name"><b>Petróleo Brent</b> <small>· spot</small></span></div>
       <div className="tile-body">
         <div className="tile-num">
@@ -49,7 +50,7 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
       <small className="muted">Referência: {dateLabel(last?.date)} · sem intraday</small>
       <small className="muted">Divulgação EIA: {dateLabel(data?.releaseDate)}</small>
       {(state.error || overdue) && <small role="status">{last ? 'Último dado disponível; atualização pendente.' : 'Cotação indisponível.'}</small>}
-      <button type="button" className="more" onClick={() => setExpanded(true)}>Ver histórico do petróleo ›</button>
+      <span className="more" aria-hidden="true">Ver histórico do petróleo ›</span>
       <a href={SOURCE} target="_blank" rel="noreferrer" className="oil-source">Fonte: EIA · Brent spot FOB</a>
     </article>
     {expanded && <OilHistory points={points} spark={spark} dates={dates} presets={presets} onDates={onDates} onPreset={onPreset} dateError={dateError} stale={state.error || overdue} loading={!data && !state.error} onClose={() => setExpanded(false)} />}
