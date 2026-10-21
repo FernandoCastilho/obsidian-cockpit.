@@ -239,12 +239,12 @@ export default function HistoryChart({ currency, color, start, end, day }) {
                 {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th><th>PTAX</th></tr>}
               </thead>
               <tbody>
-                {[...pts].reverse().map((p) => (
+                {pts.map((p, i) => ({ ...p, prevBid: i > 0 ? pts[i - 1].bid : null })).reverse().map((p) => (
                   <tr key={p.t}>
                     {intraday ? (
                       <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
                     ) : (
-                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td><td>{ptaxH?.[new Date(p.t).toISOString().slice(0, 10)] ? brl(ptaxH[new Date(p.t).toISOString().slice(0, 10)]) : '—'}</td></>
+                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td style={p.prevBid == null || p.bid === p.prevBid ? undefined : { color: p.bid > p.prevBid ? '#f85149' : '#3fb950', fontWeight: 600 }}>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td><td>{ptaxH?.[new Date(p.t).toISOString().slice(0, 10)] ? brl(ptaxH[new Date(p.t).toISOString().slice(0, 10)]) : '—'}</td></>
                     )}
                   </tr>
                 ))}
