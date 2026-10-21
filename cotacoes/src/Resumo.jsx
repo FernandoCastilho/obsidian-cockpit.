@@ -69,7 +69,6 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           ) : (
             quote && <small className="muted">var. do dia indisponível</small>
           )}
-          {ptax ? <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell).replace('R$', '').trim()}</small> : <small className="muted" aria-hidden="true">&nbsp;</small>}
         </span>
         <span className="tile-spark">
           <Sparkline points={pts} tone={trend} />
@@ -79,6 +78,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           </small>
         </span>
       </span>
+      {ptax && <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell)}</small>}
     </button>
   )
 }
