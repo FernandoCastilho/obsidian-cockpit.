@@ -467,7 +467,7 @@ export default function App() {
     <>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     <div className="clocks-top">
-      <Clock codes={['USD', 'JPY', 'CNH']} />
+      <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
     </div>
     <main className="app">
       {update && (
@@ -520,12 +520,10 @@ export default function App() {
           <section className="grid">
             {CURRENCIES.map((c) => (
               <div className="slot" key={c.code}>
-                <Clock codes={[c.code]} />
                 <Card currency={c} quote={quotes?.[c.code]} dir={direction[c.code]} err={errors[c.code]} ptax={macro.data?.ptax?.[c.code]} onRetry={reload} />
               </div>
             ))}
             <div className="slot">
-              <Clock codes={['USD']} />
               <ParityCard quotes={quotes} />
             </div>
           </section>
