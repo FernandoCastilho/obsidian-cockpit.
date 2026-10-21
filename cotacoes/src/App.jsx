@@ -12,7 +12,6 @@ import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
 import Feriados from './Feriados.jsx'
 import { useHolidays } from './useHolidays.js'
-import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
@@ -57,6 +56,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
           </button>
         ))}
       </div>
+      <div className="period-dates">
       {preset === 'day' ? (
         <label>
           Dia
@@ -74,6 +74,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
       </label>
         </>
       )}
+      </div>
     </div>
   )
 }
@@ -192,7 +193,7 @@ export default function App() {
     window.addEventListener('app-update', on)
     return () => window.removeEventListener('app-update', on)
   }, [])
-  const [preset, setPreset] = useState('30')
+  const [preset, setPreset] = useState('day')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
   const [day, setDay] = useState(() => {
@@ -315,10 +316,7 @@ export default function App() {
       )}
 
       {tab === 'cenarios' && (
-        <>
-          <Agenda />
-          <Projecoes />
-        </>
+        <Projecoes macro={macro} />
       )}
 
       {tab === 'feriados' && <Feriados hol={hol} />}

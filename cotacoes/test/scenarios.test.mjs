@@ -1,0 +1,40 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { INDICATORS, INSTITUTIONS, scenarioValue } from '../src/scenarios.js'
+const focus = { rows: [{ label: 'PIB', values: { 2026: { median: 2.5 }, 2027: { median: 2 } } }] }
+const banks = { institutions: [{ name: 'BB', years: { 2026: { pib: 1.8, usd: 5.4, selic: 0 }, 2027: { pib: 2.2 } } }] }
+test('scenario has exactly four metrics and ordered six institutions', () => {
+  assert.deepEqual(INDICATORS.map(x => x.id), ['pib', 'ipca', 'selic', 'usd'])
+  assert.deepEqual(INSTITUTIONS, ['FOCUS', 'Itaú BBA', 'Bradesco', 'Santander', 'BB', 'BTG'])
+})
+test('year selection reads each year independently, without substituting missing years', () => {
+  assert.equal(scenarioValue('FOCUS', INDICATORS[0], '2026', focus, banks), 2.5)
+  assert.equal(scenarioValue('FOCUS', INDICATORS[0], '2027', focus, banks), 2)
+  assert.equal(scenarioValue('BB', INDICATORS[0], '2026', focus, banks), 1.8)
+  assert.equal(scenarioValue('BB', INDICATORS[0], '2027', focus, banks), 2.2)
+  assert.equal(scenarioValue('BB', INDICATORS[3], '2027', focus, banks), null)
+})
+test('missing and invalid values remain null; real zero remains zero', () => {
+  assert.equal(scenarioValue('Santander', INDICATORS[0], '2026', focus, banks), null)
+  assert.equal(scenarioValue('FOCUS', INDICATORS[0], '2026', undefined, undefined), null)
+  assert.equal(scenarioValue('BB', INDICATORS[2], '2026', focus, banks), 0)
+  assert.equal(scenarioValue('BB', INDICATORS[0], '2026', null, { institutions:[{ name:'BB',years:{2026:{pib:NaN}}}] }), null)
+})
+test('published bank dataset has only supported sources and numeric or absent values', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const data = JSON.parse(await readFile(new URL('../public/cenarios.json', import.meta.url)))
+  assert.deepEqual(data.institutions.map(bank => bank.name), INSTITUTIONS.slice(1))
+  for (const bank of data.institutions) {
+    if (Object.keys(bank.years).length) {
+      assert.match(bank.date, /^\d{4}-\d{2}-\d{2}$/)
+      assert.ok(bank.url.startsWith('https://'))
+    }
+    for (const [year, values] of Object.entries(bank.years)) {
+      assert.ok(['2026', '2027'].includes(year))
+      for (const [metric, value] of Object.entries(values)) {
+        assert.ok(INDICATORS.some(indicator => indicator.id === metric))
+        assert.ok(value === null || (typeof value === 'number' && Number.isFinite(value)))
+      }
+    }
+  }
+})

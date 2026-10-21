@@ -374,7 +374,7 @@ function ResumoChart({ colors, spark }) {
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors }) {
-  const [sparkId, setSparkId] = useState('month')
+  const [sparkId, setSparkId] = useState('day')
   const spark = SPARK.find((s) => s.id === sparkId)
   return (
       <Expandable label="card das moedas">

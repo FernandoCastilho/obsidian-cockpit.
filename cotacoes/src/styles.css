@@ -33,7 +33,9 @@ footer p { margin:0 0 4px; }
 .history { margin-top: 40px; }
 .history-head { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; justify-content:space-between; margin-bottom:16px; }
 .history h2 { margin:0; font-size:1.2rem; }
-.period { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.period { display:flex; flex-direction:column; gap:12px; align-items:flex-start; }
+.period > .seg { max-width:100%; }
+.period-dates { display:flex; flex-wrap:wrap; gap:12px; max-width:100%; }
 .period label { display:flex; align-items:center; gap:6px; color:var(--mut); font-size:.85rem; }
 .period input { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font:inherit; }
 .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex-wrap:wrap; }
@@ -605,3 +607,17 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .expandable-panel::backdrop { background:rgba(0,0,0,.65); }
 .expandable-panel.is-full { width:100%; height:100dvh; max-height:100dvh; border-radius:0; padding:16px 16px calc(16px + env(safe-area-inset-bottom)); }
 .expandable-panel.is-dialog > .expandable-controls { position:sticky; top:-16px; background:var(--bg); z-index:5; padding:8px 0; }
+
+/* Compact scenario comparison; scroll without compressing source columns. */
+.scenario-year { display:flex; align-items:center; gap:8px; }
+.scenario-year select { color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:7px 12px; }
+.scenario-table { min-width:660px; }
+.scenario-table th, .scenario-table td { white-space:nowrap; }
+.scenario-table th:first-child { position:sticky; left:0; z-index:1; background:var(--card, var(--bg)); text-align:left; }
+.scenario-table tbody th small { display:block; color:var(--mut); font-size:.7rem; font-weight:400; margin-top:3px; }
+.scenario-sources { color:var(--mut); font-size:.75rem; line-height:1.5; display:flex; flex-wrap:wrap; gap:4px 18px; }
+.scenario-sources p { margin:0; }
+.scenario-sources p:last-child { flex-basis:100%; }
+.scenario-scroll:focus-visible { outline:2px solid var(--blue, #557dff); outline-offset:3px; }
+.scenario-table caption { text-align:left; color:var(--mut); font-size:.75rem; padding:0 0 8px; }
+.scenarios .status { display:block; font-size:.8rem; line-height:1.5; margin:12px 0; }
