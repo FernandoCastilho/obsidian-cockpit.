@@ -10,6 +10,7 @@ import CdiFuturo from './CdiFuturo.jsx'
 import Calculadora from './Calculadora.jsx'
 import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
+import Feriados from './Feriados.jsx'
 import { useHolidays } from './useHolidays.js'
 import Agenda from './Agenda.jsx'
 import Novidades from './Novidades.jsx'
@@ -556,15 +557,12 @@ export default function App() {
 
       {tab === 'cenarios' && (
         <>
-          <section className="macro" aria-labelledby="fer-h">
-            <h2 id="fer-h">Feriados nas praças</h2>
-            <Pracas pracas={hol.pracas} onChange={hol.setPracas} />
-            <HolidayNotice hol={hol} days={60} list />
-          </section>
           <Agenda />
           <Projecoes />
         </>
       )}
+
+      {tab === 'feriados' && <Feriados hol={hol} />}
 
       {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} view={sub} onView={(v) => goto('calculadora', v)} />}
 
