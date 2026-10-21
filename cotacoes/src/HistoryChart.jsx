@@ -190,6 +190,8 @@ export default function HistoryChart({ currency, color, start, end, day }) {
   const h = useSeries(currency, start, end, day)
   const [ref, width] = useWidth()
   const pts = h.status === 'ok' ? h.data.points : null
+  const [tableOpen, setTableOpen] = useState(() => localStorage.getItem('tabelaAberta') === '1')
+  useEffect(() => { try { localStorage.setItem('tabelaAberta', tableOpen ? '1' : '0') } catch { /* sem armazenamento */ } }, [tableOpen])
   const macroH = useMacro()
   const ptaxH = macroH.data?.ptaxHist?.[currency.code]
   const td = currency.code === 'JPY' ? 4 : 2 // iene vale centavos: precisa de mais casas
@@ -232,7 +234,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
         <p className="status stale">Fonte principal indisponível: mostrando a referência diária do {h.data.feed}, sem máxima e mínima do dia.</p>
       )}
       {pts && (
-        <details className="table">
+        <details className="table" open={tableOpen} onToggle={(e) => setTableOpen(e.currentTarget.open)}>
           <summary>Ver tabela ({pts.length} {intraday ? 'barras de 5 min' : 'dias'})</summary>
           <div className="scroll">
             <table>
