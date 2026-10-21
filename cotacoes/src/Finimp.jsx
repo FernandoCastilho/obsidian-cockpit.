@@ -146,7 +146,7 @@ export default function Finimp({ hol }) {
         addLabel="desembolso"
         render={(it, up) => (
           <>
-            <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>
+            <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>
             <label>Valor ({currency})<input inputMode="decimal" value={it.amount} onChange={(e) => up({ amount: e.target.value })} /></label>
           </>
         )}
@@ -162,11 +162,11 @@ export default function Finimp({ hol }) {
       {structure === 'amort' && <p className="status">Os juros são pagos junto de cada amortização. A soma das amortizações deve igualar o principal; o último pagamento é o vencimento.</p>}
       {structure && structure !== 'amort' && (
         <div className="calc-form">
-          <label>Vencimento<input type="date" value={maturity} onChange={(e) => setMaturity(e.target.value)} /><DateCheck date={maturity} hol={hol} onUse={setMaturity} /></label>
+          <label>Vencimento<input type="date" value={maturity} onChange={(e) => setMaturity(e.target.value)} /></label>
         </div>
       )}
       {structure === 'periodic' && (
-        <Rows items={interest} setItems={setInterest} blank={{ date: '' }} addLabel="data de juros" render={(it, up) => <label>Data de pagamento de juros<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>} />
+        <Rows items={interest} setItems={setInterest} blank={{ date: '' }} addLabel="data de juros" render={(it, up) => <label>Data de pagamento de juros<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>} />
       )}
       {structure === 'amort' && (
         <Rows
@@ -176,7 +176,7 @@ export default function Finimp({ hol }) {
           addLabel="amortização"
           render={(it, up) => (
             <>
-              <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /><DateCheck date={it.date} hol={hol} onUse={(d) => up({ date: d })} /></label>
+              <label>Data<input type="date" value={it.date} onChange={(e) => up({ date: e.target.value })} /></label>
               <label>
                 Tipo
                 <select value={it.kind} onChange={(e) => up({ kind: e.target.value })}>
@@ -216,7 +216,6 @@ export default function Finimp({ hol }) {
         <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
         <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
         </div>
-        <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças da operação (avisos de feriado nas datas)" />
         <p className="status note">Estimativa com os dados informados. Não é CET regulatório.</p>
       </details>
 </div>
