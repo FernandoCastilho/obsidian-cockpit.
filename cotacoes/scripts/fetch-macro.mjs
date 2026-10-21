@@ -90,9 +90,21 @@ for (const moeda of ['USD', 'EUR', 'JPY']) {
 }
 console.log('PTAX:', Object.keys(out.ptax).join(','))
 
+// Histórico da PTAX de fechamento (venda), ~400 dias, para a tabela dos gráficos
+out.ptaxHist = {}
+{
+  const md = (d) => `${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}-${d.getUTCFullYear()}`
+  const ini = md(new Date(now.getTime() - 400 * 864e5))
+  for (const moeda of ['USD', 'EUR', 'JPY']) {
+    const url = `${OLINDA}/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@moeda='${moeda}'&@dataInicial='${ini}'&@dataFinalCotacao='${md(now)}'&$filter=tipoBoletim%20eq%20'Fechamento'&$select=cotacaoVenda,dataHoraCotacao&$format=json`
+    const data = await getJson(url, `ptax hist ${moeda}`, 3)
+    if (data?.value?.length) out.ptaxHist[moeda] = Object.fromEntries(data.value.map((r) => [r.dataHoraCotacao.slice(0, 10), r.cotacaoVenda]))
+  }
+}
+
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
 // Fonte que falhou: mantém o último dado publicado (e avisa na tela) em vez de apagar o bloco ou travar o deploy.
-fillFromPrevious(out, await loadPrevious('macro.json'), ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax'])
+fillFromPrevious(out, await loadPrevious('macro.json'), ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax', 'ptaxHist'])
 if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 const ok = out.cdi.length && out.selic.length
 if (!ok && process.env.MACRO_STRICT === 'true') {
