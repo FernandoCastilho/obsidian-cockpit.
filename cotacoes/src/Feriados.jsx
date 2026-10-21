@@ -4,9 +4,15 @@ import { holidayMap } from './holidays.js'
 // Aba Feriados: lista do ano por praça.
 const LIST = [
   { id: 'BR', title: 'Nacionais' },
-  { id: 'SP', title: 'São Paulo' },
-  { id: 'MG', title: 'Minas Gerais' },
+  { id: 'SPE', title: 'Estado de São Paulo' },
+  { id: 'MG', title: 'Minas Gerais (Belo Horizonte)' },
   { id: 'NY', title: 'Nova York' },
+  { id: 'SPC', title: 'Cidade de São Paulo' },
+  { id: 'SOR', title: 'Sorocaba' },
+  { id: 'BAR', title: 'Barueri (Alphaville)' },
+  { id: 'CVL', title: 'Cascavel' },
+  { id: 'LDA', title: 'Londrina' },
+  { id: 'MGA', title: 'Maringá' },
 ]
 const fmt = (d) => {
   const dt = new Date(`${d}T12:00:00`)
