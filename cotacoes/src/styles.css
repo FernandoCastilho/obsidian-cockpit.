@@ -577,3 +577,6 @@ section[aria-labelledby="r-moedas"] > .sec-head h2 { display:flex; align-items:c
 section[aria-labelledby="r-moedas"] > .sec-head .seg { display:flex; flex-wrap:nowrap; flex-shrink:0; }
 section[aria-labelledby="r-moedas"] > .sec-head .seg button { padding:6px 9px; font-size:.85rem; white-space:nowrap; }
 section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin-left:2px; }
+
+.expandable { cursor:pointer; }
+.resumo-chart.big { padding-top:8px; }
