@@ -26,7 +26,7 @@ import { liveParity } from './parity.js'
 import Projecoes from './Projecoes.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
 import { flagPngs, flagSvg } from './flags.js'
-import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
+import { MAX_DAYS, fromInput, fullWindow, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
@@ -103,11 +103,7 @@ const sgn = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).
 
 // Variação em 1 semana, 1 mês e no ano, e volatilidade realizada de 30 dias, a partir do histórico diário.
 function Stats({ code }) {
-  const range = useMemo(() => {
-    const end = new Date()
-    end.setHours(0, 0, 0, 0)
-    return { end, start: new Date(end.getTime() - 359 * 864e5) }
-  }, [])
+  const range = useMemo(() => fullWindow(), [])
   const h = useHistory(code, range.start, range.end)
   const st = h.status === 'ok' ? rangeStats(h.data.points) : null
   if (!st) return h.status === 'loading' ? <p className="stats muted">carregando variações…</p> : null
@@ -224,24 +220,16 @@ function Share({ quotes, updatedAt, macro, curves }) {
     })
   }
   // Texto com a marcação do WhatsApp (*negrito*, _itálico_) e emoji, para colar direto na conversa.
-  const copyText = async (body) => {
+  const copyText = async (body, success = 'Copiado. Cole no WhatsApp ou no Teams.') => {
     try {
       await navigator.clipboard.writeText(body)
-      setMsg('Copiado. Cole no WhatsApp ou no Teams.')
+      setMsg(success)
     } catch {
       setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
     }
     setTimeout(() => setMsg(''), 3000)
   }
-  const copyWa = async () => {
-    try {
-      await navigator.clipboard.writeText(text)
-      setMsg('Copiado. Cole no WhatsApp.')
-    } catch {
-      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
-    }
-    setTimeout(() => setMsg(''), 3000)
-  }
+  const copyWa = () => copyText(text, 'Copiado. Cole no WhatsApp.')
   const copy = async () => {
     const when = updatedAt ?? new Date()
     const plain = buildPlain(quotes, when)
