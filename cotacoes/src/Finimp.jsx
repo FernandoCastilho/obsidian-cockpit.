@@ -157,7 +157,7 @@ export default function Finimp({ hol }) {
       <div className="fin-step">
       <h3 className="calc-sub"><span className="fin-n">2</span> Pagamento</h3>
       {seg(structure, setStructure, [['bullet', 'Bullet'], ['periodic', 'Juros periódicos'], ['amort', 'Amortizações']], 'Estrutura')}
-      {structure === 'bullet' && <p className="status">Principal e juros pagos no vencimento. Os juros ficam acumulados a pagar; não são somados ao principal.</p>}
+      {structure === 'bullet' && <p className="status">Principal e juros no vencimento.</p>}
       {structure === 'periodic' && <p className="status">Principal no vencimento; juros pagos nas datas abaixo e no vencimento.</p>}
       {structure === 'amort' && <p className="status">Os juros são pagos junto de cada amortização. A soma das amortizações deve igualar o principal; o último pagamento é o vencimento.</p>}
       {structure && structure !== 'amort' && (
@@ -198,7 +198,7 @@ export default function Finimp({ hol }) {
         <label>Taxa final (% a.a.)<input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder="ex.: 6,50" /></label>
         <div>
           <span className="lbl">Regra de juros <Explain id="regraJuros" /></span>
-          {seg(rule, setRule, [['prop', 'Proporcional (linear)'], ['comp', 'Composta (efetiva a.a.)']], 'Regra de juros')}
+          {seg(rule, setRule, [['prop', 'Proporcional'], ['comp', 'Composta']], 'Regra de juros')}
         </div>
         <div>
           <span className="lbl">Convenção de dias <Explain id="convencao" /></span>
