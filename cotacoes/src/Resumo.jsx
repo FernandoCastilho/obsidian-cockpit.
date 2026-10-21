@@ -72,7 +72,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           )}
         </span>
         <span className="tile-spark">
-          <Sparkline points={pts} tone={trend} />
+          <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
           <small className="muted">
             {spark.label}
             {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
@@ -145,7 +145,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}</small>
         </span>
         <span className="tile-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
-          <Sparkline points={pts} tone={trend} />
+          <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
           <small className="muted">
             {spark.label}
             {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
