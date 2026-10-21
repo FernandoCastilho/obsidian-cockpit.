@@ -479,12 +479,12 @@ export default function App() {
           <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
         </div>
       )}
-      {tab !== 'resumo' && tab !== 'calculadora' && (
+      {tab !== 'resumo' && tab !== 'calculadora' && tab !== 'noticias' && (
         <header className="top">
           <h1>{TABS.find((t) => t.id === tab).label}</h1>
         </header>
       )}
-      {tab !== 'calculadora' && (
+      {tab !== 'calculadora' && tab !== 'noticias' && (
       <p className="status src">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
