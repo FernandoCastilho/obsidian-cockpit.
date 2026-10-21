@@ -36,7 +36,7 @@ export default function Projecoes({ macro }) {
             </tr>)}</tbody>
           </table>
         </div>
-        <p className="status">USD: <a href="https://www.bcb.gov.br/controleinflacao/relatoriofocus" target="_blank" rel="noopener noreferrer">Focus = média de dezembro</a>; bancos = fim do ano. As medidas não são idênticas. — = projeção não verificada ou indisponível, nunca zero.</p>
+        <p className="status">USD: <a href="https://www.bcb.gov.br/controleinflacao/relatoriofocus" target="_blank" rel="noopener noreferrer">Focus = média de dezembro</a>; Itaú BBA = dezembro; demais bancos = fim do período. Selic: Itaú = dezembro; demais fontes = fim do ano. As medidas não são idênticas. — = projeção não verificada ou indisponível, nunca zero.</p>
         <div className="scenario-sources">
           <p><a href="https://www.bcb.gov.br/publicacoes/focus" target="_blank" rel="noopener noreferrer">FOCUS · Banco Central</a>: {focus ? `coleta até ${date(focus.date)}` : 'indisponível'}{macro?.data?.stale?.focus ? ' · dado de reserva' : ''}.</p>
           {INSTITUTIONS.slice(1).map((name) => {
