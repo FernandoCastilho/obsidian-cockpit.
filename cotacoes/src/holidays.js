@@ -69,7 +69,7 @@ const spCidade = fixed([[1, 25, 'Aniversário de São Paulo']])
 const sorocaba = fixed([[8, 15, 'Aniversário de Sorocaba']])
 const barueri = fixed([[3, 26, 'Aniversário de Barueri'], [6, 24, 'São João Batista (padroeiro)']])
 const cascavel = fixed([[11, 14, 'Aniversário de Cascavel']])
-const londrina = fixed([[12, 10, 'Aniversário de Londrina']])
+const londrina = (y) => sortMap([[addDays(easter(y), 68), 'Sagrado Coração de Jesus (padroeiro)'], [iso(y, 12, 10), 'Aniversário de Londrina']])
 const maringa = fixed([[5, 10, 'Aniversário de Maringá']])
 
 // Federal Reserve: domingo vira segunda; sábado não é compensado (os bancos abrem na sexta).
