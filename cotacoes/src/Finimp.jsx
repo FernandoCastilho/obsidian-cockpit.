@@ -221,19 +221,21 @@ export default function Finimp({ hol }) {
       </details>
 </div>
 <div className="calc-out" id="calc-out">
-      <h3 className="calc-sub">Ficha da cotação</h3>
-      <div className="scroll">
-        <table className="focus-table fin-table ficha">
-          <tbody>
-            {ficha.map(([k, v]) => (
-              <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>
+      {res.ok ? (
+        <div className="ficha-card">
+          <div className="ficha-top">
+            <small>Valor final a pagar</small>
+            <b>{fmt(res.totals.paid)}</b>
+            <span>Juros {fmt(res.totals.interest)} · principal {fmt(res.totals.disbursed)}</span>
+          </div>
+          <dl className="ficha-list">
+            {ficha.filter(([k, v]) => v !== '—' && k !== 'Vl Final').map(([k, v]) => (
+              <div key={k}><dt>{k === 'Cronograma de amortização' ? 'Cronograma' : k}</dt><dd>{v}</dd></div>
             ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="calc-form">
-        <button type="button" className="btn small" onClick={copyQ}>{copiedQ ? 'Copiado' : 'Copiar ficha (Excel)'}</button>
-      </div>
+          </dl>
+          <button type="button" className="btn small" onClick={copyQ}>{copiedQ ? 'Copiado' : 'Copiar ficha (Excel)'}</button>
+        </div>
+      ) : null}
       {!res.ok ? (
         <div className="calc-block">
           {res.missing.length > 0 && (
