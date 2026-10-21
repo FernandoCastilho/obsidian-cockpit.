@@ -555,3 +555,16 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .fin-step .seg button { min-height:42px; padding:6px 4px; font-size:.85rem; line-height:1.15; text-align:center; white-space:normal; }
 .fin-step > .status { margin:0; font-size:.82rem; }
 .fin-step .rows { gap:8px; }
+
+/* FINIMP: ficha da cotação compacta */
+.ficha-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px; display:flex; flex-direction:column; gap:12px; }
+.ficha-top { display:flex; flex-direction:column; gap:2px; }
+.ficha-top small { color:var(--mut); font-size:.78rem; }
+.ficha-top b { font-size:1.6rem; }
+.ficha-top span { color:var(--mut); font-size:.82rem; }
+.ficha-list { margin:0; display:flex; flex-direction:column; }
+.ficha-list > div { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-top:1px solid var(--line); }
+.ficha-list dt { color:var(--mut); font-size:.85rem; flex:none; }
+.ficha-list dd { margin:0; text-align:right; font-size:.9rem; }
+.fin-step .calc-form > div { display:flex; flex-direction:column; align-items:stretch; gap:6px; text-align:left; }
+.fin-step .lbl { display:flex; align-items:center; gap:6px; }
