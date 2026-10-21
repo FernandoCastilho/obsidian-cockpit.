@@ -65,7 +65,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           <span className="tile-price">{quote ? brl(quote.bid) : '—'}</span>
           {hasDay ? (
             <span className={`pct ${trend}`}>
-              <Arrow v={day} /> {pct(day)}<small className="muted"> hoje</small>
+              <Arrow v={day} /> {pct(day)}
             </span>
           ) : (
             quote && <small className="muted">var. do dia indisponível</small>
@@ -137,7 +137,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           <span className="tile-price">{p ? cross(p.main, quote) : '—'}</span>
           {hasDay ? (
             <span className={`pct ${trend}`}>
-              <Arrow v={p.pct} /> {pct(p.pct)}<small className="muted"> hoje</small>
+              <Arrow v={p.pct} /> {pct(p.pct)}
             </span>
           ) : (
             p && <small className="muted">var. do dia indisponível</small>
