@@ -241,7 +241,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
                     {intraday ? (
                       <><td>{fmtTime(p.t, true)}</td><td>{brl(p.bid)}</td></>
                     ) : (
-                      <><td>{fmtDate(p.t, true)}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
+                      <><td>{new Date(p.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</td><td>{brl(p.bid)}</td><td>{brl(p.high)}</td><td>{brl(p.low)}</td></>
                     )}
                   </tr>
                 ))}
