@@ -1,3 +1,4 @@
+import Expandable from './Expandable.jsx'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
@@ -24,7 +25,7 @@ import ParityChart from './ParityChart.jsx'
 import Projecoes from './Projecoes.jsx'
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
 import { flagPngs } from './flags.js'
-import { MAX_DAYS, fromInput, toInput, useHistory } from './useHistory.js'
+import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
@@ -176,23 +177,7 @@ function useFx() {
 
 // Detalhes de uma moeda (toque no quadro do resumo): o card completo, com compra/venda, máx./mín., PTAX e variações.
 function Sheet({ onClose, children }) {
-  useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose()
-    document.addEventListener('keydown', onKey)
-    document.body.classList.add('no-scroll')
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.classList.remove('no-scroll')
-    }
-  }, [onClose])
-  return (
-    <div className="sheet-backdrop" onClick={onClose}>
-      <div className="sheet" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
-        <button type="button" className="sheet-close" onClick={onClose} aria-label="Fechar">×</button>
-        {children}
-      </div>
-    </div>
-  )
+  return <Expandable modal label="detalhes da moeda" onClose={onClose}>{children}</Expandable>
 }
 
 export default function App() {
@@ -225,7 +210,8 @@ export default function App() {
   const onDates = (a, b) => {
     let start = fromInput(a)
     let end = fromInput(b)
-    if (start > end) [start, end] = [end, start]
+    const error = historyRangeError(start, end)
+    if (error) { setNotice(error); return }
     const min = new Date(end)
     min.setDate(min.getDate() - MAX_DAYS)
     if (start < min) {
@@ -374,6 +360,7 @@ export default function App() {
             )
           )}
           <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
+          {notice && <p role="status">{notice}</p>}
         </Sheet>
       )}
     </main>

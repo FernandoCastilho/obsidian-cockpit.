@@ -1,3 +1,4 @@
+import Expandable from './Expandable.jsx'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
@@ -376,6 +377,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [sparkId, setSparkId] = useState('month')
   const spark = SPARK.find((s) => s.id === sparkId)
   return (
+      <Expandable label="card das moedas">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
           <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
@@ -395,6 +397,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
         </div>
         <ResumoChart colors={colors} spark={spark} />
       </section>
+      </Expandable>
   )
 }
 
