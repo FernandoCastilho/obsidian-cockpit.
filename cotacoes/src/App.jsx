@@ -466,9 +466,11 @@ export default function App() {
   return (
     <>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
-    <div className="clocks-top">
-      <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
-    </div>
+    {tab !== 'calculadora' && (
+      <div className="clocks-top">
+        <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
+      </div>
+    )}
     <main className="app">
       {update && (
         <div className="update-notice" role="status">
@@ -476,11 +478,12 @@ export default function App() {
           <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
         </div>
       )}
-      {tab !== 'resumo' && (
+      {tab !== 'resumo' && tab !== 'calculadora' && (
         <header className="top">
           <h1>{TABS.find((t) => t.id === tab).label}</h1>
         </header>
       )}
+      {tab !== 'calculadora' && (
       <p className="status src">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
@@ -504,6 +507,7 @@ export default function App() {
             </svg>
           </button>
       </p>
+      )}
 
       {tab === 'resumo' && (
         <>
