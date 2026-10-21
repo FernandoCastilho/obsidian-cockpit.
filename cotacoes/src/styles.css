@@ -580,3 +580,10 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 
 .expandable { cursor:pointer; }
 .resumo-chart.big { padding-top:8px; }
+
+.fer-block { margin-top:14px; }
+.fer-block h3 { margin:0 0 6px; }
+.fer-table { width:100%; border-collapse:collapse; font-size:.92rem; }
+.fer-table td { padding:6px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
+.fer-table td:first-child { white-space:nowrap; width:1%; padding-right:12px; }
+.fer-table tr.past { opacity:.5; }
