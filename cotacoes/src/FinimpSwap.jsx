@@ -78,7 +78,6 @@ export default function FinimpSwap({ curves, hol }) {
     <article className="chart finimp calc-split stack">
       <div className="calc-in">
         <p className="status note">Reproduz o formato da cotação do banco: perna em dólar (juros, IR e amortização) e perna em reais do swap (CDI esperado + spread). Estimativa; nada é presumido além do que você informa e da curva DI x pré.</p>
-        <Pracas pracas={cals} onChange={setCals} label="Praças que ajustam as datas de pagamento" />
         <div className="calc-form">
           <button type="button" className="btn small" onClick={fill}>Preencher exemplo</button>
         </div>
