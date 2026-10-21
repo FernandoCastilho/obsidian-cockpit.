@@ -239,7 +239,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
           <div className="scroll">
             <table>
               <thead>
-                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fechamento</th><th>Máx.</th><th>Mín.</th><th>PTAX</th></tr>}
+                {intraday ? <tr><th>Hora</th><th>Cotação</th></tr> : <tr><th>Data</th><th>Fech.</th><th>Máx.</th><th>Mín.</th><th>PTAX</th></tr>}
               </thead>
               <tbody>
                 {pts.map((p, i) => ({ ...p, prevBid: i > 0 ? pts[i - 1].bid : null })).reverse().map((p) => (
