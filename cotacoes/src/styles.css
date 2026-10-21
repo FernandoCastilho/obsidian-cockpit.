@@ -531,3 +531,15 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .clocks-top .clock { display:flex !important; justify-content:space-between; width:100%; }
 .clocks-top .clock-one small { display:inline !important; font-size:.68rem; }
 .clocks-top .clock-one { align-items:center; }
+
+/* calculadoras: ícones e FINIMP em etapas */
+.calc-icon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; }
+.fin-step { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin:0 0 12px; display:flex; flex-direction:column; gap:10px; }
+.fin-step .calc-sub { margin:0; display:flex; align-items:center; gap:8px; }
+.fin-step-head { display:flex; justify-content:space-between; align-items:center; }
+.fin-n { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--accent, #3987e5); color:#fff; font-size:.75rem; font-weight:700; }
+.fin-step input, .fin-step select { font-size:16px; min-height:42px; }
+.fin-step .row { display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:end; }
+.fin-more { border:1px dashed var(--line); border-radius:14px; padding:10px 14px; margin-bottom:12px; }
+.fin-more summary { cursor:pointer; color:var(--mut); }
+.btn.ghost { background:none; }
