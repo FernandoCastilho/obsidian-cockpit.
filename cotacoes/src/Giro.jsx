@@ -49,7 +49,6 @@ export default function Giro({ curves, hol }) {
     <article className="chart calc-split">
       <div className="calc-in">
       <p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p>
-      <Pracas pracas={hol.pracas} onChange={hol.setPracas} label="Praças (avisos de feriado nas datas)" />
       <div className="calc-form">
         <label>
           Valor liberado (R$)
@@ -134,8 +133,8 @@ export default function Giro({ curves, hol }) {
               )}
             </section>
           </div>
-          <DateCheck date={res.rows[0].date} hol={hol} />
-          <DateCheck date={res.end} hol={hol} />
+          
+          
           <details className="table" open={res.rows.length <= 14}>
             <summary>Cronograma de pagamentos ({res.rows.length} parcelas)</summary>
             <div className="scroll">
