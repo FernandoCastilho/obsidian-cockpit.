@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, useHistory, useIntraday } from './useHistory.js'
@@ -75,7 +75,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           <Sparkline points={pts} tone={trend} />
           <small className="muted">
             {spark.label}
-            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
+            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
       </span>
@@ -120,7 +120,9 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const hasDay = !!p && !quotes[base].fallback && !quotes[quote].fallback
   const trend = toneOf(hasDay ? p.pct : change)
   const eurUsd = base === 'EUR' && quote === 'USD'
+  const [big, setBig] = useState(false)
   return (
+    <>
     <div style={{ '--series': color }} className="tile wide pair-tile">
       <span className="tile-head">
         <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(base, 'width="26" height="18"') }} />
@@ -142,15 +144,24 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           )}
           <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}</small>
         </span>
-        <span className="tile-spark">
+        <span className="tile-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
           <Sparkline points={pts} tone={trend} />
           <small className="muted">
             {spark.label}
-            {change != null ? ` ${pct(change)}` : spark.intraday && ' · sem pontos hoje'}
+            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
       </span>
     </div>
+    {big && (
+      <Overlay onClose={() => setBig(false)}>
+        <div className="resumo-chart big">
+          <h3>{base}/{quote} <small className="muted">· {spark.label}</small>{change != null && <span className={`pct ${toneOf(change)}`}> {pct(change)}</span>}</h3>
+          <Wide render={(wv) => <Plot points={pts} width={wv} color={color} code={`par-${base}-${quote}-${spark.id}`} intraday={dia} fmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} labels label={`${base}/${quote}`} />} />
+        </div>
+      </Overlay>
+    )}
+    </>
   )
 }
 
@@ -244,6 +255,31 @@ function MultiPlot({ series, width, intraday }) {
 }
 
 // Gráfico do Resumo: moedas escolhidas nos botões (várias ao mesmo tempo) e o período dos botões Dia/Semana/Mês/Ano.
+
+// Tela ampliada (mesmo visual do detalhe das moedas).
+function Overlay({ onClose, children }) {
+  useEffect(() => {
+    const onKey = (ev) => ev.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey)
+    document.body.classList.add('no-scroll')
+    return () => { document.removeEventListener('keydown', onKey); document.body.classList.remove('no-scroll') }
+  }, [onClose])
+  return (
+    <div className="sheet-backdrop" onClick={onClose}>
+      <div className="sheet" role="dialog" aria-modal="true" onClick={(ev) => ev.stopPropagation()}>
+        <button type="button" className="sheet-close" onClick={onClose} aria-label="Fechar">×</button>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Mede a largura disponível e desenha o gráfico nela.
+function Wide({ render }) {
+  const [ref, width] = useWidth()
+  return <div ref={ref}>{width > 0 ? render(width) : null}</div>
+}
+
 function ResumoChart({ colors, spark }) {
   const [sel, setSel] = useState(['USD'])
   const w = useWindow(spark.days)
@@ -262,8 +298,51 @@ function ResumoChart({ colors, spark }) {
   const one = rows.length === 1
   const r0 = rows[0]
   const chg = (r) => periodChange(r.points)
+  const [big, setBig] = useState(false)
+  const chart = (wv) => (
+        ready.length === rows.length ? (
+          one ? (
+            <Plot points={r0.points} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
+          ) : (
+            <MultiPlot series={rows} width={wv} intraday={dia} />
+          )
+        ) : (
+          <div className="placeholder" style={{ height: 120 }}>
+            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos de hoje ainda (a coleta roda de segunda a sexta, a partir das 9h30).' : 'Histórico indisponível no momento.'}
+          </div>
+        )
+  )
   return (
+    <>
     <div className="resumo-chart">
+      <div className="sec-head">
+        <h3 className="expandable" onClick={() => setBig(true)} role="button" title="Ampliar">
+          {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
+          {' '}<span className="muted" aria-hidden="true">›</span>
+        </h3>
+        <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
+          {CURRENCIES.map((c) => (
+            <button key={c.code} type="button" aria-pressed={sel.includes(c.code)} style={sel.includes(c.code) ? { borderColor: colors?.[c.code] } : undefined} onClick={() => toggle(c.code)}>
+              {sel.includes(c.code) && <i className="chip-dot" style={{ background: colors?.[c.code] }} aria-hidden="true" />}
+              {c.code}
+            </button>
+          ))}
+        </div>
+      </div>
+      {!one && (
+        <p className="chart-legend">
+          {rows.map((r) => (
+            <span key={r.code}><i className="chip-dot" style={{ background: r.color }} aria-hidden="true" />{r.code} {chg(r) != null && <b className={`pct ${toneOf(chg(r))}`}>{pct(chg(r))}</b>}</span>
+          ))}
+        </p>
+      )}
+      <div ref={ref}>
+        {chart(width)}
+      </div>
+    </div>
+    {big && (
+      <Overlay onClose={() => setBig(false)}>
+        <div className="resumo-chart big">
       <div className="sec-head">
         <h3>
           {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
@@ -284,20 +363,11 @@ function ResumoChart({ colors, spark }) {
           ))}
         </p>
       )}
-      <div ref={ref}>
-        {ready.length === rows.length ? (
-          one ? (
-            <Plot points={r0.points} width={width} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
-          ) : (
-            <MultiPlot series={rows} width={width} intraday={dia} />
-          )
-        ) : (
-          <div className="placeholder" style={{ height: 120 }}>
-            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos de hoje ainda (a coleta roda de segunda a sexta, a partir das 9h30).' : 'Histórico indisponível no momento.'}
-          </div>
-        )}
-      </div>
-    </div>
+          <Wide render={chart} />
+        </div>
+      </Overlay>
+    )}
+    </>
   )
 }
 
