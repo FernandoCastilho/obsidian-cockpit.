@@ -390,12 +390,13 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
     if (!s.intraday) start.setDate(start.getDate() - s.days)
     setDates({ start: toInput(start), end: toInput(end) })
   }
-  const chooseDate = (key, value) => {
-    const next = { ...dates, [key]: value }; setDates(next)
+  const applyDates = (next) => {
+    setDates(next)
     const selection = selectedPeriod(next.start, next.end)
     setDateError(selection.error || '')
     if (!selection.error) { setCustom(selection); setSparkId('custom') }
   }
+  const chooseDate = (key, value) => applyDates({ ...dates, [key]: value })
   const openSelected = (code) => onOpen(code, spark)
   return (
       <Expandable label="card das moedas">
@@ -423,7 +424,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
             <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={openSelected} color={colors?.[c.code]} />
           ))}
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
-          <OilTile spark={spark} />
+          <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>
         <ResumoChart colors={colors} spark={spark} />
       </section>

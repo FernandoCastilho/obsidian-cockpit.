@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import Sparkline from './Sparkline.jsx'
+import OilHistory from './OilHistory.jsx'
 import { oilPeriodPoints } from './summaryPeriod.js'
 
 const SOURCE = 'https://www.eia.gov/dnav/pet/hist/RBRTED.htm'
 const dateLabel = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? date.split('-').reverse().join('/') : '—'
 
 // Commodity independente: nunca entra no câmbio, na paridade ou nos cálculos em reais.
-export default function OilTile({ spark }) {
+export default function OilTile({ spark, dates, presets, onDates, onPreset, dateError }) {
+  const [expanded, setExpanded] = useState(false)
   const [state, setState] = useState({ data: null, error: false })
   useEffect(() => {
     const controller = new AbortController()
@@ -33,6 +35,7 @@ export default function OilTile({ spark }) {
   const chart = oilPeriodPoints(points, spark).map((p) => ({ bid: p.value }))
   const overdue = data?.nextReleaseDate && new Date().toISOString().slice(0, 10) > data.nextReleaseDate
   return (
+    <>
     <article className="tile oil-tile" aria-label="Petróleo Brent spot">
       <div className="tile-head"><span aria-hidden="true">🛢</span><span className="tile-name"><b>Petróleo Brent</b> <small>· spot</small></span></div>
       <div className="tile-body">
@@ -46,7 +49,10 @@ export default function OilTile({ spark }) {
       <small className="muted">Referência: {dateLabel(last?.date)} · sem intraday</small>
       <small className="muted">Divulgação EIA: {dateLabel(data?.releaseDate)}</small>
       {(state.error || overdue) && <small role="status">{last ? 'Último dado disponível; atualização pendente.' : 'Cotação indisponível.'}</small>}
+      <button type="button" className="more" onClick={() => setExpanded(true)}>Ver histórico do petróleo ›</button>
       <a href={SOURCE} target="_blank" rel="noreferrer" className="oil-source">Fonte: EIA · Brent spot FOB</a>
     </article>
+    {expanded && <OilHistory points={points} spark={spark} dates={dates} presets={presets} onDates={onDates} onPreset={onPreset} dateError={dateError} stale={state.error || overdue} loading={!data && !state.error} onClose={() => setExpanded(false)} />}
+    </>
   )
 }
