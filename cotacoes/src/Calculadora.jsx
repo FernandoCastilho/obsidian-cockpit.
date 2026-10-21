@@ -309,7 +309,7 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
           <div className="calc-list">
             {CALC_OPTIONS.map((o) => (
               <button key={o.id} type="button" className="calc-item" onClick={() => onView(o.id)}>
-                <span className="start-chip" aria-hidden="true">{o.chip}</span>
+                <span className="start-chip calc-icon" aria-hidden="true">{o.icon ? <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{o.icon.map((d) => <path key={d} d={d} />)}</svg> : o.chip}</span>
                 <span className="calc-item-text">
                   <b>{o.title}</b>
                   <small>{o.desc}</small>
