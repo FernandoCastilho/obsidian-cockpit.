@@ -1,0 +1,108 @@
+/* Escopo próprio: não interfere nas tabelas recolhíveis dos gráficos. */
+.executive-rates {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 0 28px;
+}
+
+.executive-rates__heading { margin-bottom: 12px; }
+.executive-rates__heading h2 { margin: 0; font-size: 1.2rem; line-height: 1.35; }
+.executive-rates__heading p,
+.executive-rates__footnote {
+  margin: 6px 0 0;
+  color: var(--mut);
+  font-size: .8rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.executive-rates__scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) var(--card);
+}
+.executive-rates__scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.executive-rates__table {
+  width: 100%;
+  min-width: 696px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.executive-rates__indicator-column { width: 176px; }
+.executive-rates__table th,
+.executive-rates__table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.executive-rates__table thead th {
+  background: var(--surface-2, var(--card));
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+.executive-rates__table tbody tr:last-child > * { border-bottom: 0; }
+.executive-rates__table .executive-rates__indicator {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  background: var(--card);
+  box-shadow: 1px 0 0 var(--line);
+}
+.executive-rates__table thead .executive-rates__indicator {
+  z-index: 2;
+  background: var(--surface-2, var(--card));
+}
+.executive-rates__table thead .executive-rates__indicator span {
+  display: block;
+  color: var(--mut);
+  font-size: .72rem;
+  font-weight: 400;
+}
+.executive-rates__name { display: block; font-size: .88rem; font-weight: 600; line-height: 1.4; }
+.executive-rates__unit { display: block; margin-top: 3px; color: var(--mut); font-size: .72rem; font-weight: 400; line-height: 1.4; }
+.executive-rates__value { display: block; font-size: .95rem; font-weight: 700; line-height: 1.4; }
+.executive-rates__date,
+.executive-rates__status,
+.executive-rates__source { display: block; margin-top: 3px; color: var(--mut); font-size: .72rem; line-height: 1.4; }
+.executive-rates__source a { color: inherit; text-underline-offset: 2px; }
+.executive-rates__source a:hover { color: var(--fg); }
+.executive-rates__source a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.executive-rates__cell--missing .executive-rates__value { color: var(--mut); }
+.executive-rates__table .executive-rates__empty { text-align: left; padding: 18px 14px; color: var(--mut); font-size: .85rem; }
+.executive-rates__footnote { margin-top: 10px; }
+.executive-rates__hint { display: none; }
+.executive-rates__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 699px) {
+  .executive-rates__table { min-width: 680px; }
+  .executive-rates__indicator-column { width: 128px; }
+  .executive-rates__table th,
+  .executive-rates__table td { padding: 11px 12px; }
+  .executive-rates__hint { display: block; margin: 0 0 8px; color: var(--mut); font-size: .75rem; line-height: 1.4; }
+}

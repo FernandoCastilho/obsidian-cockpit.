@@ -5,6 +5,7 @@ import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
 import Macro from './Macro.jsx'
+import RatesSnapshot from './RatesSnapshot.jsx'
 import Curves from './Curves.jsx'
 import CdiFuturo from './CdiFuturo.jsx'
 import Calculadora from './Calculadora.jsx'
@@ -309,6 +310,7 @@ export default function App() {
 
       {tab === 'juros' && (
         <>
+          <RatesSnapshot quotes={quotes} macro={macro} />
           <Macro />
           <CdiFuturo curves={curves} macro={macro.data} hol={hol} />
           <Curves curves={curves} />
