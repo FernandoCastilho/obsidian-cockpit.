@@ -9,6 +9,7 @@ import HBars from './HBars.jsx'
 import Finimp from './Finimp.jsx'
 import FinimpSwap from './FinimpSwap.jsx'
 import Giro from './Giro.jsx'
+import Ncg from './Ncg.jsx'
 import Aplicacao from './Aplicacao.jsx'
 import { CALC_OPTIONS } from './calcOptions.js'
 
@@ -328,6 +329,7 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
           </div>
           {view === 'finimp' && <Finimp hol={hol} />}
           {view === 'finimpswap' && <FinimpSwap curves={curves} hol={hol} />}
+          {view === 'ncg' && <Ncg />}
           {view === 'giro' && <Giro curves={curves} hol={hol} />}
           {view === 'comparar' && <OperacaoDi curves={curves} hol={hol} />}
           {view === 'aplicacao' && <Aplicacao curves={curves} hol={hol} />}
