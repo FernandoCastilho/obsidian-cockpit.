@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
 
 export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
@@ -195,7 +196,7 @@ export function refreshLimits(now = Date.now()) {
   return { wait, left: Math.max(0, REFRESH_DAILY_MAX - log.length) }
 }
 
-export function useQuotes(intervalMs = 60000) {
+export function useQuotes(intervalMs = DATA_POLL_MS) {
   const [quotes, setQuotes] = useState(null)
   const [direction, setDirection] = useState({})
   const [error, setError] = useState(null)
@@ -208,10 +209,14 @@ export function useQuotes(intervalMs = 60000) {
   const ctrl = useRef(null)
 
   const load = useCallback(async (direct = false) => {
+    // O automático não interrompe uma carga pendente, especialmente a atualização manual.
+    if (!direct && ctrl.current) return
     ctrl.current?.abort()
-    ctrl.current = new AbortController()
+    const request = new AbortController()
+    ctrl.current = request
     try {
-      const { results, via: v, collectedAt } = await fetchQuotes(ctrl.current.signal, { direct })
+      const { results, via: v, collectedAt } = await fetchQuotes(request.signal, { direct })
+      if (request.signal.aborted || ctrl.current !== request) return
       const next = {}
       const errs = {}
       const dir = {}
@@ -241,7 +246,9 @@ export function useQuotes(intervalMs = 60000) {
       // todas falharam (ex.: limite da API): não afirmar que está atualizado
       setError(fresh ? null : Object.values(errs)[0] ?? 'sem resposta da fonte')
     } catch (e) {
-      if (e.name !== 'AbortError') setError(friendlyError(e.message))
+      if (e.name !== 'AbortError' && !request.signal.aborted && ctrl.current === request) setError(friendlyError(e.message))
+    } finally {
+      if (ctrl.current === request) ctrl.current = null
     }
   }, [])
 
@@ -264,20 +271,12 @@ export function useQuotes(intervalMs = 60000) {
   }, [limits.wait])
 
   useEffect(() => {
-    load()
-    let id = setInterval(load, intervalMs)
-    const onVisibility = () => {
-      clearInterval(id)
-      if (!document.hidden) {
-        load()
-        id = setInterval(load, intervalMs)
-      }
-    }
-    document.addEventListener('visibilitychange', onVisibility)
+    // A função intermediária evita passar o evento de foco como argumento direct=true.
+    const stop = startVisiblePolling(() => load(false), intervalMs)
     return () => {
-      clearInterval(id)
+      stop()
       ctrl.current?.abort()
-      document.removeEventListener('visibilitychange', onVisibility)
+      ctrl.current = null
     }
   }, [load, intervalMs])
 

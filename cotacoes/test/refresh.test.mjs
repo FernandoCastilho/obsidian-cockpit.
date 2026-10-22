@@ -1,0 +1,216 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { createRequire } from 'node:module'
+import { pathToFileURL } from 'node:url'
+import { browserClock, deferred, flush, hookRenderer, json } from './helpers/hooks.mjs'
+
+const MIN = 60000, TTL = 6 * 3600000
+let version = 0
+const history = () => import(`../src/useHistory.js?refresh-test=${++version}`)
+const day = '2026-10-22'
+const at = (hour) => new Date(`${day}T${hour}:00:00`).getTime()
+const file = (generatedAt, extra = false) => ({ generatedAt, source: 'Coleta central', resolution: '5 min', series: Object.fromEntries(['USD', 'EUR'].map((code) => [code, { points: [[at('10'), 5], [at('11'), 5.1], ...(extra ? [[at('12'), 5.2]] : [])] }])) })
+
+test('intraday: atualiza aberto no TTL exato, compartilha consulta e preserva pontos durante loading', async (t) => {
+  const clock = browserClock(t), h = await history(), pending = [], urls = []
+  globalThis.fetch = (url) => { urls.push(url); const p = deferred(); pending.push(p); return p.promise }
+  const a = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  const b = hookRenderer(() => h.useIntraday('EUR', h.fromInput(day)))
+  clock.cleanup(() => { a.close(); b.close() })
+  await a.settle(); await b.settle()
+  assert.equal(urls.length, 1)
+  const originalAt = clock.now
+  pending[0].resolve(json(file(originalAt)))
+  assert.equal((await a.settle()).data.points.length, 2)
+  assert.equal((await b.settle()).data.points.length, 2)
+  await clock.advance(9 * MIN)
+  assert.equal(urls.length, 1)
+  await clock.advance(MIN)
+  assert.equal(urls.length, 2)
+  const loading = await a.settle()
+  assert.equal(loading.status, 'ok')
+  assert.equal(loading.refreshing, true)
+  assert.equal(loading.data.generatedAt, originalAt)
+  assert.equal(loading.data.points.length, 2)
+  pending[1].resolve(json(file(clock.now, true)))
+  assert.equal((await a.settle()).data.points.length, 3)
+  assert.equal((await b.settle()).data.points.length, 3)
+  assert.equal(a.value.data.generatedAt, clock.now)
+  assert.equal(a.value.data.feed, 'Coleta central')
+  assert.ok(urls.every((url) => /^\.\/intraday\.json\?t=/.test(url)), 'não chama API de cotações')
+})
+
+test('intraday: pausa hidden, retoma por foco/visibility sem sobreposição e limpa listeners', async (t) => {
+  const clock = browserClock(t), h = await history(), pending = []
+  globalThis.fetch = () => { const p = deferred(); pending.push(p); return p.promise }
+  const r = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  clock.cleanup(() => r.close())
+  await r.settle(); pending[0].resolve(json(file(clock.now))); await r.settle()
+  clock.doc.hidden = true; clock.doc.dispatch('visibilitychange')
+  assert.equal(clock.timers.size, 0)
+  await clock.advance(20 * MIN)
+  clock.win.dispatch('focus'); await flush()
+  assert.equal(pending.length, 1)
+  clock.doc.hidden = false; clock.doc.dispatch('visibilitychange'); clock.win.dispatch('focus')
+  await r.settle()
+  assert.equal(pending.length, 2)
+  await clock.advance(3 * MIN)
+  clock.win.dispatch('focus'); await flush()
+  assert.equal(pending.length, 2, 'não sobrepõe requisição pendente')
+  r.close()
+  const updates = r.updates
+  assert.equal(clock.timers.size, 0)
+  assert.equal(clock.win.size, 0)
+  assert.equal(clock.doc.size, 0)
+  pending[1].resolve(json(file(clock.now, true))); await flush()
+  assert.equal(r.updates, updates, 'resposta após desmontagem não atualiza estado')
+})
+
+test('intraday: falha conserva série e data reais, avisa stale e recuperação limpa o aviso', async (t) => {
+  const clock = browserClock(t), h = await history()
+  let calls = 0, fail = false
+  globalThis.fetch = async () => { calls++; if (fail) throw new Error('rede'); return json(file(clock.now, calls > 1)) }
+  const r = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  clock.cleanup(() => r.close())
+  const original = (await r.settle()).data
+  fail = true; await clock.advance(10 * MIN)
+  const failed = await r.settle()
+  assert.equal(failed.status, 'ok'); assert.equal(failed.stale, true)
+  assert.match(failed.error, /rede/)
+  assert.deepEqual(failed.data, original)
+  fail = false; await clock.advance(MIN)
+  const recovered = await r.settle()
+  assert.equal(recovered.data.points.length, 3)
+  assert.equal(recovered.stale, undefined); assert.equal(recovered.error, undefined)
+})
+
+test('intraday: cache próximo da expiração não ganha mais dez minutos ao remontar', async (t) => {
+  const clock = browserClock(t), h = await history()
+  let calls = 0
+  globalThis.fetch = async () => { calls++; return json(file(clock.now, calls > 1)) }
+  const a = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  await a.settle(); a.close(); await clock.advance(9 * MIN)
+  const b = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  clock.cleanup(() => b.close())
+  await b.settle(); assert.equal(calls, 1)
+  await clock.advance(MIN)
+  assert.equal((await b.settle()).data.points.length, 3)
+  assert.equal(calls, 2)
+})
+
+test('intraday: resposta antiga não invade outra seleção e skip/data inválida não fazem polling', async (t) => {
+  const clock = browserClock(t), h = await history(), p = deferred()
+  let calls = 0, selected = day, skip = false
+  globalThis.fetch = () => { calls++; return p.promise }
+  const r = hookRenderer(() => h.useIntraday('USD', h.fromInput(selected), skip))
+  clock.cleanup(() => r.close())
+  await r.settle()
+  selected = '2026-10-21'; r.render(); await r.settle()
+  p.resolve(json(file(clock.now))); const result = await r.settle()
+  assert.equal(calls, 1); assert.equal(result.status, 'error'); assert.equal(result.data, undefined)
+  skip = true; r.render(); await r.settle(); assert.equal(clock.timers.size, 0)
+  skip = false; selected = ''; r.render(); assert.equal((await r.settle()).status, 'error')
+  assert.equal(clock.timers.size, 0); assert.equal(calls, 1)
+})
+
+test('intraday: arquivo com coleta anterior não substitui série mais nova', async (t) => {
+  const clock = browserClock(t), h = await history(), originalAt = clock.now
+  let calls = 0
+  globalThis.fetch = async () => json(file(++calls === 1 ? originalAt : originalAt - MIN))
+  const r = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  clock.cleanup(() => r.close())
+  await r.settle(); await clock.advance(10 * MIN)
+  const result = await r.settle()
+  assert.equal(result.data.generatedAt, originalAt)
+  assert.equal(result.stale, true); assert.match(result.error, /anterior/)
+})
+
+test('diário: sessão aberta renova memória após seis horas, sem consultas antes ou duplicadas', async (t) => {
+  const clock = browserClock(t), h = await history(), win = h.fullWindow()
+  let calls = 0
+  globalThis.fetch = async () => { calls++; return json({ rates: { [h.toInput(win.end)]: { BRL: 5 + calls / 10 } } }) }
+  const a = hookRenderer(() => h.useHistory('TEST-TTL', win.start, win.end))
+  const b = hookRenderer(() => h.useHistory('TEST-TTL', win.end, win.end))
+  clock.cleanup(() => { a.close(); b.close() })
+  await a.settle(); await b.settle(); assert.equal(calls, 1)
+  await clock.advance(TTL - MIN); assert.equal(calls, 1)
+  await clock.advance(MIN); assert.equal(calls, 2)
+  assert.equal((await a.settle()).data.points[0].bid, 5.2)
+  assert.equal((await b.settle()).data.points[0].bid, 5.2)
+  assert.equal(a.value.data.points[0].t, Date.parse(`${h.toInput(win.end)}T15:00:00Z`))
+})
+
+test('diário: reidratação preserva idade do cache e expira no minuto correto', async (t) => {
+  const clock = browserClock(t), h = await history(), win = h.fullWindow()
+  const key = `TEST-STORED|full|${h.toYmd(win.end)}`, storedAt = clock.now - TTL + MIN
+  const data = { source: 'TEST-STORED', points: [{ t: win.end.getTime() + 12 * 3600000, bid: 5 }] }
+  localStorage.setItem('cotacoes-hist-v1', JSON.stringify({ [key]: { at: storedAt, data } }))
+  let calls = 0
+  globalThis.fetch = async () => { calls++; return json({ rates: { [h.toInput(win.end)]: { BRL: 5.2 } } }) }
+  const r = hookRenderer(() => h.useHistory('TEST-STORED', win.start, win.end))
+  clock.cleanup(() => r.close())
+  assert.equal((await r.settle()).data.points[0].bid, 5)
+  assert.equal(calls, 0)
+  assert.equal(JSON.parse(localStorage.getItem('cotacoes-hist-v1'))[key].at, storedAt)
+  await clock.advance(MIN)
+  assert.equal(calls, 1); assert.equal((await r.settle()).data.points[0].bid, 5.2)
+})
+
+test('diário: falha de atualização mantém dados, e seleção nova nunca herda dados de outra', async (t) => {
+  const clock = browserClock(t), h = await history(), win = h.fullWindow()
+  let fail = false, code = 'TEST-FAIL'
+  globalThis.fetch = async () => { if (fail) throw new Error('rede indisponível'); return json({ rates: { [h.toInput(win.end)]: { BRL: 5.1 } } }) }
+  const r = hookRenderer(() => h.useHistory(code, win.start, win.end))
+  clock.cleanup(() => r.close())
+  const original = (await r.settle()).data
+  fail = true; await clock.advance(TTL)
+  const result = await r.settle()
+  assert.equal(result.stale, true); assert.deepEqual(result.data, original)
+  code = 'TEST-OTHER'; r.render()
+  const changed = await r.settle()
+  assert.equal(changed.status, 'error'); assert.equal(changed.data, undefined)
+})
+
+// Injeta somente a configuração Vite para exercer o hook real no Node com coleta central.
+async function quotesWithCentral() {
+  const require = createRequire(import.meta.url)
+  let src = await readFile(new URL('../src/useQuotes.js', import.meta.url), 'utf8')
+  src = src.replace("from 'react'", `from '${pathToFileURL(require.resolve('react'))}'`)
+    .replace("from './visiblePolling.js'", `from '${new URL('../src/visiblePolling.js', import.meta.url)}'`)
+    .replace('import.meta.env?.VITE_DATA_BASE', "'https://central.example'")
+  return import(`data:text/javascript;base64,${Buffer.from(`${src}\n// test ${++version}`).toString('base64')}`)
+}
+const batch = (time, bid = 5) => Object.fromEntries(['USDBRL', 'EURBRL', 'JPYBRL', 'USDCNH'].map((code) => [code, { bid: String(bid), ask: String(bid + .01), high: String(bid + .1), low: String(bid - .1), pctChange: '1', timestamp: String(time / 1000) }]))
+
+test('quotes: foco é automático, não concorre, manual prevalece e resposta abortada é ignorada', async (t) => {
+  const clock = browserClock(t), q = await quotesWithCentral(), pending = []
+  globalThis.fetch = (url, options) => { const p = deferred(); pending.push({ ...p, url, signal: options?.signal }); return p.promise }
+  const r = hookRenderer(() => q.useQuotes())
+  clock.cleanup(() => r.close())
+  await r.settle()
+  pending[0].resolve(json({ generatedAt: clock.now, quotes: batch(clock.now) })); await r.settle()
+  await clock.advance(MIN)
+  clock.win.dispatch('focus'); clock.doc.dispatch('visibilitychange'); await r.settle()
+  assert.equal(pending.length, 2)
+  assert.ok(pending.every((p) => p.url.startsWith('https://central.example/quotes.json')))
+  await clock.advance(2 * MIN); assert.equal(pending.length, 2)
+  const manual = r.value.refresh(); await flush()
+  assert.equal(pending.length, 3)
+  assert.equal(pending[1].signal.aborted, true)
+  assert.match(pending[2].url, /economia\.awesomeapi\.com\.br/)
+  const directAt = clock.now
+  pending[2].resolve(json(batch(directAt, 5.5))); await manual; await r.settle()
+  assert.equal(r.value.quotes.USD.bid, 5.5)
+  pending[1].resolve(json({ generatedAt: directAt - MIN, quotes: batch(directAt - MIN, 4.9) })); await r.settle()
+  assert.equal(r.value.quotes.USD.bid, 5.5)
+  assert.equal(r.value.via, 'direto'); assert.equal(r.value.updatedAt.getTime(), directAt)
+  clock.doc.hidden = true; clock.doc.dispatch('visibilitychange'); assert.equal([...clock.timers.values()].filter((timer) => timer.ms >= MIN).length, 0)
+  await clock.advance(10 * MIN); assert.equal(pending.length, 3)
+  clock.doc.hidden = false; clock.win.dispatch('focus'); clock.doc.dispatch('visibilitychange'); await r.settle()
+  assert.equal(pending.length, 4); assert.match(pending[3].url, /^https:\/\/central\.example/)
+  r.close(); const updates = r.updates
+  assert.equal(pending[3].signal.aborted, true); assert.equal(clock.timers.size, 0)
+  pending[3].resolve(json({ generatedAt: clock.now, quotes: batch(clock.now, 6) })); await flush()
+  assert.equal(r.updates, updates)
+})
