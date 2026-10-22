@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DATA_BASE, friendlyError } from './useQuotes.js'
+import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
 
 export const MAX_DAYS = 360 // limite do endpoint diário da AwesomeAPI
 const cache = new Map()
@@ -113,17 +114,17 @@ const STORE_TTL = 6 * 3600e3
 const readStore = (fkey) => {
   try {
     const e = JSON.parse(localStorage.getItem(STORE) ?? '{}')[fkey]
-    return e && Date.now() - e.at < STORE_TTL ? e.data : null
+    return e && Date.now() - e.at < STORE_TTL ? e : null
   } catch {
     return null
   }
 }
-const writeStore = (fkey, data) => {
+const writeStore = (fkey, entry) => {
   try {
     const all = JSON.parse(localStorage.getItem(STORE) ?? '{}')
     const day = fkey.split('|')[2]
     for (const k of Object.keys(all)) if (k.split('|')[2] !== day) delete all[k] // descarta dias anteriores
-    all[fkey] = { at: Date.now(), data }
+    all[fkey] = entry
     localStorage.setItem(STORE, JSON.stringify(all))
   } catch {
     /* sem armazenamento (modo privado) ou cheio: segue só com a memória */
@@ -148,38 +149,51 @@ export function useHistory(code, start, end, skip = false) {
       setState({ key, status: 'error', error })
       return
     }
-    const win = fullWindow()
-    const full = rangeStart >= win.start && rangeEnd <= win.end
-    const fkey = full ? `${code}|full|${toYmd(win.end)}` : key
+    let alive = true
     const view = (data) => {
       // Recorta também respostas diretas/reservas: a fonte pode incluir uma referência anterior.
       const points = sliceRange(data.points, rangeStart, rangeEnd)
-      return points.length
-        ? { key, status: 'ok', data: { ...data, points } }
-        : { key, status: 'error', error: 'Sem cotações no período selecionado. Escolha outro intervalo.' }
+      if (!points.length) throw new Error('Sem cotações no período selecionado. Escolha outro intervalo.')
+      return { key, status: 'ok', refreshing: false, data: { ...data, points } }
     }
-    const hit = cache.get(fkey) ?? (full ? readStore(fkey) : null)
-    if (hit) {
-      cache.set(fkey, hit)
-      setState(view(hit))
-      return
+    const load = async () => {
+      const win = fullWindow()
+      const full = rangeStart >= win.start && rangeEnd <= win.end
+      const fkey = full ? `${code}|full|${toYmd(win.end)}` : key
+      let hit = cache.get(fkey)
+      if (!hit || Date.now() - hit.at >= STORE_TTL) hit = full ? readStore(fkey) : null
+      try {
+        if (hit) {
+          cache.set(fkey, hit) // preserva a idade original, inclusive ao ler o armazenamento
+          setState(view(hit.data))
+          return
+        }
+        setState((s) => s.key === key && s.data ? { ...s, refreshing: true } : { key, status: 'loading' })
+        let p = inflight.get(fkey)
+        if (!p) {
+          p = fetchHistory({ code }, full ? win.start : rangeStart, full ? win.end : rangeEnd, undefined)
+            .then((data) => {
+              const entry = { at: Date.now(), data }
+              cache.set(fkey, entry)
+              if (full) writeStore(fkey, entry)
+              return data
+            })
+            .finally(() => inflight.delete(fkey))
+          inflight.set(fkey, p)
+        }
+        const data = await p
+        if (alive) setState(view(data))
+      } catch (e) {
+        if (!alive) return
+        setState((s) => s.key === key && s.data
+          ? { ...s, refreshing: false, stale: true, error: e.message }
+          : { key, status: 'error', error: e.message })
+      }
     }
-    let alive = true
-    setState({ key, status: 'loading' })
-    let p = inflight.get(fkey)
-    if (!p) {
-      p = fetchHistory({ code }, full ? win.start : rangeStart, full ? win.end : rangeEnd, undefined)
-        .then((data) => {
-          cache.set(fkey, data)
-          if (full) writeStore(fkey, data)
-          return data
-        })
-        .finally(() => inflight.delete(fkey))
-      inflight.set(fkey, p)
-    }
-    p.then((data) => alive && setState(view(data))).catch((e) => alive && setState({ key, status: 'error', error: e.message }))
+    const stop = startVisiblePolling(load, DATA_POLL_MS)
     return () => {
       alive = false
+      stop()
     }
   }, [key, code, startYmd, endYmd, skip])
 
@@ -187,24 +201,29 @@ export function useHistory(code, start, end, skip = false) {
 }
 
 // ---- Intraday: barras de 5 minutos coletadas no GitHub (intraday.json), últimos 5 dias úteis ----
+const INTRADAY_REFRESH_MS = 600000
 let intradayPromise = null
+let intradayFile = null
 let intradayAt = 0
 
 function loadIntraday() {
-  // o arquivo é renovado a cada hora; recarrega a cada 10 min
-  if (!intradayPromise || Date.now() - intradayAt > 600000) {
-    intradayAt = Date.now()
-    // dados da coleta central (branch `data`); sem ela configurada, tenta o arquivo do próprio site
-    intradayPromise = fetch(`${DATA_BASE ? `${DATA_BASE}/` : './'}intraday.json?t=${Math.floor(Date.now() / 60000)}`)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json()
-      })
-      .catch((e) => {
-        intradayPromise = null
-        throw e
-      })
-  }
+  // Uma carga compartilhada pelos cards e gráficos; o TTL também vale na borda exata de 10 min.
+  if (intradayPromise) return intradayPromise
+  if (intradayFile && Date.now() - intradayAt < INTRADAY_REFRESH_MS) return Promise.resolve(intradayFile)
+  // Só lê o arquivo central já coletado; não consulta a API de cotações.
+  intradayPromise = fetch(`${DATA_BASE ? `${DATA_BASE}/` : './'}intraday.json?t=${Math.floor(Date.now() / 60000)}`)
+    .then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`)
+      return r.json()
+    })
+    .then((file) => {
+      if (!file?.series) throw new Error('arquivo intraday inválido')
+      if (intradayFile?.generatedAt && file.generatedAt < intradayFile.generatedAt) throw new Error('a coleta recebida é anterior à última disponível')
+      intradayFile = file
+      intradayAt = Date.now()
+      return file
+    })
+    .finally(() => { intradayPromise = null })
   return intradayPromise
 }
 
@@ -220,21 +239,28 @@ export function useIntraday(code, day, skip = false) {
       return
     }
     let alive = true
-    setState((s) => (s.key === key ? s : { key, status: 'loading' }))
-    loadIntraday()
-      .then((file) => {
+    const load = async () => {
+      setState((s) => s.key === key && s.data ? { ...s, refreshing: true } : { key, status: 'loading' })
+      try {
+        const file = await loadIntraday()
         if (!alive) return
         const serie = file.series?.[code]
         const points = (serie?.points ?? []).filter(([t]) => toInput(new Date(t)) === dayYmd).map(([t, v]) => ({ t, bid: v }))
-        if (points.length < 2) {
-          setState({ key, status: 'error', error: 'ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)' })
-          return
-        }
-        setState({ key, status: 'ok', data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
-      })
-      .catch((e) => alive && setState({ key, status: 'error', error: `intraday indisponível (${e.message})` }))
+        if (points.length < 2) throw new Error('ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)')
+        setState({ key, status: 'ok', refreshing: false, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
+      } catch (e) {
+        if (!alive) return
+        const error = `intraday indisponível (${e.message})`
+        // Uma falha transitória não apaga os pontos reais nem altera a data da última coleta.
+        setState((s) => s.key === key && s.data
+          ? { ...s, refreshing: false, stale: true, error }
+          : { key, status: 'error', error })
+      }
+    }
+    const stop = startVisiblePolling(load, DATA_POLL_MS)
     return () => {
       alive = false
+      stop()
     }
   }, [key, skip, code, dayYmd])
 

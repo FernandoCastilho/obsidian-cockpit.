@@ -18,7 +18,7 @@ function useParity(start, end, day, invert) {
     if (a.status !== 'ok' || b.status !== 'ok') return { status: 'loading' }
     const merge = day ? mergeTicks : mergeDaily
     const points = merge(a.data.points, b.data.points, invert)
-    return points.length > 1 ? { status: 'ok', points } : { status: 'error', error: 'sem cotações em comum no período' }
+    return points.length > 1 ? { status: 'ok', points, stale: a.stale || b.stale } : { status: 'error', error: 'sem cotações em comum no período' }
   }, [a, b, day, invert])
 }
 
@@ -66,6 +66,7 @@ export default function ParityChart({ color, start, end, day }) {
         )}
         {pts && <Plot points={pts} width={width} color={color} code={label} intraday={intraday} fmt={fmt} vfmt={num} labels label={label} />}
       </div>
+      {pts && s.stale && <p className="status stale" role="status">Não foi possível atualizar. Paridade calculada com a última série disponível.</p>}
       {pts && (
         <details className="table">
           <summary>Ver tabela ({pts.length} {intraday ? 'cotações' : 'dias'})</summary>

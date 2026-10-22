@@ -79,7 +79,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
         <span className="tile-spark">
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
           <small className="muted">
-            {spark.label}
+            {spark.label}{s.stale && ' · última série disponível'}
             {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
@@ -147,7 +147,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           ) : (
             p && <small className="muted">var. do dia indisponível</small>
           )}
-          <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}</small>
+          <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}{(a.stale || b.stale) && ' · última série disponível'}</small>
         </span>
         <span className="tile-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
@@ -162,6 +162,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
       <Overlay onClose={() => setBig(false)}>
         <div className="resumo-chart big">
           <h3>{base}/{quote} <small className="muted">· {spark.label}</small>{change != null && <span className={`pct ${toneOf(change)}`}> {pct(change)}</span>}</h3>
+          {(a.stale || b.stale) && <p className="status stale" role="status">Não foi possível atualizar. Paridade calculada com a última série disponível.</p>}
           <Wide render={(wv) => <Plot points={pts} width={wv} color={color} code={`par-${base}-${quote}-${spark.id}`} intraday={dia} fmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} labels label={`${base}/${quote}`} />} />
         </div>
       </Overlay>
@@ -299,6 +300,8 @@ function ResumoChart({ colors, spark }) {
     return { code: c.code, color: colors?.[c.code], st, points: st.status === 'ok' ? st.data.points : [], source: st.data?.source }
   }).filter((r) => sel.includes(r.code))
   const ready = rows.filter((r) => r.points.length > 1)
+  const staleCodes = rows.filter((r) => r.st.stale).map((r) => r.code)
+  const staleNote = staleCodes.length > 0 && <p className="status stale" role="status">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</p>
   const failed = rows.every((r) => r.st.status === 'error')
   const one = rows.length === 1
   const r0 = rows[0]
@@ -341,6 +344,7 @@ function ResumoChart({ colors, spark }) {
           ))}
         </p>
       )}
+      {staleNote}
       <div ref={ref}>
         {chart(width)}
       </div>
@@ -368,6 +372,7 @@ function ResumoChart({ colors, spark }) {
           ))}
         </p>
       )}
+          {staleNote}
           <Wide render={chart} />
         </div>
       </Overlay>
