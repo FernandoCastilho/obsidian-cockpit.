@@ -1,3 +1,6 @@
+import Sparkline from './Sparkline.jsx'
+import IndicatorHistory from './IndicatorHistory.jsx'
+import { normalizeIndicatorHistory, monthLabel } from './indicatorHistory.js'
 import { useEffect, useState } from 'react'
 import { MARKET_IDS, COMMODITY_IDS, contextItems, contextDate, contextValue, brentContext } from './marketContext.js'
 import './MarketContext.css'
@@ -29,14 +32,16 @@ function useContextFile(file, parse) {
 const parseMarket = data => contextItems(data, 'indicators', MARKET_IDS)
 const parseCommodities = data => contextItems(data, 'commodities', COMMODITY_IDS)
 const parseBrent = data => { const item = brentContext(data); if (!item) throw new Error('Brent inválido'); return item }
-function Card({item, failed}) {
-  return <article className="context-card">
+function Card({item, failed, history, historyLoading, historyFailed, onOpen}) {
+  return <article className={`context-card${onOpen ? ' context-interactive' : ''}`}>
+    {onOpen && <button className="context-card-trigger" aria-label={`${item.label}: abrir histórico e detalhes`} onClick={onOpen} />}
     <h3>{item.label}</h3>
     <p className="context-number">{contextValue(item)} <span>{item.unit}</span></p>
     <p className="context-nature">{item.nature}{item.benchmark ? ` · ${item.benchmark}` : ''}</p>
     <dl><div><dt>Referência</dt><dd>{contextDate(item.period)}</dd></div><div><dt>Divulgação</dt><dd>{contextDate(item.releaseDate)}</dd></div></dl>
     {item.note && <p className="context-note">{item.note}</p>}
     {(failed || item.stale || item.value === null) && <p role="status" className="context-warning">{item.value === null ? 'Dado indisponível. Não representa zero.' : 'Último dado preservado; atualização não confirmada.'}</p>}
+    {onOpen && <div className="context-mini">{history?.points?.length > 1 ? <><Sparkline points={history.points.slice(-12).map(p=>({bid:p.value}))} tone="flat" height={70}/><span>{monthLabel(history.points.slice(-12)[0].period)} a {monthLabel(history.points.at(-1).period)} · Abrir gráfico ›</span></> : <span>{historyLoading ? 'Carregando histórico…' : history?.unavailableReason || (historyFailed ? 'Histórico indisponível no momento' : 'Histórico ainda não disponível')} · Ver detalhes ›</span>}</div>}
     <footer><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName || 'Fonte oficial'} ↗</a><span>Conferência: {contextDate(item.checkedAt?.slice(0,10))}</span></footer>
   </article>
 }
@@ -44,14 +49,17 @@ function Cards({state, children}) {
   return <>{!state.data && <p role="status">{state.failed ? 'Não foi possível carregar os dados.' : 'Carregando dados…'}</p>}{children}</>
 }
 export default function MarketContext() {
+  const [open,setOpen] = useState(null)
+  const history = useContextFile('indicator-history.json', normalizeIndicatorHistory)
   const market = useContextFile('market-indicators.json', parseMarket)
   const commodities = useContextFile('commodities.json', parseCommodities)
   const brent = useContextFile('oil.json', parseBrent)
   const all = [brent.data, ...(commodities.data || [])].filter(Boolean)
   return <div className="market-context">
+    {open && <IndicatorHistory item={open} series={history.data?.find(s=>s.id===open.id)} loading={!history.data&&!history.failed} failed={history.failed} onClose={()=>setOpen(null)}/>}
     <section aria-labelledby="market-context-heading"><h2 id="market-context-heading">Indicadores de mercado</h2>
       <p className="context-intro">Atividade e emprego. Indicadores observados, não projeções. Competências e datas de divulgação diferem.</p>
-      <Cards state={market}><div className="context-grid">{(market.data || []).map(item => <Card key={item.id} item={item} failed={market.failed}/>)}</div></Cards>
+      <Cards state={market}><div className="context-grid">{(market.data || []).map(item => <Card key={item.id} item={item} failed={market.failed} history={history.data?.find(s=>s.id===item.id)} historyLoading={!history.data&&!history.failed} historyFailed={history.failed} onOpen={()=>setOpen(item)}/>)}</div></Cards>
       {market.data && market.data.length < MARKET_IDS.length && <p role="status">Cobertura parcial: alguns indicadores não puderam ser carregados.</p>}
       <p className="context-method">Leituras conferidas manualmente nas fontes; não há atualização automática destes indicadores. PMI ISM em pontos: acima de 50 indica expansão; abaixo de 50, contração. Saldos de emprego podem ser negativos e sujeitos a revisão.</p>
     </section>

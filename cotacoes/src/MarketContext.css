@@ -21,3 +21,11 @@
 
 .context-card dl { display:block }
 .context-card dl div { flex-direction:row }
+.context-interactive { position:relative }
+.context-card-trigger { position:absolute; inset:0; z-index:1; width:100%; height:100%; border:0; background:transparent; border-radius:12px; cursor:pointer }
+.context-card-trigger:hover { box-shadow:inset 0 0 0 1px var(--accent,#6aa9ff) }
+.context-card-trigger:focus-visible { outline:3px solid var(--accent,#6aa9ff); outline-offset:2px }
+.context-interactive footer a { position:relative; z-index:2 }
+.context-mini { margin:6px 0; min-height:95px; display:flex; flex-direction:column; gap:6px }
+.context-mini .spark { display:block; width:100%; height:70px }
+.context-mini span { font-size:.76rem; color:var(--mut,#a5acb8); line-height:1.4 }
