@@ -60,7 +60,7 @@ export default function MarketContext() {
       {!all.length && <p role="status">{commodities.failed || brent.failed ? 'Não foi possível carregar as referências.' : 'Carregando referências…'}</p>}
       {all.some(item => ['brent','wti'].includes(item.id)) && <><h3 className="context-subheading">Petróleo · referências spot diárias</h3><div className="context-grid">{all.filter(item => ['brent','wti'].includes(item.id)).map(item => <Card key={item.id} item={item} failed={item.id === 'brent' ? brent.failed : commodities.failed}/>)}</div></>}
       {all.some(item => !['brent','wti'].includes(item.id)) && <><h3 className="context-subheading">Referências mensais · médias do mês indicado</h3><div className="context-grid">{all.filter(item => !['brent','wti'].includes(item.id)).map(item => <Card key={item.id} item={item} failed={commodities.failed}/>)}</div></>}
-      {all.length > 0 && (!brent.data || !commodities.data) && <p role="status">Cobertura parcial: uma das fontes ainda não está disponível.</p>}
+      {all.length > 0 && (!brent.data || !commodities.data || commodities.data.length < COMMODITY_IDS.length) && <p role="status">Cobertura parcial: uma das fontes ainda não está disponível.</p>}
       <p className="context-method">EIA e Banco Mundial. Coleta nas publicações do painel, preservando a última referência em falhas. A data da conferência não é a data do preço. Frequência de publicação e unidades variam; valores ausentes nunca são convertidos em zero.</p>
     </section>
   </div>

@@ -19,3 +19,8 @@ test('verified indicators have provenance and no invented release date', async (
  assert.equal(items.length,5);for(const item of items){assert.ok(item.period);assert.ok(item.checkedAt);assert.ok(item.sourceUrl.startsWith('https://'))}
  assert.equal(items[0].releaseDate,null); assert.equal(items.find(i=>i.id==='caged').value,165827)
 })
+
+test('partial commodity coverage is signaled even when both files loaded', async () => {
+ const source=await readFile(new URL('../src/MarketContext.jsx',import.meta.url),'utf8')
+ assert.ok(source.includes('commodities.data.length < COMMODITY_IDS.length'))
+})
