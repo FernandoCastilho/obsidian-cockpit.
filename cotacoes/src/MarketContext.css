@@ -1,0 +1,23 @@
+.market-context { display:grid; gap:28px; margin-top:28px }
+.market-context section { min-width:0 }
+.market-context h2 { margin:0 0 8px }
+.context-intro,.context-method { color:var(--mut,#a5acb8); font-size:.85rem; line-height:1.5 }
+.context-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:16px 0 }
+.context-card { border:1px solid var(--line,#303741); background:var(--card,#171c24); border-radius:12px; padding:16px; min-width:0; display:flex; flex-direction:column; gap:8px }
+.context-card h3 { font-size:.95rem; margin:0 }
+.context-card p { margin:0 }
+.context-number { font-size:1.65rem; font-weight:700; font-variant-numeric:tabular-nums; overflow-wrap:anywhere }
+.context-number span { font-size:.78rem; font-weight:400; color:var(--mut,#a5acb8) }
+.context-nature,.context-note { font-size:.8rem; line-height:1.45; color:var(--mut,#a5acb8) }
+.context-card dl { margin:4px 0; font-size:.76rem; line-height:1.5 }
+.context-card dl div { display:flex; flex-wrap:wrap; gap:6px; justify-content:space-between }
+.context-card dt { color:var(--mut,#a5acb8) }
+.context-card dd { margin:0; text-align:right }
+.context-card footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; font-size:.72rem; margin-top:auto; padding-top:10px; color:var(--mut,#a5acb8) }
+.context-card footer a { color:inherit; text-decoration:underline; text-underline-offset:3px }
+.context-warning { font-size:.78rem; color:#edbd71 }
+@media(max-width:950px) { .context-grid { grid-template-columns:repeat(2,minmax(0,1fr)) } }
+@media(max-width:560px) { .context-grid { grid-template-columns:1fr } .context-card { padding:14px } }
+
+.context-card dl { display:block }
+.context-card dl div { flex-direction:row }

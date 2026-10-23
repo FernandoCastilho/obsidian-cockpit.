@@ -1,3 +1,4 @@
+import MarketContext from './MarketContext.jsx'
 import Expandable from './Expandable.jsx'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
@@ -318,7 +319,10 @@ export default function App() {
       )}
 
       {tab === 'cenarios' && (
-        <Projecoes macro={macro} />
+        <>
+          <Projecoes macro={macro} />
+          <MarketContext />
+        </>
       )}
 
       {tab === 'feriados' && <Feriados hol={hol} />}
