@@ -4,14 +4,17 @@ import { fullWindow, toInput } from './useHistory.js'
 import { oilHistory } from './oilHistory.js'
 const date = (d) => d ? d.split('-').reverse().join('/') : '—'
 const money = (v) => `US$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-export default function OilHistory({ points, spark, dates, presets, onDates, onPreset, dateError, stale, loading, onClose }) {
+export default function OilHistory({ data, points, spark, dates, presets, onDates, onPreset, dateError, stale, loading, onClose }) {
   const [ref, width] = useWidth()
   const selected = oilHistory(points, spark)
   const limits = fullWindow()
   const plot = selected.points.map((p) => ({ t: new Date(`${p.date}T12:00:00`).getTime(), bid: p.value }))
   return <Expandable label="histórico do petróleo Brent" modal onClose={onClose}>
     <h2>Petróleo Brent · histórico spot</h2>
+    <p>Histórico EIA independente do CFD indicativo TVC:UKOIL no card. O widget não alimenta esta série e não garante tempo real; seu link abre a referência no provedor.</p>
+    {points.length > 0 && <p>Última referência EIA: {money(points.at(-1).value)} por barril em {date(points.at(-1).date)}.</p>}
     <p>US$/barril · {spark.label}. Série diária EIA, sem cotação intraday.</p>
+    <p className="muted">Observações diárias, divulgadas em lote semanal. Divulgação: {date(data?.releaseDate)}. Próxima prevista: {date(data?.nextReleaseDate)}. Última coleta bem-sucedida: {data?.generatedAt ? new Date(data.generatedAt).toLocaleString('pt-BR', { timeZone: 'UTC' }) + ' UTC' : 'indisponível'}. O horário de coleta não é o horário da cotação.</p>
     <div className="summary-period-controls">
       <div className="seg" role="group" aria-label="Período do petróleo">{presets.map((p) => <button key={p.id} aria-pressed={spark.id === p.id} onClick={() => onPreset(p)}>{p.label}</button>)}</div>
       <div className="summary-dates">

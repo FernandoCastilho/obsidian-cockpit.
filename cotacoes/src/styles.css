@@ -624,7 +624,6 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 
 /* Brent é commodity em USD/barril, separado dos cinco quadros de câmbio. */
 .oil-tile { --series:#ca9c49; cursor:default; }
-.oil-source { color:var(--mut); font-size:.75rem; }
 .oil-tile .pct small { display:block; }
 @media (min-width:700px) { .tiles .pair-tile { grid-column:auto; } }
 @media (max-width:699px) { .tiles .oil-tile { grid-column:1 / -1; } }
@@ -639,8 +638,7 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .oil-history-table th, .oil-history-table td { padding:8px; border-bottom:1px solid var(--line); text-align:right; }
 .oil-history-table th:first-child { text-align:left; }
 .oil-history-table thead { position:sticky; top:0; background:var(--card); }
-/* Um botão nativo cobre o card; o link da fonte continua independente. */
-.oil-tile { position:relative; cursor:pointer; }
-.oil-card-trigger { position:absolute; inset:0; z-index:1; width:100%; height:100%; border:0; border-radius:inherit; padding:0; background:transparent; cursor:pointer; }
-.oil-card-trigger:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
-.oil-tile .oil-source { position:relative; z-index:2; align-self:flex-start; }
+/* O embed controla apenas a referência CFD; o botão abre a série EIA separada. */
+.oil-live-quote { height:140px; width:100%; }
+.oil-details { align-self:flex-start; margin-top:8px; min-height:40px; padding:8px 10px; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; font:inherit; font-size:.8rem; cursor:pointer; }
+.oil-details:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
