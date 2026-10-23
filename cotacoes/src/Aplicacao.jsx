@@ -47,6 +47,7 @@ export default function Aplicacao({ curves, hol }) {
   return (
     <article className="chart calc-split">
       <div className="calc-in">
+      <h3 className="calc-sub">Dados da aplicação</h3>
       <div className="calc-form">
         <label>
           Valor aplicado (R$)
@@ -61,14 +62,15 @@ export default function Aplicacao({ curves, hol }) {
           Prazo (dias corridos)
           <input inputMode="numeric" value={t.daysTxt} onChange={(e) => t.typeDays(e.target.value)} />
         </label>
-        <div className="seg" role="group" aria-label="Atalhos de prazo">
+        <div className="calc-control calc-wide"><span className="lbl">Atalhos de prazo</span><div className="seg" role="group" aria-label="Atalhos de prazo">
           {TERMS.map((x) => (
             <button key={x.label} type="button" onClick={() => t.pickDue(t.iso(Math.min(x.days, t.maxCal)))}>{x.label}</button>
           ))}
-        </div>
+        </div></div>
       </div>
+      <h3 className="calc-sub">Tributação</h3>
       <div className="calc-form">
-        <div>
+        <div className="calc-wide">
           <span className="lbl">Tipo de ativo <Explain id="irRegressivo" /></span>
           <div className="seg" role="group" aria-label="Tipo de ativo">
             <button type="button" aria-pressed={kind === 'cdb'} onClick={() => setKind('cdb')}>CDB / RDB (IR regressivo)</button>
@@ -82,24 +84,25 @@ export default function Aplicacao({ curves, hol }) {
           </label>
         )}
       </div>
+      <h3 className="calc-sub">Rentabilidade</h3>
       <div className="calc-form">
-        <div className="seg" role="group" aria-label="Como a rentabilidade é informada">
+        <div className="calc-control calc-wide"><span className="lbl">Como a rentabilidade é informada</span><div className="seg" role="group" aria-label="Como a rentabilidade é informada">
           {MODES.map((x) => (
             <button key={x.id} type="button" aria-pressed={mode === x.id} onClick={() => (setMode(x.id), setRate(x.ph))}>{x.label}</button>
           ))}
-        </div>
+        </div></div>
         {(mode === 'pre' || mode === 'spread') && (
-          <div className="seg" role="group" aria-label="Unidade da taxa">
+          <div className="calc-control"><span className="lbl">Unidade da taxa</span><div className="seg" role="group" aria-label="Unidade da taxa">
             {UNITS.map((u) => (
               <button key={u.id} type="button" aria-pressed={unit === u.id} onClick={() => setUnit(u.id)}>{u.label}</button>
             ))}
-          </div>
+          </div></div>
         )}
         {(mode === 'pre' || mode === 'spread') && unit === 'am' && (
-          <div className="seg" role="group" aria-label="Base do mês">
+          <div className="calc-control"><span className="lbl">Base do mês</span><div className="seg" role="group" aria-label="Base do mês">
             <button type="button" aria-pressed={monthBase === 'du'} onClick={() => setMonthBase('du')}>mês = 21 dias úteis</button>
             <button type="button" aria-pressed={monthBase === 'cal'} onClick={() => setMonthBase('cal')}>mês = 30 dias corridos</button>
-          </div>
+          </div></div>
         )}
         <label>
           {mode === 'cdi' ? 'Rentabilidade (% do CDI)' : mode === 'total' ? 'Valor total recebido no vencimento (R$)' : `Taxa (% ${UNITS.find((u) => u.id === unit).label}${mode === 'spread' ? ', sobre o CDI' : ''})`}

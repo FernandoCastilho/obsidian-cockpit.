@@ -13,6 +13,7 @@ import Ncg from './Ncg.jsx'
 import Aplicacao from './Aplicacao.jsx'
 import { CALC_OPTIONS } from './calcOptions.js'
 import './Calculadora.css'
+import './CalculatorLayout.css'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
@@ -84,7 +85,8 @@ function OperacaoDi({ curves, hol }) {
       {pts && (
         <article className="chart calc-split">
           <div className="calc-in">
-          <div className="calc-form">
+          <h3 className="calc-sub">Dados da operação</h3>
+      <div className="calc-form">
             <label>
               Valor (R$)
               <input inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
@@ -98,47 +100,49 @@ function OperacaoDi({ curves, hol }) {
               Prazo (dias corridos)
               <input inputMode="numeric" value={daysTxt} onChange={(e) => typeDays(e.target.value)} />
             </label>
-            <div className="seg" role="group" aria-label="Atalhos de prazo">
+            <div className="calc-control calc-wide"><span className="lbl">Atalhos de prazo</span><div className="seg" role="group" aria-label="Atalhos de prazo">
               {TERMS.map((t) => (
                 <button key={t.label} type="button" onClick={() => pickDue(iso(Math.min(t.days, Math.floor((maxD / 252) * 365))))}>
                   {t.label}
                 </button>
               ))}
-            </div>
+            </div></div>
           </div>
+          <h3 className="calc-sub">Taxa e sentido da operação</h3>
           <div className="calc-form">
-            <div className="seg" role="group" aria-label="Tipo de taxa da operação">
+            <div className="calc-control calc-wide"><span className="lbl">Tipo de taxa da operação</span><div className="seg" role="group" aria-label="Tipo de taxa da operação">
               {MODES.map((x) => (
                 <button key={x.id} type="button" aria-pressed={mode === x.id} onClick={() => (setMode(x.id), setUnit(x.id === 'spread' && unit === 'periodo' ? 'aa' : unit), setRate(x.id === 'pre' ? PH[unit] : x.ph))}>
                   {x.label}
                 </button>
               ))}
-            </div>
+            </div></div>
             {mode !== 'cdi' && mode !== 'total' && (
-              <div className="seg" role="group" aria-label="Unidade da taxa">
+              <div className="calc-control"><span className="lbl">Unidade da taxa</span><div className="seg" role="group" aria-label="Unidade da taxa">
                 {UNITS.filter((u) => mode === 'pre' || u.id !== 'periodo').map((u) => (
                   <button key={u.id} type="button" aria-pressed={unit === u.id} onClick={() => (setUnit(u.id), mode === 'pre' && setRate(PH[u.id]))}>
                     {u.label}
                   </button>
                 ))}
-              </div>
+              </div></div>
             )}
             {mode !== 'cdi' && mode !== 'total' && unit === 'am' && (
-              <div className="seg" role="group" aria-label="Base do mês">
+              <div className="calc-control"><span className="lbl">Base do mês</span><div className="seg" role="group" aria-label="Base do mês">
                 <button type="button" aria-pressed={monthBase === 'cal'} title="Mês de 30 dias corridos: prazo ÷ 30" onClick={() => setMonthBase('cal')}>mês = 30 dias corridos</button>
                 <button type="button" aria-pressed={monthBase === 'du'} title="Mês de 21 dias úteis (252 ÷ 12), convenção do mercado de DI" onClick={() => setMonthBase('du')}>mês = 21 dias úteis</button>
-              </div>
+              </div></div>
             )}
             <label>
               {mode === 'total' ? `Valor total ${side === 'borrow' ? 'pago' : 'recebido'} no vencimento (R$)` : `Taxa da operação (${mode === 'cdi' ? '% do CDI' : `% ${UNITS.find((u) => u.id === unit).label}`})`}
               <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder={m.ph} />
             </label>
-            <div className="seg" role="group" aria-label="Sentido da operação">
+            <div className="calc-control calc-wide"><span className="lbl">Sentido da operação</span><div className="seg" role="group" aria-label="Sentido da operação">
               <button type="button" aria-pressed={side === 'invest'} onClick={() => setSide('invest')}>Aplicação (eu recebo)</button>
               <button type="button" aria-pressed={side === 'borrow'} onClick={() => setSide('borrow')}>Empréstimo (eu pago)</button>
-            </div>
+            </div></div>
           </div>
           {side === 'borrow' && (
+            <section className="calc-section"><h3 className="calc-sub">Aplicação de referência</h3>
             <div className="calc-form">
               <label>
                 Aplicação: rentabilidade (% do CDI)
@@ -163,7 +167,7 @@ function OperacaoDi({ curves, hol }) {
                   </label>
                 </>
               )}
-            </div>
+            </div></section>
           )}
 </div>
 <div className="calc-out" id="calc-out">

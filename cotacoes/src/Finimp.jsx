@@ -132,12 +132,12 @@ export default function Finimp({ hol }) {
   return (
     <article className="chart finimp calc-split">
       <div className="calc-in">
-      <div className="fin-step">
+      <section className="fin-step">
       <div className="fin-step-head">
         <h3 className="calc-sub"><span className="fin-n">1</span> Moeda e valor</h3>
         <button type="button" className="btn small ghost" onClick={fill}>Exemplo</button>
       </div>
-      {seg(currency, setCurrency, [['USD', 'USD'], ['EUR', 'EUR'], ['JPY', 'JPY']], 'Moeda')}
+      <div className="calc-control fin-currency"><span className="lbl">Moeda</span>{seg(currency, setCurrency, [['USD', 'USD'], ['EUR', 'EUR'], ['JPY', 'JPY']], 'Moeda')}</div>
 
       <Rows
         items={disb}
@@ -152,11 +152,11 @@ export default function Finimp({ hol }) {
         )}
       />
 
-      </div>
+      </section>
 
-      <div className="fin-step">
+      <section className="fin-step">
       <h3 className="calc-sub"><span className="fin-n">2</span> Pagamento</h3>
-      {seg(structure, setStructure, [['bullet', 'Bullet'], ['periodic', 'Juros periódicos'], ['amort', 'Amortizações']], 'Estrutura')}
+      <div className="calc-control"><span className="lbl">Estrutura</span>{seg(structure, setStructure, [['bullet', 'Bullet'], ['periodic', 'Juros periódicos'], ['amort', 'Amortizações']], 'Estrutura')}</div>
       {structure === 'bullet' && <p className="status">Principal e juros no vencimento.</p>}
       {structure === 'periodic' && <p className="status">Principal no vencimento; juros pagos nas datas abaixo e no vencimento.</p>}
       {structure === 'amort' && <p className="status">Os juros são pagos junto de cada amortização. A soma das amortizações deve igualar o principal; o último pagamento é o vencimento.</p>}
@@ -190,9 +190,9 @@ export default function Finimp({ hol }) {
         />
       )}
 
-      </div>
+      </section>
 
-      <div className="fin-step">
+      <section className="fin-step">
       <h3 className="calc-sub"><span className="fin-n">3</span> Taxa</h3>
       <div className="calc-form">
         <label>Taxa final (% a.a.)<input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder="ex.: 6,50" /></label>
@@ -206,7 +206,7 @@ export default function Finimp({ hol }) {
         </div>
       </div>
 
-      </div>
+      </section>
 
       <details className="fin-more">
         <summary>Identificação e ajustes (opcional)</summary>
