@@ -10,19 +10,12 @@ export default function OilLiveQuote() {
     widget.setAttribute('symbol', 'TVC:UKOIL')
     widget.setAttribute('transparent', '')
     widget.setAttribute('theme', 'dark')
-    const credit = document.createElement('div')
-    credit.className = 'tradingview-widget-copyright'
-    const link = document.createElement('a')
-    link.href = 'https://www.tradingview.com/symbols/TVC-UKOIL/'
-    link.target = '_blank'
-    link.rel = 'noopener noreferrer'
-    link.textContent = 'Brent por TradingView'
-    credit.append(link)
     const script = document.createElement('script')
     script.type = 'module'
     script.src = 'https://widgets.tradingview-widget.com/w/br/tv-single-ticker.js'
     script.onerror = () => setFailed(true)
-    container.append(widget, credit, script)
+    // The official web component renders its own branding and attribution.
+    container.append(widget, script)
     return () => { script.onerror = null; container.replaceChildren() }
   }, [])
   return <>
