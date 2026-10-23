@@ -214,3 +214,40 @@ test('quotes: foco é automático, não concorre, manual prevalece e resposta ab
   pending[3].resolve(json({ generatedAt: clock.now, quotes: batch(clock.now, 6) })); await flush()
   assert.equal(r.updates, updates)
 })
+
+test('quotes: central atrasada reutiliza cotação direta por 5 min sem alternar para BCE nem renovar data', async(t)=>{
+ const clock=browserClock(t), q=await quotesWithCentral(), urls=[]
+ let centralFresh=false, directCalls=0
+ globalThis.fetch=async url=>{
+  urls.push(url)
+  if(url.startsWith('https://central.example'))return json({generatedAt:centralFresh?clock.now:clock.now-60*MIN,quotes:batch(clock.now,6)})
+  assert.match(url,/economia\.awesomeapi\.com\.br/,'não chama referência BCE durante cooldown')
+  directCalls++;return json(batch(clock.now,5+directCalls/10))
+ }
+ const first=await q.fetchQuotes();const originalAt=first.collectedAt
+ assert.equal(first.via,'direto');assert.equal(first.results.USD.quote.bid,5.1)
+ await clock.advance(MIN)
+ const reused=await q.fetchQuotes()
+ assert.equal(directCalls,1);assert.equal(reused.collectedAt,originalAt)
+ assert.equal(reused.results.USD.quote.timestamp,originalAt);assert.equal(reused.results.USD.quote.bid,5.1)
+ await clock.advance(4*MIN)
+ const renewed=await q.fetchQuotes()
+ assert.equal(directCalls,2);assert.equal(renewed.results.USD.quote.bid,5.2);assert.equal(renewed.collectedAt,clock.now)
+ centralFresh=true;await clock.advance(MIN)
+ const recovered=await q.fetchQuotes()
+ assert.equal(recovered.via,'central');assert.equal(recovered.results.USD.quote.bid,6);assert.equal(directCalls,2)
+})
+
+test('quotes: resposta direta tardia não substitui cache de requisição mais recente no mesmo milissegundo',async(t)=>{
+ const clock=browserClock(t), q=await quotesWithCentral(), pending=[]
+ globalThis.fetch=url=>{
+  if(url.startsWith('https://central.example'))return Promise.resolve(json({generatedAt:clock.now-60*MIN,quotes:batch(clock.now)}))
+  const p=deferred();pending.push(p);return p.promise
+ }
+ const oldAt=clock.now, first=q.fetchQuotes(undefined,{direct:true});await flush()
+ const newAt=clock.now, second=q.fetchQuotes(undefined,{direct:true});await flush()
+ pending[1].resolve(json(batch(newAt,6)));await second
+ pending[0].resolve(json(batch(oldAt,5)));await first
+ const reused=await q.fetchQuotes()
+ assert.equal(reused.results.USD.quote.bid,6);assert.equal(reused.collectedAt,newAt)
+})

@@ -279,7 +279,7 @@ export default function App() {
         {error
           ? `Falha ao atualizar (${error}). Tentando novamente…`
           : updatedAt
-            ? `Cotações de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'atualizadas a cada 5 min' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
+            ? `Consulta de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
             : 'Carregando…'}
         {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
           <button
