@@ -178,7 +178,7 @@ test('intraday: Date do mesmo dia estabiliza e outro dia troca pontos', async (t
   let calls = 0
   mockFetch(t, async () => {
     calls++
-    return json({ series: { USD: { points: [[at('2026-10-01', 10), 5.1], [at('2026-10-01', 11), 5.2], [at('2026-10-02', 10), 5.3], [at('2026-10-02', 11), 5.4]] } } })
+    return json({ series: { USD: { points: [[at('2026-10-01', 10), 5.1], [at('2026-10-01', 11), 5.2], [at('2026-10-02', 10), 5.3], [at('2026-10-02', 11), 5.4], [at('2026-10-03', 11), 5.0376]] } } })
   })
   let date = '2026-10-01'
   const renderer = hookRenderer(() => useIntraday('USD', fromInput(date)))
@@ -192,6 +192,9 @@ test('intraday: Date do mesmo dia estabiliza e outro dia troca pontos', async (t
   assert.deepEqual((await renderer.settle()).data.points.map((p) => p.bid), [5.3, 5.4])
   assert.equal(calls, 1)
   date = '2026-10-03'
+  renderer.render()
+  assert.deepEqual((await renderer.settle()).data.points.map((p) => p.bid), [5.0376])
+  date = '2026-10-04'
   renderer.render()
   assert.equal((await renderer.settle()).status, 'error')
 })

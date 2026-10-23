@@ -246,7 +246,7 @@ export function useIntraday(code, day, skip = false) {
         if (!alive) return
         const serie = file.series?.[code]
         const points = (serie?.points ?? []).filter(([t]) => toInput(new Date(t)) === dayYmd).map(([t, v]) => ({ t, bid: v }))
-        if (points.length < 2) throw new Error('ainda sem pontos suficientes neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)')
+        if (!points.length) throw new Error('ainda sem pontos neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)')
         setState({ key, status: 'ok', refreshing: false, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       } catch (e) {
         if (!alive) return

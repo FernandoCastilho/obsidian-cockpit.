@@ -1,3 +1,4 @@
+import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import OilTile from './OilTile.jsx'
 import { selectedPeriod } from './summaryPeriod.js'
@@ -299,8 +300,9 @@ function ResumoChart({ colors, spark }) {
     const st = dia ? is[k] : hs[k]
     return { code: c.code, color: colors?.[c.code], st, points: st.status === 'ok' ? st.data.points : [], source: st.data?.source }
   }).filter((r) => sel.includes(r.code))
-  const ready = rows.filter((r) => r.points.length > 1)
+  const { available: ready, comparable, incomplete } = comparisonSeries(rows)
   const staleCodes = rows.filter((r) => r.st.stale).map((r) => r.code)
+  const incompleteNote = incomplete.length > 0 && <p className="status" role="status">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.error || 'aguardando cotações'}`).join(' · ')}</p>
   const staleNote = staleCodes.length > 0 && <p className="status stale" role="status">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</p>
   const failed = rows.every((r) => r.st.status === 'error')
   const one = rows.length === 1
@@ -308,11 +310,11 @@ function ResumoChart({ colors, spark }) {
   const chg = (r) => periodChange(r.points)
   const [big, setBig] = useState(false)
   const chart = (wv) => (
-        ready.length === rows.length ? (
+        ready.length > 0 && (one || comparable.length > 0) ? (
           one ? (
             <Plot points={r0.points} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
           ) : (
-            <MultiPlot series={rows} width={wv} intraday={dia} />
+            <MultiPlot series={comparable} width={wv} intraday={dia} />
           )
         ) : (
           <div className="placeholder" style={{ height: 120 }}>
@@ -345,6 +347,7 @@ function ResumoChart({ colors, spark }) {
         </p>
       )}
       {staleNote}
+      {incompleteNote}
       <div ref={ref}>
         {chart(width)}
       </div>
@@ -373,6 +376,7 @@ function ResumoChart({ colors, spark }) {
         </p>
       )}
           {staleNote}
+      {incompleteNote}
           <Wide render={chart} />
         </div>
       </Overlay>

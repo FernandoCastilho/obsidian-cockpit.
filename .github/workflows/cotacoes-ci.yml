@@ -1,0 +1,22 @@
+name: Cotações CI
+on:
+  pull_request:
+    paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
+permissions:
+  contents: read
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cotacoes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cotacoes/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
