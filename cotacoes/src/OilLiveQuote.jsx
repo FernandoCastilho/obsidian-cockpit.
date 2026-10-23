@@ -6,22 +6,16 @@ export default function OilLiveQuote() {
   const [failed, setFailed] = useState(false)
   useEffect(() => {
     const container = host.current
-    const widget = document.createElement('div')
-    widget.className = 'tradingview-widget-container__widget'
-    const credit = document.createElement('div')
-    credit.className = 'tradingview-widget-copyright'
-    const link = document.createElement('a')
-    link.href = 'https://www.tradingview.com/symbols/TVC-UKOIL/'
-    link.target = '_blank'
-    link.rel = 'noopener noreferrer'
-    link.textContent = 'Brent por TradingView'
-    credit.append(link)
+    const widget = document.createElement('tv-single-ticker')
+    widget.setAttribute('symbol', 'TVC:UKOIL')
+    widget.setAttribute('transparent', '')
+    widget.setAttribute('theme', 'dark')
     const script = document.createElement('script')
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js'
-    script.async = true
-    script.textContent = JSON.stringify({ symbol: 'TVC:UKOIL', width: '100%', isTransparent: false, colorTheme: 'dark', locale: 'br' })
+    script.type = 'module'
+    script.src = 'https://widgets.tradingview-widget.com/w/br/tv-single-ticker.js'
     script.onerror = () => setFailed(true)
-    container.append(widget, credit, script)
+    // The official web component renders its own branding and attribution.
+    container.append(widget, script)
     return () => { script.onerror = null; container.replaceChildren() }
   }, [])
   return <>
