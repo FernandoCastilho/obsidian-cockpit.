@@ -136,6 +136,8 @@ export async function fetchCentral(signal, base = DATA_BASE) {
 }
 
 let lastDirectAt = 0
+let lastDirectSnapshot = null
+let directRequestSeq = 0
 
 // direct=true (botão "Atualizar agora"): consulta a API na hora. Automático: lê a coleta central e só consulta
 // a API direto, no máximo a cada 5 min, se a coleta central estiver ausente ou velha.
@@ -157,16 +159,26 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
       batchError = e.message
     }
   }
-  if (!batch && (direct || Date.now() - lastDirectAt > 300000)) {
+  if (!batch && (direct || Date.now() - lastDirectAt >= 300000)) {
     lastDirectAt = Date.now()
+    const requestId = ++directRequestSeq
     try {
       batch = await getJson(`${BASE}/${ALL}`, 'cotações', signal)
       batchError = null
       collectedAt = Date.now()
+      if (!lastDirectSnapshot || requestId > lastDirectSnapshot.requestId) lastDirectSnapshot = { batch, collectedAt, requestId }
     } catch (e) {
       if (e.name === 'AbortError') throw e
       batchError = e.message
     }
+  }
+  // Durante o limite da consulta direta, reutiliza a resposta real, sem cair no BCE
+  // só porque a próxima leitura automática aconteceu antes dos cinco minutos.
+  // A data da coleta original é preservada; esse reuso não simula atualização.
+  if (!direct && !batch && lastDirectSnapshot && Date.now() - lastDirectSnapshot.collectedAt < 300000) {
+    batch = lastDirectSnapshot.batch
+    collectedAt = lastDirectSnapshot.collectedAt
+    via = 'direto'
   }
   const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal)))
   return { results: Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), via: batch ? via : 'reserva', collectedAt }
