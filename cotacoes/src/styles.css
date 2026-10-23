@@ -623,7 +623,7 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .scenarios .status { display:block; font-size:.8rem; line-height:1.5; margin:12px 0; }
 
 /* Brent é commodity em USD/barril, separado dos cinco quadros de câmbio. */
-.oil-tile { --series:#ca9c49; cursor:default; }
+.oil-tile { --series:#ca9c49; cursor:default; align-self:start; }
 .oil-tile .pct small { display:block; }
 @media (min-width:700px) { .tiles .pair-tile { grid-column:auto; } }
 @media (max-width:699px) { .tiles .oil-tile { grid-column:1 / -1; } }
@@ -639,6 +639,7 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .oil-history-table th:first-child { text-align:left; }
 .oil-history-table thead { position:sticky; top:0; background:var(--card); }
 /* O embed controla apenas a referência CFD; o botão abre a série EIA separada. */
-.oil-live-quote { height:140px; width:100%; }
-.oil-details { align-self:flex-start; margin-top:8px; min-height:40px; padding:8px 10px; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; font:inherit; font-size:.8rem; cursor:pointer; }
+.oil-live-quote { height:133px; width:100%; }
+.oil-tile .tile-head { justify-content:space-between; flex-wrap:wrap; }
+.oil-details { min-height:32px; padding:4px 6px; background:transparent; color:var(--fg); border:1px solid var(--line); border-radius:6px; font:inherit; font-size:.75rem; cursor:pointer; }
 .oil-details:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }

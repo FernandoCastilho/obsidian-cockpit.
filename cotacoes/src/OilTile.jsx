@@ -29,9 +29,8 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
   const status = oilStatus(data, state.error)
   return <>
     <article className="tile oil-tile" aria-label="Petróleo Brent CFD indicativo">
-      <div className="tile-head"><span className="tile-name"><b>Petróleo Brent</b> <small>· online</small></span></div>
+      <div className="tile-head"><span className="tile-name"><b>Petróleo Brent</b></span><button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Histórico EIA ›</button></div>
       <OilLiveQuote />
-      <button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Detalhes e histórico spot EIA ›</button>
     </article>
     {expanded && <OilHistory data={data} points={points} spark={spark} dates={dates} presets={presets} onDates={onDates} onPreset={onPreset} dateError={dateError} stale={status.pending} loading={!data && !state.error} onClose={() => setExpanded(false)} />}
   </>

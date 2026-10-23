@@ -39,3 +39,9 @@ Capturas fora do Git: `../oil-evidence/desktop-card.png`, `desktop-modal.png`, `
 Parecer: aprovado com ressalvas. Dependência do widget externo e atraso/timestamp não garantidos estão explícitos. Validar em produção após integração pelo responsável. Nenhum dado CFD deve alimentar série EIA.
 
 Checks finais após rebase f79ea46: 138/138 testes passam; build passa; git diff --check passa. Logs em ../oil-evidence/tests-final.txt e build-final.txt.
+
+## Compactação do card (23/10/2026, base98c2973)
+
+O Single Ticker legado instalado já mostra cotação e variação. O novo gerador Web Component pede conta para copiar snippet; não houve login, cadastro nem contorno. A compactação usa somente layout externo: histórico no cabeçalho, status consolidado e altura do host133px (iframe101px + crédito32px), mantendo script, símbolo TVC:UKOIL, marca e crédito integralmente visíveis. Nenhuma alteração interna, recorte, ocultação ou extração de feed. FAQ oficial exige usar apenas opções suportadas e contatar TradingView para remoção de marca/atribuição; nada foi removido.
+Fontes: https://www.tradingview.com/widget-docs/faq/general/ e https://www.tradingview.com/widget-docs/tutorials/iframe/set-widget-size/ .
+QA local Edge do computador do usuário em1440x1000 e390x844: card192,33px de altura, sem overflow; preços117,09 e117,11 visíveis, crédito completo; modal/filtro mensal EIA preservados. Moedas, frete, calculadoras e demais dados sem alterações.
