@@ -27,7 +27,6 @@ export default function OilLiveQuote() {
   return <>
     <div ref={host} className="tradingview-widget-container oil-live-quote" aria-label="Cotação online CFD Brent pela TradingView" />
     {failed && <small role="status">Referência online indisponível.</small>}
-    <small className="muted">USD/barril · CFD indicativo · TVC:UKOIL</small>
-    <small className="muted">Online · atraso não informado pelo provedor.</small>
+    <small className="muted">CFD indicativo · USD/barril · atraso não informado.</small>
   </>
 }
