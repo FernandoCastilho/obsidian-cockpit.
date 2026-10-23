@@ -12,6 +12,7 @@ import Giro from './Giro.jsx'
 import Ncg from './Ncg.jsx'
 import Aplicacao from './Aplicacao.jsx'
 import { CALC_OPTIONS } from './calcOptions.js'
+import './Calculadora.css'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}%`
@@ -301,6 +302,9 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
   const opt = CALC_OPTIONS.find((o) => o.id === view)
   return (
     <section className="macro calc" aria-labelledby="calc-h">
+      <p className="calc-validation-notice" role="status">
+        <strong>Em construção.</strong> Os cálculos estão sendo validados.
+      </p>
       {!opt ? (
         <>
           <div className="history-head">
