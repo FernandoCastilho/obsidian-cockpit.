@@ -1,0 +1,10 @@
+.app-disclaimer {
+  margin: 0 0 1rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--fg);
+  font-size: .875rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}

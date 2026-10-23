@@ -1,3 +1,4 @@
+import './AppDisclaimer.css'
 import MarketContext from './MarketContext.jsx'
 import Expandable from './Expandable.jsx'
 import { useEffect, useState } from 'react'
@@ -263,6 +264,9 @@ export default function App() {
       </div>
     )}
     <main className="app">
+      <aside className="app-disclaimer" aria-label="Aviso sobre informações e simulações">
+        <strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.
+      </aside>
       {update && (
         <div className="update-notice" role="status">
           Nova versão disponível.{' '}
