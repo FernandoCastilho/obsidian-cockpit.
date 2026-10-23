@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "indicators": [
+    {
+      "id": "ism-manufacturing",
+      "label": "PMI industrial · EUA",
+      "value": 54.5,
+      "unit": "pontos",
+      "nature": "ISM · índice mensal",
+      "period": "2026-09",
+      "releaseDate": null,
+      "sourceName": "ISM · Manufacturing PMI",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/september/",
+      "decimals": 1,
+      "note": "Setembro: 54,5; agosto: 54,6. Data exata da divulgação não confirmada na página.",
+      "checkedAt": "2026-10-23T14:00:00Z",
+      "stale": false
+    },
+    {
+      "id": "ism-services",
+      "label": "PMI de serviços · EUA",
+      "value": 54.9,
+      "unit": "pontos",
+      "nature": "ISM · índice mensal",
+      "period": "2026-09",
+      "releaseDate": null,
+      "sourceName": "ISM · Services PMI",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/services/september/",
+      "decimals": 1,
+      "note": "Setembro: 54,9; agosto: 55,4. Data exata da divulgação não confirmada na página.",
+      "checkedAt": "2026-10-23T14:00:00Z",
+      "stale": false
+    },
+    {
+      "id": "caged",
+      "label": "Emprego formal · Brasil",
+      "value": 165827,
+      "unit": "postos líquidos",
+      "nature": "Novo Caged · saldo mensal",
+      "period": "2026-08",
+      "releaseDate": "2026-09-29",
+      "sourceName": "Ministério do Trabalho e Emprego",
+      "sourceUrl": "https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/setembro/novo-caged-emprego-formal-gera-165-8-mil-vagas-em-agosto-e-acumula-1-13-milhao-de-postos-no-ano/",
+      "decimals": 0,
+      "note": "Admissões menos desligamentos no emprego formal; não inclui todo o mercado de trabalho.",
+      "checkedAt": "2026-10-23T14:00:00Z",
+      "stale": false
+    },
+    {
+      "id": "unemployment-br",
+      "label": "Desemprego · Brasil",
+      "value": 5.3,
+      "unit": "%",
+      "nature": "PNAD Contínua · trimestre móvel",
+      "period": "jun–ago/2026",
+      "releaseDate": "2026-09-29",
+      "sourceName": "IBGE · PNAD Contínua",
+      "sourceUrl": "https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html",
+      "decimals": 1,
+      "note": "Taxa de desocupação. Trimestre móvel, não taxa mensal nem apenas emprego formal.",
+      "checkedAt": "2026-10-23T14:00:00Z",
+      "stale": false
+    },
+    {
+      "id": "payroll-us",
+      "label": "Payroll · EUA",
+      "value": 29000,
+      "unit": "postos líquidos",
+      "nature": "BLS · emprego não agrícola mensal",
+      "period": "2026-09",
+      "releaseDate": "2026-10-02",
+      "sourceName": "BLS · Employment Situation",
+      "sourceUrl": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "decimals": 0,
+      "note": "Variação mensal do emprego não agrícola, com ajuste sazonal; sujeita a revisões.",
+      "checkedAt": "2026-10-23T14:00:00Z",
+      "stale": false
+    }
+  ]
+}

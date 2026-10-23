@@ -60,6 +60,9 @@ jobs:
       - name: Coletar referência diária de petróleo Brent (EIA)
         run: node scripts/fetch-oil.mjs
         timeout-minutes: 2
+      - name: Coletar commodities diárias e mensais (EIA e Banco Mundial)
+        run: node scripts/fetch-commodities.mjs
+        timeout-minutes: 3
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true
