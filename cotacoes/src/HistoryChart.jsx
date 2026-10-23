@@ -29,7 +29,7 @@ export function useWidth() {
   return [setEl, w]
 }
 
-export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light }) {
+export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel }) {
   const [hover, setHover] = useState(null)
   const g = useMemo(() => {
     const t0 = points[0].t
@@ -107,7 +107,7 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
         width="100%"
         height={H}
         role="img"
-        aria-label={`Gráfico de linha de ${label ?? `${code}/BRL`}, de ${intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
+        aria-label={`Gráfico de linha de ${label ?? `${code}/BRL`}, de ${dateLabel ? dateLabel(g.t0) : intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${dateLabel ? dateLabel(g.t1) : intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
         onPointerMove={onMove}
         onPointerDown={onMove}
       >
@@ -133,7 +133,7 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
             textAnchor={i === 0 ? 'start' : i === g.xTicks.length - 1 ? 'end' : 'middle'}
             className="tick"
           >
-            {intraday ? fmtTime(t) : g.years ? new Date(t).getFullYear() : g.long ? fmtMonth(t) : fmtDate(t)}
+            {dateLabel ? dateLabel(t) : intraday ? fmtTime(t) : g.years ? new Date(t).getFullYear() : g.long ? fmtMonth(t) : fmtDate(t)}
           </text>
         ))}
         <path d={g.area} fill={`url(#${gid})`} />
@@ -158,7 +158,7 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
       </svg>
       {hp && (
         <div className="tip" style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
-          <strong>{intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
+          <strong>{dateLabel ? dateLabel(hp.t) : intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
           {fmt ? (
             <span>{label} {fmt(hp.bid)}</span>
           ) : intraday ? (

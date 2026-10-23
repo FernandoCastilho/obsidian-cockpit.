@@ -1,0 +1,396 @@
+{
+  "series": [
+    {
+      "id": "unemployment-br",
+      "unit": "%",
+      "frequency": "rolling-quarter",
+      "sourceName": "IBGE — PNAD Contínua, SIDRA 6381/4099",
+      "sourceUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2024?formato=json",
+      "checkedAt": "2026-10-23T14:57:00Z",
+      "revisionNote": "Taxa de desocupação das pessoas de 14 anos ou mais, Brasil, sem ajuste sazonal. Cada ponto representa trimestre móvel, identificado pelo mês final. Série retornada pelo SIDRA na consulta, sujeita a revisões do IBGE.",
+      "points": [
+        {
+          "period": "2024-09",
+          "value": 6.4,
+          "periodLabel": "jul–set/2024"
+        },
+        {
+          "period": "2024-10",
+          "value": 6.2,
+          "periodLabel": "ago–out/2024"
+        },
+        {
+          "period": "2024-11",
+          "value": 6.1,
+          "periodLabel": "set–nov/2024"
+        },
+        {
+          "period": "2024-12",
+          "value": 6.2,
+          "periodLabel": "out–dez/2024"
+        },
+        {
+          "period": "2025-01",
+          "value": 6.5,
+          "periodLabel": "nov–jan/2025"
+        },
+        {
+          "period": "2025-02",
+          "value": 6.8,
+          "periodLabel": "dez–fev/2025"
+        },
+        {
+          "period": "2025-03",
+          "value": 7.0,
+          "periodLabel": "jan–mar/2025"
+        },
+        {
+          "period": "2025-04",
+          "value": 6.6,
+          "periodLabel": "fev–abr/2025"
+        },
+        {
+          "period": "2025-05",
+          "value": 6.2,
+          "periodLabel": "mar–mai/2025"
+        },
+        {
+          "period": "2025-06",
+          "value": 5.8,
+          "periodLabel": "abr–jun/2025"
+        },
+        {
+          "period": "2025-07",
+          "value": 5.6,
+          "periodLabel": "mai–jul/2025"
+        },
+        {
+          "period": "2025-08",
+          "value": 5.6,
+          "periodLabel": "jun–ago/2025"
+        },
+        {
+          "period": "2025-09",
+          "value": 5.6,
+          "periodLabel": "jul–set/2025"
+        },
+        {
+          "period": "2025-10",
+          "value": 5.4,
+          "periodLabel": "ago–out/2025"
+        },
+        {
+          "period": "2025-11",
+          "value": 5.2,
+          "periodLabel": "set–nov/2025"
+        },
+        {
+          "period": "2025-12",
+          "value": 5.1,
+          "periodLabel": "out–dez/2025"
+        },
+        {
+          "period": "2026-01",
+          "value": 5.4,
+          "periodLabel": "nov–jan/2026"
+        },
+        {
+          "period": "2026-02",
+          "value": 5.8,
+          "periodLabel": "dez–fev/2026"
+        },
+        {
+          "period": "2026-03",
+          "value": 6.1,
+          "periodLabel": "jan–mar/2026"
+        },
+        {
+          "period": "2026-04",
+          "value": 5.8,
+          "periodLabel": "fev–abr/2026"
+        },
+        {
+          "period": "2026-05",
+          "value": 5.6,
+          "periodLabel": "mar–mai/2026"
+        },
+        {
+          "period": "2026-06",
+          "value": 5.4,
+          "periodLabel": "abr–jun/2026"
+        },
+        {
+          "period": "2026-07",
+          "value": 5.3,
+          "periodLabel": "mai–jul/2026"
+        },
+        {
+          "period": "2026-08",
+          "value": 5.3,
+          "periodLabel": "jun–ago/2026"
+        }
+      ],
+      "seasonallyAdjusted": false
+    },
+    {
+      "id": "payroll-us",
+      "unit": "postos de trabalho",
+      "frequency": "monthly",
+      "sourceName": "U.S. Bureau of Labor Statistics — CES0000000001",
+      "sourceUrl": "https://api.bls.gov/publicAPI/v2/timeseries/data/CES0000000001?startyear=2024&endyear=2026",
+      "checkedAt": "2026-10-23T14:57:00Z",
+      "revisionNote": "Variação mensal calculada por diferença entre níveis mensais da mesma consulta BLS, convertidos de milhares para postos. Total nonfarm, ajuste sazonal. Agosto e setembro de 2026 preliminares; meses anteriores refletem as revisões vigentes, não a primeira divulgação.",
+      "points": [
+        {
+          "period": "2024-02",
+          "value": 206000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-03",
+          "value": 228000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-04",
+          "value": 64000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-05",
+          "value": 78000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-06",
+          "value": 87000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-07",
+          "value": 53000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-08",
+          "value": 9000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-09",
+          "value": 155000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-10",
+          "value": 33000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-11",
+          "value": 134000,
+          "preliminary": false
+        },
+        {
+          "period": "2024-12",
+          "value": 237000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-01",
+          "value": -48000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-02",
+          "value": 42000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-03",
+          "value": 67000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-04",
+          "value": 108000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-05",
+          "value": 13000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-06",
+          "value": -20000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-07",
+          "value": 64000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-08",
+          "value": -70000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-09",
+          "value": 76000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-10",
+          "value": -140000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-11",
+          "value": 41000,
+          "preliminary": false
+        },
+        {
+          "period": "2025-12",
+          "value": -17000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-01",
+          "value": 160000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-02",
+          "value": -156000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-03",
+          "value": 214000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-04",
+          "value": 148000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-05",
+          "value": 63000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-06",
+          "value": 31000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-07",
+          "value": -10000,
+          "preliminary": false
+        },
+        {
+          "period": "2026-08",
+          "value": 133000,
+          "preliminary": true
+        },
+        {
+          "period": "2026-09",
+          "value": 29000,
+          "preliminary": true
+        }
+      ],
+      "seasonallyAdjusted": true
+    },
+    {
+      "id": "caged",
+      "unit": "postos de trabalho",
+      "frequency": "monthly",
+      "sourceName": "Ministério do Trabalho e Emprego — Novo Caged",
+      "sourceUrl": "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/acoes-e-programas/programas-projetos-acoes-obras-e-atividades/estatisticas-trabalho/novo-caged/2026/agosto/apresentacao-agosto-de-2026.pdf/@@download/file",
+      "checkedAt": "2026-10-23T14:57:00Z",
+      "revisionNote": "Saldo mensal de empregos formais. Série da página 5 da apresentação de agosto/2026, publicada em 29/09/2026: ajustes de declarações até agosto/2026. Esses ajustes são revisões administrativas, NÃO dessazonalização. Extração conferida visualmente contra o gráfico oficial. Não misturar com primeiras divulgações.",
+      "points": [
+        {
+          "period": "2025-08",
+          "value": 154683
+        },
+        {
+          "period": "2025-09",
+          "value": 214688
+        },
+        {
+          "period": "2025-10",
+          "value": 92597
+        },
+        {
+          "period": "2025-11",
+          "value": 81468
+        },
+        {
+          "period": "2025-12",
+          "value": -635078
+        },
+        {
+          "period": "2026-01",
+          "value": 117787
+        },
+        {
+          "period": "2026-02",
+          "value": 268156
+        },
+        {
+          "period": "2026-03",
+          "value": 228133
+        },
+        {
+          "period": "2026-04",
+          "value": 79608
+        },
+        {
+          "period": "2026-05",
+          "value": 81648
+        },
+        {
+          "period": "2026-06",
+          "value": 136959
+        },
+        {
+          "period": "2026-07",
+          "value": 55915
+        },
+        {
+          "period": "2026-08",
+          "value": 165827
+        }
+      ],
+      "seasonallyAdjusted": false
+    },
+    {
+      "id": "ism-manufacturing",
+      "unit": "pontos",
+      "frequency": "monthly",
+      "sourceName": "Institute for Supply Management",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/september/",
+      "checkedAt": "2026-10-23T14:57:00Z",
+      "revisionNote": "Histórico público de 12 meses existe no relatório, mas os termos proíbem gráficos/séries derivados sem autorização escrita. Não fornecido para publicação como dataset livre; requer licença/autorização.",
+      "points": [],
+      "status": "license-required",
+      "unavailableReason": "Gráfico ISM não reproduzido: requer autorização da fonte. Consulte o relatório oficial."
+    },
+    {
+      "id": "ism-services",
+      "unit": "pontos",
+      "frequency": "monthly",
+      "sourceName": "Institute for Supply Management",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/services/september/",
+      "checkedAt": "2026-10-23T14:57:00Z",
+      "revisionNote": "Histórico público de 12 meses existe no relatório, mas os termos proíbem gráficos/séries derivados sem autorização escrita. Não fornecido para publicação como dataset livre; requer licença/autorização.",
+      "points": [],
+      "status": "license-required",
+      "unavailableReason": "Gráfico ISM não reproduzido: requer autorização da fonte. Consulte o relatório oficial."
+    }
+  ]
+}
