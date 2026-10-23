@@ -49,6 +49,7 @@ export default function Giro({ curves, hol }) {
     <article className="chart calc-split">
       <div className="calc-in">
       <p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p>
+      <h3 className="calc-sub">Dados da operação</h3>
       <div className="calc-form">
         <label>
           Valor liberado (R$)
@@ -63,8 +64,9 @@ export default function Giro({ curves, hol }) {
           <input type="date" value={start} onChange={(e) => e.target.value && setStart(e.target.value)} />
         </label>
       </div>
+      <h3 className="calc-sub">Pagamento</h3>
       <div className="calc-form">
-        <div>
+        <div className="calc-wide">
           <span className="lbl">Estrutura de pagamento <Explain id="giro" /></span>
           <div className="seg" role="group" aria-label="Estrutura de pagamento">
             {STRUCT.map(([id, label]) => (
@@ -73,11 +75,12 @@ export default function Giro({ curves, hol }) {
           </div>
         </div>
       </div>
+      <h3 className="calc-sub">Taxa e despesas</h3>
       <div className="calc-form">
-        <div className="seg" role="group" aria-label="Unidade da taxa">
+        <div className="calc-control"><span className="lbl">Unidade da taxa</span><div className="seg" role="group" aria-label="Unidade da taxa">
           <button type="button" aria-pressed={unit === 'am'} onClick={() => setUnit('am')}>ao mês</button>
           <button type="button" aria-pressed={unit === 'aa'} onClick={() => setUnit('aa')}>ao ano</button>
-        </div>
+        </div></div>
         <label>
           Taxa (% {unit === 'am' ? 'ao mês' : 'ao ano'})
           <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} />

@@ -24,13 +24,15 @@ export default function Ncg(){
  const invalid=Object.entries(parsed).filter(([,v])=>v!==null&&(!Number.isFinite(v)||v<0)).map(([k])=>k)
  const set=(key,value)=>{setExample(false);setValues(prev=>({...prev,[key]:value}))}
  const baseReady=FIELDS.slice(0,5).every(([key])=>parsed[key]!==null)
- const field=(key,label,help)=><label key={key} htmlFor={`ncg-${key}`}>{label}<input id={`ncg-${key}`} inputMode="decimal" autoComplete="off" value={values[key]} onChange={e=>set(key,e.target.value)} aria-invalid={invalid.includes(key)} aria-describedby={`ncg-help-${key}`} /><small id={`ncg-help-${key}`}>{help}</small></label>
+ const field=(key,label,help)=><label key={key} htmlFor={`ncg-${key}`}><span className="ncg-label">{label}</span><input id={`ncg-${key}`} inputMode="decimal" autoComplete="off" value={values[key]} onChange={e=>set(key,e.target.value)} aria-invalid={invalid.includes(key)} aria-describedby={`ncg-help-${key}`} /><small id={`ncg-help-${key}`}>{help}</small></label>
  return <article className="chart ncg">
   <p className="ncg-intro">Estime o capital preso no ciclo comercial. Valores mensais e base de 30 dias, sem conversas ou etapas adicionais.</p>
   <div className="ncg-actions"><button type="button" className="more" onClick={()=>{setValues(EXAMPLE);setExample(true)}}>Carregar exemplo fictício</button><button type="button" className="more" onClick={()=>{setValues(EMPTY);setExample(false)}}>Limpar campos</button></div>
   {example&&<p className="ncg-notice" role="status">Exemplo fictício para demonstração. Não representa uma empresa real.</p>}
   <div className="ncg-grid">
-   <div className="ncg-inputs">{FIELDS.map(([key,label,help])=>field(key,label,help))}
+   <div className="ncg-inputs">
+    <section className="calc-section"><h3 className="calc-sub">Ciclo comercial</h3><div className="ncg-fields ncg-cycle">{FIELDS.slice(0,5).map(([key,label,help])=>field(key,label,help))}</div></section>
+    <section className="calc-section"><h3 className="calc-sub">Reserva e cobertura</h3><div className="ncg-fields">{FIELDS.slice(5).map(([key,label,help])=>field(key,label,help))}</div></section>
     <details className="ncg-advanced"><summary>Premissas e ajuste de compras</summary>
      <p>Por padrão, compras mensais ≈ custo vendido mensal, supondo estoque estável. Ajuste se as compras do período forem diferentes.</p>
      {field('monthlyPurchases','Compras mensais (R$), opcional','Vazio utiliza o custo vendido. Digite 0 somente se realmente não houver compras.')}

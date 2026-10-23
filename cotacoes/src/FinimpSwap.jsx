@@ -87,18 +87,17 @@ export default function FinimpSwap({ curves, hol }) {
           <label>Desembolso<input type="date" value={start} onChange={(e) => setStart(e.target.value)} /></label>
           <label>Volume (USD)<input inputMode="decimal" value={vUsd} onChange={(e) => setVUsd(e.target.value)} placeholder="2.879.963,14" /></label>
           <label>Volume (R$), nocional do swap<input inputMode="decimal" value={vBrl} onChange={(e) => setVBrl(e.target.value)} placeholder="15.000.000,00" /></label>
-          {fx && <small className="muted">Câmbio implícito: R$ {num(fx, 4)} por US$</small>}
-        </div>
-        <div className="calc-form">
+
           <label>Parcelas<input inputMode="numeric" value={n} onChange={(e) => setN(e.target.value)} placeholder="60" /></label>
           <label>Carência (parcelas só de juros)<input inputMode="numeric" value={grace} onChange={(e) => setGrace(e.target.value)} placeholder="6" /></label>
           <label>Intervalo (dias corridos)<input inputMode="numeric" value={step} onChange={(e) => setStep(e.target.value)} /></label>
         </div>
 
+        {fx && <p className="status">Câmbio implícito: R$ {num(fx, 4)} por US$</p>}
         <h3 className="calc-sub">Custo em dólar</h3>
         <div className="calc-form">
           <label>Taxa do ativo (% a.a., ACT/360)<input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder="6,48" /></label>
-          <label>IR sobre os juros (%) <Explain id="irGrossUp" /><input inputMode="decimal" value={ir} onChange={(e) => setIr(e.target.value)} /></label>
+          <label><span>IR sobre os juros (%) <Explain id="irGrossUp" /></span><input inputMode="decimal" value={ir} onChange={(e) => setIr(e.target.value)} /></label>
         </div>
 
         <h3 className="calc-sub">Swap para CDI</h3>
