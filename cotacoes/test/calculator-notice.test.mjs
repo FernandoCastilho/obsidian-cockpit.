@@ -24,3 +24,13 @@ test('information disclaimer is visible outside every section condition', () => 
   assert.match(app, /observadas as responsabilidades previstas na legislação aplicável/)
   assert.equal(app.match(/className="app-disclaimer"/g).length, 1)
 })
+
+
+test('compact disclaimer retains expandable full text and clear summary', () => {
+  const app = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8')
+  assert.match(app, /<details>\s*<summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo<\/summary>/)
+  assert.match(app, /baseado em fontes públicas/)
+  assert.match(app, /O uso é de responsabilidade do usuário/)
+  assert.match(css, /background: #2d2415/)
+  assert.match(css, /color: #f3d59a/)
+})

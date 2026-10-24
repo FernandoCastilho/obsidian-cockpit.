@@ -1,0 +1,16 @@
+.feriados.macro { margin-top: 20px; }
+.feriados h1 { margin: 0 0 6px; font-size: 1.25rem; }
+.fer-caption, .fer-count { color: var(--mut); font-size: .85rem; margin: 0; }
+.fer-filter { display: flex; align-items: center; gap: 8px; color: var(--mut); font-size: .85rem; }
+.fer-filter select { max-width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); font: inherit; }
+.fer-filter select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fer-month { margin-top: 24px; }
+.fer-month h2 { margin: 0 0 8px; font-size: 1rem; text-transform: capitalize; }
+.fer-list { font-variant-numeric: tabular-nums; }
+.fer-body { overflow-wrap: anywhere; }
+@media (max-width: 599px) {
+  .fer-filter { width: 100%; }
+  .fer-filter select { flex: 1; min-width: 0; }
+  .feriados .fer-list li { gap: 10px; align-items: flex-start; }
+  .feriados .fer-left { font-size: .78rem; padding-top: 2px; }
+}
