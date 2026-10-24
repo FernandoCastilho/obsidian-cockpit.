@@ -2,13 +2,19 @@ name: Cotações (coleta central)
 
 # Um único robô consulta a AwesomeAPI e publica quotes.json, intraday.json e history.json na branch `data`.
 # Todos os usuários leem esses arquivos: a cota da API não depende de quantas pessoas abrem a página.
+#
+# Pregão (9h30 às 18h de Brasília = 12h30 às 21h UTC, segunda a sexta): o agendamento do GitHub não garante
+# execuções a cada 5 min (na prática atrasa ou pula horas). Por isso cada execução do pregão fica ligada e coleta
+# a cada 5 min pelo relógio, até o fim do pregão ou até 5h40 de duração (limite de 6 h por job). Três partidas
+# escalonadas cobrem o dia: enquanto uma roda, a seguinte espera na fila (concurrency) e assume quando ela termina.
+# Fora do pregão, cada execução coleta uma vez.
 on:
   schedule:
-    # Horário de Brasília = UTC-3. A cada 5 min das 9h30 às 18h, de segunda a sexta (12h30 às 21h00 UTC).
-    - cron: '30-55/5 12 * * 1-5'
-    - cron: '*/5 13-20 * * 1-5'
-    - cron: '0 21 * * 1-5'
-    # Fora dessa janela, 1 vez por hora, só de segunda a sexta: 0h07 às 9h07 e 18h07 às 23h07 de Brasília. Nada no sábado e no domingo.
+    # Partidas do pregão (a 1ª cobre a manhã; as outras são reserva e continuação).
+    - cron: '20 12 * * 1-5'
+    - cron: '20 15 * * 1-5'
+    - cron: '50 17 * * 1-5'
+    # Fora do pregão, 1 vez por hora, só de segunda a sexta: 0h07 às 9h07 e 18h07 às 23h07 de Brasília. Nada no sábado e no domingo.
     - cron: '7 3-12 * * 1-5'
     - cron: '7 21-23 * * 1-5'
     - cron: '7 0-2 * * 2-6'
@@ -24,7 +30,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,17 +43,40 @@ jobs:
             git fetch --depth=1 origin data
             for f in quotes.json intraday.json history.json; do git show FETCH_HEAD:$f > /tmp/data/$f 2>/dev/null || true; done
           fi
-      - name: Coletar
-        run: node cotacoes/scripts/fetch-quotes.mjs
+      - name: Coletar e publicar (laço de 5 min no pregão, uma vez fora dele)
         env:
           DATA_DIR: /tmp/data
           AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
-      - name: Publicar na branch data
+          PUSH_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         run: |
-          cd /tmp/data
-          [ -f quotes.json ] || { echo "nada a publicar"; exit 0; }
-          git init -q
-          git checkout -q -b data
-          git add -A
-          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -q -m "cotações $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+          # janela do laço: 12h15 a 21h UTC (a partida das 12h20 já entra nela; 12h30 é a abertura)
+          in_session() {
+            local dow hm
+            dow=$(date -u +%u); hm=$((10#$(date -u +%H%M)))
+            [ "$dow" -le 5 ] && [ "$hm" -ge 1215 ] && [ "$hm" -le 2100 ]
+          }
+          collect_and_publish() {
+            node cotacoes/scripts/fetch-quotes.mjs || echo "coleta com erro; mantidos os arquivos anteriores"
+            [ -f "$DATA_DIR/quotes.json" ] || { echo "nada a publicar"; return 0; }
+            (
+              cd "$DATA_DIR"
+              rm -rf .git
+              git init -q
+              git checkout -q -b data
+              git add -A
+              git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -q -m "cotações $(date -u +%Y-%m-%dT%H:%MZ)"
+              git push -q -f "$PUSH_URL" data
+            ) || echo "publicação falhou nesta rodada; tenta de novo na próxima"
+          }
+          start=$(date +%s)
+          deadline=$((start + 340 * 60))
+          collect_and_publish
+          rounds=1
+          while in_session && [ "$(date +%s)" -lt "$deadline" ]; do
+            # dorme até o próximo múltiplo de 5 min (+5 s), para as coletas caírem em horários previsíveis
+            sleep $((300 - $(date +%s) % 300 + 5))
+            in_session && [ "$(date +%s)" -lt "$deadline" ] || break
+            collect_and_publish
+            rounds=$((rounds + 1))
+          done
+          echo "rodadas nesta execução: $rounds"
