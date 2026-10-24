@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import './Feriados.css'
+import { groupHolidayRows } from './holidayView.js'
 import { holidayMap } from './holidays.js'
 
 // Aba Feriados: próximos 12 meses, em ordem de data, com o local e quantos dias faltam.
@@ -22,6 +25,7 @@ const fmt = (d) => {
 const left = (n) => (n === 0 ? 'hoje' : n === 1 ? 'amanhã' : `${n} dias`)
 
 export default function Feriados({ hol }) {
+  const [place, setPlace] = useState('all')
   const now = new Date()
   const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
   const y = now.getFullYear()
@@ -31,17 +35,35 @@ export default function Feriados({ hol }) {
       for (const [d, name] of holidayMap(c.id, yr, hol?.ctx)) {
         if (d < today || ms(d) - ms(today) > 366 * 864e5) continue
         const k = `${d}|${name}`
-        if (!map.has(k)) map.set(k, { d, name, where: [] })
+        if (!map.has(k)) map.set(k, { d, name, where: [], places: [] })
         map.get(k).where.push(c.where)
+        map.get(k).places.push(c.id)
       }
     }
   }
-  const rows = [...map.values()].sort((a, b) => a.d.localeCompare(b.d) || a.name.localeCompare(b.name))
+  const groups = groupHolidayRows([...map.values()], place)
   return (
-    <section className="macro feriados">
-      {rows.length ? (
-        <ul className="fer-list">
-          {rows.map((r) => {
+    <section className="macro feriados" aria-labelledby="feriados-title">
+      <div className="history-head">
+        <div>
+          <h1 id="feriados-title">Próximos feriados</h1>
+          <p className="fer-caption">Próximos 12 meses · datas e praças de referência</p>
+        </div>
+        <label className="fer-filter">Praça
+          <select value={place} onChange={(event) => setPlace(event.target.value)}>
+            <option value="all">Todas as praças</option>
+            {LIST.map((item) => <option key={item.id} value={item.id}>{item.where}</option>)}
+          </select>
+        </label>
+      </div>
+      <div aria-live="polite" aria-atomic="true" className="fer-count">
+        {groups.reduce((count, group) => count + group.rows.length, 0)} feriados nesta seleção
+      </div>
+      {groups.length ? groups.map((group) => (
+        <section className="fer-month" key={group.month} aria-labelledby={`month-${group.month}`}>
+          <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h2>
+          <ul className="fer-list">
+          {group.rows.map((r) => {
             const f = fmt(r.d)
             const n = Math.round((ms(r.d) - ms(today)) / 864e5)
             return (
@@ -52,8 +74,9 @@ export default function Feriados({ hol }) {
               </li>
             )
           })}
-        </ul>
-      ) : <p className="status">Nenhum feriado nos próximos 12 meses.</p>}
+          </ul>
+        </section>
+      )) : <p className="status">Nenhum feriado nesta praça nos próximos 12 meses.</p>}
     </section>
   )
 }

@@ -17,7 +17,7 @@
 }
 .calc .calc-in > .calc-sub,
 .calc .calc-section > .calc-sub {
-  margin: 24px 0 16px;
+  margin: 20px 0 12px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--fg);
@@ -33,7 +33,7 @@
 .calc .calc-split.stack .calc-in .calc-form {
   display: grid;
   grid-template-columns: repeat(var(--calc-columns, 3), minmax(0, 1fr));
-  gap: 18px 20px;
+  gap: 14px 20px;
   align-items: end;
   margin-bottom: 0;
 }
@@ -117,9 +117,9 @@
   gap: 0 24px;
 }
 .calc .fin-step {
-  margin-bottom: 20px;
-  padding: 20px;
-  gap: 18px;
+  margin-bottom: 16px;
+  padding: 16px;
+  gap: 12px;
   overflow: visible;
 }
 .calc .fin-step-head {

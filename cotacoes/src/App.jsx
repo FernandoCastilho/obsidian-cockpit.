@@ -265,7 +265,10 @@ export default function App() {
     )}
     <main className="app">
       <aside className="app-disclaimer" aria-label="Aviso sobre informações e simulações">
-        <strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.
+        <details>
+          <summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo</summary>
+          <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
+        </details>
       </aside>
       {update && (
         <div className="update-notice" role="status">
