@@ -441,6 +441,7 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
   .status.src { margin:2px 0 8px; font-size:.82rem; }
 }
 .tile-spark small { white-space:nowrap; }
+.tile-history-status { white-space:normal; overflow-wrap:anywhere; }
 @media (max-width: 699px) { .tile-price { font-size:clamp(1.05rem, 4.9vw, 1.25rem); } .tile-spark { max-width:38%; } }
 
 /* Foco visível em todos os controles */
