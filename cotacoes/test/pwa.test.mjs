@@ -56,18 +56,24 @@ const field = (f, min, max) => {
   return out
 }
 test('coleta de 5 em 5 minutos só entre 9h30 e 18h de Brasília (12h30 a 21h00 UTC)', () => {
-  const crons = [...rf(new URL('../../.github/workflows/quotes.yml', import.meta.url), 'utf8').matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
-  const frequent = crons.filter((c) => c.split(' ')[0].includes('/'))
-  assert.ok(frequent.length >= 2)
-  const times = frequent.flatMap((c) => {
+  // No pregão, cada execução fica ligada e coleta a cada 5 min pelo relógio (o agendamento do GitHub não garante a frequência).
+  const yml = rf(new URL('../../.github/workflows/quotes.yml', import.meta.url), 'utf8')
+  const crons = [...yml.matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
+  const fixed = crons.filter((c) => /^\d+ \d+ /.test(c)) // partidas do pregão: minuto e hora únicos
+  const starts = fixed.map((c) => { const [m, h] = c.split(' ').map(Number); return h * 60 + m })
+  assert.ok(starts.length >= 2, 'pelo menos duas partidas (uma de reserva)')
+  assert.ok(Math.min(...starts) >= 12 * 60 + 15 && Math.min(...starts) <= 12 * 60 + 30, 'primeira partida até a abertura (9h30)')
+  assert.ok(Math.max(...starts) < 21 * 60)
+  // janela do laço e cadência de 5 min no próprio script
+  assert.match(yml, /\[ "\$hm" -ge 1215 \] && \[ "\$hm" -le 2100 \]/)
+  assert.match(yml, /sleep \$\(\(300 - \$\(date \+%s\) % 300 \+ 5\)\)/)
+  const deadline = Number(yml.match(/deadline=\$\(\(start \+ (\d+) \* 60\)\)/)[1])
+  const timeout = Number(yml.match(/timeout-minutes: (\d+)/)[1])
+  assert.ok(deadline + 5 < timeout && timeout <= 360, 'o laço termina antes do limite do job')
+  assert.match(yml, /cancel-in-progress: false/) // a partida seguinte espera na fila
+  // coletas horárias (faixas de horas) ficam fora do pregão
+  for (const c of crons.filter((x) => !fixed.includes(x))) {
     const [m, h] = c.split(' ')
-    return field(h, 0, 23).flatMap((hh) => field(m, 0, 59).map((mm) => hh * 60 + mm))
-  })
-  assert.equal(Math.min(...times), 12 * 60 + 30) // 9h30 em Brasília
-  assert.ok(Math.max(...times) <= 21 * 60) // até 18h
-  // nenhuma coleta horária cai dentro da janela de 5 minutos (evita rodar duas vezes)
-  for (const c of crons.filter((x) => !x.split(' ')[0].includes('/'))) {
-    const [m, h] = c.split(' ')
-    for (const hh of field(h, 0, 23)) for (const mm of field(m, 0, 59)) assert.ok(hh * 60 + mm < 12 * 60 + 30 || hh * 60 + mm > 21 * 60 || c.split(' ')[0] === '0', `coleta horária ${c} dentro da janela`)
+    for (const hh of field(h, 0, 23)) for (const mm of field(m, 0, 59)) assert.ok(hh * 60 + mm < 12 * 60 + 30 || hh * 60 + mm > 21 * 60, `coleta horária ${c} dentro da janela`)
   }
 })
