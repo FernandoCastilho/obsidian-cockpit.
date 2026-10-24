@@ -220,7 +220,7 @@ test('quotes: central atrasada reutiliza cotação direta por 5 min sem alternar
  let centralFresh=false, directCalls=0
  globalThis.fetch=async url=>{
   urls.push(url)
-  if(url.startsWith('https://central.example'))return json({generatedAt:centralFresh?clock.now:clock.now-60*MIN,quotes:batch(clock.now,6)})
+  if(url.startsWith('https://central.example'))return json({generatedAt:centralFresh?clock.now:clock.now-q.centralMaxAge(clock.now)-MIN,quotes:batch(clock.now,6)})
   assert.match(url,/economia\.awesomeapi\.com\.br/,'não chama referência BCE durante cooldown')
   directCalls++;return json(batch(clock.now,5+directCalls/10))
  }
@@ -241,7 +241,7 @@ test('quotes: central atrasada reutiliza cotação direta por 5 min sem alternar
 test('quotes: resposta direta tardia não substitui cache de requisição mais recente no mesmo milissegundo',async(t)=>{
  const clock=browserClock(t), q=await quotesWithCentral(), pending=[]
  globalThis.fetch=url=>{
-  if(url.startsWith('https://central.example'))return Promise.resolve(json({generatedAt:clock.now-60*MIN,quotes:batch(clock.now)}))
+  if(url.startsWith('https://central.example'))return Promise.resolve(json({generatedAt:clock.now-q.centralMaxAge(clock.now)-MIN,quotes:batch(clock.now)}))
   const p=deferred();pending.push(p);return p.promise
  }
  const oldAt=clock.now, first=q.fetchQuotes(undefined,{direct:true});await flush()

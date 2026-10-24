@@ -49,7 +49,10 @@ async function getJson(url, label, signal) {
   return res.json()
 }
 
-const toQuote = (q, source) => ({
+export const toQuote = (q, source) => {
+  if (!q || ['bid', 'ask', 'high', 'low', 'timestamp'].some((key) => !(Number(q[key]) > 0)) || q.pctChange == null || q.pctChange === '' || !Number.isFinite(Number(q.pctChange))) return null
+  if (['bid', 'ask', 'high', 'low', 'timestamp'].some((key) => !Number.isFinite(Number(q[key])))) return null
+  return ({
   source,
   bid: Number(q.bid),
   ask: Number(q.ask),
@@ -57,12 +60,13 @@ const toQuote = (q, source) => ({
   low: Number(q.low),
   pct: Number(q.pctChange),
   timestamp: Number(q.timestamp) * 1000,
-})
+  })
+}
 
 // Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH.
 async function fetchCnhCross(brl, preloaded, signal) {
   const cnh = preloaded ?? (await getJson(`${BASE}/USD-CNH`, 'USD-CNH', signal)).USDCNH
-  if (!cnh) throw new Error('USD-CNH: resposta sem cotação')
+  if (!toQuote(brl, 'USD') || !toQuote(cnh, 'CNH')) throw new Error('USD-CNH: resposta sem cotação válida')
   const n = Number
   return {
     source: 'CNH',
@@ -108,7 +112,7 @@ async function complete(code, batch, batchError, signal) {
   } else {
     const raw = batch?.[PAIRS[code]]
     quote = raw ? toQuote(raw, code) : null
-    if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação`)
+    if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação válida`)
   }
   if (!quote) {
     try {
@@ -124,7 +128,20 @@ async function complete(code, batch, batchError, signal) {
 // Coleta central: um robô do GitHub consulta a API a cada 5 min e publica quotes.json na branch `data`.
 // Todos os usuários leem esse arquivo (sem gastar a cota da API). VITE_DATA_BASE é definido no build.
 export const DATA_BASE = import.meta.env?.VITE_DATA_BASE
-const CENTRAL_MAX_AGE = 45 * 60000
+// A coleta é de 5 min no expediente, horária fora dele e pausa no fim de semana.
+// Não interpretar uma pausa prevista como pane e multiplicar consultas por navegador.
+export function centralMaxAge(now = Date.now()) {
+  const br = new Date(now - 3 * 3600000)
+  const weekday = br.getUTCDay()
+  if (weekday === 0 || weekday === 6) {
+    const friday = new Date(br)
+    friday.setUTCDate(friday.getUTCDate() - (weekday === 6 ? 1 : 2))
+    friday.setUTCHours(23, 7, 0, 0)
+    return now - (friday.getTime() + 3 * 3600000) + 75 * 60000
+  }
+  const minute = br.getUTCHours() * 60 + br.getUTCMinutes()
+  return (minute >= 570 && minute <= 1080 ? 45 : 75) * 60000
+}
 
 export async function fetchCentral(signal, base = DATA_BASE) {
   if (!base) throw new Error('coleta central não configurada')
@@ -149,7 +166,7 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
   if (!direct) {
     try {
       const c = await fetchCentral(signal, base)
-      if (Date.now() - c.generatedAt <= CENTRAL_MAX_AGE) {
+      if (Number.isFinite(c.generatedAt) && c.generatedAt <= Date.now() + 60000 && Date.now() - c.generatedAt <= centralMaxAge()) {
         batch = c.quotes
         via = 'central'
         collectedAt = c.generatedAt
@@ -239,11 +256,11 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
           fresh += 1
           // nunca troca uma cotação mais nova (ex.: do botão) por outra mais velha (ex.: da coleta central)
           const keep = old && !old.fallback && !r.quote.fallback && old.timestamp > r.quote.timestamp
-          next[code] = keep ? old : r.quote
+          next[code] = keep ? { ...old, stale: false, error: undefined } : r.quote
           if (old && next[code].bid !== old.bid) dir[code] = next[code].bid > old.bid ? 'up' : 'down'
         } else {
           // mantém a última cotação válida enquanto a moeda falha
-          if (old) next[code] = old
+          if (old) next[code] = { ...old, stale: true, error: r.error }
           errs[code] = r.error
         }
       }

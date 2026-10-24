@@ -85,6 +85,10 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
           </small>
         </span>
       </span>
+      {quote && <small className={quote.stale || quote.fallback ? 'status stale' : 'muted'}>
+        {quote.stale ? 'Atualização pendente · ' : quote.fallback ? 'Referência diária de reserva · ' : 'Referência · '}
+        {Number.isFinite(quote.timestamp) ? new Date(quote.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'}
+      </small>}
       {ptax && <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell)}</small>}
     </button>
   )

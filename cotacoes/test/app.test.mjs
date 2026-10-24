@@ -73,7 +73,7 @@ test('erros técnicos viram texto em português', () => {
 test('cotações: uma única consulta para as quatro moedas (poupa a cota da API)', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js')
   const now = Math.floor(Date.now() / 1000)
-  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b + 0.1), low: String(b - 0.1), pctChange: '0.5', timestamp: String(now) })
+  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b + 0.1), low: String(Math.max(0.001, b - 0.1)), pctChange: '0.5', timestamp: String(now) })
   const calls = []
   const real = globalThis.fetch
   globalThis.fetch = async (url) => {

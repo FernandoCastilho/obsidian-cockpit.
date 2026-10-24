@@ -3,6 +3,7 @@ import { useMacro } from './useMacro.js'
 import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
+import { readStorage } from './storage.js'
 import { flagSvg } from './flags.js'
 
 const H = 240
@@ -190,7 +191,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
   const h = useSeries(currency, start, end, day)
   const [ref, width] = useWidth()
   const pts = h.status === 'ok' ? h.data.points : null
-  const [tableOpen, setTableOpen] = useState(() => localStorage.getItem('tabelaAberta') === '1')
+  const [tableOpen, setTableOpen] = useState(() => readStorage('tabelaAberta') === '1')
   useEffect(() => { try { localStorage.setItem('tabelaAberta', tableOpen ? '1' : '0') } catch { /* sem armazenamento */ } }, [tableOpen])
   const macroH = useMacro()
   const ptaxH = macroH.data?.ptaxHist?.[currency.code]

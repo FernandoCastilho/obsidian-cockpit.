@@ -128,6 +128,7 @@ export default function Curves({ curves: c }) {
   return (
     <section className="macro" aria-labelledby="curves-h">
       <h2 id="curves-h">Curvas de juros</h2>
+      {c.stale && <p className="status stale" role="status">Não foi possível atualizar as curvas. Mantida a última coleta disponível. {c.error}</p>}
       {c.status === 'loading' && <div className="placeholder">Carregando curvas…</div>}
       {c.status === 'ok' && c.data.generatedAt && (Date.now() - c.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: as curvas foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
