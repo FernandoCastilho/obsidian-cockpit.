@@ -32,7 +32,7 @@
 
 .executive-rates__table {
   width: 100%;
-  min-width: 696px;
+  min-width: 760px;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
@@ -76,7 +76,7 @@
 }
 .executive-rates__name { display: block; font-size: .88rem; font-weight: 600; line-height: 1.4; }
 .executive-rates__unit { display: block; margin-top: 3px; color: var(--mut); font-size: .72rem; font-weight: 400; line-height: 1.4; }
-.executive-rates__value { display: block; font-size: .95rem; font-weight: 700; line-height: 1.4; }
+.executive-rates__value { display: block; font-size: .95rem; font-weight: 700; line-height: 1.4; white-space: nowrap; }
 .executive-rates__date,
 .executive-rates__status,
 .executive-rates__source { display: block; margin-top: 3px; color: var(--mut); font-size: .72rem; line-height: 1.4; }
