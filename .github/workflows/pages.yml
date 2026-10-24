@@ -54,6 +54,14 @@ jobs:
         run: node scripts/fetch-curves.mjs
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preparar leitura dos comunicados oficiais em PDF
+        run: python -m pip install -r scripts/requirements-policy.txt
+      - name: Coletar juros de política monetária (Fed, BCE, BoE e BoJ)
+        run: node scripts/fetch-policy-rates.mjs
+        timeout-minutes: 5
       - name: Coletar feriados da China (dados oficiais)
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
