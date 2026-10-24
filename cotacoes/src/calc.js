@@ -5,8 +5,38 @@ import { growthAt } from './cdiFuturo.js'
 export const parseNum = (s) => {
   const t = String(s ?? '').trim().replace(/\s/g, '')
   if (!t) return NaN
-  const clean = t.includes(',') ? t.replace(/\./g, '').replace(',', '.') : /^\d{1,3}(\.\d{3})+$/.test(t) ? t.replace(/\./g, '') : t
+  // "0.500" nunca é milhar: zero à esquerda indica decimal.
+  const clean = t.includes(',') ? t.replace(/\./g, '').replace(',', '.') : /^-?[1-9]\d{0,2}(\.\d{3})+$/.test(t) ? t.replace(/\./g, '') : t
   return /^-?\d*\.?\d+$/.test(clean) ? Number(clean) : NaN
+}
+
+// Taxas e percentuais: sem vírgula, o ponto é sempre separador decimal ("1.250" = 1,25), pois ninguém digita taxa com milhar.
+// Com vírgula, vale a leitura brasileira de parseNum ("1.250,5" = 1250,5).
+export const parseRate = (s) => {
+  const t = String(s ?? '').trim().replace(/\s/g, '')
+  if (!t.includes(',') && /^-?\d*\.\d+$/.test(t)) return Number(t)
+  return parseNum(t)
+}
+
+// Inverso de rateFactor: taxa na unidade escolhida que gera o fator f em d dias úteis (cal dias corridos).
+export const rateFromFactor = (f, unit, d, cal = null, base = 'du') =>
+  unit === 'periodo' ? (f - 1) * 100 : unit === 'am' ? (f ** (1 / (base === 'cal' && cal ? cal / 30 : d / 21)) - 1) * 100 : (f ** (252 / d) - 1) * 100
+
+// % do CDI que, composto dia a dia pela curva, chega ao fator alvo em d dias úteis (bisseção; o fator cresce com o percentual).
+export function cdiPercentFor(pts, d, target) {
+  if (!(target > 0)) return null
+  let lo = -1000
+  let hi = 1000
+  const f = (p) => cdiPercentFactor(pts, d, p)
+  const flo = f(lo)
+  const fhi = f(hi)
+  if (flo == null || fhi == null || !(target >= flo && target <= fhi)) return null
+  for (let i = 0; i < 200; i++) {
+    const mid = (lo + hi) / 2
+    if (f(mid) < target) lo = mid
+    else hi = mid
+  }
+  return (lo + hi) / 2
 }
 
 const aa = (factor, d) => (factor ** (252 / d) - 1) * 100
@@ -138,6 +168,14 @@ export function compare({ pts, d, value, mode, rate, unit = 'aa', side = 'invest
     diffBps: (aa(F, d) - aa(refF, d)) * 100,
     cdiEquivalent: G > 1 ? ((F - 1) / (G - 1)) * 100 : null, // taxa da operação no período ÷ CDI da curva no período
     good,
-    breakeven: mode === 'total' ? value * refF : mode === 'pre' ? beRate(refF) : mode === 'cdi' ? 100 : 0,
+    // Taxa que empata com a referência (DI, ou a aplicação no empréstimo, bruta ou líquida de IR), no mesmo modo e unidade da taxa informada.
+    breakeven:
+      mode === 'total'
+        ? value * refF
+        : mode === 'pre'
+          ? beRate(refF)
+          : mode === 'cdi'
+            ? cdiPercentFor(pts, d, refF)
+            : rateFromFactor(refF / G, unit === 'periodo' ? 'aa' : unit, d, calDays, monthBase),
   }
 }

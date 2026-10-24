@@ -259,7 +259,7 @@ test('FINIMP: composta × proporcional e ano bissexto (ACT/365F usa 365 mesmo em
   assert.equal(daysBetween('2024-01-01', '2025-01-01'), 366)
   assert.ok(Math.abs(leap.totals.interest - 1000 * 0.06 * (366 / 365)) < 1e-9)
 })
-test('FINIMP: juros periódicos, períodos irregulares e composta aditiva entre trechos', () => {
+test('FINIMP: juros periódicos, períodos irregulares e composta por tranche', () => {
   const one = simulate({ ...FI, rule: 'comp' })
   // juros pagos em data intermediária: a composta de cada período parte do início do período, sem capitalizar
   const per = simulate({ ...FI, rule: 'comp', structure: 'periodic', interestDates: ['2026-04-15'] })
@@ -268,10 +268,10 @@ test('FINIMP: juros periódicos, períodos irregulares e composta aditiva entre 
   const d2 = daysBetween('2026-04-15', '2026-07-14')
   assert.ok(Math.abs(per.totals.interest - 1e6 * ((1.06 ** (d1 / 360) - 1) + (1.06 ** (d2 / 360) - 1))) < 1e-6)
   assert.ok(per.checks.every((c) => c.ok) && one.checks.every((c) => c.ok))
-  // desembolso no meio do período: soma dos trechos (composta aditiva) = fórmula fechada para saldo constante
+  // desembolso no meio do período: cada tranche capitaliza desde a própria data de desembolso
   const split = simulate({ ...FI, rule: 'comp', disb: [{ date: '2026-01-15', amount: 500000 }, { date: '2026-03-01', amount: 500000 }] })
   const f = (a, b) => daysBetween(a, b) / 360
-  const exp = 500000 * (1.06 ** f('2026-01-15', '2026-07-14') - 1) + 500000 * (1.06 ** f('2026-01-15', '2026-07-14') - 1.06 ** f('2026-01-15', '2026-03-01'))
+  const exp = 500000 * (1.06 ** f('2026-01-15', '2026-07-14') - 1) + 500000 * (1.06 ** f('2026-03-01', '2026-07-14') - 1)
   assert.ok(Math.abs(split.totals.interest - exp) < 1e-6)
 })
 test('FINIMP: amortização parcial por valor e por percentual, soma e saldo validados', () => {

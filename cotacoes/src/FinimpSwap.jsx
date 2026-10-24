@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { FORMULAS, finimpSwap, swapTsv } from './finimpSwap.js'
-import { parseNum } from './calc.js'
+import { parseNum, parseRate } from './calc.js'
 import { nextBusinessDay } from './holidays.js'
 import Pracas from './Pracas.jsx'
 import Explain from './Explain.jsx'
@@ -40,14 +40,14 @@ export default function FinimpSwap({ curves, hol }) {
         n: parseInt(n, 10) || 0,
         grace: grace === '' ? NaN : parseInt(grace, 10),
         step: parseInt(step, 10) || 0,
-        ratePct: rate === '' ? NaN : parseNum(rate),
-        irPct: ir === '' ? 0 : parseNum(ir),
-        spreadPct: spread === '' ? NaN : parseNum(spread),
+        ratePct: rate === '' ? NaN : parseRate(rate),
+        irPct: ir === '' ? 0 : parseRate(ir),
+        spreadPct: spread === '' ? NaN : parseRate(spread),
         pts,
         base,
         cals,
         ctx: hol.ctx,
-        flatCdi: flat === '' ? undefined : parseNum(flat),
+        flatCdi: flat === '' ? undefined : parseRate(flat),
       }),
     [start, vUsd, vBrl, n, grace, step, rate, ir, spread, flat, pts, base, cals, hol.ctx],
   )
@@ -122,7 +122,7 @@ export default function FinimpSwap({ curves, hol }) {
                 <tr><th scope="row">{res.rows.length}x</th><td>4131</td></tr>
                 <tr><th scope="row">Volume</th><td>USD {num(parseNum(vUsd))} // BRL {num(parseNum(vBrl))}</td></tr>
                 <tr><th scope="row">Custo (USD)</th><td>Taxa ativo + IR: {num(res.allIn)}% a.a.</td></tr>
-                <tr><th scope="row">Custo (BRL)</th><td>Swap CDI: {num(parseNum(spread))}% a.a. · {num(res.spreadAm)}% a.m.</td></tr>
+                <tr><th scope="row">Custo (BRL)</th><td>Swap CDI: {num(parseRate(spread))}% a.a. · {num(res.spreadAm)}% a.m.</td></tr>
                 <tr><th scope="row">Total parcelas (R$)</th><td><b>{num(res.totals.parcelaBrl)}</b></td></tr>
               </tbody>
             </table>
