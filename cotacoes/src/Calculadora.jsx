@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { busDaysIn } from './holidays.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
@@ -6,11 +6,11 @@ import { compare, parseNum } from './calc.js'
 import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
 import HBars from './HBars.jsx'
-import Finimp from './Finimp.jsx'
-import FinimpSwap from './FinimpSwap.jsx'
-import Giro from './Giro.jsx'
-import Ncg from './Ncg.jsx'
-import Aplicacao from './Aplicacao.jsx'
+const Finimp = lazy(() => import('./Finimp.jsx'))
+const FinimpSwap = lazy(() => import('./FinimpSwap.jsx'))
+const Giro = lazy(() => import('./Giro.jsx'))
+const Ncg = lazy(() => import('./Ncg.jsx'))
+const Aplicacao = lazy(() => import('./Aplicacao.jsx'))
 import { CALC_OPTIONS } from './calcOptions.js'
 import './Calculadora.css'
 import './CalculatorLayout.css'
@@ -305,6 +305,7 @@ function OperacaoDi({ curves, hol }) {
 export default function Calculadora({ curves, hol, view = '', onView }) {
   const opt = CALC_OPTIONS.find((o) => o.id === view)
   return (
+    <Suspense fallback={<p className="status" role="status">Carregando calculadora…</p>}>
     <section className="macro calc" aria-labelledby="calc-h">
       <p className="calc-validation-notice" role="status">
         <strong>Em construção.</strong> Os cálculos estão sendo validados.
@@ -344,5 +345,6 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
         </>
       )}
     </section>
+    </Suspense>
   )
 }
