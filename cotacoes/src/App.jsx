@@ -318,8 +318,8 @@ export default function App() {
 
       {tab === 'juros' && (
         <>
-          <RatesSnapshot quotes={quotes} macro={macro} />
-          <Macro />
+          <RatesSnapshot macro={macro} />
+          <Macro macro={macro} />
           <CdiFuturo curves={curves} macro={macro.data} hol={hol} />
           <Curves curves={curves} />
         </>

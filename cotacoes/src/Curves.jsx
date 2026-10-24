@@ -70,8 +70,8 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
       </header>
       <div className="curve-legend">
         {compare.map((c, i) => (
-          <button key={c.date} type="button" className={off.has(c.date) ? 'off' : ''} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
-            <i className="swatch" /> {c.label} <small>{day(c.date)}</small>
+          <button key={c.date} type="button" className={off.has(c.date) ? 'series-hidden' : 'series-visible'} aria-pressed={!off.has(c.date)} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
+            <i className="swatch" /> {c.label} <small>{day(c.date)} · {off.has(c.date) ? 'Oculta' : 'Visível'}</small>
           </button>
         ))}
       </div>

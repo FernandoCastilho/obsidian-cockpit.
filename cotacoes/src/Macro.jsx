@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { Plot, fmtDate, useWidth } from './HistoryChart.jsx'
-import { useMacro } from './useMacro.js'
 import SofrChart from './Sofr.jsx'
 
 const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -107,7 +106,7 @@ function CdiChart({ macro, range }) {
   return (
     <RateChart
       id="CDI"
-      title="CDI"
+      title="Brasil · CDI"
       help="cdi"
       subtitle="B3 · taxa anualizada"
       color={COLORS.CDI}
@@ -138,7 +137,7 @@ function SelicChart({ macro, range }) {
   return (
     <RateChart
       id="SELIC"
-      title="Selic"
+      title="Brasil · Selic meta"
       help="selic"
       subtitle="Meta definida pelo Copom"
       color={COLORS.SELIC}
@@ -150,63 +149,10 @@ function SelicChart({ macro, range }) {
   )
 }
 
-const FOCUS_FMT = {
-  Selic: (v) => `${n2(v)}%`,
-  IPCA: (v) => `${n2(v)}%`,
-  PIB: (v) => `${n2(v)}%`,
-  Câmbio: (v) => `R$ ${n2(v)}`,
-}
-
-function FocusTable({ focus }) {
-  const years = [...new Set(focus.rows.flatMap((r) => Object.keys(r.values)))].sort().slice(0, 4)
-  const fmt = (d) => new Date(`${d}T12:00:00`).toLocaleDateString('pt-BR')
-  const release = focus.release ?? focus.date
-  return (
-    <article className="chart wide">
-      <header>
-        <h3>
-          Boletim Focus
-          <Explain id="focus" />
-          <small>divulgado na segunda-feira, {fmt(release)} · mediana das expectativas</small>
-        </h3>
-      </header>
-      <div className="scroll">
-        <table className="focus-table">
-          <thead>
-            <tr>
-              <th />
-              {years.map((y) => <th key={y}>{y}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {focus.rows.map((r) => (
-              <tr key={r.label}>
-                <th scope="row">{r.label}</th>
-                {years.map((y) => {
-                  const v = r.values[y]
-                  return (
-                    <td key={y} title={v ? `Mín. ${n2(v.min)} · Máx. ${n2(v.max)} · ${v.n} respondentes` : undefined}>
-                      {v ? (FOCUS_FMT[r.label] ?? n2)(v.median) : '—'}
-                    </td>
-                  )
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="status">
-        O Focus sai às segundas-feiras com as expectativas coletadas até a sexta anterior{focus.release ? ` (aqui, até ${fmt(focus.date)})` : ''}. Selic e IPCA em % a.a. no fim do ano; PIB em % de crescimento. Fonte: Banco Central do Brasil.
-      </p>
-    </article>
-  )
-}
-
 const STALE_LABELS = { cdi: 'CDI', selic: 'Selic', sofr: 'SOFR', sofrAvg: 'médias da SOFR', focus: 'Boletim Focus', ptax: 'PTAX' }
 const stamp = (t) => (t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida')
 
-export default function Macro() {
-  const m = useMacro()
+export default function Macro({ macro: m }) {
   const [preset, setPreset] = useState('365')
   const [range, setRange] = useState(() => rangeFor(365))
   const onPreset = (p) => {
@@ -223,17 +169,18 @@ export default function Macro() {
   return (
     <section className="macro">
       <div className="history-head">
-        <h2>Juros e expectativas</h2>
+        <h2>Histórico das taxas de juros</h2>
         <RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
       </div>
       {m.status === 'loading' && <p className="status">Carregando dados do Banco Central…</p>}
       {m.status === 'error' && <p className="status">Dados do Banco Central indisponíveis no momento ({m.error}).</p>}
+      {m.stale && <p className="status stale">Atualização pendente; mantidas as últimas taxas disponíveis.</p>}
       {m.status === 'ok' && m.data.generatedAt && (Date.now() - m.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: os dados do Banco Central foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
-      {m.status === 'ok' && Object.keys(m.data.stale ?? {}).length > 0 && (
+      {m.status === 'ok' && Object.keys(m.data.stale ?? {}).some(k => ['cdi', 'selic', 'sofr', 'sofrAvg'].includes(k)) && (
         <p className="status stale">
-          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(m.data.stale).map(([k, t]) => `${STALE_LABELS[k] ?? k} (coletado em ${stamp(t)})`).join(', ')}.
+          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(m.data.stale).filter(([k]) => ['cdi', 'selic', 'sofr', 'sofrAvg'].includes(k)).map(([k, t]) => `${STALE_LABELS[k] ?? k} (coletado em ${stamp(t)})`).join(', ')}.
         </p>
       )}
       {m.status === 'ok' && (
@@ -241,7 +188,6 @@ export default function Macro() {
           {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} /> : <p className="status">CDI indisponível no momento.</p>}
           {m.data.selic?.length ? <SelicChart macro={m.data} range={range} /> : <p className="status">Selic indisponível no momento.</p>}
           {m.data.sofr?.length ? <SofrChart macro={m.data} range={range} /> : <p className="status">SOFR indisponível no momento.</p>}
-          {m.data.focus ? <FocusTable focus={m.data.focus} /> : <p className="status">Boletim Focus indisponível no momento.</p>}
         </div>
       )}
     </section>
