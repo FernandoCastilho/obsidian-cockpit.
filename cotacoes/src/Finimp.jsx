@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { DECIMALS, simulate, toTsv } from './finimp.js'
-import { parseNum } from './calc.js'
+import { parseNum, parseRate } from './calc.js'
 import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
 import Pracas from './Pracas.jsx'
@@ -62,7 +62,7 @@ export default function Finimp({ hol }) {
         maturity,
         interestDates: interest.map((i) => i.date).filter(Boolean),
         amort: amort.map((a) => ({ ...a, amount: a.amount === '' ? '' : parseNum(a.amount) })),
-        rate: rate === '' ? NaN : parseNum(rate),
+        rate: rate === '' ? NaN : parseRate(rate),
         rule,
         dayCount,
         round,
@@ -295,7 +295,7 @@ export default function Finimp({ hol }) {
                 <thead><tr><th>Trecho</th><th>Dias</th><th>Saldo</th><th>Fração início</th><th>Fração fim</th><th>Fórmula</th><th>Juros</th></tr></thead>
                 <tbody>
                   {res.memo.map((m) => (
-                    <tr key={m.from + m.to}>
+                    <tr key={m.from + m.to + (m.since ?? "")}>
                       <td data-label="Trecho">{dm(m.from)} → {dm(m.to)}</td>
                       <td data-label="Dias">{m.days}</td>
                       <td data-label="Saldo">{fmt(m.balance)}</td>

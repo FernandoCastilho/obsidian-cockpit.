@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { investment, parseNum } from './calc.js'
+import { investment, parseNum, parseRate } from './calc.js'
 import { useTerm } from './useTerm.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
@@ -37,7 +37,7 @@ export default function Aplicacao({ curves, hol }) {
   const [kind, setKind] = useState('cdb')
   const [ageTxt, setAgeTxt] = useState('0')
   const r = useMemo(
-    () => (t.pts ? investment({ pts: t.pts, d: t.d, calDays: t.calDays, value: parseNum(value), mode, rate: parseNum(rate), unit, monthBase, kind, ageDays: parseNum(ageTxt) || 0 }) : null),
+    () => (t.pts ? investment({ pts: t.pts, d: t.d, calDays: t.calDays, value: parseNum(value), mode, rate: mode === 'total' ? parseNum(rate) : parseRate(rate), unit, monthBase, kind, ageDays: parseNum(ageTxt) || 0 }) : null),
     [t.pts, t.d, t.calDays, value, mode, rate, unit, monthBase, kind, ageTxt],
   )
 

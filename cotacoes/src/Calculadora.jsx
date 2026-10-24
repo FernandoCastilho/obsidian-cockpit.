@@ -2,7 +2,7 @@ import { lazy, Suspense, useMemo, useState } from 'react'
 import { busDaysIn } from './holidays.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
-import { compare, parseNum } from './calc.js'
+import { compare, parseNum, parseRate } from './calc.js'
 import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
 import HBars from './HBars.jsx'
@@ -70,7 +70,7 @@ function OperacaoDi({ curves, hol }) {
     if (n > 0) setDue(iso(Math.min(n, Math.floor((maxD / 252) * 365))))
   }
   const d = base ? busDaysIn(base, end, ['BR'], hol.ctx) : 0 // dias úteis do DI: calendário nacional (B3/ANBIMA)
-  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: parseNum(rate), unit, side, calDays, monthBase, appPct: parseNum(appPct), net, ageDays: parseNum(ageTxt) || 0, accrued: parseNum(accTxt) || 0 }) : null), [pts, d, value, mode, rate, unit, side, calDays, monthBase, appPct, net, ageTxt, accTxt])
+  const r = useMemo(() => (pts ? compare({ pts, d, value: parseNum(value), mode, rate: mode === 'total' ? parseNum(rate) : parseRate(rate), unit, side, calDays, monthBase, appPct: parseRate(appPct), net, ageDays: parseNum(ageTxt) || 0, accrued: parseNum(accTxt) || 0 }) : null), [pts, d, value, mode, rate, unit, side, calDays, monthBase, appPct, net, ageTxt, accTxt])
   const m = MODES.find((x) => x.id === mode)
 
   const bar = r && !r.error
@@ -194,7 +194,7 @@ function OperacaoDi({ curves, hol }) {
                     <section className={`opt${r.good ? '' : ' win'}`}>
                       <h4>Resgatar a aplicação hoje{!r.good && <span className="badge-best">Melhor</span>}</h4>
                       <dl>
-                        <dt>Rendimento que deixa de ganhar em {calDays} dias ({pct(parseNum(appPct), 0)} do CDI)</dt>
+                        <dt>Rendimento que deixa de ganhar em {calDays} dias ({pct(parseRate(appPct), 0)} do CDI)</dt>
                         <dd>{brl(r.app.gross.gain)}</dd>
                         {net && (
                           <>
@@ -232,7 +232,7 @@ function OperacaoDi({ curves, hol }) {
                     <div className="scroll">
                       <table className="focus-table">
                         <thead>
-                          <tr><th></th><th>Empréstimo</th><th>Aplicação ({pct(parseNum(appPct), 0)} do CDI) bruta</th>{net && <th>Aplicação líquida de IR</th>}</tr>
+                          <tr><th></th><th>Empréstimo</th><th>Aplicação ({pct(parseRate(appPct), 0)} do CDI) bruta</th>{net && <th>Aplicação líquida de IR</th>}</tr>
                         </thead>
                         <tbody>
                           <tr><td>Taxa no período ({calDays} dias corridos, {r.d} d.u.)</td><td>{pct(r.op.period)}</td><td>{pct(r.app.gross.period)}</td>{net && <td>{pct(r.app.net.period)}</td>}</tr>
@@ -281,7 +281,7 @@ function OperacaoDi({ curves, hol }) {
                     </>
                   ) : (
                     <>
-                      {pct(parseNum(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
+                      {pct(parseRate(rate))} {UNITS.find((u) => u.id === unit).label}{mode === 'spread' ? ' de spread' : ''} = <b>{pct(r.op.period)}</b> em {calDays} dias = <b>{pct(r.cdiEquivalent, 1)}</b> do CDI do período ({pct(r.di.period)}).
                     </>
                   )}
                 </p>
@@ -289,7 +289,7 @@ function OperacaoDi({ curves, hol }) {
               <details className="premissas">
                 <summary>Premissas e método</summary>
               <p className="status">
-                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'total' ? `valor total de ${brl(r.breakeven)}` : mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? '100% do CDI' : 'spread de 0,00%'} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
+                {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'total' ? `valor total de ${brl(r.breakeven)}` : mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? (r.breakeven != null ? `${pct(r.breakeven)} do CDI` : '—') : `spread de ${pct(r.breakeven)} ${UNITS.find((u) => u.id === (unit === 'periodo' ? 'aa' : unit)).label}`} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
               </details>
             </>

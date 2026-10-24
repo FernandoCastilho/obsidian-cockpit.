@@ -18,7 +18,8 @@ export function simulate(input) {
   const missing = []
   const errors = []
 
-  const disb = (input.disb ?? []).filter((d) => d.date || d.amount !== '' || d.amount != null).map((d) => ({ date: d.date, amount: Number(d.amount) }))
+  // Linhas em branco (sem data e sem valor) são ignoradas; linha com só um dos dois é incompleta.
+  const disb = (input.disb ?? []).filter((d) => d.date || (d.amount !== '' && d.amount != null)).map((d) => ({ date: d.date, amount: Number(d.amount) }))
   const good = disb.filter((d) => validDate(d.date) && d.amount > 0)
   if (!good.length) missing.push('pelo menos um desembolso (data e valor)')
   else if (good.length !== disb.length) missing.push('desembolso incompleto (data e valor maiores que zero)')
@@ -66,6 +67,9 @@ export function simulate(input) {
   const rows = []
   const memo = []
   let S = 0
+  // Parcelas do saldo por data de início da contagem no período de juros (início do período ou data do desembolso, se posterior).
+  // Na regra composta, cada parcela capitaliza desde a própria data: um desembolso no meio do período não paga juros de antes de entrar.
+  let lots = []
   let periodStart = first
   let accrued = 0
   let prev = first
@@ -74,10 +78,21 @@ export function simulate(input) {
     let seg = 0
     if (t > prev && S > EPS) {
       const days = daysBetween(prev, t)
-      const f0 = daysBetween(periodStart, prev) / base
-      const f1 = daysBetween(periodStart, t) / base
-      seg = rule === 'comp' ? S * ((1 + q) ** f1 - (1 + q) ** f0) : S * q * (f1 - f0)
-      memo.push({ from: prev, to: t, days, balance: S, f0, f1, interest: seg, formula: rule === 'comp' ? 'S × [(1+i)^f₁ − (1+i)^f₀]' : 'S × i × (f₁ − f₀)' })
+      if (rule === 'comp') {
+        for (const lot of lots) {
+          if (!(lot.amount > EPS)) continue
+          const f0 = daysBetween(lot.start, prev) / base
+          const f1 = daysBetween(lot.start, t) / base
+          const interest = lot.amount * ((1 + q) ** f1 - (1 + q) ** f0)
+          seg += interest
+          memo.push({ from: prev, to: t, since: lot.start, days, balance: lot.amount, f0, f1, interest, formula: 'S × [(1+i)^f₁ − (1+i)^f₀]' })
+        }
+      } else {
+        const f0 = daysBetween(periodStart, prev) / base
+        const f1 = daysBetween(periodStart, t) / base
+        seg = S * q * (f1 - f0)
+        memo.push({ from: prev, to: t, since: periodStart, days, balance: S, f0, f1, interest: seg, formula: 'S × i × (f₁ − f₀)' })
+      }
     }
     accrued += seg
     const opening = S
@@ -88,10 +103,15 @@ export function simulate(input) {
       paidInterest = input.round ? r2(accrued, dec) : accrued
       accrued = 0
       periodStart = t
+      // novo período: todo o saldo passa a contar a partir de t
+      lots = S > EPS ? [{ start: t, amount: S }] : []
     }
     // 3) movimenta o principal: desembolsos entram e amortizações saem na mesma data
     const am = principalPays.filter((p) => p.date === t).reduce((s, p) => s + p.amount, 0)
     S = S + dis - am
+    if (dis > 0) lots.push({ start: t, amount: dis })
+    // Amortização: a regra composta só a admite em data de juros (saldo numa parcela só); na proporcional a data de início não importa.
+    if (am > 0) lots = S > EPS ? [{ start: lots.length ? lots.reduce((a, l) => (l.start < a ? l.start : a), t) : t, amount: S }] : []
     if (S < -0.005) return { ok: false, missing: [], errors: [`Saldo negativo em ${t}: as amortizações superam o principal em aberto.`] }
     if (Math.abs(S) <= 0.005) S = 0
     rows.push({ date: t, opening, disbursement: dis, accrued: seg, interestPaid: paidInterest, amortization: am, closing: S, payment: paidInterest + am, flow: dis - paidInterest - am, pendingInterest: accrued })

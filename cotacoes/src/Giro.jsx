@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { giro, giroTsv, giroVsCdi } from './giro.js'
-import { parseNum } from './calc.js'
+import { parseNum, parseRate } from './calc.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import Explain from './Explain.jsx'
@@ -26,7 +26,7 @@ export default function Giro({ curves, hol }) {
   const [fees, setFees] = useState('0')
   const [copied, setCopied] = useState(false)
   const res = useMemo(
-    () => giro({ value: parseNum(value), n: parseInt(n, 10) || 0, structure, rate: parseNum(rate), unit, start, fees: parseNum(fees) || 0 }),
+    () => giro({ value: parseNum(value), n: parseInt(n, 10) || 0, structure, rate: parseRate(rate), unit, start, fees: parseNum(fees) || 0 }),
     [value, n, structure, rate, unit, start, fees],
   )
   const pts = (() => {
