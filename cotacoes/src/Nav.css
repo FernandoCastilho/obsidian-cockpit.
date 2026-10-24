@@ -1,0 +1,47 @@
+/* Keep all destinations reachable on tablets without a horizontal tab scroll.
+   Reuse the existing Mais menu; phone and wide-desktop navigation stay unchanged. */
+@media (min-width: 700px) and (max-width: 999px) {
+  .nav-top nav.tabs {
+    overflow: visible;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 4px 12px;
+  }
+  .nav-top nav.tabs > button,
+  .nav-top nav.tabs > .more-tab {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .nav-top nav.tabs > button.sec { display: none; }
+  .nav-top nav.tabs > .more-tab { display: flex; }
+  .nav-top nav.tabs > button,
+  .nav-top nav.tabs .more-tab > button {
+    min-height: 48px;
+    padding: 8px;
+    gap: 6px;
+    font-size: .85rem;
+  }
+  .nav-top nav.tabs .more-tab > button { flex: 1; }
+  .nav-top nav.tabs .more-sheet {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    max-width: calc(100vw - 24px);
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    box-shadow: 0 8px 24px rgba(0,0,0,.5);
+    z-index: 50;
+  }
+  .nav-top nav.tabs .more-sheet button {
+    justify-content: flex-start;
+    min-height: 48px;
+    padding: 8px 12px;
+    gap: 12px;
+    font-size: .95rem;
+  }
+}
