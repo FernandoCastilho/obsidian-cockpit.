@@ -16,14 +16,14 @@ export function policyRows(data,periods,{loading=false,error=false,now=Date.now(
   return DEFINITIONS.map(([id,label,source]) => {
     const series = data?.series?.[id]
     const pending = error || series?.stale || (series?.checkedAt && now - series.checkedAt > 36*3600e3)
-    const points = series?.points || []
+    const points = series?.usagePending ? [] : series?.points || []
     return {id,label,unit:'Política monetária · % a.a.',cells:Object.fromEntries(periods.map(period => {
       const p = points.filter(p=>/^\d{4}-\d{2}-\d{2}$/.test(p.date || '') && p.date <= period.date && pointValue(p)!=null)
         .reduce((a,b)=>!a || b.date>a.date ? b : a,null)
       return [period.id,{
         value:p ? pointValue(p) : '-', date:p ? displayDate(p.date) : undefined,
         status:p ? `${pending ? 'Atualização pendente · ' : ''}Vigente desde a data indicada${p.approximate ? ' · alvo aproximado' : ''}`
-          : loading ? 'Carregando fonte oficial…' : 'Sem vigência verificada até esta data',
+          : series?.usagePending ? 'Uso da fonte aguardando validação' : loading ? 'Carregando fonte oficial…' : 'Sem vigência verificada até esta data',
         source,sourceUrl:p?.sourceUrl || series?.sourceUrl,
       }]
     }))}

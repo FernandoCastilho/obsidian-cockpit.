@@ -14,6 +14,12 @@ async function table(id, parse) {
   return {points:parse(await response.text()),sourceUrl:POLICY_SOURCES[id],checkedAt:now}
 }
 await Promise.all(Object.entries({FED:parseFedPolicy,ECB:parseEcbPolicy,BOE:parseBoePolicy,BOJ:null}).map(async ([id,parse]) => {
+  // BOJ permits reproduction with credit but commercial use needs prior permission.
+  // Do not infer the user's purpose, or retain previously collected values when blocked.
+  if (id === 'BOJ' && !['noncommercial','permission-confirmed'].includes(process.env.POLICY_BOJ_USE)) {
+    out.series[id] = {id,points:[],usagePending:true,checkedAt:null,sourceUrl:POLICY_SOURCES.BOJ}
+    return
+  }
   const previous = [local?.series?.[id],remote?.series?.[id]].filter(Boolean).sort((a,b)=>(b.checkedAt||0)-(a.checkedAt||0))[0]
   try {
     const series = id === 'BOJ' ? await collectBoj(previous,now) : await table(id,parse)
@@ -27,4 +33,4 @@ await Promise.all(Object.entries({FED:parseFedPolicy,ECB:parseEcbPolicy,BOE:pars
   }
 }))
 await writeFile(output,`${JSON.stringify(out,null,2)}\n`)
-for(const [id,s] of Object.entries(out.series)) console.log(`${id}: ${s.points.length} vigências; última ${s.points.at(-1)?.date || 'ausente'}; pendente=${!!s.stale}`)
+for(const [id,s] of Object.entries(out.series)) console.log(`${id}: ${s.points.length} vigências; última ${s.points.at(-1)?.date || 'ausente'}; pendente=${!!(s.stale || s.usagePending)}`)

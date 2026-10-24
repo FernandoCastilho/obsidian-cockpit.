@@ -55,9 +55,11 @@ jobs:
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
       - uses: actions/setup-python@v5
+        if: env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
         with:
           python-version: '3.12'
       - name: Preparar leitura dos comunicados oficiais em PDF
+        if: env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
         run: python -m pip install -r scripts/requirements-policy.txt
       - name: Coletar juros de política monetária (Fed, BCE, BoE e BoJ)
         run: node scripts/fetch-policy-rates.mjs

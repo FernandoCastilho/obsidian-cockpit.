@@ -20,6 +20,8 @@ Todas as políticas são expressas em % a.a. SOFR e CDI continuam como taxas obs
 - Bank Rate: dados da base do Bank of England sob UK Open Government Licence, conforme https://www.bankofengland.co.uk/legal . A fonte é citada em cada célula; não se utiliza dado de terceiros excluído da licença.
 - BoJ: https://www.boj.or.jp/en/copyright.htm permite reprodução com crédito, mas exige contato prévio para finalidade comercial. O caráter comercial/não comercial do painel precisa ser esclarecido antes da publicação dessa série; não se presume autorização adicional, nem se envia solicitação ao fornecedor sem instrução do usuário.
 
+Por padrão, o coletor não publica pontos nem cache japonês: `usagePending` mantém a linha com traços e link oficial. Ativação depende de finalidade não comercial confirmada (`POLICY_BOJ_USE=noncommercial`) ou permissão documentada do fornecedor (`permission-confirmed`); essa variável não concede permissão. Python/pypdf no deploy só é preparado com um desses estados. A coleta completa foi validada localmente, mas a versão de produção deve respeitar essa condição.
+
 ## Coleta e armazenamento
 
 `fetch-policy-rates.mjs` gera `public/policy-rates.json` no deploy horário existente. Schema1: `generatedAt` da consulta; `series` por banco; cada série com `checkedAt`, `sourceUrl`, `points`, estado `stale/error` e, para BoJ, cache dos documentos oficiais por URL. Cada ponto tem data efetiva e valor ou limites inferior/superior. Documentos japoneses novos são lidos via Python+pypdf6.1.3; decisões antigas ficam em cache para evitar downloads repetidos.

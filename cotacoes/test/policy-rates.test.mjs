@@ -33,3 +33,9 @@ test('policy comparison uses last effective rate at cutoff, never future, averag
  assert.equal(boj.cells.day.value,'≈1,00%');assert.equal(boj.cells.day.date,'17/06/2026');assert.match(boj.cells.day.status,/pendente/);assert.equal(boj.cells.year.value,'-')
  assert.equal(r.find(r=>r.id==='ECB').cells.day.value,'-');assert.match(policyRows(null,periods,{loading:true})[0].cells.day.status,/Carregando/)
 })
+
+test('pending source-use validation does not expose cached Japanese rates or invent zero',()=>{
+ const data={series:{BOJ:{usagePending:true,points:[{date:'2026-09-24',value:1.25}],sourceUrl:'https://www.boj.or.jp/en/mopo/mpmdeci/index.htm'}}}
+ const row=policyRows(data,[{id:'day',date:'2026-10-24'}]).find(r=>r.id==='BOJ')
+ assert.equal(row.cells.day.value,'-');assert.match(row.cells.day.status,/Uso da fonte/);assert.match(row.cells.day.sourceUrl,/boj.or.jp/)
+})

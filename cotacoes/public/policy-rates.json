@@ -1,7 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": 1792808304429,
+  "generatedAt": 1792808652444,
   "series": {
+    "BOJ": {
+      "id": "BOJ",
+      "points": [],
+      "usagePending": true,
+      "checkedAt": null,
+      "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/index.htm"
+    },
     "FED": {
       "points": [
         {
@@ -198,7 +205,7 @@
         }
       ],
       "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/openmarket.htm",
-      "checkedAt": 1792808304429,
+      "checkedAt": 1792808652444,
       "id": "FED",
       "stale": false
     },
@@ -1496,7 +1503,7 @@
         }
       ],
       "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp",
-      "checkedAt": 1792808304429,
+      "checkedAt": 1792808652444,
       "id": "BOE",
       "stale": false
     },
@@ -1849,243 +1856,8 @@
         }
       ],
       "sourceUrl": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html",
-      "checkedAt": 1792808304429,
+      "checkedAt": 1792808652444,
       "id": "ECB",
-      "stale": false
-    },
-    "BOJ": {
-      "id": "BOJ",
-      "points": [
-        {
-          "date": "2024-03-21",
-          "lower": 0,
-          "upper": 0.1,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240319a.htm"
-        },
-        {
-          "date": "2024-08-01",
-          "value": 0.25,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240731a.htm"
-        },
-        {
-          "date": "2025-01-27",
-          "value": 0.5,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250124a.htm"
-        },
-        {
-          "date": "2025-12-22",
-          "value": 0.75,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k251219a.htm"
-        },
-        {
-          "date": "2026-06-17",
-          "value": 1,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260616a.pdf"
-        },
-        {
-          "date": "2026-09-24",
-          "value": 1.25,
-          "approximate": true,
-          "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf"
-        }
-      ],
-      "documents": {
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240319a.htm": {
-          "decisionDate": "2024-03-19",
-          "target": {
-            "lower": 0,
-            "upper": 0.1,
-            "approximate": true
-          },
-          "point": {
-            "date": "2024-03-21",
-            "lower": 0,
-            "upper": 0.1,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240319a.htm"
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240426a.htm": {
-          "decisionDate": "2024-04-26",
-          "target": {
-            "lower": 0,
-            "upper": 0.1,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240731a.htm": {
-          "decisionDate": "2024-07-31",
-          "target": {
-            "value": 0.25,
-            "approximate": true
-          },
-          "point": {
-            "date": "2024-08-01",
-            "value": 0.25,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240731a.htm"
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240614a.htm": {
-          "decisionDate": "2024-06-14",
-          "target": {
-            "lower": 0,
-            "upper": 0.1,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k241031a.htm": {
-          "decisionDate": "2024-10-31",
-          "target": {
-            "value": 0.25,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k240920a.htm": {
-          "decisionDate": "2024-09-20",
-          "target": {
-            "value": 0.25,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250124a.htm": {
-          "decisionDate": "2025-01-24",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          },
-          "point": {
-            "date": "2025-01-27",
-            "value": 0.5,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250124a.htm"
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2024/k241219a.htm": {
-          "decisionDate": "2024-12-19",
-          "target": {
-            "value": 0.25,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250501a.htm": {
-          "decisionDate": "2025-05-01",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250319a.htm": {
-          "decisionDate": "2025-03-19",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250731a.htm": {
-          "decisionDate": "2025-07-31",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250617a.htm": {
-          "decisionDate": "2025-06-17",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k250919a.htm": {
-          "decisionDate": "2025-09-19",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k251030a.htm": {
-          "decisionDate": "2025-10-30",
-          "target": {
-            "value": 0.5,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2026/k260123a.htm": {
-          "decisionDate": "2026-01-23",
-          "target": {
-            "value": 0.75,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k251219a.htm": {
-          "decisionDate": "2025-12-19",
-          "target": {
-            "value": 0.75,
-            "approximate": true
-          },
-          "point": {
-            "date": "2025-12-22",
-            "value": 0.75,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/k251219a.htm"
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/state_2026/k260319a.htm": {
-          "decisionDate": "2026-03-19",
-          "target": {
-            "value": 0.75,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260428a.pdf": {
-          "decisionDate": "2026-04-28",
-          "target": {
-            "value": 0.75,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260731a.pdf": {
-          "decisionDate": "2026-07-31",
-          "target": {
-            "value": 1,
-            "approximate": true
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260616a.pdf": {
-          "decisionDate": "2026-06-16",
-          "target": {
-            "value": 1,
-            "approximate": true
-          },
-          "point": {
-            "date": "2026-06-17",
-            "value": 1,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260616a.pdf"
-          }
-        },
-        "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf": {
-          "decisionDate": "2026-09-18",
-          "target": {
-            "value": 1.25,
-            "approximate": true
-          },
-          "point": {
-            "date": "2026-09-24",
-            "value": 1.25,
-            "approximate": true,
-            "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf"
-          }
-        }
-      },
-      "checkedAt": 1792808304429,
-      "sourceUrl": "https://www.boj.or.jp/en/mopo/mpmdeci/state_2026/index.htm",
-      "coverageStart": "2024-03-21",
       "stale": false
     }
   },
