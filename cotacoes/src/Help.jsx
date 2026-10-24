@@ -1,7 +1,8 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 
-// Ícone "?" com explicação: abre ao passar o mouse, ao focar pelo teclado ou ao tocar/clicar (fixa).
-export default function Help({ label, align = 'left', wide = false, children }) {
+// Ícone com explicação: abre ao passar o mouse, ao focar pelo teclado ou ao tocar/clicar (fixa).
+// icon "?" = o que é o indicador (glossário); "i" = fonte, método e observações do bloco.
+export default function Help({ label, align = 'left', wide = false, icon = '?', children }) {
   const [pinned, setPinned] = useState(false)
   const [hover, setHover] = useState(false)
   const ref = useRef(null)
@@ -35,7 +36,7 @@ export default function Help({ label, align = 'left', wide = false, children }) 
 
   return (
     <span
-      className="help"
+      className={`help${icon === 'i' ? ' help-info' : ''}`}
       ref={ref}
       onPointerEnter={(e) => e.pointerType === 'mouse' && setHover(true)}
       onPointerLeave={() => setHover(false)}
@@ -49,7 +50,7 @@ export default function Help({ label, align = 'left', wide = false, children }) 
         onFocus={() => setHover(true)}
         onBlur={() => setHover(false)}
       >
-        ?
+        {icon}
       </button>
       {show && pinned && mobile && <span className="pop-backdrop" onClick={() => setPinned(false)} aria-hidden="true" />}
       {show && (

@@ -6,11 +6,11 @@ const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
 const DAY = 864e5
 const SERIES = [
-  { id: 'raw', label: 'SOFR do dia', color: '#e6b34a', on: true },
+  { id: 'raw', label: 'SOFR do dia', color: '#c99a2e', on: true },
   { id: 'm30', label: 'Média 30 d', color: '#4aa3a2', on: false },
   { id: 'm90', label: 'Média 90 d', color: '#a98bd6', on: false },
   { id: 'm180', label: 'Média 180 d', color: '#d55181', on: false },
-  { id: 'band', label: 'Faixa 1º–99º percentil', color: '#e6b34a', on: false },
+  { id: 'band', label: 'Faixa 1º–99º percentil', color: '#c99a2e', on: false },
 ]
 const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 const yearOf = (t) => new Date(t).getUTCFullYear()

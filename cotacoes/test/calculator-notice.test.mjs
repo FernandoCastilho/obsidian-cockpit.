@@ -17,9 +17,9 @@ test('validation notice is shared by calculator list and direct calculator route
   assert.doesNotMatch(css, /position:\s*(fixed|absolute)|min-width:/)
 })
 
-test('information disclaimer is visible outside every section condition', () => {
+test('information disclaimer is visible outside every section condition (rodapé de todas as telas)', () => {
   const app = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8')
-  assert.match(app, /<main className="app">\s*<aside className="app-disclaimer"/)
+  assert.match(app, /<\/Suspense>\s*<aside className="app-disclaimer"[\s\S]*?<\/aside>\s*<\/main>/)
   assert.match(app, /As simulações são hipotéticas/)
   assert.match(app, /observadas as responsabilidades previstas na legislação aplicável/)
   assert.equal(app.match(/className="app-disclaimer"/g).length, 1)
@@ -31,6 +31,6 @@ test('compact disclaimer retains expandable full text and clear summary', () => 
   assert.match(app, /<details>\s*<summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo<\/summary>/)
   assert.match(app, /baseado em fontes públicas/)
   assert.match(app, /O uso é de responsabilidade do usuário/)
-  assert.match(css, /background: #2d2415/)
-  assert.match(css, /color: #f3d59a/)
+  assert.match(css, /background: color-mix\(in srgb, var\(--warn\) 10%, var\(--card\)\)/)
+  assert.match(css, /border: 1px solid var\(--warn\)/)
 })

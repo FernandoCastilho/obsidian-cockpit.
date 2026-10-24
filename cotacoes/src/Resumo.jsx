@@ -4,6 +4,7 @@ import OilTile from './OilTile.jsx'
 import { selectedPeriod } from './summaryPeriod.js'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
+import Help from './Help.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, toInput, useHistory, useIntraday } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
@@ -19,6 +20,7 @@ import { Plot, useWidth } from './HistoryChart.jsx'
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
 const p2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const p4 = (v) => (Number.isFinite(v) ? v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '—')
 const bps = (d) => `${d > 0 ? '+' : d < 0 ? '−' : ''}${Math.abs(Math.round(d * 100))} bps`
 const SPARK = [
   { id: 'day', label: 'Dia', days: 1, intraday: true },
@@ -47,7 +49,34 @@ function Arrow({ v }) {
   return <span aria-hidden="true">{v > 0 ? '▲' : v < 0 ? '▼' : '■'}</span>
 }
 
-function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
+// Hora da cotação: só a hora se for de hoje; com o dia, se for de outro dia.
+const when = (t) => {
+  if (!Number.isFinite(t)) return 'data desconhecida'
+  const d = new Date(t)
+  const today = new Date().toDateString() === d.toDateString()
+  return d.toLocaleString('pt-BR', today ? { hour: '2-digit', minute: '2-digit' } : { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+}
+
+// Faixa do dia: onde a cotação atual está entre a mínima e a máxima do dia (só com máx./mín. da fonte).
+export function rangePosition(q) {
+  if (!q || !(q.high > 0) || !(q.low > 0) || !(q.bid > 0) || q.high < q.low) return null
+  if (q.high === q.low) return 0.5
+  return Math.min(1, Math.max(0, (q.bid - q.low) / (q.high - q.low)))
+}
+function DayRange({ quote, fmt }) {
+  const pos = rangePosition(quote)
+  if (pos == null) return <span className="qt-range is-empty" aria-hidden="true" />
+  const text = `Faixa do dia: mínima ${fmt(quote.low)} · máxima ${fmt(quote.high)}`
+  return (
+    <span className="qt-range" title={text} role="img" aria-label={text}>
+      <span className="qt-range-mark" style={{ left: `${(pos * 100).toFixed(1)}%` }} />
+    </span>
+  )
+}
+
+// Quadro da moeda: preço, variação do dia, faixa do dia e minigráfico do período. Detalhes ficam no toque (gráfico completo)
+// e nas dicas de passar o mouse; o quadro mostra só o essencial.
+function Tile({ code, quote, ptax, spark, onOpen, color }) {
   const w = useWindow(spark)
   const h = useHistory(code, w.start, w.end, !!spark.intraday)
   const i = useIntraday(code, new Date(), !spark.intraday)
@@ -58,39 +87,39 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
   const day = hasDay ? quote.pct ?? 0 : 0
   const trend = toneOf(hasDay ? day : change)
   const cur = CURRENCIES.find((c) => c.code === code)
+  const pair = `${quote?.source ?? code}/BRL${code === 'CNH' && quote?.source === 'CNH' ? ' offshore' : ''}`
+  const state = quote?.stale ? 'Atualização pendente' : quote?.fallback ? 'Reserva BCE' : null
+  const stateTip = quote?.stale ? 'A última consulta falhou; mantida a cotação anterior.' : 'Fonte principal indisponível: referência diária do BCE, sem compra/venda nem variação do dia.'
+  const histWarn = s.stale || s.warning
   return (
-    <button type="button" style={{ '--series': color }} className={`tile${wide ? ' wide' : ''}`} onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
-      <span className="tile-head">
-        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="26" height="18"') }} />
-        <span className="tile-name">
-          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL{code === 'CNH' && quote?.source === 'CNH' && ' offshore'}</small>
+    <button type="button" style={{ '--series': color }} className="tile qt" onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
+      <span className="qt-head">
+        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="22" height="15"') }} />
+        <b className="qt-name">{NAMES[code]}</b>
+        <span className="qt-pair">{pair}</span>
+        {hasDay ? (
+          <span className={`qt-chg ${trend}`} title="Variação do dia">
+            <Arrow v={day} /> {pct(day)}
+          </span>
+        ) : (
+          quote && <span className="qt-chg flat" title="Variação do dia indisponível na fonte de reserva">—</span>
+        )}
+      </span>
+      <span className="qt-price">{quote ? brl(quote.bid) : '—'}</span>
+      <DayRange quote={quote} fmt={(v) => brl(v)} />
+      <span className="qt-spark" title={histWarn ? 'Histórico: não foi possível atualizar; mantida a última série.' : undefined}>
+        <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} height={40} />
+      </span>
+      <span className="qt-foot">
+        <span className={state ? 'qt-state' : undefined} title={state ? stateTip : `Última cotação: ${quote && Number.isFinite(quote.timestamp) ? new Date(quote.timestamp).toLocaleString('pt-BR') : '—'}`}>
+          {state ? `${state} · ` : ''}{quote ? when(quote.timestamp) : '—'}
+        </span>
+        {ptax && <span title={`PTAX de venda (${ptax.kind ?? 'BCB'})`}>PTAX {p4(ptax.sell)}</span>}
+        <span className="qt-period" title={`Variação no período do minigráfico (${spark.label})`}>
+          {spark.label} {change != null ? <b className={toneOf(change)}>{pct(change)}</b> : <span className="muted">—</span>}
+          {histWarn && <i className="qt-warn" aria-label="histórico desatualizado" />}
         </span>
       </span>
-      <span className="tile-body">
-        <span className="tile-num">
-          <span className="tile-price">{quote ? brl(quote.bid) : '—'}</span>
-          {hasDay ? (
-            <span className={`pct ${trend}`}>
-              <Arrow v={day} /> {pct(day)}
-            </span>
-          ) : (
-            quote && <small className="muted">var. do dia indisponível</small>
-          )}
-        </span>
-        <span className="tile-spark">
-          <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
-          <small className="muted">
-            {spark.label}
-            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
-          </small>
-        </span>
-      </span>
-      {(s.stale || s.warning) && <small className="tile-history-status status stale">Histórico: conferir atualização.</small>}
-      {quote && <small className={quote.stale || quote.fallback ? 'status stale' : 'muted'}>
-        {quote.stale ? 'Atualização pendente · ' : quote.fallback ? 'Referência diária de reserva · ' : 'Referência · '}
-        {Number.isFinite(quote.timestamp) ? new Date(quote.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'}
-      </small>}
-      {ptax && <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell)}</small>}
     </button>
   )
 }
@@ -134,33 +163,31 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const [big, setBig] = useState(false)
   return (
     <>
-    <div style={{ '--series': color }} className="tile wide pair-tile">
-      <span className="tile-head">
-        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(base, 'width="26" height="18"') }} />
+    <div style={{ '--series': color }} className="tile qt pair-tile">
+      <span className="qt-head">
         <PairSelect value={base} onChange={(v) => pick('base', v)} label="Moeda base" />
         <span className="pair-slash" aria-hidden="true">/</span>
         <PairSelect value={quote} onChange={(v) => pick('quote', v)} label="Moeda cotada" />
-        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(quote, 'width="26" height="18"') }} />
-        <button type="button" className="more" onClick={() => (eurUsd ? onOpen('PAR') : pts.length > 1 && setBig(true))}>Detalhes ›</button>
+        {hasDay ? (
+          <span className={`qt-chg ${trend}`} title="Variação do dia">
+            <Arrow v={p.pct} /> {pct(p.pct)}
+          </span>
+        ) : (
+          p && <span className="qt-chg flat" title="Variação do dia indisponível">—</span>
+        )}
       </span>
-      <span className="tile-body">
-        <span className="tile-num">
-          <span className="tile-price">{p ? cross(p.main, quote) : '—'}</span>
-          {hasDay ? (
-            <span className={`pct ${trend}`}>
-              <Arrow v={p.pct} /> {pct(p.pct)}
-            </span>
-          ) : (
-            p && <small className="muted">var. do dia indisponível</small>
-          )}
-          <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}{(a.stale || b.stale) && ' · última série disponível'}</small>
-        </span>
-        <span className="tile-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
-          <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
-          <small className="muted">
-            {spark.label}
-            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
-          </small>
+      <button type="button" className="qt-price qt-price-btn" onClick={() => (eurUsd ? onOpen('PAR') : pts.length > 1 && setBig(true))} title="Abrir gráfico da paridade">
+        {p ? cross(p.main, quote) : '—'}
+      </button>
+      <span className="qt-range is-empty" aria-hidden="true" />
+      <span className="qt-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
+        <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} height={40} />
+      </span>
+      <span className="qt-foot">
+        <span title={(a.stale || b.stale) ? 'Calculada com a última série disponível' : 'Cruzamento das cotações em reais'}>{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}</span>
+        <span className="qt-period" title={`Variação no período do minigráfico (${spark.label})`}>
+          {spark.label} {change != null ? <b className={toneOf(change)}>{pct(change)}</b> : <span className="muted">—</span>}
+          {(a.stale || b.stale) && <i className="qt-warn" aria-label="série desatualizada" />}
         </span>
       </span>
     </div>
@@ -244,16 +271,16 @@ function MultiPlot({ series, width, intraday }) {
             const p0 = at(norm[0], hover)
             return (
               <g pointerEvents="none">
-                <rect x={bx} y={M.t} width={bw} height={bh} rx="8" fill="var(--card, #161b22)" stroke="var(--line)" opacity="0.96" />
+                <rect x={bx} y={M.t} width={bw} height={bh} rx="8" fill="var(--pop-bg)" stroke="var(--line)" opacity="0.96" />
                 <text x={bx + 10} y={M.t + 16} fontSize="11" fill="var(--mut)">{intraday ? new Date(p0.t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : new Date(p0.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</text>
                 {norm.map((s, k) => {
                   const p = at(s, hover)
                   const d = s.code === 'JPY' ? 4 : 4
                   return (
-                    <text key={s.code} x={bx + 10} y={M.t + 34 + k * 18} fontSize="12" fill="var(--txt, #e6edf3)">
+                    <text key={s.code} x={bx + 10} y={M.t + 34 + k * 18} fontSize="12" fill="var(--fg)">
                       <tspan fill={s.color} fontWeight="700">{s.code}</tspan>
                       <tspan dx="6">{p.bid.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}</tspan>
-                      <tspan dx="6" fill={p.v > 0 ? '#3fb950' : p.v < 0 ? '#f85149' : 'var(--mut)'}>{pct(p.v)}</tspan>
+                      <tspan dx="6" fill={p.v > 0 ? 'var(--up)' : p.v < 0 ? 'var(--down)' : 'var(--mut)'}>{pct(p.v)}</tspan>
                     </text>
                   )
                 })}
@@ -307,7 +334,12 @@ function ResumoChart({ colors, spark }) {
   }).filter((r) => sel.includes(r.code))
   const { available: ready, comparable, incomplete } = comparisonSeries(rows)
   const staleCodes = rows.filter((r) => r.st.stale).map((r) => r.code)
-  const incompleteNote = incomplete.length > 0 && <p className="status" role="status">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.error || 'aguardando cotações'}`).join(' · ')}</p>
+  // Detalhe de séries incompletas vai para a dica (i): a área do gráfico mostra só a mensagem curta.
+  const incompleteNote = incomplete.length > 0 && (
+    <Help label="Por que faltam pontos" icon="i" align="right">
+      {incomplete.map((r) => <span key={r.code} className="ex">{`${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.error || 'aguardando cotações'}`}</span>)}
+    </Help>
+  )
   const staleNote = staleCodes.length > 0 && <p className="status stale" role="status">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</p>
   const failed = rows.every((r) => r.st.status === 'error')
   const one = rows.length === 1
@@ -323,7 +355,7 @@ function ResumoChart({ colors, spark }) {
           )
         ) : (
           <div className="placeholder" style={{ height: 120 }}>
-            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos de hoje ainda (a coleta roda de segunda a sexta, a partir das 9h30).' : 'Histórico indisponível no momento.'}
+            {failed ? (dia ? 'Sem pontos hoje. A coleta roda nos dias úteis, das 9h30 às 18h.' : 'Histórico indisponível no momento.') : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos hoje. A coleta roda nos dias úteis, das 9h30 às 18h.' : 'Histórico indisponível no momento.'}
           </div>
         )
   )
@@ -331,10 +363,13 @@ function ResumoChart({ colors, spark }) {
     <>
     <div className="resumo-chart">
       <div className="sec-head">
+        <div className="sec-head-l">
         <h3 className="expandable" onClick={() => setBig(true)} role="button" title="Ampliar">
           {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
           {' '}<span className="muted" aria-hidden="true">›</span>
         </h3>
+        {incompleteNote}
+        </div>
         <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
           {CURRENCIES.map((c) => (
             <button key={c.code} type="button" aria-pressed={sel.includes(c.code)} style={sel.includes(c.code) ? { borderColor: colors?.[c.code] } : undefined} onClick={() => toggle(c.code)}>
@@ -352,7 +387,6 @@ function ResumoChart({ colors, spark }) {
         </p>
       )}
       {staleNote}
-      {incompleteNote}
       <div ref={ref}>
         {chart(width)}
       </div>
@@ -381,7 +415,6 @@ function ResumoChart({ colors, spark }) {
         </p>
       )}
           {staleNote}
-      {incompleteNote}
           <Wide render={chart} />
         </div>
       </Overlay>
@@ -391,7 +424,7 @@ function ResumoChart({ colors, spark }) {
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, status }) {
   const [sparkId, setSparkId] = useState('day')
   const [custom, setCustom] = useState(null)
   const [dates, setDates] = useState(() => ({ start: toInput(new Date()), end: toInput(new Date()) }))
@@ -412,28 +445,44 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   }
   const chooseDate = (key, value) => applyDates({ ...dates, [key]: value })
   const openSelected = (code) => onOpen(code, spark)
+  const since = toInput(limits.start).split('-').reverse().join('/')
+  const dm = (iso) => iso.split('-').reverse().slice(0, 2).join('/')
   return (
-      <Expandable label="card das moedas">
-      <section aria-labelledby="r-moedas">
-        <div className="sec-head">
-          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
-          <div className="summary-period-controls">
-          <div className="seg" role="group" aria-label="Período do minigráfico">
-            {SPARK.map((s) => (
-              <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => choosePreset(s)}>
-                {s.label}
-              </button>
-            ))}
+      <Expandable label="card das moedas" compact>
+      <section aria-labelledby="r-moedas" className="moedas">
+        <header className="mo-head">
+          <div className="mo-title">
+            <h2 id="r-moedas">Moedas <Explain id="minigrafico" /></h2>
+            {status}
           </div>
-          <div className="summary-dates">
-            <label>De <input aria-label="Data inicial dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.start} onChange={(e) => chooseDate('start', e.target.value)} /></label>
-            <label>Até <input aria-label="Data final dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => chooseDate('end', e.target.value)} /></label>
+          <div className="mo-tools">
+            <div className="seg mo-seg" role="group" aria-label="Período do minigráfico">
+              {SPARK.map((s) => (
+                <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => choosePreset(s)}>
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            <details className="mo-dates">
+              <summary className={`icon-btn${sparkId === 'custom' ? ' is-on' : ''}`} aria-label="Escolher datas do minigráfico" title="Escolher datas">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" /><path d="M3.5 10h17M8 3v4M16 3v4" /></svg>
+                {sparkId === 'custom' && <span className="mo-dates-label">{dm(dates.start)}–{dm(dates.end)}</span>}
+              </summary>
+              <div className="mo-dates-pop">
+                <label>De <input aria-label="Data inicial dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.start} onChange={(e) => chooseDate('start', e.target.value)} /></label>
+                <label>Até <input aria-label="Data final dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => chooseDate('end', e.target.value)} /></label>
+              </div>
+            </details>
+            <Help label="Sobre os minigráficos" icon="i" align="right">
+              <span className="ex">Minigráficos: {spark.label}. Histórico desde {since}; cada fonte pode ter lacunas.</span>
+              <span className="ex">O preço em destaque é sempre a última cotação, não o histórico filtrado.</span>
+              <span className="ex">A barra fina sob o preço mostra onde a cotação está entre a mínima e a máxima do dia.</span>
+            </Help>
+            <button type="button" className="icon-btn img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button>
           </div>
-          </div>
-        </div>
-        <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. Valores principais são as últimas cotações, não o histórico filtrado.</small>
-        {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
-        <div className="tiles">
+        </header>
+        {dateError && <p role="alert" className="status stale">{dateError} O período anterior permanece aplicado.</p>}
+        <div className="tiles qt-grid">
           {CURRENCIES.map((c) => (
             <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={openSelected} color={colors?.[c.code]} />
           ))}
@@ -474,10 +523,10 @@ export function RatesTop({ macro, curves, onOpen }) {
   )
 }
 
-export default function Resumo({ quotes, ptax, onOpen, colors }) {
+export default function Resumo({ quotes, ptax, onOpen, colors, status }) {
   return (
     <div className="resumo">
-      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} />
+      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} status={status} />
     </div>
   )
 }
