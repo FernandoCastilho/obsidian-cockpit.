@@ -1,30 +1,30 @@
 import './AppDisclaimer.css'
-import MarketContext from './MarketContext.jsx'
+const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 import Help from './Help.jsx'
-import Macro from './Macro.jsx'
-import RatesSnapshot from './RatesSnapshot.jsx'
-import Curves from './Curves.jsx'
-import CdiFuturo from './CdiFuturo.jsx'
-import Calculadora from './Calculadora.jsx'
+const Macro = lazy(() => import('./Macro.jsx'))
+const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
+const Curves = lazy(() => import('./Curves.jsx'))
+const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
+const Calculadora = lazy(() => import('./Calculadora.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
-import Feriados from './Feriados.jsx'
+const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
-import Novidades from './Novidades.jsx'
+const Novidades = lazy(() => import('./Novidades.jsx'))
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo, { MoveAgenda, RatesTop } from './Resumo.jsx'
 import Clock from './Clock.jsx'
-import News from './News.jsx'
+const News = lazy(() => import('./News.jsx'))
 import { useMacro } from './useMacro.js'
 import { useCurves } from './useCurves.js'
 import ParityChart from './ParityChart.jsx'
-import Projecoes from './Projecoes.jsx'
+const Projecoes = lazy(() => import('./Projecoes.jsx'))
 import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
 import { flagPngs } from './flags.js'
 import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './useHistory.js'
@@ -239,14 +239,19 @@ export default function App() {
       setSub(h.sub)
     }
     window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    window.addEventListener('popstate', onHash)
+    return () => {
+      window.removeEventListener('hashchange', onHash)
+      window.removeEventListener('popstate', onHash)
+    }
   }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
   const goto = (id, to = '') => {
     setTab(id)
     setSub(to)
     try {
-      window.history.replaceState(null, '', `#${id}${to ? `/${to}` : ''}`)
+      const hash = `#${id}${to ? `/${to}` : ''}`
+      if (window.location.hash !== hash) window.history.pushState(null, '', hash)
     } catch {
       /* sem histórico (ex.: arquivo local) */
     }
@@ -270,6 +275,7 @@ export default function App() {
           <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
         </details>
       </aside>
+      <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (
         <div className="update-notice" role="status">
           Nova versão disponível.{' '}
@@ -374,6 +380,7 @@ export default function App() {
           {notice && <p role="status">{notice}</p>}
         </Sheet>
       )}
+      </Suspense>
     </main>
     </>
   )

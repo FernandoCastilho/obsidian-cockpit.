@@ -80,7 +80,7 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
         <span className="tile-spark">
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
           <small className="muted">
-            {spark.label}{s.stale && ' · última série disponível'}
+            {spark.label}{(s.stale || s.warning) && ' · conferir atualização'}
             {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
