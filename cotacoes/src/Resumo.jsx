@@ -80,11 +80,12 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
         <span className="tile-spark">
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
           <small className="muted">
-            {spark.label}{(s.stale || s.warning) && ' · conferir atualização'}
+            {spark.label}
             {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
           </small>
         </span>
       </span>
+      {(s.stale || s.warning) && <small className="tile-history-status status stale">Histórico: conferir atualização.</small>}
       {quote && <small className={quote.stale || quote.fallback ? 'status stale' : 'muted'}>
         {quote.stale ? 'Atualização pendente · ' : quote.fallback ? 'Referência diária de reserva · ' : 'Referência · '}
         {Number.isFinite(quote.timestamp) ? new Date(quote.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'}
