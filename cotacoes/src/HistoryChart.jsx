@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { nextChartIndex } from './chartNavigation.js'
+import './ChartAccess.css'
 import { useMacro } from './useMacro.js'
 import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
@@ -13,7 +15,7 @@ export const fmtDate = (t, long) =>
   new Date(t).toLocaleDateString('pt-BR', long ? { day: '2-digit', month: 'short', year: 'numeric' } : { day: '2-digit', month: '2-digit' })
 export const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' })
 const fmtMonth = (t) => new Date(t).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }).replace('.', '')
-const brl = (v, d = 4) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
+const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
 
 // Largura do contêiner do gráfico. Usa "ref de função" para medir também quando o elemento aparece depois (dados que chegam tarde):
 // com um ref comum, o gráfico ficava preso na largura inicial (480 px).
@@ -32,6 +34,8 @@ export function useWidth() {
 
 export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel }) {
   const [hover, setHover] = useState(null)
+  const [announcement, setAnnouncement] = useState('')
+  const plotId = useId()
   const g = useMemo(() => {
     const t0 = points[0].t
     const t1 = points[points.length - 1].t
@@ -99,11 +103,26 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
     return kept.sort((a, b) => a - b)
   }, [points, g])
   const hp = hover != null ? points[hover] : null
-  const gid = `a-${code}`
+  const gid = `a-${plotId.replaceAll(':', '')}`
+  const onKey = (e) => {
+    const next = nextChartIndex(e.key, hover, points.length)
+    if (next == null) return
+    e.preventDefault()
+    setHover(next)
+    const point = points[next]
+    setAnnouncement(`${label ?? code}: ${dateLabel ? dateLabel(point.t) : intraday ? fmtTime(point.t, true) : fmtDate(point.t, true)}; ${fmt ? fmt(point.bid) : brl(point.bid)}`)
+  }
 
   return (
     <div className={`plot${light ? ' light' : ''}`} onPointerLeave={() => setHover(null)}>
+      <span id={`${plotId}-hint`} className="chart-access-text">Use as setas para percorrer os pontos; Home e End vão ao primeiro e ao último.</span>
+      <span className="chart-access-text" role="status" aria-live="polite">{announcement}</span>
       <svg
+        tabIndex={0}
+        aria-describedby={`${plotId}-hint`}
+        onFocus={() => setHover(0)}
+        onBlur={() => setHover(null)}
+        onKeyDown={onKey}
         viewBox={`0 0 ${width} ${H}`}
         width="100%"
         height={H}
@@ -226,6 +245,8 @@ export default function HistoryChart({ currency, color, start, end, day }) {
         )}
         {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} vfmt={quoteFmt} labels label={intraday ? 'Cotação' : undefined} />}
       </div>
+      {pts && h.warning && <p className="status stale" role="status">{h.warning}</p>}
+      {pts && <p className="status">Cobertura exibida: {fmtDate(pts[0].t, true)} a {fmtDate(pts.at(-1).t, true)}.</p>}
       {pts && h.stale && <p className="status stale" role="status">Não foi possível atualizar. Mantida a última série disponível. {h.error}</p>}
       {pts && intraday && (
         <p className="status">
