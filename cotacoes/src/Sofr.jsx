@@ -105,8 +105,8 @@ export default function SofrChart({ macro, range }) {
       </header>
       <div className="curve-legend">
         {SERIES.filter((s) => avail(s.id)).map((s) => (
-          <button key={s.id} type="button" className={on[s.id] ? '' : 'off'} style={{ '--series': s.color }} aria-pressed={on[s.id]} disabled={s.id === 'raw'} onClick={() => setOn((o) => ({ ...o, [s.id]: !o[s.id] }))}>
-            <i className="swatch" /> {s.label}
+          <button key={s.id} type="button" className={on[s.id] ? 'series-visible' : 'series-hidden'} style={{ '--series': s.color }} aria-pressed={on[s.id]} disabled={s.id === 'raw'} onClick={() => setOn((o) => ({ ...o, [s.id]: !o[s.id] }))}>
+            <i className="swatch" /> {s.label} <small>{s.id === 'raw' ? 'Sempre visível' : on[s.id] ? 'Visível' : 'Oculta'}</small>
           </button>
         ))}
       </div>
