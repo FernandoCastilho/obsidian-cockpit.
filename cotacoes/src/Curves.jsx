@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
+import { nextChartIndex } from './chartNavigation.js'
+import './ChartAccess.css'
 import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
@@ -14,6 +16,8 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
   const [ref, width] = useWidth()
   const [off, setOff] = useState(() => new Set())
   const [hover, setHover] = useState(null)
+  const [announcement, setAnnouncement] = useState('')
+  const chartId = useId()
   const compare = data?.compare ?? []
   const shown = compare.filter((c) => !off.has(c.date))
 
@@ -59,6 +63,15 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
   const vertexLabel = (p) => (mode === 'us' ? p[2] : `${Math.round(p[0])} d.u. (~${(p[0] / 21).toFixed(1).replace('.', ',')} m)`)
   const at = (s, p) => (mode === 'us' ? s.pts.find((q) => q[0] === p[0]) : s.pts.reduce((b, q) => (Math.abs(q[0] - p[0]) < Math.abs(b[0] - p[0]) ? q : b)))
 
+  const onKey = (e) => {
+    const next = nextChartIndex(e.key, hover, g?.series[0]?.pts.length ?? 0)
+    if (next == null) return
+    e.preventDefault()
+    setHover(next)
+    const point = g.series[0].pts[next]
+    setAnnouncement(`${vertexLabel(point)}: ${g.series.map(s => { const q = at(s, point); return q ? `${s.label}, ${pct(q[1])}` : '' }).filter(Boolean).join('; ')}`)
+  }
+
   return (
     <article className="chart curve">
       <header>
@@ -70,15 +83,17 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
       </header>
       <div className="curve-legend">
         {compare.map((c, i) => (
-          <button key={c.date} type="button" className={off.has(c.date) ? 'off' : ''} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
-            <i className="swatch" /> {c.label} <small>{day(c.date)}</small>
+          <button key={c.date} type="button" className={off.has(c.date) ? 'series-hidden' : 'series-visible'} aria-pressed={!off.has(c.date)} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
+            <i className="swatch" /> {c.label} <small>{day(c.date)} · {off.has(c.date) ? 'Oculta' : 'Visível'}</small>
           </button>
         ))}
       </div>
       <div ref={ref}>
         {g ? (
           <div className="plot" onPointerLeave={() => setHover(null)}>
-            <svg viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`Curva de juros: ${title}`} onPointerMove={onMove} onPointerDown={onMove}>
+            <span id={`${chartId}-hint`} className="chart-access-text">Use as setas para percorrer os prazos; Home e End vão ao primeiro e ao último.</span>
+            <span className="chart-access-text" role="status" aria-live="polite">{announcement}</span>
+            <svg tabIndex={0} aria-describedby={`${chartId}-hint`} onFocus={() => setHover(0)} onBlur={() => setHover(null)} onKeyDown={onKey} viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`Curva de juros: ${title}`} onPointerMove={onMove} onPointerDown={onMove}>
               {g.yTicks.map((v) => (
                 <g key={v}>
                   <line x1={M.l} x2={width - M.r} y1={g.Y(v)} y2={g.Y(v)} className="gridline" />
@@ -128,6 +143,7 @@ export default function Curves({ curves: c }) {
   return (
     <section className="macro" aria-labelledby="curves-h">
       <h2 id="curves-h">Curvas de juros</h2>
+      {c.stale && <p className="status stale" role="status">Não foi possível atualizar as curvas. Mantida a última coleta disponível. {c.error}</p>}
       {c.status === 'loading' && <div className="placeholder">Carregando curvas…</div>}
       {c.status === 'ok' && c.data.generatedAt && (Date.now() - c.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: as curvas foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>

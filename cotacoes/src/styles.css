@@ -129,7 +129,8 @@ dd .muted { color:var(--mut); font-size:.72rem; }
 .curve-legend { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; }
 .curve-legend button { display:flex; align-items:center; gap:6px; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:999px; padding:4px 10px; font:inherit; font-size:.8rem; cursor:pointer; }
 .curve-legend button small { color:var(--mut); }
-.curve-legend button.off { color:var(--mut); text-decoration:line-through; }
+.curve-legend button.series-hidden { color:var(--mut); border-style:dashed; }
+.curve-legend button.series-hidden .swatch { opacity:.35; }
 .slot { display:flex; flex-direction:column; gap:6px; min-width:0; }
 .slot > .card { flex:1; }
 .clock { display:flex; flex-wrap:wrap; gap:4px 14px; padding:0 4px; color:var(--mut); font-size:.8rem; }

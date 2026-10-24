@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { validHistoryPoints, historyQuality } from './historyQuality.js'
 import { DATA_BASE, friendlyError } from './useQuotes.js'
 import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
 
@@ -45,11 +46,12 @@ function loadCentralHistory() {
 // Recorte do arquivo central; só vale se ele cobre o início do período pedido.
 export function pickCentral(file, code, start, end) {
   const s = file?.series?.[code]
-  if (!s?.points?.length) throw new Error(`${code}: histórico central sem dados`)
-  if (s.points[0].t > start.getTime() + 5 * 864e5) throw new Error(`${code}: período maior que o histórico central`)
-  const points = sliceRange(s.points, start, end)
+  const valid = validHistoryPoints(s?.points)
+  if (!valid.length) throw new Error(`${code}: histórico central sem dados válidos`)
+  if (valid[0].t > start.getTime() + 5 * 864e5) throw new Error(`${code}: período maior que o histórico central`)
+  const points = sliceRange(valid, start, end)
   if (!points.length) throw new Error(`${code}: sem dados no período`)
-  return { source: s.source, points }
+  return { source: s.source, points, generatedAt: file.generatedAt }
 }
 
 // Reserva: referências diárias do BCE (Frankfurter), sem máxima/mínima. { rates: { 'AAAA-MM-DD': { BRL: n } } } -> pontos.
@@ -154,7 +156,8 @@ export function useHistory(code, start, end, skip = false) {
       // Recorta também respostas diretas/reservas: a fonte pode incluir uma referência anterior.
       const points = sliceRange(data.points, rangeStart, rangeEnd)
       if (!points.length) throw new Error('Sem cotações no período selecionado. Escolha outro intervalo.')
-      return { key, status: 'ok', refreshing: false, data: { ...data, points } }
+      const warning = historyQuality({ points, generatedAt: data.generatedAt, end: rangeEnd.getTime(), reference: !!data.feed })
+      return { key, status: 'ok', refreshing: false, warning, data: { ...data, points } }
     }
     const load = async () => {
       const win = fullWindow()
@@ -245,9 +248,10 @@ export function useIntraday(code, day, skip = false) {
         const file = await loadIntraday()
         if (!alive) return
         const serie = file.series?.[code]
-        const points = (serie?.points ?? []).filter(([t]) => toInput(new Date(t)) === dayYmd).map(([t, v]) => ({ t, bid: v }))
+        const points = validHistoryPoints((serie?.points ?? []).filter(p => Array.isArray(p)).map(([t, v]) => ({ t, bid: v }))).filter(p => toInput(new Date(p.t)) === dayYmd)
         if (!points.length) throw new Error('ainda sem pontos neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)')
-        setState({ key, status: 'ok', refreshing: false, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
+        const warning = historyQuality({ points, generatedAt: file.generatedAt, intraday: true })
+        setState({ key, status: 'ok', refreshing: false, warning, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       } catch (e) {
         if (!alive) return
         const error = `intraday indisponível (${e.message})`

@@ -1,6 +1,6 @@
 .app-disclaimer {
   margin: 0 0 1rem;
-  padding: .75rem 1rem;
+  padding: .55rem .85rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--fg);
@@ -8,3 +8,8 @@
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
+
+.app-disclaimer summary { cursor: pointer; color: var(--mut); }
+.app-disclaimer summary:hover { color: var(--fg); }
+.app-disclaimer details[open] summary { color: var(--fg); }
+.app-disclaimer p { margin: .65rem 0 0; }
