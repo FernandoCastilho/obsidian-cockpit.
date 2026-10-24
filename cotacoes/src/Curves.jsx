@@ -7,7 +7,7 @@ import { useWidth } from './HistoryChart.jsx'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
-const SHADES = ['#4aa3a2', '#e6b34a', '#a98bd6', '#d55181', '#6fa8dc', '#9bbf5a', '#c0c0c0']
+const SHADES = ['#2f9a98', '#c99a2e', '#8f6fd1', '#c2477a', '#4f8fd6', '#7ea83f', '#8a94a6']
 const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 const day = (iso) => iso.split('-').reverse().join('/')
 

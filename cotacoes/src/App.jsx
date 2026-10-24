@@ -29,9 +29,9 @@ import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsapp
 import { flagPngs } from './flags.js'
 import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './useHistory.js'
 
-// cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
+// cor fixa por moeda (tons médios, legíveis nos temas claro e escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
-const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
+const COLORS = { USD: '#2f6fdb', EUR: '#d4612a', JPY: '#12957a', CNH: '#8b5cf6', PAR: '#c2477a' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
@@ -258,7 +258,30 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }
   const openCurrency = CURRENCIES.find((c) => c.code === open)
-  const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
+  const wait0 = limits.wait > 0 ? ` (${limits.wait}s)` : ''
+  const statusLine = (
+<p className="status src" role="status" title="Fontes: AwesomeAPI (câmbio) e Banco Central (PTAX)">
+        <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
+        {error
+          ? `Falha ao atualizar (${error}). Tentando novamente…`
+          : updatedAt
+            ? `Consulta de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
+            : 'Carregando…'}
+          <button
+            type="button"
+            className="refresh-mini"
+            onClick={refresh}
+            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
+            aria-label={`Atualizar cotações agora${wait0}`}
+            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
+              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
+              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
+            </svg>
+          </button>
+      </p>
+  )
 
   return (
     <>
@@ -269,12 +292,6 @@ export default function App() {
       </div>
     )}
     <main className="app">
-      <aside className="app-disclaimer" aria-label="Aviso sobre informações e simulações">
-        <details>
-          <summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo</summary>
-          <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
-        </details>
-      </aside>
       <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (
         <div className="update-notice" role="status">
@@ -287,36 +304,12 @@ export default function App() {
           <h1>{TABS.find((t) => t.id === tab).label}</h1>
         </header>
       )}
-      {tab !== 'calculadora' && tab !== 'noticias' && tab !== 'feriados' && (
-      <p className="status src">
-        <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
-        {error
-          ? `Falha ao atualizar (${error}). Tentando novamente…`
-          : updatedAt
-            ? `Consulta de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
-            : 'Carregando…'}
-        {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
-          <button
-            type="button"
-            className="refresh-mini"
-            style={{ background: "none", border: "none", padding: 2, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
-            onClick={refresh}
-            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
-            aria-label={`Atualizar cotações agora${wait}`}
-            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
-              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
-              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
-            </svg>
-          </button>
-      </p>
-      )}
+      {tab !== 'calculadora' && tab !== 'noticias' && tab !== 'feriados' && tab !== 'resumo' && statusLine}
 
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} status={statusLine} onOpen={(code, selection) => { if (selection) { setPreset(({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
         </>
@@ -381,6 +374,12 @@ export default function App() {
         </Sheet>
       )}
       </Suspense>
+      <aside className="app-disclaimer" aria-label="Aviso sobre informações e simulações">
+        <details>
+          <summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo</summary>
+          <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
+        </details>
+      </aside>
     </main>
     </>
   )
