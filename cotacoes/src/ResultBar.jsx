@@ -12,7 +12,13 @@ export default function ResultBar({ targetId, main, sub }) {
   }, [targetId, !!main])
   if (!main || inView) return null
   return (
-    <button type="button" className="result-bar" onClick={() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+    <button type="button" className="result-bar" aria-controls={targetId} aria-label={`Ver resultado desta simulação: ${main}`} onClick={() => {
+      const target = document.getElementById(targetId)
+      if (!target) return
+      target.setAttribute('tabindex', '-1')
+      target.focus({ preventScroll: true })
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
+    }}>
       <span className="rb-text">
         <b>{main}</b>
         {sub && <small>{sub}</small>}

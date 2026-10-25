@@ -1,3 +1,4 @@
+import { dataTimestamp } from './dataTimestamp.js'
 import './AppDisclaimer.css'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
@@ -84,8 +85,8 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
 
 function Share({ quotes, updatedAt, macro, curves }) {
   const [msg, setMsg] = useState('')
-  const text = buildMessage(quotes, updatedAt ?? new Date())
-  const summary = buildSummary({ quotes, macro: macro?.data, curves: curves?.data, when: updatedAt ?? new Date() })
+  const text = updatedAt ? buildMessage(quotes, updatedAt) : null
+  const summary = updatedAt ? buildSummary({ quotes, macro: macro?.data, curves: curves?.data, when: updatedAt }) : null
   // No celular, o compartilhamento nativo leva o texto sem passar por endereço de internet,
   // que perdia os emojis (bandeiras e setas). Sem suporte, abre o link do WhatsApp.
   const send = (e, body = text) => {
@@ -133,24 +134,24 @@ function Share({ quotes, updatedAt, macro, curves }) {
     <div className="share">
       {text ? (
         <a className="btn wa" href={whatsappUrl(text)} target="_blank" rel="noopener noreferrer" onClick={send} title="No celular, abre a lista de compartilhamento: escolha o WhatsApp">
-          Enviar no WhatsApp
+          Enviar câmbio no WhatsApp
         </a>
       ) : (
         <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
       )}
       {summary && (
         <a className="btn wa" href={whatsappUrl(summary)} target="_blank" rel="noopener noreferrer" onClick={(e) => send(e, summary)} title="Câmbio, juros, curva DI, SOFR, Treasuries e Focus numa mensagem só. No celular, escolha o grupo na lista de compartilhamento.">
-          Resumo do dia no WhatsApp
+          Enviar resumo de câmbio e juros
         </a>
       )}
       <button type="button" className="btn" disabled={!summary} onClick={() => copyText(summary)} title="Copia o resumo do dia já formatado para colar no WhatsApp ou no Teams">
-        Copiar resumo
+        Copiar resumo de câmbio e juros
       </button>
       <button type="button" className="btn" disabled={!text} onClick={copyWa} title="Copia o texto já formatado para colar no WhatsApp">
-        Copiar para WhatsApp
+        Copiar câmbio para WhatsApp
       </button>
       <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada, com as bandeiras, para colar no e-mail ou no Teams">
-        Copiar para e-mail ou Teams
+        Copiar câmbio para e-mail ou Teams
       </button>
       <span className="status" role="status">{msg}</span>
     </div>
@@ -287,19 +288,19 @@ export default function App() {
           <h1>{TABS.find((t) => t.id === tab).label}</h1>
         </header>
       )}
-      {tab !== 'calculadora' && tab !== 'noticias' && tab !== 'feriados' && (
+      {tab === 'resumo' && (
       <p className="status src">
         <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
         {error
-          ? `Falha ao atualizar (${error}). Tentando novamente…`
+          ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
           : updatedAt
-            ? `Consulta de ${updatedAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
+            ? `Câmbio — consulta de ${dataTimestamp(updatedAt)} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
             : 'Carregando…'}
         {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
           <button
             type="button"
             className="refresh-mini"
-            style={{ background: "none", border: "none", padding: 2, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
+            style={{ background: "none", border: "none", padding: 10, minWidth: 44, minHeight: 44, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
             onClick={refresh}
             disabled={refreshing || limits.wait > 0 || limits.left <= 0}
             aria-label={`Atualizar cotações agora${wait}`}
@@ -316,7 +317,7 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
         </>
@@ -373,7 +374,7 @@ export default function App() {
             <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
           ) : (
             openCurrency && (
-              <HistoryChart key={openCurrency.code} currency={openCurrency} color={COLORS[openCurrency.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
+              <HistoryChart onDay={onDay} key={openCurrency.code} currency={openCurrency} color={COLORS[openCurrency.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
             )
           )}
           <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />

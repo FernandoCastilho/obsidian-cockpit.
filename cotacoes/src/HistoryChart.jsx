@@ -1,3 +1,4 @@
+import { dataTimestamp } from './dataTimestamp.js'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
 import './ChartAccess.css'
@@ -205,7 +206,7 @@ function useSeries(currency, start, end, day) {
 // valor dos rótulos dentro do gráfico: 4 casas (5 para o iene, que vale centavos de real)
 const quoteFmt = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })
 
-export default function HistoryChart({ currency, color, start, end, day }) {
+export default function HistoryChart({ currency, color, start, end, day, onDay }) {
   const intraday = !!day
   const h = useSeries(currency, start, end, day)
   const [ref, width] = useWidth()
@@ -237,6 +238,10 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       </header>
       <div ref={ref}>
         {h.status === 'loading' && <div className="placeholder" style={{ height: H }}>Carregando…</div>}
+        {h.status === 'empty' && <div className="placeholder" role="status">Sem amostras na data selecionada. Isso não confirma fechamento do mercado.
+          <small>Arquivo intraday consultado: {dataTimestamp(h.generatedAt)}.</small>
+          {h.previousDay && onDay && <button type="button" className="btn" onClick={() => onDay(h.previousDay)}>Ver último dia anterior com amostras ({h.previousDay.split('-').reverse().join('/')})</button>}
+        </div>}
         {h.status === 'error' && (
           <div className="placeholder err" style={{ height: 120 }}>
             Não foi possível carregar o histórico.<br />
@@ -250,7 +255,7 @@ export default function HistoryChart({ currency, color, start, end, day }) {
       {pts && h.stale && <p className="status stale" role="status">Não foi possível atualizar. Mantida a última série disponível. {h.error}</p>}
       {pts && intraday && (
         <p className="status">
-          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Pontos a cada 5 min no horário comercial'} · atualizado às {new Date(h.data.generatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · Fonte: {h.data.feed ?? 'Yahoo Finance'}
+          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Pontos a cada 5 min no horário comercial'} · arquivo intraday de {dataTimestamp(h.data.generatedAt)} · Fonte: {h.data.feed ?? 'Yahoo Finance'}
         </p>
       )}
       {pts && !intraday && h.data?.feed && (

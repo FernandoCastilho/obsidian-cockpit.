@@ -15,6 +15,7 @@ function useParity(start, end, day, invert) {
   const [a, b] = day ? [usdI, eurI] : [usdD, eurD]
   return useMemo(() => {
     if (a.status === 'error' || b.status === 'error') return { status: 'error', error: [a.error, b.error].filter(Boolean).join(' · ') }
+    if (a.status === 'empty' || b.status === 'empty') return { status: 'empty' }
     if (a.status !== 'ok' || b.status !== 'ok') return { status: 'loading' }
     const merge = day ? mergeTicks : mergeDaily
     const points = merge(a.data.points, b.data.points, invert)
@@ -58,6 +59,7 @@ export default function ParityChart({ color, start, end, day }) {
       </header>
       <div ref={ref}>
         {s.status === 'loading' && <div className="placeholder" style={{ height: 240 }}>Carregando…</div>}
+        {s.status === 'empty' && <div className="placeholder" role="status">Sem amostras em comum na data selecionada. Isso não confirma fechamento do mercado.</div>}
         {s.status === 'error' && (
           <div className="placeholder err" style={{ height: 240 }}>
             Não foi possível calcular a paridade.<br />

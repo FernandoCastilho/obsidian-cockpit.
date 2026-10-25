@@ -5,6 +5,7 @@ import { growthAt } from './cdiFuturo.js'
 export const parseNum = (s) => {
   const t = String(s ?? '').trim().replace(/\s/g, '')
   if (!t) return NaN
+  if (t.includes(',') && !/^-?(?:\d+|[1-9]\d{0,2}(?:\.\d{3})+),\d+$/.test(t)) return NaN
   // "0.500" nunca é milhar: zero à esquerda indica decimal.
   const clean = t.includes(',') ? t.replace(/\./g, '').replace(',', '.') : /^-?[1-9]\d{0,2}(\.\d{3})+$/.test(t) ? t.replace(/\./g, '') : t
   return /^-?\d*\.?\d+$/.test(clean) ? Number(clean) : NaN

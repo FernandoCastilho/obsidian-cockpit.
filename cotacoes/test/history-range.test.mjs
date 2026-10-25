@@ -196,5 +196,8 @@ test('intraday: Date do mesmo dia estabiliza e outro dia troca pontos', async (t
   assert.deepEqual((await renderer.settle()).data.points.map((p) => p.bid), [5.0376])
   date = '2026-10-04'
   renderer.render()
-  assert.equal((await renderer.settle()).status, 'error')
+  const empty = await renderer.settle()
+  assert.equal(empty.status, 'empty')
+  assert.equal(empty.previousDay, '2026-10-03')
+  assert.equal(empty.error, undefined)
 })

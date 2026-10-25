@@ -1,3 +1,4 @@
+import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import OilTile from './OilTile.jsx'
@@ -5,7 +6,7 @@ import { selectedPeriod } from './summaryPeriod.js'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
-import { fullWindow, toInput, useHistory, useIntraday } from './useHistory.js'
+import { fullWindow, fromInput, toInput, useHistory, useIntraday } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
@@ -50,7 +51,7 @@ function Arrow({ v }) {
 function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
   const w = useWindow(spark)
   const h = useHistory(code, w.start, w.end, !!spark.intraday)
-  const i = useIntraday(code, new Date(), !spark.intraday)
+  const i = useIntraday(code, spark.day ? fromInput(spark.day) : new Date(), !spark.intraday)
   const s = spark.intraday ? i : h
   const pts = s.status === 'ok' ? s.data.points : []
   const change = periodChange(pts)
@@ -77,18 +78,18 @@ function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
             quote && <small className="muted">var. do dia indisponível</small>
           )}
         </span>
-        <span className="tile-spark">
+        {pts.length > 0 && <span className="tile-spark">
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
-          <small className="muted">
-            {spark.label}
-            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
-          </small>
-        </span>
+        </span>}
       </span>
+          <small className="muted tile-period">
+            {spark.label}
+            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && (s.status === 'empty' ? ' · sem amostras' : s.status === 'error' ? ' · falha na consulta' : s.status === 'loading' ? ' · carregando' : ' · variação indisponível')}
+          </small>
       {(s.stale || s.warning) && <small className="tile-history-status status stale">Histórico: conferir atualização.</small>}
       {quote && <small className={quote.stale || quote.fallback ? 'status stale' : 'muted'}>
         {quote.stale ? 'Atualização pendente · ' : quote.fallback ? 'Referência diária de reserva · ' : 'Referência · '}
-        {Number.isFinite(quote.timestamp) ? new Date(quote.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'}
+        {Number.isFinite(quote.timestamp) ? dataTimestamp(quote.timestamp) : 'data desconhecida'}
       </small>}
       {ptax && <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell)}</small>}
     </button>
@@ -122,8 +123,8 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const dia = !!spark.intraday
   const bh = useHistory(base, w.start, w.end, dia)
   const qh = useHistory(quote, w.start, w.end, dia)
-  const bi = useIntraday(base, new Date(), !dia)
-  const qi = useIntraday(quote, new Date(), !dia)
+  const bi = useIntraday(base, spark.day ? fromInput(spark.day) : new Date(), !dia)
+  const qi = useIntraday(quote, spark.day ? fromInput(spark.day) : new Date(), !dia)
   const [a, b] = dia ? [qi, bi] : [qh, bh]
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
@@ -155,14 +156,14 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           )}
           <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}{(a.stale || b.stale) && ' · última série disponível'}</small>
         </span>
-        <span className="tile-spark expandable" role="button" title="Ampliar" onClick={() => pts.length > 1 && setBig(true)}>
+        {pts.length > 0 && <span className="tile-spark expandable" role="button" tabIndex={0} title="Ampliar" onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && pts.length > 1) { e.preventDefault(); setBig(true) } }} onClick={() => pts.length > 1 && setBig(true)}>
           <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
-          <small className="muted">
-            {spark.label}
-            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && ' · sem pontos hoje'}
-          </small>
-        </span>
+        </span>}
       </span>
+          <small className="muted tile-period">
+            {spark.label}
+            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && (a.status === 'error' || b.status === 'error' ? ' · falha na consulta' : a.status === 'empty' || b.status === 'empty' ? ' · sem amostras em comum' : ' · variação indisponível')}
+          </small>
     </div>
     {big && (
       <Overlay onClose={() => setBig(false)}>
@@ -292,13 +293,13 @@ function Wide({ render }) {
   return <div ref={ref}>{width > 0 ? render(width) : null}</div>
 }
 
-function ResumoChart({ colors, spark }) {
+function ResumoChart({ colors, spark, onPrevious }) {
   const [sel, setSel] = useState(['USD'])
   const w = useWindow(spark)
   const dia = !!spark.intraday
   // hooks em número fixo (uma consulta por moeda; ficam em cache)
   const hs = CURRENCIES.map((c) => useHistory(c.code, w.start, w.end, dia)) // eslint-disable-line react-hooks/rules-of-hooks
-  const is = CURRENCIES.map((c) => useIntraday(c.code, new Date(), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
+  const is = CURRENCIES.map((c) => useIntraday(c.code, spark.day ? fromInput(spark.day) : new Date(), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
   const [ref, width] = useWidth()
   const toggle = (code) => setSel((s) => (s.includes(code) ? (s.length > 1 ? s.filter((c) => c !== code) : s) : CURRENCIES.map((c) => c.code).filter((c) => c === code || s.includes(c))))
   const rows = CURRENCIES.map((c, k) => {
@@ -307,7 +308,7 @@ function ResumoChart({ colors, spark }) {
   }).filter((r) => sel.includes(r.code))
   const { available: ready, comparable, incomplete } = comparisonSeries(rows)
   const staleCodes = rows.filter((r) => r.st.stale).map((r) => r.code)
-  const incompleteNote = incomplete.length > 0 && <p className="status" role="status">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.error || 'aguardando cotações'}`).join(' · ')}</p>
+  const incompleteNote = incomplete.length > 0 && <p className="status" role="status">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.status === 'empty' ? 'sem amostras na data selecionada' : r.st.error || 'aguardando cotações'}`).join(' · ')}</p>
   const staleNote = staleCodes.length > 0 && <p className="status stale" role="status">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</p>
   const failed = rows.every((r) => r.st.status === 'error')
   const one = rows.length === 1
@@ -323,7 +324,7 @@ function ResumoChart({ colors, spark }) {
           )
         ) : (
           <div className="placeholder" style={{ height: 120 }}>
-            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem pontos de hoje ainda (a coleta roda de segunda a sexta, a partir das 9h30).' : 'Histórico indisponível no momento.'}
+            {failed ? 'Histórico indisponível no momento.' : rows.some((r) => r.st.status === 'loading') ? 'Carregando…' : dia ? 'Sem amostras na data selecionada. Isso não confirma fechamento do mercado.' : 'Histórico indisponível no momento.'}
           </div>
         )
   )
@@ -331,7 +332,7 @@ function ResumoChart({ colors, spark }) {
     <>
     <div className="resumo-chart">
       <div className="sec-head">
-        <h3 className="expandable" onClick={() => setBig(true)} role="button" title="Ampliar">
+        <h3 className="expandable" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setBig(true) } }} onClick={() => setBig(true)} role="button" title="Ampliar">
           {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
           {' '}<span className="muted" aria-hidden="true">›</span>
         </h3>
@@ -353,6 +354,7 @@ function ResumoChart({ colors, spark }) {
       )}
       {staleNote}
       {incompleteNote}
+      {dia && rows.some(r => r.st.previousDay) && <button type="button" className="btn" onClick={() => onPrevious(rows.map(r => r.st.previousDay).filter(Boolean).sort().at(-1))}>Ver último dia anterior com amostras disponíveis</button>}
       <div ref={ref}>
         {chart(width)}
       </div>
@@ -396,7 +398,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [custom, setCustom] = useState(null)
   const [dates, setDates] = useState(() => ({ start: toInput(new Date()), end: toInput(new Date()) }))
   const [dateError, setDateError] = useState('')
-  const spark = sparkId === 'custom' ? custom : SPARK.find((s) => s.id === sparkId)
+  const spark = (sparkId === 'custom' || sparkId === 'previous') ? custom : SPARK.find((s) => s.id === sparkId)
   const limits = fullWindow()
   const choosePreset = (s) => {
     setSparkId(s.id); setDateError('')
@@ -416,7 +418,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
       <Expandable label="card das moedas">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das cotações" title="Enviar imagem das cotações" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
           <div className="summary-period-controls">
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
@@ -440,7 +442,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
           <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>
-        <ResumoChart colors={colors} spark={spark} />
+        <ResumoChart colors={colors} spark={spark} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
       </section>
       </Expandable>
   )
