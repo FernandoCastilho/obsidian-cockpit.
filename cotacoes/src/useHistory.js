@@ -1,3 +1,4 @@
+import { intradaySelection } from './intradayState.js'
 import { useEffect, useState } from 'react'
 import { validHistoryPoints, historyQuality } from './historyQuality.js'
 import { DATA_BASE, friendlyError } from './useQuotes.js'
@@ -248,8 +249,15 @@ export function useIntraday(code, day, skip = false) {
         const file = await loadIntraday()
         if (!alive) return
         const serie = file.series?.[code]
-        const points = validHistoryPoints((serie?.points ?? []).filter(p => Array.isArray(p)).map(([t, v]) => ({ t, bid: v }))).filter(p => toInput(new Date(p.t)) === dayYmd)
-        if (!points.length) throw new Error('ainda sem pontos neste dia (o intraday guarda os últimos 5 dias e é atualizado a cada 5 minutos das 9h30 às 18h)')
+        if (!Array.isArray(serie?.points)) throw new Error(`série ${code} ausente ou inválida no arquivo intraday`)
+        const valid = validHistoryPoints(serie.points.filter(p => Array.isArray(p)).map(([t, v]) => ({ t, bid: v })))
+        if (serie.points.length && !valid.length) throw new Error(`série ${code} sem amostras válidas no arquivo intraday`)
+        const selection = intradaySelection(valid, dayYmd)
+        const { points, previousDay } = selection
+        if (!points.length) {
+          setState({ key, status: 'empty', previousDay, generatedAt: file.generatedAt, refreshing: false })
+          return
+        }
         const warning = historyQuality({ points, generatedAt: file.generatedAt, intraday: true })
         setState({ key, status: 'ok', refreshing: false, warning, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       } catch (e) {

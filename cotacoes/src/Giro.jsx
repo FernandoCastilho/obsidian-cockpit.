@@ -1,6 +1,7 @@
+import { parseMoneyInput } from './moneyInput.js'
 import { useMemo, useState } from 'react'
 import { giro, giroTsv, giroVsCdi } from './giro.js'
-import { parseNum, parseRate } from './calc.js'
+import { parseRate } from './calc.js'
 import Pracas from './Pracas.jsx'
 import DateCheck from './DateCheck.jsx'
 import Explain from './Explain.jsx'
@@ -25,8 +26,14 @@ export default function Giro({ curves, hol }) {
   const [start, setStart] = useState(today())
   const [fees, setFees] = useState('0')
   const [copied, setCopied] = useState(false)
+  const amount = parseMoneyInput(value)
+  const expenses = parseMoneyInput(fees, { optional: true })
+  const amountError = !amount.ok ? amount.error : amount.value <= 0 ? 'Informe um valor maior que zero.' : ''
+  const feesError = !expenses.ok ? expenses.error : amount.ok && expenses.value >= amount.value ? 'As despesas devem ser menores que o valor liberado.' : ''
+  const termError = !/^\d+$/.test(n.trim()) || !(Number(n) >= 1) ? 'Informe o prazo em meses inteiros, maior que zero.' : ''
+  const rateError = !Number.isFinite(parseRate(rate)) || parseRate(rate) < 0 ? 'Informe uma taxa válida, maior ou igual a zero.' : ''
   const res = useMemo(
-    () => giro({ value: parseNum(value), n: parseInt(n, 10) || 0, structure, rate: parseRate(rate), unit, start, fees: parseNum(fees) || 0 }),
+    () => amountError || feesError || termError || rateError ? { ok: false, error: 'Corrija os valores indicados nos campos para calcular.' } : giro({ value: amount.value, n: Number(n), structure, rate: parseRate(rate), unit, start, fees: expenses.value }),
     [value, n, structure, rate, unit, start, fees],
   )
   const pts = (() => {
@@ -53,11 +60,13 @@ export default function Giro({ curves, hol }) {
       <div className="calc-form">
         <label>
           Valor liberado (R$)
-          <input inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
+          <input aria-invalid={!!amountError} aria-describedby="giro-value-feedback" inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
+          <small id="giro-value-feedback" className={amountError ? 'field-error' : 'muted'} aria-live="polite">{amountError || `Valor informado: ${brl(amount.value)}`}</small>
         </label>
         <label>
           Prazo (meses)
-          <input inputMode="numeric" value={n} onChange={(e) => setN(e.target.value)} />
+          <input aria-invalid={!!termError} aria-describedby="giro-term-feedback" inputMode="numeric" value={n} onChange={(e) => setN(e.target.value)} />
+          {termError && <small id="giro-term-feedback" className="field-error">{termError}</small>}
         </label>
         <label>
           Início
@@ -83,15 +92,17 @@ export default function Giro({ curves, hol }) {
         </div></div>
         <label>
           Taxa (% {unit === 'am' ? 'ao mês' : 'ao ano'})
-          <input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} />
+          <input aria-invalid={!!rateError} aria-describedby="giro-rate-feedback" inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} />
+          {rateError && <small id="giro-rate-feedback" className="field-error">{rateError}</small>}
         </label>
         <label>
           Despesas à vista (R$): tarifa, IOF e seguro descontados do valor
-          <input inputMode="decimal" value={fees} onChange={(e) => setFees(e.target.value)} />
+          <input aria-invalid={!!feesError} aria-describedby="giro-fees-feedback" inputMode="decimal" value={fees} onChange={(e) => setFees(e.target.value)} />
+          <small id="giro-fees-feedback" className={feesError ? 'field-error' : 'muted'} aria-live="polite">{feesError || `Despesas informadas: ${brl(expenses.value)}`}</small>
         </label>
       </div>
 </div>
-<div className="calc-out" id="calc-out">
+<div className="calc-out" id="calc-out" role="region" aria-label="Resultado do capital de giro">
       {!res.ok ? (
         <div className="calc-block">
           {res.missing?.length > 0 && (
@@ -104,10 +115,11 @@ export default function Giro({ curves, hol }) {
         </div>
       ) : (
         <>
+          <p className="status">Simulação de {brl(amount.value)} em {Number(n)} meses · despesas de {brl(expenses.value)} · taxa de {pct(parseRate(rate))} {unit === 'am' ? 'ao mês' : 'ao ano'}.</p>
           <p className="calc-verdict">
             {structure === 'bullet' ? `Pagar ${brl(res.totalPaid)} em ${dm(res.end)}` : `${brl(res.rows[0].payment)} na 1ª parcela${structure === 'sac' ? ` (a última sai ${brl(res.rows.at(-1).payment)})` : ' (iguais)'}`}
             <small>
-              {' '}· total pago {brl(res.totalPaid)} · juros {brl(res.totalInterest)} ({pct((res.totalInterest / parseNum(value)) * 100)} do valor) · taxa {pct(res.i)} ao mês · prazo médio {res.avgLife.toFixed(1).replace('.', ',')} meses
+              {' '}· total pago {brl(res.totalPaid)} · juros {brl(res.totalInterest)} ({pct((res.totalInterest / amount.value) * 100)} do valor) · taxa {pct(res.i)} ao mês · prazo médio {res.avgLife.toFixed(1).replace('.', ',')} meses
             </small>
           </p>
           <div className="options">

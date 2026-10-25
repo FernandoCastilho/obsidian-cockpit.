@@ -12,6 +12,20 @@ const day = '2026-10-22'
 const at = (hour) => new Date(`${day}T${hour}:00:00`).getTime()
 const file = (generatedAt, extra = false) => ({ generatedAt, source: 'Coleta central', resolution: '5 min', series: Object.fromEntries(['USD', 'EUR'].map((code) => [code, { points: [[at('10'), 5], [at('11'), 5.1], ...(extra ? [[at('12'), 5.2]] : [])] }])) })
 
+test('intraday: série ausente ou inválida é erro, não ausência de amostras na data', async (t) => {
+  const clock = browserClock(t), h = await history()
+  globalThis.fetch = async () => json({ generatedAt: clock.now, series: { USD: { points: [[at('10'), 0]] } } })
+  const usd = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
+  const eur = hookRenderer(() => h.useIntraday('EUR', h.fromInput(day)))
+  clock.cleanup(() => { usd.close(); eur.close() })
+  const invalid = await usd.settle()
+  assert.equal(invalid.status, 'error')
+  assert.match(invalid.error, /sem amostras válidas/)
+  const absent = await eur.settle()
+  assert.equal(absent.status, 'error')
+  assert.match(absent.error, /ausente ou inválida/)
+})
+
 test('intraday: atualiza aberto no TTL exato, compartilha consulta e preserva pontos durante loading', async (t) => {
   const clock = browserClock(t), h = await history(), pending = [], urls = []
   globalThis.fetch = (url) => { urls.push(url); const p = deferred(); pending.push(p); return p.promise }
@@ -108,7 +122,7 @@ test('intraday: resposta antiga não invade outra seleção e skip/data inválid
   await r.settle()
   selected = '2026-10-21'; r.render(); await r.settle()
   p.resolve(json(file(clock.now))); const result = await r.settle()
-  assert.equal(calls, 1); assert.equal(result.status, 'error'); assert.equal(result.data, undefined)
+  assert.equal(calls, 1); assert.equal(result.status, 'empty'); assert.equal(result.data, undefined)
   skip = true; r.render(); await r.settle(); assert.equal(clock.timers.size, 0)
   skip = false; selected = ''; r.render(); assert.equal((await r.settle()).status, 'error')
   assert.equal(clock.timers.size, 0); assert.equal(calls, 1)
