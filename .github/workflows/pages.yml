@@ -73,6 +73,8 @@ jobs:
       - name: Coletar commodities diárias e mensais (EIA e Banco Mundial)
         run: node scripts/fetch-commodities.mjs
         timeout-minutes: 3
+      - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
+        run: node scripts/fetch-freight.mjs
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true

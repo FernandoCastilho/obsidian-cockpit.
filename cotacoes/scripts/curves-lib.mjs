@@ -29,7 +29,13 @@ export function pickDates(available, offsets = OFFSETS) {
   return out
 }
 
-const num = (s) => Number(String(s).replace('.', '').replace(',', '.'))
+const num = (s) => {
+  if (typeof s === 'number') return Number.isFinite(s) ? s : NaN
+  const value = String(s ?? '').trim()
+  if (!value) return NaN
+  if (/^-?(?:\d+|\d{1,3}(?:\.\d{3})+),\d+$/.test(value)) return Number(value.replaceAll('.', '').replace(',', '.'))
+  return /^-?\d+(?:\.\d+)?$/.test(value) ? Number(value) : NaN
+}
 
 // Resposta de GetList da B3 -> [[anos úteis (252), taxa % a.a.]]
 export function parseB3(rows, minDays = 1) {

@@ -25,7 +25,7 @@ export default function IndicatorHistory({item,series,loading,failed,onClose}) {
    <p className="muted">Cobertura: {monthLabel(points[0].period)} a {monthLabel(points.at(-1).period)}. {points.length} observações. Meses ausentes não são preenchidos.</p>
    {failed && <p role="status">Última série preservada; não foi possível confirmar a atualização.</p>}
    {selected.error ? <p role="alert">{selected.error}</p> : selected.points.length ? <>
-    <div ref={ref}><Plot points={plot} width={width} color="#6aa9ff" code={`indicator-${item.id}`} intraday={false} fmt={fmt} vfmt={v=>contextValue({...item,value:v})} label={item.label} dateLabel={dateFmt} nice labels /></div>
+    <div ref={ref} className="indicator-history-plot"><Plot points={plot} width={width} color="#6aa9ff" code={`indicator-${item.id}`} intraday={false} fmt={fmt} vfmt={v=>contextValue({...item,value:v})} label={item.label} dateLabel={dateFmt} nice labels /></div>
     <p className="muted">Passe o mouse ou toque no gráfico para consultar uma observação. A tabela abaixo também permite consulta por teclado.</p>
     <label>Consultar competência <select aria-label="Consultar competência do indicador" value={inspectedPoint?.period || ''} onChange={e=>setInspected(e.target.value)}>{selected.points.map(p=><option key={p.period} value={p.period}>{p.periodLabel || monthLabel(p.period)}</option>)}</select></label>
     {inspectedPoint && <p aria-live="polite">{inspectedPoint.periodLabel || monthLabel(inspectedPoint.period)}: {fmt(inspectedPoint.value)}{inspectedPoint.preliminary ? ' · preliminar' : ''}</p>}

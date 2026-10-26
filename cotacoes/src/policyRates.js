@@ -22,9 +22,9 @@ export function policyRows(data,periods,{loading=false,error=false,now=Date.now(
         .reduce((a,b)=>!a || b.date>a.date ? b : a,null)
       return [period.id,{
         value:p ? pointValue(p) : '-', date:p ? displayDate(p.date) : undefined,
-        status:p ? `${pending ? 'Atualização pendente · ' : ''}Vigente desde a data indicada${p.approximate ? ' · alvo aproximado' : ''}`
+        status:p ? `${pending ? 'Atualização pendente · ' : ''}${series?.provider === 'BIS' ? 'Primeira observação deste nível na série' : 'Vigente desde a data indicada'}${p.approximate ? ' · alvo aproximado' : ''}`
           : series?.usagePending ? 'Uso da fonte aguardando validação' : loading ? 'Carregando fonte oficial…' : 'Sem vigência verificada até esta data',
-        source,sourceUrl:p?.sourceUrl || series?.sourceUrl,
+        source:series?.sourceName || source,sourceUrl:p?.sourceUrl || series?.sourceUrl,
       }]
     }))}
   })

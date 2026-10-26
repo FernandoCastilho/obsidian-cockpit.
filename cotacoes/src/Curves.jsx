@@ -2,6 +2,7 @@ import { useId, useMemo, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
 import './ChartAccess.css'
 import { isWeekendBR } from './market.js'
+import { dataTimestamp } from './dataTimestamp.js'
 import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
 
@@ -134,6 +135,9 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
         )}
       </div>
       <p className="status">{source}</p>
+      {compare[0]?.date && <p className="status">Referência: {day(data.sourceDate || compare[0].date)}{data.checkedAt ? ` · Conferência dos vértices: ${dataTimestamp(data.checkedAt)}` : ''}.</p>}
+      {data.discoveryPending && <p className="status stale" role="status">Catálogo de datas B3 indisponível. Vértices conferidos somente nas datas oficiais já conhecidas; não foi possível confirmar uma referência mais recente.</p>}
+      {!data.discoveryPending && data.warnings?.length>0 && <p className="status stale" role="status">Comparações históricas com pendência: {data.warnings.join(' · ')}</p>}
     </article>
   )
 }
