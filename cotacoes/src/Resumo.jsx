@@ -1,4 +1,5 @@
 import './MarketTable.css'
+import './MarketTerminal.css'
 import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
@@ -49,16 +50,16 @@ function Arrow({ v }) {
   return <span aria-hidden="true">{v > 0 ? '▲' : v < 0 ? '▼' : '■'}</span>
 }
 
-function QuoteRow({ code, quote, ptax, loading, onOpen, color }) {
+function QuoteRow({ code, quote, ptax, loading, selected, onOpen, color }) {
   const cur = CURRENCIES.find(c => c.code === code)
   const hasDay = !!quote && !quote.fallback && Number.isFinite(quote.pct)
   const delta = hasDay && Number.isFinite(quote.delta) ? quote.delta : null
   const open = () => onOpen(code)
   const status = !quote ? loading ? 'Carregando cotação' : 'Cotação indisponível' : quote.stale ? 'Atualização pendente' : quote.fallback ? 'Referência diária de reserva' : 'Referência da fonte'
   const series = quote?.source || code
-  return <tbody className="market-record" style={{ '--series': color }}>
+  return <tbody className={'market-record' + (selected ? ' is-selected' : '')} style={{ '--series': color }}>
     <tr className="market-values" onClick={open}>
-      <th scope="row"><button type="button" className="market-open" onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
+      <th scope="row"><button type="button" className="market-open" aria-pressed={selected} onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
         <b>{series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
       </button></th>
       <td className="market-price">{quote ? brl(quote.bid, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span className="muted">—</span>}</td>
@@ -270,8 +271,7 @@ function Wide({ render }) {
   return <div ref={ref}>{width > 0 ? render(width) : null}</div>
 }
 
-function ResumoChart({ colors, spark, onPrevious }) {
-  const [sel, setSel] = useState(['USD'])
+function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPrevious }) {
   const w = useWindow(spark)
   const dia = !!spark.intraday
   // hooks em número fixo (uma consulta por moeda; ficam em cache)
@@ -335,6 +335,7 @@ function ResumoChart({ colors, spark, onPrevious }) {
       <div ref={ref}>
         {chart(width)}
       </div>
+      <p className="terminal-chart-source muted">{rows.filter(r => r.st.data).map(r => r.code + ': ' + (r.st.data.feed || 'AwesomeAPI') + (r.st.data.generatedAt ? ' · arquivo de ' + dataTimestamp(r.st.data.generatedAt) : ' · data do arquivo não disponível')).join(' | ')}</p>
     </div>
     {big && (
       <Overlay onClose={() => setBig(false)}>
@@ -371,6 +372,7 @@ function ResumoChart({ colors, spark, onPrevious }) {
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors }) {
+  const [selection, setSelection] = useState(['USD'])
   const [sparkId, setSparkId] = useState('day')
   const [custom, setCustom] = useState(null)
   const [dates, setDates] = useState(() => ({ start: toInput(new Date()), end: toInput(new Date()) }))
@@ -390,12 +392,14 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
     if (!selection.error) { setCustom(selection); setSparkId('custom') }
   }
   const chooseDate = (key, value) => applyDates({ ...dates, [key]: value })
-  const openSelected = (code) => onOpen(code, spark)
+  const openSelected = code => { if (CURRENCIES.some(c => c.code === code)) setSelection([code]); onOpen(code, spark) }
   return (
       <Expandable label="Mercado hoje">
-      <section aria-labelledby="r-moedas">
-        <div className="sec-head">
+      <section className="market-terminal" aria-labelledby="r-moedas">
+        <div className="sec-head terminal-titlebar">
           <h2 id="r-moedas">Mercado hoje <Explain id="mercadoHoje" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+        </div>
+        <div className="terminal-toolbar">
           <div className="summary-period-controls">
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
@@ -410,22 +414,31 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           </div>
           </div>
         </div>
+        <div className="terminal-summary" role="group" aria-label="Resumo das últimas cotações em reais">
+          {CURRENCIES.map(c => <button key={c.code} type="button" onClick={() => openSelected(c.code)} aria-label={'Abrir gráfico de ' + c.code + '/BRL no resumo'}><span>{quotes?.[c.code]?.source || c.code}/BRL</span><b>{quotes?.[c.code] ? brl(quotes[c.code].bid, c.code === 'JPY' ? 5 : 4) : '—'}</b></button>)}
+        </div>
         <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. </small>
         {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
-        <p className="market-instruction muted" id="market-help">Toque na linha ou selecione o par para abrir o gráfico. Cotação e Δ dia são da última referência; os filtros alteram apenas os gráficos.</p>
+        <p className="market-instruction muted" id="market-help">Toque na linha para selecionar e abrir o gráfico. Cotação e Δ dia são da última referência; os filtros alteram apenas os gráficos.</p>
+        <div className="terminal-main">
+        <div className="terminal-quotes">
         <div className="market-table-wrap">
           <table className="market-table" aria-busy={!quotes} aria-describedby="market-help">
             <caption className="market-caption">Câmbio em reais · últimas referências disponíveis</caption>
             <thead><tr><th scope="col">Par</th><th scope="col">Cotação <small>(R$)</small></th><th scope="col" aria-label="Variação absoluta do dia em reais">Δ dia <small>(R$)</small></th><th scope="col" aria-label="Variação percentual do dia">Δ dia %</th></tr></thead>
-            {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} loading={!quotes} ptax={ptax?.[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
+            {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} loading={!quotes} selected={selection.includes(c.code)} ptax={ptax?.[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
           </table>
         </div>
         <p className="market-instruction muted">—: variação não informada pela fonte. A cotação CNH é calculada por cruzamento; sua variação absoluta não está disponível.</p>
+        </div>
+        <div className="terminal-chart">
+        <ResumoChart colors={colors} spark={spark} selection={selection} onSelection={setSelection} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
+        </div>
+        </div>
         <div className="tiles market-secondary">
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
           <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>
-        <ResumoChart colors={colors} spark={spark} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
       </section>
       </Expandable>
   )
