@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-26T12:35:00.286Z",
+  "series": {
+    "id": "freight-us-ppi",
+    "unit": "pontos · jun/1988=100",
+    "frequency": "monthly",
+    "sourceName": "U.S. Bureau of Labor Statistics (BLS)",
+    "sourceUrl": "https://data.bls.gov/timeseries/PCU483111483111",
+    "checkedAt": "2026-10-26T12:35:00.286Z",
+    "stale": false,
+    "releaseDate": null,
+    "points": [
+      {
+        "period": "2024-01",
+        "value": 420.196,
+        "preliminary": false
+      },
+      {
+        "period": "2024-02",
+        "value": 410.193,
+        "preliminary": false
+      },
+      {
+        "period": "2024-03",
+        "value": 398.465,
+        "preliminary": false
+      },
+      {
+        "period": "2024-04",
+        "value": 400.708,
+        "preliminary": false
+      },
+      {
+        "period": "2024-05",
+        "value": 414.552,
+        "preliminary": false
+      },
+      {
+        "period": "2024-06",
+        "value": 434.674,
+        "preliminary": false
+      },
+      {
+        "period": "2024-07",
+        "value": 439.668,
+        "preliminary": false
+      },
+      {
+        "period": "2024-08",
+        "value": 432.687,
+        "preliminary": false
+      },
+      {
+        "period": "2024-09",
+        "value": 414.282,
+        "preliminary": false
+      },
+      {
+        "period": "2024-10",
+        "value": 409.49,
+        "preliminary": false
+      },
+      {
+        "period": "2024-11",
+        "value": 396.571,
+        "preliminary": false
+      },
+      {
+        "period": "2024-12",
+        "value": 394.191,
+        "preliminary": false
+      },
+      {
+        "period": "2025-01",
+        "value": 428.44,
+        "preliminary": false
+      },
+      {
+        "period": "2025-02",
+        "value": 437.603,
+        "preliminary": false
+      },
+      {
+        "period": "2025-03",
+        "value": 415.837,
+        "preliminary": false
+      },
+      {
+        "period": "2025-04",
+        "value": 410.34,
+        "preliminary": false
+      },
+      {
+        "period": "2025-05",
+        "value": 399.524,
+        "preliminary": false
+      },
+      {
+        "period": "2025-06",
+        "value": 404.766,
+        "preliminary": false
+      },
+      {
+        "period": "2025-07",
+        "value": 392.604,
+        "preliminary": false
+      },
+      {
+        "period": "2025-08",
+        "value": 392.827,
+        "preliminary": false
+      },
+      {
+        "period": "2025-09",
+        "value": 390.95,
+        "preliminary": false
+      },
+      {
+        "period": "2025-10",
+        "value": 420.696,
+        "preliminary": false
+      },
+      {
+        "period": "2025-11",
+        "value": 402.725,
+        "preliminary": false
+      },
+      {
+        "period": "2025-12",
+        "value": 415.302,
+        "preliminary": false
+      },
+      {
+        "period": "2026-01",
+        "value": 445.272,
+        "preliminary": false
+      },
+      {
+        "period": "2026-02",
+        "value": 441.81,
+        "preliminary": false
+      },
+      {
+        "period": "2026-03",
+        "value": 451.353,
+        "preliminary": false
+      },
+      {
+        "period": "2026-04",
+        "value": 462.08,
+        "preliminary": false
+      },
+      {
+        "period": "2026-05",
+        "value": 475.059,
+        "preliminary": false
+      },
+      {
+        "period": "2026-06",
+        "value": 504.328,
+        "preliminary": true
+      },
+      {
+        "period": "2026-07",
+        "value": 521.184,
+        "preliminary": true
+      },
+      {
+        "period": "2026-08",
+        "value": 532.736,
+        "preliminary": true
+      },
+      {
+        "period": "2026-09",
+        "value": 534.796,
+        "preliminary": true
+      }
+    ],
+    "revisionNote": "Índice não dessazonalizado de preços recebidos por produtores dos EUA no transporte marítimo de carga (NAICS 483111). Valores preliminares podem ser revistos. Não representa rota brasileira, cotação spot ou US$/contêiner. BLS.gov não pode atestar os dados ou análises derivados após a extração dos dados de BLS.gov.",
+    "licenseUrl": "https://www.bls.gov/bls/linksite.htm",
+    "termsUrl": "https://www.bls.gov/developers/termsOfService.htm"
+  }
+}

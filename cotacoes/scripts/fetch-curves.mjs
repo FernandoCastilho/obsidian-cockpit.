@@ -1,7 +1,8 @@
+import { collectB3Curve } from './b3-collector.mjs'
 // Coleta as curvas de juros (DI x pré da B3 e Treasuries dos EUA) e grava public/curves.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
-import { b3Url, parseB3, parseTreasury, pickDates } from './curves-lib.mjs'
+import { parseTreasury, pickDates } from './curves-lib.mjs'
 
 const UA = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', accept: 'application/json, text/csv, */*' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -25,28 +26,20 @@ async function get(url, label, text = false, tries = 4) {
   return null
 }
 
+const previous = await loadPrevious('curves.json')
 const out = { generatedAt: Date.now(), br: null, cc: null, us: null, errors }
 
 // Brasil (B3, Taxas referenciais): PRE = DI x pré; DOL = DI x dólar (cupom cambial). minDays corta os vértices curtos, muito ruidosos no cupom.
-async function b3Curve(id, minDays) {
-  const dates = await get(b3Url('GetDate', { language: 'pt-br', id }), `B3 ${id} datas`)
-  const picks = pickDates(dates ?? [])
-  const curves = {}
-  for (const p of picks) {
-    const pts = []
-    for (let page = 1; page <= 5; page++) {
-      const r = await get(b3Url('GetList', { language: 'pt-br', id, pageNumber: page, pageSize: 100, date: p.date }), `B3 ${id} ${p.date} p${page}`)
-      pts.push(...parseB3(r?.results, minDays))
-      if (!r || page >= (r.page?.totalPages ?? 0)) break
-    }
-    if (pts.length) curves[p.date] = pts
-  }
-  const compare = picks.filter((p) => curves[p.date])
-  console.log(`B3 ${id}:`, compare.map((p) => p.date).join(', ') || 'sem dados')
-  return compare.length ? { compare, curves } : null
+async function b3Curve(id,minDays,key) {
+  try {
+    const data=await collectB3Curve(id,minDays,{previous:previous?.[key],now:out.generatedAt})
+    errors.push(...data.warnings)
+    console.log('B3 '+id+': '+data.sourceDate+'; '+data.curves[data.sourceDate].length+' vértices; catálogo pendente='+data.discoveryPending)
+    return data
+  } catch(error) { errors.push(error.message); return null }
 }
-out.br = await b3Curve('PRE', 1)
-out.cc = await b3Curve('DOL', 21)
+out.br = await b3Curve('PRE', 1, 'br')
+out.cc = await b3Curve('DOL', 21, 'cc')
 
 // EUA: Treasury par yield curve (Tesouro dos EUA)
 {
@@ -62,7 +55,8 @@ out.cc = await b3Curve('DOL', 21)
   console.log('Treasuries:', picks.map((p) => p.date).join(', ') || 'sem dados')
 }
 
-fillFromPrevious(out, await loadPrevious('curves.json'), ['br', 'cc', 'us'])
+fillFromPrevious(out, previous, ['br', 'cc', 'us'])
+for(const key of ['br','cc']) if(out[key]?.discoveryPending) out.stale[key]=previous?.stale?.[key] ?? previous?.generatedAt ?? null
 if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 if (!out.br && !out.us && process.env.CURVES_STRICT === 'true') {
   console.error('Nenhuma curva coletada:', errors)
