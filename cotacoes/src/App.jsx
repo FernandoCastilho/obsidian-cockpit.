@@ -1,6 +1,7 @@
 import { dataTimestamp } from './dataTimestamp.js'
 import './AppDisclaimer.css'
 import InfoNotice from './InfoNotice.jsx'
+import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
@@ -188,6 +189,7 @@ function Sheet({ onClose, children }) {
 
 export default function App() {
   const { quotes, direction, error, errors, updatedAt, via, reload, refresh, refreshing, limits } = useQuotes(POLL_MS)
+  const quoteAgeWarning = quotes && CURRENCIES.some(c => !!quoteAgeState(quotes[c.code]))
   const macro = useMacro()
   const curves = useCurves()
   const hol = useHolidays()
@@ -286,7 +288,7 @@ export default function App() {
       )}
       {tab === 'resumo' && (
       <p className="status src">
-        <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
+        <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
         {error
           ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
           : updatedAt

@@ -79,6 +79,7 @@
 .market-footnotes li { margin-bottom:5px; }
 .market-footnotes .status { display:inline; margin:0; font-size:inherit; }
 .market-terminal .market-open .market-state { color:#ffd37b; font-weight:600; }
+.status.src .dot.delayed { background:#e5b453; }
 .general-notice-footer { margin:16px 0; padding-bottom:16px; }
 .general-notice-footer .app-disclaimer { justify-content:flex-start; }
 .market-scroll-hint { display:none; margin:8px 0; font-size:.75rem; color:var(--terminal-amber); }
