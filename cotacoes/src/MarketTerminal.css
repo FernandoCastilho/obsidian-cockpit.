@@ -60,3 +60,31 @@
 .market-terminal .pair-tile .pair-sel, .market-terminal .pair-tile .more { min-height:44px; }
 .market-terminal .pair-tile .more { min-width:76px; scroll-margin-block:100px; }
 @media (min-width:1000px) { .market-terminal > .market-secondary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+/* Seven financial columns retain precision; narrow screens scroll the table only. */
+.market-terminal .market-table-wrap { overflow-x:auto; overscroll-behavior-inline:contain; }
+.market-terminal .market-table-wrap:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+.market-terminal .market-table { min-width:600px; }
+.market-terminal .market-table thead th { width:auto; padding:10px 6px; font-size:.74rem; }
+.market-terminal .market-table thead th:first-child { width:21%; }
+.market-terminal .market-table thead th:nth-child(2) { width:14%; }
+.market-terminal .market-table thead th:nth-child(3) { width:15%; }
+.market-terminal .market-table thead th:nth-child(n+4) { width:12.5%; }
+.market-terminal .market-table td { font-size:.78rem; padding:4px 6px; }
+.market-terminal .market-table .market-price { font-size:.85rem; }
+.market-terminal .market-open small { font-size:.7rem; }
+.market-terminal .market-footnotes { padding:10px 12px; border-top:1px solid #343a43; font-size:.75rem; line-height:1.55; overflow-wrap:anywhere; }
+.market-footnotes p { margin:4px 0 8px; }
+.market-footnotes ul { padding-left:18px; margin:8px 0; }
+.market-footnotes li { margin-bottom:5px; }
+.market-footnotes .status { display:inline; margin:0; font-size:inherit; }
+.market-terminal .market-open .market-state { color:#ffd37b; font-weight:600; }
+.general-notice-footer { margin:16px 0; padding-bottom:16px; }
+.general-notice-footer .app-disclaimer { justify-content:flex-start; }
+.market-scroll-hint { display:none; margin:8px 0; font-size:.75rem; color:var(--terminal-amber); }
+@media (max-width:650px) {
+  .market-scroll-hint { display:block; }
+  .market-terminal .market-table thead th:first-child, .market-terminal .market-values th { position:sticky; left:0; z-index:1; background:#080b10; }
+  .market-terminal .market-record.is-selected .market-values th { background:#142236; }
+  .market-terminal .market-table thead th:first-child { z-index:2; background:#191c23; }
+}

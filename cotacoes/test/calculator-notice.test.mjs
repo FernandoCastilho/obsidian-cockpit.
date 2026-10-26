@@ -19,7 +19,8 @@ test('validation notice is shared by calculator list and direct calculator route
 
 test('general notice remains globally available with full text while material calculator notice stays visible', () => {
   const app = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8')
-  assert.match(app, /<main className="app">\s*<InfoNotice>/)
+  assert.match(app, /<footer className="general-notice-footer"[^>]*>\s*<InfoNotice>/)
+  assert.ok(app.indexOf('<InfoNotice>') > app.indexOf('</Suspense>'))
   for (const text of ['As simulações são hipotéticas', 'observadas as responsabilidades previstas na legislação aplicável', 'baseado em fontes públicas', 'O uso é de responsabilidade do usuário']) assert.ok(app.includes(text))
   assert.ok(app.includes('<p><i>{DISCLAIMER}</i></p>'))
 })

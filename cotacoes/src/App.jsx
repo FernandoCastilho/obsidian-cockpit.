@@ -271,11 +271,7 @@ export default function App() {
       </div>
     )}
     <main className="app">
-      <InfoNotice>
-        <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
-        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
-        <p><i>{DISCLAIMER}</i></p>
-      </InfoNotice>
+
       <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (
         <div className="update-notice" role="status">
@@ -377,6 +373,13 @@ export default function App() {
         </Sheet>
       )}
       </Suspense>
+      <footer className="general-notice-footer" aria-label="Avisos gerais do aplicativo">
+      <InfoNotice>
+        <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
+        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
+        <p><i>{DISCLAIMER}</i></p>
+      </InfoNotice>
+      </footer>
     </main>
     </>
   )
