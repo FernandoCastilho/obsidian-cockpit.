@@ -8,6 +8,12 @@ export const GLOSSARY = {
     b: 'Dólar a R$ 5,00: com R$ 5,00 você compra US$ 1. A seta mostra se está mais caro (▲) ou mais barato (▼) que no fechamento anterior.',
     c: 'Dólar subindo encarece importação e dívida em dólar; ajuda quem exporta.',
   },
+  mercadoHoje: {
+    t: 'Mercado hoje: tabela e gráficos',
+    a: 'Cotação é o preço em reais de uma unidade da moeda. Δ dia mostra a variação absoluta em reais e Δ dia % a variação percentual informada para a referência.',
+    b: 'Um sinal positivo indica alta; um negativo indica queda. O traço significa que a fonte não forneceu aquela variação, e não variação zero.',
+    c: 'Toque na linha para abrir o gráfico. Os filtros mudam os gráficos, não a última cotação da tabela. Confira fonte, data e avisos de cada referência.',
+  },
   minigrafico: {
     t: 'Minigráfico e período',
     a: 'Um desenho do caminho do preço no período escolhido (Dia, Semana, Mês ou Ano).',

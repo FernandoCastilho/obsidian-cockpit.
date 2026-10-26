@@ -27,14 +27,14 @@ const assert = require('node:assert/strict')
   return route.abort()
  })
  await page.goto(`${base}/#resumo`)
- await page.getByRole('button',{name:'Dólar americano: detalhes',exact:true}).waitFor()
+ await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).waitFor()
  assert.equal(chunks.some(u=>/\/Calculadora-/.test(u)),false,'calculadora não deve entrar na carga inicial')
- for(const label of ['Juros','Calculadoras','Feriados','Cenários','Notícias','Configurações','Moedas']){
+ for(const label of ['Juros','Calculadoras','Feriados','Cenários','Notícias','Configurações','Mercado hoje']){
   await page.getByRole('navigation',{name:'Seções'}).getByRole('button',{name:label,exact:true}).click()
   await page.waitForTimeout(200)
   assert.equal(await page.getByRole('heading',{name:'Não foi possível exibir esta tela'}).count(),0,label)
  }
- await page.getByRole('button',{name:'Dólar americano: detalhes',exact:true}).click()
+ await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).click()
  const dialog=page.getByRole('dialog',{name:'detalhes da moeda'})
  await dialog.waitFor({state:'visible'})
  const plot=dialog.locator('svg[tabindex="0"]').first()

@@ -59,6 +59,8 @@ export const toQuote = (q, source) => {
   high: Number(q.high),
   low: Number(q.low),
   pct: Number(q.pctChange),
+  // Apenas o campo absoluto fornecido pela fonte: ausência nunca vira zero.
+  delta: ['string', 'number'].includes(typeof q.varBid) && String(q.varBid).trim() !== '' && Number.isFinite(Number(q.varBid)) ? Number(q.varBid) : null,
   timestamp: Number(q.timestamp) * 1000,
   })
 }
