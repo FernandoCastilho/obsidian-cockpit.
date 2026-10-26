@@ -1,3 +1,4 @@
+import './MarketTable.css'
 import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
@@ -48,52 +49,28 @@ function Arrow({ v }) {
   return <span aria-hidden="true">{v > 0 ? '▲' : v < 0 ? '▼' : '■'}</span>
 }
 
-function Tile({ code, quote, ptax, spark, onOpen, wide, color }) {
-  const w = useWindow(spark)
-  const h = useHistory(code, w.start, w.end, !!spark.intraday)
-  const i = useIntraday(code, spark.day ? fromInput(spark.day) : new Date(), !spark.intraday)
-  const s = spark.intraday ? i : h
-  const pts = s.status === 'ok' ? s.data.points : []
-  const change = periodChange(pts)
-  const hasDay = !!quote && !quote.fallback // a fonte reserva (BCE) não traz a variação do dia
-  const day = hasDay ? quote.pct ?? 0 : 0
-  const trend = toneOf(hasDay ? day : change)
-  const cur = CURRENCIES.find((c) => c.code === code)
-  return (
-    <button type="button" style={{ '--series': color }} className={`tile${wide ? ' wide' : ''}`} onClick={() => onOpen(code)} aria-label={`${cur.name}: detalhes`}>
-      <span className="tile-head">
-        <span className="flag" aria-hidden="true" dangerouslySetInnerHTML={{ __html: flagSvg(code, 'width="26" height="18"') }} />
-        <span className="tile-name">
-          <b>{NAMES[code]}</b> <small>· {quote?.source ?? code}/BRL{code === 'CNH' && quote?.source === 'CNH' && ' offshore'}</small>
-        </span>
-      </span>
-      <span className="tile-body">
-        <span className="tile-num">
-          <span className="tile-price">{quote ? brl(quote.bid) : '—'}</span>
-          {hasDay ? (
-            <span className={`pct ${trend}`}>
-              <Arrow v={day} /> {pct(day)}
-            </span>
-          ) : (
-            quote && <small className="muted">var. do dia indisponível</small>
-          )}
-        </span>
-        {pts.length > 0 && <span className="tile-spark">
-          <Sparkline points={pts} tone={change != null ? toneOf(change) : trend} />
-        </span>}
-      </span>
-          <small className="muted tile-period">
-            {spark.label}
-            {change != null ? <span className={`pct ${toneOf(change)}`}> {pct(change)}</span> : spark.intraday && (s.status === 'empty' ? ' · sem amostras' : s.status === 'error' ? ' · falha na consulta' : s.status === 'loading' ? ' · carregando' : ' · variação indisponível')}
-          </small>
-      {(s.stale || s.warning) && <small className="tile-history-status status stale">Histórico: conferir atualização.</small>}
-      {quote && <small className={quote.stale || quote.fallback ? 'status stale' : 'muted'}>
-        {quote.stale ? 'Atualização pendente · ' : quote.fallback ? 'Referência diária de reserva · ' : 'Referência · '}
-        {Number.isFinite(quote.timestamp) ? dataTimestamp(quote.timestamp) : 'data desconhecida'}
-      </small>}
-      {ptax && <small className="muted" style={{ whiteSpace: 'nowrap' }}>PTAX {brl(ptax.sell)}</small>}
-    </button>
-  )
+function QuoteRow({ code, quote, ptax, loading, onOpen, color }) {
+  const cur = CURRENCIES.find(c => c.code === code)
+  const hasDay = !!quote && !quote.fallback && Number.isFinite(quote.pct)
+  const delta = hasDay && Number.isFinite(quote.delta) ? quote.delta : null
+  const open = () => onOpen(code)
+  const status = !quote ? loading ? 'Carregando cotação' : 'Cotação indisponível' : quote.stale ? 'Atualização pendente' : quote.fallback ? 'Referência diária de reserva' : 'Referência da fonte'
+  const series = quote?.source || code
+  return <tbody className="market-record" style={{ '--series': color }}>
+    <tr className="market-values" onClick={open}>
+      <th scope="row"><button type="button" className="market-open" onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
+        <b>{series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
+      </button></th>
+      <td className="market-price">{quote ? brl(quote.bid, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span className="muted">—</span>}</td>
+      <td className={delta == null ? 'muted' : 'pct ' + toneOf(delta)}>{delta == null ? <span aria-label={quote?.cross ? 'Variação absoluta indisponível para o cruzamento' : 'Variação absoluta indisponível'} title={quote?.cross ? 'A fonte não fornece variação absoluta deste cruzamento' : 'Variação absoluta não fornecida'}>—</span> : (delta > 0 ? '+' : delta < 0 ? '−' : '') + Math.abs(delta).toLocaleString('pt-BR', { minimumFractionDigits: code === 'JPY' ? 5 : 4, maximumFractionDigits: code === 'JPY' ? 5 : 4 })}</td>
+      <td className={hasDay ? 'pct ' + toneOf(quote.pct) : 'muted'}>{hasDay ? pct(quote.pct) : <span aria-label="Variação percentual do dia indisponível">—</span>}</td>
+    </tr>
+    <tr className="market-meta" onClick={open}><td colSpan="4">
+      <span className={(!quote && !loading) || quote?.stale || quote?.fallback ? 'status stale' : 'muted'}>{status}{quote && ' · ' + dataTimestamp(quote.timestamp)}</span>
+      <span className="muted">{quote ? quote.fallback ? 'BCE · referência diária' : quote.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}</span>
+      {ptax && <span className="muted">BCB · PTAX venda · {/^\d{4}-\d{2}-\d{2}$/.test(ptax.date || '') ? ptax.date.split('-').reverse().join('/') : 'data não disponível'}: {brl(ptax.sell)}</span>}
+    </td></tr>
+  </tbody>
 }
 
 // Paridade entre duas moedas à escolha: base à esquerda, cotada à direita (padrão EUR/USD, convenção de mercado).
@@ -415,10 +392,10 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const chooseDate = (key, value) => applyDates({ ...dates, [key]: value })
   const openSelected = (code) => onOpen(code, spark)
   return (
-      <Expandable label="card das moedas">
+      <Expandable label="Mercado hoje">
       <section aria-labelledby="r-moedas">
         <div className="sec-head">
-          <h2 id="r-moedas">Moedas <Explain id="minigrafico" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+          <h2 id="r-moedas">Mercado hoje <Explain id="mercadoHoje" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
           <div className="summary-period-controls">
           <div className="seg" role="group" aria-label="Período do minigráfico">
             {SPARK.map((s) => (
@@ -433,12 +410,18 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           </div>
           </div>
         </div>
-        <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. Valores principais são as últimas cotações, não o histórico filtrado.</small>
+        <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. </small>
         {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
-        <div className="tiles">
-          {CURRENCIES.map((c) => (
-            <Tile key={c.code} code={c.code} quote={quotes?.[c.code]} ptax={ptax?.[c.code]} spark={spark} onOpen={openSelected} color={colors?.[c.code]} />
-          ))}
+        <p className="market-instruction muted" id="market-help">Toque na linha ou selecione o par para abrir o gráfico. Cotação e Δ dia são da última referência; os filtros alteram apenas os gráficos.</p>
+        <div className="market-table-wrap">
+          <table className="market-table" aria-busy={!quotes} aria-describedby="market-help">
+            <caption className="market-caption">Câmbio em reais · últimas referências disponíveis</caption>
+            <thead><tr><th scope="col">Par</th><th scope="col">Cotação <small>(R$)</small></th><th scope="col" aria-label="Variação absoluta do dia em reais">Δ dia <small>(R$)</small></th><th scope="col" aria-label="Variação percentual do dia">Δ dia %</th></tr></thead>
+            {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} loading={!quotes} ptax={ptax?.[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
+          </table>
+        </div>
+        <p className="market-instruction muted">—: variação não informada pela fonte. A cotação CNH é calculada por cruzamento; sua variação absoluta não está disponível.</p>
+        <div className="tiles market-secondary">
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
           <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>

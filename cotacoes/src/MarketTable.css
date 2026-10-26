@@ -1,0 +1,42 @@
+/* Real quote table; graph periods and independent instruments keep their own controls. */
+.market-table-wrap { width:100%; min-width:0; }
+.market-table { width:100%; table-layout:fixed; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.market-caption { text-align:left; color:var(--mut); font-size:.8rem; padding:6px 0 10px; }
+.market-table thead { background:var(--surface-2, #161b22); }
+.market-table thead th { color:var(--mut); font-size:.78rem; font-weight:600; padding:10px 8px; text-align:right; border-bottom:1px solid var(--line); }
+.market-table thead th:first-child { text-align:left; width:30%; }
+.market-table thead th:nth-child(2) { width:25%; }
+.market-table thead th:nth-child(3) { width:23%; }
+.market-table thead th:nth-child(4) { width:22%; }
+.market-table thead small { font-size:inherit; }
+.market-table td { text-align:right; padding:4px 8px; }
+.market-values th { text-align:left; padding:0; font-weight:400; }
+.market-values td { white-space:nowrap; }
+.market-price { font-size:1.05rem; font-weight:700; }
+.market-record { cursor:pointer; border-bottom:1px solid var(--line); }
+.market-record:hover, .market-record:focus-within { background:var(--surface-2, #161b22); }
+.market-open { display:flex; flex-direction:column; justify-content:center; gap:3px; text-align:left; min-height:48px; width:100%; padding:8px; background:transparent; color:var(--fg); border:0; font:inherit; cursor:pointer; }
+.market-open b { color:var(--fg); font-size:.95rem; }
+.market-open b span { color:var(--mut); }
+.market-open small { color:var(--mut); font-size:.76rem; line-height:1.3; }
+.market-open:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+.market-meta td { padding:0 8px 10px; text-align:left; font-size:.76rem; line-height:1.5; overflow-wrap:anywhere; }
+.market-meta td > span { display:block; }
+.market-meta .status { margin:0; font-size:inherit; }
+.market-instruction { font-size:.8rem; line-height:1.5; margin:10px 0 4px; }
+.market-secondary { margin-top:16px; }
+@media (min-width:700px) {
+  .market-meta td > span { display:inline; }
+  .market-meta td > span + span::before { content:' · '; }
+  .market-table td { font-size:.95rem; }
+  .market-meta td { font-size:.78rem; }
+}
+@media (max-width:450px) {
+  .market-table thead th { padding:9px 4px; font-size:.73rem; }
+  .market-table td { padding-right:4px; padding-left:4px; font-size:.78rem; }
+  .market-table .market-price { font-size:.85rem; }
+  .market-open { padding:8px 4px; }
+  .market-open b { font-size:.8rem; }
+  .market-open small { font-size:.72rem; }
+  .market-meta td { font-size:.74rem; padding-bottom:10px; }
+}
