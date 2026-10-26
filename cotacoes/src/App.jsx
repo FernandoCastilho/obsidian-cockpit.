@@ -1,5 +1,6 @@
 import { dataTimestamp } from './dataTimestamp.js'
 import './AppDisclaimer.css'
+import InfoNotice from './InfoNotice.jsx'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
@@ -270,12 +271,11 @@ export default function App() {
       </div>
     )}
     <main className="app">
-      <aside className="app-disclaimer" aria-label="Aviso sobre informações e simulações">
-        <details>
-          <summary>Conteúdo ilustrativo, não constitui recomendação · aviso completo</summary>
-          <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
-        </details>
-      </aside>
+      <InfoNotice>
+        <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
+        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
+        <p><i>{DISCLAIMER}</i></p>
+      </InfoNotice>
       <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (
         <div className="update-notice" role="status">
@@ -354,11 +354,6 @@ export default function App() {
  <>
       <Novidades />
       <footer>
-        <details className="premissas">
-          <summary>Fontes e avisos</summary>
-          <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
-          <p><i>{DISCLAIMER}</i></p>
-        </details>
         <p>
           <button type="button" className="fx-toggle" aria-pressed={fx === 'neon'} onClick={() => setFx(fx === 'neon' ? 'off' : 'neon')} title="Brilho discreto nas linhas dos gráficos (desligado por padrão)">
             Efeitos: {fx === 'neon' ? 'brilho ligado' : 'desligados'}

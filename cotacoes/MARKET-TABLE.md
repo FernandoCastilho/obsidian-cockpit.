@@ -1,6 +1,6 @@
 # Mercado hoje — tabela de cotações
 
-Base: produção `05b57005e8ceb0c9d7d34d6685a889df3711767c` (PR144). Nova interface preparada em branch isolada; não autoriza merge ou deploy.
+Base: produção `05b57005e8ceb0c9d7d34d6685a889df3711767c` (PR144). Interface preparada em branch isolada. Publicação e ajuste do aviso geral autorizados em26/10/2026, condicionados aos checks e QA do SHA final.
 
 - Seção e menu passam de Moedas para Mercado hoje. O endereço `#resumo` permanece compatível. Não há bloco editorial novo.
 - Tabela HTML real: Par, Cotação (R$ por unidade), Δ dia (R$), Δ dia %. Linhas abrem os gráficos existentes; botão nativo no par oferece Enter/Espaço, foco visível e retorno após Escape. Paridade e petróleo conservam seus controles independentes.
@@ -16,10 +16,14 @@ Diretor de Arte/Simplificador revisaram capturas reais 390/820/1440, incluindo r
 
 ## Verificação reproduzível
 
-- `npm test`: 198 testes; `npm run build`: aprovado. Pacote JavaScript sem scripts próprios de lint/tipos.
+- `npm test`: 197 testes (avisos gerais cobertos em um teste consolidado e smoke de navegador); `npm run build`: aprovado. Pacote JavaScript sem scripts próprios de lint/tipos.
 - `scripts/smoke-market-table.cjs`: requer Playwright/Edge do executor, usa fixtures sintéticas identificadas. Aceita `SMOKE_BASE_URL` e `TABLE_QA_OUTPUT`. Testa quatro linhas, cliques, Enter/Espaço, Escape/retorno de foco, Back/Forward, reserva/erro/stale, precisão JPY, delta ausente CNH, alvos acima de 44px, ausência de overflow e preservação do modal EIA/símbolo do widget. Não certifica preços reais nem o feed TradingView, bloqueado nesse smoke.
 - `scripts/smoke-ui.cjs` e `scripts/smoke-ux.cjs`: navegação e regressões UX142 aprovadas nas larguras configuradas; seletores atualizados para os novos rótulos.
 - QA Edge instalado no FTC-NOTE, perfil headless isolado, viewports 390/820/1440 × 1000. Não foi teste em celular físico. Regressão adicional DI/Japão/BLS usa snapshots reais do artefato de produção PR144, com filtros/modal/teclado e sem erros/overflow.
 - Evidências locais: `../source-evidence/table-final/`, `table-ux/`, `table-pr144/`, logs de testes/build. Capturas com fixtures não representam cotações atuais.
 
 QA executada sobre build de produção, conforme TESTING.md. O servidor Vite dev apresentou `Cannot access lazy before initialization` em App.jsx não alterado; o build servido passou. Sem alteração oportunista em App/infraestrutura.
+
+## Avisos gerais em ⓘ
+
+Aviso integral, fontes gerais e DISCLAIMER de compartilhamento permanecem em diálogo nativo acionado por botão de44px, com nome acessível, Fechar, Escape e retorno de foco. O glifo não depende de hover. Textos não foram reduzidos. Alerta de cálculos em validação, dados stale/erro, limites do índice EUA, atribuições e créditos permanecem visíveis. Smoke da tabela inclui abrir/fechar por toque/teclado, foco contido e texto completo nas três larguras.
