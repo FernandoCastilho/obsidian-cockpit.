@@ -14,7 +14,7 @@ const M = { t: 12, r: 16, b: 28, l: 58 }
 
 export const fmtDate = (t, long) =>
   new Date(t).toLocaleDateString('pt-BR', long ? { day: '2-digit', month: 'short', year: 'numeric' } : { day: '2-digit', month: '2-digit' })
-export const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', sec ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' })
+export const fmtTime = (t, sec) => new Date(t).toLocaleTimeString('pt-BR', { timeZone:'America/Sao_Paulo', hour:'2-digit', minute:'2-digit', ...(sec ? {second:'2-digit'} : {}) })
 const fmtMonth = (t) => new Date(t).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' }).replace('.', '')
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d })
 

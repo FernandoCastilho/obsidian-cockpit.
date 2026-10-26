@@ -21,8 +21,16 @@ export default function Expandable({ children, label, modal = false, onClose }) 
     el.setAttribute('open', '')
   }, [active])
   const restore = () => setFull(false)
+  const containFocus = e => {
+    if (!active || e.key !== 'Tab') return
+    const targets = [...ref.current.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.getClientRects().length)
+    const first = targets[0], last = targets.at(-1)
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus() }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus() }
+  }
   return (
     <dialog ref={ref} className={`expandable-panel${active ? ' is-dialog' : ''}${full ? ' is-full' : ''}`} aria-label={label}
+      onKeyDown={containFocus}
       onCancel={(e) => { e.preventDefault(); full ? restore() : onClose?.() }}
       onClick={(e) => { if (modal && e.target === e.currentTarget) onClose?.() }}>
       <div className="expandable-controls">

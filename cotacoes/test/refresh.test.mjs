@@ -38,9 +38,9 @@ test('intraday: atualiza aberto no TTL exato, compartilha consulta e preserva po
   pending[0].resolve(json(file(originalAt)))
   assert.equal((await a.settle()).data.points.length, 2)
   assert.equal((await b.settle()).data.points.length, 2)
-  await clock.advance(9 * MIN)
+  await clock.advance(45000)
   assert.equal(urls.length, 1)
-  await clock.advance(MIN)
+  await clock.advance(15000)
   assert.equal(urls.length, 2)
   const loading = await a.settle()
   assert.equal(loading.status, 'ok')
@@ -99,16 +99,18 @@ test('intraday: falha conserva série e data reais, avisa stale e recuperação 
   assert.equal(recovered.stale, undefined); assert.equal(recovered.error, undefined)
 })
 
-test('intraday: cache próximo da expiração não ganha mais dez minutos ao remontar', async (t) => {
+test('intraday: remount preserves cache age and renews on the next minute polling', async (t) => {
   const clock = browserClock(t), h = await history()
   let calls = 0
   globalThis.fetch = async () => { calls++; return json(file(clock.now, calls > 1)) }
   const a = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
-  await a.settle(); a.close(); await clock.advance(9 * MIN)
+  await a.settle(); a.close(); await clock.advance(45000)
   const b = hookRenderer(() => h.useIntraday('USD', h.fromInput(day)))
   clock.cleanup(() => b.close())
   await b.settle(); assert.equal(calls, 1)
-  await clock.advance(MIN)
+  await clock.advance(15000)
+  assert.equal((await b.settle()).data.points.length, 2)
+  await clock.advance(45000) // first minute polling after the remount at t=45s
   assert.equal((await b.settle()).data.points.length, 3)
   assert.equal(calls, 2)
 })
@@ -196,6 +198,22 @@ async function quotesWithCentral() {
   return import(`data:text/javascript;base64,${Buffer.from(`${src}\n// test ${++version}`).toString('base64')}`)
 }
 const batch = (time, bid = 5) => Object.fromEntries(['USDBRL', 'EURBRL', 'JPYBRL', 'USDCNH'].map((code) => [code, { bid: String(bid), ask: String(bid + .01), high: String(bid + .1), low: String(bid - .1), pctChange: '1', timestamp: String(time / 1000) }]))
+
+test('quotes: anonymous response two hours older cannot replace the central price or its source timestamp', async t => {
+  const clock = browserClock(t), q = await quotesWithCentral()
+  globalThis.fetch = async url => url.startsWith('https://central.example')
+    ? json({ generatedAt:clock.now, quotes:batch(clock.now,5.4) })
+    : json(batch(clock.now-2*3600000,5.42))
+  const r = hookRenderer(() => q.useQuotes())
+  clock.cleanup(() => r.close())
+  await r.settle()
+  const original = r.value.quotes
+  await r.value.refresh(); await r.settle()
+  for (const code of ['USD','EUR','JPY','CNH']) {
+    assert.equal(r.value.quotes[code].bid,original[code].bid)
+    assert.equal(r.value.quotes[code].timestamp,original[code].timestamp)
+  }
+})
 
 test('quotes: foco é automático, não concorre, manual prevalece e resposta abortada é ignorada', async (t) => {
   const clock = browserClock(t), q = await quotesWithCentral(), pending = []

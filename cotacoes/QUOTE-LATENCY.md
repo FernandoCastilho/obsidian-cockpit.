@@ -29,10 +29,22 @@ Para streaming contratado, confirmar antes de escolher: USD/BRL, EUR/BRL, JPY/BR
 
 Fontes oficiais lidas:
 
--https://docs.awesomeapi.com.br/api-de-moedas — endpoint last e cache anônimo descrito; daily é fechamento, não feed de ticks.
--https://docs.awesomeapi.com.br/instrucoes-api-key —100mil requisições/mês gratuitas sem cache autenticado; sem compromisso de latência fim a fim identificado. Não prova a quota da conta existente.
--https://twelvedata.com/docs — WebSocket; acesso da documentação teve timeout na primeira leitura, índice oficial retornou na pesquisa.
--https://twelvedata.com/markets/327325/forex/usd-brl/historical-data — existênciaUSD/BRL; não prova coberturaCNH/licença.
--https://twelvedata.com/terms — licença interna por padrão; exibição externa depende de tier/add-on/acordo que a autorize. Não houve assinatura.
+- https://docs.awesomeapi.com.br/api-de-moedas — endpoint last e cache anônimo descrito; daily é fechamento, não feed de ticks.
+- https://docs.awesomeapi.com.br/instrucoes-api-key —100mil requisições/mês gratuitas sem cache autenticado; sem compromisso de latência fim a fim identificado. Não prova a quota da conta existente.
+- https://twelvedata.com/docs — WebSocket; acesso da documentação teve timeout na primeira leitura, índice oficial retornou na pesquisa.
+- https://twelvedata.com/markets/327325/forex/usd-brl/historical-data — existênciaUSD/BRL; não prova coberturaCNH/licença.
+- https://twelvedata.com/terms — licença interna por padrão; exibição externa depende de tier/add-on/acordo que a autorize. Não houve assinatura.
 
-Evidências JSON/capturas locais em `source-evidence/quote-freshness`; sem segredos. UI ampliada será revisada separadamente no mesmo draft, mantendo esse diagnóstico.
+Evidências JSON/capturas locais em `source-evidence/quote-freshness`; sem segredos. UI ampliada incluída em commit separado no mesmo draft; revisão visual final aprovada em390/820/1440, mantendo esse diagnóstico.
+
+## Revisão da interface e atrasos corrigíveis
+
+Removida a faixa redundante de quatro moedas (as quatro linhas continuam). Comparador acessível pelo botão44px no topo, com montagem, período próprio, seleção preservada, teclado no gráfico, Tab contido, Fechar/Escape e retorno de foco. Inline permanece uma moeda por vez, identificando a primeira amostra e a base distinta de Δ dia. Petróleo fica em tabela separada Demais, com widget oficial, CFD/USD por barril, atraso desconhecido e histórico EIA separado; sem extrair valores ou recortar atribuição.
+
+Juros conserva níveis/unidades e estados materiais na tabela; datas, fontes e vigência de cada indicador/período estão associadas por aria-describedby a um rodapé expansível. Métodos financeiros não foram alterados.
+
+Foram corrigidos o dia civil intradiário e seus horários para America/Sao_Paulo, inclusive tooltip/teclado e retorno a Dia depois de outro período/par. Esses defeitos de fuso não explicam a descida comprovada no snapshot de26/10, onde ambos os horários eram no mesmo dia. O teste usa27/10 01:10UTC (ainda26/10BRT) em fusos Tokyo/UTC/SãoPaulo.
+
+O cache compartilhado do arquivo intraday no navegador foi reduzido de10min para1min, relido no próximo polling visível. Não muda coleta nem adiciona chamadas ao provedor. Remove atraso local evitável, mas CDN/coletor/fonte ainda impedem declarar realtime. O relógio não altera timestamp/preço nem fabrica amostras.
+
+Validação local:207 testes de lógica, build, regressões gerais/UX142 e smoke dedicado390/820/1440. Evidência de casos sintéticos está rotulada; capturas de dados públicos/snapshots são distintas. Diretor de Arte revisa artefatos reais, não certifica preços. Sem merge/deploy deste draft.
