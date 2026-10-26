@@ -1,5 +1,6 @@
 import './MarketTable.css'
 import './MarketTerminal.css'
+import { accumulatedReturns, compatiblePtax } from './marketReturns.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
@@ -8,7 +9,7 @@ import { selectedPeriod } from './summaryPeriod.js'
 import { useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
-import { fullWindow, fromInput, toInput, useHistory, useIntraday } from './useHistory.js'
+import { fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
@@ -50,27 +51,24 @@ function Arrow({ v }) {
   return <span aria-hidden="true">{v > 0 ? '▲' : v < 0 ? '▼' : '■'}</span>
 }
 
-function QuoteRow({ code, quote, ptax, loading, selected, onOpen, color }) {
+function QuoteRow({ code, quote, ptax, returns, selected, onOpen, color }) {
   const cur = CURRENCIES.find(c => c.code === code)
   const hasDay = !!quote && !quote.fallback && Number.isFinite(quote.pct)
   const delta = hasDay && Number.isFinite(quote.delta) ? quote.delta : null
   const open = () => onOpen(code)
-  const status = !quote ? loading ? 'Carregando cotação' : 'Cotação indisponível' : quote.stale ? 'Atualização pendente' : quote.fallback ? 'Referência diária de reserva' : 'Referência da fonte'
   const series = quote?.source || code
   return <tbody className={'market-record' + (selected ? ' is-selected' : '')} style={{ '--series': color }}>
     <tr className="market-values" onClick={open}>
       <th scope="row"><button type="button" className="market-open" aria-pressed={selected} onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
         <b>{series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
+        {(!quote || quote.stale || quote.fallback) && <small className="market-state">{!quote ? 'Sem dado' : quote.stale ? 'Pendente' : 'Reserva diária'}</small>}
       </button></th>
       <td className="market-price">{quote ? brl(quote.bid, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span className="muted">—</span>}</td>
       <td className={delta == null ? 'muted' : 'pct ' + toneOf(delta)}>{delta == null ? <span aria-label={quote?.cross ? 'Variação absoluta indisponível para o cruzamento' : 'Variação absoluta indisponível'} title={quote?.cross ? 'A fonte não fornece variação absoluta deste cruzamento' : 'Variação absoluta não fornecida'}>—</span> : (delta > 0 ? '+' : delta < 0 ? '−' : '') + Math.abs(delta).toLocaleString('pt-BR', { minimumFractionDigits: code === 'JPY' ? 5 : 4, maximumFractionDigits: code === 'JPY' ? 5 : 4 })}</td>
       <td className={hasDay ? 'pct ' + toneOf(quote.pct) : 'muted'}>{hasDay ? pct(quote.pct) : <span aria-label="Variação percentual do dia indisponível">—</span>}</td>
+      {['month', 'year'].map(period => <td key={period} className={returns?.[period] ? 'pct ' + toneOf(returns[period].value) : 'muted'}>{returns?.[period] ? pct(returns[period].value) : <span aria-label={(period === 'month' ? 'Acumulado do mês' : 'Acumulado do ano') + ' indisponível'}>—</span>}</td>)}
+      <td className="market-ptax">{ptax ? brl(ptax.sell, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span aria-label="PTAX compatível indisponível">—</span>}</td>
     </tr>
-    <tr className="market-meta" onClick={open}><td colSpan="4">
-      <span className={(!quote && !loading) || quote?.stale || quote?.fallback ? 'status stale' : 'muted'}>{status}{quote && ' · ' + dataTimestamp(quote.timestamp)}</span>
-      <span className="muted">{quote ? quote.fallback ? 'BCE · referência diária' : quote.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}</span>
-      {ptax && <span className="muted">BCB · PTAX venda · {/^\d{4}-\d{2}-\d{2}$/.test(ptax.date || '') ? ptax.date.split('-').reverse().join('/') : 'data não disponível'}: {brl(ptax.sell)}</span>}
-    </td></tr>
   </tbody>
 }
 
@@ -335,7 +333,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
       <div ref={ref}>
         {chart(width)}
       </div>
-      <p className="terminal-chart-source muted">{rows.filter(r => r.st.data).map(r => r.code + ': ' + (r.st.data.feed || 'AwesomeAPI') + (r.st.data.generatedAt ? ' · arquivo de ' + dataTimestamp(r.st.data.generatedAt) : ' · data do arquivo não disponível')).join(' | ')}</p>
+      <footer className="terminal-chart-source muted">{rows.filter(r => r.st.data).map(r => r.code + ': ' + (r.st.data.feed || 'AwesomeAPI') + (r.st.data.generatedAt ? ' · arquivo de ' + dataTimestamp(r.st.data.generatedAt) : ' · data do arquivo não disponível')).join(' | ')}</footer>
     </div>
     {big && (
       <Overlay onClose={() => setBig(false)}>
@@ -372,6 +370,9 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors }) {
+  const daily = useCentralDaily()
+  const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
+  const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
   const [selection, setSelection] = useState(['USD'])
   const [sparkId, setSparkId] = useState('day')
   const [custom, setCustom] = useState(null)
@@ -417,28 +418,39 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
         <div className="terminal-summary" role="group" aria-label="Resumo das últimas cotações em reais">
           {CURRENCIES.map(c => <button key={c.code} type="button" onClick={() => openSelected(c.code)} aria-label={'Abrir gráfico de ' + c.code + '/BRL no resumo'}><span>{quotes?.[c.code]?.source || c.code}/BRL</span><b>{quotes?.[c.code] ? brl(quotes[c.code].bid, c.code === 'JPY' ? 5 : 4) : '—'}</b></button>)}
         </div>
-        <small className="summary-period-note muted">Gráficos: {spark.label}. Histórico disponível desde {toInput(limits.start).split('-').reverse().join('/')}; cada fonte pode ter lacunas. </small>
         {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
-        <p className="market-instruction muted" id="market-help">Toque na linha para selecionar e abrir o gráfico. Cotação e Δ dia são da última referência; os filtros alteram apenas os gráficos.</p>
         <div className="terminal-main">
         <div className="terminal-quotes">
-        <div className="market-table-wrap">
-          <table className="market-table" aria-busy={!quotes} aria-describedby="market-help">
+        <p className="market-scroll-hint">Deslize para ver mês, ano e PTAX →</p>
+        <div className="market-table-wrap" role="region" aria-label="Tabela de câmbio; role horizontalmente para ver todas as colunas" tabIndex={0}>
+          <table className="market-table" aria-busy={!quotes} aria-describedby="market-help market-sources">
             <caption className="market-caption">Câmbio em reais · últimas referências disponíveis</caption>
-            <thead><tr><th scope="col">Par</th><th scope="col">Cotação <small>(R$)</small></th><th scope="col" aria-label="Variação absoluta do dia em reais">Δ dia <small>(R$)</small></th><th scope="col" aria-label="Variação percentual do dia">Δ dia %</th></tr></thead>
-            {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} loading={!quotes} selected={selection.includes(c.code)} ptax={ptax?.[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
+            <thead><tr><th scope="col">Par</th><th scope="col">Cotação <small>(R$)</small></th><th scope="col" aria-label="Variação absoluta do dia em reais">Δ dia <small>(R$)</small></th><th scope="col" aria-label="Variação percentual do dia">Δ dia %</th><th scope="col" aria-label="Acumulado no mês em percentual">Mês %</th><th scope="col" aria-label="Acumulado no ano em percentual">Ano %</th><th scope="col" aria-label="PTAX de venda em reais por unidade">PTAX <small>venda</small></th></tr></thead>
+            {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} returns={returns[c.code]} selected={selection.includes(c.code)} ptax={ptaxes[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
           </table>
         </div>
-        <p className="market-instruction muted">—: variação não informada pela fonte. A cotação CNH é calculada por cruzamento; sua variação absoluta não está disponível.</p>
         </div>
         <div className="terminal-chart">
         <ResumoChart colors={colors} spark={spark} selection={selection} onSelection={setSelection} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
         </div>
         </div>
+
         <div className="tiles market-secondary">
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
           <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>
+        <footer className="market-footnotes" id="market-sources" aria-label="Fontes, datas e metodologia do câmbio">
+          <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
+          <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
+          <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
+            <b>{q?.source || c.code}/BRL:</b> <span className={!q || q.stale || q.fallback ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : '') + dataTimestamp(q.timestamp)}</span>
+            {' · '}{q ? q.fallback ? 'BCE · referência diária' : q.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}
+            {p && <> · BCB PTAX venda, boletim {p.kind}, {p.date.split('-').reverse().join('/')}, R$ por 1 {c.code}</>}
+            {['month', 'year'].map(k => <span key={k}> · {k === 'month' ? 'Mês' : 'Ano'}: {r[k] ? `base ${r[k].baseDate.split('-').reverse().join('/')} → ${r[k].endDate.split('-').reverse().join('/')}` : 'sem base/cobertura compatível'}</span>)}
+          </li> })}</ul>
+          <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série AwesomeAPI. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
+          <p>PTAX é referência oficial independente, não spot. <a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noreferrer">BCB: cotações e boletins</a> · <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noreferrer">AwesomeAPI: cotações e histórico</a>. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
+        </footer>
       </section>
       </Expandable>
   )
@@ -511,6 +523,7 @@ export function MoveAgenda({ goto, colors }) {
             <li className="status">{news.error ? 'Notícias indisponíveis no momento.' : 'Carregando notícias…'}</li>
           )}
         </ul>
+
       </section>
 
       <section aria-labelledby="r-agenda">
@@ -535,6 +548,7 @@ export function MoveAgenda({ goto, colors }) {
             <li className="status">Sem eventos nos próximos dias.</li>
           )}
         </ul>
+
       </section>
     </div>
   )

@@ -44,6 +44,18 @@ function loadCentralHistory() {
   return centralPromise
 }
 
+// Shares the existing history request/cache; never substitutes BCE/CNY for these returns.
+export function useCentralDaily() {
+  const [state, setState] = useState({ status: 'loading', data: null })
+  useEffect(() => {
+    let alive = true
+    loadCentralHistory().then(data => { if (alive) setState({ status: 'ok', data }) })
+      .catch(() => { if (alive) setState({ status: 'error', data: null }) })
+    return () => { alive = false }
+  }, [])
+  return state
+}
+
 // Recorte do arquivo central; só vale se ele cobre o início do período pedido.
 export function pickCentral(file, code, start, end) {
   const s = file?.series?.[code]
