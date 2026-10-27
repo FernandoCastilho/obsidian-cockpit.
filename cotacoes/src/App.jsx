@@ -20,6 +20,7 @@ import Pracas from './Pracas.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
+const Aprender = lazy(() => import('./Aprender.jsx'))
 import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo, { MoveAgenda } from './Resumo.jsx'
@@ -284,6 +285,8 @@ export default function App() {
           <MoveAgenda goto={goto} colors={COLORS} />
         </>
       )}
+
+      {tab === 'aprender' && <Aprender view={sub} goto={goto} />}
 
       {tab === 'config' && <Config quotesAt={updatedAt} quotesVia={via} fx={fx} setFx={setFx} />}
 
