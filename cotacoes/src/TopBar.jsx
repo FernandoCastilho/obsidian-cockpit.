@@ -43,7 +43,7 @@ export default function TopBar({ tab, onTab, onCommand, feed, feedAt }) {
       if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault()
         input.current?.focus()
-      } else if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-7]$/.test(e.key)) {
+      } else if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-8]$/.test(e.key)) {
         e.preventDefault()
         onTab(DESK_TABS[Number(e.key) - 1].id)
       }

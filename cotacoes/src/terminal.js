@@ -10,6 +10,7 @@ export const DESK_TABS = [
   { id: 'calculadora', label: 'Calculadoras' },
   { id: 'noticias', label: 'Notícias' },
   { id: 'feriados', label: 'Feriados' },
+  { id: 'aprender', label: 'Aprender' },
   { id: 'config', label: 'Config' },
 ]
 
@@ -30,6 +31,7 @@ const TAB = {
   FINIMP: ['calculadora', 'finimp'], SWAP: ['calculadora', 'finimpswap'], NCG: ['calculadora', 'ncg'], GIRO: ['calculadora', 'giro'], APLICACAO: ['calculadora', 'aplicacao'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
   FERIADOS: ['feriados'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
+  APRENDER: ['aprender'], EDU: ['aprender'], EDUCACAO: ['aprender'], ESTUDAR: ['aprender'], CUPOM: ['aprender', 'cupom-cambial'], CUPOMCAMBIAL: ['aprender', 'cupom-cambial'], EURIBOR: ['aprender', 'euribor'], FUNDING: ['aprender', 'custo-de-funding'], CUSTODEFUNDING: ['aprender', 'custo-de-funding'], CDS: ['aprender', 'cds'],
 }
 
 // "USDBRL Curncy", "usd/brl", "dólar", "juros <GO>", "finimp" → destino, ou null se o comando não existe.
@@ -42,7 +44,7 @@ export function parseCommand(text) {
   return null
 }
 
-export const COMMAND_HINTS = ['USDBRL', 'EURBRL', 'JPYBRL', 'CNHBRL', 'EURUSD', 'JUROS', 'CURVA', 'FOCUS', 'CALC', 'FINIMP', 'NEWS', 'FERIADOS', 'CONFIG']
+export const COMMAND_HINTS = ['USDBRL', 'EURBRL', 'JPYBRL', 'CNHBRL', 'EURUSD', 'JUROS', 'CURVA', 'FOCUS', 'CALC', 'FINIMP', 'NEWS', 'FERIADOS', 'APRENDER', 'CDS', 'EURIBOR', 'CONFIG']
 
 const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 export const toneOf = (v) => (Number.isFinite(v) && v > 0 ? 'up' : Number.isFinite(v) && v < 0 ? 'down' : 'flat')
@@ -150,10 +152,11 @@ export function ageText(ageMs) {
 
 export const SHORTCUTS = [
   ['/', 'Foca a linha de comando'],
-  ['Alt + 1 … 7', 'Mercado, Juros, Cenários, Calculadoras, Notícias, Feriados, Config'],
+  ['Alt + 1 … 8', 'Mercado, Juros, Cenários, Calculadoras, Notícias, Feriados, Aprender, Config'],
   ['USDBRL · EURBRL · JPYBRL · CNHBRL', 'Abre o gráfico da moeda'],
   ['EURUSD', 'Abre a paridade EUR/USD'],
   ['JUROS · CURVA · FOCUS', 'Vai para Juros ou Cenários'],
   ['CALC · FINIMP · NCG · GIRO', 'Abre a calculadora indicada'],
   ['NEWS · FERIADOS · CONFIG', 'Vai para a seção'],
+  ['APRENDER · CUPOM · EURIBOR · CDS · FUNDING', 'Abre a aba Aprender no conceito'],
 ]

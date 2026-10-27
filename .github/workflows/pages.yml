@@ -114,6 +114,10 @@ jobs:
           path: cotacoes/dist
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Sondar séries de indexadores (temporário)
+        continue-on-error: true
+        timeout-minutes: 4
+        run: node scripts/probe-indexadores.mjs
       - name: Avisar falha do deploy (issue + Teams, se configurado)
         if: failure()
         uses: actions/github-script@v7
