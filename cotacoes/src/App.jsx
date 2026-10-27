@@ -29,8 +29,7 @@ import { useMacro } from './useMacro.js'
 import { useCurves } from './useCurves.js'
 import ParityChart from './ParityChart.jsx'
 const Projecoes = lazy(() => import('./Projecoes.jsx'))
-import { DISCLAIMER, buildHtml, buildMessage, buildPlain, buildSummary, whatsappUrl } from './whatsapp.js'
-import { flagPngs } from './flags.js'
+import { DISCLAIMER } from './whatsapp.js'
 import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
@@ -82,81 +81,6 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
         </>
       )}
       </div>
-    </div>
-  )
-}
-
-function Share({ quotes, updatedAt, macro, curves }) {
-  const [msg, setMsg] = useState('')
-  const text = updatedAt ? buildMessage(quotes, updatedAt) : null
-  const summary = updatedAt ? buildSummary({ quotes, macro: macro?.data, curves: curves?.data, when: updatedAt }) : null
-  // No celular, o compartilhamento nativo leva o texto sem passar por endereço de internet,
-  // que perdia os emojis (bandeiras e setas). Sem suporte, abre o link do WhatsApp.
-  const send = (e, body = text) => {
-    const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-    if (!mobile || !navigator.share) return
-    e.preventDefault()
-    navigator.share({ text: body }).catch((err) => {
-      if (err?.name !== 'AbortError') window.open(whatsappUrl(body), '_blank', 'noopener')
-    })
-  }
-  // Texto com a marcação do WhatsApp (*negrito*, _itálico_) e emoji, para colar direto na conversa.
-  const copyText = async (body, success = 'Copiado. Cole no WhatsApp ou no Teams.') => {
-    try {
-      await navigator.clipboard.writeText(body)
-      setMsg(success)
-    } catch {
-      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
-    }
-    setTimeout(() => setMsg(''), 3000)
-  }
-  const copyWa = () => copyText(text, 'Copiado. Cole no WhatsApp.')
-  const copy = async () => {
-    const when = updatedAt ?? new Date()
-    const plain = buildPlain(quotes, when)
-    try {
-      if (window.ClipboardItem) {
-        // formatado (negrito) e bandeiras como imagem para e-mail/Teams, com texto simples de reserva
-        const pngs = await flagPngs()
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            'text/html': new Blob([buildHtml(quotes, when, pngs)], { type: 'text/html' }),
-            'text/plain': new Blob([plain], { type: 'text/plain' }),
-          }),
-        ])
-      } else {
-        await navigator.clipboard.writeText(plain)
-      }
-      setMsg('Copiado. Cole no e-mail ou no Teams.')
-    } catch {
-      setMsg('Não foi possível copiar. Use o botão do WhatsApp.')
-    }
-    setTimeout(() => setMsg(''), 3000)
-  }
-  return (
-    <div className="share">
-      {text ? (
-        <a className="btn wa" href={whatsappUrl(text)} target="_blank" rel="noopener noreferrer" onClick={send} title="No celular, abre a lista de compartilhamento: escolha o WhatsApp">
-          Enviar câmbio no WhatsApp
-        </a>
-      ) : (
-        <button type="button" className="btn wa" disabled>Enviar no WhatsApp</button>
-      )}
-      {summary && (
-        <a className="btn wa" href={whatsappUrl(summary)} target="_blank" rel="noopener noreferrer" onClick={(e) => send(e, summary)} title="Câmbio, juros, curva DI, SOFR, Treasuries e Focus numa mensagem só. No celular, escolha o grupo na lista de compartilhamento.">
-          Enviar resumo de câmbio e juros
-        </a>
-      )}
-      <button type="button" className="btn" disabled={!summary} onClick={() => copyText(summary)} title="Copia o resumo do dia já formatado para colar no WhatsApp ou no Teams">
-        Copiar resumo de câmbio e juros
-      </button>
-      <button type="button" className="btn" disabled={!text} onClick={copyWa} title="Copia o texto já formatado para colar no WhatsApp">
-        Copiar câmbio para WhatsApp
-      </button>
-      <button type="button" className="btn" disabled={!text} onClick={copy} title="Copia a cotação formatada, com as bandeiras, para colar no e-mail ou no Teams">
-        Copiar câmbio para e-mail ou Teams
-      </button>
-      <span className="status" role="status">{msg}</span>
     </div>
   )
 }
@@ -313,7 +237,7 @@ export default function App() {
         <>
           <HolidayNotice hol={hol} />
           <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
-          <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
+
           <InstallApp />
         </>
       )}

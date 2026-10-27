@@ -1,3 +1,4 @@
+import { buildFeed } from './feed.js'
 import './MarketTable.css'
 import './MarketTerminal.css'
 import { accumulatedReturns, compatiblePtax, marketDate } from './marketReturns.js'
@@ -144,13 +145,13 @@ function ParityTile({ quotes, spark, onOpen, color }) {
           </small>
     </div>
     {big && (
-      <Overlay onClose={() => setBig(false)}>
+      <Expandable modal label="Detalhes da taxa cruzada" onClose={() => setBig(false)}>
         <div className="resumo-chart big">
           <h3>{base}/{quote} <small className="muted">· {spark.label}</small>{change != null && <span className={`pct ${toneOf(change)}`}> {pct(change)}</span>}</h3>
           {(a.stale || b.stale) && <p className="status stale" role="status">Não foi possível atualizar. Paridade calculada com a última série disponível.</p>}
           <Wide render={(wv) => <Plot points={pts} width={wv} color={color} code={`par-${base}-${quote}-${spark.id}`} intraday={dia} fmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} labels label={`${base}/${quote}`} />} />
         </div>
-      </Overlay>
+      </Expandable>
     )}
     </>
   )
@@ -388,6 +389,11 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [compareSelection, setCompareSelection] = useState(['USD', 'EUR'])
   const [compareSpark, setCompareSpark] = useState(SPARK[0])
   const compareTrigger = useRef(null)
+  const [calendarOpen, setCalendarOpen] = useState(false)
+  const [draftDates, setDraftDates] = useState(null)
+  const [calendarError, setCalendarError] = useState('')
+  const calendarTrigger = useRef(null)
+  const closeCalendar = () => { setCalendarOpen(false); requestAnimationFrame(() => calendarTrigger.current?.focus()) }
   const today = marketDate(Date.now())
   const closeCompare = () => { setCompareOpen(false); requestAnimationFrame(() => compareTrigger.current?.focus()) }
 
@@ -408,9 +414,8 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
     setDates(next)
     const selection = selectedPeriod(next.start, next.end)
     setDateError(selection.error || '')
-    if (!selection.error) { setCustom(selection); setSparkId('custom') }
+    if (!selection.error) { if (next.start === today && next.end === today) { setSparkId('day') } else { setCustom(selection); setSparkId('custom') } }
   }
-  const chooseDate = (key, value) => applyDates({ ...dates, [key]: value })
   const openSelected = code => { if (CURRENCIES.some(c => c.code === code)) setSelection([code]); onOpen(code, spark) }
   return (
       <Expandable label="Mercado hoje">
@@ -428,10 +433,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
               </button>
             ))}
           </div>
-          <div className="summary-dates">
-            <label>De <input aria-label="Data inicial dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.start} onChange={(e) => chooseDate('start', e.target.value)} /></label>
-            <label>Até <input aria-label="Data final dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => chooseDate('end', e.target.value)} /></label>
-          </div>
+          <button type="button" className="calendar-trigger" aria-label={`Escolher intervalo: ${dates.start} a ${dates.end}`} ref={calendarTrigger} aria-haspopup="dialog" aria-expanded={calendarOpen} onClick={() => { setDraftDates({...dates}); setCalendarError(''); setCalendarOpen(true) }}><span aria-hidden="true">▦</span> {dates.start.split('-').reverse().join('/')} – {dates.end.split('-').reverse().join('/')}</button>
           </div>
         </div>
         {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
@@ -451,9 +453,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
         </div>
         </div>
 
-        <div className="tiles market-secondary">
-          <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
-        </div>
+
         <OilTile table spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <footer className="market-footnotes" id="market-sources" aria-label="Fontes, datas e metodologia do câmbio">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
@@ -469,8 +469,11 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           <p>Cotação do dia: última referência recebida, não um feed em tempo real. A coleta central é de 5 min na janela configurada e horária fora dela em dias úteis, com pausa de coleta no fim de semana; o navegador verifica a cada minuto e o arquivo também pode ter cache. “Dado antigo” sinaliza horário da fonte há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. A fonte não informa abertura/fechamento do mercado: ausência de novo preço não é tratada como mercado fechado.</p>
         </footer>
       </section>
+      {calendarOpen && <Expandable modal label="Intervalo dos gráficos" onClose={closeCalendar}><form className="calendar-form" onSubmit={e => { e.preventDefault(); const next = selectedPeriod(draftDates.start, draftDates.end); if(next.error) { setCalendarError(next.error); return } applyDates(draftDates); closeCalendar() }}><h2>Intervalo dos gráficos</h2><label>Data inicial<input autoFocus required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.start} onChange={e => setDraftDates({...draftDates,start:e.target.value})} /></label><label>Data final<input required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.end} onChange={e => setDraftDates({...draftDates,end:e.target.value})} /></label>{calendarError && <p role="alert">{calendarError}</p>}<button type="submit" className="btn">Aplicar</button><button type="button" className="btn" onClick={closeCalendar}>Cancelar</button></form></Expandable>}
       {compareOpen && <Expandable modal label="Comparar moedas" onClose={closeCompare}>
         <section className="currency-comparison" aria-labelledby="comparison-title"><h2 id="comparison-title">Comparar moedas</h2>
+          <h3>Taxa entre duas moedas</h3><ParityTile quotes={quotes} spark={spark} onOpen={code => { closeCompare(); openSelected(code) }} color={colors?.PAR} />
+          <h3>Evolução comparada em percentual</h3>
           <div className="seg" role="group" aria-label="Período do comparador">{SPARK.map(p => <button type="button" key={p.id} aria-pressed={compareSpark.id === p.id} onClick={() => setCompareSpark(p)}>{p.label}</button>)}</div>
           <ResumoChart comparison colors={colors} spark={compareSpark} selection={compareSelection} onSelection={setCompareSelection} onPrevious={day => setCompareSpark({ id:'previous', label:`Amostras de ${day.split('-').reverse().join('/')}`, intraday:true, day })} />
         </section>
@@ -507,12 +510,18 @@ export function RatesTop({ macro, curves, onOpen }) {
   )
 }
 
+function MarketNews() {
+  const news = useNews()
+  const headlines = buildFeed(news.data?.news, 'ALL', 8)
+  return <aside className="market-news" aria-labelledby="market-news-title"><h2 id="market-news-title">Notícia</h2>
+    {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Últimos títulos preservados.' : ''}</p>}
+    {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes; títulos anteriores preservados.</p>}
+    {!headlines.length && <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias disponíveis.'}</p>}
+    <ul>{headlines.map(n => <li key={n.link}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
+  </aside>
+}
 export default function Resumo({ quotes, ptax, onOpen, colors }) {
-  return (
-    <div className="resumo">
-      <MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} />
-    </div>
-  )
+  return <div className="market-workspace"><div className="resumo"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div><MarketNews /></div>
 }
 
 // "O que move o mercado" e "Agenda econômica": ficam na aba Notícias.
