@@ -443,3 +443,6 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 .terminal-news .market-news li a:hover { color: var(--amber); }
 .terminal-news .market-news li small { display: block; margin-top: 2px; color: var(--mut); }
 .terminal-news .market-news p { margin: 0; padding: 8px 12px; }
+
+/* Assuntos da aba Cenários */
+main.app .cen-nav { margin: 0 0 12px; }

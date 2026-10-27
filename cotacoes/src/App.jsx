@@ -41,6 +41,13 @@ import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './u
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
 const COLORS = { USD: '#ffb000', EUR: '#4cc3ff', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
+// Assuntos da aba Cenários (cada um com seu endereço: #cenarios/commodities etc.).
+const CEN_VIEWS = [
+  { id: 'projecoes', label: 'Projeções' },
+  { id: 'atividade', label: 'Atividade e emprego' },
+  { id: 'commodities', label: 'Commodities' },
+  { id: 'frete', label: 'Frete marítimo' },
+]
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
@@ -177,6 +184,7 @@ export default function App() {
     }
   }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
+  const cenView = CEN_VIEWS.some((v) => v.id === sub) ? sub : 'projecoes'
   const goto = (id, to = '') => {
     setTab(id)
     setSub(to)
@@ -272,8 +280,12 @@ export default function App() {
 
       {tab === 'cenarios' && (
         <>
-          <Projecoes macro={macro} />
-          <MarketContext />
+          <nav className="learn-nav cen-nav" aria-label="Assuntos de Cenários">
+            {CEN_VIEWS.map((v) => (
+              <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
+            ))}
+          </nav>
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : <MarketContext part={cenView} />}
         </>
       )}
 

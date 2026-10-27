@@ -22,10 +22,8 @@ import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
-import { AgendaList, KpiRow, Panel } from './TerminalDesk.jsx'
+import { KpiRow, Panel } from './TerminalDesk.jsx'
 const RateModal = lazy(() => import('./RateModal.jsx'))
-const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
-const CurvePanel = lazy(() => import('./Curves.jsx').then((m) => ({ default: m.CurvePanel })))
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
@@ -507,23 +505,15 @@ function MarketNews({ bare = false }) {
     <ul>{headlines.map(n => <li key={n.link}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
   </aside>
 }
-// Mesa de mercado: indicadores, câmbio com gráfico, e uma fileira de painéis (curva DI, juros de política, notícias e agenda).
+// Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
 export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
-  const wait = <p className="status" role="status">Carregando…</p>
   return (
     <div className="terminal-desk">
       <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
       <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div>
-      <div className="desk-row">
-        <Panel title="Curva DI × Pré" note="B3 · prazo em dias úteis" className="desk-curve"><Suspense fallback={wait}><CurvePanel curves={curves} /></Suspense></Panel>
-        <Panel title="Juros de referência" note="Brasil e exterior · por data" className="desk-rates"><Suspense fallback={wait}><RatesSnapshot macro={macro} /></Suspense></Panel>
-        <div className="desk-side">
-          <Panel title="Agenda" note="Brasília"><AgendaList goto={goto} /></Panel>
-        </div>
-      </div>
     </div>
   )
 }
