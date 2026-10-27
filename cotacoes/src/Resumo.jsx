@@ -9,7 +9,7 @@ import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import OilTile from './OilTile.jsx'
 import { selectedPeriod } from './summaryPeriod.js'
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -22,6 +22,9 @@ import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
+import { AgendaList, HeatMap, KpiRow, Panel } from './TerminalDesk.jsx'
+const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
+const CurvePanel = lazy(() => import('./Curves.jsx').then((m) => ({ default: m.CurvePanel })))
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
@@ -380,7 +383,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, extra }) {
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -447,6 +450,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
             {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} returns={returns[c.code]} selected={selection.includes(c.code)} ptax={ptaxes[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
           </table>
         </div>
+        {extra}
         </div>
         <div className="terminal-chart">
         <ResumoChart colors={colors} spark={spark} selection={selection} onSelection={setSelection} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
@@ -456,6 +460,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
 
         <OilTile table spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <footer className="market-footnotes" id="market-sources" aria-label="Fontes, datas e metodologia do câmbio">
+          <details className="market-notes"><summary>Fontes, datas e metodologia</summary>
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
@@ -467,6 +472,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série AwesomeAPI. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
           <p>PTAX é referência oficial independente, não spot. <a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noreferrer">BCB: cotações e boletins</a> · <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noreferrer">AwesomeAPI: cotações e histórico</a>. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
           <p>Cotação do dia: última referência recebida, não um feed em tempo real. A coleta central é de 5 min na janela configurada e horária fora dela em dias úteis, com pausa de coleta no fim de semana; o navegador verifica a cada minuto e o arquivo também pode ter cache. “Dado antigo” sinaliza horário da fonte há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. A fonte não informa abertura/fechamento do mercado: ausência de novo preço não é tratada como mercado fechado.</p>
+          </details>
         </footer>
       </section>
       {calendarOpen && <Expandable modal label="Intervalo dos gráficos" onClose={closeCalendar}><form className="calendar-form" onSubmit={e => { e.preventDefault(); const next = selectedPeriod(draftDates.start, draftDates.end); if(next.error) { setCalendarError(next.error); return } applyDates(draftDates); closeCalendar() }}><h2>Intervalo dos gráficos</h2><label>Data inicial<input autoFocus required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.start} onChange={e => setDraftDates({...draftDates,start:e.target.value})} /></label><label>Data final<input required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.end} onChange={e => setDraftDates({...draftDates,end:e.target.value})} /></label>{calendarError && <p role="alert">{calendarError}</p>}<button type="submit" className="btn">Aplicar</button><button type="button" className="btn" onClick={closeCalendar}>Cancelar</button></form></Expandable>}
@@ -510,18 +516,34 @@ export function RatesTop({ macro, curves, onOpen }) {
   )
 }
 
-function MarketNews() {
+function MarketNews({ bare = false }) {
   const news = useNews()
   const headlines = buildFeed(news.data?.news, 'ALL', 8)
-  return <aside className="market-news" aria-labelledby="market-news-title"><h2 id="market-news-title">Notícia</h2>
+  return <aside className="market-news" aria-labelledby="market-news-title"><h2 id="market-news-title" className={bare ? 'sr-only' : undefined}>Notícia</h2>
     {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Últimos títulos preservados.' : ''}</p>}
     {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes; títulos anteriores preservados.</p>}
     {!headlines.length && <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias disponíveis.'}</p>}
     <ul>{headlines.map(n => <li key={n.link}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
   </aside>
 }
-export default function Resumo({ quotes, ptax, onOpen, colors }) {
-  return <div className="market-workspace"><div className="resumo"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div><MarketNews /></div>
+// Mesa de mercado: indicadores, câmbio com gráfico e mapa de variação, e uma fileira de painéis (curva DI, juros de política, notícias e agenda).
+export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto }) {
+  const rates = rateTiles(macro?.data, curves?.data)
+  const wait = <p className="status" role="status">Carregando…</p>
+  return (
+    <div className="terminal-desk">
+      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} goto={goto} />
+      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} extra={<HeatMap quotes={quotes} rates={rates} onOpen={onOpen} goto={goto} />} /></div>
+      <div className="desk-row">
+        <Panel title="Curva DI × Pré" note="B3 · prazo em dias úteis" className="desk-curve"><Suspense fallback={wait}><CurvePanel curves={curves} /></Suspense></Panel>
+        <Panel title="Juros de referência" note="Brasil e exterior · por data" className="desk-rates"><Suspense fallback={wait}><RatesSnapshot macro={macro} /></Suspense></Panel>
+        <div className="desk-side">
+          <Panel title="Manchetes" note="por moeda"><MarketNews bare /></Panel>
+          <Panel title="Agenda" note="Brasília"><AgendaList goto={goto} /></Panel>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // "O que move o mercado" e "Agenda econômica": ficam na aba Notícias.

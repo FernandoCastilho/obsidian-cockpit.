@@ -22,7 +22,11 @@ import { useHolidays } from './useHolidays.js'
 const Novidades = lazy(() => import('./Novidades.jsx'))
 import InstallApp from './InstallApp.jsx'
 import Nav, { TABS } from './Nav.jsx'
-import Resumo, { MoveAgenda, RatesTop } from './Resumo.jsx'
+import Resumo, { MoveAgenda } from './Resumo.jsx'
+import TopBar from './TopBar.jsx'
+import { Tape } from './TerminalDesk.jsx'
+import { feedState } from './terminal.js'
+import { rateTiles } from './snapshot.js'
 import Clock from './Clock.jsx'
 const News = lazy(() => import('./News.jsx'))
 import { useMacro } from './useMacro.js'
@@ -34,7 +38,7 @@ import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './u
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
-const COLORS = { USD: '#3987e5', EUR: '#d95926', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
+const COLORS = { USD: '#ffb000', EUR: '#4cc3ff', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
   { id: '7', label: '7 dias', days: 7 },
@@ -184,9 +188,21 @@ export default function App() {
   }
   const openCurrency = CURRENCIES.find((c) => c.code === open)
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
+  const rates = rateTiles(macro.data, curves.data)
+  const feed = feedState({ error, aged: quoteAgeWarning, hasQuotes: !!quotes })
+  const feedAt = updatedAt ? new Date(updatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) : null
+  const runCommand = (cmd) => {
+    if (cmd.kind === 'tab') return goto(cmd.id, cmd.sub)
+    goto('resumo')
+    setOpen(cmd.kind === 'pair' ? 'PAR' : cmd.code)
+  }
 
   return (
     <>
+    <header className="term-head">
+      <TopBar tab={tab} onTab={(id) => goto(id)} onCommand={runCommand} feed={feed} feedAt={feedAt} />
+      <Tape quotes={quotes} rates={rates} />
+    </header>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     {tab === 'resumo' && (
       <div className="clocks-top">
@@ -236,7 +252,7 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} goto={goto} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
 
           <InstallApp />
         </>

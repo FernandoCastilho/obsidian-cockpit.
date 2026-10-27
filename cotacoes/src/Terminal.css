@@ -1,0 +1,225 @@
+/* Tema "terminal": preto, âmbar de marca, verde/vermelho só para variação, números tabulares.
+   Carregado depois de styles.css; no celular e no tablet a navegação inferior continua a mesma. */
+:root {
+  --bg: #050505;
+  --card: #0d0d0e;
+  --surface-2: #131315;
+  --line: #25221b;
+  --fg: #ece9e2;
+  --mut: #8b8678;
+  --up: #12d977;
+  --down: #ff4d4f;
+  --accent: #ffb000;
+  --warn: #ffb000;
+  --amber: #ffb000;
+  --mono: ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+body { background: var(--bg); }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.tabs button.on svg { color: var(--amber); }
+.tabs button.on::after { background: var(--amber); }
+.up { color: var(--up); } .down { color: var(--down); } .flat { color: var(--mut); }
+
+/* ===== Barra superior e faixa de cotações (computador) ===== */
+.term-head, .tape { display: none; }
+@media (min-width: 700px) {
+  .tape { display: flex; }
+  .term-head { display: block; position: sticky; top: 0; z-index: 60; background: #000; }
+  .term-head .topbar { display: none; }
+}
+.tape { height: 30px; align-items: center; overflow: hidden; white-space: nowrap; background: #090909; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .76rem; }
+.tape-item { display: inline-flex; align-items: baseline; gap: 8px; padding: 0 16px; border-right: 1px solid #1a1813; }
+.tape-item b { color: var(--mut); font: 600 .7rem/1 system-ui, sans-serif; letter-spacing: .02em; }
+.tape-item em { font-style: normal; }
+
+@media (min-width: 1000px) {
+  .nav-top, .clocks-top { display: none; }
+  .term-head .topbar { display: flex; }
+  main.app { max-width: 1760px; padding: 6px 6px 24px; }
+  .status.src { margin: 0 0 6px; font-size: .75rem; }
+  .topbar { height: 42px; align-items: stretch; background: #000; border-bottom: 1px solid var(--line); }
+  .topbar-brand { display: flex; align-items: center; gap: 6px; padding: 0 16px; background: var(--amber); color: #000; font-weight: 800; font-size: .8rem; letter-spacing: .14em; white-space: nowrap; }
+  .topbar-brand span { font-weight: 500; opacity: .7; }
+  .topbar-cmd { position: relative; display: flex; align-items: center; gap: 8px; padding: 0 12px; width: 280px; border-right: 1px solid var(--line); }
+  .topbar-cmd label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .topbar-cmd input { flex: 1; min-width: 0; height: 28px; padding: 0 10px; background: #0b0b0b; border: 1px solid var(--line); color: var(--amber); font: .78rem var(--mono); }
+  .topbar-cmd input::placeholder { color: #5d5a50; }
+  .topbar-cmd input:focus-visible, .topbar button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+  .topbar-cmd button { height: 22px; padding: 0 8px; background: var(--amber); color: #000; border: 0; font: 700 .65rem/1 system-ui, sans-serif; letter-spacing: .08em; cursor: pointer; }
+  .topbar-miss { position: absolute; top: 100%; left: 12px; margin: 0; padding: 6px 10px; z-index: 5; max-width: 420px; background: #1c1608; border: 1px solid var(--amber); color: var(--fg); font-size: .75rem; }
+  .topbar-tabs { display: flex; flex: 1; min-width: 0; }
+  .topbar-tabs button { display: flex; align-items: center; gap: 7px; padding: 0 12px; background: transparent; border: 0; border-right: 1px solid #1a1813; color: var(--mut); font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+  .topbar-tabs button i { font: normal .62rem var(--mono); color: #5d5a50; }
+  .topbar-tabs button:hover { color: var(--fg); background: #0f0e0b; }
+  .topbar-tabs button.on { background: var(--amber); color: #000; }
+  .topbar-tabs button.on i { color: #0009; }
+  .topbar-clocks { display: flex; align-items: center; gap: 14px; padding: 0 14px; border-left: 1px solid var(--line); font: .72rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .topbar-clocks b { margin-right: 6px; color: var(--mut); font: 600 .66rem system-ui, sans-serif; }
+  .topbar-feed { display: flex; align-items: center; gap: 7px; padding: 0 14px; border-left: 1px solid var(--line); font: 700 .66rem system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; color: var(--mut); }
+  .topbar-feed span { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .topbar-feed b { font: 500 .72rem var(--mono); letter-spacing: 0; color: var(--fg); }
+  .topbar-feed.ok { color: var(--up); } .topbar-feed.ok span { box-shadow: 0 0 8px var(--up); }
+  .topbar-feed.delayed { color: var(--amber); } .topbar-feed.err { color: var(--down); }
+}
+@media (min-width: 1000px) {
+  .topbar-tabs { overflow: hidden; }
+  .topbar-tabs button { flex: 0 1 auto; min-width: 0; padding: 0 10px; gap: 5px; }
+}
+@media (min-width: 1000px) and (max-width: 1799px) { .topbar-clocks .opt { display: none; } }
+@media (min-width: 1000px) and (max-width: 1699px) {
+  .topbar-cmd { width: 230px; }
+  .topbar-tabs button i { display: none; }
+}
+@media (min-width: 1000px) and (max-width: 1299px) {
+  .topbar-clocks { display: none; }
+  .topbar-brand span, .topbar-feed:not(.err) { font-size: 0; }
+  .topbar-feed b { font-size: .72rem; }
+  .topbar-feed span { margin-right: 7px; }
+  .topbar-cmd { width: 170px; }
+  .topbar-tabs button { padding: 0 8px; font-size: .66rem; overflow: hidden; text-overflow: ellipsis; }
+}
+@media (min-width: 1000px) and (max-width: 1099px) { .topbar-tabs button { padding: 0 6px; } .topbar-brand { padding: 0 10px; letter-spacing: .08em; } }
+
+/* ===== Mesa do Mercado ===== */
+.terminal-desk { display: grid; gap: 6px; min-width: 0; }
+.terminal-desk > * { min-width: 0; }
+.resumo .market-terminal { margin-top: 0; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; }
+.kpi { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0 8px; padding: 9px 12px 9px 15px; text-align: left; color: var(--fg); background: var(--card); border: 1px solid var(--line); font: inherit; cursor: pointer; overflow: hidden; }
+.kpi::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--series, var(--amber)); }
+.kpi:hover { background: #121112; }
+.kpi:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.kpi-label { grid-column: 1 / -1; display: flex; justify-content: space-between; color: var(--mut); font: 700 .66rem/1.2 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.kpi-label small { font-weight: 500; letter-spacing: .02em; text-transform: none; color: #5d5a50; }
+.kpi-value { grid-column: 1 / -1; margin: 3px 0 1px; font: 700 1.5rem/1.1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.kpi-change { font: .74rem var(--mono); }
+.kpi-spark { grid-column: 2; grid-row: 3; align-self: end; width: 84px; height: 30px; }
+.kpi-spark .spark { width: 100%; height: 100%; display: block; }
+@media (min-width: 1000px) { .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); } .kpi-value { font-size: 1.65rem; } }
+
+/* painel genérico */
+.desk-panel { min-width: 0; background: var(--card); border: 1px solid var(--line); }
+.desk-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 28px; padding: 0 10px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); }
+.desk-panel > header h2 { margin: 0; color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.desk-panel > header small { color: #5d5a50; font-size: .68rem; }
+.desk-panel-body { min-width: 0; }
+.desk-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.desk-side { display: grid; gap: 6px; align-content: start; min-width: 0; }
+@media (min-width: 1000px) {
+  .desk-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.05fr) minmax(0, .95fr); align-items: stretch; }
+  .desk-rates .desk-panel-body { max-height: 440px; overflow: auto; }
+}
+.desk-curve .chart.curve { margin: 0; padding: 6px 8px 8px; border: 0; background: transparent; }
+.desk-curve .status { font-size: .72rem; }
+.desk-rates .executive-rates, .desk-rates section { margin: 0; border: 0; }
+.desk-rates .status { margin: 6px 10px; }
+
+/* quadro de câmbio ("Mercado hoje"), no mesmo vocabulário dos painéis */
+.market-terminal { --terminal-amber: var(--amber); background: var(--card); border: 1px solid var(--line); }
+.market-terminal > .terminal-titlebar { min-height: 30px; padding: 0 10px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); }
+.market-terminal .terminal-titlebar h2 { color: var(--amber); font: 700 .74rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.market-terminal .terminal-titlebar .img-share, .market-terminal .terminal-titlebar .help button { color: var(--mut); }
+.compare-trigger { border-color: #4a3a12; color: var(--amber); }
+.market-terminal .terminal-toolbar, .market-terminal .market-footnotes, .terminal-main, .terminal-chart, .other-market, .market-terminal > .other-market, .market-terminal > .market-secondary { border-color: var(--line); }
+.market-terminal .seg { border-color: #4a3a12; }
+.market-terminal .seg button { background: #0b0b0b; color: var(--amber); }
+.market-terminal .seg button[aria-pressed='true'] { background: var(--amber); color: #000; font-weight: 700; }
+.calendar-trigger { background: #0b0b0b; color: var(--amber); border-color: #4a3a12; font-family: var(--mono); font-size: .78rem; }
+.market-terminal .market-table thead { background: #0a0a0a; }
+.market-terminal .market-table thead th { color: var(--mut); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; }
+.market-table td, .market-price { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.market-record { border-bottom-color: #1a1813; }
+.market-terminal .market-record.is-selected { background: #1a1507; }
+.market-terminal .market-record:hover { background: #14120c; }
+.market-terminal .market-record.is-selected .market-open b, .market-open b { color: var(--amber); }
+.market-terminal .market-table thead th:first-child, .market-terminal .market-values th { background: transparent; }
+.market-terminal .market-open .market-state { color: var(--amber); }
+.market-terminal .market-footnotes { color: var(--mut); font-size: .7rem; }
+.other-market h3, .other-market thead th { color: var(--amber); }
+.market-terminal .market-table-wrap:focus-visible { outline-color: var(--amber); }
+@media (min-width: 1000px) {
+  .terminal-main { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .terminal-quotes { display: flex; flex-direction: column; }
+  .market-terminal .terminal-toolbar { padding: 6px 10px; }
+}
+@media (min-width: 1000px) and (max-width: 1399px) { .market-terminal .market-table { min-width: 0; } }
+
+/* mapa de variação */
+.heat { margin-top: auto; border-top: 1px solid var(--line); }
+.heat h3 { display: flex; justify-content: space-between; align-items: center; margin: 0; min-height: 28px; padding: 0 10px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.heat h3 small { color: #5d5a50; font-size: .66rem; letter-spacing: 0; text-transform: none; font-weight: 500; }
+.heat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; padding: 6px; }
+@media (min-width: 700px) { .heat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.heat-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 4px; min-height: 52px; padding: 7px 10px; text-align: left; color: var(--fg); border: 0; font: 700 .72rem system-ui, sans-serif; cursor: pointer; background: color-mix(in srgb, var(--mut) 18%, #0d0d0e); }
+.heat-tile b { font: 700 1rem var(--mono); font-variant-numeric: tabular-nums; }
+.heat-tile.up { background: color-mix(in srgb, var(--up) calc(12% + var(--k) * 48%), #0d0d0e); }
+.heat-tile.down { background: color-mix(in srgb, var(--down) calc(12% + var(--k) * 48%), #0d0d0e); }
+.heat-tile:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+/* notícias e agenda */
+.market-news { padding: 0; border: 0; background: transparent; align-self: stretch; }
+.market-news li { padding: 8px 12px; border-bottom-color: #1a1813; font-size: .8rem; }
+.market-news li:last-child { border-bottom: 0; }
+.market-news small { margin-top: 3px; font-size: .68rem; }
+.market-news .status { margin: 8px 12px; }
+.desk-side .desk-panel:first-child .desk-panel-body { max-height: 330px; overflow: auto; }
+.desk-agenda { list-style: none; margin: 0; padding: 0; }
+.desk-agenda li { border-bottom: 1px solid #1a1813; }
+.desk-agenda li:last-child { border-bottom: 0; }
+.desk-agenda button { display: grid; grid-template-columns: 5.2rem auto 1fr; align-items: center; gap: 8px; width: 100%; padding: 7px 12px; text-align: left; background: none; border: 0; color: var(--fg); font: inherit; font-size: .78rem; cursor: pointer; }
+.desk-agenda button:hover { background: #14120c; }
+.desk-agenda time { color: var(--mut); font: .72rem var(--mono); }
+.desk-agenda time b { color: var(--amber); font-weight: 600; }
+.desk-agenda .tag { padding: 1px 6px; border: 1px solid var(--line); color: var(--mut); font: 700 .6rem/1.4 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+
+@media (prefers-reduced-motion: no-preference) { .kpi, .heat-tile, .topbar-tabs button { transition: background-color .15s; } }
+
+/* acabamento do computador: controles compactos dentro dos painéis */
+@media (min-width: 1000px) {
+  .desk-markets .expandable-panel { position: relative; }
+  .desk-markets .expandable-controls { position: absolute; top: 0; right: 124px; z-index: 3; height: 44px; align-items: center; margin: 0; }
+  .desk-markets .expandable-controls .btn { min-height: 44px; padding: 2px 8px; border: 0; background: none; color: var(--mut); font-size: .68rem; }
+  .desk-markets .expandable-controls .btn:hover { color: var(--amber); }
+}
+.market-notes { padding: 6px 0; }
+.market-notes summary { cursor: pointer; color: var(--amber); font: 700 .68rem system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.market-notes[open] summary { margin-bottom: 8px; }
+.other-market h3 { margin: 0 0 8px; color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.other-market thead th { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mut); }
+.market-news a { color: var(--fg); text-decoration: none; }
+.market-news a:hover { color: var(--amber); }
+.market-news a:visited { color: var(--mut); }
+
+/* tabela de juros (Mercado e aba Juros): título vira cabeçalho de painel, sem a faixa vinho */
+.executive-rates .executive-rates__heading { padding: 0 10px; min-height: 28px; display: flex; align-items: center; background: linear-gradient(#17150f, #100f0b); border: 0; border-bottom: 1px solid var(--line); }
+.executive-rates .executive-rates__heading h2 { color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.executive-rates .executive-rates__table thead th { color: var(--mut); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; }
+.executive-rates__value { font-family: var(--mono); }
+.executive-rates__footnote summary { color: var(--amber); }
+.desk-rates .executive-rates .executive-rates__heading, .desk-rates .executive-rates__heading { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); padding: 0; min-height: 0; }
+.desk-rates .executive-rates__scroll { border: 0; }
+.desk-rates .executive-rates__table { min-width: 0; table-layout: fixed; }
+.desk-rates .executive-rates__indicator-column { width: 140px; }
+.desk-rates .executive-rates__table th, .desk-rates .executive-rates__table td { padding: 8px 10px; }
+.desk-rates .executive-rates__name { font-size: .78rem; }
+.desk-rates .executive-rates__value { font-size: .85rem; }
+.desk-rates .executive-rates__footnote { margin: 0; padding: 0 10px 8px; }
+.desk-rates .executive-rates__footnote p { font-size: .68rem; }
+@media (min-width: 700px) and (max-width: 1799px) { .desk-rates .executive-rates__table th:nth-child(5), .desk-rates .executive-rates__table td:nth-child(5), .desk-rates .executive-rates__table col:nth-child(5) { display: none; } }
+@media (min-width: 700px) and (max-width: 1399px) { .desk-rates .executive-rates__table th:nth-child(4), .desk-rates .executive-rates__table td:nth-child(4), .desk-rates .executive-rates__table col:nth-child(4) { display: none; } }
+
+/* petróleo ("Demais") e notas: sem os vazios do layout antigo */
+.market-terminal .other-market, .market-terminal > .other-market { margin-top: 0; padding: 8px 10px; }
+.other-market .oil-live-quote { min-height: 0; }
+.other-market th, .other-market td { padding: 6px 8px; }
+.market-terminal .market-footnotes { padding: 4px 12px; }
+.desk-panel-body { height: calc(100% - 28px); }
+
+main a { color: #ffd37b; }
+main a:visited { color: #c9a24a; }
+@media (max-width: 650px) {
+  .market-terminal .market-values th { background: var(--card); }
+  .market-terminal .market-record.is-selected .market-values th { background: #1a1507; }
+  .market-terminal .market-table thead th:first-child { background: #0a0a0a; }
+}
