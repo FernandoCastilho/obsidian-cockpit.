@@ -72,7 +72,7 @@ function useDaySeries() {
 
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
 // Clique abre o gráfico da moeda ou a aba de juros.
-export function KpiRow({ quotes, rates, colors, onOpen, goto, status }) {
+export function KpiRow({ quotes, rates, colors, onOpen, onRate, goto, status }) {
   const series = useDaySeries()
   const items = kpiItems(quotes, rates)
   if (!items.length) return status ?? null
@@ -83,7 +83,7 @@ export function KpiRow({ quotes, rates, colors, onOpen, goto, status }) {
       {items.map((i) => {
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
         return (
-          <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? goto('juros') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: ${i.rate ? 'abrir juros' : 'abrir gráfico'}`}>
+          <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
             <span className="kpi-label">{i.label}{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}</span>
             <span className="kpi-value">{i.value}</span>
             <span className={`kpi-change ${i.tone}`}>

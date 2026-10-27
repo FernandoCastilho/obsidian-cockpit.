@@ -12,7 +12,7 @@ const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
 
-function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help }) {
+export function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help }) {
   const [ref, width] = useWidth()
   const ok = points && points.length > 1
   const diff = ok ? points[points.length - 1].bid - points[0].bid : 0
@@ -47,8 +47,8 @@ function RateChart({ id, title, subtitle, color, points, fmt, label, note, actio
   )
 }
 
-const toInput = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-const fromInput = (v) => {
+export const toInput = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+export const fromInput = (v) => {
   const [y, m, d] = v.split('-').map(Number)
   return new Date(y, m - 1, d)
 }
@@ -59,7 +59,7 @@ const startOfToday = () => {
 }
 
 // Períodos só dos juros (independentes do câmbio). days: 0 = desde 1999.
-const PRESETS = [
+export const PRESETS = [
   { id: '30', label: '30 dias', days: 30 },
   { id: '90', label: '90 dias', days: 90 },
   { id: '180', label: '6 meses', days: 180 },
@@ -68,13 +68,13 @@ const PRESETS = [
   { id: '3650', label: '10 anos', days: 3650 },
   { id: 'all', label: 'Desde 1999', days: 0 },
 ]
-const rangeFor = (days) => {
+export const rangeFor = (days) => {
   const end = startOfToday()
   const start = days ? new Date(end.getTime() - days * DAY) : new Date(1999, 0, 1)
   return { start, end }
 }
 
-function RatesPeriod({ range, preset, onPreset, onDates }) {
+export function RatesPeriod({ range, preset, onPreset, onDates }) {
   const today = toInput(new Date())
   return (
     <div className="period">
@@ -97,7 +97,7 @@ function RatesPeriod({ range, preset, onPreset, onDates }) {
   )
 }
 
-function CdiChart({ macro, range }) {
+export function CdiChart({ macro, range }) {
   const from = range.start.getTime()
   const to = range.end.getTime() + DAY
   const points = useMemo(() => macro.cdi.filter(([t]) => t >= from && t <= to).map(([t, v]) => ({ t, bid: v })), [macro, from, to])
@@ -119,7 +119,7 @@ function CdiChart({ macro, range }) {
 }
 
 // Meta Selic só registra os dias de mudança: recorta no período e desenha em degraus.
-function SelicChart({ macro, range }) {
+export function SelicChart({ macro, range }) {
   const all = macro.selic
   const from = range.start.getTime()
   const to = range.end.getTime() + DAY

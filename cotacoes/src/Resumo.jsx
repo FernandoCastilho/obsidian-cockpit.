@@ -23,6 +23,7 @@ import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
 import { AgendaList, KpiRow, Panel } from './TerminalDesk.jsx'
+const RateModal = lazy(() => import('./RateModal.jsx'))
 const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
 const CurvePanel = lazy(() => import('./Curves.jsx').then((m) => ({ default: m.CurvePanel })))
 
@@ -509,10 +510,12 @@ function MarketNews({ bare = false }) {
 // Mesa de mercado: indicadores, câmbio com gráfico, e uma fileira de painéis (curva DI, juros de política, notícias e agenda).
 export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status }) {
   const rates = rateTiles(macro?.data, curves?.data)
+  const [rateOpen, setRateOpen] = useState(null)
   const wait = <p className="status" role="status">Carregando…</p>
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} goto={goto} status={status} />
+      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
+      {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
       <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div>
       <div className="desk-row">
         <Panel title="Curva DI × Pré" note="B3 · prazo em dias úteis" className="desk-curve"><Suspense fallback={wait}><CurvePanel curves={curves} /></Suspense></Panel>
