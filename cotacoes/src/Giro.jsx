@@ -1,5 +1,8 @@
 import { parseMoneyInput } from './moneyInput.js'
 import { useMemo, useState } from 'react'
+import { useCalcMemory } from './calcMemory.js'
+import CalcMemory from './CalcMemory.jsx'
+import MoneyInput from './MoneyInput.jsx'
 import { giro, giroTsv, giroVsCdi } from './giro.js'
 import { parseRate } from './calc.js'
 import Pracas from './Pracas.jsx'
@@ -18,13 +21,14 @@ const STRUCT = [
 const today = () => new Date().toISOString().slice(0, 10)
 
 export default function Giro({ curves, hol }) {
-  const [value, setValue] = useState('500.000,00')
-  const [n, setN] = useState('12')
-  const [structure, setStructure] = useState('price')
-  const [rate, setRate] = useState('1,80')
-  const [unit, setUnit] = useState('am')
+  const mem = useCalcMemory('giro')
+  const [value, setValue] = mem.use('value', '500.000,00')
+  const [n, setN] = mem.use('n', '12')
+  const [structure, setStructure] = mem.use('structure', 'price')
+  const [rate, setRate] = mem.use('rate', '1,80')
+  const [unit, setUnit] = mem.use('unit', 'am')
   const [start, setStart] = useState(today())
-  const [fees, setFees] = useState('0')
+  const [fees, setFees] = mem.use('fees', '0')
   const [copied, setCopied] = useState(false)
   const amount = parseMoneyInput(value)
   const expenses = parseMoneyInput(fees, { optional: true })
@@ -55,12 +59,13 @@ export default function Giro({ curves, hol }) {
   return (
     <article className="chart calc-split">
       <div className="calc-in">
+      <CalcMemory mem={mem} />
       <p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p>
       <h3 className="calc-sub">Dados da operação</h3>
       <div className="calc-form">
         <label>
           Valor liberado (R$)
-          <input aria-invalid={!!amountError} aria-describedby="giro-value-feedback" inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
+          <MoneyInput aria-invalid={!!amountError} aria-describedby="giro-value-feedback" value={value} onChange={setValue} />
           <small id="giro-value-feedback" className={amountError ? 'field-error' : 'muted'} aria-live="polite">{amountError || `Valor informado: ${brl(amount.value)}`}</small>
         </label>
         <label>
@@ -97,7 +102,7 @@ export default function Giro({ curves, hol }) {
         </label>
         <label>
           Despesas à vista (R$): tarifa, IOF e seguro descontados do valor
-          <input aria-invalid={!!feesError} aria-describedby="giro-fees-feedback" inputMode="decimal" value={fees} onChange={(e) => setFees(e.target.value)} />
+          <MoneyInput aria-invalid={!!feesError} aria-describedby="giro-fees-feedback" value={fees} onChange={setFees} />
           <small id="giro-fees-feedback" className={feesError ? 'field-error' : 'muted'} aria-live="polite">{feesError || `Despesas informadas: ${brl(expenses.value)}`}</small>
         </label>
       </div>

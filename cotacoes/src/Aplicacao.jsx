@@ -1,4 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useCalcMemory } from './calcMemory.js'
+import CalcMemory from './CalcMemory.jsx'
+import MoneyInput from './MoneyInput.jsx'
 import { investment, parseNum, parseRate } from './calc.js'
 import { useTerm } from './useTerm.js'
 import Pracas from './Pracas.jsx'
@@ -29,13 +32,14 @@ const TERMS = [
 
 export default function Aplicacao({ curves, hol }) {
   const t = useTerm(curves, hol, 365)
-  const [value, setValue] = useState('100.000,00')
-  const [mode, setMode] = useState('cdi')
-  const [unit, setUnit] = useState('aa')
-  const [monthBase, setMonthBase] = useState('du')
-  const [rate, setRate] = useState('100')
-  const [kind, setKind] = useState('cdb')
-  const [ageTxt, setAgeTxt] = useState('0')
+  const mem = useCalcMemory('aplicacao')
+  const [value, setValue] = mem.use('value', '100.000,00')
+  const [mode, setMode] = mem.use('mode', 'cdi')
+  const [unit, setUnit] = mem.use('unit', 'aa')
+  const [monthBase, setMonthBase] = mem.use('monthBase', 'du')
+  const [rate, setRate] = mem.use('rate', '100')
+  const [kind, setKind] = mem.use('kind', 'cdb')
+  const [ageTxt, setAgeTxt] = mem.use('age', '0')
   const r = useMemo(
     () => (t.pts ? investment({ pts: t.pts, d: t.d, calDays: t.calDays, value: parseNum(value), mode, rate: mode === 'total' ? parseNum(rate) : parseRate(rate), unit, monthBase, kind, ageDays: parseNum(ageTxt) || 0 }) : null),
     [t.pts, t.d, t.calDays, value, mode, rate, unit, monthBase, kind, ageTxt],
@@ -47,11 +51,12 @@ export default function Aplicacao({ curves, hol }) {
   return (
     <article className="chart calc-split">
       <div className="calc-in">
+      <CalcMemory mem={mem} />
       <h3 className="calc-sub">Dados da aplicação</h3>
       <div className="calc-form">
         <label>
           Valor aplicado (R$)
-          <input inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
+          <MoneyInput value={value} onChange={setValue} />
         </label>
         <label>
           Vencimento

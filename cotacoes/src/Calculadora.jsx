@@ -5,6 +5,9 @@ import DateCheck from './DateCheck.jsx'
 import { compare, parseNum, parseRate } from './calc.js'
 import Explain from './Explain.jsx'
 import ResultBar from './ResultBar.jsx'
+import { useCalcMemory } from './calcMemory.js'
+import CalcMemory from './CalcMemory.jsx'
+import MoneyInput from './MoneyInput.jsx'
 import HBars from './HBars.jsx'
 const Finimp = lazy(() => import('./Finimp.jsx'))
 const FinimpSwap = lazy(() => import('./FinimpSwap.jsx'))
@@ -46,17 +49,18 @@ function OperacaoDi({ curves, hol }) {
   const iso = (days) => new Date(Date.parse(`${base}T12:00:00Z`) + days * 864e5).toISOString().slice(0, 10)
   const maxD = pts ? Math.max(...pts.map((p) => p[0])) : 0
   const maxIso = base ? iso(Math.floor((maxD / 252) * 365)) : ''
-  const [value, setValue] = useState('1.000.000,00')
+  const mem = useCalcMemory('comparar')
+  const [value, setValue] = mem.use('value', '1.000.000,00')
   const [due, setDue] = useState('')
-  const [mode, setMode] = useState('pre')
-  const [rate, setRate] = useState('1,20')
-  const [side, setSide] = useState('borrow')
-  const [unit, setUnit] = useState('am')
-  const [monthBase, setMonthBase] = useState('du')
-  const [appPct, setAppPct] = useState('100')
-  const [net, setNet] = useState(true)
-  const [ageTxt, setAgeTxt] = useState('0')
-  const [accTxt, setAccTxt] = useState('0')
+  const [mode, setMode] = mem.use('mode', 'pre')
+  const [rate, setRate] = mem.use('rate', '1,20')
+  const [side, setSide] = mem.use('side', 'borrow')
+  const [unit, setUnit] = mem.use('unit', 'am')
+  const [monthBase, setMonthBase] = mem.use('monthBase', 'du')
+  const [appPct, setAppPct] = mem.use('appPct', '100')
+  const [net, setNet] = mem.use('net', true)
+  const [ageTxt, setAgeTxt] = mem.use('age', '0')
+  const [accTxt, setAccTxt] = mem.use('acc', '0')
   const [daysTxt, setDaysTxt] = useState('180')
   const end = due && base ? (due < base ? base : due > maxIso ? maxIso : due) : base ? iso(Math.min(180, Math.floor((maxD / 252) * 365))) : ''
   const calDays = base && end ? Math.round((Date.parse(`${end}T12:00:00Z`) - Date.parse(`${base}T12:00:00Z`)) / 864e5) : 0
@@ -85,11 +89,12 @@ function OperacaoDi({ curves, hol }) {
       {pts && (
         <article className="chart calc-split">
           <div className="calc-in">
+          <CalcMemory mem={mem} />
           <h3 className="calc-sub">Dados da operação</h3>
       <div className="calc-form">
             <label>
               Valor (R$)
-              <input inputMode="decimal" value={value} onChange={(e) => setValue(e.target.value)} />
+              <MoneyInput value={value} onChange={setValue} />
             </label>
             <label>
               Vencimento
@@ -163,7 +168,7 @@ function OperacaoDi({ curves, hol }) {
                   </label>
                   <label>
                     Rendimento já acumulado (R$)
-                    <input inputMode="decimal" value={accTxt} onChange={(e) => setAccTxt(e.target.value)} />
+                    <MoneyInput value={accTxt} onChange={setAccTxt} />
                   </label>
                 </>
               )}

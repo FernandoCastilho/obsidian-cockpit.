@@ -11,3 +11,13 @@ export function parseMoneyInput(input, { optional = false } = {}) {
     ? { ok: true, value }
     : { ok: false, error: 'Informe um valor monetário dentro do limite permitido.' }
 }
+
+const fmtBr = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+// Ao sair do campo, "1000000" vira "1.000.000,00". Texto inválido fica como está, para o aviso de erro da tela.
+export function formatMoneyText(text) {
+  const t = String(text ?? '').trim()
+  if (!t) return text
+  const p = parseMoneyInput(t)
+  return p.ok ? fmtBr(p.value) : text
+}
