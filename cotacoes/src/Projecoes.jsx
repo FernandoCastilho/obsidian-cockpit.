@@ -26,6 +26,7 @@ export default function Projecoes({ macro }) {
         </select></label>
       </div>
       <article className="chart">
+        <p className="scroll-hint">Deslize para ver os demais bancos →</p>
         <div className="scroll scenario-scroll" tabIndex={0} role="region" aria-label={`Comparação das projeções para ${year}`}>
           <table className="focus-table scenario-table">
             <caption >Projeções para {year}, por instituição. Valores ausentes indicados por travessão.</caption>

@@ -386,3 +386,21 @@ main.app .money-wrap > input { padding-left: 42px !important; font-variant-numer
 main.app .calc-memory { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0 0 14px; padding: 6px 10px; font-size: 12px; color: var(--muted, #8a8a8a); border: 1px dashed var(--line); border-radius: 2px; }
 main.app .calc-memory .more { min-height: 44px; padding: 0 4px; color: var(--amber, #ffb000); }
 main.app .calc .calc-in > .calc-memory + .calc-sub, main.app .calc .calc-in > .calc-memory + .calc-form { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* ===== Ajustes de celular e tablet: alvos de toque, relógios e tabela de cenários ===== */
+main.app .scroll-hint { display: none; margin: 0 0 8px; font-size: 12px; color: var(--amber, #ffb000); }
+main.app .scenario-table caption { white-space: normal; text-align: left; position: sticky; left: 0; width: min(100%, 340px); padding: 0 0 8px; }
+@media (max-width: 700px) {
+  main.app .scroll-hint { display: block; }
+}
+@media (max-width: 1099px) {
+  main.app details > summary { padding-top: 14px; padding-bottom: 14px; }
+  main.app button.more, main.app .chips button, main.app .fx-toggle, main.app .scenario-year select, main.app .expandable-controls .btn { min-height: 44px; }
+}
+@media (max-width: 440px) {
+  .clocks-top { padding-left: 6px; padding-right: 6px; }
+  .clocks-top .clock { gap: 2px; }
+  .clocks-top .clock-one b { font-size: .78rem !important; }
+  .clocks-top .clock-one { gap: 3px; }
+  .clocks-top .clock-one small { display: none !important; }
+}
