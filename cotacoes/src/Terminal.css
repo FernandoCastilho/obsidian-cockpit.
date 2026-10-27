@@ -394,7 +394,7 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
   main.app .scroll-hint { display: block; }
 }
 @media (max-width: 1099px) {
-  main.app details > summary { padding-top: 14px; padding-bottom: 14px; }
+  main.app details > summary { padding-top: 15px; padding-bottom: 15px; }
   main.app button.more, main.app .chips button, main.app .fx-toggle, main.app .scenario-year select, main.app .expandable-controls .btn { min-height: 44px; }
 }
 @media (max-width: 440px) {
@@ -403,4 +403,13 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
   .clocks-top .clock-one b { font-size: .78rem !important; }
   .clocks-top .clock-one { gap: 3px; }
   .clocks-top .clock-one small { display: none !important; }
+}
+
+/* Alvos de toque restantes (celular e tablet): legendas de séries, agenda, datas, modo claro/escuro, títulos que ampliam e links de fonte soltos. */
+@media (max-width: 1099px) {
+  main.app .series-visible, main.app .series-hidden, main.app .desk-agenda button, main.app .agenda li button, main.app .mode-btn { min-height: 44px; }
+  main.app .mode-btn { min-width: 44px; }
+  main.app input[type="date"], main.app .period input { min-height: 44px; }
+  main.app h3.expandable { padding-top: 12px; padding-bottom: 12px; }
+  main.app section a[target="_blank"]:not(p a):not(li a):not(td a):not(small a):not(dd a):not(.status a) { display: inline-block; padding: 15px 0; }
 }
