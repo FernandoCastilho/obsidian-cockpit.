@@ -86,6 +86,13 @@
 .executive-rates__cell--missing .executive-rates__value { color: var(--mut); }
 .executive-rates__table .executive-rates__empty { text-align: left; padding: 18px 14px; color: var(--mut); font-size: .85rem; }
 .executive-rates__footnote { margin-top: 10px; }
+.executive-rates__footnote summary { min-height:44px; display:flex; align-items:center; cursor:pointer; color:var(--accent); }
+.executive-rates__footnote li { margin:4px 0; }
+.executive-rates__table td { vertical-align:middle; padding:10px 14px; }
+.executive-rates__heading { padding:10px 12px; background:#571d29; border:1px solid #87414b; margin-bottom:0; }
+.executive-rates__heading h2 { color:#fff; font-size:1rem; }
+.executive-rates__scroll { border-radius:0; }
+.executive-rates__table thead th { color:#e5b453; }
 .executive-rates__hint { display: none; }
 .executive-rates__sr-only {
   position: absolute;

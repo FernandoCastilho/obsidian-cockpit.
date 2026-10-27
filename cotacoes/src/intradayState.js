@@ -1,7 +1,4 @@
-const localDate = (t) => {
-  const d = new Date(t)
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-}
+import { marketDate as localDate } from './marketReturns.js'
 
 // Availability follows the actual retained samples, never a weekday assumption.
 export function intradaySelection(points, selectedDate) {

@@ -1,6 +1,8 @@
 import { dataTimestamp } from './dataTimestamp.js'
 import './AppDisclaimer.css'
 import InfoNotice from './InfoNotice.jsx'
+import { marketDate } from './marketReturns.js'
+import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
@@ -188,6 +190,7 @@ function Sheet({ onClose, children }) {
 
 export default function App() {
   const { quotes, direction, error, errors, updatedAt, via, reload, refresh, refreshing, limits } = useQuotes(POLL_MS)
+  const quoteAgeWarning = quotes && CURRENCIES.some(c => !!quoteAgeState(quotes[c.code]))
   const macro = useMacro()
   const curves = useCurves()
   const hol = useHolidays()
@@ -201,11 +204,7 @@ export default function App() {
   const [preset, setPreset] = useState('day')
   const [range, setRange] = useState(() => rangeFor(30))
   const [notice, setNotice] = useState('')
-  const [day, setDay] = useState(() => {
-    const d = new Date()
-    d.setHours(0, 0, 0, 0)
-    return d
-  })
+  const [day, setDay] = useState(() => fromInput(marketDate(Date.now())))
 
   const onPreset = (p) => {
     setPreset(p.id)
@@ -286,7 +285,7 @@ export default function App() {
       )}
       {tab === 'resumo' && (
       <p className="status src">
-        <span className={`dot ${error ? 'err' : quotes ? 'ok' : ''}`} />
+        <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
         {error
           ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
           : updatedAt
@@ -313,7 +312,7 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : new Date()); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
           <Share quotes={quotes} updatedAt={updatedAt} macro={macro} curves={curves} />
           <InstallApp />
         </>

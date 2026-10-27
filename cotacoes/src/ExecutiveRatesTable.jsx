@@ -15,21 +15,15 @@ export const EXECUTIVE_RATE_PERIODS = [
  * Os quatro textos de cada célula já devem chegar formatados pelo consumidor.
  * Uma célula ausente não é zero, nem repete o último valor de outro período.
  */
-function RateCell({ cell }) {
+function RateCell({ cell, metaId }) {
   const hasValue = cell?.value != null && cell.value !== ''
   const status = cell?.status || (!hasValue ? 'Não disponível' : '')
-  const sourceUrl = typeof cell?.sourceUrl === 'string' && /^https?:\/\//i.test(cell.sourceUrl) ? cell.sourceUrl : null
+  const material = /pendente|erro|falha|carregando|sem |indispon|aguardando|defas|desatual/i.test(status)
 
   return (
-    <td className={`executive-rates__cell${hasValue ? '' : ' executive-rates__cell--missing'}`}>
+    <td aria-describedby={metaId} className={`executive-rates__cell${hasValue ? '' : ' executive-rates__cell--missing'}`}>
       <span className="executive-rates__value">{hasValue ? cell.value : '—'}</span>
-      {cell?.date && <span className="executive-rates__date">{cell.date}</span>}
-      {status && <span className="executive-rates__status">{status}</span>}
-      {cell?.source && (
-        <span className="executive-rates__source">
-          {sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{cell.source}</a> : cell.source}
-        </span>
-      )}
+      {material && <span className="executive-rates__status">{status}</span>}
     </td>
   )
 }
@@ -51,7 +45,6 @@ export default function ExecutiveRatesTable({
     <section className="executive-rates" aria-labelledby={titleId}>
       <header className="executive-rates__heading">
         <h2 id={titleId}>{title}</h2>
-        {description && <p id={descriptionId}>{description}</p>}
       </header>
       <p className="executive-rates__hint" id={hintId}>Deslize a tabela para ver todos os períodos →</p>
       <div
@@ -80,7 +73,7 @@ export default function ExecutiveRatesTable({
                   <span className="executive-rates__name">{row.label}</span>
                   {row.unit && <span className="executive-rates__unit">{row.unit}</span>}
                 </th>
-                {periods.map((period) => <RateCell key={period.id} cell={row.cells?.[period.id]} />)}
+                {periods.map((period) => <RateCell key={period.id} cell={row.cells?.[period.id]} metaId={`${id}-${row.id}-${period.id}`} />)}
               </tr>
             ))}
             {!rows.length && (
@@ -91,7 +84,11 @@ export default function ExecutiveRatesTable({
           </tbody>
         </table>
       </div>
-      {footnote && <p className="executive-rates__footnote">{footnote}</p>}
+      <footer className="executive-rates__footnote">
+        {description && <p id={descriptionId}>{description}</p>}
+        {footnote && <p>{footnote}</p>}
+        <details><summary>Datas, fontes e vigência por indicador</summary><ul>{rows.map(row => <li key={row.id}><b>{row.label} · {row.unit}</b><ul>{periods.map(period => { const cell = row.cells?.[period.id], url = /^https?:\/\//i.test(cell?.sourceUrl || '') ? cell.sourceUrl : null; return <li key={period.id} id={`${id}-${row.id}-${period.id}`}><b>{period.label}:</b> {cell?.date || 'Data indisponível'} · {cell?.status || 'Observação na data indicada'} · {url ? <a href={url} target="_blank" rel="noopener noreferrer">{cell?.source}</a> : cell?.source || 'Fonte indisponível'}</li> })}</ul></li>)}</ul></details>
+      </footer>
     </section>
   )
 }

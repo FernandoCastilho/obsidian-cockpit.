@@ -1,12 +1,14 @@
 import './MarketTable.css'
 import './MarketTerminal.css'
-import { accumulatedReturns, compatiblePtax } from './marketReturns.js'
+import { accumulatedReturns, compatiblePtax, marketDate } from './marketReturns.js'
+import { quoteAgeState } from './quoteFreshness.js'
+import { nextChartIndex } from './chartNavigation.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import OilTile from './OilTile.jsx'
 import { selectedPeriod } from './summaryPeriod.js'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -18,7 +20,7 @@ import { rateTiles, topHeadlines } from './snapshot.js'
 import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
-import { Plot, useWidth } from './HistoryChart.jsx'
+import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
 const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2).replace('.', ',')}%`
@@ -43,7 +45,7 @@ const ago = (t) => {
 function useWindow(spark) {
   if (spark.range) return spark.range
   const days = spark.days
-  const win = fullWindow()
+  const win = fullWindow(fromInput(marketDate(Date.now())))
   return { start: new Date(win.end.getTime() - days * 864e5), end: win.end }
 }
 
@@ -61,7 +63,7 @@ function QuoteRow({ code, quote, ptax, returns, selected, onOpen, color }) {
     <tr className="market-values" onClick={open}>
       <th scope="row"><button type="button" className="market-open" aria-pressed={selected} onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
         <b>{series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
-        {(!quote || quote.stale || quote.fallback) && <small className="market-state">{!quote ? 'Sem dado' : quote.stale ? 'Pendente' : 'Reserva diária'}</small>}
+        {quoteAgeState(quote) && <small className="market-state">{quoteAgeState(quote)}</small>}
       </button></th>
       <td className="market-price">{quote ? brl(quote.bid, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span className="muted">—</span>}</td>
       <td className={delta == null ? 'muted' : 'pct ' + toneOf(delta)}>{delta == null ? <span aria-label={quote?.cross ? 'Variação absoluta indisponível para o cruzamento' : 'Variação absoluta indisponível'} title={quote?.cross ? 'A fonte não fornece variação absoluta deste cruzamento' : 'Variação absoluta não fornecida'}>—</span> : (delta > 0 ? '+' : delta < 0 ? '−' : '') + Math.abs(delta).toLocaleString('pt-BR', { minimumFractionDigits: code === 'JPY' ? 5 : 4, maximumFractionDigits: code === 'JPY' ? 5 : 4 })}</td>
@@ -99,8 +101,8 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const dia = !!spark.intraday
   const bh = useHistory(base, w.start, w.end, dia)
   const qh = useHistory(quote, w.start, w.end, dia)
-  const bi = useIntraday(base, spark.day ? fromInput(spark.day) : new Date(), !dia)
-  const qi = useIntraday(quote, spark.day ? fromInput(spark.day) : new Date(), !dia)
+  const bi = useIntraday(base, spark.day ? fromInput(spark.day) : fromInput(marketDate(Date.now())), !dia)
+  const qi = useIntraday(quote, spark.day ? fromInput(spark.day) : fromInput(marketDate(Date.now())), !dia)
   const [a, b] = dia ? [qi, bi] : [qh, bh]
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
@@ -182,15 +184,21 @@ function MultiPlot({ series, width, intraday }) {
   const yTicks = Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
   const nx = width < 420 ? 3 : 5
   const xTicks = Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
-  const fmtX = (t) => (intraday ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }))
+  const fmtX = (t) => (intraday ? fmtTime(t) : new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }))
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect()
     const px = ((e.clientX - r.left) / r.width) * width
     setHover(t0 + ((px - M.l) / iw) * (t1 - t0))
   }
   const at = (s, t) => s.pts.reduce((b, p) => (Math.abs(p.t - t) < Math.abs(b.t - t) ? p : b), s.pts[0])
+  const times = [...new Set(all.map(p => p.t))].sort((a,b) => a-b)
+  const onKey = e => {
+    const current = hover == null ? 0 : times.reduce((best,t,i) => Math.abs(t-hover)<Math.abs(times[best]-hover) ? i : best,0)
+    const next = nextChartIndex(e.key,current,times.length)
+    if (next != null) { e.preventDefault(); setHover(times[next]) }
+  }
   return (
-    <svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" aria-label="Variação percentual das moedas selecionadas no período" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
+    <><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} onKeyDown={onKey} onFocus={() => setHover(t0)} aria-label="Variação percentual das moedas selecionadas no período; use setas, Home e End para consultar amostras" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
       {yTicks.map((v) => (
         <g key={v}>
           <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke="var(--line)" />
@@ -222,7 +230,7 @@ function MultiPlot({ series, width, intraday }) {
             return (
               <g pointerEvents="none">
                 <rect x={bx} y={M.t} width={bw} height={bh} rx="8" fill="var(--card, #161b22)" stroke="var(--line)" opacity="0.96" />
-                <text x={bx + 10} y={M.t + 16} fontSize="11" fill="var(--mut)">{intraday ? new Date(p0.t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : new Date(p0.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</text>
+                <text className="comparison-tooltip-time" x={bx + 10} y={M.t + 16} fontSize="11" fill="var(--mut)">{intraday ? fmtTime(p0.t) : new Date(p0.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}</text>
                 {norm.map((s, k) => {
                   const p = at(s, hover)
                   const d = s.code === 'JPY' ? 4 : 4
@@ -239,7 +247,7 @@ function MultiPlot({ series, width, intraday }) {
           })()}
         </g>
       )}
-    </svg>
+    </svg><p className="chart-access-text" role="status" aria-live="polite">{hover != null && `${fmtX(hover)} · ${norm.map(s => s.code + ': ' + pct(at(s,hover).v)).join(' · ')}`}</p></>
   )
 }
 
@@ -269,12 +277,12 @@ function Wide({ render }) {
   return <div ref={ref}>{width > 0 ? render(width) : null}</div>
 }
 
-function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPrevious }) {
+function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPrevious, comparison = false }) {
   const w = useWindow(spark)
   const dia = !!spark.intraday
   // hooks em número fixo (uma consulta por moeda; ficam em cache)
   const hs = CURRENCIES.map((c) => useHistory(c.code, w.start, w.end, dia)) // eslint-disable-line react-hooks/rules-of-hooks
-  const is = CURRENCIES.map((c) => useIntraday(c.code, spark.day ? fromInput(spark.day) : new Date(), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
+  const is = CURRENCIES.map((c) => useIntraday(c.code, spark.day ? fromInput(spark.day) : fromInput(marketDate(Date.now())), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
   const [ref, width] = useWidth()
   const toggle = (code) => setSel((s) => (s.includes(code) ? (s.length > 1 ? s.filter((c) => c !== code) : s) : CURRENCIES.map((c) => c.code).filter((c) => c === code || s.includes(c))))
   const rows = CURRENCIES.map((c, k) => {
@@ -307,18 +315,18 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
     <>
     <div className="resumo-chart">
       <div className="sec-head">
-        <h3 className="expandable" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setBig(true) } }} onClick={() => setBig(true)} role="button" title="Ampliar">
+        <h3 className={comparison ? '' : 'expandable'} tabIndex={comparison ? undefined : 0} onKeyDown={(e) => { if (!comparison && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setBig(true) } }} onClick={() => !comparison && setBig(true)} role={comparison ? undefined : 'button'} title={comparison ? undefined : 'Ampliar'}>
           {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
-          {' '}<span className="muted" aria-hidden="true">›</span>
+          {!comparison && <span className="muted" aria-hidden="true"> ›</span>}
         </h3>
-        <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
+        {comparison && <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
           {CURRENCIES.map((c) => (
             <button key={c.code} type="button" aria-pressed={sel.includes(c.code)} style={sel.includes(c.code) ? { borderColor: colors?.[c.code] } : undefined} onClick={() => toggle(c.code)}>
               {sel.includes(c.code) && <i className="chip-dot" style={{ background: colors?.[c.code] }} aria-hidden="true" />}
               {c.code}
             </button>
           ))}
-        </div>
+        </div>}
       </div>
       {!one && (
         <p className="chart-legend">
@@ -327,6 +335,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
           ))}
         </p>
       )}
+      <p className="chart-basis">{one && r0.points.length ? `Desde a 1ª amostra: ${dataTimestamp(r0.points[0].t)} até ${dataTimestamp(r0.points.at(-1).t)}. ` : 'Comparação normalizada desde a primeira amostra disponível de cada série. '}A variação deste gráfico não é o Δ dia da fonte contra a referência anterior. Horários em Brasília; amostras podem ter lacunas.</p>
       {staleNote}
       {incompleteNote}
       {dia && rows.some(r => r.st.previousDay) && <button type="button" className="btn" onClick={() => onPrevious(rows.map(r => r.st.previousDay).filter(Boolean).sort().at(-1))}>Ver último dia anterior com amostras disponíveis</button>}
@@ -342,14 +351,14 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
         <h3>
           {one ? <>{`${r0.source ?? r0.code}/BRL`} <small className="muted">· {spark.label}</small>{chg(r0) != null && <span className={`pct ${toneOf(chg(r0))}`}> {pct(chg(r0))}</span>}</> : <>Variação no período <small className="muted">· {spark.label}</small></>}
         </h3>
-        <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
+        {comparison && <div className="chips" role="group" aria-label="Moedas do gráfico (escolha uma ou mais)">
           {CURRENCIES.map((c) => (
             <button key={c.code} type="button" aria-pressed={sel.includes(c.code)} style={sel.includes(c.code) ? { borderColor: colors?.[c.code] } : undefined} onClick={() => toggle(c.code)}>
               {sel.includes(c.code) && <i className="chip-dot" style={{ background: colors?.[c.code] }} aria-hidden="true" />}
               {c.code}
             </button>
           ))}
-        </div>
+        </div>}
       </div>
       {!one && (
         <p className="chart-legend">
@@ -360,6 +369,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
       )}
           {staleNote}
       {incompleteNote}
+          <p className="chart-basis">Variação desde a primeira amostra disponível na janela selecionada; não é o Δ dia da fonte. Horários em Brasília.</p>
           <Wide render={chart} />
         </div>
       </Overlay>
@@ -374,12 +384,20 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
   const [selection, setSelection] = useState(['USD'])
+  const [compareOpen, setCompareOpen] = useState(false)
+  const [compareSelection, setCompareSelection] = useState(['USD', 'EUR'])
+  const [compareSpark, setCompareSpark] = useState(SPARK[0])
+  const compareTrigger = useRef(null)
+  const today = marketDate(Date.now())
+  const closeCompare = () => { setCompareOpen(false); requestAnimationFrame(() => compareTrigger.current?.focus()) }
+
   const [sparkId, setSparkId] = useState('day')
   const [custom, setCustom] = useState(null)
-  const [dates, setDates] = useState(() => ({ start: toInput(new Date()), end: toInput(new Date()) }))
+  const [dates, setDates] = useState(() => ({ start: marketDate(Date.now()), end: marketDate(Date.now()) }))
   const [dateError, setDateError] = useState('')
+  useEffect(() => { if (sparkId === 'day') setDates({ start: today, end: today }) }, [today, sparkId])
   const spark = (sparkId === 'custom' || sparkId === 'previous') ? custom : SPARK.find((s) => s.id === sparkId)
-  const limits = fullWindow()
+  const limits = fullWindow(fromInput(marketDate(Date.now())))
   const choosePreset = (s) => {
     setSparkId(s.id); setDateError('')
     const end = limits.end, start = new Date(end)
@@ -399,6 +417,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
       <section className="market-terminal" aria-labelledby="r-moedas">
         <div className="sec-head terminal-titlebar">
           <h2 id="r-moedas">Mercado hoje <Explain id="mercadoHoje" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+          <button type="button" ref={compareTrigger} className="compare-trigger" aria-label="Comparar moedas" aria-haspopup="dialog" aria-expanded={compareOpen} title="Montar comparação de moedas" onClick={() => setCompareOpen(true)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M3 3v18h18M5 16l5-7 4 4 6-9M5 10l5 4 5-7 5 9" /></svg><span>Comparar</span></button>
         </div>
         <div className="terminal-toolbar">
           <div className="summary-period-controls">
@@ -414,9 +433,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
             <label>Até <input aria-label="Data final dos gráficos" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => chooseDate('end', e.target.value)} /></label>
           </div>
           </div>
-        </div>
-        <div className="terminal-summary" role="group" aria-label="Resumo das últimas cotações em reais">
-          {CURRENCIES.map(c => <button key={c.code} type="button" onClick={() => openSelected(c.code)} aria-label={'Abrir gráfico de ' + c.code + '/BRL no resumo'}><span>{quotes?.[c.code]?.source || c.code}/BRL</span><b>{quotes?.[c.code] ? brl(quotes[c.code].bid, c.code === 'JPY' ? 5 : 4) : '—'}</b></button>)}
         </div>
         {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
         <div className="terminal-main">
@@ -437,21 +453,28 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
 
         <div className="tiles market-secondary">
           <ParityTile quotes={quotes} spark={spark} onOpen={openSelected} color={colors?.PAR} />
-          <OilTile spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         </div>
+        <OilTile table spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <footer className="market-footnotes" id="market-sources" aria-label="Fontes, datas e metodologia do câmbio">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
-            <b>{q?.source || c.code}/BRL:</b> <span className={!q || q.stale || q.fallback ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : '') + dataTimestamp(q.timestamp)}</span>
+            <b>{q?.source || c.code}/BRL:</b> <span className={quoteAgeState(q) ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : quoteAgeState(q) ? quoteAgeState(q) + ' · ' : '') + dataTimestamp(q.timestamp)}</span>
             {' · '}{q ? q.fallback ? 'BCE · referência diária' : q.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}
             {p && <> · BCB PTAX venda, boletim {p.kind}, {p.date.split('-').reverse().join('/')}, R$ por 1 {c.code}</>}
             {['month', 'year'].map(k => <span key={k}> · {k === 'month' ? 'Mês' : 'Ano'}: {r[k] ? `base ${r[k].baseDate.split('-').reverse().join('/')} → ${r[k].endDate.split('-').reverse().join('/')}` : 'sem base/cobertura compatível'}</span>)}
           </li> })}</ul>
           <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série AwesomeAPI. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
           <p>PTAX é referência oficial independente, não spot. <a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noreferrer">BCB: cotações e boletins</a> · <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noreferrer">AwesomeAPI: cotações e histórico</a>. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
+          <p>Cotação do dia: última referência recebida, não um feed em tempo real. A coleta central é de 5 min na janela configurada e horária fora dela em dias úteis, com pausa de coleta no fim de semana; o navegador verifica a cada minuto e o arquivo também pode ter cache. “Dado antigo” sinaliza horário da fonte há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. A fonte não informa abertura/fechamento do mercado: ausência de novo preço não é tratada como mercado fechado.</p>
         </footer>
       </section>
+      {compareOpen && <Expandable modal label="Comparar moedas" onClose={closeCompare}>
+        <section className="currency-comparison" aria-labelledby="comparison-title"><h2 id="comparison-title">Comparar moedas</h2>
+          <div className="seg" role="group" aria-label="Período do comparador">{SPARK.map(p => <button type="button" key={p.id} aria-pressed={compareSpark.id === p.id} onClick={() => setCompareSpark(p)}>{p.label}</button>)}</div>
+          <ResumoChart comparison colors={colors} spark={compareSpark} selection={compareSelection} onSelection={setCompareSelection} onPrevious={day => setCompareSpark({ id:'previous', label:`Amostras de ${day.split('-').reverse().join('/')}`, intraday:true, day })} />
+        </section>
+      </Expandable>}
       </Expandable>
   )
 }

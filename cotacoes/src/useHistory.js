@@ -217,13 +217,14 @@ export function useHistory(code, start, end, skip = false) {
 }
 
 // ---- Intraday: barras de 5 minutos coletadas no GitHub (intraday.json), últimos 5 dias úteis ----
-const INTRADAY_REFRESH_MS = 600000
+// Re-read the existing public snapshot each minute; no provider call or extra collector.
+const INTRADAY_REFRESH_MS = DATA_POLL_MS
 let intradayPromise = null
 let intradayFile = null
 let intradayAt = 0
 
 function loadIntraday() {
-  // Uma carga compartilhada pelos cards e gráficos; o TTL também vale na borda exata de 10 min.
+  // Uma carga compartilhada pelos cards e gráficos; expira após um minuto, sem renovar a idade ao remontar.
   if (intradayPromise) return intradayPromise
   if (intradayFile && Date.now() - intradayAt < INTRADAY_REFRESH_MS) return Promise.resolve(intradayFile)
   // Só lê o arquivo central já coletado; não consulta a API de cotações.

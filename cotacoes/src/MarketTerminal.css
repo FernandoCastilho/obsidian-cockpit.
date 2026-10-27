@@ -79,6 +79,29 @@
 .market-footnotes li { margin-bottom:5px; }
 .market-footnotes .status { display:inline; margin:0; font-size:inherit; }
 .market-terminal .market-open .market-state { color:#ffd37b; font-weight:600; }
+.status.src .dot.delayed { background:#e5b453; }
+.compare-trigger { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:44px; min-width:44px; padding:8px; border:1px solid #a05b66; border-radius:4px; background:transparent; color:#fff; cursor:pointer; }
+.compare-trigger:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.compare-trigger span { font-size:.75rem; }
+.chart-basis { margin:6px 0 10px; color:var(--mut); font-size:.75rem; line-height:1.5; }
+.currency-comparison { min-width:0; }
+.currency-comparison .chips { display:flex; flex-wrap:wrap; gap:4px; }
+.currency-comparison .chips button, .currency-comparison .seg button { min-width:44px; min-height:44px; }
+.currency-comparison .sec-head { flex-wrap:wrap; }
+.market-terminal > .market-secondary { display:block; }
+.other-market { padding:10px; border-top:1px solid #343a43; }
+.other-market h3 { margin:0 0 10px; color:#e5b453; }
+.other-market-scroll { overflow-x:auto; max-width:100%; }
+.other-market table { border-collapse:collapse; width:100%; min-width:540px; table-layout:fixed; }
+.other-market th, .other-market td { padding:8px; border-bottom:1px solid #343a43; text-align:left; vertical-align:middle; }
+.other-market thead th { color:#e5b453; font-size:.8rem; }
+.other-market th:first-child { width:25%; }
+.other-market th:nth-child(2) { width:50%; }
+.other-market tbody th small { display:block; margin-top:4px; color:var(--mut); font-size:.75rem; font-weight:400; }
+.other-market .oil-details { min-height:44px; }
+.other-market .oil-live-quote { min-height:100px; }
+.other-market td > small { display:block; margin-top:4px; line-height:1.5; }
+@media(max-width:450px) { .compare-trigger span { display:none; } }
 .general-notice-footer { margin:16px 0; padding-bottom:16px; }
 .general-notice-footer .app-disclaimer { justify-content:flex-start; }
 .market-scroll-hint { display:none; margin:8px 0; font-size:.75rem; color:var(--terminal-amber); }
