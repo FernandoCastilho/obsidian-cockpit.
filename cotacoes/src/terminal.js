@@ -108,20 +108,6 @@ export function kpiItems(quotes, rates) {
   return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ...pick('selic', 'cdi', 'di1')].filter(Boolean))
 }
 
-// Mapa de variação: moedas, paridade e juros longos, todos com a variação já calculada pelo app.
-export function heatItems(quotes, rates) {
-  const p = parityItem(quotes)
-  const longRates = rateItems(rates).filter((r) => ['di1', 'ust10'].includes(r.key))
-  return withTone([...fxItems(quotes), ...(p ? [p] : []), ...longRates]).filter((i) => Number.isFinite(i.change))
-}
-
-// Intensidade (0 a 1) da cor de um bloco do mapa: 1,2% no câmbio ou 15 bps em juros já saturam.
-export function heatStrength(item) {
-  if (!Number.isFinite(item.change)) return 0
-  const full = item.unit === 'bps' ? 0.15 : 1.2
-  return Math.min(1, Math.abs(item.change) / full)
-}
-
 // Estado do indicador "dados" da barra superior, a partir do que App.jsx já sabe sobre as cotações.
 export function feedState({ error, aged, hasQuotes }) {
   if (error) return 'err'

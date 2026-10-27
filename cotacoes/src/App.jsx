@@ -200,6 +200,31 @@ export default function App() {
     setOpen(cmd.kind === 'pair' ? 'PAR' : cmd.code)
   }
 
+  const quoteStatus = (
+    <p className="status src">
+          <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
+          {error
+            ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
+            : updatedAt
+              ? `Câmbio — consulta de ${dataTimestamp(updatedAt)} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
+              : 'Carregando…'}
+          {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB · atualiza a cada 10 min</span>}
+            <button
+              type="button"
+              className="refresh-mini"
+              style={{ background: "none", border: "none", padding: 10, minWidth: 44, minHeight: 44, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
+              onClick={refresh}
+              disabled={refreshing || limits.wait > 0 || limits.left <= 0}
+              aria-label={`Atualizar cotações agora${wait}`}
+              title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
+                <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
+                <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
+              </svg>
+            </button>
+        </p>
+  )
   return (
     <>
     <header className="term-head">
@@ -226,36 +251,11 @@ export default function App() {
           <h1>{TABS.find((t) => t.id === tab).label}</h1>
         </header>
       )}
-      {tab === 'resumo' && (
-      <p className="status src">
-        <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
-        {error
-          ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
-          : updatedAt
-            ? `Câmbio — consulta de ${dataTimestamp(updatedAt)} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
-            : 'Carregando…'}
-        {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB</span>}
-          <button
-            type="button"
-            className="refresh-mini"
-            style={{ background: "none", border: "none", padding: 10, minWidth: 44, minHeight: 44, marginLeft: 6, verticalAlign: "middle", cursor: "pointer", color: "inherit" }}
-            onClick={refresh}
-            disabled={refreshing || limits.wait > 0 || limits.left <= 0}
-            aria-label={`Atualizar cotações agora${wait}`}
-            title={limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Atualizar agora. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).`}
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshing ? 'spin' : ''} aria-hidden="true">
-              <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
-              <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
-            </svg>
-          </button>
-      </p>
-      )}
 
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} status={quoteStatus} />
 
         </>
       )}
