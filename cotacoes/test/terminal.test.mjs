@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { changeText, feedState, heatItems, heatStrength, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
+import { ageText, brentItem, changeText, dataStatus, feedState, heatItems, heatStrength, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
 
 const q = (bid, pct, extra = {}) => ({ bid, ask: bid, high: bid, low: bid, pct, timestamp: Date.now(), ...extra })
 const quotes = { USD: q(5, 1, { source: 'USD' }), EUR: q(6, -0.5, { source: 'EUR' }), JPY: q(0.034, 0.2, { source: 'JPY' }), CNH: q(0.74, 0.1, { source: 'CNH' }) }
@@ -90,4 +90,46 @@ test('estado dos dados: erro vence; antigo avisa; sem cotação ainda carrega', 
   assert.equal(feedState({ error: null, aged: false, hasQuotes: false }), 'loading')
   assert.equal(feedState({ error: null, aged: true, hasQuotes: true }), 'delayed')
   assert.equal(feedState({ error: null, aged: undefined, hasQuotes: true }), 'ok')
+})
+
+const oil = { benchmark: 'Brent', kind: 'spot', unit: 'USD/barril', value: 115.22, observationDate: '2026-10-20' }
+
+test('Brent da EIA entra na faixa com a data da observação e sem variação inventada', () => {
+  const b = brentItem(oil)
+  assert.equal(b.value, '115,22')
+  assert.equal(b.note, '20/10')
+  assert.equal(b.change, null)
+  const items = tapeItems(quotes, rates, oil)
+  assert.equal(items.at(-1).label, 'Brent EIA')
+  assert.equal(items.at(-1).text, null)
+  assert.equal(items.at(-1).tone, 'flat')
+})
+
+test('Brent inválido ou de outra série não entra', () => {
+  assert.equal(brentItem(null), null)
+  assert.equal(brentItem({ ...oil, kind: 'futures' }), null)
+  assert.equal(brentItem({ ...oil, value: null }), null)
+  assert.equal(tapeItems(quotes, [], { ...oil, unit: 'USD/m3' }).some((i) => i.key === 'BRENT'), false)
+})
+
+test('estado das fontes: atrasado só acima do limite; fim de semana não atrasa coleta de dia útil', () => {
+  const now = Date.parse('2026-10-27T12:00:00Z')
+  const H = 3600e3
+  const rows = dataStatus([
+    { key: 'a', label: 'A', at: now - 2 * H, maxAge: 6 * H, weekdays: true },
+    { key: 'b', label: 'B', at: now - 9 * H, maxAge: 6 * H, weekdays: true },
+    { key: 'c', label: 'C', at: new Date(now - 9 * H).toISOString(), maxAge: 6 * H, weekdays: false },
+    { key: 'd', label: 'D', at: undefined, maxAge: 6 * H, weekdays: true },
+  ], now, false)
+  assert.deepEqual(rows.map((r) => r.state), ['ok', 'old', 'old', 'missing'])
+  const weekend = dataStatus([{ key: 'b', label: 'B', at: now - 40 * H, maxAge: 6 * H, weekdays: true }, { key: 'q', label: 'Q', at: now - 40 * H, maxAge: 6 * H, weekdays: false }], now, true)
+  assert.deepEqual(weekend.map((r) => r.state), ['ok', 'old'])
+})
+
+test('idade em texto', () => {
+  assert.equal(ageText(20e3), 'agora')
+  assert.equal(ageText(5 * 60e3), 'há 5 min')
+  assert.equal(ageText(3 * 3600e3), 'há 3 h')
+  assert.equal(ageText(72 * 3600e3), 'há 3 dias')
+  assert.equal(ageText(NaN), '—')
 })

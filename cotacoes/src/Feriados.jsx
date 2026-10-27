@@ -59,7 +59,7 @@ export default function Feriados({ hol }) {
       <div aria-live="polite" aria-atomic="true" className="fer-count">
         {groups.reduce((count, group) => count + group.rows.length, 0)} feriados nesta seleção
       </div>
-      {groups.length ? groups.map((group) => (
+      {groups.length ? <div className="fer-months">{groups.map((group) => (
         <section className="fer-month" key={group.month} aria-labelledby={`month-${group.month}`}>
           <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h2>
           <ul className="fer-list">
@@ -76,7 +76,7 @@ export default function Feriados({ hol }) {
           })}
           </ul>
         </section>
-      )) : <p className="status">Nenhum feriado nesta praça nos próximos 12 meses.</p>}
+      ))}</div> : <p className="status">Nenhum feriado nesta praça nos próximos 12 meses.</p>}
     </section>
   )
 }

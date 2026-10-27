@@ -85,7 +85,8 @@ body { background: var(--bg); }
 .terminal-desk > * { min-width: 0; }
 .resumo .market-terminal { margin-top: 0; }
 
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; }
+.kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+@media (min-width: 700px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .kpi { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0 8px; padding: 9px 12px 9px 15px; text-align: left; color: var(--fg); background: var(--card); border: 1px solid var(--line); font: inherit; cursor: pointer; overflow: hidden; }
 .kpi::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--series, var(--amber)); }
 .kpi:hover { background: #121112; }
@@ -200,14 +201,21 @@ body { background: var(--bg); }
 .desk-rates .executive-rates .executive-rates__heading, .desk-rates .executive-rates__heading { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); padding: 0; min-height: 0; }
 .desk-rates .executive-rates__scroll { border: 0; }
 .desk-rates .executive-rates__table { min-width: 0; table-layout: fixed; }
-.desk-rates .executive-rates__indicator-column { width: 140px; }
-.desk-rates .executive-rates__table th, .desk-rates .executive-rates__table td { padding: 8px 10px; }
-.desk-rates .executive-rates__name { font-size: .78rem; }
-.desk-rates .executive-rates__value { font-size: .85rem; }
+.desk-rates .executive-rates__indicator-column { width: 124px; }
+.desk-rates .executive-rates__table th, .desk-rates .executive-rates__table td { padding: 8px 8px; }
+.desk-rates .executive-rates__name { font-size: .76rem; }
+.desk-rates .executive-rates__value { font-size: .82rem; }
+.desk-rates .executive-rates__table th:nth-child(n+4), .desk-rates .executive-rates__table td:nth-child(n+4), .desk-rates .executive-rates__table col:nth-child(n+4) { display: none; }
+@media (min-width: 700px) {
+  .desk-rates .executive-rates__indicator-column { width: 140px; }
+  .desk-rates .executive-rates__table th, .desk-rates .executive-rates__table td { padding: 8px 10px; }
+  .desk-rates .executive-rates__name { font-size: .78rem; }
+  .desk-rates .executive-rates__value { font-size: .85rem; }
+}
 .desk-rates .executive-rates__footnote { margin: 0; padding: 0 10px 8px; }
 .desk-rates .executive-rates__footnote p { font-size: .68rem; }
-@media (min-width: 700px) and (max-width: 1799px) { .desk-rates .executive-rates__table th:nth-child(5), .desk-rates .executive-rates__table td:nth-child(5), .desk-rates .executive-rates__table col:nth-child(5) { display: none; } }
-@media (min-width: 700px) and (max-width: 1399px) { .desk-rates .executive-rates__table th:nth-child(4), .desk-rates .executive-rates__table td:nth-child(4), .desk-rates .executive-rates__table col:nth-child(4) { display: none; } }
+@media (min-width: 1400px) { .desk-rates .executive-rates__table th:nth-child(4), .desk-rates .executive-rates__table td:nth-child(4), .desk-rates .executive-rates__table col:nth-child(4) { display: table-cell; } .desk-rates .executive-rates__table col:nth-child(4) { display: table-column; } }
+@media (min-width: 1800px) { .desk-rates .executive-rates__table th:nth-child(5), .desk-rates .executive-rates__table td:nth-child(5), .desk-rates .executive-rates__table col:nth-child(5) { display: table-cell; } .desk-rates .executive-rates__table col:nth-child(5) { display: table-column; } }
 
 /* petróleo ("Demais") e notas: sem os vazios do layout antigo */
 .market-terminal .other-market, .market-terminal > .other-market { margin-top: 0; padding: 8px 10px; }
@@ -223,3 +231,83 @@ main a:visited { color: #c9a24a; }
   .market-terminal .market-record.is-selected .market-values th { background: #1a1507; }
   .market-terminal .market-table thead th:first-child { background: #0a0a0a; }
 }
+
+/* ===== Repaginação das demais telas: títulos, cartões e controles no mesmo vocabulário ===== */
+:root { --r-card: 3px; }
+main.app .top h1, main.app .history-head h1, main.app .history-head h2, main.app section.macro > h2, main.app .market-context h2, main.app .sec-head:not(.terminal-titlebar) h2, main.app .fer-month h2, main.app .macro.calc h2 {
+  display: flex; align-items: center; gap: 12px; margin: 0 0 10px;
+  color: var(--amber); font: 700 .8rem/1.3 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase;
+}
+main.app .top h1::after, main.app .history-head h1::after, main.app .history-head h2::after, main.app section.macro > h2::after, main.app .market-context h2::after, main.app .sec-head:not(.terminal-titlebar) h2::after, main.app .fer-month h2::after, main.app .macro.calc h2::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+.history-head > :first-child { flex: 1; min-width: 0; }
+.history-head { align-items: flex-end; }
+.top { margin: 4px 0 6px; }
+main.app .top h1 { margin: 0; font-size: .8rem; }
+.market-context .context-subheading { margin: 18px 0 8px; color: var(--mut); font: 700 .72rem/1.3 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+main.app .fer-month h2 { text-transform: uppercase; }
+@media (min-width: 1100px) {
+  .fer-months { columns: 2; column-gap: 28px; }
+  .fer-month { break-inside: avoid; margin: 0 0 22px; }
+}
+.fer-count { margin: 6px 0 14px; }
+
+/* cartões, listas e controles: cantos quase retos */
+.card, .chart, .tile, .context-card, .ncg, .calc-item, .start-card, .fin-step, .ficha-card, .list, .feed, .wire, .holiday-notice, .update-notice, .resumo-chart, .executive-rates__scroll, .opt, .rate, .result-bar, .fin-more, .agenda li, .tip, .pop, .more-sheet { border-radius: var(--r-card); }
+.seg, .btn, .chips button, .curve-legend button, .calc-shortcuts button, .start-chip, .pair-sel, .fer-filter select, .calc-form input, .calc-form select, .finimp select, .finimp input[type=date], .finimp input[inputmode], .scenario-year select, .update-notice button, .fx-toggle, .img-share { border-radius: 2px; }
+.context-card-trigger { border-radius: var(--r-card); }
+.sheet, .info-notice-dialog, .expandable-panel.is-dialog { border-radius: 4px; }
+.seg button[aria-pressed='true'], .chips button[aria-pressed='true'], .seg button.on { background: #1a1507; color: var(--amber); box-shadow: inset 0 -2px 0 var(--amber); }
+.calc-icon, .calc-item .calc-icon { color: var(--amber); }
+.calc-validation-notice { margin: 0 0 12px; padding: 6px 12px; background: transparent; border: 0; border-left: 3px solid var(--amber); border-radius: 0; color: var(--mut); font-size: .8rem; }
+.calc-validation-notice strong { color: var(--fg); }
+
+/* fonte nos cartões de Cenários: o botão que cobre o cartão não pode esconder o link */
+.context-card { position: relative; }
+.context-card footer a { position: relative; z-index: 2; }
+
+/* Configurações */
+.config-desk { display: grid; gap: 6px; grid-template-columns: minmax(0, 1fr); }
+.config-side { display: grid; gap: 6px; align-content: start; min-width: 0; }
+@media (min-width: 1000px) { .config-desk { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } .config-wide { grid-column: 1 / -1; } }
+.config-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.config-table th, .config-table td { padding: 8px 12px; border-bottom: 1px solid #1a1813; text-align: left; vertical-align: middle; }
+.config-table thead th { color: var(--mut); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; background: #0a0a0a; }
+.config-table tbody th { font-weight: 600; }
+.config-table td { color: var(--mut); font-variant-numeric: tabular-nums; }
+.config-table kbd { padding: 2px 6px; background: #1a1507; border: 1px solid #4a3a12; color: var(--amber); font: .72rem var(--mono); white-space: normal; }
+.config-table .chip { display: inline-block; padding: 1px 8px; border: 1px solid var(--line); font: 700 .64rem/1.5 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.config-table .chip.up { color: var(--up); border-color: #0f3a24; background: #0a1f15; }
+.config-table .chip.down { color: var(--down); border-color: #4a1618; background: #1f0a0b; }
+.config-note { margin: 0; padding: 8px 12px 10px; color: var(--mut); font-size: .72rem; line-height: 1.5; }
+.config-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px; color: var(--mut); font-size: .8rem; }
+.config-wide .novidades { padding: 6px 12px 12px; }
+.config-wide .novidades summary { color: var(--amber); }
+.config-scroll { overflow-x: auto; max-width: 100%; }
+.config-scroll:focus-visible { outline: 2px solid var(--amber); }
+@media (max-width: 699px) { .config-table th, .config-table td { padding: 8px; } .config-table { min-width: 460px; } }
+.config-wide .novidades > summary { display: none; }
+.config-hint { margin: 0; padding: 12px; color: var(--mut); font-size: .8rem; line-height: 1.5; }
+
+/* faixa rolante */
+.tape { display: none; }
+@media (min-width: 700px) { .tape { display: block; } }
+.tape-track { display: flex; width: max-content; height: 100%; align-items: center; }
+.tape-set { display: flex; align-items: center; height: 100%; flex: none; }
+.tape-track.run { animation: tape-scroll var(--tape-secs, 60s) linear infinite; }
+.tape:hover .tape-track, .tape:focus-within .tape-track, .tape:focus .tape-track { animation-play-state: paused; }
+.tape:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+@keyframes tape-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .tape { overflow-x: auto; } .tape-track.run { animation: none; } .tape-set[aria-hidden] { display: none; } }
+
+/* "Demais" (petróleo) e notas de fonte */
+@media (min-width: 700px) { .other-market .oil-eia-table th, .other-market .oil-eia-table td { font-size: .85rem; } }
+@media (max-width: 699px) { .other-market .oil-eia-table th, .other-market .oil-eia-table td { font-size: .72rem; } .other-market .oil-eia-table small { font-size: .62rem; } }
+.other-market .oil-eia-table tbody th { font-weight: 700; }
+.oil-spot-value { background: #1a1507; border-color: #4a3a12; color: var(--amber); font-family: var(--mono); font-size: .9rem; }
+.other-market .status, .other-market .status.stale { margin: 6px 0; font-size: .75rem; }
+.other-market .chart-basis { font-size: .72rem; }
+.rates-source-note { margin: 8px 0; font-size: .75rem; line-height: 1.5; }
+.oil-spot-value { white-space: nowrap; }
+.desk-rates .executive-rates__hint { display: none; }

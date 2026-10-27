@@ -80,10 +80,18 @@ function rateItems(rates) {
 
 const withTone = (items) => items.map((i) => ({ ...i, tone: toneOf(i.change), text: changeText(i.change, i.unit) }))
 
-// Faixa corrida sob a barra superior: câmbio, paridade e juros.
-export function tapeItems(quotes, rates) {
+// Brent spot diário da EIA (arquivo oil.json): é referência datada, não cotação em tempo real; por isso leva a data e não tem variação.
+export function brentItem(oil) {
+  if (oil?.benchmark !== 'Brent' || oil?.kind !== 'spot' || oil?.unit !== 'USD/barril' || !Number.isFinite(oil.value)) return null
+  const [, m, d] = String(oil.observationDate ?? '').split('-')
+  return { key: 'BRENT', code: 'BRENT', label: 'Brent EIA', value: nf(oil.value, 2), change: null, unit: 'pct', note: d && m ? `${d}/${m}` : null }
+}
+
+// Faixa corrida sob a barra superior: câmbio, paridade, juros de referência e Brent (EIA, com data).
+export function tapeItems(quotes, rates, oil) {
   const p = parityItem(quotes)
-  return withTone([...fxItems(quotes), ...(p ? [p] : []), ...rateItems(rates)])
+  const brent = brentItem(oil)
+  return withTone([...fxItems(quotes), ...(p ? [p] : []), ...rateItems(rates), ...(brent ? [brent] : [])])
 }
 
 // Seis indicadores do topo do Mercado: dólar, euro, paridade e os três juros de referência do Brasil.
@@ -115,3 +123,34 @@ export function feedState({ error, aged, hasQuotes }) {
   if (!hasQuotes) return 'loading'
   return aged ? 'delayed' : 'ok'
 }
+
+// Estado de cada fonte na tela de configurações. `at` em ms ou texto de data; `maxAge` em ms; fim de semana não conta como atraso
+// quando a coleta é de dias úteis (`weekdays`).
+export function dataStatus(entries, now = Date.now(), weekend = false) {
+  return entries.map((e) => {
+    const at = typeof e.at === 'number' ? e.at : Date.parse(e.at)
+    if (!Number.isFinite(at)) return { key: e.key, label: e.label, at: null, ageMs: null, state: 'missing' }
+    const ageMs = Math.max(0, now - at)
+    const late = ageMs > e.maxAge && !(weekend && e.weekdays)
+    return { key: e.key, label: e.label, at, ageMs, state: late ? 'old' : 'ok' }
+  })
+}
+
+export function ageText(ageMs) {
+  if (!Number.isFinite(ageMs)) return '—'
+  const min = Math.round(ageMs / 60000)
+  if (min < 1) return 'agora'
+  if (min < 60) return `há ${min} min`
+  const h = Math.round(min / 60)
+  return h < 48 ? `há ${h} h` : `há ${Math.round(h / 24)} dias`
+}
+
+export const SHORTCUTS = [
+  ['/', 'Foca a linha de comando'],
+  ['Alt + 1 … 7', 'Mercado, Juros, Cenários, Calculadoras, Notícias, Feriados, Config'],
+  ['USDBRL · EURBRL · JPYBRL · CNHBRL', 'Abre o gráfico da moeda'],
+  ['EURUSD', 'Abre a paridade EUR/USD'],
+  ['JUROS · CURVA · FOCUS', 'Vai para Juros ou Cenários'],
+  ['CALC · FINIMP · NCG · GIRO', 'Abre a calculadora indicada'],
+  ['NEWS · FERIADOS · CONFIG', 'Vai para a seção'],
+]
