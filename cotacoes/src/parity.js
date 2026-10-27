@@ -34,8 +34,13 @@ export function liveParity(usd, eur) {
 }
 
 // Cruzamento genérico base/cotada (unidades da cotada por 1 da base), a partir das cotações em reais de cada moeda.
+// As duas variações do dia só se combinam se as cotações são do mesmo momento: com horários muito distintos, cada uma é medida contra uma
+// referência diferente e o cruzamento inventa um movimento (ex.: dólar de ontem à noite contra euro de hoje de madrugada).
+export const CROSS_MAX_GAP_MS = 30 * 60000
 export function liveCross(base, quote) {
   if (!base || !quote || !(base.bid > 0) || !(quote.bid > 0)) return null
   const pct = ((1 + base.pct / 100) / (1 + quote.pct / 100) - 1) * 100
-  return { main: base.bid / quote.bid, pct: Number.isFinite(pct) ? pct : 0 }
+  const gap = Math.abs(Number(base.timestamp) - Number(quote.timestamp))
+  const comparable = !Number.isFinite(gap) || gap <= CROSS_MAX_GAP_MS
+  return { main: base.bid / quote.bid, pct: Number.isFinite(pct) ? pct : 0, comparable }
 }

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { liveCross } from '../src/parity.js'
 import { ageText, brentItem, changeText, dataStatus, feedState, heatItems, heatStrength, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
 
 const q = (bid, pct, extra = {}) => ({ bid, ask: bid, high: bid, low: bid, pct, timestamp: Date.now(), ...extra })
@@ -132,4 +133,32 @@ test('idade em texto', () => {
   assert.equal(ageText(3 * 3600e3), 'há 3 h')
   assert.equal(ageText(72 * 3600e3), 'há 3 dias')
   assert.equal(ageText(NaN), '—')
+})
+
+test('paridade: cotações de horários distintos não geram variação do dia', () => {
+  const now = Date.now()
+  const stale = { ...quotes, USD: { ...quotes.USD, timestamp: now - 6 * 3600e3 }, EUR: { ...quotes.EUR, timestamp: now } }
+  const p = tapeItems(stale, []).find((i) => i.key === 'EURUSD')
+  assert.equal(p.change, null)
+  assert.equal(p.text, null)
+  assert.equal(p.reason, 'cotações de horários distintos')
+  assert.equal(kpiItems(stale, []).find((i) => i.key === 'EURUSD').text, null)
+  assert.equal(heatItems(stale, []).some((i) => i.key === 'EURUSD'), false)
+  const sync = { ...quotes, USD: { ...quotes.USD, timestamp: now }, EUR: { ...quotes.EUR, timestamp: now - 5 * 60e3 } }
+  assert.ok(Number.isFinite(tapeItems(sync, []).find((i) => i.key === 'EURUSD').change))
+})
+
+test('liveCross sinaliza horários distintos e aceita cotações sem horário', () => {
+  const a = { bid: 6, pct: -0.1, timestamp: 2e6 }
+  assert.equal(liveCross(a, { bid: 5, pct: 0.1, timestamp: 2e6 + 29 * 60e3 }).comparable, true)
+  assert.equal(liveCross(a, { bid: 5, pct: 0.1, timestamp: 2e6 + 31 * 60e3 }).comparable, false)
+  assert.equal(liveCross({ bid: 6, pct: 0 }, { bid: 5, pct: 0 }).comparable, true)
+})
+
+test('variação que arredonda para zero fica neutra, sem seta de alta ou baixa', () => {
+  const r = [{ key: 'cdi', label: 'CDI', value: 14.19, delta: 0.0004 }, { key: 'selic', label: 'Selic', value: 14.25, delta: -0.004 }, { key: 'di1', label: 'DI 1 ano', value: 13.8, delta: 0.006 }]
+  const items = tapeItems(null, r)
+  assert.deepEqual(items.map((i) => [i.tone, i.text]), [['flat', '0 bps'], ['flat', '0 bps'], ['up', '+1 bps']])
+  assert.equal(changeText(0.004), '0,00%')
+  assert.equal(changeText(-0.004), '0,00%')
 })
