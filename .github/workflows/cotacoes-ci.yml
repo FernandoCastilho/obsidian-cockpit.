@@ -1,7 +1,7 @@
 name: Cotações CI
 on:
   pull_request:
-    paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
+    paths: ['cotacoes/**', 'caixa/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -16,7 +16,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: cotacoes/package-lock.json
+          cache-dependency-path: |
+            cotacoes/package-lock.json
+            caixa/package-lock.json
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: App Caixa (testes e build, como no deploy)
+        working-directory: caixa
+        run: |
+          npm ci
+          npm test
+          npm run build

@@ -97,7 +97,7 @@ export default function FinimpSwap({ curves, hol }) {
         <h3 className="calc-sub">Custo em dólar</h3>
         <div className="calc-form">
           <label>Taxa do ativo (% a.a., ACT/360)<input inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} placeholder="6,48" /></label>
-          <label><span>IR sobre os juros (%) <Explain id="irGrossUp" /></span><input inputMode="decimal" value={ir} onChange={(e) => setIr(e.target.value)} /></label>
+          <label><span>IR sobre os juros (%) <Explain id="irGrossUp" /></span><input aria-label="IR sobre os juros (%)" inputMode="decimal" value={ir} onChange={(e) => setIr(e.target.value)} /></label>
         </div>
 
         <h3 className="calc-sub">Swap para CDI</h3>

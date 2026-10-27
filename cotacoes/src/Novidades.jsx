@@ -1,5 +1,6 @@
 // Registro de mudanças para a equipe. Acrescente as novas entradas no topo.
 const ENTRIES = [
+  { date: '27/10/2026', items: ['Novo visual "terminal": barra superior com linha de comando (ex.: USDBRL, EURUSD, JUROS, FINIMP) e atalhos Alt+1 a Alt+7, faixa de cotações com Brent (EIA), indicadores do dia, mapa de variação e painéis de curva DI, juros, manchetes e agenda no Mercado.', 'Configurações com atalhos, estado de cada fonte de dados e instalação do aplicativo. Feriados em duas colunas, campo de IR do FINIMP + swap com nome acessível e links de fonte dos cartões de Cenários clicáveis.'] },
   { date: '11/10/2026', items: ['Gráficos: o CDI futuro passa a ocupar a largura toda do cartão; eixo da Selic sem exagero quando a série está parada; valores só no primeiro, último, máximo e mínimo; curva DI com marcadores nos vértices; estados vazios menores.', 'Calculadoras: barras horizontais comparando custo (resgatar × empréstimo) e rendimento (bruto, líquido e CDI), com base em zero.', 'Acessibilidade e textos: foco visível em todos os controles, faixa de juros lida por leitor de tela e rodapé de fontes e avisos recolhido.'] },
   { date: '10/10/2026', items: ['Resumo com visual refinado: faixa de cor da moeda em cada quadro, número maior com "hoje" ao lado da variação, paridade em destaque e gráfico de 60 pregões (linha reta, sem suavização). Brilho discreto nas linhas é opcional (chave "Efeitos" no rodapé, desligada por padrão).', 'Celular: 4 abas na barra e "Mais" para Cenários e Notícias; cabeçalho mais enxuto; aviso de feriado em uma linha; botão de pausa na faixa de juros. Yuan passa a roxo para não ser confundido com aviso.'] },
   { date: '10/10/2026', items: ['Aba "Calculadoras": lista compacta, endereço próprio por calculadora (#calculadora/finimp) e atalhos no Resumo. Formulário à esquerda e resultado fixo à direita no computador; no celular, barra de resultado acima das abas. Cronogramas viram cartões no celular. Veredito neutro com selo "Melhor", alvos de toque de 44 px, mais contraste, aviso de nova versão e botão Fechar nas explicações.'] },
@@ -15,9 +16,9 @@ const ENTRIES = [
   { date: '09/10/2026', items: ['SOFR com médias de 30/90/180 dias e faixa de percentis.', 'Relógio do país acima de cada cotação.', 'Cotação do CNH por cruzamento quando a direta está defasada.', 'Curvas de juros: DI x pré (B3) e Treasuries (EUA), com comparação entre datas.'] },
 ]
 
-export default function Novidades() {
+export default function Novidades({ open = false }) {
   return (
-    <details className="novidades">
+    <details className="novidades" open={open}>
       <summary>O que há de novo</summary>
       {ENTRIES.map((e) => (
         <div key={e.date}>

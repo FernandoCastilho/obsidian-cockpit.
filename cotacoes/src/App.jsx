@@ -19,8 +19,8 @@ import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
-const Novidades = lazy(() => import('./Novidades.jsx'))
-import InstallApp from './InstallApp.jsx'
+const Config = lazy(() => import('./Config.jsx'))
+import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo, { MoveAgenda } from './Resumo.jsx'
 import TopBar from './TopBar.jsx'
@@ -189,6 +189,7 @@ export default function App() {
   const openCurrency = CURRENCIES.find((c) => c.code === open)
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
   const rates = rateTiles(macro.data, curves.data)
+  const oil = useDataFile('oil.json')
   const feed = feedState({ error, aged: quoteAgeWarning, hasQuotes: !!quotes })
   const feedAt = updatedAt ? new Date(updatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) : null
   const runCommand = (cmd) => {
@@ -201,7 +202,7 @@ export default function App() {
     <>
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} onCommand={runCommand} feed={feed} feedAt={feedAt} />
-      <Tape quotes={quotes} rates={rates} />
+      <Tape quotes={quotes} rates={rates} oil={oil.data} />
     </header>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
     {tab === 'resumo' && (
@@ -252,9 +253,8 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} goto={goto} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
+          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} />
 
-          <InstallApp />
         </>
       )}
 
@@ -285,18 +285,7 @@ export default function App() {
         </>
       )}
 
-      {tab === 'config' && (
- <>
-      <Novidades />
-      <footer>
-        <p>
-          <button type="button" className="fx-toggle" aria-pressed={fx === 'neon'} onClick={() => setFx(fx === 'neon' ? 'off' : 'neon')} title="Brilho discreto nas linhas dos gráficos (desligado por padrão)">
-            Efeitos: {fx === 'neon' ? 'brilho ligado' : 'desligados'}
-          </button>
-        </p>
-      </footer>
-        </>
-      )}
+      {tab === 'config' && <Config quotesAt={updatedAt} quotesVia={via} fx={fx} setFx={setFx} />}
 
       {open && (
         <Sheet onClose={() => setOpen(null)}>

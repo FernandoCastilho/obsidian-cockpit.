@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { fromInput, useIntraday } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
@@ -7,19 +8,45 @@ import { heatItems, heatStrength, kpiItems, tapeItems } from './terminal.js'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 
-// Faixa corrida sob a barra superior (só no computador).
-export function Tape({ quotes, rates }) {
-  const items = tapeItems(quotes, rates)
+// Faixa corrida sob a barra superior (só no computador). Se os itens não cabem, ela rola devagar e pausa sob o mouse.
+export function Tape({ quotes, rates, oil }) {
+  const items = tapeItems(quotes, rates, oil)
+  const box = useRef(null)
+  const set = useRef(null)
+  const [run, setRun] = useState(false)
+  const [secs, setSecs] = useState(60)
+  const sig = items.map((i) => `${i.key}${i.value}${i.text ?? ''}`).join('|')
+  useLayoutEffect(() => {
+    const check = () => {
+      if (!box.current || !set.current) return
+      const w = set.current.scrollWidth
+      setRun(w > box.current.clientWidth + 2)
+      setSecs(Math.max(30, Math.round(w / 40)))
+    }
+    check()
+    const ro = new ResizeObserver(check)
+    if (box.current) ro.observe(box.current)
+    return () => ro.disconnect()
+  }, [sig])
   if (!items.length) return <div className="tape" aria-hidden="true" />
-  return (
-    <div className="tape" role="region" aria-label="Cotações e juros de referência">
+  const list = (hidden) => (
+    <div className="tape-set" ref={hidden ? undefined : set} aria-hidden={hidden || undefined}>
       {items.map((i) => (
         <span key={i.key} className="tape-item">
           <b>{i.label}</b>
           {i.value}
           {i.text && <em className={i.tone}>{i.text}</em>}
+          {i.note && <em className="flat">{i.note}</em>}
         </span>
       ))}
+    </div>
+  )
+  return (
+    <div className="tape" ref={box} role="region" aria-label="Cotações e juros de referência" tabIndex={run ? 0 : undefined}>
+      <div className={`tape-track${run ? ' run' : ''}`} style={{ '--tape-secs': `${secs}s` }}>
+        {list(false)}
+        {run && list(true)}
+      </div>
     </div>
   )
 }
