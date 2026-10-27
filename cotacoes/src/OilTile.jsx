@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Expandable from './Expandable.jsx'
 import OilHistory from './OilHistory.jsx'
 import OilLiveQuote from './OilLiveQuote.jsx'
 import { oilStatus } from './oilStatus.js'
@@ -6,6 +7,7 @@ import { oilStatus } from './oilStatus.js'
 // Commodity independente: nunca entra no câmbio ou nos cálculos em reais.
 export default function OilTile({ spark, dates, presets, onDates, onPreset, dateError, table = false }) {
   const [expanded, setExpanded] = useState(false)
+  const [liveOpen, setLiveOpen] = useState(false)
   const [state, setState] = useState({ data: null, error: false })
   useEffect(() => {
     const controller = new AbortController()
@@ -33,13 +35,15 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
       <p className="market-scroll-hint">Deslize para ver a referência online e o histórico →</p>
       <div className="other-market-scroll" role="region" aria-label="Tabela Demais; role para ver a referência e o histórico" tabIndex={0}>
         <table aria-label="Demais instrumentos — referências independentes"><thead><tr><th scope="col">Instrumento</th><th scope="col">Referência online</th><th scope="col">Histórico</th></tr></thead>
-          <tbody><tr><th scope="row">Petróleo Brent<small>CFD indicativo · USD/barril</small></th><td><OilLiveQuote /></td><td><button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Histórico EIA ›</button></td></tr></tbody>
+          <tbody><tr><th scope="row">Petróleo Brent</th><td><button type="button" className="oil-details" onClick={() => setLiveOpen(true)} aria-haspopup="dialog">Abrir CFD online</button></td><td><button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Histórico EIA ›</button></td></tr></tbody>
         </table>
       </div>
+      <p className="chart-basis">Online: CFD indicativo TradingView, USD/barril; atraso não informado. Histórico: spot diário EIA independente; não representa a cotação do CFD.</p>
     </section> : <article className="tile oil-tile" aria-label="Petróleo Brent CFD indicativo">
       <div className="tile-head"><span className="tile-name"><b>Petróleo Brent</b></span><button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Histórico EIA ›</button></div>
       <OilLiveQuote />
     </article>}
+    {liveOpen && <Expandable modal label="Referência online Brent" onClose={() => setLiveOpen(false)}><h2>Brent — CFD indicativo</h2><OilLiveQuote /></Expandable>}
     {expanded && <OilHistory data={data} points={points} spark={spark} dates={dates} presets={presets} onDates={onDates} onPreset={onPreset} dateError={dateError} stale={status.pending} loading={!data && !state.error} onClose={() => setExpanded(false)} />}
   </>
 }
