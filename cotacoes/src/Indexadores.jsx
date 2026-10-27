@@ -1,0 +1,44 @@
+import { useDataFile } from './useDataFile.js'
+import { Panel } from './TerminalDesk.jsx'
+import { indexRows } from './indexadores.js'
+
+const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
+
+// Indexadores TR, TBF e TLP (Banco Central, SGS): valor vigente, período de vigência e equivalente anual.
+export default function Indexadores() {
+  const file = useDataFile('indexadores.json')
+  const rows = indexRows(file.data)
+  const loading = file.status === 'loading'
+  return (
+    <Panel title="Indexadores · TR · TBF · TLP" note="Banco Central (SGS)">
+      {file.status === 'error' && !file.data ? (
+        <p className="status">Indexadores indisponíveis agora ({file.error}). Eles voltam na próxima coleta.</p>
+      ) : (
+        <div className="idx-scroll" role="region" aria-label="Indexadores TR, TBF e TLP" tabIndex={0}>
+          <table className="idx-table">
+            <thead>
+              <tr><th scope="col">Indexador</th><th scope="col">Valor vigente</th><th scope="col">Equivalente</th><th scope="col">Vigência</th><th scope="col">Fonte</th></tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.key}>
+                  <th scope="row"><b>{r.key}</b><small>{r.name}</small></th>
+                  <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
+                  <td className="num">{r.annualText ?? '—'}</td>
+                  <td>{r.missing ? '—' : r.period}</td>
+                  <td>{r.missing ? '—' : <>SGS {r.code}{r.stale && <em className="old"> · dado anterior ({dmy(r.stale)})</em>}</>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <dl className="idx-defs">
+        {rows.map((r) => (
+          <div key={r.key}><dt>{r.key}</dt><dd>{r.definition}</dd></div>
+        ))}
+      </dl>
+      <p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. Atualizado a cada coleta horária.</p>
+    </Panel>
+  )
+}

@@ -21,6 +21,7 @@ const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
 const Aprender = lazy(() => import('./Aprender.jsx'))
+const Indexadores = lazy(() => import('./Indexadores.jsx'))
 import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo, { MoveAgenda } from './Resumo.jsx'
@@ -265,6 +266,7 @@ export default function App() {
           <Macro macro={macro} />
           <CdiFuturo curves={curves} macro={macro.data} hol={hol} />
           <Curves curves={curves} />
+          <Indexadores />
         </>
       )}
 

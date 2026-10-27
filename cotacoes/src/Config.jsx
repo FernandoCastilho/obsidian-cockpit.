@@ -20,6 +20,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const news = useNews()
   const policy = useDataFile('policy-rates.json')
   const oil = useDataFile('oil.json')
+  const indexadores = useDataFile('indexadores.json')
   const commodities = useDataFile('commodities.json')
   const freight = useDataFile('freight.json')
   const rows = dataStatus(
@@ -29,6 +30,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: 6 * H, weekdays: true },
       { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: 6 * H, weekdays: true },
       { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: 36 * H, weekdays: true },
+      { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central)', at: indexadores.data?.generatedAt, maxAge: 6 * H, weekdays: true },
       { key: 'oil', label: 'Petróleo Brent (EIA)', at: oil.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'commodities', label: 'Commodities (EIA e Banco Mundial)', at: commodities.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: 72 * H, weekdays: true },
