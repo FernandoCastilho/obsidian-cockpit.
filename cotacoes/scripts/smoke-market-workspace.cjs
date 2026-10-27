@@ -1,7 +1,7 @@
 // Synthetic market fixtures; does not certify provider prices or a real-time feed.
 const{chromium}=require('playwright'),fs=require('fs'),assert=require('node:assert/strict')
 ;(async()=>{
- const b=await chromium.launch({channel:'msedge',headless:true}),base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:5207',out=process.env.WORKSPACE_QA_OUTPUT||'workspace-qa';fs.mkdirSync(out,{recursive:true});const results=[]
+ const b=await chromium.launch(require('./smoke-launch.cjs')()),base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:5207',out=process.env.WORKSPACE_QA_OUTPUT||'workspace-qa';fs.mkdirSync(out,{recursive:true});const results=[]
  const now=Date.parse('2026-10-27T01:10:00Z'),first=Date.parse('2026-10-26T15:02:51Z'),last=Date.parse('2026-10-26T20:50:04Z')
  const raw=(bid,t,pct=8.793912)=>({bid:String(bid),ask:String(bid*1.0001),high:String(bid*1.02),low:String(bid*.98),pctChange:String(pct),varBid:String(bid*.01),timestamp:String(t/1000)})
  const batch={USDBRL:raw(5.406,now-60000),EURBRL:raw(6.1,now-20*60000),JPYBRL:raw(.034,now-60000),USDCNH:raw(6.67,now-30*60000,-.01)}

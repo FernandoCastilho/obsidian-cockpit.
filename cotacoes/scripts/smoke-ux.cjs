@@ -2,7 +2,7 @@ const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 ;(async () => {
- const browser = await chromium.launch({channel:'msedge',headless:true})
+ const browser = await chromium.launch(require('./smoke-launch.cjs')())
  const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5197', out=process.env.UX_QA_OUTPUT || '../oil-evidence/ux-fixes'
  fs.mkdirSync(out,{recursive:true})
  const results=[]

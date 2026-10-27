@@ -1,7 +1,7 @@
 // Fixture synthetic values only; no provider feed or prices are certified by this smoke.
 const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:assert/strict')
 ;(async()=>{
- const browser=await chromium.launch({channel:'msedge',headless:true}),base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:8768',out=process.env.TABLE_QA_OUTPUT||'table-qa';fs.mkdirSync(out,{recursive:true});const results=[]
+ const browser=await chromium.launch(require('./smoke-launch.cjs')()),base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:8768',out=process.env.TABLE_QA_OUTPUT||'table-qa';fs.mkdirSync(out,{recursive:true});const results=[]
  try{for(const width of [390,820,1440]){
  const ctx=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block'}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));let mode='ok';const now=Date.now(),day=864e5
  await ctx.route('**/*',route=>{
