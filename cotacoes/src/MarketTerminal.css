@@ -132,3 +132,23 @@
 .market-news a { display:block; line-height:1.5; }
 .market-news small { display:block; color:var(--mut); margin-top:6px; line-height:1.5; }
 @media(min-width:1500px) { main.app:has(.market-workspace) { max-width:1600px; } .market-workspace { grid-template-columns:minmax(0,1168px) minmax(260px,1fr); } }
+
+.other-market table { min-width:600px; }
+.other-market th:first-child { width:28%; }
+.other-market th:nth-child(2) { width:22%; }
+.other-market th:nth-child(3) { width:20%; }
+.other-market th:nth-child(4) { width:30%; }
+.oil-spot-value { font-weight:700; font-variant-numeric:tabular-nums; }
+.oil-secondary-reference { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+.oil-secondary-reference small { color:var(--mut); line-height:1.5; }
+
+@media(max-width:650px) {
+ .other-market .oil-eia-table { min-width:0; }
+ .other-market .oil-eia-table th,.other-market .oil-eia-table td { padding:6px 4px; overflow-wrap:anywhere; }
+ .other-market .oil-eia-table th:first-child { width:30%; }
+ .other-market .oil-eia-table th:nth-child(2) { width:20%; }
+ .other-market .oil-eia-table th:nth-child(3) { width:28%; }
+ .other-market .oil-eia-table th:nth-child(4) { width:22%; }
+ .other-market .oil-eia-table time { white-space:nowrap; font-variant-numeric:tabular-nums; }
+ .other-market .oil-eia-table .oil-details { padding:6px 4px; }
+}
