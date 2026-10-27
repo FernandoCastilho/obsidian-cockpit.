@@ -1,3 +1,4 @@
+import { preserveFocus } from './focus-collector.mjs'
 // Coleta CDI, Selic, PTAX e Boletim Focus (Banco Central) e grava public/macro.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
@@ -55,8 +56,8 @@ const out = { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], sofrAvg: []
   console.log('SOFR médias:', out.sofrAvg.length, 'pontos')
 }
 
-// Boletim Focus: expectativas anuais (mediana)
-{
+// Focus scheduled refresh is weekly; manual/push retains the existing explicit refresh.
+if (process.env.GITHUB_EVENT_NAME !== 'schedule') {
   const since = new Date(now.getTime() - 21 * 864e5).toISOString().slice(0, 10)
   const names = { Selic: 'Selic', IPCA: 'IPCA', 'PIB Total': 'PIB', Câmbio: 'Câmbio' }
   const rowsOut = []
@@ -104,7 +105,9 @@ out.ptaxHist = {}
 
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
 // Fonte que falhou: mantém o último dado publicado (e avisa na tela) em vez de apagar o bloco ou travar o deploy.
-fillFromPrevious(out, await loadPrevious('macro.json'), ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax', 'ptaxHist'])
+const previous=await loadPrevious('macro.json')
+fillFromPrevious(out, previous, ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax', 'ptaxHist'])
+if(process.env.GITHUB_EVENT_NAME==='schedule') { delete out.stale.focus; preserveFocus(out,previous,{skipped:true}) }
 if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 const ok = out.cdi.length && out.selic.length
 if (!ok && process.env.MACRO_STRICT === 'true') {
