@@ -1,3 +1,4 @@
+import { b3CollectionDecision } from './data-schedules.mjs'
 import { collectB3Curve } from './b3-collector.mjs'
 // Coleta as curvas de juros (DI x pré da B3 e Treasuries dos EUA) e grava public/curves.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
@@ -38,8 +39,11 @@ async function b3Curve(id,minDays,key) {
     return data
   } catch(error) { errors.push(error.message); return null }
 }
-out.br = await b3Curve('PRE', 1, 'br')
-out.cc = await b3Curve('DOL', 21, 'cc')
+const decision=b3CollectionDecision(out.generatedAt,previous?.br?.checkedAt)
+out.b3Schedule=decision
+if(decision.reason==='calendário B3 do ano não verificado')errors.push(decision.reason)
+if(decision.run) { out.br=await b3Curve('PRE',1,'br');out.cc=await b3Curve('DOL',21,'cc') }
+else {out.br=previous?.br ?? null;out.cc=previous?.cc ?? null;console.log('B3: '+decision.reason)}
 
 // EUA: Treasury par yield curve (Tesouro dos EUA)
 {
@@ -56,6 +60,8 @@ out.cc = await b3Curve('DOL', 21, 'cc')
 }
 
 fillFromPrevious(out, previous, ['br', 'cc', 'us'])
+if(decision.reason==='calendário B3 do ano não verificado')for(const key of ['br','cc'])if(out[key])out.stale[key]=previous?.stale?.[key] ?? previous?.generatedAt ?? null
+for(const key of ['br','cc']) if(!decision.run && previous?.stale?.[key])out.stale[key]=previous.stale[key]
 for(const key of ['br','cc']) if(out[key]?.discoveryPending) out.stale[key]=previous?.stale?.[key] ?? previous?.generatedAt ?? null
 if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 if (!out.br && !out.us && process.env.CURVES_STRICT === 'true') {

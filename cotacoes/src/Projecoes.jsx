@@ -43,7 +43,7 @@ export default function Projecoes({ macro }) {
             const bank = banks?.institutions?.find((item) => item.name === name)
             return <p key={name}>{bank?.url ? <a href={bank.url} target="_blank" rel="noopener noreferrer">{name}</a> : name}: {bank?.date ? date(bank.date) : 'fonte pendente'}{bank?.note ? ` · ${bank.note}` : ''}.</p>
           })}
-          <p>Focus acompanha a coleta do painel. Projeções dos bancos são revisadas manualmente; datas e metodologias podem diferir.{banks?.reviewedAt ? ` Conferidas em ${date(banks.reviewedAt)}.` : ''} Sujeitas a revisão, não constituem recomendação.</p>
+          <p>Focus: consulta programada às segundas, 09h30 (Brasília), sujeita a atraso do agendador; uma consulta não significa nova publicação. Projeções dos bancos são revisadas manualmente; datas e metodologias podem diferir.{banks?.reviewedAt ? ` Conferidas em ${date(banks.reviewedAt)}.` : ''} Sujeitas a revisão, não constituem recomendação.</p>
           {failed && <p role="status">Não foi possível carregar as projeções dos bancos.</p>}
         </div>
       </article>
