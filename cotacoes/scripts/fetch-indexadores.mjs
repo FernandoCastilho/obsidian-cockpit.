@@ -1,7 +1,7 @@
 // Coleta TR, TBF e TLP no SGS do Banco Central e grava public/indexadores.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
-import { INDEXADORES, buildIndexadores, fillSeriesFromPrevious, sgsLast } from './indexadores-lib.mjs'
+import { INDEXADORES, buildIndexadores, fillSeriesFromPrevious, sgsWindow } from './indexadores-lib.mjs'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const errors = []
@@ -24,7 +24,7 @@ async function getJson(url, label, tries = 4) {
 }
 
 const results = {}
-for (const [key, def] of Object.entries(INDEXADORES)) results[key] = await getJson(sgsLast(def.code, def.keep), `${key} (SGS ${def.code})`)
+for (const [key, def] of Object.entries(INDEXADORES)) results[key] = await getJson(sgsWindow(def.code, def.days), `${key} (SGS ${def.code})`)
 const out = fillSeriesFromPrevious(buildIndexadores(results, errors), await loadPrevious('indexadores.json'))
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(new URL('../public/indexadores.json', import.meta.url), `${JSON.stringify(out)}\n`)

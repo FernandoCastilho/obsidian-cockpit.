@@ -1,15 +1,16 @@
 // Indexadores do crédito (TR, TBF e TLP) a partir do SGS do Banco Central. Sem dependências.
-import { brDate } from './macro-lib.mjs'
+import { brDate, toBr } from './macro-lib.mjs'
 
 // TR e TBF: séries diárias em % a.m., cada ponto vale para o período que começa em `data` e termina em `dataFim`.
 // TLP: série mensal em % a.a., um ponto por mês de vigência.
 export const INDEXADORES = {
-  TR: { code: 226, name: 'Taxa Referencial', unit: 'a.m.', keep: 30 },
-  TBF: { code: 253, name: 'Taxa Básica Financeira', unit: 'a.m.', keep: 30 },
-  TLP: { code: 27572, name: 'Taxa de Longo Prazo', unit: 'a.a.', keep: 18 },
+  TR: { code: 226, name: 'Taxa Referencial', unit: 'a.m.', keep: 30, days: 45 },
+  TBF: { code: 253, name: 'Taxa Básica Financeira', unit: 'a.m.', keep: 30, days: 45 },
+  TLP: { code: 27572, name: 'Taxa de Longo Prazo', unit: 'a.a.', keep: 18, days: 600 },
 }
 
-export const sgsLast = (code, n) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados/ultimos/${n}?formato=json`
+// Séries diárias do SGS exigem janela de datas (o atalho /ultimos/N devolve HTTP 400 para elas).
+export const sgsWindow = (code, days, now = Date.now()) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados?formato=json&dataInicial=${toBr(now - days * 864e5)}&dataFinal=${toBr(now)}`
 
 // [{data, dataFim?, valor}] -> { latest, history } com pontos { start, end, value } (ms UTC ao meio-dia); null se nada válido.
 export function parseIndexador(rows, keep = 30, now = Date.now()) {

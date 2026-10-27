@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildIndexadores, fillSeriesFromPrevious, parseIndexador } from '../scripts/indexadores-lib.mjs'
+import { INDEXADORES, buildIndexadores, sgsWindow, fillSeriesFromPrevious, parseIndexador } from '../scripts/indexadores-lib.mjs'
 import { anual, indexRows } from '../src/indexadores.js'
 
 const NOW = Date.UTC(2026, 9, 27, 15)
@@ -45,4 +45,10 @@ test('indexRows monta TR, TBF e TLP e marca a série ausente', () => {
   assert.match(rows[2].period, /01\/10\/2026 a 31\/10\/2026/)
   assert.ok(Math.abs(rows[2].delta - -0.18) < 1e-9)
   assert.equal(indexRows(null).every((r) => r.missing), true)
+})
+
+test('janela de datas do SGS (séries diárias não aceitam /ultimos)', () => {
+  const url = sgsWindow(226, 45, NOW)
+  assert.match(url, /sgs\.226\/dados\?formato=json&dataInicial=12\/09\/2026&dataFinal=27\/10\/2026$/)
+  assert.ok(Object.values(INDEXADORES).every((d) => d.days >= d.keep))
 })
