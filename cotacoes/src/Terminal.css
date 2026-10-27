@@ -378,3 +378,11 @@ main.app .calc > .history-head .more:hover { text-decoration: underline; }
   main.app .calc .calc-split:not(.stack) .calc-out .focus-table { font-size: 13px; }
   main.app .calc .calc-split:not(.stack) .calc-out .focus-table td:first-child { min-width: 170px; }
 }
+
+/* ===== Campos de valor e memória das calculadoras ===== */
+main.app .money-wrap { position: relative; display: block; }
+main.app .money-wrap > i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-style: normal; font-family: var(--mono, ui-monospace, monospace); font-size: 12px; color: var(--muted, #8a8a8a); pointer-events: none; }
+main.app .money-wrap > input { padding-left: 42px !important; font-variant-numeric: tabular-nums; }
+main.app .calc-memory { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0 0 14px; padding: 6px 10px; font-size: 12px; color: var(--muted, #8a8a8a); border: 1px dashed var(--line); border-radius: 2px; }
+main.app .calc-memory .more { min-height: 44px; padding: 0 4px; color: var(--amber, #ffb000); }
+main.app .calc .calc-in > .calc-memory + .calc-sub, main.app .calc .calc-in > .calc-memory + .calc-form { margin-top: 0; padding-top: 0; border-top: 0; }

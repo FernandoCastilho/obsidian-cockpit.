@@ -1,4 +1,7 @@
 import { useMemo, useState } from 'react'
+import { useCalcMemory } from './calcMemory.js'
+import CalcMemory from './CalcMemory.jsx'
+import MoneyInput from './MoneyInput.jsx'
 import { FORMULAS, finimpSwap, swapTsv } from './finimpSwap.js'
 import { parseNum, parseRate } from './calc.js'
 import { nextBusinessDay } from './holidays.js'
@@ -14,15 +17,16 @@ const addDays = (n) => new Date(Date.now() + n * 864e5).toISOString().slice(0, 1
 // FINIMP 4131 + swap para CDI, no formato da cotação do banco: perna em USD (juros, IR, amortização) e perna em R$ (CDI esperado + spread).
 export default function FinimpSwap({ curves, hol }) {
   const [start, setStart] = useState('')
-  const [vUsd, setVUsd] = useState('')
-  const [vBrl, setVBrl] = useState('')
-  const [n, setN] = useState('')
-  const [grace, setGrace] = useState('')
-  const [step, setStep] = useState('30')
-  const [rate, setRate] = useState('')
-  const [ir, setIr] = useState('15')
-  const [spread, setSpread] = useState('')
-  const [flat, setFlat] = useState('')
+  const mem = useCalcMemory('finimpswap')
+  const [vUsd, setVUsd] = mem.use('vUsd', '')
+  const [vBrl, setVBrl] = mem.use('vBrl', '')
+  const [n, setN] = mem.use('n', '')
+  const [grace, setGrace] = mem.use('grace', '')
+  const [step, setStep] = mem.use('step', '30')
+  const [rate, setRate] = mem.use('rate', '')
+  const [ir, setIr] = mem.use('ir', '15')
+  const [spread, setSpread] = mem.use('spread', '')
+  const [flat, setFlat] = mem.use('flat', '')
   const [cals, setCals] = useState(['BR', 'NY'])
   const [copied, setCopied] = useState(false)
 
@@ -77,6 +81,7 @@ export default function FinimpSwap({ curves, hol }) {
   return (
     <article className="chart finimp calc-split stack">
       <div className="calc-in">
+        <CalcMemory mem={mem} />
         <p className="status note">Reproduz o formato da cotação do banco: perna em dólar (juros, IR e amortização) e perna em reais do swap (CDI esperado + spread). Estimativa; nada é presumido além do que você informa e da curva DI x pré.</p>
         <div className="calc-form">
           <button type="button" className="btn small" onClick={fill}>Preencher exemplo</button>
@@ -85,8 +90,8 @@ export default function FinimpSwap({ curves, hol }) {
         <h3 className="calc-sub">Operação</h3>
         <div className="calc-form">
           <label>Desembolso<input type="date" value={start} onChange={(e) => setStart(e.target.value)} /></label>
-          <label>Volume (USD)<input inputMode="decimal" value={vUsd} onChange={(e) => setVUsd(e.target.value)} placeholder="2.879.963,14" /></label>
-          <label>Volume (R$), nocional do swap<input inputMode="decimal" value={vBrl} onChange={(e) => setVBrl(e.target.value)} placeholder="15.000.000,00" /></label>
+          <label>Volume (USD)<MoneyInput prefix="US$" value={vUsd} onChange={setVUsd} placeholder="2.879.963,14" /></label>
+          <label>Volume (R$), nocional do swap<MoneyInput value={vBrl} onChange={setVBrl} placeholder="15.000.000,00" /></label>
 
           <label>Parcelas<input inputMode="numeric" value={n} onChange={(e) => setN(e.target.value)} placeholder="60" /></label>
           <label>Carência (parcelas só de juros)<input inputMode="numeric" value={grace} onChange={(e) => setGrace(e.target.value)} placeholder="6" /></label>

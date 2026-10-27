@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useCalcMemory } from './calcMemory.js'
+import CalcMemory from './CalcMemory.jsx'
+import MoneyInput from './MoneyInput.jsx'
 import { parseNum } from './calc.js'
 import { calculateNcg } from './ncg.js'
 import './Ncg.css'
@@ -17,16 +20,18 @@ const EXAMPLE={monthlySales:'300.000',monthlyCogs:'210.000',pmr:'30',pme:'40',pm
 const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})
 const num=v=>v.toLocaleString('pt-BR',{maximumFractionDigits:2})
 export default function Ncg(){
- const [values,setValues]=useState(EMPTY)
- const [example,setExample]=useState(false)
+ const mem=useCalcMemory('ncg')
+ const [values,setValues]=mem.use('values',EMPTY)
+ const [example,setExample]=useState(()=>JSON.stringify(values)===JSON.stringify(EXAMPLE))
  const parsed=Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v.trim()===''?null:parseNum(v)]))
  const result=calculateNcg(parsed)
  const invalid=Object.entries(parsed).filter(([,v])=>v!==null&&(!Number.isFinite(v)||v<0)).map(([k])=>k)
  const set=(key,value)=>{setExample(false);setValues(prev=>({...prev,[key]:value}))}
  const baseReady=FIELDS.slice(0,5).every(([key])=>parsed[key]!==null)
- const field=(key,label,help)=><label key={key} htmlFor={`ncg-${key}`}><span className="ncg-label">{label}</span><input id={`ncg-${key}`} inputMode="decimal" autoComplete="off" value={values[key]} onChange={e=>set(key,e.target.value)} aria-invalid={invalid.includes(key)} aria-describedby={`ncg-help-${key}`} /><small id={`ncg-help-${key}`}>{help}</small></label>
+ const field=(key,label,help)=><label key={key} htmlFor={`ncg-${key}`}><span className="ncg-label">{label}</span>{label.includes('(R$)')?<MoneyInput id={`ncg-${key}`} value={values[key]} onChange={v=>set(key,v)} aria-invalid={invalid.includes(key)} aria-describedby={`ncg-help-${key}`} />:<input id={`ncg-${key}`} inputMode="decimal" autoComplete="off" value={values[key]} onChange={e=>set(key,e.target.value)} aria-invalid={invalid.includes(key)} aria-describedby={`ncg-help-${key}`} />}<small id={`ncg-help-${key}`}>{help}</small></label>
  return <article className="chart ncg">
   <p className="ncg-intro">Estime o capital preso no ciclo comercial. Valores mensais e base de 30 dias, sem conversas ou etapas adicionais.</p>
+  <CalcMemory mem={mem} />
   <div className="ncg-actions"><button type="button" className="more" onClick={()=>{setValues(EXAMPLE);setExample(true)}}>Carregar exemplo fictício</button><button type="button" className="more" onClick={()=>{setValues(EMPTY);setExample(false)}}>Limpar campos</button></div>
   {example&&<p className="ncg-notice" role="status">Exemplo fictício para demonstração. Não representa uma empresa real.</p>}
   <div className="ncg-grid">
