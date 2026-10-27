@@ -8,6 +8,7 @@ on:
     # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.
     - cron: '17 3-23 * * 1-5' # segunda a sexta, 0h a 20h de Brasília
     - cron: '17 0-2 * * 2-6' # terça a sábado UTC = segunda a sexta, 21h a 23h de Brasília
+    - cron: '30 12 * * 1' # Cenários/Focus: segunda 09:30 Brasília, best effort
   workflow_dispatch:
 
 permissions:
@@ -18,7 +19,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false # A consulta semanal aguarda o deploy ativo; não o cancela.
 
 jobs:
   deploy:
@@ -41,16 +42,22 @@ jobs:
       - run: npm ci
       - name: Testes (parsers e lógica)
         run: npm test
+      - name: Atualizar Focus semanal preservando os demais dados publicados
+        if: github.event.schedule == '30 12 * * 1'
+        run: node scripts/refresh-scenarios.mjs
       - name: Coletar notícias
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-news.mjs
         env:
           NEWS_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar dados do Banco Central (CDI, Selic, Focus, PTAX)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-macro.mjs
         timeout-minutes: 15
         env:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar curvas de juros (DI x pré e Treasuries)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-curves.mjs
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
@@ -62,18 +69,23 @@ jobs:
         if: env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
         run: python -m pip install -r scripts/requirements-policy.txt
       - name: Coletar juros de política monetária (Fed, BCE, BoE e BoJ)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-policy-rates.mjs
         timeout-minutes: 5
       - name: Coletar feriados da China (dados oficiais)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
       - name: Coletar referência diária de petróleo Brent (EIA)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-oil.mjs
         timeout-minutes: 2
       - name: Coletar commodities diárias e mensais (EIA e Banco Mundial)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-commodities.mjs
         timeout-minutes: 3
       - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
+        if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-freight.mjs
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
