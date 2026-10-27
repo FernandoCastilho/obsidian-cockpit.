@@ -392,11 +392,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const [compareSelection, setCompareSelection] = useState(['USD', 'EUR'])
   const [compareSpark, setCompareSpark] = useState(SPARK[0])
   const compareTrigger = useRef(null)
-  const [calendarOpen, setCalendarOpen] = useState(false)
-  const [draftDates, setDraftDates] = useState(null)
-  const [calendarError, setCalendarError] = useState('')
-  const calendarTrigger = useRef(null)
-  const closeCalendar = () => { setCalendarOpen(false); requestAnimationFrame(() => calendarTrigger.current?.focus()) }
   const today = marketDate(Date.now())
   const closeCompare = () => { setCompareOpen(false); requestAnimationFrame(() => compareTrigger.current?.focus()) }
 
@@ -427,19 +422,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           <h2 id="r-moedas">Mercado hoje <Explain id="mercadoHoje" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
           <button type="button" ref={compareTrigger} className="compare-trigger" aria-label="Comparar moedas" aria-haspopup="dialog" aria-expanded={compareOpen} title="Montar comparação de moedas" onClick={() => setCompareOpen(true)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M3 3v18h18M5 16l5-7 4 4 6-9M5 10l5 4 5-7 5 9" /></svg><span>Comparar</span></button>
         </div>
-        <div className="terminal-toolbar">
-          <div className="summary-period-controls">
-          <div className="seg" role="group" aria-label="Período do minigráfico">
-            {SPARK.map((s) => (
-              <button key={s.id} type="button" aria-pressed={sparkId === s.id} onClick={() => choosePreset(s)}>
-                {s.label}
-              </button>
-            ))}
-          </div>
-          <button type="button" className="calendar-trigger" aria-label={`Escolher intervalo: ${dates.start} a ${dates.end}`} ref={calendarTrigger} aria-haspopup="dialog" aria-expanded={calendarOpen} onClick={() => { setDraftDates({...dates}); setCalendarError(''); setCalendarOpen(true) }}><span aria-hidden="true">▦</span> {dates.start.split('-').reverse().join('/')} – {dates.end.split('-').reverse().join('/')}</button>
-          </div>
-        </div>
-        {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
         <div className="terminal-main">
         <div className="terminal-quotes">
         <p className="market-scroll-hint">Deslize para ver mês, ano e PTAX →</p>
@@ -451,8 +433,8 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           </table>
         </div>
         </div>
-        <div className="terminal-chart">
-        <ResumoChart colors={colors} spark={spark} selection={selection} onSelection={setSelection} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
+        <div className="terminal-chart terminal-news">
+        <Panel title="Manchetes" note="por moeda"><MarketNews bare /></Panel>
         </div>
         </div>
 
@@ -474,7 +456,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           </details>
         </footer>
       </section>
-      {calendarOpen && <Expandable modal label="Intervalo dos gráficos" onClose={closeCalendar}><form className="calendar-form" onSubmit={e => { e.preventDefault(); const next = selectedPeriod(draftDates.start, draftDates.end); if(next.error) { setCalendarError(next.error); return } applyDates(draftDates); closeCalendar() }}><h2>Intervalo dos gráficos</h2><label>Data inicial<input autoFocus required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.start} onChange={e => setDraftDates({...draftDates,start:e.target.value})} /></label><label>Data final<input required type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={draftDates.end} onChange={e => setDraftDates({...draftDates,end:e.target.value})} /></label>{calendarError && <p role="alert">{calendarError}</p>}<button type="submit" className="btn">Aplicar</button><button type="button" className="btn" onClick={closeCalendar}>Cancelar</button></form></Expandable>}
       {compareOpen && <Expandable modal label="Comparar moedas" onClose={closeCompare}>
         <section className="currency-comparison" aria-labelledby="comparison-title"><h2 id="comparison-title">Comparar moedas</h2>
           <h3>Taxa entre duas moedas</h3><ParityTile quotes={quotes} spark={spark} onOpen={code => { closeCompare(); openSelected(code) }} color={colors?.PAR} />
@@ -537,7 +518,6 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
         <Panel title="Curva DI × Pré" note="B3 · prazo em dias úteis" className="desk-curve"><Suspense fallback={wait}><CurvePanel curves={curves} /></Suspense></Panel>
         <Panel title="Juros de referência" note="Brasil e exterior · por data" className="desk-rates"><Suspense fallback={wait}><RatesSnapshot macro={macro} /></Suspense></Panel>
         <div className="desk-side">
-          <Panel title="Manchetes" note="por moeda"><MarketNews bare /></Panel>
           <Panel title="Agenda" note="Brasília"><AgendaList goto={goto} /></Panel>
         </div>
       </div>
