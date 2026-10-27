@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { liveCross } from '../src/parity.js'
-import { ageText, brentItem, changeText, dataStatus, feedState, heatItems, heatStrength, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
+import { ageText, brentItem, changeText, dataStatus, feedState, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
 
 const q = (bid, pct, extra = {}) => ({ bid, ask: bid, high: bid, low: bid, pct, timestamp: Date.now(), ...extra })
 const quotes = { USD: q(5, 1, { source: 'USD' }), EUR: q(6, -0.5, { source: 'EUR' }), JPY: q(0.034, 0.2, { source: 'JPY' }), CNH: q(0.74, 0.1, { source: 'CNH' }) }
@@ -60,30 +60,16 @@ test('cotação de reserva (BCE) não exibe variação do dia nem entra na parid
   const items = tapeItems(fb, [])
   assert.equal(items.find((i) => i.key === 'EURBRL').text, null)
   assert.equal(items.find((i) => i.key === 'EURUSD'), undefined)
-  assert.deepEqual(heatItems(fb, []).map((i) => i.key), ['USDBRL', 'JPYBRL', 'CNHBRL'])
+  assert.equal(kpiItems(fb, []).some((i) => i.key === 'EURUSD'), false)
 })
 
 test('sem dados: nada é inventado', () => {
   assert.deepEqual(tapeItems(null, undefined), [])
   assert.deepEqual(kpiItems(undefined, []), [])
-  assert.deepEqual(heatItems({}, null), [])
 })
 
 test('indicadores: dólar, euro, paridade e juros do Brasil, nessa ordem', () => {
   assert.deepEqual(kpiItems(quotes, rates).map((i) => i.key), ['USDBRL', 'EURBRL', 'EURUSD', 'selic', 'cdi', 'di1'])
-})
-
-test('mapa de variação: só itens com variação; juros longos em bps', () => {
-  const heat = heatItems(quotes, rates)
-  assert.deepEqual(heat.map((i) => i.key), ['USDBRL', 'EURBRL', 'JPYBRL', 'CNHBRL', 'EURUSD', 'di1', 'ust10'])
-  assert.equal(heat.find((i) => i.key === 'ust10').text, '−3 bps')
-})
-
-test('intensidade do mapa: proporcional e limitada a 1', () => {
-  assert.equal(heatStrength({ change: 0.6, unit: 'pct' }), 0.5)
-  assert.equal(heatStrength({ change: 5, unit: 'pct' }), 1)
-  assert.equal(heatStrength({ change: -0.075, unit: 'bps' }), 0.5)
-  assert.equal(heatStrength({ change: null, unit: 'pct' }), 0)
 })
 
 test('estado dos dados: erro vence; antigo avisa; sem cotação ainda carrega', () => {
@@ -143,7 +129,6 @@ test('paridade: cotações de horários distintos não geram variação do dia',
   assert.equal(p.text, null)
   assert.equal(p.reason, 'cotações de horários distintos')
   assert.equal(kpiItems(stale, []).find((i) => i.key === 'EURUSD').text, null)
-  assert.equal(heatItems(stale, []).some((i) => i.key === 'EURUSD'), false)
   const sync = { ...quotes, USD: { ...quotes.USD, timestamp: now }, EUR: { ...quotes.EUR, timestamp: now - 5 * 60e3 } }
   assert.ok(Number.isFinite(tapeItems(sync, []).find((i) => i.key === 'EURUSD').change))
 })

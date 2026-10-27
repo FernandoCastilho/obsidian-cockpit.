@@ -4,7 +4,7 @@ import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { heatItems, heatStrength, kpiItems, tapeItems } from './terminal.js'
+import { kpiItems, tapeItems } from './terminal.js'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 
@@ -70,12 +70,15 @@ function useDaySeries() {
   return { USD: u, EUR: e, PAR: u.length > 1 && e.length > 1 && sameSession ? mergeTicks(u, e, true) : [] }
 }
 
-// Indicadores do topo do Mercado. Clique abre o gráfico da moeda ou a aba de juros.
-export function KpiRow({ quotes, rates, colors, onOpen, goto }) {
+// Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
+// Clique abre o gráfico da moeda ou a aba de juros.
+export function KpiRow({ quotes, rates, colors, onOpen, goto, status }) {
   const series = useDaySeries()
   const items = kpiItems(quotes, rates)
-  if (!items.length) return null
+  if (!items.length) return status ?? null
   return (
+    <section className="kpi-block" aria-labelledby="kpi-title">
+      <h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
@@ -91,25 +94,8 @@ export function KpiRow({ quotes, rates, colors, onOpen, goto }) {
         )
       })}
     </div>
-  )
-}
-
-// Mapa de variação: cor pela direção e intensidade pelo tamanho do movimento; sem dado, sem bloco.
-export function HeatMap({ quotes, rates, onOpen, goto }) {
-  const items = heatItems(quotes, rates)
-  if (!items.length) return null
-  return (
-    <div className="heat" role="group" aria-label="Mapa de variação do dia">
-      <h3>Mapa de variação · dia <small>cor = direção · intensidade = tamanho do movimento</small></h3>
-      <div className="heat-grid">
-        {items.map((i) => (
-          <button key={i.key} type="button" className={`heat-tile ${i.tone}`} style={{ '--k': heatStrength(i) }} onClick={() => (i.rate ? goto('juros') : onOpen(i.code))}>
-            <span>{i.label}</span>
-            <b>{i.text}</b>
-          </button>
-        ))}
-      </div>
-    </div>
+      {status}
+    </section>
   )
 }
 

@@ -22,7 +22,7 @@ import { upcoming } from './agenda.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
-import { AgendaList, HeatMap, KpiRow, Panel } from './TerminalDesk.jsx'
+import { AgendaList, KpiRow, Panel } from './TerminalDesk.jsx'
 const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
 const CurvePanel = lazy(() => import('./Curves.jsx').then((m) => ({ default: m.CurvePanel })))
 
@@ -383,7 +383,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors, extra }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors }) {
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -450,7 +450,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, extra }) {
             {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} returns={returns[c.code]} selected={selection.includes(c.code)} ptax={ptaxes[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
           </table>
         </div>
-        {extra}
         </div>
         <div className="terminal-chart">
         <ResumoChart colors={colors} spark={spark} selection={selection} onSelection={setSelection} onPrevious={(date) => { setCustom({ id: 'previous', label: `Amostras de ${date.split('-').reverse().join('/')}`, intraday: true, day: date }); setSparkId('previous'); setDates({ start: date, end: date }) }} />
@@ -526,14 +525,14 @@ function MarketNews({ bare = false }) {
     <ul>{headlines.map(n => <li key={n.link}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
   </aside>
 }
-// Mesa de mercado: indicadores, câmbio com gráfico e mapa de variação, e uma fileira de painéis (curva DI, juros de política, notícias e agenda).
-export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto }) {
+// Mesa de mercado: indicadores, câmbio com gráfico, e uma fileira de painéis (curva DI, juros de política, notícias e agenda).
+export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const wait = <p className="status" role="status">Carregando…</p>
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} goto={goto} />
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} extra={<HeatMap quotes={quotes} rates={rates} onOpen={onOpen} goto={goto} />} /></div>
+      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} goto={goto} status={status} />
+      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div>
       <div className="desk-row">
         <Panel title="Curva DI × Pré" note="B3 · prazo em dias úteis" className="desk-curve"><Suspense fallback={wait}><CurvePanel curves={curves} /></Suspense></Panel>
         <Panel title="Juros de referência" note="Brasil e exterior · por data" className="desk-rates"><Suspense fallback={wait}><RatesSnapshot macro={macro} /></Suspense></Panel>

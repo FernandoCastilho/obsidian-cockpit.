@@ -247,6 +247,21 @@ test('quotes: foco é automático, não concorre, manual prevalece e resposta ab
   assert.equal(r.updates, updates)
 })
 
+test('quotes: a cada 10 min com a aba visível consulta a API direto; oculta, não consulta', async (t) => {
+  const clock = browserClock(t), q = await quotesWithCentral(), urls = []
+  globalThis.fetch = async (url) => { urls.push(url); return url.startsWith('https://central.example') ? json({ generatedAt: clock.now, quotes: batch(clock.now) }) : json(batch(clock.now, 5.5)) }
+  const r = hookRenderer(() => q.useQuotes())
+  clock.cleanup(() => r.close())
+  await r.settle()
+  const direct = () => urls.filter((u) => /awesomeapi/.test(u)).length
+  assert.equal(direct(), 0)
+  await clock.advance(9 * MIN); await r.settle(); assert.equal(direct(), 0)
+  await clock.advance(MIN); await r.settle(); assert.equal(direct(), 1)
+  assert.equal(r.value.via, 'direto')
+  clock.doc.hidden = true; clock.doc.dispatch('visibilitychange')
+  await clock.advance(30 * MIN); await r.settle(); assert.equal(direct(), 1)
+})
+
 test('quotes: central atrasada reutiliza cotação direta por 5 min sem alternar para BCE nem renovar data', async(t)=>{
  const clock=browserClock(t), q=await quotesWithCentral(), urls=[]
  let centralFresh=false, directCalls=0

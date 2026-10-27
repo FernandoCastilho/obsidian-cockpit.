@@ -149,16 +149,6 @@ body { background: var(--bg); }
 @media (min-width: 1000px) and (max-width: 1399px) { .market-terminal .market-table { min-width: 0; } }
 
 /* mapa de variação */
-.heat { margin-top: auto; border-top: 1px solid var(--line); }
-.heat h3 { display: flex; justify-content: space-between; align-items: center; margin: 0; min-height: 28px; padding: 0 10px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
-.heat h3 small { color: #5d5a50; font-size: .66rem; letter-spacing: 0; text-transform: none; font-weight: 500; }
-.heat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; padding: 6px; }
-@media (min-width: 700px) { .heat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.heat-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 4px; min-height: 52px; padding: 7px 10px; text-align: left; color: var(--fg); border: 0; font: 700 .72rem system-ui, sans-serif; cursor: pointer; background: color-mix(in srgb, var(--mut) 18%, #0d0d0e); }
-.heat-tile b { font: 700 1rem var(--mono); font-variant-numeric: tabular-nums; }
-.heat-tile.up { background: color-mix(in srgb, var(--up) calc(12% + var(--k) * 48%), #0d0d0e); }
-.heat-tile.down { background: color-mix(in srgb, var(--down) calc(12% + var(--k) * 48%), #0d0d0e); }
-.heat-tile:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
 
 /* notícias e agenda */
 .market-news { padding: 0; border: 0; background: transparent; align-self: stretch; }
@@ -176,7 +166,7 @@ body { background: var(--bg); }
 .desk-agenda time b { color: var(--amber); font-weight: 600; }
 .desk-agenda .tag { padding: 1px 6px; border: 1px solid var(--line); color: var(--mut); font: 700 .6rem/1.4 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
 
-@media (prefers-reduced-motion: no-preference) { .kpi, .heat-tile, .topbar-tabs button { transition: background-color .15s; } }
+@media (prefers-reduced-motion: no-preference) { .kpi, .topbar-tabs button { transition: background-color .15s; } }
 
 /* acabamento do computador: controles compactos dentro dos painéis */
 @media (min-width: 1000px) {
@@ -437,3 +427,8 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
   .topbar-cmd { width: 104px; }
   .topbar-tabs button { padding: 0 4px; }
 }
+
+/* ===== Título e linha de consulta dos quadros do Mercado ===== */
+.kpi-block { display: block; }
+.kpi-title { margin: 0 0 6px; font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); }
+.kpi-block > .status.src { margin: 6px 0 0; }

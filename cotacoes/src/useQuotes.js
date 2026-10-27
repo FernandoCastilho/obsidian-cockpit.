@@ -205,6 +205,7 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
 
 // Limite do botão "Atualizar agora", por navegador: 1 por minuto e 30 por dia (protege a cota da API de todos).
 const REFRESH_KEY = 'cotacoes-refresh-log'
+export const AUTO_REFRESH_MS = 10 * 60000
 export const REFRESH_COOLDOWN_S = 60
 export const REFRESH_DAILY_MAX = 30
 const readLog = () => {
@@ -310,6 +311,26 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
       ctrl.current = null
     }
   }, [load, intervalMs])
+
+  // Quadros online: a cada 10 min, com a aba visível, consulta a API direto (não gasta o limite do botão).
+  // Em segundo plano o timer fica desarmado; ao voltar, a leitura automática de 1 min já renova pela coleta central.
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined
+    let id = null
+    const tick = () => { if (!document.hidden) load(true) }
+    const sync = () => {
+      if (document.hidden) {
+        clearInterval(id)
+        id = null
+      } else if (id === null) id = setInterval(tick, AUTO_REFRESH_MS)
+    }
+    sync()
+    document.addEventListener('visibilitychange', sync)
+    return () => {
+      clearInterval(id)
+      document.removeEventListener('visibilitychange', sync)
+    }
+  }, [load])
 
   return { quotes, direction, error, errors, updatedAt, via, reload: () => load(false), refresh, refreshing, limits }
 }
