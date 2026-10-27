@@ -111,7 +111,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
   const p = liveCross(quotes?.[base], quotes?.[quote])
-  const hasDay = !!p && !quotes[base].fallback && !quotes[quote].fallback
+  const hasDay = !!p && p.comparable !== false && !quotes[base].fallback && !quotes[quote].fallback
   const trend = toneOf(hasDay ? p.pct : change)
   const eurUsd = base === 'EUR' && quote === 'USD'
   const [big, setBig] = useState(false)
@@ -134,7 +134,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
               <Arrow v={p.pct} /> {pct(p.pct)}
             </span>
           ) : (
-            p && <small className="muted">var. do dia indisponível</small>
+            p && <small className="muted">{p.comparable === false ? 'var. do dia indisponível: cotações de horários distintos' : 'var. do dia indisponível'}</small>
           )}
           <small className="muted">{NAMES[quote]} por 1 {NAMES[base].toLowerCase()}{(a.stale || b.stale) && ' · última série disponível'}</small>
         </span>

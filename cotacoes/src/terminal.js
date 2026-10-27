@@ -47,10 +47,13 @@ export const COMMAND_HINTS = ['USDBRL', 'EURBRL', 'JPYBRL', 'CNHBRL', 'EURUSD', 
 const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 export const toneOf = (v) => (Number.isFinite(v) && v > 0 ? 'up' : Number.isFinite(v) && v < 0 ? 'down' : 'flat')
 
+// Uma variação que arredonda para zero na unidade exibida (0,00% ou 0 bps) não pode ter seta nem cor de alta ou baixa.
+const roundsToZero = (change, unit) => Number.isFinite(change) && (unit === 'bps' ? Math.round(Math.abs(change) * 100) === 0 : Math.round(Math.abs(change) * 100) === 0)
+
 // unit 'pct' (variação do dia) ou 'bps' (taxa de juros: a variação vem em pontos percentuais).
 export function changeText(change, unit = 'pct') {
   if (!Number.isFinite(change)) return null
-  const sign = change > 0 ? '+' : change < 0 ? '−' : ''
+  const sign = roundsToZero(change, unit) ? '' : change > 0 ? '+' : change < 0 ? '−' : ''
   return unit === 'bps' ? `${sign}${Math.abs(Math.round(change * 100))} bps` : `${sign}${nf(Math.abs(change), 2)}%`
 }
 
@@ -71,14 +74,14 @@ function fxItems(quotes) {
 function parityItem(quotes) {
   const p = liveCross(quotes?.EUR, quotes?.USD)
   if (!p || quotes.EUR.fallback || quotes.USD.fallback) return null
-  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', value: nf(p.main, 4), change: p.pct, unit: 'pct' }
+  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
 }
 
 function rateItems(rates) {
   return (rates ?? []).map((r) => ({ key: r.key, label: r.label, value: `${nf(r.value, 2)}%`, change: r.delta, unit: 'bps', rate: true }))
 }
 
-const withTone = (items) => items.map((i) => ({ ...i, tone: toneOf(i.change), text: changeText(i.change, i.unit) }))
+const withTone = (items) => items.map((i) => ({ ...i, tone: roundsToZero(i.change, i.unit) ? 'flat' : toneOf(i.change), text: changeText(i.change, i.unit) }))
 
 // Brent spot diário da EIA (arquivo oil.json): é referência datada, não cotação em tempo real; por isso leva a data e não tem variação.
 export function brentItem(oil) {

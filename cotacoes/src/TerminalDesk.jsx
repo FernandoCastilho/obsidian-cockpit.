@@ -51,13 +51,23 @@ export function Tape({ quotes, rates, oil }) {
   )
 }
 
-// Minigráficos dos indicadores: o dia atual em cada moeda (arquivo intraday já usado pelo quadro de câmbio).
+// Minigráficos dos indicadores: o dia atual em cada moeda (arquivo intraday já usado pelo quadro de câmbio). Sem amostras de hoje
+// (madrugada, fim de semana), usa o último pregão com amostras, que o arquivo indica em `previousDay`.
 function useDaySeries() {
-  const day = fromInput(marketDate(Date.now()))
-  const usd = useIntraday('USD', day)
-  const eur = useIntraday('EUR', day)
+  const today = fromInput(marketDate(Date.now()))
+  const usd = useIntraday('USD', today)
+  const eur = useIntraday('EUR', today)
+  const prev = usd.previousDay || eur.previousDay || null
+  const prevDay = prev ? fromInput(prev) : today
+  const usdPrev = useIntraday('USD', prevDay, !prev)
+  const eurPrev = useIntraday('EUR', prevDay, !prev)
   const ok = (s) => (s.status === 'ok' ? s.data.points : [])
-  return { USD: ok(usd), EUR: ok(eur), PAR: usd.status === 'ok' && eur.status === 'ok' ? mergeTicks(usd.data.points, eur.data.points, true) : [] }
+  const pick = (now, before) => (ok(now).length > 1 ? ok(now) : ok(before))
+  const u = pick(usd, usdPrev)
+  const e = pick(eur, eurPrev)
+  // a paridade só junta as duas séries se vêm do mesmo pregão
+  const sameSession = ok(usd).length > 1 === ok(eur).length > 1
+  return { USD: u, EUR: e, PAR: u.length > 1 && e.length > 1 && sameSession ? mergeTicks(u, e, true) : [] }
 }
 
 // Indicadores do topo do Mercado. Clique abre o gráfico da moeda ou a aba de juros.
@@ -68,13 +78,13 @@ export function KpiRow({ quotes, rates, colors, onOpen, goto }) {
   return (
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
-        const points = series[i.code]
+        const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
         return (
           <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? goto('juros') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: ${i.rate ? 'abrir juros' : 'abrir gráfico'}`}>
             <span className="kpi-label">{i.label}{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}</span>
             <span className="kpi-value">{i.value}</span>
             <span className={`kpi-change ${i.tone}`}>
-              {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted">variação indisponível</span>}
+              {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}
             </span>
             {points?.length > 1 && <span className="kpi-spark"><Sparkline points={points} tone={i.tone} height={30} /></span>}
           </button>
