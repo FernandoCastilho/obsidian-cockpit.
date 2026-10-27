@@ -1,35 +1,23 @@
-// SONDAGEM TEMPORÁRIA (sai do repositório na etapa seguinte): descobre no deploy, com rede real, quais séries do Banco Central
-// correspondem a TR, TBF e TLP. Imprime só o necessário; não grava arquivo nem altera o site.
+// SONDAGEM TEMPORÁRIA (sai do repositório na etapa seguinte): lê o nome oficial das séries candidatas no SGS do Banco Central.
 const get = async (url, ms = 25000) => {
   try {
-    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-sondagem)', accept: 'application/json' }, signal: AbortSignal.timeout(ms) })
+    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-sondagem)', accept: '*/*' }, signal: AbortSignal.timeout(ms) })
     return { status: res.status, body: await res.text() }
   } catch (e) {
     return { status: 0, body: String(e.message) }
   }
 }
-const short = (s, n = 160) => String(s).replace(/\s+/g, ' ').slice(0, n)
-console.log('### SONDAGEM INDEXADORES')
-
-// 1) Portal de dados abertos do BCB (CKAN): títulos e links das séries
-for (const q of ['taxa referencial', 'taxa básica financeira', 'taxa de longo prazo', 'TLP', 'TBF']) {
-  const r = await get(`https://dadosabertos.bcb.gov.br/api/3/action/package_search?q=${encodeURIComponent(q)}&rows=6`)
-  let line = `[ckan "${q}"] http ${r.status}`
-  try {
-    const j = JSON.parse(r.body)
-    const hits = (j.result?.results ?? []).map((p) => {
-      const urls = (p.resources ?? []).map((x) => x.url).filter((u) => /sgs|bcdata/i.test(u || '')).map((u) => (u.match(/sgs\.(\d+)/) || [])[1] || short(u, 60))
-      return `${short(p.title, 70)} => [${[...new Set(urls)].join(',')}]`
-    })
-    line += ` ${hits.length} resultados: ${hits.join(' || ')}`
-  } catch { line += ' ' + short(r.body) }
-  console.log(line)
+const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
+console.log('### SONDAGEM 2 (metadados)')
+const CODES = [25, 226, 253, 7811, 7812, 7813, 7814, 7815, 27572, 27573, 27574, 27570, 27571, 27578, 27579, 27580, 27581, 27582, 27583, 27584, 27585]
+for (const code of CODES) {
+  const r = await get(`https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?method=consultarMetadadosSeriesInternet&hdOidSeriesSelecionadas=${code}`, 20000)
+  const t = text(r.body)
+  const m = t.match(/Nome completo[:\s]*(.{0,170})/i) || t.match(/Nome abreviado[:\s]*(.{0,170})/i)
+  console.log(`[meta ${code}] http ${r.status} ${m ? m[1] : t.slice(0, 200)}`)
 }
-
-// 2) Séries candidatas do SGS: código, última(s) observação(ões)
-const CANDIDATES = [25, 226, 253, 256, 7811, 7812, 7813, 7814, 7815, 27572, 27573, 27574, 27575, 27576, 27577]
-for (const code of CANDIDATES) {
-  const r = await get(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados/ultimos/3?formato=json`, 20000)
-  console.log(`[sgs ${code}] http ${r.status} ${short(r.body, 200)}`)
+for (const code of [27572, 27573]) {
+  const r = await get(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados/ultimos/14?formato=json`, 40000)
+  console.log(`[sgs ${code}] http ${r.status} ${r.body.replace(/\s+/g, ' ').slice(0, 700)}`)
 }
-console.log('### FIM DA SONDAGEM')
+console.log('### FIM DA SONDAGEM 2')
