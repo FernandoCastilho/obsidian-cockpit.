@@ -13,7 +13,7 @@ const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maxi
 const day = (iso) => iso.split('-').reverse().join('/')
 
 // Eixo X: BR em anos úteis (day252 / 252), EUA em posições iguais por vencimento.
-function CurveChart({ title, subtitle, data, mode, source, help }) {
+function CurveChart({ title, subtitle, data, mode, source, help, bare = false }) {
   const [ref, width] = useWidth()
   const [off, setOff] = useState(() => new Set())
   const [hover, setHover] = useState(null)
@@ -75,13 +75,15 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
 
   return (
     <article className="chart curve">
-      <header>
-        <h3>
-          {title}
-          <small>{subtitle}</small>
-          <Explain id={help} />
-        </h3>
-      </header>
+      {!bare && (
+        <header>
+          <h3>
+            {title}
+            <small>{subtitle}</small>
+            <Explain id={help} />
+          </h3>
+        </header>
+      )}
       <div className="curve-legend">
         {compare.map((c, i) => (
           <button key={c.date} type="button" className={off.has(c.date) ? 'series-hidden' : 'series-visible'} aria-pressed={!off.has(c.date)} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
@@ -139,6 +141,22 @@ function CurveChart({ title, subtitle, data, mode, source, help }) {
       {data.discoveryPending && <p className="status stale" role="status">Catálogo de datas B3 indisponível. Vértices conferidos somente nas datas oficiais já conhecidas; não foi possível confirmar uma referência mais recente.</p>}
       {!data.discoveryPending && data.warnings?.length>0 && <p className="status stale" role="status">Comparações históricas com pendência: {data.warnings.join(' · ')}</p>}
     </article>
+  )
+}
+
+// Curva DI x pré sozinha, para o painel do Mercado (a aba Juros continua com as três curvas).
+export function CurvePanel({ curves: c }) {
+  if (!c || c.status === 'loading') return <div className="placeholder">Carregando curvas…</div>
+  if (c.status === 'error') return <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>
+  return (
+    <>
+      {c.stale && <p className="status stale" role="status">Não foi possível atualizar as curvas. Mantida a última coleta disponível.</p>}
+      {c.data?.br ? (
+        <CurveChart bare help="curvaDi" title="Brasil · DI x pré" subtitle="B3, taxa % a.a. por prazo em dias úteis" data={c.data.br} mode="br" source="Fonte: B3, Taxas referenciais (DI x pré), calculadas a partir dos ajustes dos futuros de DI. Atualizado a cada hora; a B3 publica após o fechamento do pregão." />
+      ) : (
+        <p className="status">Curva DI indisponível nesta atualização.</p>
+      )}
+    </>
   )
 }
 
