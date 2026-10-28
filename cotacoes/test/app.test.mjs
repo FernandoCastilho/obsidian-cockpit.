@@ -533,3 +533,18 @@ test('FINIMP + swap: reproduz a cotação do banco (60x, 6 de carência, 6,48% +
   assert.equal(f.ok, true)
   assert.equal(finimpSwap({ start: '', usd: 0 }).ok, false)
 })
+
+test('cotações: CNH ganha variação absoluta pelos fechamentos anteriores das duas pontas; sem varBid de uma ponta fica ausente', async () => {
+  const { fetchQuotes } = await import('../src/useQuotes.js?cnh-delta')
+  const now = Math.floor(Date.now() / 1000)
+  const q = (b, v) => ({ bid: String(b), ask: String(b), high: String(b + 0.1), low: String(b - 0.1), pctChange: '0.5', timestamp: String(now), ...(v === undefined ? {} : { varBid: String(v) }) })
+  const real = globalThis.fetch
+  const run = async (cnhVar) => {
+    globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ USDBRL: q(5.3304, -0.021), EURBRL: q(6.1, 0), JPYBRL: q(0.035, 0), USDCNH: q(6.66367, cnhVar) }) })
+    try { return (await fetchQuotes(undefined, { direct: true })).results.CNH.quote } finally { globalThis.fetch = real }
+  }
+  const withLegs = await run(-0.00151)
+  assert.ok(Math.abs(withLegs.delta - (5.3304 / 6.66367 - (5.3304 + 0.021) / (6.66367 + 0.00151))) < 1e-12)
+  assert.ok(withLegs.delta < 0)
+  assert.equal((await run(undefined)).delta, null)
+})

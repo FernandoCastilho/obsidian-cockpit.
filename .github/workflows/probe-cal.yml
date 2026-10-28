@@ -10,5 +10,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: node cotacoes/scripts/probe-cal.mjs
-# run2
+      - run: node cotacoes/scripts/validate-data.mjs
