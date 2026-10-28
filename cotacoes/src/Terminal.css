@@ -432,3 +432,7 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 
 /* Assuntos da aba Cenários */
 main.app .cen-nav { margin: 0 0 12px; }
+
+.kpi-name { display: inline-flex; align-items: center; gap: 6px; }
+.market-open b .flag { vertical-align: middle; margin-right: 4px; }
+.ind-table .market-open b .flag { margin-right: 4px; }

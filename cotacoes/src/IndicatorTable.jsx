@@ -1,3 +1,4 @@
+import Flag from './Flag.jsx'
 import './MarketTable.css'
 import './IndicatorTable.css'
 
@@ -12,7 +13,7 @@ export default function IndicatorTable({ caption, columns, rows, onOpen, ariaLab
         {rows.map((r) => (
           <tbody key={r.id} className="market-record" style={{ '--series': 'var(--amber)' }}>
             <tr className="market-values" onClick={() => onOpen(r.id)}>
-              <th scope="row"><button type="button" className="market-open" aria-label={r.openLabel ?? `${r.name}: abrir gráfico`} onClick={(e) => { e.stopPropagation(); onOpen(r.id) }}><b>{r.name} <span aria-hidden="true">›</span></b>{r.sub && <small>{r.sub}</small>}</button></th>
+              <th scope="row"><button type="button" className="market-open" aria-label={r.openLabel ?? `${r.name}: abrir gráfico`} onClick={(e) => { e.stopPropagation(); onOpen(r.id) }}><b>{r.flag && <Flag code={r.flag} width={18} height={12} />}{r.flag && ' '}{r.name} <span aria-hidden="true">›</span></b>{r.sub && <small>{r.sub}</small>}</button></th>
               {r.cells.map((c, i) => <td key={i} className={`${i === 0 ? 'market-price ' : ''}${c.tone ? 'pct ' + c.tone : c.text === '—' ? 'muted' : ''}`} title={c.title}>{c.text}</td>)}
             </tr>
           </tbody>

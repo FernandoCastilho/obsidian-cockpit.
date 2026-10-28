@@ -6,6 +6,7 @@ import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
 import { kpiItems, tapeItems } from './terminal.js'
+import Flag from './Flag.jsx'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 
@@ -85,7 +86,7 @@ export function KpiRow({ quotes, rates, oil, colors, onOpen, onRate, onOil, goto
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
         return (
           <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate || i.key === 'BRENT' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'BRENT' ? onOil() : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
-            <span className="kpi-label">{i.label}{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'BRENT' && <small>US$/bbl{i.note ? ` · ${i.note}` : ''}</small>}</span>
+            <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'BRENT' && <small>US$/bbl{i.note ? ` · ${i.note}` : ''}</small>}</span>
             <span className="kpi-value">{i.value}</span>
             <span className={`kpi-change ${i.tone}`}>
               {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}
