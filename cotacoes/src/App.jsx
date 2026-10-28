@@ -4,6 +4,7 @@ import { marketDate } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 import Expandable from './Expandable.jsx'
+import ChartFilters from './ChartFilters.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
@@ -312,6 +313,8 @@ export default function App() {
 
       {open && (
         <Sheet onClose={() => setOpen(null)}>
+          <ChartFilters><Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} /></ChartFilters>
+          {notice && <p role="status">{notice}</p>}
           {open === 'PAR' ? (
             <ParityChart color={COLORS.PAR} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
           ) : (
@@ -319,8 +322,6 @@ export default function App() {
               <HistoryChart onDay={onDay} key={openCurrency.code} currency={openCurrency} color={COLORS[openCurrency.code]} start={range.start} end={range.end} day={preset === 'day' ? day : null} />
             )
           )}
-          <Period range={range} preset={preset} onPreset={onPreset} onDates={onDates} day={day} onDay={onDay} />
-          {notice && <p role="status">{notice}</p>}
         </Sheet>
       )}
       </Suspense>

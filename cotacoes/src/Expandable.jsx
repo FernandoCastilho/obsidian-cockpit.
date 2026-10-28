@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { FilterScope } from './ChartFilters.jsx'
 
 // O mesmo conteúdo permanece montado ao ampliar: filtros e seleções são preservados.
 // O diálogo nativo mantém foco e Escape dentro da vista ampliada, inclusive no celular.
@@ -29,17 +30,16 @@ export default function Expandable({ children, label, modal = false, onClose }) 
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus() }
   }
   return (
-    <dialog ref={ref} className={`expandable-panel${active ? ' is-dialog' : ''}${full ? ' is-full' : ''}`} aria-label={label}
+    <dialog ref={ref} className={`expandable-panel${active ? ' is-dialog' : ''}${full ? ' is-full' : ''}${modal ? ' is-modal' : ''}`} aria-label={label}
       onKeyDown={containFocus}
       onCancel={(e) => { e.preventDefault(); full ? restore() : onClose?.() }}
       onClick={(e) => { if (modal && e.target === e.currentTarget) onClose?.() }}>
       <div className="expandable-controls">
-        <button type="button" className="btn" aria-label={`${full ? 'Restaurar' : 'Maximizar'} ${label}`} aria-pressed={full} onClick={() => setFull((v) => !v)}>
-          {full ? '↙ Restaurar' : '⛶ Tela cheia'}
-        </button>
-        {modal && <button type="button" className="btn" onClick={onClose} aria-label="Fechar detalhes">Fechar ×</button>}
+        {modal
+          ? <button type="button" className="btn" onClick={onClose} aria-label="Fechar detalhes">Fechar ×</button>
+          : <button type="button" className="btn" aria-label={`${full ? 'Restaurar' : 'Maximizar'} ${label}`} aria-pressed={full} onClick={() => setFull((v) => !v)}>{full ? '↙ Restaurar' : '⛶ Tela cheia'}</button>}
       </div>
-      {children}
+      {modal ? <FilterScope><div className="expandable-body">{children}</div></FilterScope> : children}
     </dialog>
   )
 }

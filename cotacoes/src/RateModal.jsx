@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import Expandable from './Expandable.jsx'
+import ChartFilters from './ChartFilters.jsx'
 import { CdiChart, PRESETS, RateChart, RatesPeriod, SelicChart, fromInput, rangeFor } from './Macro.jsx'
 
 const rate = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}% a.a.`
@@ -37,7 +38,7 @@ export default function RateModal({ kind, macro, curves, onClose }) {
     <Expandable modal label={`detalhes: ${TITLES[kind] ?? kind}`} onClose={onClose}>
       <section className="macro rate-modal">
         <h2>{TITLES[kind] ?? kind}</h2>
-        {kind !== 'di1' && <div className="history-head"><RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} /></div>}
+        {kind !== 'di1' && <ChartFilters><RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} /></ChartFilters>}
         {kind === 'cdi' && (data?.cdi?.length ? <CdiChart macro={data} range={range} /> : <p className="status">CDI indisponível no momento.</p>)}
         {kind === 'selic' && (data?.selic?.length ? <SelicChart macro={data} range={range} /> : <p className="status">Selic indisponível no momento.</p>)}
         {kind === 'di1' && (
