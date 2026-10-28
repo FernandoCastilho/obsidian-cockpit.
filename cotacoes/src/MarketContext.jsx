@@ -1,5 +1,5 @@
 import { Aviso } from './Avisos.jsx'
-import { freightContext } from './freight.js'
+import { freightBase, freightContext } from './freight.js'
 import Sparkline from './Sparkline.jsx'
 import IndicatorHistory from './IndicatorHistory.jsx'
 import { normalizeIndicatorHistory, monthLabel } from './indicatorHistory.js'
@@ -55,30 +55,71 @@ function Card({item, failed, history, historyLoading, historyFailed, onOpen}) {
 const fnum = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const fsgn = (v, d = 2, suffix = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + fnum(Math.abs(v), d) + suffix
 const ftone = v => v > 0 ? 'up' : v < 0 ? 'down' : 'flat'
-// Frete marítimo (PPI de transporte marítimo dos EUA, BLS) no mesmo formato da tabela do Mercado; a linha abre o gráfico com os filtros.
-function FreightTable({data, failed, onOpen}) {
-  const stats = monthlyStats(data.series.points)
-  if (!stats) return <p role="status">Dado indisponível. Não representa zero.</p>
+// Frete marítimo (EUA: BLS; Japão: Banco do Japão) no mesmo formato da tabela do Mercado; cada linha abre o gráfico com os filtros.
+// Os níveis têm bases diferentes (jun/1988 = 100 nos EUA, média de 2020 = 100 no Japão): compare as variações, não os pontos.
+function FreightTable({entries, onOpen}) {
   const pct = v => v == null ? {text:'—'} : {text:fsgn(v, 2, '%'), tone:ftone(v)}
-  const row = {
-    id:'freight', name:data.item.label, sub:`${data.series.sourceName} · jun/1988 = 100`,
-    openLabel:`${data.item.label}: abrir histórico e gráfico`,
-    cells:[
-      {text:fnum(stats.last.value, 3)},
-      stats.delta == null ? {text:'—'} : {text:fsgn(stats.delta, 3), tone:ftone(stats.delta)},
-      pct(stats.pct), pct(stats.yoyPct), pct(stats.ytdPct),
-      {text:contextDate(stats.last.period)},
-    ],
-  }
+  const rows = entries.filter(e => e.state.data).map(({state}) => {
+    const {data} = state, stats = monthlyStats(data.series.points)
+    if (!stats) return null
+    return {
+      id:data.item.id, name:data.item.label, sub:`${data.series.sourceName} · ${freightBase(data.item.id)}`,
+      openLabel:`${data.item.label}: abrir histórico e gráfico`,
+      cells:[
+        {text:fnum(stats.last.value, 2)},
+        pct(stats.pct), pct(stats.yoyPct), pct(stats.ytdPct),
+        {text:contextDate(stats.last.period)},
+      ],
+    }
+  }).filter(Boolean)
+  const pending = entries.some(e => e.state.failed || e.state.data?.series.stale)
+  if (!rows.length) return <p role="status">Dado indisponível. Não representa zero.</p>
   return <>
     <IndicatorTable
-      caption={`Índice mensal de preços ao produtor · EUA · referência ${contextDate(stats.last.period)}`}
+      caption="Índices mensais de preços do transporte marítimo · EUA e Japão"
       ariaLabel="Tabela de frete marítimo; role para ver todas as colunas"
-      columns={[{label:'Índice', small:'(pontos)'},{label:'Δ mês', small:'(pontos)'},{label:'Δ mês %', aria:'Variação percentual no mês'},{label:'12 meses %', aria:'Variação percentual em 12 meses'},{label:'Ano %', aria:'Variação percentual no ano'},{label:'Referência'}]}
-      rows={[row]}
+      columns={[{label:'Índice', small:'(pontos)'},{label:'Δ mês %', aria:'Variação percentual no mês'},{label:'12 meses %', aria:'Variação percentual em 12 meses'},{label:'Ano %', aria:'Variação percentual no ano'},{label:'Referência'}]}
+      rows={rows}
       onOpen={onOpen}
     />
-    {(failed || data.series.stale) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
+    {pending && <p role="status" className="context-warning">Último dado preservado em ao menos uma fonte; atualização não confirmada.</p>}
+  </>
+}
+// Atividade e emprego em tabela (mesmo formato do Mercado): último, anterior, variação na unidade do indicador e mesmo mês do ano anterior.
+// A comparação só vale quando o último ponto do histórico é o valor mostrado; sem histórico, os campos ficam em "—" (não viram zero).
+const DELTA_UNIT = { '%': ' p.p.', pontos: ' pts' }
+function ActivityTable({items, series, failed, historyFailed, historyLoading, onOpen}) {
+  const rows = items.map(item => {
+    const points = series?.find(s=>s.id===item.id)?.points || []
+    const last = points.at(-1)
+    const base = last && Number.isFinite(item.value) && Math.abs(last.value - item.value) < 1e-9 ? last : null
+    const prev = base ? points.at(-2) ?? null : null
+    const year = base ? points.find(p=>p.period===`${Number(base.period.slice(0,4))-1}${base.period.slice(4)}`) ?? null : null
+    const val = v => `${contextValue({...item, value:v})}${item.unit === '%' ? '%' : ''}`
+    return {
+      id:item.id, name:item.label, sub:`${item.nature}${base ? '' : series && !points.length ? ' · histórico indisponível' : ''}`,
+      openLabel:`${item.label}: abrir gráfico e histórico`,
+      cells:[
+        {text:val(item.value)},
+        {text:prev ? val(prev.value) : '—'},
+        {text:prev ? `${prev.value === item.value ? '' : item.value > prev.value ? '+' : '−'}${contextValue({...item, value:Math.abs(item.value - prev.value)})}${DELTA_UNIT[item.unit] ?? ''}` : '—'},
+        {text:year ? val(year.value) : '—'},
+        {text:contextDate(item.period)},
+        {text:contextDate(item.releaseDate)},
+      ],
+    }
+  })
+  return <>
+    <IndicatorTable
+      caption="Atividade e emprego · últimas leituras divulgadas"
+      ariaLabel="Tabela de atividade e emprego; role para ver todas as colunas"
+      columns={[{label:'Último'},{label:'Anterior'},{label:'Variação', small:'(vs anterior)'},{label:'Ano anterior', small:'(mesmo período)'},{label:'Referência'},{label:'Divulgação'}]}
+      rows={rows}
+      onOpen={onOpen}
+    />
+    {(failed || historyFailed) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
+    {historyLoading && <p role="status" className="ind-note">Carregando histórico para as comparações…</p>}
+    {items.some(i=>i.value===null) && <p role="status" className="context-warning">Dado indisponível em algum indicador. Não representa zero.</p>}
   </>
 }
 function Cards({state, children}) {
@@ -91,12 +132,14 @@ export default function MarketContext({ part = '' }) {
   const commodities = useContextFile('commodities.json', parseCommodities)
   const brent = useContextFile('oil.json', parseBrent)
   const freight = useContextFile('freight.json', freightContext)
+  const freightJp = useContextFile('freight-jp.json', freightContext)
+  const freightStates = { 'freight-us-ppi': freight, 'freight-jp-sppi': freightJp }
   const all = [brent.data, ...(commodities.data || [])].filter(Boolean)
   return <div className="market-context">
-    {open && <IndicatorHistory item={open} series={open.id==='freight-us-ppi' ? freight.data?.series : history.data?.find(s=>s.id===open.id)} loading={open.id==='freight-us-ppi' ? !freight.data&&!freight.failed : !history.data&&!history.failed} failed={open.id==='freight-us-ppi' ? freight.failed || freight.data?.series.stale : history.failed} onClose={()=>setOpen(null)}/>}
+    {open && <IndicatorHistory item={open} series={freightStates[open.id] ? freightStates[open.id].data?.series : history.data?.find(s=>s.id===open.id)} loading={freightStates[open.id] ? !freightStates[open.id].data&&!freightStates[open.id].failed : !history.data&&!history.failed} failed={freightStates[open.id] ? freightStates[open.id].failed || freightStates[open.id].data?.series.stale : history.failed} onClose={()=>setOpen(null)}/>}
     {(!part || part === 'atividade') && <section aria-labelledby="market-context-heading"><div className="ctx-head"><h2 id="market-context-heading">Indicadores de mercado</h2><RefreshButton files={['market-indicators.json', 'indicator-history.json']} label="Indicadores de mercado" /></div>
       <Aviso title="Atividade e emprego"><p className="context-intro">Atividade e emprego. Indicadores observados, não projeções. Competências e datas de divulgação diferem.</p></Aviso>
-      <Cards state={market}><div className="context-grid">{(market.data || []).map(item => <Card key={item.id} item={item} failed={market.failed} history={history.data?.find(s=>s.id===item.id)} historyLoading={!history.data&&!history.failed} historyFailed={history.failed} onOpen={()=>setOpen(item)}/>)}</div></Cards>
+      <Cards state={market}>{market.data && <ActivityTable items={market.data} series={history.data} historyFailed={history.failed} historyLoading={!history.data&&!history.failed} failed={market.failed} onOpen={id=>setOpen(market.data.find(i=>i.id===id))} />}</Cards>
       {market.data && market.data.length < MARKET_IDS.length && <p role="status">Cobertura parcial: alguns indicadores não puderam ser carregados.</p>}
       <Aviso title="Atividade e emprego · método"><p className="context-method">Leituras conferidas manualmente nas fontes; não há atualização automática destes indicadores. PMI ISM em pontos: acima de 50 indica expansão; abaixo de 50, contração. Saldos de emprego podem ser negativos e sujeitos a revisão.</p></Aviso>
     </section>}
@@ -108,10 +151,10 @@ export default function MarketContext({ part = '' }) {
       {all.length > 0 && (!brent.data || !commodities.data || commodities.data.length < COMMODITY_IDS.length) && <p role="status">Cobertura parcial: uma das fontes ainda não está disponível.</p>}
       <Aviso title="Commodities · método"><p className="context-method">EIA e Banco Mundial. Coleta nas publicações do painel, preservando a última referência em falhas. A data da conferência não é a data do preço. Frequência de publicação e unidades variam; valores ausentes nunca são convertidos em zero.</p></Aviso>
     </section>}
-    {(!part || part === 'frete') && <section aria-labelledby="freight-heading"><div className="ctx-head"><h2 id="freight-heading">Transporte marítimo · referência de preços</h2><RefreshButton files={['freight.json']} label="Transporte marítimo" /></div>
-      <Aviso title="Transporte marítimo"><p className="context-intro">Índice geral dos produtores dos EUA. Não mede fretes China–Brasil ou Europa–Brasil; não substitui orçamento de transportadora.</p></Aviso>
-      <Cards state={freight}>{freight.data && <FreightTable data={freight.data} failed={freight.failed} onOpen={() => setOpen(freight.data.item)} />}</Cards>
-      <Aviso title="Transporte marítimo · método"><p className="context-method">Fonte: U.S. Bureau of Labor Statistics, série PCU483111483111; índice mensal não dessazonalizado, jun/1988=100. Coleta central com limite de uma consulta por dia; meses não são transformados em cotações diárias. BLS.gov não pode atestar os dados ou análises derivados após a extração dos dados de BLS.gov. <a href="https://www.bls.gov/bls/linksite.htm" target="_blank" rel="noopener noreferrer">Domínio público e crédito</a> · <a href="https://www.bls.gov/developers/termsOfService.htm" target="_blank" rel="noopener noreferrer">Condições de uso</a>.</p></Aviso>
+    {(!part || part === 'frete') && <section aria-labelledby="freight-heading"><div className="ctx-head"><h2 id="freight-heading">Transporte marítimo · referência de preços</h2><RefreshButton files={['freight.json', 'freight-jp.json']} label="Transporte marítimo" /></div>
+      <Aviso title="Transporte marítimo"><p className="context-intro">Índices de preços do transporte marítimo dos EUA (BLS) e do Japão (Banco do Japão), em bases diferentes: compare as variações, não os níveis. Não medem fretes por rota (China–Brasil, Europa–Brasil); não substituem orçamento de transportadora.</p></Aviso>
+      <Cards state={freight.data || freightJp.data ? {data:true} : freight.failed && freightJp.failed ? {failed:true} : {}}><FreightTable entries={[{state:freight},{state:freightJp}]} onOpen={id => setOpen(freightStates[id].data.item)} /></Cards>
+      <Aviso title="Transporte marítimo · método"><p className="context-method">Japão: Banco do Japão, índice de preços de serviços (SPPI, base 2020), item transporte marítimo de carga (série PRCS20_5200730001), mensal desde 1985. EUA: U.S. Bureau of Labor Statistics, série PCU483111483111; índice mensal não dessazonalizado, jun/1988=100. Coleta central com limite de uma consulta por dia; meses não são transformados em cotações diárias. BLS.gov não pode atestar os dados ou análises derivados após a extração dos dados de BLS.gov. <a href="https://www.bls.gov/bls/linksite.htm" target="_blank" rel="noopener noreferrer">Domínio público e crédito</a> · <a href="https://www.bls.gov/developers/termsOfService.htm" target="_blank" rel="noopener noreferrer">Condições de uso</a>.</p></Aviso>
     </section>}
   </div>
 }

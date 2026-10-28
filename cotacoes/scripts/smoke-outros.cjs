@@ -8,6 +8,8 @@ for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
   points.push({ period: `${y}-${String(m).padStart(2, '0')}`, mom: +mom.toFixed(2), ytd: +(mom * m).toFixed(2), y12: +(mom * 12).toFixed(2), index: +index.toFixed(2) })
 }
 const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/1737', checkedAt: new Date().toISOString(), stale: false, points } }
+const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'freight-jp-sppi', unit: 'pontos · média de 2020 = 100', frequency: 'monthly', sourceName: 'Banco do Japão (fixture de teste)', sourceUrl: 'https://www.boj.or.jp/en/statistics/pi/sppi_2020/index.htm', checkedAt: new Date().toISOString(), stale: false, releaseDate: null,
+  points: Array.from({ length: 40 }, (_, i) => ({ period: `${2023 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`, value: 100 + i * 1.5 })) } }
 ;(async () => {
   const b = await chromium.launch({ channel: process.env.SMOKE_CHANNEL || 'msedge', headless: true }), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
   try {
@@ -15,6 +17,7 @@ const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: 
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
+      await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
       await p.goto(base + '/#cenarios/outros')
       const table = p.locator('.ind-table')
       await table.waitFor()
@@ -34,10 +37,25 @@ const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: 
       const f = p.locator('.ind-table')
       await f.waitFor()
       assert.match(await f.innerText(), /Δ mês %[\s\S]*12 meses %[\s\S]*Ano %/)
-      await f.getByRole('button', { name: /abrir histórico e gráfico/ }).click()
+      assert.equal(await f.locator('tbody').count(), 2, 'EUA e Japão')
+      assert.match(await f.innerText(), /Japão · Transporte marítimo/)
+      await f.getByRole('button', { name: /Japão.*abrir histórico e gráfico/ }).click()
+      const jd = p.getByRole('dialog', { name: /histórico de Japão/i }); await jd.waitFor()
+      await p.keyboard.press('Escape'); await jd.waitFor({ state: 'hidden' })
+      await f.getByRole('button', { name: /EUA.*abrir histórico e gráfico/ }).click()
       const fd = p.getByRole('dialog', { name: /histórico de /i }); await fd.waitFor()
       assert.equal(await fd.locator('.chart-filters').count(), 1)
       await p.keyboard.press('Escape'); await fd.waitFor({ state: 'hidden' })
+      // atividade e emprego: tabela; a linha abre o gráfico em tela cheia
+      await p.goto(base + '/#cenarios/atividade')
+      const at = p.locator('.ind-table'); await at.waitFor()
+      assert.equal(await at.locator('tbody').count(), 5, 'cinco indicadores de atividade e emprego')
+      assert.match(await at.innerText(), /Anterior[\s\S]*Variação[\s\S]*Ano anterior/)
+      await at.getByRole('button', { name: /Payroll . EUA: abrir gráfico/ }).click()
+      const ad = p.getByRole('dialog', { name: /histórico de Payroll/i }); await ad.waitFor()
+      assert.equal(await ad.locator('.chart-filters').count(), 1)
+      assert.deepEqual(await ad.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
+      await p.keyboard.press('Escape'); await ad.waitFor({ state: 'hidden' })
       assert.deepEqual(errors, [])
       console.log(width + ' PASS IPCA em Outros (tabela, gráfico em tela cheia, filtros no topo) e frete em tabela')
       await p.close()
