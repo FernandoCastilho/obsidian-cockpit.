@@ -1,8 +1,9 @@
+import './Projecoes.css'
 import RefreshButton from './RefreshButton.jsx'
 import { onRefresh } from './refreshBus.js'
 import { Aviso } from './Avisos.jsx'
 import { useEffect, useState } from 'react'
-import { INDICATORS, INSTITUTIONS, scenarioValue } from './scenarios.js'
+import { FOCUS_MARK, INDICATORS, INSTITUTIONS, compareToFocus, scenarioValue } from './scenarios.js'
 
 const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value ?? '') ? value.split('-').reverse().join('/') : 'data não informada'
 const format = (value) => value === null ? '—' : value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -35,11 +36,16 @@ export default function Projecoes({ macro }) {
         <p className="scroll-hint">Deslize para ver os demais bancos →</p>
         <div className="scroll scenario-scroll" tabIndex={0} role="region" aria-label={`Comparação das projeções para ${year}`}>
           <table className="focus-table scenario-table">
-            <caption >Projeções para {year}, por instituição. Valores ausentes indicados por travessão.</caption>
+            <caption >Projeções para {year}, por instituição. Valores ausentes indicados por travessão. <span className="focus-legend">Sinais comparam cada banco com o FOCUS da mesma linha: <b className="fm up">▲</b> acima · <b className="fm down">▼</b> abaixo · <b className="fm same">=</b> igual (2 casas).</span></caption>
             <thead><tr><th scope="col">Indicador</th>{INSTITUTIONS.map((name) => <th scope="col" key={name}>{name}</th>)}</tr></thead>
             <tbody>{INDICATORS.map((indicator) => <tr key={indicator.id}>
               <th scope="row">{indicator.label}<small>{indicator.unit}</small></th>
-              {INSTITUTIONS.map((name) => <td key={name}>{format(scenarioValue(name, indicator, year, focus, banks))}</td>)}
+              {INSTITUTIONS.map((name) => {
+                const value = scenarioValue(name, indicator, year, focus, banks)
+                const cmp = name === 'FOCUS' ? null : compareToFocus(value, scenarioValue('FOCUS', indicator, year, focus, banks))
+                const mark = cmp && FOCUS_MARK[cmp]
+                return <td key={name} className={cmp ? `vs-focus vs-${cmp}` : undefined}>{format(value)}{mark && <span className={`fm ${cmp}`} role="img" aria-label={mark.text} title={mark.text}>{mark.symbol}</span>}</td>
+              })}
             </tr>)}</tbody>
           </table>
         </div>

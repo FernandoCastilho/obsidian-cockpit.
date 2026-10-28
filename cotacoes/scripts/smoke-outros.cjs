@@ -22,6 +22,27 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
+      // Cenários › Projeções: sinais ▲ ▼ = de cada banco contra o FOCUS, linha a linha
+      await p.route('**/macro.json*', (r) => r.fulfill({ json: { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], sofrAvg: [], ptax: {}, ptaxHist: {}, focus: { date: '2026-10-26', rows: [
+        { label: 'PIB', values: { 2026: { median: 2.5 }, 2027: { median: 2 } } }, { label: 'IPCA', values: { 2026: { median: 4.5 }, 2027: { median: 4 } } },
+        { label: 'Selic', values: { 2026: { median: 14.25 }, 2027: { median: 12 } } }, { label: 'Câmbio', values: { 2026: { median: 5.4 }, 2027: { median: 5.5 } } }] } } }))
+      await p.route('**/cenarios.json*', (r) => r.fulfill({ json: { institutions: [
+        { name: 'Itaú BBA', date: '2026-10-20', years: { 2026: { pib: 2.8, ipca: 4.2, selic: 14.25, usd: 5.4 } } },
+        { name: 'Bradesco', date: '2026-10-20', years: { 2026: { pib: 2.5, ipca: 4.5 } } }] } }))
+      await p.goto(base + '/#cenarios/projecoes')
+      const sc = p.locator('.scenario-table'); await sc.waitFor()
+      const rowOf = (name) => sc.locator('tbody tr', { hasText: name }).first()
+      await rowOf('PIB').locator('.fm').first().waitFor()
+      assert.equal(await rowOf('PIB').getByRole('img', { name: 'acima do Focus' }).count(), 1, 'Itaú acima no PIB')
+      assert.equal(await rowOf('PIB').getByRole('img', { name: 'igual ao Focus' }).count(), 1, 'Bradesco igual no PIB')
+      assert.equal(await rowOf('IPCA').getByRole('img', { name: 'abaixo do Focus' }).count(), 1, 'Itaú abaixo no IPCA')
+      assert.equal(await rowOf('Selic').getByRole('img', { name: 'igual ao Focus' }).count(), 1)
+      assert.equal(await sc.locator('tbody tr', { hasText: 'IPCA' }).first().locator('td').first().locator('.fm').count(), 0, 'a coluna FOCUS não recebe sinal')
+      assert.equal(await rowOf('USD').getByRole('img', { name: 'igual ao Focus' }).count(), 1)
+      assert.match(await sc.locator('caption').innerText(), /▲[\s\S]*acima[\s\S]*▼[\s\S]*abaixo[\s\S]*=[\s\S]*igual/)
+      // menu na ordem pedida
+      const names = await p.getByRole('navigation', { name: /Navegação principal|Seções/ }).getByRole('button').allInnerTexts()
+      if (width >= 700) assert.deepEqual(names.slice(0, 3).map((t) => t.trim().toLowerCase().split(' ')[0]), ['mercado', 'juros', 'cenários'])
       // card do topo do Mercado: IPCA 12m no lugar do Brent; clique leva a Cenários › Outros
       await p.goto(base + '/#resumo')
       const card = p.locator('.kpis .kpi', { hasText: 'IPCA 12m' })
