@@ -81,6 +81,43 @@ function FreightTable({data, failed, onOpen}) {
     {(failed || data.series.stale) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
   </>
 }
+// Atividade e emprego em tabela (mesmo formato do Mercado): último, anterior, variação na unidade do indicador e mesmo mês do ano anterior.
+// A comparação só vale quando o último ponto do histórico é o valor mostrado; sem histórico, os campos ficam em "—" (não viram zero).
+const DELTA_UNIT = { '%': ' p.p.', pontos: ' pts' }
+function ActivityTable({items, series, failed, historyFailed, historyLoading, onOpen}) {
+  const rows = items.map(item => {
+    const points = series?.find(s=>s.id===item.id)?.points || []
+    const last = points.at(-1)
+    const base = last && Number.isFinite(item.value) && Math.abs(last.value - item.value) < 1e-9 ? last : null
+    const prev = base ? points.at(-2) ?? null : null
+    const year = base ? points.find(p=>p.period===`${Number(base.period.slice(0,4))-1}${base.period.slice(4)}`) ?? null : null
+    const val = v => `${contextValue({...item, value:v})}${item.unit === '%' ? '%' : ''}`
+    return {
+      id:item.id, name:item.label, sub:`${item.nature}${base ? '' : series && !points.length ? ' · histórico indisponível' : ''}`,
+      openLabel:`${item.label}: abrir gráfico e histórico`,
+      cells:[
+        {text:val(item.value)},
+        {text:prev ? val(prev.value) : '—'},
+        {text:prev ? `${prev.value === item.value ? '' : item.value > prev.value ? '+' : '−'}${contextValue({...item, value:Math.abs(item.value - prev.value)})}${DELTA_UNIT[item.unit] ?? ''}` : '—'},
+        {text:year ? val(year.value) : '—'},
+        {text:contextDate(item.period)},
+        {text:contextDate(item.releaseDate)},
+      ],
+    }
+  })
+  return <>
+    <IndicatorTable
+      caption="Atividade e emprego · últimas leituras divulgadas"
+      ariaLabel="Tabela de atividade e emprego; role para ver todas as colunas"
+      columns={[{label:'Último'},{label:'Anterior'},{label:'Variação', small:'(vs anterior)'},{label:'Ano anterior', small:'(mesmo período)'},{label:'Referência'},{label:'Divulgação'}]}
+      rows={rows}
+      onOpen={onOpen}
+    />
+    {(failed || historyFailed) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
+    {historyLoading && <p role="status" className="ind-note">Carregando histórico para as comparações…</p>}
+    {items.some(i=>i.value===null) && <p role="status" className="context-warning">Dado indisponível em algum indicador. Não representa zero.</p>}
+  </>
+}
 function Cards({state, children}) {
   return <>{!state.data && <p role="status">{state.failed ? 'Não foi possível carregar os dados.' : 'Carregando dados…'}</p>}{children}</>
 }
@@ -96,7 +133,7 @@ export default function MarketContext({ part = '' }) {
     {open && <IndicatorHistory item={open} series={open.id==='freight-us-ppi' ? freight.data?.series : history.data?.find(s=>s.id===open.id)} loading={open.id==='freight-us-ppi' ? !freight.data&&!freight.failed : !history.data&&!history.failed} failed={open.id==='freight-us-ppi' ? freight.failed || freight.data?.series.stale : history.failed} onClose={()=>setOpen(null)}/>}
     {(!part || part === 'atividade') && <section aria-labelledby="market-context-heading"><div className="ctx-head"><h2 id="market-context-heading">Indicadores de mercado</h2><RefreshButton files={['market-indicators.json', 'indicator-history.json']} label="Indicadores de mercado" /></div>
       <Aviso title="Atividade e emprego"><p className="context-intro">Atividade e emprego. Indicadores observados, não projeções. Competências e datas de divulgação diferem.</p></Aviso>
-      <Cards state={market}><div className="context-grid">{(market.data || []).map(item => <Card key={item.id} item={item} failed={market.failed} history={history.data?.find(s=>s.id===item.id)} historyLoading={!history.data&&!history.failed} historyFailed={history.failed} onOpen={()=>setOpen(item)}/>)}</div></Cards>
+      <Cards state={market}>{market.data && <ActivityTable items={market.data} series={history.data} historyFailed={history.failed} historyLoading={!history.data&&!history.failed} failed={market.failed} onOpen={id=>setOpen(market.data.find(i=>i.id===id))} />}</Cards>
       {market.data && market.data.length < MARKET_IDS.length && <p role="status">Cobertura parcial: alguns indicadores não puderam ser carregados.</p>}
       <Aviso title="Atividade e emprego · método"><p className="context-method">Leituras conferidas manualmente nas fontes; não há atualização automática destes indicadores. PMI ISM em pontos: acima de 50 indica expansão; abaixo de 50, contração. Saldos de emprego podem ser negativos e sujeitos a revisão.</p></Aviso>
     </section>}
