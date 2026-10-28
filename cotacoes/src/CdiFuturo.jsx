@@ -78,7 +78,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
           ) : (
             <p className="status stale">Escolha um intervalo dentro da curva (até {dm(maxIso)}), com “Até” depois de “De”.</p>
           )}
-          <div ref={ref}>{series && <Plot points={series} width={width} color="#4aa3a2" code="cdif" fmt={pct} label="CDI a termo" nice labels light={light} />}</div>
+          <div ref={ref}>{series && <Plot points={series} width={width} color="#4aa3a2" code="cdif" fmt={pct} label="CDI a termo" scales={false} nice labels light={light} />}</div>
           <details className="table" open>
             <summary>Tabela por horizonte</summary>
             <div className="scroll">

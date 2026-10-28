@@ -14,7 +14,7 @@ const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
 
-export function RateChart({ id, title, subtitle, color, points, history, step, fmt, label, note, actions, help, refresh = ['macro.json'] }) {
+export function RateChart({ id, title, subtitle, color, points, history, step, scales, fmt, label, note, actions, help, refresh = ['macro.json'] }) {
   const [ref, width] = useWidth()
   const ok = points && points.length > 1
   const diff = ok ? points[points.length - 1].bid - points[0].bid : 0
@@ -40,7 +40,7 @@ export function RateChart({ id, title, subtitle, color, points, history, step, f
       {actions && <div className="chart-actions">{actions}</div>}
       <div ref={ref}>
         {ok ? (
-          <Plot points={points} history={history} step={step} width={width} color={color} code={id} fmt={fmt} label={label} nice />
+          <Plot points={points} history={history} step={step} scales={scales} width={width} color={color} code={id} fmt={fmt} label={label} nice />
         ) : (
           <div className="placeholder" style={{ height: 120 }}>Sem dados no período.</div>
         )}

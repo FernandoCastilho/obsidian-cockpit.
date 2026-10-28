@@ -8,6 +8,7 @@ import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
 import { readStorage } from './storage.js'
 import { priorYear, rangeStats } from './rangeCompare.js'
+import { resample, scaleOptions } from './resample.js'
 import { flagSvg } from './flags.js'
 
 const H = 240
@@ -37,8 +38,27 @@ export function useWidth() {
 const signed = (v, d) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const DRAG_PX = 6
 
+// Escala dos pontos: Auto mantém o dado original; Hora, Dia, Mês e Ano agrupam (só para escalas mais grossas que o dado).
+export function Plot({ points, scales = true, ...props }) {
+  const [scale, setScale] = useState('auto')
+  const options = useMemo(() => (scales ? scaleOptions(points) : []), [points, scales])
+  const active = options.find((o) => o.id === scale && o.enabled)
+  const view = useMemo(() => (active ? resample(points, active.id) : points), [points, active])
+  return (
+    <>
+      {options.some((o) => o.enabled) && (
+        <div className="seg scale-seg" role="group" aria-label="Escala do gráfico">
+          <button type="button" aria-pressed={!active} aria-label="Auto: escala original dos dados" title="Escala original dos dados" onClick={() => setScale('auto')}>Auto</button>
+          {options.map((o) => <button type="button" key={o.id} aria-pressed={active?.id === o.id} disabled={!o.enabled} aria-label={`Escala por ${o.label.toLowerCase()}`} title={o.enabled ? o.title : o.reason} onClick={() => setScale(o.id)}>{o.label}</button>)}
+        </div>
+      )}
+      <PlotView {...props} points={view} history={props.history ?? points} intraday={active ? active.id === 'hora' : props.intraday} dateLabel={active?.name ?? props.dateLabel} compare={props.compare ?? !props.intraday} />
+    </>
+  )
+}
+
 // `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
-export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
+function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
   const [hover, setHover] = useState(null)
   const [sel, setSel] = useState(null)
   const drag = useRef(null)

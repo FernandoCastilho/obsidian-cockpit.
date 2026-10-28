@@ -12,7 +12,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await d.waitFor()
       await d.getByRole('group', { name: 'Período do petróleo' }).getByRole('button', { name: 'Ano', exact: true }).click()
       const svg = d.locator('.plot svg').first()
-      await svg.waitFor()
+      await svg.waitFor(); await svg.scrollIntoViewIfNeeded()
       const bb = await svg.boundingBox()
       assert.equal(await d.locator('.sel-line').count(), 0)
       await p.mouse.move(bb.x + bb.width * 0.55, bb.y + 100); await p.mouse.down()
@@ -30,6 +30,14 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await panel.waitFor()
       await p.mouse.click(bb.x + bb.width * 0.4, bb.y + 100)
       assert.equal(await panel.count(), 0)
+      // escala: hora indisponível em série diária; mês agrupa e o rótulo vira mês/ano
+      const scale = d.getByRole('group', { name: 'Escala do gráfico' })
+      assert.equal(await scale.getByRole('button', { name: 'Escala por hora' }).isDisabled(), true)
+      await scale.getByRole('button', { name: 'Escala por mês' }).click()
+      assert.equal(await scale.getByRole('button', { name: 'Escala por mês' }).getAttribute('aria-pressed'), 'true')
+      await p.mouse.move(bb.x + bb.width - 40, bb.y + 100)
+      assert.match(await d.locator('.tip').first().innerText(), /^[a-zç]{3,4}\.? de 20\d\d|^[a-zç]{3,4} de 20\d\d/i)
+      await scale.getByRole('button', { name: 'Auto: escala original dos dados' }).click()
       // teclado: Shift + setas seleciona
       await svg.focus(); await p.keyboard.press('Home'); await p.keyboard.down('Shift'); for (let i = 0; i < 5; i++) await p.keyboard.press('ArrowRight'); await p.keyboard.up('Shift')
       await panel.waitFor()

@@ -674,3 +674,6 @@ section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:
 .sel-panel em { font-style:normal; font-weight:700; }
 .sel-panel small { color:var(--mut); }
 .sel-clear { align-self:flex-start; min-height:44px; padding:6px 12px; background:transparent; color:var(--amber, #e5b453); border:1px solid var(--line); font:inherit; cursor:pointer; }
+.scale-seg { margin:0 0 6px; }
+.scale-seg button { min-height:44px; min-width:44px; }
+.scale-seg button:disabled { opacity:.4; cursor:not-allowed; }
