@@ -61,7 +61,7 @@ export default function Feriados({ hol }) {
       </div>
       {groups.length ? <div className="fer-months">{groups.map((group) => (
         <section className="fer-month" key={group.month} aria-labelledby={`month-${group.month}`}>
-          <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h2>
+          <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })} <span className="fer-month-count">· {group.rows.length} {group.rows.length === 1 ? 'feriado' : 'feriados'}</span></h2>
           <ul className="fer-list">
           {group.rows.map((r) => {
             const f = fmt(r.d)
