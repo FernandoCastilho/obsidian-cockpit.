@@ -7,10 +7,17 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       const p = await b.newPage({ viewport: { width, height: 1100 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.goto(base + '/#resumo')
-      await p.getByRole('button', { name: 'Brent spot EIA: abrir histórico' }).click()
+      await p.getByRole('button', { name: 'Petróleo Brent: abrir histórico' }).click()
       const d = p.getByRole('dialog', { name: 'histórico do petróleo Brent' })
       await d.waitFor()
       await d.getByRole('group', { name: 'Período do petróleo' }).getByRole('button', { name: 'Ano', exact: true }).click()
+      // tela cheia só com "Fechar"; filtros (período e escala) num único bloco acima do gráfico
+      assert.deepEqual(await d.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
+      assert.equal(await d.locator('.chart-filters').count(), 1)
+      assert.equal(await d.locator('.chart-filters').getByRole('group', { name: 'Escala do gráfico' }).count(), 1)
+      assert.equal(await d.getByRole('group', { name: 'Escala do gráfico' }).count(), 1, 'escala não se repete fora do bloco de filtros')
+      const full = await d.boundingBox(); assert.ok(full.width >= width - 1 && full.height >= 1099, 'diálogo ocupa a tela')
+      assert.ok((await d.locator('.chart-filters').boundingBox()).y < (await d.locator('.plot svg').first().boundingBox()).y, 'filtros acima do gráfico')
       const svg = d.locator('.plot svg').first()
       await svg.waitFor(); await svg.scrollIntoViewIfNeeded()
       const bb = await svg.boundingBox()

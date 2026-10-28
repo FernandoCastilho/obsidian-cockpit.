@@ -170,10 +170,10 @@ body { background: var(--bg); }
 
 /* acabamento do computador: controles compactos dentro dos painéis */
 @media (min-width: 1000px) {
-  .desk-markets .expandable-panel { position: relative; }
-  .desk-markets .expandable-controls { position: absolute; top: 0; right: 124px; z-index: 3; height: 44px; align-items: center; margin: 0; }
-  .desk-markets .expandable-controls .btn { min-height: 44px; padding: 2px 8px; border: 0; background: none; color: var(--mut); font-size: .68rem; }
-  .desk-markets .expandable-controls .btn:hover { color: var(--amber); }
+  .desk-markets .expandable-panel:not(.is-modal) { position: relative; }
+  .desk-markets .expandable-panel:not(.is-modal) > .expandable-controls { position: absolute; top: 0; right: 124px; z-index: 3; height: 44px; align-items: center; margin: 0; }
+  .desk-markets .expandable-panel:not(.is-modal) > .expandable-controls .btn { min-height: 44px; padding: 2px 8px; border: 0; background: none; color: var(--mut); font-size: .68rem; }
+  .desk-markets .expandable-panel:not(.is-modal) > .expandable-controls .btn:hover { color: var(--amber); }
 }
 .market-notes { padding: 6px 0; }
 .market-notes summary { cursor: pointer; color: var(--amber); font: 700 .68rem system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }

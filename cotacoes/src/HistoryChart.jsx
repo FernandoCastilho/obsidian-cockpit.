@@ -1,5 +1,7 @@
 import { dataTimestamp } from './dataTimestamp.js'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useFilterSlot } from './ChartFilters.jsx'
 import { nextChartIndex } from './chartNavigation.js'
 import './ChartAccess.css'
 import { useMacro } from './useMacro.js'
@@ -42,16 +44,18 @@ const DRAG_PX = 6
 export function Plot({ points, scales = true, ...props }) {
   const [scale, setScale] = useState('auto')
   const options = useMemo(() => (scales ? scaleOptions(points) : []), [points, scales])
+  const slot = useFilterSlot()
   const active = options.find((o) => o.id === scale && o.enabled)
   const view = useMemo(() => (active ? resample(points, active.id) : points), [points, active])
-  return (
-    <>
-      {options.some((o) => o.enabled) && (
+  const picker = options.some((o) => o.enabled) && (
         <div className="seg scale-seg" role="group" aria-label="Escala do gráfico">
           <button type="button" aria-pressed={!active} aria-label="Auto: escala original dos dados" title="Escala original dos dados" onClick={() => setScale('auto')}>Auto</button>
           {options.map((o) => <button type="button" key={o.id} aria-pressed={active?.id === o.id} disabled={!o.enabled} aria-label={`Escala por ${o.label.toLowerCase()}`} title={o.enabled ? o.title : o.reason} onClick={() => setScale(o.id)}>{o.label}</button>)}
         </div>
-      )}
+  )
+  return (
+    <>
+      {picker && (slot ? createPortal(picker, slot) : picker)}
       <PlotView {...props} points={view} history={props.history ?? points} intraday={active ? active.id === 'hora' : props.intraday} dateLabel={active?.name ?? props.dateLabel} compare={props.compare ?? !props.intraday} />
     </>
   )
