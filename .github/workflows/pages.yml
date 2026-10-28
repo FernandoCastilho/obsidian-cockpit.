@@ -98,6 +98,10 @@ jobs:
       - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-freight.mjs
+      - name: Coletar IPCA oficial e histórico (IBGE)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-ipca.mjs
+        timeout-minutes: 2
       - name: Verificar dados desatualizados
         run: node scripts/check-stale.mjs
         continue-on-error: true

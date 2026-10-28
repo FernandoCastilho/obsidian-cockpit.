@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { MARKET_IDS, COMMODITY_IDS, contextItems, contextDate, contextValue, brentContext } from './marketContext.js'
 import './MarketContext.css'
 import RefreshButton from './RefreshButton.jsx'
+import IndicatorTable from './IndicatorTable.jsx'
+import { monthlyStats } from './monthlyStats.js'
 import { onRefresh } from './refreshBus.js'
 
 function useContextFile(file, parse) {
@@ -50,6 +52,35 @@ function Card({item, failed, history, historyLoading, historyFailed, onOpen}) {
     <Aviso title={`${item.label} · fonte`}><footer><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName || 'Fonte oficial'} ↗</a><span>Conferência: {contextDate(item.checkedAt?.slice(0,10))}</span></footer></Aviso>
   </article>
 }
+const fnum = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
+const fsgn = (v, d = 2, suffix = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + fnum(Math.abs(v), d) + suffix
+const ftone = v => v > 0 ? 'up' : v < 0 ? 'down' : 'flat'
+// Frete marítimo (PPI de transporte marítimo dos EUA, BLS) no mesmo formato da tabela do Mercado; a linha abre o gráfico com os filtros.
+function FreightTable({data, failed, onOpen}) {
+  const stats = monthlyStats(data.series.points)
+  if (!stats) return <p role="status">Dado indisponível. Não representa zero.</p>
+  const pct = v => v == null ? {text:'—'} : {text:fsgn(v, 2, '%'), tone:ftone(v)}
+  const row = {
+    id:'freight', name:data.item.label, sub:`${data.series.sourceName} · jun/1988 = 100`,
+    openLabel:`${data.item.label}: abrir histórico e gráfico`,
+    cells:[
+      {text:fnum(stats.last.value, 3)},
+      stats.delta == null ? {text:'—'} : {text:fsgn(stats.delta, 3), tone:ftone(stats.delta)},
+      pct(stats.pct), pct(stats.yoyPct), pct(stats.ytdPct),
+      {text:contextDate(stats.last.period)},
+    ],
+  }
+  return <>
+    <IndicatorTable
+      caption={`Índice mensal de preços ao produtor · EUA · referência ${contextDate(stats.last.period)}`}
+      ariaLabel="Tabela de frete marítimo; role para ver todas as colunas"
+      columns={[{label:'Índice', small:'(pontos)'},{label:'Δ mês', small:'(pontos)'},{label:'Δ mês %', aria:'Variação percentual no mês'},{label:'12 meses %', aria:'Variação percentual em 12 meses'},{label:'Ano %', aria:'Variação percentual no ano'},{label:'Referência'}]}
+      rows={[row]}
+      onOpen={onOpen}
+    />
+    {(failed || data.series.stale) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
+  </>
+}
 function Cards({state, children}) {
   return <>{!state.data && <p role="status">{state.failed ? 'Não foi possível carregar os dados.' : 'Carregando dados…'}</p>}{children}</>
 }
@@ -79,7 +110,7 @@ export default function MarketContext({ part = '' }) {
     </section>}
     {(!part || part === 'frete') && <section aria-labelledby="freight-heading"><div className="ctx-head"><h2 id="freight-heading">Transporte marítimo · referência de preços</h2><RefreshButton files={['freight.json']} label="Transporte marítimo" /></div>
       <Aviso title="Transporte marítimo"><p className="context-intro">Índice geral dos produtores dos EUA. Não mede fretes China–Brasil ou Europa–Brasil; não substitui orçamento de transportadora.</p></Aviso>
-      <Cards state={freight}><div className="context-grid">{freight.data && <Card item={freight.data.item} failed={freight.failed} history={freight.data.series} onOpen={()=>setOpen(freight.data.item)} />}</div></Cards>
+      <Cards state={freight}>{freight.data && <FreightTable data={freight.data} failed={freight.failed} onOpen={() => setOpen(freight.data.item)} />}</Cards>
       <Aviso title="Transporte marítimo · método"><p className="context-method">Fonte: U.S. Bureau of Labor Statistics, série PCU483111483111; índice mensal não dessazonalizado, jun/1988=100. Coleta central com limite de uma consulta por dia; meses não são transformados em cotações diárias. BLS.gov não pode atestar os dados ou análises derivados após a extração dos dados de BLS.gov. <a href="https://www.bls.gov/bls/linksite.htm" target="_blank" rel="noopener noreferrer">Domínio público e crédito</a> · <a href="https://www.bls.gov/developers/termsOfService.htm" target="_blank" rel="noopener noreferrer">Condições de uso</a>.</p></Aviso>
     </section>}
   </div>

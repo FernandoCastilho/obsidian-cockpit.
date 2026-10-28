@@ -1,0 +1,9 @@
+.ind-table { min-width:640px; table-layout:fixed; }
+.ind-table thead th:first-child { width:30%; }
+.ind-table thead th:nth-child(2) { width:14%; }
+.ind-table thead th:nth-child(3), .ind-table thead th:nth-child(4), .ind-table thead th:nth-child(5), .ind-table thead th:nth-child(6) { width:auto; }
+.ind-table .market-price { font-size:1.05rem; }
+.ind-table .market-values { cursor:pointer; }
+.ind-table-wrap { overflow-x:auto; max-width:100%; }
+.ind-note { margin:8px 0 0; color:var(--mut); font-size:.78rem; line-height:1.5; }
+.outros h3 { margin:20px 0 6px; font-size:.95rem; color:var(--amber); }

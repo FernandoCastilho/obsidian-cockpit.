@@ -21,14 +21,14 @@ export default function IndicatorHistory({item,series,loading,failed,onClose}) {
   <p>{series?.unit || item.unit} · {series?.frequency==='rolling-quarter' ? 'Trimestres móveis sobrepostos; eixo pelo mês final.' : 'Observações mensais, não diárias.'}</p>
   {loading ? <p role="status">Carregando histórico…</p> : !points.length ? <p role="status">{series?.unavailableReason || (failed ? 'Não foi possível carregar a série. Tente novamente mais tarde.' : 'Série histórica verificada ainda indisponível. Não foram gerados valores para preencher o gráfico.')}</p> : <>
    <ChartFilters>
-   <div className="summary-period-controls"><div className="seg" role="group" aria-label="Período do indicador">{[[6,'6 meses'],[12,'12 meses'],[24,'24 meses'],['all','Tudo']].map(([value,label])=><button key={value} aria-pressed={!custom&&preset===value} onClick={()=>{setPreset(value);setCustom(null)}}>{label}</button>)}</div>
+   <div className="summary-period-controls"><div className="seg" role="group" aria-label="Período do indicador">{[[6,'6 meses'],[12,'12 meses'],[24,'24 meses'],[60,'5 anos'],[120,'10 anos'],['all','Tudo']].map(([value,label])=><button key={value} aria-pressed={!custom&&preset===value} onClick={()=>{setPreset(value);setCustom(null)}}>{label}</button>)}</div>
     <label>De <input type="month" aria-label="Mês inicial do indicador" value={range.start} min={points[0].period} max={points.at(-1).period} onChange={e=>setCustom({...range,start:e.target.value})}/></label>
     <label>Até <input type="month" aria-label="Mês final do indicador" value={range.end} min={points[0].period} max={points.at(-1).period} onChange={e=>setCustom({...range,end:e.target.value})}/></label></div>
    </ChartFilters>
    <p className="muted">Cobertura: {monthLabel(points[0].period)} a {monthLabel(points.at(-1).period)}. {points.length} observações. Meses ausentes não são preenchidos.</p>
    {failed && <p role="status">Última série preservada; não foi possível confirmar a atualização.</p>}
    {selected.error ? <p role="alert">{selected.error}</p> : selected.points.length ? <>
-    <div ref={ref} className="indicator-history-plot"><Plot points={plot} width={width} color="#6aa9ff" code={`indicator-${item.id}`} intraday={false} fmt={fmt} vfmt={v=>contextValue({...item,value:v})} label={item.label} dateLabel={dateFmt} nice labels /></div>
+    <div ref={ref} className="indicator-history-plot"><Plot points={plot} width={width} color="#6aa9ff" code={`indicator-${item.id}`} intraday={false} fmt={fmt} vfmt={v=>contextValue({...item,value:v})} label={item.label} dateLabel={dateFmt} nice rate={/%/.test(series?.unit || item.unit || '')} labels /></div>
     <p className="muted">Passe o mouse ou toque no gráfico para consultar uma observação. A tabela abaixo também permite consulta por teclado.</p>
     <label>Consultar competência <select aria-label="Consultar competência do indicador" value={inspectedPoint?.period || ''} onChange={e=>setInspected(e.target.value)}>{selected.points.map(p=><option key={p.period} value={p.period}>{p.periodLabel || monthLabel(p.period)}</option>)}</select></label>
     {inspectedPoint && <p aria-live="polite">{inspectedPoint.periodLabel || monthLabel(inspectedPoint.period)}: {fmt(inspectedPoint.value)}{inspectedPoint.preliminary ? ' · preliminar' : ''}</p>}
