@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ZONES } from './Clock.jsx'
-import { COMMAND_HINTS, DESK_TABS, parseCommand } from './terminal.js'
+import { DESK_TABS } from './terminal.js'
 import { AvisosButton } from './Avisos.jsx'
 
 const CLOCKS = [
@@ -31,20 +31,12 @@ function Clocks() {
   )
 }
 
-// Barra superior do terminal (computador): marca, linha de comando, seções, relógios e estado dos dados.
-// Atalhos: "/" foca o comando; Alt+1 a Alt+7 trocam de seção (as teclas F1 a F12 ficam com o navegador).
-export default function TopBar({ tab, onTab, onCommand, feed, feedAt }) {
-  const input = useRef(null)
-  const [text, setText] = useState('')
-  const [miss, setMiss] = useState('')
-
+// Barra superior do terminal (computador): marca, seções, relógios e estado dos dados.
+// Atalho: Alt+1 a Alt+8 trocam de seção (as teclas F1 a F12 ficam com o navegador).
+export default function TopBar({ tab, onTab, feed, feedAt }) {
   useEffect(() => {
     const onKey = (e) => {
-      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName) || e.target?.isContentEditable
-      if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
-        e.preventDefault()
-        input.current?.focus()
-      } else if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-8]$/.test(e.key)) {
+      if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-8]$/.test(e.key)) {
         e.preventDefault()
         onTab(DESK_TABS[Number(e.key) - 1].id)
       }
@@ -53,32 +45,11 @@ export default function TopBar({ tab, onTab, onCommand, feed, feedAt }) {
     return () => document.removeEventListener('keydown', onKey)
   }, [onTab])
 
-  const submit = (e) => {
-    e.preventDefault()
-    if (!text.trim()) return
-    const cmd = parseCommand(text)
-    if (!cmd) {
-      setMiss(`Comando "${text.trim()}" não reconhecido. Tente USDBRL, EURUSD, JUROS, FOCUS, CALC ou NEWS.`)
-      return
-    }
-    setMiss('')
-    setText('')
-    input.current?.blur()
-    onCommand(cmd)
-  }
-
   return (
     <div className="topbar">
       <div className="topbar-brand">
         COTAÇÕES<span>TERMINAL</span>
       </div>
-      <form className="topbar-cmd" onSubmit={submit} role="search" aria-label="Linha de comando">
-        <label htmlFor="cmd">Comando</label>
-        <input ref={input} id="cmd" list="cmd-hints" autoComplete="off" spellCheck="false" placeholder="USDBRL   ( / )" value={text} onChange={(e) => { setText(e.target.value); setMiss('') }} aria-describedby={miss ? 'cmd-miss' : undefined} aria-invalid={miss ? true : undefined} />
-        <datalist id="cmd-hints">{COMMAND_HINTS.map((h) => <option key={h} value={h} />)}</datalist>
-        <button type="submit">IR</button>
-        {miss && <p id="cmd-miss" role="status" className="topbar-miss">{miss}</p>}
-      </form>
       <nav className="topbar-tabs" aria-label="Navegação principal">
         {DESK_TABS.map((t, i) => (
           <button key={t.id} type="button" className={t.id === tab ? 'on' : ''} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)} title={`Alt+${i + 1}`}>

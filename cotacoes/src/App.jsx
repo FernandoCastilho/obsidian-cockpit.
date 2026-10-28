@@ -203,12 +203,6 @@ export default function App() {
   const oil = useDataFile('oil.json')
   const feed = feedState({ error, aged: quoteAgeWarning, hasQuotes: !!quotes })
   const feedAt = updatedAt ? new Date(updatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) : null
-  const runCommand = (cmd) => {
-    if (cmd.kind === 'tab') return goto(cmd.id, cmd.sub)
-    goto('resumo')
-    setOpen(cmd.kind === 'pair' ? 'PAR' : cmd.code)
-  }
-
   const quoteStatus = (
     <p className="status src">
           <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
@@ -241,7 +235,7 @@ export default function App() {
         <p><i>{DISCLAIMER}</i></p>
       </>}>
     <header className="term-head">
-      <TopBar tab={tab} onTab={(id) => goto(id)} onCommand={runCommand} feed={feed} feedAt={feedAt} />
+      <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
     </header>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>

@@ -57,8 +57,8 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
         <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado.</p>
       </Panel>
       <div className="config-side">
-        <Panel title="Atalhos e comandos" note="teclado">
-          <div className="config-scroll" role="region" aria-label="Atalhos de teclado e comandos" tabIndex={0}><table className="config-table">
+        <Panel title="Atalhos" note="teclado">
+          <div className="config-scroll" role="region" aria-label="Atalhos de teclado" tabIndex={0}><table className="config-table">
             <tbody>{SHORTCUTS.map(([k, d]) => <tr key={k}><th scope="row"><kbd>{k}</kbd></th><td>{d}</td></tr>)}</tbody>
           </table></div>
         </Panel>

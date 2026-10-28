@@ -40,13 +40,7 @@ body { background: var(--bg); }
   .topbar { height: 42px; align-items: stretch; background: #000; border-bottom: 1px solid var(--line); }
   .topbar-brand { display: flex; align-items: center; gap: 6px; padding: 0 16px; background: var(--amber); color: #000; font-weight: 800; font-size: .8rem; letter-spacing: .14em; white-space: nowrap; }
   .topbar-brand span { font-weight: 500; opacity: .7; }
-  .topbar-cmd { position: relative; display: flex; align-items: center; gap: 8px; padding: 0 12px; width: 280px; border-right: 1px solid var(--line); }
-  .topbar-cmd label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .topbar-cmd input { flex: 1; min-width: 0; height: 28px; padding: 0 10px; background: #0b0b0b; border: 1px solid var(--line); color: var(--amber); font: .78rem var(--mono); }
-  .topbar-cmd input::placeholder { color: #5d5a50; }
-  .topbar-cmd input:focus-visible, .topbar button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
-  .topbar-cmd button { height: 22px; padding: 0 8px; background: var(--amber); color: #000; border: 0; font: 700 .65rem/1 system-ui, sans-serif; letter-spacing: .08em; cursor: pointer; }
-  .topbar-miss { position: absolute; top: 100%; left: 12px; margin: 0; padding: 6px 10px; z-index: 5; max-width: 420px; background: #1c1608; border: 1px solid var(--amber); color: var(--fg); font-size: .75rem; }
+  .topbar button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
   .topbar-tabs { display: flex; flex: 1; min-width: 0; }
   .topbar-tabs button { display: flex; align-items: center; gap: 7px; padding: 0 12px; background: transparent; border: 0; border-right: 1px solid #1a1813; color: var(--mut); font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
   .topbar-tabs button i { font: normal .62rem var(--mono); color: #5d5a50; }
@@ -64,12 +58,9 @@ body { background: var(--bg); }
 @media (min-width: 1000px) {
   .topbar-tabs { overflow: hidden; }
   .topbar-tabs button { flex: none; padding: 0 10px; gap: 5px; }
-  .topbar-cmd { flex: 0 1 auto; min-width: 110px; }
-  .topbar-cmd input { min-width: 0; }
 }
 @media (min-width: 1000px) and (max-width: 1799px) { .topbar-clocks .opt { display: none; } }
 @media (min-width: 1000px) and (max-width: 1699px) {
-  .topbar-cmd { width: 230px; }
   .topbar-tabs button i { display: none; }
 }
 @media (min-width: 1000px) and (max-width: 1299px) {
@@ -77,7 +68,6 @@ body { background: var(--bg); }
   .topbar-brand span, .topbar-feed:not(.err) { font-size: 0; }
   .topbar-feed b { font-size: .72rem; }
   .topbar-feed span { margin-right: 7px; }
-  .topbar-cmd { width: 170px; }
   .topbar-tabs button { padding: 0 8px; font-size: .66rem; }
 }
 @media (min-width: 1000px) and (max-width: 1099px) { .topbar-tabs button { padding: 0 6px; } .topbar-brand { padding: 0 10px; letter-spacing: .08em; } }
@@ -409,22 +399,18 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 /* Barra superior com fontes largas do sistema: as abas têm prioridade de espaço; relógios e comando cedem. */
 @media (min-width: 1300px) and (max-width: 1399px) {
   .topbar-clocks { display: none; }
-  .topbar-cmd { width: 190px; }
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
   .topbar-clocks span:nth-child(n+2) { display: none; }
 }
 @media (min-width: 1400px) and (max-width: 1799px) {
   .topbar-clocks span:nth-child(n+3) { display: none; }
-  .topbar-cmd { width: 190px; }
   .topbar-tabs button { padding: 0 8px; }
 }
 @media (min-width: 1000px) and (max-width: 1299px) {
-  .topbar-cmd { width: 124px; padding: 0 8px; }
   .topbar-brand { padding: 0 8px; letter-spacing: .04em; }
 }
 @media (min-width: 1000px) and (max-width: 1099px) {
-  .topbar-cmd { width: 104px; }
   .topbar-tabs button { padding: 0 4px; }
 }
 
