@@ -35,3 +35,8 @@ test('história e intraday: mínimo, atualidade, saltos e ordem', () => {
   intra.series.CNH.points = tick(0.8).reverse().map(([t, v], i, a) => [a[a.length - 1 - i][0], v])
   assert.ok(validateIntraday({ series: { ...intra.series, CNH: { points: tick(0.8).slice(0, 20).concat([[now - 4000000, 0.8]]) } } }, now).some((i) => /ordem/.test(i.message)))
 })
+test('intraday: salto de 9% após pausa longa passa; o mesmo salto em 5 min é apontado', () => {
+  const mk = (gap) => ({ series: Object.fromEntries(['USD', 'EUR', 'JPY', 'CNH'].map((c) => [c, { points: [...Array.from({ length: 25 }, (_, i) => [now - gap - (25 - i) * 300000, c === 'JPY' ? 0.034 : c === 'CNH' ? 0.8 : 5.0]), [now, c === 'JPY' ? 0.034 : c === 'CNH' ? 0.87 : 5.5]] }])) })
+  assert.deepEqual(validateIntraday(mk(3 * 36e5), now), [])
+  assert.ok(validateIntraday(mk(0), now).some((i) => /salto/.test(i.message)))
+})

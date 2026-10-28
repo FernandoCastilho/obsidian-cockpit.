@@ -29,3 +29,13 @@ Proposta concreta para etapa bancária: registrar URL oficial, hash do conteúdo
 Testes cobrem horários SãoPaulo, viradaUTC, feriados nacionais/B3,09/07eferiadoEUA não fechados,2027failclosed, hora repetida, cron único, preservação do Focus/checagem/estado, erros503/vazio/incompleto/datas divergentes/NaN, resposta determinística. Build executado. Workflow não foi despachado; primeira execução em produção e cobertura de um pregão ainda não comprovadas. PR em draft; aprovação/publicação separadas.
 
 Leitura real Focus27/10/2026 00:59:52UTC: quatro indicadores(Selic,IPCA,PIB,Câmbio),Data23/10/2026,anos2026–2030. Sem escrita/publicação. Validação final local:215testes ebuild; inclui120horários úteis semanais distintos no cronUTC e manutenção da execução ativa na concorrência. Credenciais/permissões do workflow permanecem iguais.
+
+## Validação automática dos dados publicados
+
+`scripts/validate-data.mjs` roda a cada deploy (após a coleta, sem falhar o deploy) sobre `quotes.json`, `history.json` e `intraday.json` da branch `data` e a PTAX recém-coletada. Regras em `scripts/validate-lib.mjs`:
+
+- **quotes:** quatro pares presentes; campos positivos; compra ≤ venda; cotação dentro de máxima/mínima; `varBid` coerente com `pctChange`; CNH cruzado plausível e com as duas pontas a até 1 h entre si; EUR/USD implícito entre 0,8 e 1,6; coleta com menos de 6 h.
+- **PTAX:** USD, EUR e JPY ao vivo a até 3% da PTAX publicada.
+- **history/intraday:** mínimo de pontos, último ponto recente, valores plausíveis por moeda, ordem cronológica e saltos (12% entre diários; 6% entre amostras a até 30 min; 12% após pausas maiores).
+
+Qualquer achado abre (ou comenta) a issue "Dados da página de cotações com problema de validação" e avisa o Teams, se configurado; ao normalizar, a issue é fechada.

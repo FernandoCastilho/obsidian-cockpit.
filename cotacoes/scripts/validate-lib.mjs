@@ -9,6 +9,8 @@ const RANGE = { USD: [2, 12], EUR: [2, 14], JPY: [0.01, 0.1], CNH: [0.3, 2.5] }
 const PTAX_TOL = 0.03 // cotação ao vivo × PTAX do mesmo par
 const JUMP = { daily: 0.12, intraday: 0.06 } // salto máximo entre pontos consecutivos
 
+// Entre amostras muito espaçadas (fim de semana, pausa da coleta) vale o limite diário, não o de 5 min.
+const GAP_MS = 30 * 60000
 const hours = (ms) => Math.round(ms / 36e5 * 10) / 10
 
 export function validateQuotes(file, now = Date.now()) {
@@ -71,11 +73,11 @@ function checkSeries(area, code, pts, jump, now, maxAgeH, minPoints, tOf, vOf) {
     const v = vOf(pts[i])
     if (!(v > 0) || v < lo || v > hi) bad++
     if (i && !(tOf(pts[i]) >= tOf(pts[i - 1]))) unordered++
-    if (i && v > 0 && vOf(pts[i - 1]) > 0 && Math.abs(v / vOf(pts[i - 1]) - 1) > jump) { if (!jumps++) first = ` (primeiro: ${vOf(pts[i - 1])} → ${v} em ${new Date(tOf(pts[i])).toISOString().slice(0, 16)}Z)` }
+    if (i && v > 0 && vOf(pts[i - 1]) > 0 && Math.abs(v / vOf(pts[i - 1]) - 1) > (tOf(pts[i]) - tOf(pts[i - 1]) <= GAP_MS ? jump : JUMP.daily)) { if (!jumps++) first = ` (primeiro: ${vOf(pts[i - 1])} → ${v} em ${new Date(tOf(pts[i])).toISOString().slice(0, 16)}Z)` }
   }
   if (bad) out.push({ area, message: `${code}: ${bad} ponto(s) inválido(s) ou fora do plausível` })
   if (unordered) out.push({ area, message: `${code}: ${unordered} ponto(s) fora de ordem cronológica` })
-  if (jumps) out.push({ area, message: `${code}: ${jumps} salto(s) acima de ${jump * 100}% entre pontos consecutivos${first}` })
+  if (jumps) out.push({ area, message: `${code}: ${jumps} salto(s) acima do limite entre pontos consecutivos${first}` })
   return out
 }
 
