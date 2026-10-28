@@ -6,7 +6,7 @@ import { nextChartIndex } from './chartNavigation.js'
 import './ChartAccess.css'
 import { useMacro } from './useMacro.js'
 import Explain from './Explain.jsx'
-import { useHistory, useIntraday } from './useHistory.js'
+import { centralFull, useCentralDaily, useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
 import { readStorage } from './storage.js'
 import { priorYear, rangeBetween } from './rangeCompare.js'
@@ -301,6 +301,8 @@ const quoteFmt = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0
 export default function HistoryChart({ currency, color, start, end, day, onDay }) {
   const intraday = !!day
   const h = useSeries(currency, start, end, day)
+  const central = useCentralDaily()
+  const full = useMemo(() => (intraday ? undefined : centralFull(central.data, currency.code, h.data?.source)), [central.data, currency.code, h.data?.source, intraday])
   const [ref, width] = useWidth()
   const pts = h.status === 'ok' ? h.data.points : null
   const [tableOpen, setTableOpen] = useState(() => readStorage('tabelaAberta') === '1')
@@ -340,7 +342,7 @@ export default function HistoryChart({ currency, color, start, end, day, onDay }
             <small>{h.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} vfmt={quoteFmt} labels label={intraday ? 'Cotação' : undefined} />}
+        {pts && <Plot points={pts} history={full} width={width} color={color} code={currency.code} intraday={intraday} fmt={intraday ? brl : undefined} vfmt={quoteFmt} labels label={intraday ? 'Cotação' : undefined} />}
       </div>
       {pts && h.warning && <p className="status stale" role="status">{h.warning}</p>}
       {pts && <p className="status">Cobertura exibida: {fmtDate(pts[0].t, true)} a {fmtDate(pts.at(-1).t, true)}.</p>}

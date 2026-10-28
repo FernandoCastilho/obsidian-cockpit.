@@ -15,7 +15,7 @@ import { selectedPeriod } from './summaryPeriod.js'
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
-import { fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
+import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
@@ -291,6 +291,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
   const hs = CURRENCIES.map((c) => useHistory(c.code, w.start, w.end, dia)) // eslint-disable-line react-hooks/rules-of-hooks
   const is = CURRENCIES.map((c) => useIntraday(c.code, spark.day ? fromInput(spark.day) : fromInput(marketDate(Date.now())), !dia)) // eslint-disable-line react-hooks/rules-of-hooks
   const [ref, width] = useWidth()
+  const central = useCentralDaily()
   const toggle = (code) => setSel((s) => (s.includes(code) ? (s.length > 1 ? s.filter((c) => c !== code) : s) : CURRENCIES.map((c) => c.code).filter((c) => c === code || s.includes(c))))
   const rows = CURRENCIES.map((c, k) => {
     const st = dia ? is[k] : hs[k]
@@ -308,7 +309,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
   const chart = (wv) => (
         ready.length > 0 && (one || comparable.length > 0) ? (
           one ? (
-            <Plot points={r0.points} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
+            <Plot points={r0.points} history={dia ? undefined : centralFull(central.data, r0.code, r0.source)} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
           ) : (
             <MultiPlot series={comparable} width={wv} intraday={dia} />
           )

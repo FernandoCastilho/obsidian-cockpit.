@@ -48,7 +48,6 @@ export function parseCommand(text) {
   return null
 }
 
-export const COMMAND_HINTS = ['USDBRL', 'EURBRL', 'JPYBRL', 'CNHBRL', 'EURUSD', 'JUROS', 'CURVA', 'FOCUS', 'CALC', 'FINIMP', 'NEWS', 'FERIADOS', 'APRENDER', 'CDS', 'EURIBOR', 'CONFIG']
 
 const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 export const toneOf = (v) => (Number.isFinite(v) && v > 0 ? 'up' : Number.isFinite(v) && v < 0 ? 'down' : 'flat')
@@ -143,13 +142,5 @@ export function ageText(ageMs) {
 }
 
 export const SHORTCUTS = [
-  ['/', 'Foca a linha de comando'],
   ['Alt + 1 … 8', 'Mercado, Juros, Cenários, Calculadoras, Notícias, Feriados, Aprender, Config'],
-  ['USDBRL · EURBRL · JPYBRL · CNHBRL', 'Abre o gráfico da moeda'],
-  ['EURUSD', 'Abre a paridade EUR/USD'],
-  ['JUROS · CURVA · FOCUS', 'Vai para Juros ou Cenários'],
-  ['COMMODITIES · BRENT · PMI · FRETE', 'Abre o assunto em Cenários'],
-  ['CALC · FINIMP · NCG · GIRO', 'Abre a calculadora indicada'],
-  ['NEWS · FERIADOS · CONFIG', 'Vai para a seção'],
-  ['APRENDER · CUPOM · EURIBOR · CDS · FUNDING', 'Abre a aba Aprender no conceito'],
 ]

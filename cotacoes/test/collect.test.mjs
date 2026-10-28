@@ -72,14 +72,15 @@ test('histórico: grava history.json por moeda e não consulta de novo antes de 
   const f = async (...a) => (calls++, dailyApi()(...a))
   const r = await collectHistory({ dir, key: 'k', fetchFn: f, now })
   assert.equal(r.ok, true)
-  assert.equal(calls, 4)
+  assert.equal(calls, 8) // 4 da janela recente + 4 do ano anterior
   const file = JSON.parse(await readFile(join(dir, 'history.json'), 'utf8'))
+  assert.equal(file.backfill.ok, true)
   assert.deepEqual(Object.keys(file.series).sort(), ['CNH', 'EUR', 'JPY', 'USD'])
   assert.equal(file.series.USD.source, 'USD')
   assert.equal(file.series.CNH.source, 'CNH')
   const again = await collectHistory({ dir, key: 'k', fetchFn: f, now: now + 3600e3 })
   assert.equal(again.skipped, true)
-  assert.equal(calls, 4)
+  assert.equal(calls, 8)
 })
 
 test('histórico: falha preserva o arquivo anterior', async () => {
@@ -99,4 +100,40 @@ test('histórico no navegador: recorte do arquivo central e recusa de período q
   assert.equal(r.points.length, 6)
   assert.throws(() => pickCentral(file, 'USD', new Date(2025, 0, 1), new Date(2026, 8, 10)), /maior que o histórico/)
   assert.throws(() => pickCentral(file, 'EUR', new Date(2026, 8, 5), new Date(2026, 8, 10)), /sem dados/)
+})
+
+test('histórico: janela do ano anterior é pedida por datas, preservada e repetida só se falhou', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'h-'))
+  const now = Date.UTC(2026, 9, 28, 12)
+  const urls = []
+  const f = async (u) => {
+    urls.push(String(u))
+    const old = /start_date=/.test(String(u))
+    const end = old ? Date.UTC(2025, 9, 5) : Date.UTC(2026, 9, 27)
+    return { ok: true, status: 200, json: async () => Array.from({ length: 60 }, (_, i) => row(new Date(end - i * 864e5).toISOString().slice(0, 10), 5 + i / 100)) }
+  }
+  await collectHistory({ dir, key: 'k', fetchFn: f, now })
+  const back = urls.filter((u) => /start_date=/.test(u))
+  assert.equal(back.length, 4)
+  assert.match(back[0], /start_date=2024\d{4}&end_date=2025\d{4}/)
+  const file = JSON.parse(await readFile(join(dir, 'history.json'), 'utf8'))
+  const days = new Set(file.series.USD.points.map((p) => new Date(p.t).toISOString().slice(0, 4)))
+  assert.ok(days.has('2025') && days.has('2026'), 'junta as duas janelas')
+  assert.equal(file.series.CNH.points.length > 60, true)
+  // 7 h depois: refaz só a janela recente e mantém os pontos do ano anterior
+  urls.length = 0
+  await collectHistory({ dir, key: 'k', fetchFn: f, now: now + 7 * 3600e3 })
+  assert.equal(urls.filter((u) => /start_date=/.test(u)).length, 0)
+  const again = JSON.parse(await readFile(join(dir, 'history.json'), 'utf8'))
+  assert.ok(again.series.USD.points.length >= file.series.USD.points.length)
+  // falha da janela anterior: tenta de novo só depois de 24 h
+  const dir2 = await mkdtemp(join(tmpdir(), 'h-'))
+  let n = 0
+  const g = async (u) => (n++, /start_date=/.test(String(u)) ? { ok: false, status: 429 } : dailyApi()(u))
+  await collectHistory({ dir: dir2, fetchFn: g, now })
+  const first = n
+  await collectHistory({ dir: dir2, fetchFn: g, now: now + 7 * 3600e3 })
+  assert.equal(n - first, 4, 'só a janela recente, sem repetir a anterior antes de 24 h')
+  await collectHistory({ dir: dir2, fetchFn: g, now: now + 25 * 3600e3 })
+  assert.ok(n - first > 8, 'após 24 h tenta a anterior de novo')
 })
