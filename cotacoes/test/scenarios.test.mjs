@@ -38,3 +38,16 @@ test('published bank dataset has only supported sources and numeric or absent va
     }
   }
 })
+
+import { FOCUS_MARK, compareToFocus } from '../src/scenarios.js'
+test('sinalizador contra o Focus: acima, abaixo, igual (2 casas) e ausente', () => {
+  assert.equal(compareToFocus(5.3, 5.2), 'up')
+  assert.equal(compareToFocus(5.1, 5.2), 'down')
+  assert.equal(compareToFocus(5.2, 5.2), 'same')
+  assert.equal(compareToFocus(5.2049, 5.2), 'same') // arredonda como a tela mostra
+  assert.equal(compareToFocus(5.206, 5.2), 'up')
+  assert.equal(compareToFocus(null, 5.2), null)
+  assert.equal(compareToFocus(5.2, null), null)
+  assert.equal(compareToFocus(undefined, undefined), null)
+  assert.deepEqual(Object.keys(FOCUS_MARK), ['up', 'down', 'same'])
+})
