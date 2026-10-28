@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { useId } from 'react'
 import { Aviso } from './Avisos.jsx'
 import './ExecutiveRatesTable.css'
@@ -35,6 +36,7 @@ export default function ExecutiveRatesTable({
   title = 'Cotações e indicadores',
   description,
   footnote,
+  refresh,
   emptyMessage = 'Nenhum indicador disponível.',
 }) {
   const id = useId()
@@ -45,6 +47,7 @@ export default function ExecutiveRatesTable({
     <section className="executive-rates" aria-labelledby={titleId}>
       <header className="executive-rates__heading">
         <h2 id={titleId}>{title}</h2>
+        {refresh && <RefreshButton files={refresh} label={title} />}
       </header>
       <p className="executive-rates__hint" id={hintId}>Deslize a tabela para ver todos os períodos →</p>
       <div

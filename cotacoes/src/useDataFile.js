@@ -1,22 +1,27 @@
 import { useEffect, useState } from 'react'
 import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
+import { onRefresh } from './refreshBus.js'
 
 // Um snapshot por arquivo: telas diferentes compartilham leitura, data e falhas.
 const resources = new Map()
 const TTL = 10 * 60000
 function resource(file) {
-  if (!resources.has(file)) resources.set(file, { state: { status: 'loading' }, at: 0, pending: null, listeners: new Set() })
+  if (!resources.has(file)) {
+    resources.set(file, { state: { status: 'loading' }, at: 0, pending: null, listeners: new Set() })
+    // botão "atualizar" do painel: relê este arquivo na hora, ignorando o intervalo e o cache
+    onRefresh((files) => files.includes(file) ? loadDataFile(file, Date.now(), true).then((s) => { if (s.status === 'error' || s.stale) throw new Error(s.error || 'falha') }) : undefined)
+  }
   return resources.get(file)
 }
-export function loadDataFile(file, now = Date.now()) {
+export function loadDataFile(file, now = Date.now(), force = false) {
   const r = resource(file)
   if (r.pending) return r.pending
-  if (r.at && now - r.at < TTL) return Promise.resolve(r.state)
+  if (!force && r.at && now - r.at < TTL) return Promise.resolve(r.state)
   const ctrl = new AbortController()
   const timeout = setTimeout(() => ctrl.abort(), 20000)
   r.pending = (async () => {
     try {
-      const response = await fetch(`./${file}?t=${Math.floor(now / TTL)}`, { signal: ctrl.signal })
+      const response = await fetch(`./${file}?t=${force ? now : Math.floor(now / TTL)}`, { signal: ctrl.signal, ...(force ? { cache: 'no-store' } : {}) })
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const data = await response.json()
       if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Arquivo de dados inválido')
@@ -46,3 +51,6 @@ export function useDataFile(file) {
   }, [file, r])
   return state
 }
+
+// Hora da coleta mais recente entre os arquivos (ms), ou null.
+export const collectedAt = (files) => Math.max(0, ...files.map((f) => resources.get(f)?.state?.data?.generatedAt ?? 0)) || null

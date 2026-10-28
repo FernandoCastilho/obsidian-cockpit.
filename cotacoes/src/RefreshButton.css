@@ -1,0 +1,15 @@
+.refresh-wrap { display: inline-flex; align-items: center; gap: 2px; }
+.refresh-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: var(--mut); cursor: pointer; opacity: .8; }
+.refresh-btn:hover:not(:disabled), .refresh-btn:focus-visible { color: var(--amber, #ffb000); opacity: 1; }
+.refresh-btn:disabled { cursor: progress; opacity: .6; }
+.refresh-msg { font-size: .68rem; color: var(--mut); white-space: nowrap; }
+.refresh-btn .spin { animation: refresh-spin 1s linear infinite; }
+@keyframes refresh-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .refresh-btn .spin { animation: none; opacity: .5; } }
+.ctx-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ctx-head > h2, .ctx-head > h3 { margin: 0; flex: 1; min-width: 0; }
+.desk-panel > header { display: flex; align-items: center; }
+.desk-panel > header .refresh-wrap { margin-left: auto; }
+.chart > header .refresh-wrap, .macro > h2 + .refresh-wrap { flex: none; }
+.history-head .refresh-wrap { flex: none; }
+.executive-rates__heading { display: flex; align-items: center; justify-content: space-between; }

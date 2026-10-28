@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
@@ -103,6 +104,7 @@ export default function SofrChart({ macro, range }) {
           <small>EUA · overnight, taxa do dia</small>
           <Explain id="sofr" />
         </h3>
+        <RefreshButton files={['macro.json']} label="SOFR" />
       </header>
       <div className="curve-legend">
         {SERIES.filter((s) => avail(s.id)).map((s) => (

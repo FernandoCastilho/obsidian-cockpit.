@@ -40,7 +40,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte">
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'oil.json', 'commodities.json', 'freight.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>

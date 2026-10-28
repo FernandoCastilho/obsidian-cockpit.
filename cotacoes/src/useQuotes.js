@@ -277,8 +277,10 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
       }
       // todas falharam (ex.: limite da API): não afirmar que está atualizado
       setError(fresh ? null : Object.values(errs)[0] ?? 'sem resposta da fonte')
+      return fresh > 0
     } catch (e) {
       if (e.name !== 'AbortError' && !request.signal.aborted && ctrl.current === request) setError(friendlyError(e.message))
+      return false
     } finally {
       if (ctrl.current === request) ctrl.current = null
     }
@@ -290,9 +292,10 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
     if (lim.wait > 0 || lim.left <= 0) return setLimits(lim)
     writeLog([...readLog(), Date.now()])
     setRefreshing(true)
-    await load(true)
+    const ok = await load(true)
     setRefreshing(false)
     setLimits(refreshLimits())
+    return ok
   }, [load])
 
   // contagem regressiva do intervalo mínimo entre atualizações manuais

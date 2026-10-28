@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
@@ -13,7 +14,7 @@ const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
 
-export function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help }) {
+export function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help, refresh = ['macro.json'] }) {
   const [ref, width] = useWidth()
   const ok = points && points.length > 1
   const diff = ok ? points[points.length - 1].bid - points[0].bid : 0
@@ -27,6 +28,7 @@ export function RateChart({ id, title, subtitle, color, points, fmt, label, note
           {help && <Explain id={help} />}
         </h3>
         <div className="parity-actions">
+          <RefreshButton files={refresh} label={title} />
           {ok && (
             <div className={`pct ${trend}`}>
               {trend === 'up' ? '▲' : trend === 'down' ? '▼' : '■'} {Math.abs(diff).toFixed(2).replace('.', ',')} p.p.
