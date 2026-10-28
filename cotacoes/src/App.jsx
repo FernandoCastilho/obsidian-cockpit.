@@ -3,6 +3,7 @@ import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
+const Outros = lazy(() => import('./Outros.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
@@ -47,6 +48,7 @@ const CEN_VIEWS = [
   { id: 'atividade', label: 'Atividade e emprego' },
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
+  { id: 'outros', label: 'Outros' },
 ]
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
@@ -286,7 +288,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros /> : <MarketContext part={cenView} />}
         </>
       )}
 

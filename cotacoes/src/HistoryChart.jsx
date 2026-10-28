@@ -62,7 +62,7 @@ export function Plot({ points, scales = true, ...props }) {
 }
 
 // `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
-function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
+function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, rate = nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
   const [hover, setHover] = useState(null)
   const [sel, setSel] = useState(null)
   const drag = useRef(null)
@@ -182,7 +182,7 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
   }
   const when = (t) => (dateLabel ? dateLabel(t) : intraday ? fmtTime(t) : fmtDate(t, true))
   const fmtPct = (v) => (v == null ? '—' : `${signed(v, 2)}%`)
-  const unit = nice ? ' p.p.' : ''
+  const unit = rate ? ' p.p.' : ''
   const abs = (v) => `${signed(v, g.dec)}${unit}`
   const tone = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat')
 
@@ -262,9 +262,9 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
       </svg>
       {range && (
         <div className="sel-panel" role="status">
-          <span><b>Trecho</b> {when(range.t0)} → {when(range.t1)}: <em className={tone(range.delta)}>{fmtPct(range.pct)}{nice && ' rel.'} · {abs(range.delta)}</em></span>
+          <span><b>Trecho</b> {when(range.t0)} → {when(range.t1)}: <em className={tone(range.delta)}>{fmtPct(range.pct)}{rate && ' rel.'} · {abs(range.delta)}</em></span>
           {compare && (prior
-            ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{nice && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{nice ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>}</span>
+            ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{rate && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{rate ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>}</span>
             : <span className="muted"><b>Ano anterior</b> indisponível: o histórico não cobre esse trecho.</span>)}
           <button type="button" className="sel-clear" onClick={() => setSel(null)}>Limpar seleção</button>
         </div>
