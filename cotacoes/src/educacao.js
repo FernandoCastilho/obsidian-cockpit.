@@ -1,4 +1,4 @@
-// Aba "Aprender": conceitos explicados pelo método Feynman. Os números dos exemplos saem das funções abaixo (testadas),
+// Aba "Aprender": conceitos explicados em linguagem simples. Os números dos exemplos saem das funções abaixo (testadas),
 // nunca digitados no texto, para a tela não mostrar uma conta errada. Exemplos são didáticos, não cotações de mercado.
 
 const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
@@ -20,17 +20,6 @@ export const custoMedio = (fontes) => {
 
 // Prêmio anual de um CDS: spread em pontos-base × valor protegido (100 pb = 1% ao ano).
 export const premioCds = (nocional, pontosBase) => (nocional * pontosBase) / 10000
-
-export const METODO = {
-  titulo: 'O método Feynman em 4 passos',
-  intro: 'Entender de verdade é conseguir explicar sem jargão. Use esta aba assim: leia a explicação simples, tente repetir com as suas palavras, veja onde travou e só então leia a versão precisa.',
-  passos: [
-    ['Escolha o conceito', 'Dê um nome a uma coisa só. Se o assunto tem duas ideias, são dois conceitos.'],
-    ['Explique como a uma criança de 12 anos', 'Sem sigla, sem fórmula, com uma situação do dia a dia. Se precisou de jargão, você ainda não entendeu.'],
-    ['Marque onde travou', 'Cada trecho em que você hesitou é uma lacuna. Volte à fonte e estude só essas lacunas.'],
-    ['Simplifique e use uma analogia', 'Reescreva mais curto. Teste de novo com alguém, ou em voz alta.'],
-  ],
-}
 
 const EX_CUPOM = { spot: 5, futuro: 5.5, di: 0.14 }
 const EX_CUPOM_2 = { spot: 5, futuro: 5.25, di: 0.14 }

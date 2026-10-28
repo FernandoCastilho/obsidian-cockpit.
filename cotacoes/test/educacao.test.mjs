@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, METODO, cupomCambial, custoMedio, jurosAnuais, jurosDeUmDia, premioCds } from '../src/educacao.js'
+import { CONCEITOS, CONEXAO, cupomCambial, custoMedio, jurosAnuais, jurosDeUmDia, premioCds } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
@@ -11,7 +11,7 @@ test('os cinco conceitos pedidos existem, com ids únicos', () => {
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
-test('cada conceito segue o método Feynman: frase, explicação simples, lacunas, versão precisa, exemplo e teste', () => {
+test('cada conceito traz frase, explicação simples, lacunas, versão precisa, exemplo e teste', () => {
   for (const c of CONCEITOS) {
     assert.ok(c.frase.length > 30, c.id)
     assert.ok(c.crianca.length >= 2 && c.crianca.every((p) => p.length > 40), c.id)
@@ -22,7 +22,6 @@ test('cada conceito segue o método Feynman: frase, explicação simples, lacuna
     assert.ok(c.noApp.texto.length > 10 && ['juros', 'calculadora'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
-  assert.equal(METODO.passos.length, 4)
   assert.equal(CONEXAO.itens.length, 4)
 })
 
