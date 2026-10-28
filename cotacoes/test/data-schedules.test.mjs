@@ -20,7 +20,7 @@ test('one weekly cron at Monday09:30 Brazil; hourly crons and coin workflow not 
  const y=await readFile(new URL('../../.github/workflows/pages.yml',import.meta.url),'utf8')
  const crons=[...y.matchAll(/- cron: '([^']+)'/g)].map(m=>m[1]);assert.equal(crons.length,3);assert.equal(new Set(crons).size,3)
  assert.match(y,/if: github.event.schedule == '30 12 \* \* 1'/)
- assert.equal((y.match(/if: github.event.schedule != '30 12 \* \* 1'/g)||[]).length,11)
+ assert.equal((y.match(/if: github.event.schedule != '30 12 \* \* 1'/g)||[]).length,12)
 })
 test('Focus failure/skip preserves actual publication date, values and quote timestamps',()=>{
  const prev={generatedAt:1,focusCheckedAt:2,focus:{date:'2026-10-23',rows:[{values:{2026:10}}]},stale:{focus:1}}

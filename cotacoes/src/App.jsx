@@ -4,6 +4,7 @@ import { marketDate } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
+const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
@@ -46,6 +47,7 @@ const COLORS = { USD: '#ffb000', EUR: '#4cc3ff', JPY: '#199e70', CNH: '#a371f7',
 // Assuntos da aba Cenários (cada um com seu endereço: #cenarios/commodities etc.).
 const CEN_VIEWS = [
   { id: 'projecoes', label: 'Projeções' },
+  { id: 'calendario', label: 'Calendário econômico' },
   { id: 'atividade', label: 'Atividade e emprego' },
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
@@ -280,7 +282,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
 

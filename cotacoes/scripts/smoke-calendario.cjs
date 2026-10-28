@@ -1,0 +1,40 @@
+// Calendário econômico (Cenários › Calendário econômico): filtros de período, impacto e país; dia agrupado; horário de Brasília.
+const { chromium } = require('playwright'), assert = require('node:assert/strict')
+;(async () => {
+  const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
+  try {
+    for (const width of [390, 1280]) {
+      const now = Date.now(), h = 3600e3
+      const ev = (src, country, dt, title, impact, forecast = null, previous = null) => ({ src, country, currency: 'X', t: now + dt, title, impact, forecast, previous, actual: null })
+      const file = { schemaVersion: 1, generatedAt: now, sources: { ff: { ok: true, n: 4 }, bls: { ok: true, n: 1 }, bea: { ok: true, n: 0 }, fomc: { ok: true, n: 0 } }, stale: {}, events: [
+        ev('ff', 'EU', 2 * h, 'CPI Flash Estimate y/y', 'high', '2.1%', '2.0%'), ev('ff', 'JP', 3 * h, 'Tokyo Core CPI', 'medium', '1.8%', '1.7%'),
+        ev('ff', 'GB', 4 * h, 'Retail Sales', 'low', '0.2%', '0.1%'), ev('bls', 'US', 5 * h, 'CPI: inflação ao consumidor (EUA)', 'high'), ev('ff', 'AU', 6 * h, 'Trade Balance', 'high', '4.0B', '3.9B') ] }
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      p.on('pageerror', (e) => errors.push(e.message))
+      await p.route('**/calendar.json*', (r) => r.fulfill({ json: file }))
+      await p.goto(base + '/#cenarios/calendario')
+      const sec = p.locator('.calendario'); await sec.waitFor()
+      const table = sec.locator('.cal-table'); await table.waitFor()
+      const f = sec.getByRole('group', { name: 'Período do calendário' })
+      await f.getByRole('button', { name: '7 dias' }).click()
+      let txt = await table.innerText()
+      assert.match(txt, /CPI Flash Estimate y\/y/); assert.match(txt, /Tokyo Core CPI/); assert.match(txt, /CPI: inflação ao consumidor/)
+      assert.doesNotMatch(txt, /Retail Sales/, 'impacto baixo oculto por padrão')
+      assert.match(txt, /2,1%|2\.1%/); assert.match(await table.locator('thead').innerText(), /Previsto[\s\S]*Anterior/)
+      assert.ok(await table.locator('.cal-day').count() >= 1)
+      assert.match(await table.locator('.cal-time').first().innerText(), /^\d{2}:\d{2}$/)
+      // impacto baixo entra ao ligar; país restringe
+      await sec.getByRole('group', { name: 'Impacto dos eventos' }).getByRole('button', { name: 'Baixo' }).click()
+      assert.match(await table.innerText(), /Retail Sales/)
+      await sec.getByLabel('País do evento').selectOption('EU')
+      txt = await table.innerText(); assert.match(txt, /CPI Flash/); assert.doesNotMatch(txt, /Tokyo|Retail/)
+      // o último filtro de impacto não pode ser desligado
+      for (const n of ['Alto', 'Médio', 'Baixo']) await sec.getByRole('group', { name: 'Impacto dos eventos' }).getByRole('button', { name: n }).click()
+      assert.equal(await sec.getByRole('group', { name: 'Impacto dos eventos' }).locator('[aria-pressed="true"]').count() >= 1, true)
+      assert.match(await sec.innerText(), /Horário de Brasília/)
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
+      assert.deepEqual(errors, [])
+    }
+    console.log('PASS calendário econômico: filtros, agrupamento por dia e horário de Brasília (390 e 1280)')
+  } finally { await b.close() }
+})().catch((e) => { console.error(e); process.exit(1) })

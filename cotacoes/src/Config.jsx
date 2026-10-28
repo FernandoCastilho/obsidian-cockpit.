@@ -24,6 +24,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const commodities = useDataFile('commodities.json')
   const freight = useDataFile('freight.json')
   const ipca = useDataFile('ipca.json')
+  const calendar = useDataFile('calendar.json')
   const freightJp = useDataFile('freight-jp.json')
   const rows = dataStatus(
     [
@@ -38,13 +39,14 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'freight-jp', label: 'Transporte marítimo Japão (Banco do Japão)', at: freightJp.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'ipca', label: 'IPCA (IBGE)', at: ipca.data?.generatedAt, maxAge: 72 * H, weekdays: true },
+      { key: 'calendar', label: 'Calendário econômico', at: calendar.data?.generatedAt, maxAge: 12 * H, weekdays: true },
     ],
     Date.now(),
     isWeekendBR(),
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json']}>
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'calendar.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>
