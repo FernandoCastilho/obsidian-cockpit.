@@ -8,6 +8,8 @@ import { MARKET_IDS, COMMODITY_IDS, contextItems, contextDate, contextValue, bre
 import './MarketContext.css'
 import RefreshButton from './RefreshButton.jsx'
 import IndicatorTable from './IndicatorTable.jsx'
+import SeriesHistory from './SeriesHistory.jsx'
+import { seriesStats } from './seriesStats.js'
 import { monthlyStats } from './monthlyStats.js'
 import { onRefresh } from './refreshBus.js'
 
@@ -85,6 +87,39 @@ function FreightTable({entries, onOpen}) {
     {pending && <p role="status" className="context-warning">Último dado preservado em ao menos uma fonte; atualização não confirmada.</p>}
   </>
 }
+// Commodities no mesmo formato da tabela do Mercado: último, anterior, variação, 12 meses e ano; a linha abre o histórico quando há série.
+// Brent e WTI: observações diárias; demais: médias mensais. Sem série, a linha mostra só o que a fonte divulgou e não abre gráfico.
+function CommodityTable({items, failed, onOpen}) {
+  const pct = v => v == null ? {text:'—'} : {text:fsgn(v, 2, '%'), tone:ftone(v)}
+  const rows = items.map(item => {
+    const stats = seriesStats(item.history)
+    const hasValue = Number.isFinite(item.value)
+    const dec = Math.abs(item.value) >= 1000 ? 0 : 2
+    const show = v => v == null ? '—' : fnum(v, dec)
+    const delta = stats ? stats.pct : Number.isFinite(item.variationPct) ? item.variationPct : null
+    return {
+      id:item.id, name:item.label, sub:`${item.unit} · ${item.nature}${stats ? '' : ' · sem histórico'}`,
+      openLabel:stats ? `${item.label}: abrir gráfico e histórico` : `${item.label}: histórico indisponível`,
+      cells:[
+        {text:hasValue ? show(item.value) : '—'},
+        {text:stats?.prev ? show(stats.prev.value) : Number.isFinite(item.previousValue) ? show(item.previousValue) : '—'},
+        pct(delta), pct(stats?.yoyPct), pct(stats?.ytdPct),
+        {text:contextDate(item.period)},
+      ],
+      disabled:!stats,
+    }
+  })
+  return <>
+    <IndicatorTable
+      caption="Commodities · referências internacionais em dólar"
+      ariaLabel="Tabela de commodities; role para ver todas as colunas"
+      columns={[{label:'Último'},{label:'Anterior'},{label:'Δ %', small:'(vs anterior)', aria:'Variação percentual sobre a observação anterior'},{label:'12 meses %', aria:'Variação percentual em 12 meses'},{label:'Ano %', aria:'Variação percentual no ano'},{label:'Referência'}]}
+      rows={rows}
+      onOpen={onOpen}
+    />
+    {(failed || items.some(i => i.stale || i.value === null)) && <p role="status" className="context-warning">Último dado preservado ou indisponível em alguma referência; atualização não confirmada. Dado ausente não representa zero.</p>}
+  </>
+}
 // Atividade e emprego em tabela (mesmo formato do Mercado): último, anterior, variação na unidade do indicador e mesmo mês do ano anterior.
 // A comparação só vale quando o último ponto do histórico é o valor mostrado; sem histórico, os campos ficam em "—" (não viram zero).
 const DELTA_UNIT = { '%': ' p.p.', pontos: ' pts' }
@@ -127,6 +162,7 @@ function Cards({state, children}) {
 }
 export default function MarketContext({ part = '' }) {
   const [open,setOpen] = useState(null)
+  const [openCommodity,setOpenCommodity] = useState(null)
   const history = useContextFile('indicator-history.json', normalizeIndicatorHistory)
   const market = useContextFile('market-indicators.json', parseMarket)
   const commodities = useContextFile('commodities.json', parseCommodities)
@@ -136,6 +172,7 @@ export default function MarketContext({ part = '' }) {
   const freightStates = { 'freight-us-ppi': freight, 'freight-jp-sppi': freightJp }
   const all = [brent.data, ...(commodities.data || [])].filter(Boolean)
   return <div className="market-context">
+    {openCommodity && <SeriesHistory item={openCommodity} points={openCommodity.history || []} onClose={()=>setOpenCommodity(null)} />}
     {open && <IndicatorHistory item={open} series={freightStates[open.id] ? freightStates[open.id].data?.series : history.data?.find(s=>s.id===open.id)} loading={freightStates[open.id] ? !freightStates[open.id].data&&!freightStates[open.id].failed : !history.data&&!history.failed} failed={freightStates[open.id] ? freightStates[open.id].failed || freightStates[open.id].data?.series.stale : history.failed} onClose={()=>setOpen(null)}/>}
     {(!part || part === 'atividade') && <section aria-labelledby="market-context-heading"><div className="ctx-head"><h2 id="market-context-heading">Indicadores de mercado</h2><RefreshButton files={['market-indicators.json', 'indicator-history.json']} label="Indicadores de mercado" /></div>
       <Aviso title="Atividade e emprego"><p className="context-intro">Atividade e emprego. Indicadores observados, não projeções. Competências e datas de divulgação diferem.</p></Aviso>
@@ -146,8 +183,7 @@ export default function MarketContext({ part = '' }) {
     {(!part || part === 'commodities') && <section aria-labelledby="commodities-context-heading"><div className="ctx-head"><h2 id="commodities-context-heading">Commodities</h2><RefreshButton files={['commodities.json', 'oil.json']} label="Commodities" /></div>
       <Aviso title="Commodities"><p className="context-intro">Referências internacionais em dólar. Petróleo spot diário e demais produtos em médias mensais, não preços em tempo real nem contratos futuros.</p></Aviso>
       {!all.length && <p role="status">{commodities.failed || brent.failed ? 'Não foi possível carregar as referências.' : 'Carregando referências…'}</p>}
-      {all.some(item => ['brent','wti'].includes(item.id)) && <><h3 className="context-subheading">Petróleo · referências spot diárias</h3><div className="context-grid">{all.filter(item => ['brent','wti'].includes(item.id)).map(item => <Card key={item.id} item={item} failed={item.id === 'brent' ? brent.failed : commodities.failed}/>)}</div></>}
-      {all.some(item => !['brent','wti'].includes(item.id)) && <><h3 className="context-subheading">Referências mensais · médias do mês indicado</h3><div className="context-grid">{all.filter(item => !['brent','wti'].includes(item.id)).map(item => <Card key={item.id} item={item} failed={commodities.failed}/>)}</div></>}
+      {all.length > 0 && <CommodityTable items={all} failed={commodities.failed || brent.failed} onOpen={id => setOpenCommodity(all.find(i => i.id === id))} />}
       {all.length > 0 && (!brent.data || !commodities.data || commodities.data.length < COMMODITY_IDS.length) && <p role="status">Cobertura parcial: uma das fontes ainda não está disponível.</p>}
       <Aviso title="Commodities · método"><p className="context-method">EIA e Banco Mundial. Coleta nas publicações do painel, preservando a última referência em falhas. A data da conferência não é a data do preço. Frequência de publicação e unidades variam; valores ausentes nunca são convertidos em zero.</p></Aviso>
     </section>}

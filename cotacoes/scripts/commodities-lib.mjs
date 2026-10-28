@@ -7,6 +7,8 @@ export const COMMODITIES = [
   { id: 'corn', label: 'Milho', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'FOB US Gulf' },
   { id: 'gold', label: 'Ouro', unit: 'USD/onça troy', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Spot • média mensal' },
 ]
+export const HISTORY_DAILY = 1500
+export const HISTORY_MONTHS = 240
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 const positive = v => Number.isFinite(v) && v > 0
 const isoDay = s => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && Number.isFinite(Date.parse(s)) && new Date(s).toISOString().slice(0,10) === s
@@ -61,7 +63,8 @@ export function buildWti(html, now = new Date()) {
   if (nextReleaseDate < releaseDate) throw new Error('EIA: próxima publicação WTI inválida')
   // Missing cells are skipped, never coerced to zero. Zero prices also have no percentage base.
   const previous = points.at(-2)?.value !== 0 ? points.at(-2) : null
-  return { ...item(COMMODITIES[0], points.at(-1), previous, releaseDate, WTI_URL, now), nextReleaseDate }
+  // Série diária para o gráfico (últimos ~6 anos); célula sem dado nunca vira zero.
+  return { ...item(COMMODITIES[0], points.at(-1), previous, releaseDate, WTI_URL, now), nextReleaseDate, history: points.slice(-HISTORY_DAILY) }
 }
 
 export function parsePinkRows(rows, sourceUrl, now = new Date()) {
@@ -96,7 +99,10 @@ export function parsePinkRows(rows, sourceUrl, now = new Date()) {
       const priorMonth = new Date(`${latest.period}-01T00:00:00Z`); priorMonth.setUTCMonth(priorMonth.getUTCMonth() - 1)
       if (previous.period !== priorMonth.toISOString().slice(0,7)) previous = null
     }
-    return item(COMMODITIES[i+1], latest, previous, releaseDate, sourceUrl, now)
+    // Série mensal para o gráfico (últimos 20 anos); mês sem valor válido fica de fora, nunca vira zero.
+    const history = []
+    for (const row of dated.slice(-HISTORY_MONTHS)) { try { history.push(point(row)) } catch {} }
+    return { ...item(COMMODITIES[i+1], latest, previous, releaseDate, sourceUrl, now), history }
   })
 }
 

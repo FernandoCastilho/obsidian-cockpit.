@@ -43,3 +43,14 @@ test('PTAX accepts official closing sell unit only for compatible USD/EUR/JPY', 
   for(const bad of [{sell:null},{sell:0},{kind:'Fechamento Interbancário'},{date:'2026-02-30'},{date:''}]) assert.equal(compatiblePtax('USD',{source:'USD'},{...p,...bad}),null)
   assert.equal(compatiblePtax('USD',{source:'USD'},{...p,date:'2026-10-27'},now),null)
 })
+
+test('PTAX: aceita Abertura e Intermediário do dia (com rótulo de tipo e horário), não outros boletins', async () => {
+  const { compatiblePtax, ptaxLabel } = await import('../src/marketReturns.js')
+  const open = { sell: 5.3239, date: '2026-10-28', kind: 'Abertura', at: '2026-10-28 10:11:10.510783' }
+  assert.equal(compatiblePtax('USD', { source: 'USD' }, open, Date.parse('2026-10-28T14:00:00Z')), open)
+  assert.equal(ptaxLabel(open), 'abert. 10:11')
+  assert.equal(compatiblePtax('EUR', { source: 'EUR' }, { ...open, kind: 'Intermediário' }, Date.parse('2026-10-28T14:00:00Z')).kind, 'Intermediário')
+  assert.equal(ptaxLabel({ ...open, kind: 'Intermediário', at: '2026-10-28 12:05:00' }), 'interm. 12:05')
+  assert.equal(ptaxLabel({ sell: 5.33, date: '2026-10-27', kind: 'Fechamento' }), 'fech. 27/10')
+  assert.equal(compatiblePtax('USD', { source: 'USD' }, { ...open, kind: 'Fechamento Interbancário' }, Date.parse('2026-10-28T14:00:00Z')), null)
+})

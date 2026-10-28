@@ -10,6 +10,9 @@ for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
 const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/1737', checkedAt: new Date().toISOString(), stale: false, points } }
 const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'freight-jp-sppi', unit: 'pontos · média de 2020 = 100', frequency: 'monthly', sourceName: 'Banco do Japão (fixture de teste)', sourceUrl: 'https://www.boj.or.jp/en/statistics/pi/sppi_2020/index.htm', checkedAt: new Date().toISOString(), stale: false, releaseDate: null,
   points: Array.from({ length: 40 }, (_, i) => ({ period: `${2023 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`, value: 100 + i * 1.5 })) } }
+const monthly = (v0) => Array.from({ length: 60 }, (_, i) => { const d = new Date(Date.UTC(2026, 8, 15)); d.setUTCMonth(d.getUTCMonth() - (59 - i)); return { period: d.toISOString().slice(0, 7), value: +(v0 * (1 + 0.1 * Math.sin(i / 8) + i / 600)).toFixed(2) } })
+const commodity = (id, label, unit, value, history) => ({ id, label, unit, nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet (fixture)', sourceUrl: 'https://www.worldbank.org/en/research/commodity-markets', benchmark: 'teste', value, period: '2026-09', releaseDate: '2026-10-02', checkedAt: '2026-10-05T00:00:00Z', stale: false, error: null, previousValue: null, previousPeriod: null, variationPct: null, variationBasis: 'mês anterior', history })
+const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [commodity('gold', 'Ouro', 'USD/onça troy', 4319, monthly(4000)), commodity('iron-ore', 'Minério de ferro', 'USD/tonelada seca', 97.7, monthly(90)), commodity('soybeans', 'Soja', 'USD/tonelada', 524, []), commodity('corn', 'Milho', 'USD/tonelada', 239.6, monthly(230))] }
 ;(async () => {
   const b = await chromium.launch({ channel: process.env.SMOKE_CHANNEL || 'msedge', headless: true }), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
   try {
@@ -17,6 +20,7 @@ const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { 
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
+      await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
       await p.goto(base + '/#cenarios/outros')
       const table = p.locator('.ind-table')
@@ -56,6 +60,17 @@ const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { 
       assert.equal(await ad.locator('.chart-filters').count(), 1)
       assert.deepEqual(await ad.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
       await p.keyboard.press('Escape'); await ad.waitFor({ state: 'hidden' })
+      // commodities: tabela com variações; a linha com histórico abre o gráfico, a sem histórico não abre
+      await p.goto(base + '/#cenarios/commodities')
+      const ct = p.locator('.ind-table'); await ct.waitFor()
+      assert.match(await ct.innerText(), /Δ %[\s\S]*12 meses %[\s\S]*Ano %/)
+      assert.equal(await ct.getByRole('button', { name: /Soja: histórico indisponível/ }).isDisabled(), true)
+      await ct.getByRole('button', { name: /Ouro: abrir gráfico/ }).click()
+      const cd = p.getByRole('dialog', { name: /histórico de Ouro/i }); await cd.waitFor()
+      assert.equal(await cd.locator('.chart-filters').count(), 1)
+      assert.deepEqual(await cd.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
+      await cd.locator('.plot svg').first().waitFor()
+      await p.keyboard.press('Escape'); await cd.waitFor({ state: 'hidden' })
       // feriados: Londres, Tóquio e China entram na aba, com a bandeira do país em cada linha
       await p.goto(base + '/#feriados')
       await p.locator('.fer-filter select').waitFor()
