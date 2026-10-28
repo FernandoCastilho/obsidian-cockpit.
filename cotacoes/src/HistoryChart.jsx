@@ -7,6 +7,7 @@ import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
 import { readStorage } from './storage.js'
+import { priorYear, rangeStats } from './rangeCompare.js'
 import { flagSvg } from './flags.js'
 
 const H = 240
@@ -33,8 +34,16 @@ export function useWidth() {
   return [setEl, w]
 }
 
-export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel }) {
+const signed = (v, d) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
+const DRAG_PX = 6
+
+// `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
+export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
   const [hover, setHover] = useState(null)
+  const [sel, setSel] = useState(null)
+  const drag = useRef(null)
+  const sig = `${points.length}:${points[0]?.t}:${points[points.length - 1]?.t}`
+  useEffect(() => { setSel(null) }, [sig])
   const [announcement, setAnnouncement] = useState('')
   const plotId = useId()
   const g = useMemo(() => {
@@ -78,7 +87,7 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
     return { t0, t1, x, y, dec, yTicks, xTicks, line, area, base, long: t1 - t0 > 200 * 864e5, years: t1 - t0 > 3 * 365 * 864e5 }
   }, [points, width])
 
-  const onMove = (e) => {
+  const pointAt = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const px = ((e.clientX - rect.left) / rect.width) * width
     let best = 0
@@ -90,8 +99,30 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
         best = i
       }
     })
-    setHover(best)
+    return { px, best }
   }
+  const onMove = (e) => {
+    const { px, best } = pointAt(e)
+    setHover(best)
+    const d = drag.current
+    if (!d) return
+    if (!d.moved && Math.abs(px - d.px) < DRAG_PX) return
+    d.moved = true
+    setSel({ a: d.index, b: best })
+  }
+  const onDown = (e) => {
+    const { px, best } = pointAt(e)
+    setHover(best)
+    drag.current = { px, index: best, moved: false, had: sel != null }
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* sem captura: o arrasto segue dentro do gráfico */ }
+  }
+  const onUp = () => {
+    // toque simples, sem arrastar, desfaz a seleção anterior
+    if (drag.current && !drag.current.moved && drag.current.had) setSel(null)
+    drag.current = null
+  }
+  const range = useMemo(() => (sel && sel.a !== sel.b ? rangeStats(points, sel.a, sel.b) : null), [sel, points])
+  const prior = useMemo(() => (range && compare ? priorYear(history ?? points, range.t0, range.t1, step) : null), [range, compare, history, points, step])
 
   const last = points[points.length - 1]
   // rótulos de valor: ver abaixo
@@ -106,17 +137,28 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
   const hp = hover != null ? points[hover] : null
   const gid = `a-${plotId.replaceAll(':', '')}`
   const onKey = (e) => {
+    if (e.key === 'Escape' && sel) { e.preventDefault(); e.stopPropagation(); setSel(null); return }
     const next = nextChartIndex(e.key, hover, points.length)
     if (next == null) return
     e.preventDefault()
+    // Shift + setas estende o trecho a partir do ponto em foco
+    if (e.shiftKey && hover != null) setSel({ a: sel?.a ?? hover, b: next })
     setHover(next)
     const point = points[next]
     setAnnouncement(`${label ?? code}: ${dateLabel ? dateLabel(point.t) : intraday ? fmtTime(point.t, true) : fmtDate(point.t, true)}; ${fmt ? fmt(point.bid) : brl(point.bid)}`)
   }
+  const when = (t) => (dateLabel ? dateLabel(t) : intraday ? fmtTime(t) : fmtDate(t, true))
+  const fmtPct = (v) => (v == null ? '—' : `${signed(v, 2)}%`)
+  const unit = nice ? ' p.p.' : ''
+  const abs = (v) => `${signed(v, g.dec)}${unit}`
+  const clipId = `${gid}-clip`
+  // linha do ano anterior reposicionada sobre o trecho e rebaseada no valor inicial do trecho atual (compara o caminho, não o nível)
+  const overlay = range && prior && prior.v0 ? prior.segment.map((p, i) => `${i ? 'L' : 'M'}${(g.x(range.t0) + ((p.t - prior.t0) / (prior.t1 - prior.t0 || 1)) * (g.x(range.t1) - g.x(range.t0))).toFixed(1)},${g.y(p.bid * (range.v0 / prior.v0)).toFixed(1)}`).join('') : null
+  const tone = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat')
 
   return (
     <div className={`plot${light ? ' light' : ''}`} onPointerLeave={() => setHover(null)}>
-      <span id={`${plotId}-hint`} className="chart-access-text">Use as setas para percorrer os pontos; Home e End vão ao primeiro e ao último.</span>
+      <span id={`${plotId}-hint`} className="chart-access-text">Use as setas para percorrer os pontos; Home e End vão ao primeiro e ao último. Shift com as setas seleciona um trecho; Escape limpa. Com o mouse ou o dedo, arraste sobre o gráfico para selecionar um trecho.</span>
       <span className="chart-access-text" role="status" aria-live="polite">{announcement}</span>
       <svg
         tabIndex={0}
@@ -130,7 +172,9 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
         role="img"
         aria-label={`Gráfico de linha de ${label ?? `${code}/BRL`}, de ${dateLabel ? dateLabel(g.t0) : intraday ? fmtTime(g.t0) : fmtDate(g.t0, true)} a ${dateLabel ? dateLabel(g.t1) : intraday ? fmtTime(g.t1) : fmtDate(g.t1, true)}`}
         onPointerMove={onMove}
-        onPointerDown={onMove}
+        onPointerDown={onDown}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
       >
         <defs>
           <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
@@ -170,6 +214,15 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
             </g>
           )
         })}
+        {range && (
+          <g pointerEvents="none" className="sel">
+            <clipPath id={clipId}><rect x={M.l} y={M.t} width={width - M.l - M.r} height={H - M.t - M.b} /></clipPath>
+            <rect x={g.x(range.t0)} y={M.t} width={Math.max(0, g.x(range.t1) - g.x(range.t0))} height={H - M.t - M.b} className="sel-band" fill={color} />
+            {overlay && <path d={overlay} className="sel-prior" clipPath={`url(#${clipId})`} fill="none" stroke={color} strokeWidth="1.6" strokeLinejoin="round" />}
+            {[range.t0, range.t1].map((t) => <line key={t} x1={g.x(t)} x2={g.x(t)} y1={M.t} y2={g.base} className="sel-line" />)}
+            <text x={Math.min(Math.max((g.x(range.t0) + g.x(range.t1)) / 2, M.l + 70), width - M.r - 70)} y={g.base - 8} textAnchor="middle" className={`sel-label ${tone(range.delta)}`}>{fmtPct(range.pct)} · {abs(range.delta)}</text>
+          </g>
+        )}
         {hp && (
           <g pointerEvents="none">
             <line x1={g.x(hp.t)} x2={g.x(hp.t)} y1={M.t} y2={g.base} className="cross" />
@@ -177,6 +230,15 @@ export function Plot({ points, width, color, code, intraday, fmt, vfmt, label, n
           </g>
         )}
       </svg>
+      {range && (
+        <div className="sel-panel" role="status">
+          <span><b>Trecho</b> {when(range.t0)} → {when(range.t1)}: <em className={tone(range.delta)}>{fmtPct(range.pct)}{nice && ' rel.'} · {abs(range.delta)}</em></span>
+          {compare && (prior
+            ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{nice && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{nice ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>} <small>(linha clara: ano anterior, rebaseada no início do trecho)</small></span>
+            : <span className="muted"><b>Ano anterior</b> indisponível: o histórico não cobre esse trecho.</span>)}
+          <button type="button" className="sel-clear" onClick={() => setSel(null)}>Limpar seleção</button>
+        </div>
+      )}
       {hp && (
         <div className="tip" style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
           <strong>{dateLabel ? dateLabel(hp.t) : intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
