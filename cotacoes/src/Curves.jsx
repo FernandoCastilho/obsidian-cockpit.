@@ -7,6 +7,7 @@ import { isWeekendBR } from './market.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
+import CupomLeitura from './CupomLeitura.jsx'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
@@ -198,6 +199,7 @@ export default function Curves({ curves: c }) {
           )}
         </div>
       )}
+      {c.status === 'ok' && d.cc && d.br && <CupomLeitura curves={d} />}
     </section>
   )
 }
