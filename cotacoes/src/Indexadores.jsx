@@ -5,17 +5,17 @@ import { indexRows } from './indexadores.js'
 
 const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 
-// Indexadores TR, TBF e TLP (Banco Central, SGS): valor vigente, período de vigência e equivalente anual.
+// Indexadores TR, TBF, TLP (Banco Central) e TFB (BNDES): valor vigente, período de vigência e equivalente anual.
 export default function Indexadores() {
   const file = useDataFile('indexadores.json')
   const rows = indexRows(file.data)
   const loading = file.status === 'loading'
   return (
-    <Panel title="Indexadores · TR · TBF · TLP" note="Banco Central (SGS)">
+    <Panel title="Indexadores · TR · TBF · TLP · TFB" note="Banco Central e BNDES">
       {file.status === 'error' && !file.data ? (
         <p className="status">Indexadores indisponíveis agora ({file.error}). Eles voltam na próxima coleta.</p>
       ) : (
-        <div className="idx-scroll" role="region" aria-label="Indexadores TR, TBF e TLP" tabIndex={0}>
+        <div className="idx-scroll" role="region" aria-label="Indexadores TR, TBF, TLP e TFB" tabIndex={0}>
           <table className="idx-table">
             <thead>
               <tr><th scope="col">Indexador</th><th scope="col">Valor vigente</th><th scope="col">Equivalente</th><th scope="col">Vigência</th><th scope="col">Fonte</th></tr>
@@ -27,7 +27,7 @@ export default function Indexadores() {
                   <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
                   <td className="num">{r.annualText ?? '—'}</td>
                   <td>{r.missing ? '—' : r.period}</td>
-                  <td>{r.missing ? '—' : <>SGS {r.code}{r.stale && <em className="old"> · dado anterior ({dmy(r.stale)})</em>}</>}</td>
+                  <td>{r.missing ? '—' : <>{r.sourceText}{r.stale && <em className="old"> · dado anterior ({dmy(r.stale)})</em>}</>}</td>
                 </tr>
               ))}
             </tbody>
@@ -35,11 +35,11 @@ export default function Indexadores() {
         </div>
       )}
       <dl className="idx-defs">
-        {rows.map((r) => (
-          <div key={r.key}><dt>{r.key}</dt><dd>{r.definition}</dd></div>
+        {rows.filter((r, i) => rows.findIndex((x) => x.family === r.family) === i).map((r) => (
+          <div key={r.family}><dt>{r.family}</dt><dd>{r.definition}</dd></div>
         ))}
       </dl>
-      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. Atualizado a cada coleta horária.</p></Aviso>
+      <Aviso title="Indexadores · TR, TBF, TLP e TFB"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. TLP e TFB vêm em % ao ano. TR, TBF e TLP: Banco Central (SGS). TFB: serviço de taxas do BNDES (códigos TFB_36_30 a TFB_120_30; liberação em até 30 dias); o BNDES não publica TFC por esse serviço. Atualizado a cada coleta horária.</p></Aviso>
     </Panel>
   )
 }
