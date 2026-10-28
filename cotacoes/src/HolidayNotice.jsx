@@ -1,4 +1,5 @@
-import { calLabel, cnMissingYears, upcomingHolidays } from './holidays.js'
+import { calFlag, calLabel, cnMissingYears, upcomingHolidays } from './holidays.js'
+import Flag from './Flag.jsx'
 
 const today = () => new Date().toISOString().slice(0, 10)
 const dm = (s) => s.split('-').reverse().join('/')
@@ -18,7 +19,7 @@ export default function HolidayNotice({ hol, days = 30, list = false }) {
     <ul>
       {up.map((u) => (
         <li key={u.date + u.cal}>
-          <b>{when(u.date, t)}</b> · feriado em <b>{calLabel(u.cal)}</b>: {u.name}
+          <b>{when(u.date, t)}</b> · feriado em <Flag code={calFlag(u.cal)} width={16} height={11} /> <b>{calLabel(u.cal)}</b>: {u.name}
           {u.cal === 'NY' && ' (sem liquidação em USD)'}
         </li>
       ))}
@@ -37,7 +38,7 @@ export default function HolidayNotice({ hol, days = 30, list = false }) {
   return (
     <details className="holiday-notice compact" open={up.length > 0}>
       <summary>
-        {first ? <><b>Feriados nos próximos {days} dias</b> · {dates} {dates === 1 ? 'data' : 'datas'} · primeiro: <b>{when(first.date, t)}</b> em {same.join(', ')}</> : 'Calendário da China: ano ainda não publicado'}
+        {first ? <><b>Feriados nos próximos {days} dias</b> · {dates} {dates === 1 ? 'data' : 'datas'} · primeiro: <b>{when(first.date, t)}</b> em {[...new Set(up.filter((u) => u.date === first.date).map((u) => u.cal))].map((c) => <span key={c}><Flag code={calFlag(c)} width={16} height={11} /> {calLabel(c)} </span>)}</> : 'Calendário da China: ano ainda não publicado'}
         {first && missing.length > 0 && ' · aviso China'}
       </summary>
       {up.length > 0 && items}

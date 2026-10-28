@@ -63,7 +63,7 @@ function FreightTable({entries, onOpen}) {
     const {data} = state, stats = monthlyStats(data.series.points)
     if (!stats) return null
     return {
-      id:data.item.id, name:data.item.label, sub:`${data.series.sourceName} · ${freightBase(data.item.id)}`,
+      id:data.item.id, flag:data.item.id === 'freight-jp-sppi' ? 'JPY' : 'USD', name:data.item.label, sub:`${data.series.sourceName} · ${freightBase(data.item.id)}`,
       openLabel:`${data.item.label}: abrir histórico e gráfico`,
       cells:[
         {text:fnum(stats.last.value, 2)},
@@ -97,7 +97,7 @@ function ActivityTable({items, series, failed, historyFailed, historyLoading, on
     const year = base ? points.find(p=>p.period===`${Number(base.period.slice(0,4))-1}${base.period.slice(4)}`) ?? null : null
     const val = v => `${contextValue({...item, value:v})}${item.unit === '%' ? '%' : ''}`
     return {
-      id:item.id, name:item.label, sub:`${item.nature}${base ? '' : series && !points.length ? ' · histórico indisponível' : ''}`,
+      id:item.id, flag:/-br$|^caged$/.test(item.id) ? 'BRL' : 'USD', name:item.label, sub:`${item.nature}${base ? '' : series && !points.length ? ' · histórico indisponível' : ''}`,
       openLabel:`${item.label}: abrir gráfico e histórico`,
       cells:[
         {text:val(item.value)},

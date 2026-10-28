@@ -169,6 +169,9 @@ export const CALENDARS = [
   { id: 'CN', label: 'China (continental)', short: 'China', rule: null },
 ]
 export const calLabel = (id) => CALENDARS.find((c) => c.id === id)?.short ?? id
+// Moeda do país da praça, para escolher a bandeira (praças brasileiras, mesmo as de estado e cidade, levam a do Brasil).
+const COUNTRY_FLAG = { NY: 'USD', UK: 'GBP', JP: 'JPY', CN: 'CNH' }
+export const calFlag = (id) => COUNTRY_FLAG[id] ?? (CALENDARS.some((c) => c.id === id) ? 'BRL' : null)
 
 // Dados da China: { 2026: { off: Map(data → nome), work: Set(dias úteis em fim de semana) } }, montado a partir do arquivo coletado.
 export function buildCn(file) {

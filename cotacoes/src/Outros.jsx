@@ -22,7 +22,7 @@ export default function Outros() {
   const tableRows = rows.map((r) => {
     const pct = r.metric.rate
     return {
-      id: r.metric.id, name: r.metric.label, sub: pct ? 'IPCA · IBGE' : 'IPCA · IBGE · base dez/1993',
+      id: r.metric.id, flag: 'BRL', name: r.metric.label, sub: pct ? 'IPCA · IBGE' : 'IPCA · IBGE · base dez/1993',
       cells: [
         { text: r.last ? `${fmt(r, r.last.value)}${pct ? '%' : ''}` : '—' },
         { text: r.prev ? `${fmt(r, r.prev.value)}${pct ? '%' : ''}` : '—' },

@@ -36,6 +36,9 @@ const body = {
   },
 }
 
+// Só desenha bandeira de quem tem: um código desconhecido não pode virar a bandeira dos EUA.
+export const hasFlag = (code) => Object.hasOwn(body, code)
+
 export const flagSvg = (code, attrs = '') =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" ${attrs}>${(body[code] ?? body.USD)()}<rect x=".25" y=".25" width="29.5" height="19.5" rx="1.5" fill="none" stroke="#0004" stroke-width=".5"/></svg>`
 

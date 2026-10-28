@@ -19,6 +19,7 @@ import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, u
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
 import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
+import Flag from './Flag.jsx'
 import { shareQuotesImage } from './shareImage.js'
 import { rateTiles, topHeadlines } from './snapshot.js'
 import { upcoming } from './agenda.js'
@@ -69,7 +70,7 @@ function QuoteRow({ code, quote, ptax, returns, selected, onOpen, color }) {
   return <tbody className={'market-record' + (selected ? ' is-selected' : '')} style={{ '--series': color }}>
     <tr className="market-values" onClick={open}>
       <th scope="row"><button type="button" className="market-open" aria-pressed={selected} onClick={e => { e.stopPropagation(); open() }} aria-label={cur.name + ': abrir gráfico'}>
-        <b>{series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
+        <b><Flag code={series} width={20} height={14} /> {series}/BRL <span aria-hidden="true">›</span></b><small>{seriesName(cur, series)}</small>
         {quoteAgeState(quote) && <small className="market-state">{quoteAgeState(quote)}</small>}
       </button></th>
       <td className="market-price">{quote ? brl(quote.bid, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span className="muted">—</span>}</td>
