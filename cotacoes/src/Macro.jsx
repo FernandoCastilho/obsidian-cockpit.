@@ -1,4 +1,5 @@
 import RefreshButton from './RefreshButton.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
@@ -88,14 +89,7 @@ export function RatesPeriod({ range, preset, onPreset, onDates }) {
           </button>
         ))}
       </div>
-      <label>
-        De
-        <input type="date" id="juros-de" max={toInput(range.end)} value={toInput(range.start)} onChange={(e) => e.target.value && onDates(e.target.value, toInput(range.end))} />
-      </label>
-      <label>
-        Até
-        <input type="date" id="juros-ate" max={today} min={toInput(range.start)} value={toInput(range.end)} onChange={(e) => e.target.value && onDates(toInput(range.start), e.target.value)} />
-      </label>
+      <DateRangePicker label="Período dos juros" start={toInput(range.start)} end={toInput(range.end)} max={today} onChange={onDates} />
     </div>
   )
 }

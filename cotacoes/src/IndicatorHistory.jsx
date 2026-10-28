@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
 import { contextValue } from './marketContext.js'
 import { monthLabel, indicatorWindow, filterIndicatorPoints } from './indicatorHistory.js'
@@ -22,8 +23,7 @@ export default function IndicatorHistory({item,series,loading,failed,onClose}) {
   {loading ? <p role="status">Carregando histórico…</p> : !points.length ? <p role="status">{series?.unavailableReason || (failed ? 'Não foi possível carregar a série. Tente novamente mais tarde.' : 'Série histórica verificada ainda indisponível. Não foram gerados valores para preencher o gráfico.')}</p> : <>
    <ChartFilters>
    <div className="summary-period-controls"><div className="seg" role="group" aria-label="Período do indicador">{[[6,'6 meses'],[12,'12 meses'],[24,'24 meses'],[60,'5 anos'],[120,'10 anos'],['all','Tudo']].map(([value,label])=><button key={value} aria-pressed={!custom&&preset===value} onClick={()=>{setPreset(value);setCustom(null)}}>{label}</button>)}</div>
-    <label>De <input type="month" aria-label="Mês inicial do indicador" value={range.start} min={points[0].period} max={points.at(-1).period} onChange={e=>setCustom({...range,start:e.target.value})}/></label>
-    <label>Até <input type="month" aria-label="Mês final do indicador" value={range.end} min={points[0].period} max={points.at(-1).period} onChange={e=>setCustom({...range,end:e.target.value})}/></label></div>
+    <DateRangePicker label="Período do indicador" mode="month" start={range.start} end={range.end} min={points[0].period} max={points.at(-1).period} onChange={(start,end)=>setCustom({start,end})}/></div>
    </ChartFilters>
    <p className="muted">Cobertura: {monthLabel(points[0].period)} a {monthLabel(points.at(-1).period)}. {points.length} observações. Meses ausentes não são preenchidos.</p>
    {failed && <p role="status">Última série preservada; não foi possível confirmar a atualização.</p>}

@@ -1,5 +1,6 @@
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
 import { fullWindow, toInput } from './useHistory.js'
 import { oilHistory } from './oilHistory.js'
@@ -16,10 +17,7 @@ export default function OilHistory({ data, points, spark, dates, presets, onDate
     <ChartFilters>
     <div className="summary-period-controls">
       <div className="seg" role="group" aria-label="Período do petróleo">{presets.map((p) => <button key={p.id} aria-pressed={spark.id === p.id} onClick={() => onPreset(p)}>{p.label}</button>)}</div>
-      <div className="summary-dates">
-        <label>De <input aria-label="Data inicial do petróleo" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.start} onChange={(e) => onDates({ ...dates, start: e.target.value })} /></label>
-        <label>Até <input aria-label="Data final do petróleo" type="date" min={toInput(limits.start)} max={toInput(limits.end)} value={dates.end} onChange={(e) => onDates({ ...dates, end: e.target.value })} /></label>
-      </div>
+      <DateRangePicker label="Período do petróleo" start={dates.start} end={dates.end} min={toInput(limits.start)} max={toInput(limits.end)} onChange={(start, end) => onDates({ start, end })} />
     </div>
     {dateError && <p role="alert">{dateError} O período anterior permanece aplicado.</p>}
     </ChartFilters>
