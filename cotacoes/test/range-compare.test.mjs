@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { priorYear, rangeStats, valueAt, yearBefore } from '../src/rangeCompare.js'
+import { priorYear, rangeBetween, rangeStats, valueAt, yearBefore } from '../src/rangeCompare.js'
 const T = (s) => Date.parse(s + 'T12:00:00Z')
 const pts = (rows) => rows.map(([d, v]) => ({ t: T(d), bid: v }))
 
@@ -32,4 +32,13 @@ test('mesmo trecho do ano anterior: calcula quando o histórico alcança e some 
   assert.equal(priorYear(h, T('2025-06-01'), T('2025-07-01')), null)
   assert.equal(priorYear([], 1, 2), null)
   assert.equal(new Date(yearBefore(T('2024-02-29'))).toISOString().slice(0, 10), '2023-03-01')
+})
+
+test('trecho entre dois pontos escolhidos, em qualquer ordem', () => {
+  const a = { t: T('2026-08-01'), bid: 100 }, b = { t: T('2026-10-01'), bid: 90 }
+  const r = rangeBetween(b, a)
+  assert.equal(r.t0, a.t); assert.equal(r.t1, b.t)
+  assert.ok(Math.abs(r.pct + 10) < 1e-9 && Math.abs(r.delta + 10) < 1e-9)
+  assert.equal(rangeBetween(a, a), null)
+  assert.equal(rangeBetween(a, null), null)
 })

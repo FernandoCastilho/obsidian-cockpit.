@@ -39,3 +39,10 @@ export function priorYear(history, t0, t1, hold = false) {
   const inside = history.filter((p) => p.t > p0 && p.t < p1)
   return { t0: p0, t1: p1, v0, v1, ...change(v0, v1), segment: [{ t: p0, bid: v0 }, ...inside, { t: p1, bid: v1 }] }
 }
+
+// Trecho entre dois pontos { t, bid } escolhidos no gráfico, em qualquer ordem.
+export function rangeBetween(a, b) {
+  if (!a || !b || a.t === b.t) return null
+  const [x, y] = a.t < b.t ? [a, b] : [b, a]
+  return { t0: x.t, t1: y.t, v0: x.bid, v1: y.bid, ...change(x.bid, y.bid) }
+}

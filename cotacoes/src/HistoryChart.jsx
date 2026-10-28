@@ -7,7 +7,7 @@ import Explain from './Explain.jsx'
 import { useHistory, useIntraday } from './useHistory.js'
 import { seriesName } from './useQuotes.js'
 import { readStorage } from './storage.js'
-import { priorYear, rangeStats } from './rangeCompare.js'
+import { priorYear, rangeBetween } from './rangeCompare.js'
 import { resample, scaleOptions } from './resample.js'
 import { flagSvg } from './flags.js'
 
@@ -58,12 +58,23 @@ export function Plot({ points, scales = true, ...props }) {
 }
 
 // `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
-function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
+function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
   const [hover, setHover] = useState(null)
   const [sel, setSel] = useState(null)
   const drag = useRef(null)
-  const sig = `${points.length}:${points[0]?.t}:${points[points.length - 1]?.t}`
+  const sig = `${base.length}:${base[0]?.t}:${base[base.length - 1]?.t}`
   useEffect(() => { setSel(null) }, [sig])
+  // seleção guardada como dois pontos (tempo e valor): vale mesmo quando o gráfico se estende ao ano anterior
+  const range = useMemo(() => (sel ? rangeBetween(sel.a, sel.b) : null), [sel])
+  const prior = useMemo(() => (range && compare ? priorYear(history ?? base, range.t0, range.t1, step) : null), [range, compare, history, base, step])
+  // com um trecho selecionado, o gráfico se estende para trás até o mesmo trecho do ano anterior
+  const points = useMemo(() => {
+    if (!prior || prior.t0 >= base[0].t) return base
+    const src = history ?? base
+    const from = prior.t0 - Math.max(2 * 864e5, (base[base.length - 1].t - prior.t0) * 0.03)
+    const ext = src.filter((p) => p.t >= from && p.t <= base[base.length - 1].t)
+    return ext.length > 1 ? ext : base
+  }, [prior, base, history])
   const [announcement, setAnnouncement] = useState('')
   const plotId = useId()
   const g = useMemo(() => {
@@ -128,12 +139,12 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
     if (!d) return
     if (!d.moved && Math.abs(px - d.px) < DRAG_PX) return
     d.moved = true
-    setSel({ a: d.index, b: best })
+    setSel({ a: d.point, b: points[best] })
   }
   const onDown = (e) => {
     const { px, best } = pointAt(e)
     setHover(best)
-    drag.current = { px, index: best, moved: false, had: sel != null }
+    drag.current = { px, point: points[best], moved: false, had: sel != null }
     try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* sem captura: o arrasto segue dentro do gráfico */ }
   }
   const onUp = () => {
@@ -141,8 +152,6 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
     if (drag.current && !drag.current.moved && drag.current.had) setSel(null)
     drag.current = null
   }
-  const range = useMemo(() => (sel && sel.a !== sel.b ? rangeStats(points, sel.a, sel.b) : null), [sel, points])
-  const prior = useMemo(() => (range && compare ? priorYear(history ?? points, range.t0, range.t1, step) : null), [range, compare, history, points, step])
 
   const last = points[points.length - 1]
   // rótulos de valor: ver abaixo
@@ -162,7 +171,7 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
     if (next == null) return
     e.preventDefault()
     // Shift + setas estende o trecho a partir do ponto em foco
-    if (e.shiftKey && hover != null) setSel({ a: sel?.a ?? hover, b: next })
+    if (e.shiftKey && hover != null) setSel({ a: sel?.a ?? points[hover], b: points[next] })
     setHover(next)
     const point = points[next]
     setAnnouncement(`${label ?? code}: ${dateLabel ? dateLabel(point.t) : intraday ? fmtTime(point.t, true) : fmtDate(point.t, true)}; ${fmt ? fmt(point.bid) : brl(point.bid)}`)
@@ -171,9 +180,6 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
   const fmtPct = (v) => (v == null ? '—' : `${signed(v, 2)}%`)
   const unit = nice ? ' p.p.' : ''
   const abs = (v) => `${signed(v, g.dec)}${unit}`
-  const clipId = `${gid}-clip`
-  // linha do ano anterior reposicionada sobre o trecho e rebaseada no valor inicial do trecho atual (compara o caminho, não o nível)
-  const overlay = range && prior && prior.v0 ? prior.segment.map((p, i) => `${i ? 'L' : 'M'}${(g.x(range.t0) + ((p.t - prior.t0) / (prior.t1 - prior.t0 || 1)) * (g.x(range.t1) - g.x(range.t0))).toFixed(1)},${g.y(p.bid * (range.v0 / prior.v0)).toFixed(1)}`).join('') : null
   const tone = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat')
 
   return (
@@ -234,15 +240,15 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
             </g>
           )
         })}
-        {range && (
-          <g pointerEvents="none" className="sel">
-            <clipPath id={clipId}><rect x={M.l} y={M.t} width={width - M.l - M.r} height={H - M.t - M.b} /></clipPath>
-            <rect x={g.x(range.t0)} y={M.t} width={Math.max(0, g.x(range.t1) - g.x(range.t0))} height={H - M.t - M.b} className="sel-band" fill={color} />
-            {overlay && <path d={overlay} className="sel-prior" clipPath={`url(#${clipId})`} fill="none" stroke={color} strokeWidth="1.6" strokeLinejoin="round" />}
-            {[range.t0, range.t1].map((t) => <line key={t} x1={g.x(t)} x2={g.x(t)} y1={M.t} y2={g.base} className="sel-line" />)}
-            <text x={Math.min(Math.max((g.x(range.t0) + g.x(range.t1)) / 2, M.l + 70), width - M.r - 70)} y={g.base - 8} textAnchor="middle" className={`sel-label ${tone(range.delta)}`}>{fmtPct(range.pct)} · {abs(range.delta)}</text>
+        {[{ r: range, cls: 'cur' }, ...(prior ? [{ r: prior, cls: 'prior' }] : [])].map(({ r, cls }) => r && (
+          <g key={cls} pointerEvents="none" className={`sel sel-${cls}`}>
+            <rect x={g.x(r.t0)} y={M.t} width={Math.max(0, g.x(r.t1) - g.x(r.t0))} height={H - M.t - M.b} className="sel-band" fill={color} />
+            {[r.t0, r.t1].map((t) => <line key={t} x1={g.x(t)} x2={g.x(t)} y1={M.t} y2={g.base} className="sel-line" />)}
+            <line x1={g.x(r.t0)} y1={g.y(r.v0)} x2={g.x(r.t1)} y2={g.y(r.v1)} className={`sel-chord ${tone(r.delta)}`} />
+            <circle cx={g.x(r.t0)} cy={g.y(r.v0)} r="3" className="sel-dot" /><circle cx={g.x(r.t1)} cy={g.y(r.v1)} r="3" className="sel-dot" />
+            <text x={Math.min(Math.max((g.x(r.t0) + g.x(r.t1)) / 2, M.l + 62), width - M.r - 62)} y={M.t + 13} textAnchor="middle" className={`sel-label ${tone(r.delta)}`}>{fmtPct(r.pct)} · {abs(r.delta)}</text>
           </g>
-        )}
+        ))}
         {hp && (
           <g pointerEvents="none">
             <line x1={g.x(hp.t)} x2={g.x(hp.t)} y1={M.t} y2={g.base} className="cross" />
@@ -254,13 +260,13 @@ function PlotView({ points, width, color, code, intraday, fmt, vfmt, label, nice
         <div className="sel-panel" role="status">
           <span><b>Trecho</b> {when(range.t0)} → {when(range.t1)}: <em className={tone(range.delta)}>{fmtPct(range.pct)}{nice && ' rel.'} · {abs(range.delta)}</em></span>
           {compare && (prior
-            ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{nice && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{nice ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>} <small>(linha clara: ano anterior, rebaseada no início do trecho)</small></span>
+            ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{nice && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{nice ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>}</span>
             : <span className="muted"><b>Ano anterior</b> indisponível: o histórico não cobre esse trecho.</span>)}
           <button type="button" className="sel-clear" onClick={() => setSel(null)}>Limpar seleção</button>
         </div>
       )}
       {hp && (
-        <div className="tip" style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
+        <div className={`tip${range ? ' tip-low' : ''}`} style={{ left: `${Math.min(Math.max((g.x(hp.t) / width) * 100, 18), 82)}%` }}>
           <strong>{dateLabel ? dateLabel(hp.t) : intraday ? fmtTime(hp.t, true) : fmtDate(hp.t, true)}</strong>
           {fmt ? (
             <span>{label} {fmt(hp.bid)}</span>
