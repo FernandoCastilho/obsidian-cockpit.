@@ -148,3 +148,4 @@
 .other-market .oil-eia-table .market-values { cursor:pointer; }
 .other-market .oil-eia-table .oil-spot-value { background:transparent; border:0; color:var(--fg); width:100%; text-align:right; padding:6px 0; }
 .market-open:disabled { cursor:default; }
+.market-ptax small.ptax-kind { display:block; color:var(--mut); font-size:.7rem; font-weight:400; }

@@ -24,9 +24,17 @@ export function accumulatedReturns(file, code, now = Date.now()) {
   return { month: calculate(monthStart), year: calculate(yearStart) }
 }
 
+// Boletins da PTAX do Banco Central: Abertura, Intermediário (vários) e Fechamento. Qualquer um é uma PTAX oficial; o tipo e o horário vão ao lado do valor.
+const PTAX_KINDS = /^(abertura|intermedi[aá]ri[oa]|fechamento( ptax)?)$/i
+export function ptaxLabel(ptax) {
+  if (!ptax) return ''
+  if (/^fechamento/i.test(ptax.kind)) return `fech. ${ptax.date.split('-').reverse().slice(0, 2).join('/')}`
+  const hm = /\d{2}:\d{2}/.exec(ptax.at ?? '')?.[0]
+  return `${/^abertura/i.test(ptax.kind) ? 'abert.' : 'interm.'}${hm ? ` ${hm}` : ''}`
+}
 export function compatiblePtax(code, quote, ptax, now = Date.now()) {
   if (!['USD', 'EUR', 'JPY'].includes(code) || quote?.fallback || (quote?.source && quote.source !== code)) return null
-  if (!Number.isFinite(ptax?.sell) || ptax.sell <= 0 || !['Fechamento', 'Fechamento PTAX'].includes(ptax.kind) || !/^\d{4}-\d{2}-\d{2}$/.test(ptax.date || '')) return null
+  if (!Number.isFinite(ptax?.sell) || ptax.sell <= 0 || !PTAX_KINDS.test(ptax.kind ?? '') || !/^\d{4}-\d{2}-\d{2}$/.test(ptax.date || '')) return null
   const d = new Date(ptax.date + 'T12:00:00Z')
   return Number.isFinite(d.getTime()) && d.toISOString().slice(0, 10) === ptax.date && ptax.date <= marketDate(now) ? ptax : null
 }

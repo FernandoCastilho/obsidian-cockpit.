@@ -3,9 +3,10 @@ import Flag from './Flag.jsx'
 
 const today = () => new Date().toISOString().slice(0, 10)
 const dm = (s) => s.split('-').reverse().join('/')
+// "02/11/2026 (em 5 dias)", "(hoje)" ou "(amanhã)": a data e quanto falta.
 const when = (d, t) => {
   const diff = Math.round((Date.parse(`${d}T12:00:00Z`) - Date.parse(`${t}T12:00:00Z`)) / 864e5)
-  return diff === 0 ? 'Hoje' : diff === 1 ? 'Amanhã' : dm(d)
+  return `${dm(d)} (${diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : `em ${diff} dias`})`
 }
 
 // Aviso de feriados nas praças escolhidas (próximos dias) e de calendário chinês ainda não publicado.
@@ -36,7 +37,7 @@ export default function HolidayNotice({ hol, days = 30, list = false }) {
   const same = first ? up.filter((u) => u.date === first.date).map((u) => calLabel(u.cal)) : []
   const dates = new Set(up.map((u) => u.date)).size
   return (
-    <details className="holiday-notice compact" open={up.length > 0}>
+    <details className="holiday-notice compact">
       <summary>
         {first ? <><b>Feriados nos próximos {days} dias</b> · {dates} {dates === 1 ? 'data' : 'datas'} · primeiro: <b>{when(first.date, t)}</b> em {[...new Set(up.filter((u) => u.date === first.date).map((u) => u.cal))].map((c) => <span key={c}><Flag code={calFlag(c)} width={16} height={11} /> {calLabel(c)} </span>)}</> : 'Calendário da China: ano ainda não publicado'}
         {first && missing.length > 0 && ' · aviso China'}

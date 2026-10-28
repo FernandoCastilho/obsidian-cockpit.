@@ -3,7 +3,7 @@ import { buildFeed } from './feed.js'
 import RefreshButton from './RefreshButton.jsx'
 import './MarketTable.css'
 import './MarketTerminal.css'
-import { accumulatedReturns, compatiblePtax, marketDate } from './marketReturns.js'
+import { accumulatedReturns, compatiblePtax, marketDate, ptaxLabel } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 import { nextChartIndex } from './chartNavigation.js'
 import { dataTimestamp } from './dataTimestamp.js'
@@ -77,7 +77,7 @@ function QuoteRow({ code, quote, ptax, returns, selected, onOpen, color }) {
       <td className={delta == null ? 'muted' : 'pct ' + toneOf(delta)}>{delta == null ? <span aria-label={quote?.cross ? 'Variação absoluta indisponível para o cruzamento' : 'Variação absoluta indisponível'} title={quote?.cross ? 'A fonte não fornece variação absoluta deste cruzamento' : 'Variação absoluta não fornecida'}>—</span> : (delta > 0 ? '+' : delta < 0 ? '−' : '') + Math.abs(delta).toLocaleString('pt-BR', { minimumFractionDigits: code === 'JPY' ? 5 : 4, maximumFractionDigits: code === 'JPY' ? 5 : 4 })}</td>
       <td className={hasDay ? 'pct ' + toneOf(quote.pct) : 'muted'}>{hasDay ? pct(quote.pct) : <span aria-label="Variação percentual do dia indisponível">—</span>}</td>
       {['month', 'year'].map(period => <td key={period} className={returns?.[period] ? 'pct ' + toneOf(returns[period].value) : 'muted'}>{returns?.[period] ? pct(returns[period].value) : <span aria-label={(period === 'month' ? 'Acumulado do mês' : 'Acumulado do ano') + ' indisponível'}>—</span>}</td>)}
-      <td className="market-ptax">{ptax ? brl(ptax.sell, code === 'JPY' ? 5 : 4).replace('R$ ', '') : <span aria-label="PTAX compatível indisponível">—</span>}</td>
+      <td className="market-ptax">{ptax ? <>{brl(ptax.sell, code === 'JPY' ? 5 : 4).replace('R$ ', '')}<small className="ptax-kind">{ptaxLabel(ptax)}</small></> : <span aria-label="PTAX compatível indisponível">—</span>}</td>
     </tr>
   </tbody>
 }
