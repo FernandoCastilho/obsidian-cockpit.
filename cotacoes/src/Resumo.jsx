@@ -25,6 +25,7 @@ import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
 import { KpiRow, Panel } from './TerminalDesk.jsx'
+import { useDataFile } from './useDataFile.js'
 const RateModal = lazy(() => import('./RateModal.jsx'))
 
 const brl = (v, d = 4) => !Number.isFinite(v) ? '—' : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}`
@@ -384,7 +385,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest }) {
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -441,7 +442,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
         </div>
 
 
-        <OilTile table spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
+        <OilTile table openRequest={oilRequest} spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <Aviso title="Câmbio · fontes, datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
@@ -510,11 +511,13 @@ function MarketNews({ bare = false }) {
 export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
+  const [oilRequest, setOilRequest] = useState(0)
+  const oil = useDataFile('oil.json')
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
+      <KpiRow quotes={quotes} rates={rates} oil={oil.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} onOil={() => setOilRequest((n) => n + 1)} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
+      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} oilRequest={oilRequest} /></div>
     </div>
   )
 }

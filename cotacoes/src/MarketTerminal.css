@@ -131,22 +131,19 @@
 .market-news small { display:block; color:var(--mut); margin-top:6px; line-height:1.5; }
 @media(min-width:1500px) { main.app:has(.market-workspace) { max-width:1600px; } .market-workspace { grid-template-columns:minmax(0,1168px) minmax(260px,1fr); } }
 
-.other-market table { min-width:600px; }
-.other-market th:first-child { width:28%; }
-.other-market th:nth-child(2) { width:22%; }
-.other-market th:nth-child(3) { width:20%; }
-.other-market th:nth-child(4) { width:30%; }
 .oil-spot-value { font-weight:700; font-variant-numeric:tabular-nums; }
 .oil-secondary-reference { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px; }
 .oil-secondary-reference small { color:var(--mut); line-height:1.5; }
 
-@media(max-width:650px) {
- .other-market .oil-eia-table { min-width:0; }
- .other-market .oil-eia-table th,.other-market .oil-eia-table td { padding:6px 4px; overflow-wrap:anywhere; }
- .other-market .oil-eia-table th:first-child { width:30%; }
- .other-market .oil-eia-table th:nth-child(2) { width:20%; }
- .other-market .oil-eia-table th:nth-child(3) { width:28%; }
- .other-market .oil-eia-table th:nth-child(4) { width:22%; }
- .other-market .oil-eia-table time { white-space:nowrap; font-variant-numeric:tabular-nums; }
- .other-market .oil-eia-table .oil-details { padding:6px 4px; }
-}
+/* Brent: mesmas colunas da tabela de pares (cotação, Δ dia, mês, ano), em dólares por barril. */
+.other-market .oil-eia-table { min-width:640px; table-layout:fixed; }
+.other-market .oil-eia-table th, .other-market .oil-eia-table td { text-align:right; border-bottom:0; padding:4px 8px; }
+.other-market .oil-eia-table thead th:first-child, .other-market .oil-eia-table tbody th { text-align:left; padding-left:0; }
+.other-market .oil-eia-table thead th:first-child { padding-left:8px; width:26%; }
+.other-market .oil-eia-table thead th:nth-child(2) { width:17%; }
+.other-market .oil-eia-table thead th:nth-child(3) { width:14%; }
+.other-market .oil-eia-table .oil-spot-value { font-size:1.05rem; }
+.other-market .oil-eia-table .oil-date time { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.other-market .oil-eia-table .oil-details { padding:6px 4px; min-height:44px; }
+.other-market .oil-eia-table .market-values { cursor:pointer; }
+.other-market .oil-eia-table .oil-spot-value { background:transparent; border:0; color:var(--fg); width:100%; text-align:right; padding:6px 0; }

@@ -1,6 +1,7 @@
 // Camada de apresentação do terminal: comandos digitados, faixa de cotações e indicadores do topo.
 // Só formata o que o app já coleta; não consulta fontes nem calcula taxas novas.
 import { liveCross } from './parity.js'
+import { brentReturns } from './oilReference.js'
 
 // Ordem do terminal (diferente da barra inferior do celular). Os ids são os mesmos de Nav.jsx.
 export const DESK_TABS = [
@@ -88,11 +89,13 @@ function rateItems(rates) {
 
 const withTone = (items) => items.map((i) => ({ ...i, tone: roundsToZero(i.change, i.unit) ? 'flat' : toneOf(i.change), text: changeText(i.change, i.unit) }))
 
-// Brent spot diário da EIA (arquivo oil.json): é referência datada, não cotação em tempo real; por isso leva a data e não tem variação.
+// Brent spot diário da EIA (arquivo oil.json): é referência datada, não cotação em tempo real; por isso leva a data.
+// A variação é a da última observação sobre a anterior (só existe quando a série traz as duas).
 export function brentItem(oil) {
   if (oil?.benchmark !== 'Brent' || oil?.kind !== 'spot' || oil?.unit !== 'USD/barril' || !Number.isFinite(oil.value)) return null
   const [, m, d] = String(oil.observationDate ?? '').split('-')
-  return { key: 'BRENT', code: 'BRENT', label: 'Brent EIA', value: nf(oil.value, 2), change: null, unit: 'pct', note: d && m ? `${d}/${m}` : null }
+  const day = brentReturns(oil).day
+  return { key: 'BRENT', code: 'BRENT', label: 'Brent EIA', value: nf(oil.value, 2), change: Number.isFinite(day) ? day : null, unit: 'pct', note: d && m ? `${d}/${m}` : null }
 }
 
 // Faixa corrida sob a barra superior: câmbio, paridade, juros de referência e Brent (EIA, com data).
@@ -102,13 +105,13 @@ export function tapeItems(quotes, rates, oil) {
   return withTone([...fxItems(quotes), ...(p ? [p] : []), ...rateItems(rates), ...(brent ? [brent] : [])])
 }
 
-// Seis indicadores do topo do Mercado: dólar, euro, paridade e os três juros de referência do Brasil.
-export function kpiItems(quotes, rates) {
+// Indicadores do topo do Mercado: dólar, euro, paridade, Brent (EIA, quando há série) e os três juros de referência do Brasil.
+export function kpiItems(quotes, rates, oil) {
   const fx = fxItems(quotes)
   const p = parityItem(quotes)
   const byKey = Object.fromEntries(rateItems(rates).map((r) => [r.key, r]))
   const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean)
-  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ...pick('selic', 'cdi', 'di1')].filter(Boolean))
+  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, brentItem(oil), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
 }
 
 // Estado do indicador "dados" da barra superior, a partir do que App.jsx já sabe sobre as cotações.
