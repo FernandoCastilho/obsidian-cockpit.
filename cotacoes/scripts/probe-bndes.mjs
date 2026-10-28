@@ -1,35 +1,19 @@
-// SONDAGEM TEMPORÁRIA 4 (sai do repositório depois): como consultar Moedas Contratuais do BNDES.
-const BASE = 'https://www.bndes.gov.br/SiteBNDES/bndes/bndes_pt/Galerias/Convivencia/Moedas_Contratuais/'
-const H = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36', accept: 'text/html,application/xhtml+xml,*/*;q=0.8', 'accept-language': 'pt-BR,pt;q=0.9' }
-const dec = (b) => new TextDecoder('latin1').decode(b)
+// SONDAGEM TEMPORÁRIA 5 (sai do repositório depois): valores públicos de TFB/TFBTR/TLP no guia de custos e dados abertos do BNDES.
+const H = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36', accept: 'text/html,application/json,*/*' }
+const get = async (u) => { try { const r = await fetch(u, { headers: H, signal: AbortSignal.timeout(40000) }); return { s: r.status, b: new TextDecoder('utf-8').decode(await r.arrayBuffer()) } } catch (e) { return { s: 0, b: String(e.cause?.code || e.message) } } }
 const text = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
-let cookies = ''
-const req = async (url, init = {}) => {
-  const r = await fetch(url, { redirect: 'manual', ...init, headers: { ...H, ...(cookies ? { cookie: cookies } : {}), ...(init.headers || {}) }, signal: AbortSignal.timeout(40000) })
-  const sc = r.headers.getSetCookie?.() || []
-  if (sc.length) cookies = [...new Set([...cookies.split('; ').filter(Boolean), ...sc.map((c) => c.split(';')[0])])].join('; ')
-  const body = dec(await r.arrayBuffer())
-  return { status: r.status, loc: r.headers.get('location'), type: r.headers.get('content-type'), body }
+const G = 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/'
+for (const [nome, slug] of [['TFB', 'tfb-taxa-fixa-bndes'], ['TFBTR', 'taxa-fixa-bndes-baseada-em-tr'], ['TLP', 'tlp-taxa-de-longo-prazo']]) {
+  const r = await get(G + slug); const t = text(r.b)
+  const i = t.search(/Valor d[aeo]s? (TFB|TFBTR|TLP)|Valores? (da|das) /i)
+  console.log(`\n### ${nome} http ${r.s} bytes ${r.b.length} | início da seção de valores em ${i}`)
+  console.log(t.slice(Math.max(0, i), Math.max(0, i) + 1500))
+  const iframes = [...r.b.matchAll(/<(iframe|object|embed)\b[^>]*(src|data)=["']([^"']+)/gi)].map((m) => m[3]); console.log('iframes:', iframes)
+  const files = [...r.b.matchAll(/href=["']([^"']+\.(?:csv|xls|xlsx|pdf|json)[^"']*)/gi)].map((m) => m[1]).slice(0, 6); console.log('arquivos:', files)
 }
-const idx = await req(BASE + 'index.html')
-console.log('### index', idx.status, 'cookies:', cookies.replace(/=[^;]+/g, '=…') || '(nenhum)')
-const scripts = [...idx.body.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]).filter((s) => /valida/.test(s))
-console.log('### valida() COMPLETO\n' + (scripts[0] || '').replace(/\s+/g, ' ').slice(0, 3500))
-const hidden = [...idx.body.matchAll(/<input[^>]+type=["']?hidden["']?[^>]*>/gi)].map((m) => m[0])
-console.log('### hidden inputs', hidden)
-const tries = [
-  ['POST consulta_moedas.html Moeda+Data(vazio)', BASE + 'consulta_moedas.html', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', referer: BASE + 'index.html', origin: 'https://www.bndes.gov.br' }, body: 'Moeda=TFB_60_30&Data=' }],
-  ['POST Moeda+Data dd/mm/aaaa', BASE + 'consulta_moedas.html', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', referer: BASE + 'index.html', origin: 'https://www.bndes.gov.br' }, body: 'Moeda=TFB_60_30&Data=27%2F10%2F2026' }],
-  ['GET consulta_moedas.html?Moeda=', BASE + 'consulta_moedas.html?Moeda=TFB_60_30&Data=', {}],
-  ['GET consulta_moedas.jsp?Moeda=', BASE + 'consulta_moedas.jsp?Moeda=TFB_60_30&Data=', {}],
-  ['POST consulta_moedas.jsp', BASE + 'consulta_moedas.jsp', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', referer: BASE + 'index.html' }, body: 'Moeda=TFB_60_30&Data=' }],
-  ['POST index.html (mesma página)', BASE + 'index.html', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', referer: BASE + 'index.html' }, body: 'Moeda=TFB_60_30&Data=' }],
-  ['POST Moeda=777 (TLP) consulta_moedas.html', BASE + 'consulta_moedas.html', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', referer: BASE + 'index.html' }, body: 'Moeda=777&Data=' }],
-]
-for (const [nome, url, init] of tries) {
-  const r = await req(url, init).catch((e) => ({ status: 0, body: String(e.cause?.code || e.message) }))
-  const t = text(r.body)
-  console.log(`\n### ${nome} -> http ${r.status}${r.loc ? ' loc=' + r.loc : ''} ${r.type || ''} bytes ${r.body.length}`)
-  console.log(t.slice(0, 600))
+console.log('\n### DADOS ABERTOS')
+for (const q of ['taxa', 'TFB', 'TLP', 'moedas contratuais', 'custos financeiros']) {
+  const r = await get('https://dadosabertos.bndes.gov.br/api/3/action/package_search?rows=8&q=' + encodeURIComponent(q))
+  try { const j = JSON.parse(r.b); console.log(`q=${q}: ${j.result.count} conjuntos`); for (const p of j.result.results) console.log('  -', p.name, '|', p.title.slice(0, 80), '| recursos:', p.resources.length) } catch { console.log(`q=${q}: http ${r.s} ${r.b.slice(0, 150)}`) }
 }
 console.log('### FIM')
