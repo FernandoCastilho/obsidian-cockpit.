@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { liveCross } from '../src/parity.js'
-import { ageText, brentItem, changeText, dataStatus, feedState, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
+import { ageText, brentItem, changeText, dataStatus, feedState, ipcaItem, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
 
 const q = (bid, pct, extra = {}) => ({ bid, ask: bid, high: bid, low: bid, pct, timestamp: Date.now(), ...extra })
 const quotes = { USD: q(5, 1, { source: 'USD' }), EUR: q(6, -0.5, { source: 'EUR' }), JPY: q(0.034, 0.2, { source: 'JPY' }), CNH: q(0.74, 0.1, { source: 'CNH' }) }
@@ -92,11 +92,27 @@ test('Brent da EIA entra na faixa com a data da observação e sem variação in
   assert.equal(items.at(-1).tone, 'flat')
 })
 
-test('Brent com série traz a variação do dia e entra nos indicadores do topo', () => {
+test('Brent com série traz a variação do dia (faixa); o card do topo agora é o IPCA', () => {
   const withPoints = { ...oil, points: [{ date: '2026-10-19', value: 118.82 }, { date: '2026-10-20', value: 115.22 }] }
   assert.ok(Math.abs(brentItem(withPoints).change - (115.22 / 118.82 - 1) * 100) < 1e-9)
-  assert.equal(kpiItems(quotes, rates, withPoints).map((i) => i.key).join(), 'USDBRL,EURBRL,EURUSD,BRENT,selic,cdi,di1')
-  assert.equal(kpiItems(quotes, rates, withPoints).find((i) => i.key === 'BRENT').tone, 'down')
+  assert.equal(tapeItems(quotes, rates, withPoints).some((i) => i.key === 'BRENT'), true)
+  assert.equal(kpiItems(quotes, rates, null).some((i) => i.key === 'BRENT'), false)
+})
+
+test('IPCA 12 meses no topo: valor, diferença em p.p. sobre o mês anterior e mês de referência', () => {
+  const series = { points: [{ period: '2026-07', y12: 5.2 }, { period: '2026-08', y12: 4.9 }, { period: '2026-09', y12: 4.68 }] }
+  const item = ipcaItem(series)
+  assert.equal(item.label, 'IPCA 12m'); assert.equal(item.value, '4,68%'); assert.match(item.note, /set\/26/)
+  assert.ok(Math.abs(item.change - (4.68 - 4.9)) < 1e-9)
+  const k = kpiItems(quotes, rates, series)
+  assert.equal(k.map((i) => i.key).join(), 'USDBRL,EURBRL,EURUSD,IPCA,selic,cdi,di1')
+  const card = k.find((i) => i.key === 'IPCA')
+  assert.equal(card.text, '−0,22 p.p.'); assert.equal(card.tone, 'down')
+  // sem o mês anterior a variação some, sem virar zero; sem série, o card não existe
+  assert.equal(ipcaItem({ points: [{ period: '2026-09', y12: 4.68 }] }).change, null)
+  assert.equal(ipcaItem({ points: [] }), null)
+  assert.equal(ipcaItem(null), null)
+  assert.equal(changeText(0.001, 'pp'), '0,00 p.p.')
 })
 
 test('Brent inválido ou de outra série não entra', () => {

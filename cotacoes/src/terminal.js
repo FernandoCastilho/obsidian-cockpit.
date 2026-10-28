@@ -55,10 +55,11 @@ export const toneOf = (v) => (Number.isFinite(v) && v > 0 ? 'up' : Number.isFini
 // Uma variação que arredonda para zero na unidade exibida (0,00% ou 0 bps) não pode ter seta nem cor de alta ou baixa.
 const roundsToZero = (change, unit) => Number.isFinite(change) && (unit === 'bps' ? Math.round(Math.abs(change) * 100) === 0 : Math.round(Math.abs(change) * 100) === 0)
 
-// unit 'pct' (variação do dia) ou 'bps' (taxa de juros: a variação vem em pontos percentuais).
+// unit 'pct' (variação do dia), 'bps' (taxa de juros: a variação vem em pontos percentuais) ou 'pp' (pontos percentuais, mostrados como tal).
 export function changeText(change, unit = 'pct') {
   if (!Number.isFinite(change)) return null
   const sign = roundsToZero(change, unit) ? '' : change > 0 ? '+' : change < 0 ? '−' : ''
+  if (unit === 'pp') return `${sign}${nf(Math.abs(change), 2)} p.p.`
   return unit === 'bps' ? `${sign}${Math.abs(Math.round(change * 100))} bps` : `${sign}${nf(Math.abs(change), 2)}%`
 }
 
@@ -97,6 +98,19 @@ export function brentItem(oil) {
   return { key: 'BRENT', code: 'BRENT', label: 'Brent EIA', value: nf(oil.value, 2), change: Number.isFinite(day) ? day : null, unit: 'pct', note: d && m ? `${d}/${m}` : null }
 }
 
+// IPCA acumulado em 12 meses (IBGE, série já validada por normalizeIpca): valor do último mês e diferença em p.p. sobre o mês anterior.
+// Sem o mês anterior, a variação fica ausente; nunca vira zero.
+export function ipcaItem(series) {
+  const points = (series?.points ?? []).filter((p) => Number.isFinite(p?.y12))
+  const last = points.at(-1)
+  if (!last) return null
+  const [y, m] = last.period.split('-').map(Number)
+  const prevKey = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`
+  const prev = points.find((p) => p.period === prevKey)
+  const note = new Date(`${last.period}-15T12:00:00Z`).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit', timeZone: 'UTC' }).replace('.', '').replace(' de ', '/')
+  return { key: 'IPCA', code: 'IPCA', label: 'IPCA 12m', value: `${nf(last.y12, 2)}%`, change: prev ? last.y12 - prev.y12 : null, unit: 'pp', note }
+}
+
 // Faixa corrida sob a barra superior: câmbio, paridade, juros de referência e Brent (EIA, com data).
 export function tapeItems(quotes, rates, oil) {
   const p = parityItem(quotes)
@@ -104,13 +118,13 @@ export function tapeItems(quotes, rates, oil) {
   return withTone([...fxItems(quotes), ...(p ? [p] : []), ...rateItems(rates), ...(brent ? [brent] : [])])
 }
 
-// Indicadores do topo do Mercado: dólar, euro, paridade, Brent (EIA, quando há série) e os três juros de referência do Brasil.
-export function kpiItems(quotes, rates, oil) {
+// Indicadores do topo do Mercado: dólar, euro, paridade, IPCA em 12 meses (IBGE, quando há série) e os três juros de referência do Brasil.
+export function kpiItems(quotes, rates, ipca) {
   const fx = fxItems(quotes)
   const p = parityItem(quotes)
   const byKey = Object.fromEntries(rateItems(rates).map((r) => [r.key, r]))
   const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean)
-  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, brentItem(oil), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
+  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ipcaItem(ipca), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
 }
 
 // Estado do indicador "dados" da barra superior, a partir do que App.jsx já sabe sobre as cotações.

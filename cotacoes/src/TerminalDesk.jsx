@@ -74,9 +74,9 @@ function useDaySeries() {
 
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
 // Clique abre o gráfico da moeda ou a aba de juros.
-export function KpiRow({ quotes, rates, oil, colors, onOpen, onRate, onOil, goto, status }) {
+export function KpiRow({ quotes, rates, ipca, colors, onOpen, onRate, goto, status }) {
   const series = useDaySeries()
-  const items = kpiItems(quotes, rates, oil)
+  const items = kpiItems(quotes, rates, ipca)
   if (!items.length) return status ?? null
   return (
     <section className="kpi-block" aria-labelledby="kpi-title">
@@ -85,8 +85,8 @@ export function KpiRow({ quotes, rates, oil, colors, onOpen, onRate, onOil, goto
       {items.map((i) => {
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
         return (
-          <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate || i.key === 'BRENT' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'BRENT' ? onOil() : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
-            <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'BRENT' && <small>US$/bbl{i.note ? ` · ${i.note}` : ''}</small>}</span>
+          <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate || i.key === 'IPCA' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'outros') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
+            <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate || i.key === 'IPCA' ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'IPCA' && <small>IBGE{i.note ? ` · ${i.note}` : ''}</small>}</span>
             <span className="kpi-value">{i.value}</span>
             <span className={`kpi-change ${i.tone}`}>
               {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}

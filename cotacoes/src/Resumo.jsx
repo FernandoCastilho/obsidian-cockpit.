@@ -12,7 +12,8 @@ import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import OilTile from './OilTile.jsx'
 import { selectedPeriod } from './summaryPeriod.js'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -518,11 +519,13 @@ function MarketNews({ bare = false }) {
 export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
-  const [oilRequest, setOilRequest] = useState(0)
+  const [oilRequest] = useState(0)
   const oil = useDataFile('oil.json')
+  const ipcaFile = useDataFile('ipca.json')
+  const ipcaSeries = useMemo(() => { try { return ipcaFile.data ? normalizeIpca(ipcaFile.data) : null } catch { return null } }, [ipcaFile.data])
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} oil={oil.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} onOil={() => setOilRequest((n) => n + 1)} goto={goto} status={status} />
+      <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
       <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} oilRequest={oilRequest} /></div>
     </div>
