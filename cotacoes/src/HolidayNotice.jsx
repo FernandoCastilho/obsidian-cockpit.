@@ -8,7 +8,7 @@ const when = (d, t) => {
 }
 
 // Aviso de feriados nas praças escolhidas (próximos dias) e de calendário chinês ainda não publicado.
-export default function HolidayNotice({ hol, days = 5, list = false }) {
+export default function HolidayNotice({ hol, days = 30, list = false }) {
   const t = today()
   const up = upcomingHolidays(t, days, hol.pracas, hol.ctx)
   const y = Number(t.slice(0, 4))
@@ -33,11 +33,11 @@ export default function HolidayNotice({ hol, days = 5, list = false }) {
   // Resumo: uma linha com o primeiro dia de feriado e as praças; o resto fica recolhido
   const first = up[0]
   const same = first ? up.filter((u) => u.date === first.date).map((u) => calLabel(u.cal)) : []
-  const rest = first ? up.length - same.length : 0
+  const dates = new Set(up.map((u) => u.date)).size
   return (
-    <details className="holiday-notice compact">
+    <details className="holiday-notice compact" open={up.length > 0}>
       <summary>
-        {first ? <><b>{when(first.date, t)}</b> · feriado em {same.join(', ')}{rest > 0 ? ` · +${rest} nos próximos dias` : ''}</> : 'Calendário da China: ano ainda não publicado'}
+        {first ? <><b>Feriados nos próximos {days} dias</b> · {dates} {dates === 1 ? 'data' : 'datas'} · primeiro: <b>{when(first.date, t)}</b> em {same.join(', ')}</> : 'Calendário da China: ano ainda não publicado'}
         {first && missing.length > 0 && ' · aviso China'}
       </summary>
       {up.length > 0 && items}
