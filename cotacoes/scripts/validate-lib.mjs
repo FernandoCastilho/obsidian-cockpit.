@@ -66,16 +66,16 @@ function checkSeries(area, code, pts, jump, now, maxAgeH, minPoints, tOf, vOf) {
   const last = tOf(pts.at(-1))
   if (!Number.isFinite(last) || now - last > maxAgeH * 36e5) out.push({ area, message: `${code}: último ponto há ${Number.isFinite(last) ? hours(now - last) : '?'} h` })
   const [lo, hi] = RANGE[code] ?? [0, Infinity]
-  let bad = 0, jumps = 0, unordered = 0
+  let bad = 0, jumps = 0, unordered = 0, first = ''
   for (let i = 0; i < pts.length; i++) {
     const v = vOf(pts[i])
     if (!(v > 0) || v < lo || v > hi) bad++
     if (i && !(tOf(pts[i]) >= tOf(pts[i - 1]))) unordered++
-    if (i && v > 0 && vOf(pts[i - 1]) > 0 && Math.abs(v / vOf(pts[i - 1]) - 1) > jump) jumps++
+    if (i && v > 0 && vOf(pts[i - 1]) > 0 && Math.abs(v / vOf(pts[i - 1]) - 1) > jump) { if (!jumps++) first = ` (primeiro: ${vOf(pts[i - 1])} → ${v} em ${new Date(tOf(pts[i])).toISOString().slice(0, 16)}Z)` }
   }
   if (bad) out.push({ area, message: `${code}: ${bad} ponto(s) inválido(s) ou fora do plausível` })
   if (unordered) out.push({ area, message: `${code}: ${unordered} ponto(s) fora de ordem cronológica` })
-  if (jumps) out.push({ area, message: `${code}: ${jumps} salto(s) acima de ${jump * 100}% entre pontos consecutivos` })
+  if (jumps) out.push({ area, message: `${code}: ${jumps} salto(s) acima de ${jump * 100}% entre pontos consecutivos${first}` })
   return out
 }
 
