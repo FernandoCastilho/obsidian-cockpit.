@@ -11,7 +11,7 @@ export default function Indexadores() {
   const rows = indexRows(file.data)
   const loading = file.status === 'loading'
   return (
-    <Panel title="Indexadores · TR · TBF · TLP · TFB" note="Banco Central e BNDES">
+    <Panel title="Indexadores · TR · TBF · TLP · TFB" note="Banco Central e BNDES" refresh={['indexadores.json']}>
       {file.status === 'error' && !file.data ? (
         <p className="status">Indexadores indisponíveis agora ({file.error}). Eles voltam na próxima coleta.</p>
       ) : (

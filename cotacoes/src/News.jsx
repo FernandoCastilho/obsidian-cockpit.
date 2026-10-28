@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
@@ -33,6 +34,7 @@ export default function News({ colors }) {
     <section className="news">
       <div className="history-head">
         <h2>Notícias <Explain id="noticias" /></h2>
+        <RefreshButton files={['news.json']} label="Notícias" />
       </div>
       {!data && !error && <p className="status">Carregando notícias…</p>}
       {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}

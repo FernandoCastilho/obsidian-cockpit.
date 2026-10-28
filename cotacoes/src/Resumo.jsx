@@ -1,5 +1,6 @@
 import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
+import RefreshButton from './RefreshButton.jsx'
 import './MarketTable.css'
 import './MarketTerminal.css'
 import { accumulatedReturns, compatiblePtax, marketDate } from './marketReturns.js'
@@ -383,7 +384,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -420,6 +421,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
       <section className="market-terminal" aria-labelledby="r-moedas">
         <div className="sec-head terminal-titlebar">
           <h2 id="r-moedas">Mercado hoje <Explain id="mercadoHoje" /> <button type="button" className="img-share" aria-label="Enviar imagem das últimas cotações de câmbio" title="Compartilha as últimas cotações de câmbio, sem gráficos ou petróleo" onClick={() => shareQuotesImage(quotes)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg></button></h2>
+          {quoteRefresh && <RefreshButton custom={quoteRefresh} label="cotações do câmbio" />}
           <button type="button" ref={compareTrigger} className="compare-trigger" aria-label="Comparar moedas" aria-haspopup="dialog" aria-expanded={compareOpen} title="Montar comparação de moedas" onClick={() => setCompareOpen(true)}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M3 3v18h18M5 16l5-7 4 4 6-9M5 10l5 4 5-7 5 9" /></svg><span>Comparar</span></button>
         </div>
         <div className="terminal-main">
@@ -434,7 +436,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Manchetes" note="por moeda"><MarketNews bare /></Panel>
+        <Panel title="Manchetes" note="por moeda" refresh={['news.json']}><MarketNews bare /></Panel>
         </div>
         </div>
 
@@ -505,14 +507,14 @@ function MarketNews({ bare = false }) {
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
-export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status }) {
+export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
   return (
     <div className="terminal-desk">
       <KpiRow quotes={quotes} rates={rates} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} /></div>
+      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
     </div>
   )
 }

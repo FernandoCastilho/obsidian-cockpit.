@@ -1,3 +1,5 @@
+import RefreshButton from './RefreshButton.jsx'
+import { onRefresh } from './refreshBus.js'
 import { Aviso } from './Avisos.jsx'
 import { useEffect, useState } from 'react'
 import { INDICATORS, INSTITUTIONS, scenarioValue } from './scenarios.js'
@@ -11,17 +13,20 @@ export default function Projecoes({ macro }) {
   const [failed, setFailed] = useState(false)
   useEffect(() => {
     const ctrl = new AbortController()
-    fetch(`./cenarios.json?t=${Math.floor(Date.now() / 600000)}`, { signal: ctrl.signal })
+    const load = (force = false) => fetch(`./cenarios.json?t=${force ? Date.now() : Math.floor(Date.now() / 600000)}`, { signal: ctrl.signal, ...(force ? { cache: 'no-store' } : {}) })
       .then((response) => { if (!response.ok) throw new Error('Dados indisponíveis'); return response.json() })
-      .then(setBanks)
-      .catch((error) => { if (error.name !== 'AbortError') setFailed(true) })
-    return () => ctrl.abort()
+      .then((data) => { setBanks(data); setFailed(false) })
+      .catch((error) => { if (error.name !== 'AbortError') setFailed(true); if (force) throw error })
+    load().catch(() => {})
+    const off = onRefresh((files) => files.includes('cenarios.json') ? load(true) : undefined)
+    return () => { off(); ctrl.abort() }
   }, [])
   const focus = macro?.data?.focus
   return (
     <section className="scenarios" aria-labelledby="scenarios-heading">
       <div className="history-head">
         <h2 id="scenarios-heading">Cenário econômico</h2>
+        <RefreshButton files={['cenarios.json', 'macro.json']} label="Cenário econômico" />
         <label className="scenario-year">Ano <select value={year} onChange={(event) => setYear(event.target.value)} aria-label="Ano das projeções">
           <option value="2026">2026</option><option value="2027">2027</option>
         </select></label>

@@ -19,7 +19,7 @@ export default function RatesSnapshot({ macro }) {
   } })
   const rows = [...domestic, ...policyRows(policy.data, periods, { now, loading:policy.status === 'loading', error:policy.stale || policy.status === 'error' })]
   const japan=policy.data?.series?.BOJ
-  return <><ExecutiveRatesTable title="Juros de referência · Brasil e exterior" rows={rows}
+  return <><ExecutiveRatesTable title="Juros de referência · Brasil e exterior" refresh={['macro.json', 'curves.json', 'policy-rates.json']} rows={rows}
     periods={periods.map(p => ({ ...p, label: `${p.label} · ${displayDate(p.date)}` }))}
     description="Taxas na data indicada ou na última observação anterior. Comparação histórica de níveis, não de rendimentos acumulados."
     footnote="Fed mostra os limites da faixa-alvo; BCE, a taxa de depósito; Japão, a série do alvo aproximado overnight compilada pelo BIS. As datas de mudança da série japonesa indicam a primeira observação daquele nível. CDI e SOFR são taxas observadas de mercado — SOFR não é a taxa básica do Fed. Comparações usam a última vigência ou observação conhecida até cada data; lacunas ficam sem valor. Curvas por prazo permanecem separadas abaixo." />

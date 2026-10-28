@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { fromInput, useIntraday } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
@@ -99,12 +100,13 @@ export function KpiRow({ quotes, rates, colors, onOpen, onRate, goto, status }) 
   )
 }
 
-export function Panel({ title, note, className = '', children }) {
+export function Panel({ title, note, className = '', refresh, children }) {
   return (
     <section className={`desk-panel ${className}`}>
       <header>
         <h2>{title}</h2>
         {note && <small>{note}</small>}
+        {refresh && <RefreshButton files={refresh} label={title} />}
       </header>
       <div className="desk-panel-body">{children}</div>
     </section>

@@ -5,6 +5,8 @@ import OilHistory from './OilHistory.jsx'
 import OilLiveQuote from './OilLiveQuote.jsx'
 import { latestBrentSpot } from './oilReference.js'
 import { oilStatus } from './oilStatus.js'
+import RefreshButton from './RefreshButton.jsx'
+import { onRefresh } from './refreshBus.js'
 
 // Commodity independente: nunca entra no câmbio ou nos cálculos em reais.
 export default function OilTile({ spark, dates, presets, onDates, onPreset, dateError, table = false }) {
@@ -25,8 +27,9 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
       }
     }
     load()
+    const off = onRefresh((files) => files.includes('oil.json') ? load() : undefined)
     const timer = setInterval(load, 10 * 60 * 1000)
-    return () => { controller.abort(); clearInterval(timer) }
+    return () => { off(); controller.abort(); clearInterval(timer) }
   }, [])
   const data = state.data
   const points = (data?.points || []).filter((p) => /^\d{4}-\d{2}-\d{2}$/.test(p.date) && Number.isFinite(p.value) && p.value > 0)
@@ -34,7 +37,7 @@ export default function OilTile({ spark, dates, presets, onDates, onPreset, date
   const latest = latestBrentSpot(data)
   return <>
     {table ? <section className="oil-tile other-market" aria-labelledby="other-market-title">
-      <h3 id="other-market-title">Demais</h3>
+      <div className="ctx-head"><h3 id="other-market-title">Demais</h3><RefreshButton files={['oil.json']} label="Brent (EIA)" /></div>
       <div className="other-market-scroll" role="region" aria-label="Tabela Demais; role para ver a cotação, a data e o histórico" tabIndex={0}>
         <table className="oil-eia-table" aria-label="Demais instrumentos - referências independentes"><thead><tr><th scope="col">Instrumento</th><th scope="col">Cotação <small>USD/barril</small></th><th scope="col">Data da observação</th><th scope="col">Histórico</th></tr></thead>
           <tbody><tr><th scope="row">Brent spot · EIA</th><td><button type="button" className="oil-details oil-spot-value" aria-label="Brent spot EIA: abrir histórico" onClick={() => setExpanded(true)}>{latest ? latest.value.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—'}</button></td><td>{latest ? <time dateTime={latest.date}>{latest.date.split('-').reverse().join('/')}</time> : '—'}</td><td><button type="button" className="oil-details" aria-label="Petróleo Brent: abrir histórico" onClick={() => setExpanded(true)}>Histórico EIA ›</button></td></tr></tbody>

@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
@@ -52,6 +53,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
               <Explain id="cdiFuturo" />
               <small>% a.a., taxa a termo do DI no intervalo que você escolher</small>
             </h3>
+            <RefreshButton files={['curves.json', 'macro.json']} label="CDI futuro" />
             <button type="button" className="mode-btn" onClick={() => setLight((v) => !v)} aria-pressed={light} aria-label="Gráfico em modo claro" title="Gráfico em modo claro (útil para copiar para apresentações)">
               {light ? '☾' : '☀'}
             </button>

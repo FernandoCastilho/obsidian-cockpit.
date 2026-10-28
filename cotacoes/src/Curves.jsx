@@ -1,3 +1,4 @@
+import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useId, useMemo, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
@@ -83,6 +84,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
             <small>{subtitle}</small>
             <Explain id={help} />
           </h3>
+          <RefreshButton files={['curves.json']} label={title} />
         </header>
       )}
       <div className="curve-legend">
