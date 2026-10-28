@@ -56,6 +56,14 @@ export function useCentralDaily() {
   return state
 }
 
+// Série diária completa do arquivo central (mais de um ano) da mesma fonte: serve para comparar um trecho com o ano anterior.
+export function centralFull(file, code, source) {
+  const s = file?.series?.[code]
+  if (!s || (source && s.source !== source)) return undefined
+  const valid = validHistoryPoints(s.points)
+  return valid.length > 1 ? valid : undefined
+}
+
 // Recorte do arquivo central; só vale se ele cobre o início do período pedido.
 export function pickCentral(file, code, start, end) {
   const s = file?.series?.[code]

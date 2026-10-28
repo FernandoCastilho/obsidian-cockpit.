@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
 import { Plot, fmtDate, fmtTime, useWidth } from './HistoryChart.jsx'
 import { mergeDaily, mergeTicks } from './parity.js'
-import { useHistory, useIntraday } from './useHistory.js'
+import { centralFull, useCentralDaily, useHistory, useIntraday } from './useHistory.js'
 import { flagSvg } from './flags.js'
 
 const num = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
@@ -26,6 +26,14 @@ function useParity(start, end, day, invert) {
 export default function ParityChart({ color, start, end, day }) {
   const [invert, setInvert] = useState(true) // padrão de mercado: EUR/USD (dólares por 1 euro)
   const s = useParity(start, end, day, invert)
+  const central = useCentralDaily()
+  const full = useMemo(() => {
+    if (day) return undefined
+    const a = centralFull(central.data, 'USD', 'USD'), b = centralFull(central.data, 'EUR', 'EUR')
+    if (!a || !b) return undefined
+    const m = mergeDaily(a, b, invert)
+    return m.length > 1 ? m : undefined
+  }, [central.data, day, invert])
   const [ref, width] = useWidth()
   const intraday = !!day
   const label = invert ? 'EUR/USD' : 'USD/EUR'
@@ -66,7 +74,7 @@ export default function ParityChart({ color, start, end, day }) {
             <small>{s.error}</small>
           </div>
         )}
-        {pts && <Plot points={pts} width={width} color={color} code={label} intraday={intraday} fmt={fmt} vfmt={num} labels label={label} />}
+        {pts && <Plot points={pts} history={full} width={width} color={color} code={label} intraday={intraday} fmt={fmt} vfmt={num} labels label={label} />}
       </div>
       {pts && s.stale && <p className="status stale" role="status">Não foi possível atualizar. Paridade calculada com a última série disponível.</p>}
       {pts && (

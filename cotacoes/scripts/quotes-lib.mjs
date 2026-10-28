@@ -70,48 +70,85 @@ export function parseDaily(rows) {
   return [...byDay.values()].sort((a, b) => a.t - b.t)
 }
 
-// Só consulta quando history.json não existe ou tem mais de 6 h (4 consultas por vez). Falha de uma moeda mantém a anterior.
+// Dias de histórico guardados: ~2 anos, para comparar um trecho com o mesmo trecho do ano anterior.
+export const HISTORY_KEEP_DAYS = 800
+const BACKFILL_RETRY = 24 * 3600e3
+const compact = (t) => ymd(t).replaceAll('-', '')
+
+// Une pontos antigos e novos por dia (o novo vence), em ordem e dentro da janela guardada.
+export function mergePoints(old, fresh, now) {
+  const byDay = new Map()
+  for (const p of [...(old ?? []), ...(fresh ?? [])]) byDay.set(ymd(p.t), p)
+  return [...byDay.values()].filter((p) => p.t >= now - HISTORY_KEEP_DAYS * 864e5).sort((a, b) => a.t - b.t)
+}
+
+// Yuan offshore: dólar em reais ÷ dólar em yuan (CNH), dia a dia
+export function cnhPoints(usd, cnhRows) {
+  const cnh = new Map(parseDaily(cnhRows).map((p) => [ymd(p.t), p]))
+  return (usd ?? [])
+    .filter((p) => cnh.has(ymd(p.t)))
+    .map((p) => {
+      const c = cnh.get(ymd(p.t))
+      return { t: p.t, bid: p.bid / c.bid, high: p.high / c.low, low: p.low / c.high }
+    })
+}
+
+// `range`: janela de datas { start, end } (AAAAMMDD) para trás; sem ela, os últimos 360 dias.
+async function getDaily(pair, { key, fetchFn, range }) {
+  const q = new URLSearchParams()
+  if (range) { q.set('start_date', range.start); q.set('end_date', range.end) }
+  if (key) q.set('token', key)
+  const url = `https://economia.awesomeapi.com.br/json/daily/${pair}/360${q.size ? `?${q}` : ''}`
+  const res = await fetchFn(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
+  if (!res.ok) throw new Error(`${pair}: HTTP ${res.status}`)
+  return res.json()
+}
+
+// Janela recente (360 dias) a cada 6 h; janela anterior (o ano de trás) uma vez, repetida a cada 24 h só se falhou.
+// Falha de uma moeda mantém a anterior; os pontos antigos são preservados.
 export async function collectHistory({ dir, key, fetchFn = fetch, now = Date.now(), ttl = HISTORY_TTL }) {
   const file = join(dir, 'history.json')
   const prev = await readJson(file)
-  if (prev?.generatedAt && now - prev.generatedAt < ttl && prev.series?.CNH?.source === 'CNH') return { ok: true, skipped: true }
+  const needRecent = !(prev?.generatedAt && now - prev.generatedAt < ttl && prev.series?.CNH?.source === 'CNH')
+  const needBack = !prev?.backfill?.ok && !(prev?.backfill?.at && now - prev.backfill.at < BACKFILL_RETRY)
+  if (!needRecent && !needBack) return { ok: true, skipped: true }
   const series = { ...(prev?.series ?? {}) }
   const errors = []
-  for (const [code, sources] of Object.entries(HIST_SOURCES)) {
-    for (const from of sources) {
+  const windows = []
+  if (needRecent) windows.push({ name: 'recente', range: null })
+  if (needBack) {
+    const end = now - 358 * 864e5
+    windows.push({ name: 'anterior', range: { start: compact(end - 359 * 864e5), end: compact(end) } })
+  }
+  let backOk = true
+  for (const w of windows) {
+    const fresh = {}
+    for (const code of Object.keys(HIST_SOURCES)) {
       try {
-        const url = `https://economia.awesomeapi.com.br/json/daily/${from}-BRL/360${key ? `?token=${encodeURIComponent(key)}` : ''}`
-        const res = await fetchFn(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
-        if (!res.ok) throw new Error(`${from}: HTTP ${res.status}`)
-        const points = parseDaily(await res.json())
-        if (points.length < 30) throw new Error(`${from}: poucos dados`)
-        series[code] = { source: from, points }
-        break
+        const points = parseDaily(await getDaily(`${code}-BRL`, { key, fetchFn, range: w.range }))
+        if (points.length < 30) throw new Error(`${code}: poucos dados (${w.name})`)
+        fresh[code] = points
+        series[code] = { source: code, points: mergePoints(series[code]?.points, points, now) }
       } catch (e) {
         errors.push(e.message)
+        if (w.range) backOk = false
       }
+      await sleep(500)
     }
-    await sleep(500)
-  }
-  // Yuan offshore: dólar em reais ÷ dólar em yuan (CNH), dia a dia
-  try {
-    const url = `https://economia.awesomeapi.com.br/json/daily/USD-CNH/360${key ? `?token=${encodeURIComponent(key)}` : ''}`
-    const res = await fetchFn(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
-    if (!res.ok) throw new Error(`USD-CNH: HTTP ${res.status}`)
-    const cnh = new Map(parseDaily(await res.json()).map((p) => [ymd(p.t), p]))
-    const points = (series.USD?.points ?? [])
-      .filter((p) => cnh.has(ymd(p.t)))
-      .map((p) => {
-        const c = cnh.get(ymd(p.t))
-        return { t: p.t, bid: p.bid / c.bid, high: p.high / c.low, low: p.low / c.high }
-      })
-    if (points.length < 30) throw new Error('CNH: poucos dados')
-    series.CNH = { source: 'CNH', points }
-  } catch (e) {
-    errors.push(e.message)
+    try {
+      const usd = fresh.USD ?? (w.range ? null : series.USD?.points)
+      if (!usd) throw new Error(`CNH: sem dólar na janela ${w.name}`)
+      const points = cnhPoints(usd, await getDaily('USD-CNH', { key, fetchFn, range: w.range }))
+      if (points.length < 30) throw new Error(`CNH: poucos dados (${w.name})`)
+      series.CNH = { source: 'CNH', points: mergePoints(series.CNH?.points, points, now) }
+    } catch (e) {
+      errors.push(e.message)
+      if (w.range) backOk = false
+    }
   }
   if (!Object.keys(series).length) return { ok: false, error: errors.join(' | ') }
+  const backfill = needBack ? { ok: backOk, at: now } : prev?.backfill
   await mkdir(dir, { recursive: true })
-  await writeFile(file, JSON.stringify({ generatedAt: errors.length ? (prev?.generatedAt ?? now) : now, source: 'AwesomeAPI', series }))
+  await writeFile(file, JSON.stringify({ generatedAt: needRecent && !errors.length ? now : (prev?.generatedAt ?? now), source: 'AwesomeAPI', backfill, series }))
   return { ok: true, series: Object.keys(series).length, errors }
 }

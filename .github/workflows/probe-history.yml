@@ -1,0 +1,15 @@
+name: Sondagem do histórico (temporária)
+on:
+  push:
+    branches: [claude/admiring-cerf-7sq5qw]
+    paths: [cotacoes/scripts/probe-history.mjs, .github/workflows/probe-history.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node cotacoes/scripts/probe-history.mjs
+        env:
+          AWESOMEAPI_KEY: ${{ secrets.AWESOMEAPI_KEY }}
