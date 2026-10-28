@@ -72,6 +72,7 @@ const fs = require('node:fs')
   await page.waitForTimeout(300)
   await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).click()
   const failDialog=page.getByRole('dialog',{name:'detalhes da moeda'});await failDialog.waitFor()
+  await failDialog.getByText(/intraday indisponível/).first().waitFor({timeout:15000}) // o carregamento é assíncrono: espera o estado de erro em vez de ler o texto no instante da abertura
   assert.match(await failDialog.innerText(),/intraday indisponível/)
   await page.keyboard.press('Escape');await failDialog.waitFor({state:'hidden'})
   await page.screenshot({path:`${out}/${width}-failure.png`,fullPage:true})
