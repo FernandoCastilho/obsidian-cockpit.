@@ -14,7 +14,7 @@ const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
 
-export function RateChart({ id, title, subtitle, color, points, fmt, label, note, actions, help, refresh = ['macro.json'] }) {
+export function RateChart({ id, title, subtitle, color, points, history, step, fmt, label, note, actions, help, refresh = ['macro.json'] }) {
   const [ref, width] = useWidth()
   const ok = points && points.length > 1
   const diff = ok ? points[points.length - 1].bid - points[0].bid : 0
@@ -40,7 +40,7 @@ export function RateChart({ id, title, subtitle, color, points, fmt, label, note
       {actions && <div className="chart-actions">{actions}</div>}
       <div ref={ref}>
         {ok ? (
-          <Plot points={points} width={width} color={color} code={id} fmt={fmt} label={label} nice />
+          <Plot points={points} history={history} step={step} width={width} color={color} code={id} fmt={fmt} label={label} nice />
         ) : (
           <div className="placeholder" style={{ height: 120 }}>Sem dados no período.</div>
         )}
@@ -104,6 +104,7 @@ export function CdiChart({ macro, range }) {
   const from = range.start.getTime()
   const to = range.end.getTime() + DAY
   const points = useMemo(() => macro.cdi.filter(([t]) => t >= from && t <= to).map(([t, v]) => ({ t, bid: v })), [macro, from, to])
+  const history = useMemo(() => macro.cdi.map(([t, v]) => ({ t, bid: v })), [macro])
   const first = macro.cdi[0]
   const last = macro.cdi[macro.cdi.length - 1]
   return (
@@ -114,6 +115,7 @@ export function CdiChart({ macro, range }) {
       subtitle="B3 · taxa anualizada"
       color={COLORS.CDI}
       points={points}
+      history={history}
       fmt={rate}
       label="CDI"
       note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${first ? `Série disponível desde ${fmtDate(first[0], true)} · ` : ''}Fonte: B3, via Banco Central (SGS 4389).`}
@@ -136,6 +138,7 @@ export function SelicChart({ macro, range }) {
     if (pts[pts.length - 1].t < end) pts.push({ t: end, bid: pts[pts.length - 1].bid })
     return stepify(pts)
   }, [all, from, to])
+  const history = useMemo(() => stepify(all.map(([t, v]) => ({ t, bid: v }))), [all])
   const last = all[all.length - 1]
   return (
     <RateChart
@@ -145,6 +148,8 @@ export function SelicChart({ macro, range }) {
       subtitle="Meta definida pelo Copom"
       color={COLORS.SELIC}
       points={points}
+      history={history}
+      step
       fmt={rate}
       label="Meta Selic"
       note={`${last ? `Atual: ${rate(last[1])} · ` : ''}Fonte: Banco Central (SGS 432).`}
