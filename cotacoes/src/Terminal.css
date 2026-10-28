@@ -294,13 +294,22 @@ main.app .fer-month h2 { text-transform: uppercase; }
 .oil-spot-value { white-space: nowrap; }
 .desk-rates .executive-rates__hint { display: none; }
 
-/* ===== Aba Aprender (método Feynman) ===== */
+/* ===== Aba Aprender: lista de conceitos e explicação lado a lado ===== */
 .learn { display: grid; gap: 6px; min-width: 0; }
-.learn-top, .learn-grid { display: grid; gap: 6px; grid-template-columns: minmax(0, 1fr); align-items: start; }
-@media (min-width: 1000px) {
-  .learn-top { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
-  .learn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
+.learn-split { display: grid; gap: 6px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1000px) { .learn-split { grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); } }
+.learn-list { min-width: 0; background: var(--card); border: 1px solid var(--line); }
+.learn-list-title { margin: 0; padding: 8px 12px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.learn-list ul { list-style: none; margin: 0; padding: 0; }
+.learn-list li + li { border-top: 1px solid #1a1813; }
+.learn-list button { display: grid; gap: 2px; width: 100%; min-height: 56px; padding: 8px 12px; text-align: left; background: none; border: 0; border-left: 3px solid transparent; color: var(--fg); font: inherit; cursor: pointer; }
+.learn-list button b { font-size: .92rem; }
+.learn-list button small { color: var(--mut); font-size: .74rem; line-height: 1.35; }
+.learn-list button:hover { background: #121008; }
+.learn-list button.on { border-left-color: var(--amber); background: #14110a; }
+.learn-list button.on b { color: var(--amber); }
+.learn-list button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.learn-detail { min-width: 0; scroll-margin-top: 84px; }
 .learn-card { min-width: 0; scroll-margin-top: 84px; outline: none; }
 .learn-card.is-focus > .desk-panel { border-color: var(--amber); }
 .learn-body { padding: 12px 14px 8px; font-size: .88rem; line-height: 1.6; }

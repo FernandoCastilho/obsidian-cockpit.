@@ -1,4 +1,4 @@
-// Explicações curtas (método Feynman: frase simples, exemplo concreto, uso na mesa). Textos fixos, sem dados ao vivo.
+// Explicações curtas (frase simples, exemplo concreto, uso na mesa). Textos fixos, sem dados ao vivo.
 // a = o que é, em palavras do dia a dia; b = exemplo com números redondos; c = como isso ajuda na decisão.
 export const GLOSSARY = {
   ncg: { t: 'Necessidade de capital de giro comercial', a: 'Estimativa de clientes mais estoque menos fornecedores, usando valores mensais e prazos médios.', b: 'Vendas de R$ 300 mil, custo vendido de R$ 210 mil e prazos de 30/40/30 dias resultam em NCG de R$ 370 mil.', c: 'Não é a NCG contábil completa nem recomendação de empréstimo. Recursos adicionais dependem também da reserva e da cobertura já existente.' },
