@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useEffect, useRef } from 'react'
 import { CONCEITOS, CONEXAO, METODO } from './educacao.js'
 import { Panel } from './TerminalDesk.jsx'
@@ -35,7 +36,7 @@ function Concept({ c, goto, focus }) {
             <summary>Exemplo numérico · {c.exemplo.titulo}</summary>
             <ol>{c.exemplo.passos.map((t) => <li key={t}>{t}</li>)}</ol>
             <p className="learn-result"><strong>Resultado:</strong> {c.exemplo.resultado}</p>
-            <p className="learn-note">Exemplo didático com números redondos; não é cotação de mercado.</p>
+            
           </details>
 
           <details>
@@ -60,6 +61,7 @@ function Concept({ c, goto, focus }) {
 export default function Aprender({ view = '', goto }) {
   return (
     <div className="learn">
+      <Aviso title="Aprender · exemplos didáticos"><p>Os exemplos usam números redondos para facilitar a conta; não são cotações de mercado.</p></Aviso>
       <div className="learn-top">
         <Panel title={METODO.titulo} note="como estudar aqui">
           <div className="learn-body">

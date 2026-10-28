@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { parseMoneyInput } from './moneyInput.js'
 import { useMemo, useState } from 'react'
 import { useCalcMemory } from './calcMemory.js'
@@ -60,7 +61,7 @@ export default function Giro({ curves, hol }) {
     <article className="chart calc-split">
       <div className="calc-in">
       <CalcMemory mem={mem} />
-      <p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p>
+      <Aviso title="Capital de giro · estimativa"><p className="status note">Estimativa com os dados que você informa; tarifas e impostos não são presumidos. Não é CET regulatório.</p></Aviso>
       <h3 className="calc-sub">Dados da operação</h3>
       <div className="calc-form">
         <label>
@@ -178,12 +179,11 @@ export default function Giro({ curves, hol }) {
           <div className="calc-form">
             <button type="button" className="btn small" onClick={copy}>{copied ? 'Copiado' : 'Copiar cronograma (Excel)'}</button>
           </div>
-          <details className="premissas">
-            <summary>Premissas e método</summary>
+          <Aviso title="Capital de giro · premissas e método">
           <p className="status">
             Juros compostos mensais, parcelas mensais sem ajuste de feriado (o app só avisa) e IOF e tarifas só entram se você informar em "Despesas à vista". O custo efetivo é a taxa que zera o valor presente dos fluxos. A comparação com o CDI usa o DI da curva da B3 no prazo médio (21 dias úteis por mês), não o CDI realizado.
           </p>
-          </details>
+          </Aviso>
         </>
       )}
 </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ZONES } from './Clock.jsx'
 import { COMMAND_HINTS, DESK_TABS, parseCommand } from './terminal.js'
+import { AvisosButton } from './Avisos.jsx'
 
 const CLOCKS = [
   ['BRL', 'BRT'],
@@ -92,6 +93,7 @@ export default function TopBar({ tab, onTab, onCommand, feed, feedAt }) {
         {STATE_TEXT[feed]}
         {feedAt && feed !== 'loading' && <b>{feedAt}</b>}
       </div>
+      <AvisosButton className="topbar-info" />
     </div>
   )
 }

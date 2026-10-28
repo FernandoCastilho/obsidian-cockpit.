@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
@@ -95,9 +96,9 @@ export default function CdiFuturo({ curves, macro, hol }) {
             </table>
             </div>
           </details>
-          <p className="status">
+          <Aviso title="CDI futuro · fonte e método"><p className="status">
             Fonte: B3, DI x pré de {dm(today.date)}. É o CDI que o mercado precifica, com prêmio de risco embutido, não uma projeção oficial. "CDI médio até lá" é a taxa composta do DI até o vértice; "a termo no trecho" é a taxa implícita entre o horizonte anterior e este. Para a visão de analistas, veja o Boletim Focus (Selic).
-          </p>
+          </p></Aviso>
         </article>
       )}
     </section>

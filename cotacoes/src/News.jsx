@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
@@ -75,11 +76,11 @@ export default function News({ colors }) {
       {generated && (Date.now() - generated.getTime() > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: as notícias foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
-      {generated && (
+      {generated && (<Aviso title="Notícias · fontes">
         <p className="status">
           Atualizado às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · a cada hora · Google Notícias, Valor Econômico e
           Investing.com. O ticker indica a moeda que a notícia tende a afetar. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem às fontes.
-        </p>
+        </p></Aviso>
       )}
     </section>
   )

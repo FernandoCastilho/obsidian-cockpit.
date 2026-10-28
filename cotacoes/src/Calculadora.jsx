@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { lazy, Suspense, useMemo, useState } from 'react'
 import { busDaysIn } from './holidays.js'
 import Pracas from './Pracas.jsx'
@@ -291,12 +292,11 @@ function OperacaoDi({ curves, hol }) {
                   )}
                 </p>
               )}
-              <details className="premissas">
-                <summary>Premissas e método</summary>
+              <Aviso title="Comparar operações · premissas e método">
               <p className="status">
                 {side === 'borrow' ? 'Taxa máxima do empréstimo para compensar manter a aplicação' : 'Ponto de equilíbrio'}: {mode === 'total' ? `valor total de ${brl(r.breakeven)}` : mode === 'pre' ? `${pct(r.breakeven)} ${UNITS.find((u) => u.id === unit).label}` : mode === 'cdi' ? (r.breakeven != null ? `${pct(r.breakeven)} do CDI` : '—') : `spread de ${pct(r.breakeven)} ${UNITS.find((u) => u.id === (unit === 'periodo' ? 'aa' : unit)).label}`} ({side === 'borrow' ? 'acima disso resgatar a aplicação sai mais barato' : 'a operação empata com o CDI'}). Taxa ao mês é composta: {monthBase === 'cal' ? `mês de 30 dias corridos, então ${calDays} dias = ${(calDays / 30).toFixed(2).replace('.', ',')} meses` : 'mês de 21 dias úteis (252 ÷ 12)'}; taxa ao ano segue 252 dias úteis. "% do CDI do período" = taxa da operação no período ÷ CDI da curva no período; "% do CDI" como taxa informada rende esse percentual do CDI de cada dia, composto dia a dia. O DI é a taxa de mercado para o prazo na curva da B3 de {dm(today.date)}; por isso o CDI do período é o implícito na curva, não o realizado. {net ? 'IR e IOF do CDB pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); considera só o rendimento da aplicação, sem marcação a mercado, carência, penalidade ou liquidez, e não inclui IOF e tarifas do empréstimo.' : 'Valores brutos, sem impostos, custos ou IOF.'} Dias úteis do DI pelo calendário de feriados nacionais (feriados municipais não entram na contagem).
               </p>
-              </details>
+              </Aviso>
             </>
           ) : null}
 </div>
@@ -312,9 +312,11 @@ export default function Calculadora({ curves, hol, view = '', onView }) {
   return (
     <Suspense fallback={<p className="status" role="status">Carregando calculadora…</p>}>
     <section className="macro calc" aria-labelledby="calc-h">
-      <p className="calc-validation-notice" role="status">
-        <strong>Em construção.</strong> Os cálculos estão sendo validados.
-      </p>
+      <Aviso title="Calculadoras · em validação" important>
+        <p className="calc-validation-notice" role="status">
+          <strong>Em construção.</strong> Os cálculos estão sendo validados.
+        </p>
+      </Aviso>
       {!opt ? (
         <>
           <div className="history-head">

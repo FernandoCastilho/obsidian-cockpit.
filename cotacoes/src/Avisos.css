@@ -1,0 +1,27 @@
+/* "i" de avisos: discreto, no canto superior; a janela reaproveita o desenho de .info-notice-dialog */
+.avisos-btn { display: inline-flex; align-items: center; justify-content: center; position: relative; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: var(--mut); cursor: pointer; font-size: 17px; line-height: 1; opacity: .75; }
+.avisos-btn:hover, .avisos-btn:focus-visible { color: var(--fg); opacity: 1; }
+.avisos-btn[data-flag="on"]::after { content: ""; position: absolute; top: 9px; right: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--amber, #ffb000); }
+.info-notice-dialog { box-sizing: border-box; width: min(680px, calc(100vw - 24px)); max-height: calc(100dvh - 32px); overflow: auto; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg, #0d1117); color: var(--fg); line-height: 1.6; overflow-wrap: anywhere; }
+.info-notice-dialog::backdrop { background: rgb(0 0 0 / .65); }
+.info-notice-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.info-notice-head h2 { margin: 0; font-size: 1.1rem; }
+.info-notice-head button { min-width: 44px; min-height: 44px; }
+.info-notice-dialog p { margin: .8rem 0 0; }
+.aviso { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .85rem; }
+.aviso-geral { font-size: .9rem; }
+.avisos-body:empty + .aviso-geral { border-top: 0; margin-top: 8px; padding-top: 0; }
+.aviso h3 { margin: 0; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--amber, #ffb000); }
+.aviso-importante h3::after { content: " · importante"; color: var(--mut); letter-spacing: 0; text-transform: none; font-weight: 500; }
+.aviso ul { margin: .6rem 0 0; padding-left: 1.1rem; }
+.aviso li { margin: .3rem 0; }
+.aviso .status, .aviso .status.note { margin: .6rem 0 0; font-size: inherit; }
+@media (max-width: 450px) { .info-notice-dialog { padding: 16px; } }
+.info-notice-head { align-items: center; }
+/* posições: barra superior (≥ 1000 px) e faixa de relógios (celular e tablet) */
+.topbar-info { align-self: stretch; border-left: 1px solid var(--line); }
+.clocks-info { display: none; }
+@media (max-width: 999px) { .clocks-top { align-items: center; } .clocks-top .clocks-info { display: inline-flex; margin-left: auto; min-height: 44px; margin-block: -8px; } }
+@media (max-width: 440px) { .clocks-top .clock .opt-mobile { display: none !important; } }
+@media (max-width: 999px) { .top .clocks-info { display: inline-flex; margin-left: auto; } }
+@media (min-width: 1000px) { .top.top-min { display: none; } }

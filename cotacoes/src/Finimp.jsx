@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { DECIMALS, simulate, toTsv } from './finimp.js'
 import { parseNum, parseRate } from './calc.js'
@@ -216,7 +217,7 @@ export default function Finimp({ hol }) {
         <label>Derivativo<input value={deriv} onChange={(e) => setDeriv(e.target.value)} placeholder="ex.: swap USD x CDI, NDF, sem derivativo" /></label>
         <label className="chk"><input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} /> Arredondar os juros de cada pagamento a {dec} casas</label>
         </div>
-        <p className="status note">Estimativa com os dados informados. Não é CET regulatório.</p>
+        <Aviso title="FINIMP 4131 · estimativa"><p className="status note">Estimativa com os dados informados. Não é CET regulatório.</p></Aviso>
       </details>
 </div>
 <div className="calc-out" id="calc-out">

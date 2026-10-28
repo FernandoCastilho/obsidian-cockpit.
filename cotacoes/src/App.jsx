@@ -1,6 +1,5 @@
 import { dataTimestamp } from './dataTimestamp.js'
-import './AppDisclaimer.css'
-import InfoNotice from './InfoNotice.jsx'
+import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
@@ -234,7 +233,11 @@ export default function App() {
         </p>
   )
   return (
-    <>
+    <AvisosProvider general={<>
+        <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
+        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
+        <p><i>{DISCLAIMER}</i></p>
+      </>}>
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} onCommand={runCommand} feed={feed} feedAt={feedAt} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
@@ -243,6 +246,7 @@ export default function App() {
     {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
+        <AvisosButton className="clocks-info" />
       </div>
     )}
     <main className="app">
@@ -254,9 +258,10 @@ export default function App() {
           <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
         </div>
       )}
-      {tab !== 'resumo' && tab !== 'calculadora' && tab !== 'noticias' && tab !== 'feriados' && (
-        <header className="top">
-          <h1>{TABS.find((t) => t.id === tab).label}</h1>
+      {tab !== 'resumo' && (
+        <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
+          {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
+          <AvisosButton className="clocks-info" />
         </header>
       )}
 
@@ -318,14 +323,7 @@ export default function App() {
         </Sheet>
       )}
       </Suspense>
-      <footer className="general-notice-footer" aria-label="Avisos gerais do aplicativo">
-      <InfoNotice>
-        <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
-        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
-        <p><i>{DISCLAIMER}</i></p>
-      </InfoNotice>
-      </footer>
     </main>
-    </>
+    </AvisosProvider>
   )
 }

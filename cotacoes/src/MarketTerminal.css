@@ -102,8 +102,6 @@
 .other-market .oil-live-quote { min-height:100px; }
 .other-market td > small { display:block; margin-top:4px; line-height:1.5; }
 @media(max-width:450px) { .compare-trigger span { display:none; } }
-.general-notice-footer { margin:16px 0; padding-bottom:16px; }
-.general-notice-footer .app-disclaimer { justify-content:flex-start; }
 .market-scroll-hint { display:none; margin:8px 0; font-size:.75rem; color:var(--terminal-amber); }
 @media (max-width:650px) {
   .market-scroll-hint { display:block; }

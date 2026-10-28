@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
 import './MarketTable.css'
 import './MarketTerminal.css'
@@ -425,7 +426,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
         <div className="terminal-quotes">
         <p className="market-scroll-hint">Deslize para ver mês, ano e PTAX →</p>
         <div className="market-table-wrap" role="region" aria-label="Tabela de câmbio; role horizontalmente para ver todas as colunas" tabIndex={0}>
-          <table className="market-table" aria-busy={!quotes} aria-describedby="market-help market-sources">
+          <table className="market-table" aria-busy={!quotes}>
             <caption className="market-caption">Câmbio em reais · últimas referências disponíveis</caption>
             <thead><tr><th scope="col">Par</th><th scope="col">Cotação <small>(R$)</small></th><th scope="col" aria-label="Variação absoluta do dia em reais">Δ dia <small>(R$)</small></th><th scope="col" aria-label="Variação percentual do dia">Δ dia %</th><th scope="col" aria-label="Acumulado no mês em percentual">Mês %</th><th scope="col" aria-label="Acumulado no ano em percentual">Ano %</th><th scope="col" aria-label="PTAX de venda em reais por unidade">PTAX <small>venda</small></th></tr></thead>
             {CURRENCIES.map(c => <QuoteRow key={c.code} code={c.code} quote={quotes?.[c.code]} returns={returns[c.code]} selected={selection.includes(c.code)} ptax={ptaxes[c.code]} onOpen={openSelected} color={colors?.[c.code]} />)}
@@ -439,8 +440,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
 
 
         <OilTile table spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
-        <footer className="market-footnotes" id="market-sources" aria-label="Fontes, datas e metodologia do câmbio">
-          <details className="market-notes"><summary>Fontes, datas e metodologia</summary>
+        <Aviso title="Câmbio · fontes, datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
@@ -452,8 +452,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors }) {
           <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série AwesomeAPI. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
           <p>PTAX é referência oficial independente, não spot. <a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noreferrer">BCB: cotações e boletins</a> · <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noreferrer">AwesomeAPI: cotações e histórico</a>. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
           <p>Cotação do dia: última referência recebida, não um feed em tempo real. A coleta central é de 5 min na janela configurada e horária fora dela em dias úteis, com pausa de coleta no fim de semana; o navegador verifica a cada minuto e o arquivo também pode ter cache. “Dado antigo” sinaliza horário da fonte há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. A fonte não informa abertura/fechamento do mercado: ausência de novo preço não é tratada como mercado fechado.</p>
-          </details>
-        </footer>
+          </Aviso>
       </section>
       {compareOpen && <Expandable modal label="Comparar moedas" onClose={closeCompare}>
         <section className="currency-comparison" aria-labelledby="comparison-title"><h2 id="comparison-title">Comparar moedas</h2>

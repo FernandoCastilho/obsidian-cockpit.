@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useDataFile } from './useDataFile.js'
 import { Panel } from './TerminalDesk.jsx'
 import { indexRows } from './indexadores.js'
@@ -38,7 +39,7 @@ export default function Indexadores() {
           <div key={r.key}><dt>{r.key}</dt><dd>{r.definition}</dd></div>
         ))}
       </dl>
-      <p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. Atualizado a cada coleta horária.</p>
+      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. Atualizado a cada coleta horária.</p></Aviso>
     </Panel>
   )
 }

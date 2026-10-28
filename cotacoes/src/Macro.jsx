@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
@@ -42,7 +43,7 @@ export function RateChart({ id, title, subtitle, color, points, fmt, label, note
           <div className="placeholder" style={{ height: 120 }}>Sem dados no período.</div>
         )}
       </div>
-      {note && <p className="status">{note}</p>}
+      {note && <Aviso title={title}><p>{note}</p></Aviso>}
     </article>
   )
 }

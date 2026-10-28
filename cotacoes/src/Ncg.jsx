@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useState } from 'react'
 import { useCalcMemory } from './calcMemory.js'
 import CalcMemory from './CalcMemory.jsx'
@@ -53,6 +54,6 @@ export default function Ncg(){
     {result.valid&&result.ncg<0&&<p className="ncg-notice">NCG negativa: fornecedores financiam o ciclo comercial estimado. Isso não prova sobra de caixa total.</p>}
    </div>
   </div>
-  <div className="ncg-cautions"><p><b>Não é um valor recomendado de empréstimo.</b> A cobertura não é apenas o saldo bancário nem toda a dívida da empresa. Inclua capital próprio e financiamentos que já sustentam este giro e permanecerão disponíveis no horizonte analisado, além de caixa livre adicional destinado a ele. Não abata automaticamente dívidas que financiaram imobilizado ou prejuízos, ou que vencem antes desse horizonte. Não conte o mesmo recurso duas vezes nem inclua financiamento ainda não contratado.</p><p>Estimativa simplificada, não substitui NCG contábil ou fluxo de caixa. Não inclui automaticamente impostos, salários, adiantamentos ou outras contas operacionais. Para serviços, projetos, produção longa ou sazonalidade, revise a adequação do modelo antes de usar o resultado.</p></div>
+  <Aviso title="NCG · cautelas" important>  <div className="ncg-cautions"><p><b>Não é um valor recomendado de empréstimo.</b> A cobertura não é apenas o saldo bancário nem toda a dívida da empresa. Inclua capital próprio e financiamentos que já sustentam este giro e permanecerão disponíveis no horizonte analisado, além de caixa livre adicional destinado a ele. Não abata automaticamente dívidas que financiaram imobilizado ou prejuízos, ou que vencem antes desse horizonte. Não conte o mesmo recurso duas vezes nem inclua financiamento ainda não contratado.</p><p>Estimativa simplificada, não substitui NCG contábil ou fluxo de caixa. Não inclui automaticamente impostos, salários, adiantamentos ou outras contas operacionais. Para serviços, projetos, produção longa ou sazonalidade, revise a adequação do modelo antes de usar o resultado.</p></div></Aviso>
  </article>
 }

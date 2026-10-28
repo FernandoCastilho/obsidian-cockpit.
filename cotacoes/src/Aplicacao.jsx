@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo } from 'react'
 import { useCalcMemory } from './calcMemory.js'
 import CalcMemory from './CalcMemory.jsx'
@@ -157,12 +158,11 @@ export default function Aplicacao({ curves, hol }) {
               ? <>Este CDB, líquido de IR, equivale a um ativo isento que pague <b>{pct(r.pctCdiNet, 1)}</b> do CDI do período.</>
               : <>Para render o mesmo líquido, um CDB com IR de {pct(r.equivalent.irPct, 1)} precisaria pagar <b>{pct(r.equivalent.cdbPctCdi, 1)}</b> do CDI do período ({pct(r.equivalent.cdbPeriod)} no período).</>}
           </p>
-          <details className="premissas">
-            <summary>Premissas e método</summary>
+          <Aviso title="Aplicação financeira · premissas e método">
           <p className="status">
             O CDI do período é o implícito na curva DI da B3 de {dm(t.today.date)}, e não o realizado. IR pela tabela regressiva sobre os dias corridos (tempo já aplicado mais o prazo); IOF só até o 29º dia. A isenção vale para pessoa física em LCI/LCA; confirme o regime do seu caso. Não considera marcação a mercado, carência, liquidez nem tarifas. {parseNum(value) > 250000 ? 'Valores acima do limite do FGC (R$ 250 mil por instituição) têm risco de crédito do emissor.' : ''}
           </p>
-          </details>
+          </Aviso>
         </>
       ) : null}
 </div>
