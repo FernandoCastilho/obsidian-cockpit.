@@ -74,3 +74,20 @@ test('WTI aceita histórico negativo legítimo e preserva negativo no fallback',
  assert.equal(negative.value,-36.98); assert.ok(validCommodity(negative,'wti'))
  assert.equal(commodityFallback('wti',[negative],'timeout').value,-36.98)
 })
+
+test('commodities: série histórica acompanha cada referência (mensal do Banco Mundial; diária do WTI), sem zeros inventados', async () => {
+  const lib = await import('../scripts/commodities-lib.mjs')
+  const rows = [
+    { A: 'World Bank Commodity Price Data', B: 'monthly prices in nominal US dollars' },
+    { A: '', B: 'Updated on October 02, 2026' },
+    { A: '', B: 'Iron ore, cfr spot', C: 'Soybeans', D: 'Maize', E: 'Gold' },
+    { A: '', B: '($/dmt)', C: '($/mt)', D: '($/mt)', E: '($/troy oz)' },
+    { A: '2026M07', B: '100', C: '500', D: '230', E: '' },
+    { A: '2026M08', B: '99', C: '510', D: '235', E: '4300' },
+    { A: '2026M09', B: '97.7', C: '524', D: '239.6', E: '4319' },
+  ]
+  const items = lib.parsePinkRows(rows, 'https://thedocs.worldbank.org/x.xlsx', new Date('2026-10-05T00:00:00Z'))
+  const gold = items.find(i => i.id === 'gold')
+  assert.deepEqual(gold.history, [{ period: '2026-08', value: 4300 }, { period: '2026-09', value: 4319 }]) // julho sem valor fica de fora
+  assert.equal(items.find(i => i.id === 'corn').history.length, 3)
+})

@@ -12,7 +12,7 @@ export function contextItems(data, key, ids) {
 }
 export function brentContext(data) {
   if (data?.benchmark !== 'Brent' || data?.kind !== 'spot' || data?.unit !== 'USD/barril') return null
-  return { id:'brent', label:'Petróleo Brent', value: Number.isFinite(data.value) ? data.value : null, unit:'US$/barril', nature:'Spot diário · FOB', period:data.observationDate, releaseDate:data.releaseDate, checkedAt:data.generatedAt, stale:!!data.stale, error:data.error, sourceName:data.sourceName || 'EIA', sourceUrl:data.sourceURL || 'https://www.eia.gov/dnav/pet/hist/RBRTED.htm' }
+  return { id:'brent', label:'Petróleo Brent', value: Number.isFinite(data.value) ? data.value : null, unit:'US$/barril', nature:'Spot diário · FOB', period:data.observationDate, releaseDate:data.releaseDate, checkedAt:data.generatedAt, stale:!!data.stale, error:data.error, sourceName:data.sourceName || 'EIA', sourceUrl:data.sourceURL || 'https://www.eia.gov/dnav/pet/hist/RBRTED.htm', benchmark:'Europe Brent • FOB', history:(Array.isArray(data.points) ? data.points : []).filter(p=>/^\d{4}-\d{2}-\d{2}$/.test(p?.date) && Number.isFinite(p.value) && p.value>0).map(p=>({period:p.date,value:p.value})) }
 }
 export function contextValue(item) {
   return Number.isFinite(item?.value) ? item.value.toLocaleString('pt-BR', { maximumFractionDigits:item.decimals ?? 2, minimumFractionDigits:item.decimals ?? 0 }) : '—'
