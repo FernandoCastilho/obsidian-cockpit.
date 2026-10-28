@@ -41,7 +41,7 @@ export default function RateModal({ kind, macro, curves, onClose }) {
         {kind === 'cdi' && (data?.cdi?.length ? <CdiChart macro={data} range={range} /> : <p className="status">CDI indisponível no momento.</p>)}
         {kind === 'selic' && (data?.selic?.length ? <SelicChart macro={data} range={range} /> : <p className="status">Selic indisponível no momento.</p>)}
         {kind === 'di1' && (
-          <RateChart id="DI1" title="Brasil · DI 1 ano" subtitle="B3 · vértice de 252 dias úteis" color="#e5b453" points={di} fmt={rate} label="DI 1 ano"
+          <RateChart id="DI1" title="Brasil · DI 1 ano" subtitle="B3 · vértice de 252 dias úteis" color="#e5b453" points={di} fmt={rate} label="DI 1 ano" scales={false}
             refresh={['curves.json']} note="Cada ponto é o vértice de 1 ano da curva DI x pré da B3 em uma data de comparação (hoje, 1 dia, 1 semana, 1 mês, 3 e 6 meses, 1 ano); não é uma série diária. Fonte: B3." />
         )}
       </section>
