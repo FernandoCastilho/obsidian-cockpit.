@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import { useCalcMemory } from './calcMemory.js'
 import CalcMemory from './CalcMemory.jsx'
@@ -82,7 +83,7 @@ export default function FinimpSwap({ curves, hol }) {
     <article className="chart finimp calc-split stack">
       <div className="calc-in">
         <CalcMemory mem={mem} />
-        <p className="status note">Reproduz o formato da cotação do banco: perna em dólar (juros, IR e amortização) e perna em reais do swap (CDI esperado + spread). Estimativa; nada é presumido além do que você informa e da curva DI x pré.</p>
+        <Aviso title="FINIMP + swap CDI · estimativa"><p className="status note">Reproduz o formato da cotação do banco: perna em dólar (juros, IR e amortização) e perna em reais do swap (CDI esperado + spread). Estimativa; nada é presumido além do que você informa e da curva DI x pré.</p></Aviso>
         <div className="calc-form">
           <button type="button" className="btn small" onClick={fill}>Preencher exemplo</button>
         </div>

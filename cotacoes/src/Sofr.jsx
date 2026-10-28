@@ -1,3 +1,4 @@
+import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
 import { fmtDate, useWidth } from './HistoryChart.jsx'
@@ -143,11 +144,11 @@ export default function SofrChart({ macro, range }) {
           <div className="placeholder" style={{ height: H }}>Sem dados no período.</div>
         )}
       </div>
-      <p className="status">
+      <Aviso title="SOFR · EUA"><p className="status">
         {last ? `Último: ${pct(last[1])} em ${fmtDate(last[0], true)} · ` : ''}
         {first ? `Série desde ${fmtDate(first[0], true)} · ` : ''}
         Taxa crua do dia; as médias (compostas) e a faixa de percentis são opcionais na legenda. Fonte: Federal Reserve Bank of New York.
-      </p>
+      </p></Aviso>
     </article>
   )
 }
