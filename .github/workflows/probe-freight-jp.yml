@@ -1,0 +1,15 @@
+name: Verificação do coletor do Japão (temporária)
+on:
+  push:
+    branches: [claude/admiring-cerf-7sq5qw]
+    paths: [.github/workflows/probe-freight-jp.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: |
+          cd cotacoes && mkdir -p public && node scripts/fetch-freight-jp.mjs
+          node -e "const f=require('./public/freight-jp.json');const p=f.series.points;console.log('primeiro',JSON.stringify(p[0]),'último',JSON.stringify(p.at(-1)),'n',p.length,'stale',f.series.stale,f.series.error||'')"

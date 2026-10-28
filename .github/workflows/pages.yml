@@ -98,6 +98,10 @@ jobs:
       - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-freight.mjs
+      - name: Coletar referência mensal de transporte marítimo do Japão (Banco do Japão)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-freight-jp.mjs
+        timeout-minutes: 2
       - name: Coletar IPCA oficial e histórico (IBGE)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-ipca.mjs
