@@ -28,6 +28,7 @@ export function accumulatedReturns(file, code, now = Date.now()) {
 const PTAX_KINDS = /^(abertura|intermedi[aá]ri[oa]|fechamento( ptax)?)$/i
 export function ptaxLabel(ptax) {
   if (!ptax) return ''
+  if (ptax.cross) return 'ref. cruz.'
   if (/^fechamento/i.test(ptax.kind)) return `fech. ${ptax.date.split('-').reverse().slice(0, 2).join('/')}`
   const hm = /\d{2}:\d{2}/.exec(ptax.at ?? '')?.[0]
   return `${/^abertura/i.test(ptax.kind) ? 'abert.' : 'interm.'}${hm ? ` ${hm}` : ''}`
@@ -37,4 +38,15 @@ export function compatiblePtax(code, quote, ptax, now = Date.now()) {
   if (!Number.isFinite(ptax?.sell) || ptax.sell <= 0 || !PTAX_KINDS.test(ptax.kind ?? '') || !/^\d{4}-\d{2}-\d{2}$/.test(ptax.date || '')) return null
   const d = new Date(ptax.date + 'T12:00:00Z')
   return Number.isFinite(d.getTime()) && d.toISOString().slice(0, 10) === ptax.date && ptax.date <= marketDate(now) ? ptax : null
+}
+
+// Não existe PTAX oficial do yuan: referência cruzada = PTAX do dólar (venda) ÷ USD/CNH do instante do boletim, lido do intraday (AwesomeAPI).
+// Sem amostras das duas pontas a até 15 min do boletim, não há valor (nunca usa cotação de outro horário).
+const nearest = (points, t) => points.reduce((best, p) => (Math.abs(p.t - t) < Math.abs((best?.t ?? Infinity) - t) ? p : best), null) ?? null
+export function cnhPtaxCross(ptaxUsd, usdPoints, cnhPoints, maxGapMs = 15 * 60000) {
+  const at = Date.parse(String(ptaxUsd?.at ?? '').replace(' ', 'T') + '-03:00')
+  if (!Number.isFinite(at) || !(ptaxUsd?.sell > 0)) return null
+  const usd = nearest(usdPoints ?? [], at), cnh = nearest(cnhPoints ?? [], at)
+  if (!usd || !cnh || Math.abs(usd.t - at) > maxGapMs || Math.abs(cnh.t - at) > maxGapMs || !(usd.bid > 0) || !(cnh.bid > 0)) return null
+  return { ...ptaxUsd, sell: ptaxUsd.sell / (usd.bid / cnh.bid), cross: true }
 }

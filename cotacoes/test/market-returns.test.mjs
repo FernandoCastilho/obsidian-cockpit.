@@ -54,3 +54,16 @@ test('PTAX: aceita Abertura e Intermediário do dia (com rótulo de tipo e horá
   assert.equal(ptaxLabel({ sell: 5.33, date: '2026-10-27', kind: 'Fechamento' }), 'fech. 27/10')
   assert.equal(compatiblePtax('USD', { source: 'USD' }, { ...open, kind: 'Fechamento Interbancário' }, Date.parse('2026-10-28T14:00:00Z')), null)
 })
+
+import { cnhPtaxCross, ptaxLabel } from '../src/marketReturns.js'
+test('PTAX do CNH: referência cruzada só com as duas pontas a até 15 min do boletim', () => {
+  const ptax = { sell: 5.28, at: '2026-10-27 13:06:12.123', kind: 'Fechamento PTAX', date: '2026-10-27' }
+  const at = Date.parse('2026-10-27T13:06:12.123-03:00')
+  const usd = [{ t: at - 60000, bid: 5.3 }, { t: at + 3600000, bid: 9 }], cnh = [{ t: at + 120000, bid: 0.8 }]
+  const r = cnhPtaxCross(ptax, usd, cnh)
+  assert.ok(Math.abs(r.sell - 5.28 / (5.3 / 0.8)) < 1e-12)
+  assert.equal(ptaxLabel(r), 'ref. cruz.')
+  assert.equal(cnhPtaxCross(ptax, usd, [{ t: at + 20 * 60000, bid: 0.8 }]), null)
+  assert.equal(cnhPtaxCross(ptax, [], cnh), null)
+  assert.equal(cnhPtaxCross({ ...ptax, at: 'x' }, usd, cnh), null)
+})

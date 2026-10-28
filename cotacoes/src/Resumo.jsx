@@ -3,7 +3,7 @@ import { buildFeed } from './feed.js'
 import RefreshButton from './RefreshButton.jsx'
 import './MarketTable.css'
 import './MarketTerminal.css'
-import { accumulatedReturns, compatiblePtax, marketDate, ptaxLabel } from './marketReturns.js'
+import { accumulatedReturns, cnhPtaxCross, compatiblePtax, marketDate, ptaxLabel } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 import { nextChartIndex } from './chartNavigation.js'
 import { dataTimestamp } from './dataTimestamp.js'
@@ -77,7 +77,7 @@ function QuoteRow({ code, quote, ptax, returns, selected, onOpen, color }) {
       <td className={delta == null ? 'muted' : 'pct ' + toneOf(delta)}>{delta == null ? <span aria-label={quote?.cross ? 'Variação absoluta indisponível para o cruzamento' : 'Variação absoluta indisponível'} title={quote?.cross ? 'A fonte não fornece variação absoluta deste cruzamento' : 'Variação absoluta não fornecida'}>—</span> : (delta > 0 ? '+' : delta < 0 ? '−' : '') + Math.abs(delta).toLocaleString('pt-BR', { minimumFractionDigits: code === 'JPY' ? 5 : 4, maximumFractionDigits: code === 'JPY' ? 5 : 4 })}</td>
       <td className={hasDay ? 'pct ' + toneOf(quote.pct) : 'muted'}>{hasDay ? pct(quote.pct) : <span aria-label="Variação percentual do dia indisponível">—</span>}</td>
       {['month', 'year'].map(period => <td key={period} className={returns?.[period] ? 'pct ' + toneOf(returns[period].value) : 'muted'}>{returns?.[period] ? pct(returns[period].value) : <span aria-label={(period === 'month' ? 'Acumulado do mês' : 'Acumulado do ano') + ' indisponível'}>—</span>}</td>)}
-      <td className="market-ptax">{ptax ? <>{brl(ptax.sell, code === 'JPY' ? 5 : 4).replace('R$ ', '')}<small className="ptax-kind">{ptaxLabel(ptax)}</small></> : <span aria-label="PTAX compatível indisponível">—</span>}</td>
+      <td className="market-ptax" title={ptax?.cross ? 'Referência cruzada, não oficial: PTAX do dólar ÷ USD/CNH no horário do boletim' : undefined}>{ptax ? <>{brl(ptax.sell, code === 'JPY' ? 5 : 4).replace('R$ ', '')}<small className="ptax-kind">{ptaxLabel(ptax)}</small></> : <span aria-label="PTAX compatível indisponível">—</span>}</td>
     </tr>
   </tbody>
 }
@@ -392,6 +392,10 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
+  // Yuan: sem PTAX oficial; referência cruzada com o intraday do dia do boletim do dólar.
+  const ptaxDay = fromInput(ptaxes.USD?.date ?? marketDate(Date.now()))
+  const usdTicks = useIntraday('USD', ptaxDay, !ptaxes.USD), cnhTicks = useIntraday('CNH', ptaxDay, !ptaxes.USD)
+  if (ptaxes.USD && quotes?.CNH && !quotes.CNH.fallback && usdTicks.status === 'ok' && cnhTicks.status === 'ok') ptaxes.CNH = cnhPtaxCross(ptaxes.USD, usdTicks.data.points, cnhTicks.data.points)
   const [selection, setSelection] = useState(['USD'])
   const [compareOpen, setCompareOpen] = useState(false)
   const [compareSelection, setCompareSelection] = useState(['USD', 'EUR'])
@@ -448,7 +452,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
         <OilTile table openRequest={oilRequest} spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <Aviso title="Câmbio · fontes, datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
-          <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; sem variação absoluta fornecida. PTAX não se aplica a CNH; CNY não é CNH.</p>
+          <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; Δ dia (R$) do cruzamento: razão atual menos a razão dos fechamentos anteriores das duas pontas. Não há PTAX oficial do yuan: a coluna mostra referência cruzada (PTAX do dólar ÷ USD/CNH no horário do boletim), só com cotações das duas pontas a até 15 min dele. CNY não é CNH.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
             <b>{q?.source || c.code}/BRL:</b> <span className={quoteAgeState(q) ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : quoteAgeState(q) ? quoteAgeState(q) + ' · ' : '') + dataTimestamp(q.timestamp)}</span>
             {' · '}{q ? q.fallback ? 'BCE · referência diária' : q.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}

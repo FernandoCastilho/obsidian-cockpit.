@@ -70,9 +70,14 @@ async function fetchCnhCross(brl, preloaded, signal) {
   const cnh = preloaded ?? (await getJson(`${BASE}/USD-CNH`, 'USD-CNH', signal)).USDCNH
   if (!toQuote(brl, 'USD') || !toQuote(cnh, 'CNH')) throw new Error('USD-CNH: resposta sem cotação válida')
   const n = Number
+  // Variação absoluta do cruzamento: fechamento anterior de cada ponta (bid − varBid) e mesma razão; sem a das duas pontas, fica ausente.
+  const legs = [brl.varBid, cnh.varBid].every((v) => v !== '' && v != null && Number.isFinite(n(v)))
+  const previous = legs ? (n(brl.bid) - n(brl.varBid)) / (n(cnh.ask) - n(cnh.varBid)) : NaN
+  const delta = Number.isFinite(previous) && previous > 0 ? n(brl.bid) / n(cnh.ask) - previous : null
   return {
     source: 'CNH',
     cross: true,
+    delta,
     bid: n(brl.bid) / n(cnh.ask),
     ask: n(brl.ask) / n(cnh.bid),
     high: n(brl.high) / n(cnh.low),
