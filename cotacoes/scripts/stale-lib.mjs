@@ -2,7 +2,7 @@
 const LABELS = {
   macro: { cdi: 'CDI', selic: 'Selic', sofr: 'SOFR', sofrAvg: 'médias da SOFR', focus: 'Boletim Focus', ptax: 'PTAX' },
   curves: { br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' },
-  indexadores: { TR: 'TR', TBF: 'TBF', TLP: 'TLP' },
+  indexadores: { TR: 'TR', TBF: 'TBF', TLP: 'TLP', TFB36: 'TFB 36 meses', TFB60: 'TFB 60 meses', TFB84: 'TFB 84 meses', TFB120: 'TFB 120 meses' },
   news: { USD: 'notícias do USD', EUR: 'notícias do EUR', JPY: 'notícias do JPY', CNH: 'notícias do CNH' },
 }
 
