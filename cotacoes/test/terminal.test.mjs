@@ -92,6 +92,13 @@ test('Brent da EIA entra na faixa com a data da observação e sem variação in
   assert.equal(items.at(-1).tone, 'flat')
 })
 
+test('Brent com série traz a variação do dia e entra nos indicadores do topo', () => {
+  const withPoints = { ...oil, points: [{ date: '2026-10-19', value: 118.82 }, { date: '2026-10-20', value: 115.22 }] }
+  assert.ok(Math.abs(brentItem(withPoints).change - (115.22 / 118.82 - 1) * 100) < 1e-9)
+  assert.equal(kpiItems(quotes, rates, withPoints).map((i) => i.key).join(), 'USDBRL,EURBRL,EURUSD,BRENT,selic,cdi,di1')
+  assert.equal(kpiItems(quotes, rates, withPoints).find((i) => i.key === 'BRENT').tone, 'down')
+})
+
 test('Brent inválido ou de outra série não entra', () => {
   assert.equal(brentItem(null), null)
   assert.equal(brentItem({ ...oil, kind: 'futures' }), null)
