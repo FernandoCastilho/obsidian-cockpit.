@@ -6,6 +6,7 @@ const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
@@ -37,7 +38,7 @@ import { useCurves } from './useCurves.js'
 import ParityChart from './ParityChart.jsx'
 const Projecoes = lazy(() => import('./Projecoes.jsx'))
 import { DISCLAIMER } from './whatsapp.js'
-import { MAX_DAYS, fromInput, historyRangeError, toInput, useHistory } from './useHistory.js'
+import { MAX_DAYS, fromInput, fullWindow, historyRangeError, toInput, useHistory } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
@@ -84,16 +85,7 @@ function Period({ range, preset, onPreset, onDates, day, onDay }) {
           <input type="date" id="dia" max={today} value={toInput(day)} onChange={(e) => e.target.value && onDay(e.target.value)} />
         </label>
       ) : (
-        <>
-      <label>
-        De
-        <input type="date" id="de" max={toInput(range.end)} value={toInput(range.start)} onChange={(e) => e.target.value && onDates(e.target.value, toInput(range.end))} />
-      </label>
-      <label>
-        Até
-        <input type="date" id="ate" max={today} min={toInput(range.start)} value={toInput(range.end)} onChange={(e) => e.target.value && onDates(toInput(range.start), e.target.value)} />
-      </label>
-        </>
+      <DateRangePicker label="Período do gráfico" start={toInput(range.start)} end={toInput(range.end)} max={today} min={toInput(fullWindow().start)} onChange={onDates} />
       )}
       </div>
     </div>

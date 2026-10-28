@@ -1,4 +1,5 @@
 import RefreshButton from './RefreshButton.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
 import Explain from './Explain.jsx'
@@ -59,14 +60,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
             </button>
           </header>
           <div className="period">
-            <label>
-              De
-              <input type="date" id="cdif-de" min={base} max={maxIso} value={rawFrom} onChange={(e) => e.target.value && setPick((p) => ({ ...p, from: e.target.value }))} />
-            </label>
-            <label>
-              Até
-              <input type="date" id="cdif-ate" min={base} max={maxIso} value={rawTo} onChange={(e) => e.target.value && setPick((p) => ({ ...p, to: e.target.value }))} />
-            </label>
+            <DateRangePicker label="Período do CDI futuro" start={rawFrom} end={rawTo} min={base} max={maxIso} onChange={(from, to) => setPick({ from, to })} />
           </div>
           {adjusted && <p className="status stale">Datas ajustadas: a curva vale de {dm(base)} (data-base) a {dm(maxIso)} (último vértice). Mostrando {dm(from)} a {dm(to)}.</p>}
           {term != null ? (

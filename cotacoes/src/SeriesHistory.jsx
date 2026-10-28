@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import ChartFilters from './ChartFilters.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import Expandable from './Expandable.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
 import { contextDate } from './marketContext.js'
@@ -33,10 +34,7 @@ export default function SeriesHistory({ item, points, onClose }) {
           <ChartFilters>
             <div className="summary-period-controls">
               <div className="seg" role="group" aria-label="Período da referência">{PRESETS.map(([v, l]) => <button key={v} type="button" aria-pressed={!custom && preset === v} onClick={() => { setCustom(null); setPreset(v) }}>{l}</button>)}</div>
-              <div className="summary-dates">
-                <label>De <input aria-label="Início do período" type={daily ? 'date' : 'month'} min={list[0].period} max={list.at(-1).period} value={range.start} onChange={(e) => e.target.value && setCustom({ ...range, start: e.target.value })} /></label>
-                <label>Até <input aria-label="Fim do período" type={daily ? 'date' : 'month'} min={list[0].period} max={list.at(-1).period} value={range.end} onChange={(e) => e.target.value && setCustom({ ...range, end: e.target.value })} /></label>
-              </div>
+              <DateRangePicker label="Período da referência" mode={daily ? 'day' : 'month'} start={range.start} end={range.end} min={list[0].period} max={list.at(-1).period} onChange={(start, end) => setCustom({ start, end })} />
             </div>
             {bad && <p role="alert">O início não pode ser posterior ao fim.</p>}
           </ChartFilters>

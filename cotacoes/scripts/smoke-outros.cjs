@@ -35,6 +35,14 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await d.locator('.chart-filters').count(), 1, 'filtros num bloco só, acima do gráfico')
       await d.getByRole('group', { name: 'Período do indicador' }).getByRole('button', { name: 'Tudo' }).click()
       await d.locator('.plot svg').first().waitFor()
+      // período mensal no mesmo seletor de intervalo: grade de meses; dois cliques aplicam
+      assert.equal(await d.locator('input[type="month"], input[type="date"]').count(), 0)
+      const trig = d.getByRole('button', { name: /^Período do indicador: de .* a .*Abrir calendário$/ }); await trig.click()
+      const cal = d.getByRole('dialog', { name: 'Período do indicador: calendário' }); await cal.waitFor()
+      assert.equal(await cal.locator('.drp-grid-months .drp-cell').count(), 12)
+      const ms = cal.locator('.drp-cell:not(:disabled)'); await ms.first().click(); await ms.last().click()
+      await cal.waitFor({ state: 'hidden' })
+      assert.match(await trig.innerText(), /^[a-zç]{3}\/\d{2} → [a-zç]{3}\/\d{2}$/)
       await p.keyboard.press('Escape'); await d.waitFor({ state: 'hidden' })
       // frete marítimo: mesma tabela; a linha abre o gráfico
       await p.goto(base + '/#cenarios/frete')
