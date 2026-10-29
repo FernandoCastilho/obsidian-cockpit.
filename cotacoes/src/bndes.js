@@ -1,4 +1,6 @@
-// Apresentação da Taxa Fixa do BNDES (TFB): arquivo bndes.json (série diária em % a.a. por prazo e dias até a liberação dos recursos).
+// Apresentação da Taxa Fixa do BNDES (TFB) e da TLP: arquivo bndes.json (TFB: série diária em % a.a. por prazo e dias até a liberação
+// dos recursos; TLP: série mensal do SGS do Banco Central em % a.a.).
+import { tlpNextRelease } from './indexadores.js'
 export const PRAZOS = [36, 60, 84, 120]
 export const LIBERACOES = [30, 90]
 export const PRAZO_LABEL = { 36: 'até 36 meses', 60: '36 a 60 meses', 84: '60 a 84 meses', 120: '84 a 120 meses' }
@@ -35,4 +37,14 @@ export function bndesRows(data) {
     const [date, value] = points.at(-1)
     return { ...base, date, value, text: `${nf(value)}% a.a.`, day: change(value, points.length > 1 ? points.at(-2) : null), month: change(value, atOrBefore(points, shiftMonths(date, -1))), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[key] ?? null }
   }))
+}
+
+export const TLP_DEFINICAO = 'Taxa de Longo Prazo. Custo financeiro de referência do BNDES no lugar da TJLP, ligado às taxas de mercado dos títulos públicos (NTN-B). Vale o mês inteiro, em % ao ano; a taxa final do cliente ainda soma os spreads do BNDES e do agente financeiro.'
+
+// TLP mais recente, variação contra o mês anterior e contra 12 meses antes, e a próxima divulgação; null quando não há série.
+export function tlpView(data, now = Date.now()) {
+  const points = Array.isArray(data?.tlp?.points) ? data.tlp.points : []
+  if (!points.length) return null
+  const [date, value] = points.at(-1)
+  return { points, date, value, text: `${nf(value)}% a.a.`, month: change(value, points.length > 1 ? points.at(-2) : null), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.TLP ?? null, nextRelease: tlpNextRelease(now) }
 }
