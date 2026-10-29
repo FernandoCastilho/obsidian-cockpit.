@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, cupomCambial, custoMedio, jurosAnuais, jurosDeUmDia, premioCds } from '../src/educacao.js'
+import { CONCEITOS, CONEXAO, cupomCambial, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
-test('os cinco conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'cds'])
+test('os seis conceitos pedidos existem, com ids únicos', () => {
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'cds'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -22,7 +22,7 @@ test('cada conceito traz frase, explicação simples, lacunas, versão precisa, 
     assert.ok(c.noApp.texto.length > 10 && ['juros'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
-  assert.equal(CONEXAO.itens.length, 4)
+  assert.equal(CONEXAO.itens.length, 5)
 })
 
 test('contas dos exemplos', () => {
@@ -32,10 +32,15 @@ test('contas dos exemplos', () => {
   assert.equal(jurosAnuais(200_000, 0.03, 0.01), 8000)
   assert.ok(Math.abs(custoMedio([{ valor: 60, custo: 0.14 }, { valor: 30, custo: 0.13 }, { valor: 10, custo: 0 }]) - 0.123) < 1e-12)
   assert.equal(premioCds(10_000_000, 200), 200_000)
+  assert.ok(Math.abs(diferencialDeJuros(0.14, 0.04) - 0.0961538) < 1e-6)
+  assert.ok(Math.abs(dolarDeEquilibrio({ spot: 5, brl: 0.14, usd: 0.04 }) - 5.480769) < 1e-6)
+  assert.equal(diferencialDeJuros(0.05, 0.05), 0)
   assert.ok(Number.isNaN(custoMedio([])))
 })
 
 test('o texto exibido traz os mesmos números das contas', () => {
+  assert.match(text(byId('diferencial-de-juros').exemplo), /9,62%/)
+  assert.match(text(byId('diferencial-de-juros').exemplo), /5,48/)
   assert.match(text(byId('cupom-cambial').exemplo), /3,64%/)
   assert.match(text(byId('cupom-cambial').exemplo), /8,57%/)
   assert.match(text(byId('sofr').exemplo), /119,44/)

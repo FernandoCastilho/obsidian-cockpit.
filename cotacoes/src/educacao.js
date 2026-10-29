@@ -6,6 +6,12 @@ const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, m
 // Paridade coberta de juros: (1 + i_BRL) = (1 + i_USD) × F / S  →  i_USD = (1 + i_BRL) × S / F − 1 (taxas anuais compostas, para o exemplo).
 export const cupomCambial = ({ spot, futuro, di }) => ((1 + di) * spot) / futuro - 1
 
+// Diferencial de juros entre duas moedas, composto: (1 + i_BRL) ÷ (1 + i_USD) − 1 (taxas anuais). A conta rápida, i_BRL − i_USD, é uma aproximação.
+export const diferencialDeJuros = (brl, usd) => (1 + brl) / (1 + usd) - 1
+
+// Dólar futuro de equilíbrio (paridade coberta): à vista × (1 + i_BRL) ÷ (1 + i_USD). Acima dele, quem aplicou em reais perde para o câmbio.
+export const dolarDeEquilibrio = ({ spot, brl, usd }) => (spot * (1 + brl)) / (1 + usd)
+
 // Juros de um dia de um empréstimo overnight, convenção ACT/360 (a da SOFR).
 export const jurosDeUmDia = (principal, taxaAnual) => (principal * taxaAnual) / 360
 
@@ -21,6 +27,7 @@ export const custoMedio = (fontes) => {
 // Prêmio anual de um CDS: spread em pontos-base × valor protegido (100 pb = 1% ao ano).
 export const premioCds = (nocional, pontosBase) => (nocional * pontosBase) / 10000
 
+const EX_DIFERENCIAL = { brl: 0.14, usd: 0.04, spot: 5 }
 const EX_CUPOM = { spot: 5, futuro: 5.5, di: 0.14 }
 const EX_CUPOM_2 = { spot: 5, futuro: 5.25, di: 0.14 }
 const EX_SOFR = { principal: 1_000_000, taxa: 0.043 }
@@ -32,6 +39,44 @@ const money = (v, sym) => `${sym} ${nf(v, 0)}`
 const pct = (f, d = 2) => `${nf(f * 100, d)}%`
 
 export const CONCEITOS = [
+  {
+    id: 'diferencial-de-juros',
+    nome: 'Diferencial de juros',
+    frase: 'É a diferença entre a taxa de juros de duas moedas (ou países), por exemplo o juro em reais menos o juro em dólares.',
+    crianca: [
+      'Se aplicar dinheiro no Brasil rende 14% ao ano e nos Estados Unidos rende 4%, o Brasil paga mais. Essa distância é o diferencial de juros.',
+      'Quem toma dinheiro emprestado onde o juro é baixo e aplica onde é alto parece ganhar a diferença. Essa operação se chama carry trade. Só que as moedas oscilam: se a moeda da aplicação perde valor, a vantagem encolhe ou vira prejuízo.',
+      'Por isso o mercado já embute o diferencial no dólar futuro. Quem trava o câmbio da volta (faz hedge) deixa de ter ganho extra sem risco: é a ideia da paridade coberta de juros, a mesma que dá origem ao cupom cambial.',
+    ],
+    analogia: 'É como dois bancos na mesma rua pagando taxas diferentes: o que paga mais atrai o dinheiro, mas, se para depositar você precisa trocar de moeda e ela cai, a vantagem pode sumir.',
+    lacunas: [
+      'Não é lucro garantido: o ganho só se mantém se a moeda da aplicação se desvalorizar menos do que o diferencial.',
+      'Diferencial nominal não é diferencial real: se a inflação dos dois países é diferente, o juro real entre eles também é.',
+      'Pela paridade descoberta de juros, o câmbio deveria se mover para compensar o diferencial; na prática isso falha no curto prazo (em geral, menos de um ano), e é aí que o carry trade encontra espaço (e também o risco).',
+    ],
+    preciso: {
+      texto: 'Com taxas anuais compostas i_BRL e i_USD, o diferencial exato é a razão dos fatores de juros. Na paridade coberta, ele é igual ao prêmio do dólar futuro sobre o à vista (F = dólar futuro, S = dólar à vista):',
+      formula: 'diferencial = (1 + i_BRL) ÷ (1 + i_USD) − 1 = F ÷ S − 1',
+    },
+    exemplo: (() => {
+      const d = diferencialDeJuros(EX_DIFERENCIAL.brl, EX_DIFERENCIAL.usd)
+      const f = dolarDeEquilibrio(EX_DIFERENCIAL)
+      return {
+        titulo: 'Conta com números redondos',
+        passos: [
+          `Juro em reais: ${pct(EX_DIFERENCIAL.brl, 0)} ao ano. Juro em dólares: ${pct(EX_DIFERENCIAL.usd, 0)} ao ano. Dólar à vista: R$ ${nf(EX_DIFERENCIAL.spot)}.`,
+          `Diferencial = (1 + ${nf(EX_DIFERENCIAL.brl)}) ÷ (1 + ${nf(EX_DIFERENCIAL.usd)}) − 1 = ${pct(d)} ao ano. A conta rápida, ${pct(EX_DIFERENCIAL.brl, 0)} − ${pct(EX_DIFERENCIAL.usd, 0)}, dá ${nf((EX_DIFERENCIAL.brl - EX_DIFERENCIAL.usd) * 100, 0)} pontos percentuais.`,
+          `Dólar de equilíbrio em 1 ano = ${nf(EX_DIFERENCIAL.spot)} × ${nf(EX_DIFERENCIAL.brl + 1)} ÷ ${nf(EX_DIFERENCIAL.usd + 1)} = R$ ${nf(f)}.`,
+        ],
+        resultado: `Se o dólar estiver abaixo de R$ ${nf(f)} em 1 ano, quem aplicou em reais ganhou mais do que aplicando em dólares; acima disso, o câmbio consumiu a vantagem.`,
+      }
+    })(),
+    noApp: { texto: 'Aba Juros: compare o DI (Brasil), os Treasuries (EUA) e o cupom cambial, que é esse diferencial já descontado do dólar futuro.', tab: 'juros' },
+    teste: {
+      pergunta: 'Se o juro em reais sobe e o juro em dólares fica igual, o diferencial sobe ou cai?',
+      resposta: 'Sobe. A vantagem de aplicar em reais aumenta, e o carry trade tende a ficar mais atrativo se o câmbio ficar estável. O risco de o dólar subir continua existindo.',
+    },
+  },
   {
     id: 'cupom-cambial',
     nome: 'Cupom cambial',
@@ -209,6 +254,7 @@ export const CONCEITOS = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    ['Diferencial de juros', 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.'],
     ['SOFR e Euribor', 'são os benchmarks de cada moeda: o preço “sem risco” do dinheiro em dólar e em euro.'],
     ['CDS', 'é o prêmio pelo risco de crédito: quanto mais alto, mais caro captar.'],
     ['Cupom cambial', 'é a ponte entre o juro em reais e o juro em dólar.'],

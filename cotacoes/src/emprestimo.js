@@ -17,13 +17,20 @@ export function parseDecimal(text) {
 // Taxa mensal efetiva: a.m. é usada como está; a.a. converte por juros compostos.
 export const monthlyRate = (rate, unit) => (unit === 'aa' ? (1 + rate / 100) ** (1 / 12) - 1 : rate / 100)
 
-// value em R$, n = meses (inteiro), rate em % (a.m. ou a.a.), system 'price' | 'sac' | 'bullet'.
-export function loan({ value, n, rate, unit = 'am', system }) {
+// IOF de crédito para pessoa jurídica: alíquota adicional única + alíquota diária por dia de cada parcela (até 365 dias).
+// Padrão do Decreto 12.499/2025 (0,38% + 0,0082% ao dia). As fontes consultadas divergem em detalhes (base e adicional);
+// por isso os dois percentuais são editáveis na tela. O prazo de cada parcela usa meses de 365/12 dias, pois a tela não pede datas.
+export const IOF_PJ = { fixed: 0.38, daily: 0.0082, maxDays: 365 }
+
+// value em R$, n = meses (inteiro), rate em % (a.m. ou a.a.), system 'price' | 'sac' | 'bullet'; iof = { fixed, daily } em %.
+export function loan({ value, n, rate, unit = 'am', system, iof = IOF_PJ }) {
   const missing = []
   if (!(value > 0)) missing.push('valor')
   if (!Number.isInteger(n) || n < 1 || n > 600) missing.push('prazo (1 a 600 meses)')
   if (!Number.isFinite(rate) || rate < 0 || rate > 1000) missing.push('taxa')
   if (!SYSTEMS.some((s) => s.id === system)) missing.push('sistema de amortização')
+  const fixed = iof?.fixed, daily = iof?.daily
+  if (![fixed, daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)) missing.push('alíquotas do IOF')
   if (missing.length) return { ok: false, missing }
   const i = monthlyRate(rate, unit)
   let installment, last = null, total
@@ -39,5 +46,13 @@ export function loan({ value, n, rate, unit = 'am', system }) {
     installment = null // sem parcelas periódicas
     total = value * (1 + i) ** n
   }
-  return { ok: true, system, n, monthly: i, installment, last, interest: total - value, total }
+  // IOF: principal de cada parcela × dias até o vencimento × alíquota diária (dias limitados a 365) + adicional único sobre o valor.
+  let bal = value, dailyBase = 0
+  for (let k = 1; k <= n; k++) {
+    const amort = system === 'bullet' ? (k === n ? value : 0) : system === 'sac' ? value / n : installment - bal * i
+    if (system !== 'bullet') bal -= amort
+    dailyBase += amort * Math.min(Math.round((k * 365) / 12), IOF_PJ.maxDays)
+  }
+  const iofDaily = (dailyBase * daily) / 100, iofFixed = (value * fixed) / 100, iofTotal = iofDaily + iofFixed
+  return { ok: true, system, n, monthly: i, installment, last, interest: total - value, iof: iofTotal, iofFixed, iofDaily, total: total + iofTotal }
 }
