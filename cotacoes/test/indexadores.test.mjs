@@ -80,3 +80,23 @@ test('indexRows mostra TFB com fonte BNDES e uma definição por família', () =
   assert.equal(rows.filter((x) => x.family === 'TFB').length, 4)
   assert.equal(rows.find((x) => x.key === 'TFB36').missing, true)
 })
+
+import { DIVULGACAO, dailyDue, lastBusinessDay, tlpNextRelease } from '../src/indexadores.js'
+test('divulgação: último dia útil do mês (TLP) e prazo de TR/TBF', () => {
+  assert.equal(lastBusinessDay(2026, 10), '2026-10-30') // 31/10/2026 é sábado
+  assert.equal(lastBusinessDay(2026, 12), '2026-12-31')
+  assert.equal(tlpNextRelease(Date.UTC(2026, 9, 29, 15)), '2026-10-30')
+  assert.equal(tlpNextRelease(Date.UTC(2026, 10, 2, 15)), '2026-11-30') // passou do último dia útil de outubro
+  assert.equal(tlpNextRelease(Date.UTC(2026, 11, 31, 15)), '2026-12-31')
+  assert.equal(dailyDue('2026-10-29'), '2026-10-30') // quinta -> sexta
+  assert.equal(dailyDue('2026-10-30'), '2026-11-03') // sexta -> terça (2/11 é Finados)
+  assert.ok(DIVULGACAO.TR.norm.includes('4.624') && DIVULGACAO.TLP.norm.includes('4.600'))
+})
+test('indexRows traz a regra e as datas de divulgação, também sem dado', () => {
+  const now = Date.UTC(2026, 9, 29, 15)
+  const rows = indexRows(buildIndexadores({ TR: tr, TLP: tlp }, [], NOW), now)
+  assert.match(rows.find((r) => r.key === 'TLP').release.detail, /próxima: 30\/10\/2026/)
+  assert.match(rows.find((r) => r.key === 'TR').release.detail, /divulgada até \d{2}\/\d{2}/)
+  assert.match(rows.find((r) => r.key === 'TBF').release.rule, /Diária/)
+  assert.match(rows.find((r) => r.key === 'TFB60').release.rule, /dia útil/)
+})

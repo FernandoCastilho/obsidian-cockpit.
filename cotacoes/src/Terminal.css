@@ -417,3 +417,5 @@ main.app .cen-nav { margin: 0 0 12px; }
 .kpi-name { display: inline-flex; align-items: center; gap: 6px; }
 .market-open b .flag { vertical-align: middle; margin-right: 4px; }
 .ind-table .market-open b .flag { margin-right: 4px; }
+main.app .idx-table .idx-rel { min-width: 220px; }
+main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a); }

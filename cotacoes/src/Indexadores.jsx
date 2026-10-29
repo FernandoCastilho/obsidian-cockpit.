@@ -18,7 +18,7 @@ export default function Indexadores() {
         <div className="idx-scroll" role="region" aria-label="Indexadores TR, TBF, TLP e TFB" tabIndex={0}>
           <table className="idx-table">
             <thead>
-              <tr><th scope="col">Indexador</th><th scope="col">Valor vigente</th><th scope="col">Equivalente</th><th scope="col">Vigência</th><th scope="col">Fonte</th></tr>
+              <tr><th scope="col">Indexador</th><th scope="col">Valor vigente</th><th scope="col">Equivalente</th><th scope="col">Vigência</th><th scope="col">Divulgação</th><th scope="col">Fonte</th></tr>
             </thead>
             <tbody>
               {rows.map((r) => (
@@ -27,6 +27,7 @@ export default function Indexadores() {
                   <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
                   <td className="num">{r.annualText ?? '—'}</td>
                   <td>{r.missing ? '—' : r.period}</td>
+                  <td className="idx-rel">{r.release.rule}<small>{r.release.detail ?? r.release.norm}</small>{r.release.detail && <small>{r.release.norm}</small>}</td>
                   <td>{r.missing ? '—' : <>{r.sourceText}{r.stale && <em className="old"> · dado anterior ({dmy(r.stale)})</em>}</>}</td>
                 </tr>
               ))}
@@ -39,7 +40,7 @@ export default function Indexadores() {
           <div key={r.family}><dt>{r.family}</dt><dd>{r.definition}</dd></div>
         ))}
       </dl>
-      <Aviso title="Indexadores · TR, TBF, TLP e TFB"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. TLP e TFB vêm em % ao ano. TR, TBF e TLP: Banco Central (SGS). TFB: serviço de taxas do BNDES (códigos TFB_36_30 a TFB_120_30; liberação em até 30 dias); o BNDES não publica TFC por esse serviço. Atualizado a cada coleta horária.</p></Aviso>
+      <Aviso title="Indexadores · TR, TBF, TLP e TFB"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. TLP e TFB vêm em % ao ano. TR, TBF e TLP: Banco Central (SGS). TFB: serviço de taxas do BNDES (códigos TFB_36_30 a TFB_120_30; liberação em até 30 dias); o BNDES não publica TFC por esse serviço. A coluna Divulgação traz a regra de publicação (Res. CMN 4.624/2018 para TR e TBF; 4.600/2017 para a TLP) e as datas calculadas com o calendário de feriados do Brasil. Atualizado a cada coleta horária.</p></Aviso>
     </Panel>
   )
 }
