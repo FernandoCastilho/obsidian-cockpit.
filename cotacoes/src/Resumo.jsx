@@ -551,7 +551,7 @@ export function MoveAgenda({ goto, colors }) {
             heads.map((n) => (
               <li key={n.code + n.link}>
                 <a href={n.link} target="_blank" rel="noopener noreferrer">
-                  <span className="dotbadge" style={{ background: colors[n.code] }}>{n.code}</span>
+                  <span className="dotbadge" style={{ background: colors[n.code] ?? 'var(--amber)' }}>{n.code === 'MERCADO' ? 'MKT' : n.code}</span>
                   <span className="list-text">
                     <b>{n.title}</b>
                     <small className="muted">{n.source} · {ago(n.t)}{n.original ? ' · traduzida' : ''}</small>

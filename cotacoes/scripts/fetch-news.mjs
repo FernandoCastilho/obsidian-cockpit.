@@ -1,7 +1,7 @@
 // Coleta manchetes por moeda e grava public/news.json. Rodado pelo GitHub Actions a cada hora.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fillNewsFromPrevious, loadPrevious } from './prev-lib.mjs'
-import { GTX, balance, canonicalSource, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, pick, splitBatch } from './news-lib.mjs'
+import { GTX, MARKET_QUERIES, balance, canonicalSource, freshOnly, fromLingva, fromMyMemory, googleUrl, gtxBody, isEnglish, lingvaUrl, myMemoryUrl, parseRss, pick, splitBatch } from './news-lib.mjs'
 
 const SITES = {
   valor: 'site:valor.globo.com',
@@ -114,6 +114,23 @@ for (const [code, [pt, en]] of Object.entries(TOPICS)) {
   news[code] = balance(all, 5).map((it) => ({ title: it.title, link: it.link, source: it.source, t: it.t }))
   console.log(code, news[code].length, 'manchetes')
 }
+
+// "Mercado hoje" (Valor Econômico e demais veículos): janela de 2 dias, sem matéria com mais de 3 dias.
+const marketAll = []
+for (const g of [{ id: 'valor', limit: 8, site: SITES.valor, queries: MARKET_QUERIES }, { id: 'google', limit: 4, site: '', queries: MARKET_QUERIES.slice(0, 2) }]) {
+  const items = []
+  for (const q of g.queries) {
+    try {
+      items.push(...parseRss(await get(googleUrl(g.site ? `${q} ${g.site}` : q, 'pt', '2d'))))
+    } catch (e) {
+      errors.push(`MERCADO/${g.id}: ${e.message}`)
+    }
+    await sleep(400)
+  }
+  for (const it of pick(freshOnly(items), g.limit)) marketAll.push({ title: it.title, link: it.link, source: canonicalSource(it), t: it.t, via: g.id })
+}
+news.MERCADO = balance(marketAll, 8).map((it) => ({ title: it.title, link: it.link, source: it.source, t: it.t }))
+console.log('MERCADO', news.MERCADO.length, 'manchetes')
 
 const translated = await translateAll(Object.values(news).flat().map((n) => n.title))
 for (const n of Object.values(news).flat()) {

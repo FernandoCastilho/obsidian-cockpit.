@@ -8,6 +8,11 @@ for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
   points.push({ period: `${y}-${String(m).padStart(2, '0')}`, mom: +mom.toFixed(2), ytd: +(mom * m).toFixed(2), y12: +(mom * 12).toFixed(2), index: +index.toFixed(2) })
 }
 const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/1737', checkedAt: new Date().toISOString(), stale: false, points } }
+const grp = (id, name, a, b) => ({ id, name, byPeriod: { '2026-08': a, '2026-09': b } })
+const ipcaGroups = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca-groups', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/7060', checkedAt: new Date().toISOString(), stale: false, periods: ['2026-08', '2026-09'], groups: [
+  grp(7169, 'Índice geral', { mom: 0.2, weight: 100, ytd: 3, y12: 4.5 }, { mom: 0.5, weight: 100, ytd: 3.5, y12: 4.7 }),
+  grp(7170, 'Alimentação e bebidas', { mom: 0.2, weight: 21 }, { mom: 1.0, weight: 21.5, y12: 6 }),
+  grp(7625, 'Transportes', { mom: 0.1, weight: 20 }, { mom: -0.5, weight: 20, y12: 3 })] } }
 const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'freight-jp-sppi', unit: 'pontos · média de 2020 = 100', frequency: 'monthly', sourceName: 'Banco do Japão (fixture de teste)', sourceUrl: 'https://www.boj.or.jp/en/statistics/pi/sppi_2020/index.htm', checkedAt: new Date().toISOString(), stale: false, releaseDate: null,
   points: Array.from({ length: 40 }, (_, i) => ({ period: `${2023 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`, value: 100 + i * 1.5 })) } }
 const monthly = (v0) => Array.from({ length: 60 }, (_, i) => { const d = new Date(Date.UTC(2026, 8, 15)); d.setUTCMonth(d.getUTCMonth() - (59 - i)); return { period: d.toISOString().slice(0, 7), value: +(v0 * (1 + 0.1 * Math.sin(i / 8) + i / 600)).toFixed(2) } })
@@ -21,6 +26,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
+      await p.route('**/ipca-groups.json*', (r) => r.fulfill({ json: ipcaGroups }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
       // Cenários › Projeções: sinais ▲ ▼ = de cada banco contra o FOCUS, linha a linha
       await p.route('**/macro.json*', (r) => r.fulfill({ json: { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], sofrAvg: [], ptax: {}, ptaxHist: {}, focus: { date: '2026-10-26', rows: [
@@ -55,6 +61,18 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await table.waitFor()
       assert.equal(await table.locator('tbody').count(), 4, 'quatro leituras do IPCA')
       assert.match(await table.innerText(), /Acumulado em 12 meses/)
+      // quadro abaixo de Inflação · IPCA: grupos do índice e fatores fora dele
+      const infl = p.locator('section.infl'); await infl.waitFor()
+      assert.ok((await infl.boundingBox()).y > (await table.boundingBox()).y, 'quadro abaixo da tabela do IPCA')
+      const g = infl.locator('table').first()
+      assert.equal(await g.locator('tbody tr').count(), 3)
+      assert.match(await g.innerText(), /Alimentação e bebidas[\s\S]*\+0,22[\s\S]*Transportes[\s\S]*−0,10/)
+      assert.equal(await g.getByRole('img', { name: 'acima do mês anterior' }).count(), 2, 'geral e alimentação aceleram; transportes cai')
+      assert.equal(await g.getByRole('img', { name: 'abaixo do mês anterior' }).count(), 1)
+      assert.match(await infl.locator('p.infl-summary').innerText(), /maior pressão veio de Alimentação e bebidas[\s\S]*maior alívio, de Transportes/)
+      const ft = infl.locator('table.infl-factors')
+      for (const label of ['Câmbio', 'Petróleo', 'Soja', 'Milho', 'Expectativas', 'Juros']) await ft.getByRole('rowheader', { name: new RegExp(label) }).waitFor()
+      assert.match(await ft.locator('tr', { hasText: 'Expectativas' }).innerText(), /4,50%.*meta 3,0%/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await p.getByRole('button', { name: 'Acumulado em 12 meses: abrir gráfico' }).click()
       const d = p.getByRole('dialog', { name: /histórico de IPCA/ })

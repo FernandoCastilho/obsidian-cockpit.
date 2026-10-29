@@ -106,6 +106,10 @@ jobs:
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-ipca.mjs
         timeout-minutes: 2
+      - name: Coletar IPCA por grupos (IBGE)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-ipca-groups.mjs
+        timeout-minutes: 2
       - name: Coletar calendário econômico (Forex Factory, BLS, BEA e Fed)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-calendar.mjs

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Aviso } from './Avisos.jsx'
 import IndicatorHistory from './IndicatorHistory.jsx'
+import InflacaoPesos from './InflacaoPesos.jsx'
 import IndicatorTable from './IndicatorTable.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import { useDataFile } from './useDataFile.js'
@@ -11,7 +12,7 @@ const sgn = (v, d, unit = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.ab
 const monthName = (period) => new Date(`${period}-15T12:00:00Z`).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric', timeZone: 'UTC' }).replace('.', '')
 
 // Cenários › Outros: quadro de indicadores que não cabem nos demais assuntos. Hoje: IPCA oficial do IBGE, com o histórico completo.
-export default function Outros() {
+export default function Outros({ macro }) {
   const file = useDataFile('ipca.json')
   const parsed = useMemo(() => { try { return file.data ? normalizeIpca(file.data) : null } catch { return null } }, [file.data])
   const rows = useMemo(() => (parsed ? ipcaRows(parsed) : []), [parsed])
@@ -34,7 +35,7 @@ export default function Outros() {
   })
   return (
     <div className="outros" aria-labelledby="outros-title" role="region">
-      <div className="ctx-head"><h2 id="outros-title">Outros</h2><RefreshButton files={['ipca.json']} label="IPCA (IBGE)" /></div>
+      <div className="ctx-head"><h2 id="outros-title">Outros</h2><RefreshButton files={['ipca.json', 'ipca-groups.json', 'oil.json', 'commodities.json', 'macro.json']} label="Inflação" /></div>
       <h3>Inflação · IPCA</h3>
       {!parsed && <p role="status">{failed ? 'Não foi possível carregar o IPCA. Tente novamente mais tarde.' : 'Carregando IPCA…'}</p>}
       {parsed && (
@@ -50,6 +51,7 @@ export default function Outros() {
           <Aviso title="IPCA · fonte e método"><p className="ind-note">IPCA do IBGE (Sistema Nacional de Índices de Preços ao Consumidor Amplo), tabela 1737 do SIDRA, série completa desde dez/1979. Variação mensal, acumulados no ano e em 12 meses e número-índice (dez/1993 = 100) são os valores divulgados pelo IBGE, sem recálculo. Em Variação, os percentuais são diferença em pontos percentuais; no número-índice, variação relativa. Conferência: {new Date(parsed.checkedAt).toLocaleDateString('pt-BR')}. <a href={parsed.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: IBGE ↗</a></p></Aviso>
         </>
       )}
+      <InflacaoPesos macro={macro} />
       {row && (
         <IndicatorHistory
           item={{ id: row.metric.id, label: `IPCA · ${row.metric.label}`, unit: row.metric.unit, decimals: row.metric.decimals, sourceUrl: parsed.sourceUrl, sourceName: parsed.sourceName, checkedAt: parsed.checkedAt }}

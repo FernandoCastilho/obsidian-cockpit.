@@ -32,13 +32,14 @@ export function rateTiles(macro, curves) {
   return out
 }
 
-// Manchete mais recente de cada moeda (notícias já traduzidas), uma por moeda.
-export function topHeadlines(news, codes = ['USD', 'EUR', 'JPY', 'CNH']) {
-  return codes
+// Manchetes do mercado hoje (as `market` mais recentes) e, depois, a mais recente de cada moeda (já traduzidas), uma por moeda.
+export function topHeadlines(news, codes = ['USD', 'EUR', 'JPY', 'CNH'], market = 3) {
+  const hot = [...(news?.news?.MERCADO ?? [])].sort((a, b) => (b.t ?? 0) - (a.t ?? 0)).slice(0, market).map((n) => ({ code: 'MERCADO', ...n }))
+  return [...hot, ...codes
     .map((code) => {
       const items = news?.news?.[code] ?? []
       const best = items.reduce((b, n) => (!b || (n.t ?? 0) > (b.t ?? 0) ? n : b), null)
       return best ? { code, ...best } : null
     })
-    .filter(Boolean)
+    .filter(Boolean)]
 }

@@ -49,10 +49,17 @@ export function pick(items, limit) {
   return out
 }
 
-export const googleUrl = (q, lang) => {
+// when: janela da busca do Google Notícias ('7d' por moeda; '2d' para "o que move o mercado hoje").
+export const googleUrl = (q, lang, when = '7d') => {
   const p = lang === 'en' ? 'hl=en-US&gl=US&ceid=US:en' : 'hl=pt-BR&gl=BR&ceid=BR:pt-419'
-  return `https://news.google.com/rss/search?q=${encodeURIComponent(`${q} when:7d`)}&${p}`
+  return `https://news.google.com/rss/search?q=${encodeURIComponent(`${q} when:${when}`)}&${p}`
 }
+
+// "Mercado hoje": o que está movendo o mercado financeiro (bolsa, dólar, juros, petróleo, Fed), não ligado a uma moeda só.
+export const MARKET_QUERIES = ['mercado financeiro Ibovespa dólar juros', 'bolsa petróleo Fed dólar Treasuries', 'juros futuros Selic inflação Copom']
+
+// Descarta o que é mais velho que maxAgeMs (a busca do Google às vezes devolve matérias antigas quando há pouco assunto novo).
+export const freshOnly = (items, now = Date.now(), maxAgeMs = 3 * 864e5) => items.filter((it) => it.t > 0 && now - it.t <= maxAgeMs)
 
 // ---- Tradução para português (Brasil) ----
 
