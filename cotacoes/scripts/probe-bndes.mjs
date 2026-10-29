@@ -1,21 +1,19 @@
 const H = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36', accept: '*/*' }
 const ORI = 'https://www.bndes.gov.br'
-const text = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
-async function page(u) {
+async function get(path) {
   try {
-    const r = await fetch(u.startsWith('http') ? u : ORI + u, { headers: { ...H, referer: ORI + '/' }, signal: AbortSignal.timeout(40000), redirect: 'follow' })
-    return { s: r.status, url: r.url, b: new TextDecoder('latin1').decode(await r.arrayBuffer()) }
-  } catch (e) { return { s: 0, b: '', err: e.message } }
+    const r = await fetch(ORI + path, { headers: { ...H, referer: ORI + '/' }, signal: AbortSignal.timeout(30000) })
+    const t = await r.text()
+    const lines = t.split(/\r?\n/).filter(Boolean)
+    return { s: r.status, n: lines.length, first: lines[1], last: lines.at(-1), head: lines[0] }
+  } catch (e) { return { err: e.message } }
 }
-const cands = ['/SiteBNDES/bndes/bndes_pt/Galerias/Convivencia/Moedas_Contratuais/index.html', '/Moedas/', '/Moedas/index.html', '/Moedas/index.htm', '/Moedas/moedas.html', '/Moedas/moedas.txt', '/Moedas/codigos.txt', '/Moedas/lista.txt']
-for (const u of cands) {
-  const r = await page(u)
-  console.log(`\n######## ${u} -> http ${r.s} ${r.err ?? ''} bytes ${r.b.length} url ${r.url ?? ''}`)
-  if (r.s !== 200) continue
-  const t = text(r.b)
-  console.log('LINKS:', [...r.b.matchAll(/(?:href|src|action)=["']([^"']+)["']/gi)].map((m) => m[1]).filter((x) => !/^(#|javascript|mailto)/i.test(x)).slice(0, 60).join(' | '))
-  console.log('TFC:', JSON.stringify([...t.matchAll(/.{0,200}TFC.{0,300}/g)].slice(0, 6).map((m) => m[0])))
-  for (const c of ['143', '024', '236', '777', '604', 'C02']) console.log(`COD ${c}:`, JSON.stringify([...t.matchAll(new RegExp(`.{0,120}\\b${c}\\b.{0,160}`, 'g'))].slice(0, 3).map((m) => m[0])))
-  console.log('TEXTO:', t.slice(0, 3500))
+const codes = []
+for (let i = 1; i <= 26; i++) codes.push('C' + String(i).padStart(2, '0'))
+codes.push('TD1', 'TD2', 'TD3', 'TG1', 'TG2', 'TG3', 'TR1', 'TR2', 'TR3', 'TR4', 'TR5', 'TR6', 'TR7', 'TR8', '603', '602', '600', '601')
+for (const c of codes) {
+  let hit = null
+  for (const p of [`/Moedas/um${c}.txt`, `/Moedas/un${c}.txt`, `/Moedas/${c}.txt`]) { const r = await get(p); if (r.s === 200 && r.n > 1) { hit = [p, r]; break } }
+  console.log(hit ? `OK  ${hit[0]} linhas ${hit[1].n} | 1ª(topo): ${hit[1].first} | última: ${hit[1].last}` : `404 ${c}`)
 }
 console.log('### FIM')
