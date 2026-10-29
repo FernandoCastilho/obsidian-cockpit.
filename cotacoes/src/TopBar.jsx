@@ -32,11 +32,11 @@ function Clocks() {
 }
 
 // Barra superior do terminal (computador): marca, seções, relógios e estado dos dados.
-// Atalho: Alt+1 a Alt+8 trocam de seção (as teclas F1 a F12 ficam com o navegador).
+// Atalho: Alt+1 a Alt+9 trocam de seção (as teclas F1 a F12 ficam com o navegador).
 export default function TopBar({ tab, onTab, feed, feedAt }) {
   useEffect(() => {
     const onKey = (e) => {
-      if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-8]$/.test(e.key)) {
+      if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-9]$/.test(e.key)) {
         e.preventDefault()
         onTab(DESK_TABS[Number(e.key) - 1].id)
       }

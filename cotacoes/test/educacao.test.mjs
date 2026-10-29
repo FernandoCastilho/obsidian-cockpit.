@@ -67,8 +67,8 @@ test('o app não afirma ter dados que não tem (Euribor e CDS)', () => {
   assert.match(byId('cds').noApp.texto, /não exibe CDS/)
 })
 
-test('aba Aprender: comandos levam ao conceito certo e há 8 abas no terminal', () => {
-  assert.deepEqual(DESK_TABS.map((t) => t.id), ['resumo', 'juros', 'cenarios', 'noticias', 'calculadora', 'feriados', 'aprender', 'config'])
+test('aba Aprender: comandos levam ao conceito certo e há 9 abas no terminal', () => {
+  assert.deepEqual(DESK_TABS.map((t) => t.id), ['resumo', 'juros', 'cenarios', 'noticias', 'bndes', 'calculadora', 'feriados', 'aprender', 'config'])
   assert.deepEqual(parseCommand('cds'), { kind: 'tab', id: 'aprender', sub: 'cds' })
   assert.deepEqual(parseCommand('Cupom Cambial'), { kind: 'tab', id: 'aprender', sub: 'cupom-cambial' })
   assert.deepEqual(parseCommand('euribor'), { kind: 'tab', id: 'aprender', sub: 'euribor' })

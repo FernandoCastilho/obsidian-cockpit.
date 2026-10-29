@@ -25,6 +25,7 @@ import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
 const Aprender = lazy(() => import('./Aprender.jsx'))
 const Indexadores = lazy(() => import('./Indexadores.jsx'))
+const Bndes = lazy(() => import('./Bndes.jsx'))
 import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo, { MoveAgenda } from './Resumo.jsx'
@@ -285,6 +286,8 @@ export default function App() {
           {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros macro={macro} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
+
+      {tab === 'bndes' && <Bndes />}
 
       {tab === 'calculadora' && <Calculadora view={sub} onView={(v) => goto('calculadora', v)} />}
 
