@@ -9,6 +9,7 @@ export const DESK_TABS = [
   { id: 'juros', label: 'Juros' },
   { id: 'cenarios', label: 'Cenários' },
   { id: 'noticias', label: 'Notícias' },
+  { id: 'calculadora', label: 'Calculadoras' },
   { id: 'feriados', label: 'Feriados' },
   { id: 'aprender', label: 'Aprender' },
   { id: 'config', label: 'Config' },
@@ -30,6 +31,7 @@ const TAB = {
   ATIVIDADE: ['cenarios', 'atividade'], PMI: ['cenarios', 'atividade'], PAYROLL: ['cenarios', 'atividade'], EMPREGO: ['cenarios', 'atividade'],
   COMMODITIES: ['cenarios', 'commodities'], PETROLEO: ['cenarios', 'commodities'], BRENT: ['cenarios', 'commodities'], OURO: ['cenarios', 'commodities'],
   FRETE: ['cenarios', 'frete'],
+  CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'], GIRO: ['calculadora', 'giro'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
   FERIADOS: ['feriados'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
   APRENDER: ['aprender'], EDU: ['aprender'], EDUCACAO: ['aprender'], ESTUDAR: ['aprender'], CUPOM: ['aprender', 'cupom-cambial'], CUPOMCAMBIAL: ['aprender', 'cupom-cambial'], EURIBOR: ['aprender', 'euribor'], FUNDING: ['aprender', 'custo-de-funding'], CUSTODEFUNDING: ['aprender', 'custo-de-funding'], CDS: ['aprender', 'cds'],
@@ -153,5 +155,5 @@ export function ageText(ageMs) {
 }
 
 export const SHORTCUTS = [
-  ['Alt + 1 … 7', 'Mercado, Juros, Cenários, Notícias, Feriados, Aprender, Config'],
+  ['Alt + 1 … 8', 'Mercado, Juros, Cenários, Notícias, Calculadoras, Feriados, Aprender, Config'],
 ]
