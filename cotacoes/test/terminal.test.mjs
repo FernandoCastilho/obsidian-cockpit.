@@ -21,7 +21,7 @@ test('comandos: moedas, paridade e seções, com variações de escrita', () => 
   assert.deepEqual(parseCommand('EUR/USD'), { kind: 'pair' })
   assert.deepEqual(parseCommand('juros'), { kind: 'tab', id: 'juros', sub: '' })
   assert.deepEqual(parseCommand('Notícias'), { kind: 'tab', id: 'noticias', sub: '' })
-  assert.deepEqual(parseCommand('finimp'), { kind: 'tab', id: 'calculadora', sub: 'finimp' })
+  assert.deepEqual(parseCommand('finimp'), null) // comandos das calculadoras deixaram de existir
   assert.deepEqual(parseCommand('cenários'), { kind: 'tab', id: 'cenarios', sub: '' })
 })
 

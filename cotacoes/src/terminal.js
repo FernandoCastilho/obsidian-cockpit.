@@ -8,7 +8,6 @@ export const DESK_TABS = [
   { id: 'resumo', label: 'Mercado' },
   { id: 'juros', label: 'Juros' },
   { id: 'cenarios', label: 'Cenários' },
-  { id: 'calculadora', label: 'Calculadoras' },
   { id: 'noticias', label: 'Notícias' },
   { id: 'feriados', label: 'Feriados' },
   { id: 'aprender', label: 'Aprender' },
@@ -31,14 +30,12 @@ const TAB = {
   ATIVIDADE: ['cenarios', 'atividade'], PMI: ['cenarios', 'atividade'], PAYROLL: ['cenarios', 'atividade'], EMPREGO: ['cenarios', 'atividade'],
   COMMODITIES: ['cenarios', 'commodities'], PETROLEO: ['cenarios', 'commodities'], BRENT: ['cenarios', 'commodities'], OURO: ['cenarios', 'commodities'],
   FRETE: ['cenarios', 'frete'],
-  CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'],
-  FINIMP: ['calculadora', 'finimp'], SWAP: ['calculadora', 'finimpswap'], NCG: ['calculadora', 'ncg'], GIRO: ['calculadora', 'giro'], APLICACAO: ['calculadora', 'aplicacao'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
   FERIADOS: ['feriados'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
   APRENDER: ['aprender'], EDU: ['aprender'], EDUCACAO: ['aprender'], ESTUDAR: ['aprender'], CUPOM: ['aprender', 'cupom-cambial'], CUPOMCAMBIAL: ['aprender', 'cupom-cambial'], EURIBOR: ['aprender', 'euribor'], FUNDING: ['aprender', 'custo-de-funding'], CUSTODEFUNDING: ['aprender', 'custo-de-funding'], CDS: ['aprender', 'cds'],
 }
 
-// "USDBRL Curncy", "usd/brl", "dólar", "juros <GO>", "finimp" → destino, ou null se o comando não existe.
+// "USDBRL Curncy", "usd/brl", "dólar", "juros <GO>" → destino, ou null se o comando não existe.
 export function parseCommand(text) {
   const key = norm(text)
   if (!key) return null
@@ -156,5 +153,5 @@ export function ageText(ageMs) {
 }
 
 export const SHORTCUTS = [
-  ['Alt + 1 … 8', 'Mercado, Juros, Cenários, Calculadoras, Notícias, Feriados, Aprender, Config'],
+  ['Alt + 1 … 7', 'Mercado, Juros, Cenários, Notícias, Feriados, Aprender, Config'],
 ]

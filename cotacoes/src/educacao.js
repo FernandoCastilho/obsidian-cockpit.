@@ -64,7 +64,7 @@ export const CONCEITOS = [
         resultado: `Cupom de ${pct(a)} ao ano: quase todo o juro do real foi “consumido” pela alta esperada do dólar.`,
       }
     })(),
-    noApp: { texto: 'Aba Juros, “Brasil · Cupom cambial” (curva DI x dólar da B3). Também entra na calculadora FINIMP + swap.', tab: 'juros' },
+    noApp: { texto: 'Aba Juros, “Brasil · Cupom cambial” (curva DI x dólar da B3).', tab: 'juros' },
     teste: {
       pergunta: 'Se o dólar futuro sobe e o DI fica igual, o cupom cambial sobe ou cai?',
       resposta: 'Cai. O dólar futuro está no denominador: quanto maior o F, menor o cupom. Mais do juro do real passa a ser compensação cambial.',
@@ -166,7 +166,7 @@ export const CONCEITOS = [
         resultado: `Custo de funding de ${pct(c, 1)} ao ano e margem bruta de ${nf((EX_FUNDING.taxaEmprestimo - c) * 100, 1)} p.p.`,
       }
     })(),
-    noApp: { texto: 'Calculadoras: FINIMP + swap CDI (custo em dólar convertido em reais) e Capital de giro. A curva DI, em Juros, é o benchmark em reais.', tab: 'calculadora' },
+    noApp: { texto: 'A curva DI, em Juros, é o benchmark em reais; o cupom cambial, na mesma aba, mostra o custo do dólar embutido nos juros.', tab: 'juros' },
     teste: {
       pergunta: 'Se o CDS do país sobe, o que tende a acontecer com o custo de funding externo de um banco brasileiro?',
       resposta: 'Tende a subir. O mercado passa a exigir um spread maior para financiar quem está no país percebido como mais arriscado.',

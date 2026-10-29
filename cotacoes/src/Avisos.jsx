@@ -47,7 +47,7 @@ export function AvisosProvider({ general, children }) {
   )
 }
 
-// Botão "i": pequeno e sem destaque; ganha um ponto âmbar só quando a tela tem aviso importante (ex.: calculadoras em validação).
+// Botão "i": pequeno e sem destaque; ganha um ponto âmbar só quando a tela tem aviso importante (ex.: dados em validação).
 export function AvisosButton({ className = '' }) {
   const { open, flag } = useContext(Ctx)
   return (
