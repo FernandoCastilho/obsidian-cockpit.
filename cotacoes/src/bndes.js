@@ -1,5 +1,5 @@
 // Apresentação da Taxa Fixa do BNDES (TFB) e da TLP: arquivo bndes.json (TFB: série diária em % a.a. por prazo e dias até a liberação
-// dos recursos; TLP: série mensal do SGS do Banco Central em % a.a.).
+// dos recursos; TLP: série mensal da moeda 777 do BNDES em % a.a.).
 import { tlpNextRelease } from './indexadores.js'
 export const PRAZOS = [36, 60, 84, 120]
 export const LIBERACOES = [30, 90]
@@ -43,7 +43,7 @@ export const TLP_DEFINICAO = 'Taxa de Longo Prazo. Custo financeiro de referênc
 
 // TLP mais recente, variação contra o mês anterior e contra 12 meses antes, e a próxima divulgação; null quando não há série.
 export function tlpView(data, now = Date.now()) {
-  const today = new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }) // o SGS já traz o mês seguinte no último dia útil
+  const today = new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }) // o BNDES já publica o mês seguinte no último dia útil
   const points = Array.isArray(data?.tlp?.points) ? data.tlp.points.filter((p) => p[0] <= today) : []
   if (!points.length) return null
   const [date, value] = points.at(-1)

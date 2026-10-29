@@ -31,7 +31,7 @@ export default function Bndes() {
 
   return (
     <div className="bn">
-      <Panel title="BNDES · taxas e moedas contratuais" note="BNDES e Banco Central" refresh={['bndes.json', 'moedas.json']}>
+      <Panel title="BNDES · taxas e moedas contratuais" note="BNDES" refresh={['bndes.json', 'moedas.json']}>
         <div className="seg bn-fam" role="group" aria-label="Família de séries">
           {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => setFamily(f.id)}>{f.label}</button>)}
         </div>

@@ -1,6 +1,7 @@
 // Taxa Fixa do BNDES (TFB): série diária em % a.a. por prazo do financiamento (36, 60, 84 e 120 meses) e dias até a liberação dos recursos
 // (30 e 90; o serviço devolve vazio para 60 e 404 para 120). Fonte: serviço público de taxas do BNDES, arquivo .txt com todo o histórico
 // ("data;<tab>valor", data dd/mm/aaaa e vírgula decimal). Sem dependências.
+import { parseMoeda } from './moedas-lib.mjs'
 export const PRAZOS = [36, 60, 84, 120]
 export const LIBERACOES = [30, 90]
 export const BNDES_SERIES = PRAZOS.flatMap((prazo) => LIBERACOES.map((liberacao) => ({ key: `TFB_${prazo}_${liberacao}`, prazo, liberacao })))
@@ -23,32 +24,20 @@ export function parseTxt(text) {
   return [...byDay].sort((a, b) => (a[0] < b[0] ? -1 : 1))
 }
 
-// TLP (Taxa de Longo Prazo): série mensal do SGS do Banco Central em % a.a., um valor por mês de vigência, desde 2018 (início da TLP).
-export const TLP_SGS = 27572
-export const tlpUrl = (now = Date.now()) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${TLP_SGS}/dados?formato=json&dataInicial=01/01/2018&dataFinal=${new Date(now).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`
-// [{data: 'dd/mm/aaaa', valor: '8.12'}] -> [[AAAA-MM-DD, valor]] em ordem crescente, sem linhas inválidas
-export function parseTlp(rows) {
-  const byDay = new Map()
-  for (const r of Array.isArray(rows) ? rows : []) {
-    const m = DATE.exec(String(r?.data ?? ''))
-    const value = Number(r?.valor)
-    const iso = m ? `${m[3]}-${m[2]}-${m[1]}` : ''
-    const real = new Date(`${iso}T12:00:00Z`)
-    if (!m || !Number.isFinite(value) || value <= 0 || value > 100 || Number.isNaN(+real) || real.toISOString().slice(0, 10) !== iso) continue
-    byDay.set(iso, value)
-  }
-  return [...byDay].sort((a, b) => (a[0] < b[0] ? -1 : 1))
-}
+// TLP (Taxa de Longo Prazo): série mensal em % a.a., um valor por mês de vigência, desde 2018 (início da TLP). Vem do arquivo da moeda 777
+// ("TLP - TAXA PRE-FIXADA") das Moedas Contratuais do BNDES, no mesmo servidor e formato das demais séries; o SGS devolvia XML de erro nas coletas.
+export const TLP_CODE = 777
+export const tlpUrl = () => `https://www.bndes.gov.br/Moedas/um${TLP_CODE}.txt`
 
-// results = { TFB_36_30: texto|null, ..., TLP: linhas do SGS|null } -> arquivo public/bndes.json (valores com 4 casas, para o arquivo ficar enxuto)
+// results = { TFB_36_30: texto|null, ..., TLP: texto|null } -> arquivo public/bndes.json (valores com 4 casas, para o arquivo ficar enxuto)
 export function buildBndes(results, errors = [], now = Date.now()) {
   const series = {}
   for (const s of BNDES_SERIES) {
     const points = parseTxt(results?.[s.key])
     if (points.length) series[s.key] = { prazo: s.prazo, liberacao: s.liberacao, points: points.map(([d, v]) => [d, Math.round(v * 1e4) / 1e4]) }
   }
-  const tlp = parseTlp(results?.TLP)
-  return { schemaVersion: 1, generatedAt: now, series, tlp: tlp.length ? { code: TLP_SGS, unit: 'a.a.', points: tlp } : null, errors }
+  const tlp = parseMoeda(results?.TLP).filter(([, v]) => v > 0 && v <= 100)
+  return { schemaVersion: 1, generatedAt: now, series, tlp: tlp.length ? { code: TLP_CODE, unit: 'a.a.', points: tlp } : null, errors }
 }
 
 // Série que falhou nesta coleta volta com o último dado publicado; `stale` guarda o instante da coleta original.
