@@ -1,4 +1,4 @@
-// Coleta a TFB (BNDES, 4 prazos x liberação em 30 e 90 dias) e a TLP (SGS do Banco Central) e grava public/bndes.json. Rodado a cada hora pelo GitHub Actions.
+// Coleta a TFB (BNDES, 4 prazos x liberação em 30 e 90 dias) e a TLP (arquivo da moeda 777 do BNDES) e grava public/bndes.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
 import { BNDES_SERIES, buildBndes, fillSeriesFromPrevious, tlpUrl, txtUrl } from './bndes-lib.mjs'
@@ -24,8 +24,7 @@ async function getText(url, label, tries = 3, accept = 'text/plain,*/*') {
 
 const results = {}
 for (const { key } of BNDES_SERIES) results[key] = await getText(txtUrl(key), key)
-const tlpText = await getText(tlpUrl(), 'TLP (SGS 27572)', 4, 'application/json')
-try { results.TLP = tlpText ? JSON.parse(tlpText) : null } catch (e) { errors.push(`TLP: ${e.message}`); results.TLP = null }
+results.TLP = await getText(tlpUrl(), 'TLP (moeda 777)')
 const out = fillSeriesFromPrevious(buildBndes(results, errors), await loadPrevious('bndes.json'))
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(new URL('../public/bndes.json', import.meta.url), `${JSON.stringify(out)}\n`)
