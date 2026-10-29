@@ -43,10 +43,10 @@ export default function News({ colors }) {
       )}
       {data && (
         <>
-          <div className="seg feed-filter" role="group" aria-label="Filtrar por moeda">
-            {['ALL', ...CURRENCIES.map((c) => c.code)].map((c) => (
+          <div className="seg feed-filter" role="group" aria-label="Filtrar por moeda ou mercado">
+            {['ALL', ...CURRENCIES.map((c) => c.code), 'MERCADO'].map((c) => (
               <button key={c} type="button" aria-pressed={filter === c} onClick={() => setFilter(c)}>
-                {c === 'ALL' ? 'Todas' : c}
+                {c === 'ALL' ? 'Todas' : c === 'MERCADO' ? 'Mercado hoje' : c}
               </button>
             ))}
           </div>

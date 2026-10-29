@@ -282,7 +282,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros macro={macro} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
 

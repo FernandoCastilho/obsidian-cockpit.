@@ -25,6 +25,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const freight = useDataFile('freight.json')
   const ipca = useDataFile('ipca.json')
   const calendar = useDataFile('calendar.json')
+  const ipcaGroups = useDataFile('ipca-groups.json')
   const freightJp = useDataFile('freight-jp.json')
   const rows = dataStatus(
     [
@@ -39,6 +40,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'freight-jp', label: 'Transporte marítimo Japão (Banco do Japão)', at: freightJp.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'ipca', label: 'IPCA (IBGE)', at: ipca.data?.generatedAt, maxAge: 72 * H, weekdays: true },
+      { key: 'ipca-groups', label: 'IPCA por grupos (IBGE)', at: ipcaGroups.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'calendar', label: 'Calendário econômico', at: calendar.data?.generatedAt, maxAge: 12 * H, weekdays: true },
     ],
     Date.now(),
@@ -46,7 +48,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'calendar.json']}>
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'ipca-groups.json', 'calendar.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>
