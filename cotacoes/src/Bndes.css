@@ -22,3 +22,9 @@
 }
 .bn-sub { margin:14px 0 6px; font-size:13px; color:var(--mut, #8a8a8a); font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
 .bn-grp { max-height:420px; overflow:auto; }
+.bn-fam { margin-bottom:6px; }
+.bn-obs-d { margin-top:10px; border-top:1px solid var(--line, #2a2a2a); }
+.bn-obs-d > summary, .bn-src > summary { cursor:pointer; min-height:44px; display:flex; align-items:center; color:var(--mut, #8a8a8a); font-size:13px; }
+.bn-obs-d > summary:hover, .bn-obs-d > summary:focus-visible, .bn-src > summary:hover, .bn-src > summary:focus-visible { color:var(--amber, #ffb000); }
+.bn-src { margin-top:6px; border-top:1px solid var(--line, #2a2a2a); }
+.bn-obs { max-height:320px; margin-top:0; }

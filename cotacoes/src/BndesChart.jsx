@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
@@ -8,17 +8,18 @@ const PRESETS = [[3, '3 meses'], [6, '6 meses'], [12, '12 meses'], [24, '2 anos'
 const tOf = (iso) => Date.parse(`${iso}T12:00:00Z`)
 const startFor = (last, months) => { const d = new Date(tOf(last)); d.setUTCMonth(d.getUTCMonth() - months); return d.toISOString().slice(0, 10) }
 
-// Gráfico de uma série [{period: AAAA-MM-DD, value}] com período (atalhos e intervalo), resumo do trecho e tabela de observações.
+// Gráfico de uma série [{period: AAAA-MM-DD, value}] com período (atalhos e intervalo, controlados por quem usa, para valer para todas as séries),
+// resumo do trecho e tabela de observações recolhida.
 // unit: '% a.a.' (taxa, variação em p.p.), '% no mês', 'R$' ou 'índice' (nível, variação em %).
-export default function SeriesChart({ list, name, code, label, kind, loading, decimals = 2, unit = '% a.a.' }) {
+export default function SeriesChart({ list, name, code, label, kind, loading, period, decimals = 2, unit = '% a.a.' }) {
   const nf = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
   const level = unit === 'R$' || unit === 'índice'
   const show = (v) => (unit === 'R$' ? `R$ ${nf(v)}` : level ? nf(v) : `${nf(v)}${unit === '% no mês' ? '% no mês' : '% a.a.'}`)
   const delta = (a, b) => (level ? `${b >= a ? '+' : '−'}${Math.abs((b / a - 1) * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%` : `${b >= a ? '+' : '−'}${nf(Math.abs(b - a))} p.p.`)
-  const [preset, setPreset] = useState(12)
-  const [custom, setCustom] = useState(null)
+  const { preset, setPreset, custom, setCustom } = period
   const [ref, width] = useWidth()
-  const range = custom ?? (list.length ? { start: preset === 'all' ? list[0].period : startFor(list.at(-1).period, preset), end: list.at(-1).period } : null)
+  // intervalo escolhido nas datas fica dentro da cobertura da série (as séries começam em anos diferentes)
+  const range = list.length ? (custom ? { start: custom.start < list[0].period ? list[0].period : custom.start, end: custom.end > list.at(-1).period ? list.at(-1).period : custom.end } : { start: preset === 'all' ? list[0].period : startFor(list.at(-1).period, preset), end: list.at(-1).period }) : null
   const bad = range && range.start > range.end
   const shown = useMemo(() => (range && !bad ? list.filter((p) => p.period >= range.start && p.period <= range.end) : []), [list, range?.start, range?.end, bad])
   const plot = useMemo(() => shown.map((p) => ({ t: tOf(p.period), bid: p.value })), [shown])
@@ -41,12 +42,15 @@ export default function SeriesChart({ list, name, code, label, kind, loading, de
           <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code={code} intraday={false} fmt={show} vfmt={(v) => nf(v)} label={name} labels /></div>
         </>
         : <p role="status">{bad ? 'Ajuste o período.' : 'Poucas observações no período; escolha um intervalo maior.'}</p>}
-      <div className="bn-scroll bn-obs" role="region" aria-label={`Observações da ${label} no período`} tabIndex={0}>
-        <table className="bn-table"><caption>{name} · observações do período (mais recentes primeiro, até 250)</caption>
-          <thead><tr><th scope="col">{kind === 'month' ? 'Vigência desde' : 'Data'}</th><th scope="col">{unit}</th></tr></thead>
-          <tbody>{[...shown].reverse().slice(0, 250).map((p) => <tr key={p.period}><th scope="row">{dmy(p.period)}</th><td className="num">{nf(p.value)}</td></tr>)}</tbody>
-        </table>
-      </div>
+      <details className="bn-obs-d">
+        <summary>Observações do período ({shown.length})</summary>
+        <div className="bn-scroll bn-obs" role="region" aria-label={`Observações da ${label} no período`} tabIndex={0}>
+          <table className="bn-table"><caption>{name} · observações do período (mais recentes primeiro, até 250)</caption>
+            <thead><tr><th scope="col">{kind === 'month' ? 'Vigência desde' : 'Data'}</th><th scope="col">{unit}</th></tr></thead>
+            <tbody>{[...shown].reverse().slice(0, 250).map((p) => <tr key={p.period}><th scope="row">{dmy(p.period)}</th><td className="num">{nf(p.value)}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </details>
     </>
   )
 }
