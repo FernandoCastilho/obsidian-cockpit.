@@ -36,3 +36,15 @@
 .cx-iof summary:hover, .cx-iof summary:focus-visible { color:var(--amber, #ffb000); }
 .cx-iof-fields { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px 20px; margin-top:6px; }
 @media (max-width:639px) { .cx-form, .cx-iof-fields { grid-template-columns:1fr; } }
+
+.cx-compare { padding:6px 12px 14px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; }
+.cx-compare h4 { margin:8px 0 0; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); font-weight:600; }
+.cx-wrap { overflow-x:auto; }
+.cx-table { width:100%; border-collapse:collapse; font-size:.85rem; font-variant-numeric:tabular-nums; }
+.cx-table th, .cx-table td { padding:8px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; font-weight:400; }
+.cx-table thead th { color:var(--mut); font-size:.75rem; font-weight:600; }
+.cx-table tbody th, .cx-table thead th:first-child { text-align:left; font-weight:600; }
+.cx-table tbody th small { color:var(--mut); font-weight:400; }
+.cx-selected th, .cx-selected td { background:var(--surface-2); }
+.cx-selected th { box-shadow:inset 3px 0 0 var(--amber, #ffb000); }
+.cx-diff { margin:0; padding-left:18px; font-size:.85rem; display:flex; flex-direction:column; gap:4px; }

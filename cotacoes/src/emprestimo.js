@@ -56,3 +56,17 @@ export function loan({ value, n, rate, unit = 'am', system, iof = IOF_PJ }) {
   const iofDaily = (dailyBase * daily) / 100, iofFixed = (value * fixed) / 100, iofTotal = iofDaily + iofFixed
   return { ok: true, system, n, monthly: i, installment, last, interest: total - value, iof: iofTotal, iofFixed, iofDaily, total: total + iofTotal }
 }
+
+// Comparação com os outros sistemas, com as mesmas condições: SAC ↔ Price; no Bullet, mostra Price e SAC.
+export function compareSystems(params) {
+  const selected = loan(params)
+  if (!selected.ok) return { selected, others: [] }
+  const ids = params.system === 'price' ? ['sac'] : params.system === 'sac' ? ['price'] : ['price', 'sac']
+  return {
+    selected,
+    others: ids.map((system) => {
+      const r = loan({ ...params, system })
+      return { system, label: SYSTEMS.find((s) => s.id === system).label, result: r, totalDiff: r.total - selected.total, interestDiff: r.interest - selected.interest, iofDiff: r.iof - selected.iof }
+    }),
+  }
+}

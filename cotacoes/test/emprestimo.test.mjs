@@ -93,3 +93,21 @@ test('IOF PJ: prazo acima de 365 dias não aumenta a parte diária das parcelas 
   assert.deepEqual(loan({ value: 1, n: 12, rate: 1, system: 'price', iof: { fixed: -1, daily: 0 } }).missing, ['alíquotas do IOF'])
   assert.deepEqual(IOF_PJ, { fixed: 0.38, daily: 0.0082, maxDays: 365 })
 })
+
+import { compareSystems } from '../src/emprestimo.js'
+test('comparação: SAC mostra o Price e vice-versa, com as mesmas condições; Bullet mostra os dois', () => {
+  const base = { value: 100000, n: 12, rate: 2, unit: 'am' }
+  const sac = compareSystems({ ...base, system: 'sac' })
+  assert.deepEqual(sac.others.map((o) => o.system), ['price'])
+  near(sac.others[0].result.installment, 9455.96)
+  near(sac.others[0].totalDiff, 115531.91 - 115001.55, 0.02) // Price paga mais no total
+  near(sac.others[0].interestDiff, 13471.52 - 13000, 0.01)
+  const price = compareSystems({ ...base, system: 'price' })
+  assert.deepEqual(price.others.map((o) => o.system), ['sac'])
+  near(price.others[0].totalDiff, -sac.others[0].totalDiff, 1e-6) // simétrico
+  assert.deepEqual(compareSystems({ ...base, system: 'bullet' }).others.map((o) => o.system), ['price', 'sac'])
+  // entrada inválida: sem comparação
+  assert.deepEqual(compareSystems({ ...base, value: 0, system: 'sac' }).others, [])
+  // a seleção do usuário é exatamente o resultado de loan()
+  assert.deepEqual(sac.selected, loan({ ...base, system: 'sac' }))
+})
