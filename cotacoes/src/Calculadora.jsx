@@ -41,6 +41,15 @@ function CapitalDeGiro({ onBack }) {
   }
   const compared = Object.values(errors).some(Boolean) ? null : compareSystems({ value: money.value, n, rate, unit, system, iof: { fixed: iofFixed, daily: iofDaily } })
   const result = compared?.selected.ok ? compared.selected : null
+  // Colunas na ordem Price, SAC e (só quando escolhido) Bullet; as de Price e SAC aparecem sempre, vazias enquanto a entrada é inválida.
+  const byId = Object.fromEntries(result ? [[result.system, result], ...compared.others.map((o) => [o.system, o.result])] : [])
+  const cols = SYSTEMS.filter((x) => x.id !== 'bullet' || result?.system === 'bullet').map((x) => ({ system: x.id, label: x.label, result: byId[x.id] ?? null, selected: result?.system === x.id }))
+  const rows = [
+    { key: 'parcela', label: 'Parcela', cell: (r) => (r.installment == null ? { main: '—', sub: 'pagamento único' } : r.last == null ? { main: brl(r.installment), sub: `fixa, em ${r.n}x` } : { main: brl(r.installment), sub: `até ${brl(r.last)}` }) },
+    { key: 'iof', label: 'IOF', cell: (r) => ({ main: brl(r.iof) }) },
+    { key: 'juros', label: 'Juros Totais', cell: (r) => ({ main: brl(r.interest), sub: `${(r.interest / money.value * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}% do valor` }) },
+    { key: 'total', label: 'Pagamento Final', cell: (r) => ({ main: brl(r.total) }) },
+  ]
   const sys = SYSTEMS.find((s) => s.id === system)
   const field = (key, label, control) => (
     <div className="cx-field">
@@ -97,58 +106,43 @@ function CapitalDeGiro({ onBack }) {
 
       <article className="desk-panel cx-panel" aria-live="polite">
         <header><h3>Resultado</h3></header>
-        <dl className="cx-result">
-          <div>
-            <dt>Parcela</dt>
-            <dd>{result ? (result.installment == null ? '—' : brl(result.installment)) : '—'}</dd>
-            <small>{!result ? 'Preencha as condições gerais.' : result.system === 'price' ? `fixa, em ${result.n}x` : result.system === 'sac' ? `1ª parcela; a última é ${brl(result.last)}` : 'sem parcelas: pagamento único no vencimento'}</small>
-          </div>
-          <div>
-            <dt>IOF</dt>
-            <dd>{result ? brl(result.iof) : '—'}</dd>
-            <small>{result ? `adicional ${brl(result.iofFixed)} + diário ${brl(result.iofDaily)}` : ' '}</small>
-          </div>
-          <div>
-            <dt>Juros Totais</dt>
-            <dd>{result ? brl(result.interest) : '—'}</dd>
-            <small>{result ? `${(result.interest / money.value * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}% do valor` : ' '}</small>
-          </div>
-          <div>
-            <dt>Pagamento Final</dt>
-            <dd>{result ? brl(result.total) : '—'}</dd>
-            <small>{result ? 'total pago: valor + juros + IOF' : ' '}</small>
-          </div>
-        </dl>
-        {result && compared.others.length > 0 && (
-          <div className="cx-compare">
-            <h4>Comparação com {compared.others.map((o) => o.label).join(' e ')}</h4>
-            <div className="cx-wrap" role="region" aria-label={`Comparação entre ${sys.label} e ${compared.others.map((o) => o.label).join(' e ')}; role para ver todas as colunas`} tabIndex={0}>
-              <table className="cx-table">
-                <thead><tr><th scope="col">Sistema</th><th scope="col">Parcela</th><th scope="col">IOF</th><th scope="col">Juros Totais</th><th scope="col">Pagamento Final</th></tr></thead>
-                <tbody>
-                  {[{ system: result.system, label: sys.label, result, selected: true }, ...compared.others].map((r) => (
-                    <tr key={r.system} className={r.selected ? 'cx-selected' : undefined}>
-                      <th scope="row">{r.label}{r.selected && <small> · selecionado</small>}</th>
-                      <td>{r.result.installment == null ? '—' : r.result.last == null ? brl(r.result.installment) : `${brl(r.result.installment)} → ${brl(r.result.last)}`}</td>
-                      <td>{brl(r.result.iof)}</td>
-                      <td>{brl(r.result.interest)}</td>
-                      <td>{brl(r.result.total)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <ul className="cx-diff">
-              {compared.others.map((o) => (
-                <li key={o.system}>
-                  No <b>{o.label}</b>, o Pagamento Final fica {Math.abs(o.totalDiff) < 0.005 ? <>igual ao do <b>{sys.label}</b></> : <><b>{brl(Math.abs(o.totalDiff))}</b> {o.totalDiff < 0 ? 'menor' : 'maior'} que no {sys.label}</>}
-                  {Math.abs(o.interestDiff) >= 0.005 && <> (juros {brl(Math.abs(o.interestDiff))} {o.interestDiff < 0 ? 'menores' : 'maiores'})</>}.
-                </li>
+        <div className="cx-wrap" role="region" aria-label="Resultado por sistema de amortização; role para ver todas as colunas" tabIndex={0}>
+          <table className="cx-matrix">
+            <thead>
+              <tr>
+                <th scope="col"><span className="sr-only">Item</span></th>
+                {cols.map((c) => <th key={c.system} scope="col" className={c.selected ? 'cx-selected' : undefined}>{c.label}{c.selected && <small>selecionado</small>}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.key}>
+                  <th scope="row">{r.label}</th>
+                  {cols.map((c) => {
+                    const cell = c.result ? r.cell(c.result) : null
+                    return (
+                      <td key={c.system} className={c.selected ? 'cx-selected' : undefined}>
+                        {cell ? <>{cell.main}{cell.sub && <small>{cell.sub}</small>}</> : '—'}
+                      </td>
+                    )
+                  })}
+                </tr>
               ))}
-            </ul>
-            <p className="cx-hint">Parcela com seta: da 1ª à última (SAC, parcelas decrescentes). Mesmo valor, prazo, taxa e IOF; só muda o sistema de amortização.</p>
-          </div>
+            </tbody>
+          </table>
+        </div>
+        {!result && <p className="cx-hint cx-pad">Preencha as condições gerais.</p>}
+        {result && compared.others.length > 0 && (
+          <ul className="cx-diff">
+            {compared.others.map((o) => (
+              <li key={o.system}>
+                No <b>{o.label}</b>, o Pagamento Final fica {Math.abs(o.totalDiff) < 0.005 ? <>igual ao do <b>{sys.label}</b></> : <><b>{brl(Math.abs(o.totalDiff))}</b> {o.totalDiff < 0 ? 'menor' : 'maior'} que no {sys.label}</>}
+                {Math.abs(o.interestDiff) >= 0.005 && <> (juros {brl(Math.abs(o.interestDiff))} {o.interestDiff < 0 ? 'menores' : 'maiores'})</>}.
+              </li>
+            ))}
+          </ul>
         )}
+        <p className="cx-hint cx-pad">Mesmo valor, prazo, taxa e IOF nas colunas; só muda o sistema de amortização. Pagamento Final = valor + juros + IOF.</p>
       </article>
       <p className="status">Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. IOF de pessoa jurídica calculado sobre o principal de cada parcela, com meses de 365/12 dias (a tela não pede datas). Taxa a.a. convertida por juros compostos. Não é o CET do contrato.</p>
     </section>
