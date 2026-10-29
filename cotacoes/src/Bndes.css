@@ -20,3 +20,5 @@
   .bn-table th, .bn-table td { padding:8px 6px; }
   .bn-pick small { display:none; }
 }
+.bn-sub { margin:14px 0 6px; font-size:13px; color:var(--mut, #8a8a8a); font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+.bn-grp { max-height:420px; overflow:auto; }
