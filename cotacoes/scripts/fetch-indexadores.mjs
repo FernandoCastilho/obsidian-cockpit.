@@ -1,4 +1,4 @@
-// Coleta TR, TBF e TLP (SGS do Banco Central) e a TFB (BNDES) e grava public/indexadores.json. Rodado a cada hora pelo GitHub Actions.
+// Coleta TR, TBF e TLP (SGS do Banco Central) e grava public/indexadores.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
 import { INDEXADORES, buildIndexadores, fillSeriesFromPrevious, urlOf } from './indexadores-lib.mjs'
@@ -11,7 +11,7 @@ async function getJson(url, label, tries = 4) {
   let last
   for (let i = 1; i <= tries; i++) {
     try {
-      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-indexadores)', referer: 'https://www.bndes.gov.br/', accept: 'application/json' }, signal: AbortSignal.timeout(40000) })
+      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-indexadores)', accept: 'application/json' }, signal: AbortSignal.timeout(40000) })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       return await res.json()
     } catch (e) {

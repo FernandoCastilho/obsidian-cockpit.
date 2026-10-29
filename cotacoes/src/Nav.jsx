@@ -12,6 +12,7 @@ export const TABS = [
   { id: 'juros', label: 'Juros', icon: ['M5 20V11', 'M12 20V5', 'M19 20v-6'] },
   { id: 'cenarios', label: 'Cenários', icon: ['M3 17l6-6 4 4 8-8', 'M15 7h6v6'] },
   { id: 'noticias', label: 'Notícias', icon: ['M6 3h9l4 4v14H6z', 'M14 3v5h5', 'M9 12h6M9 16h6'] },
+  { id: 'bndes', label: 'BNDES', icon: ['M4 20h16', 'M6 20V10l6-5 6 5v10', 'M10 20v-5h4v5'] },
   { id: 'calculadora', label: 'Calculadoras', icon: ['M6 3h12v18H6z', 'M9 7h6', 'M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01M9 18h.01M12 18h.01M15 18h.01'] },
   { id: 'feriados', label: 'Feriados', icon: ['M4 6h16v14H4z', 'M4 10h16', 'M8 3v4M16 3v4'] },
   { id: 'aprender', label: 'Aprender', icon: ['M3 9l9-5 9 5-9 5-9-5z', 'M7 11.5V16c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-4.5', 'M21 9v6'] },
