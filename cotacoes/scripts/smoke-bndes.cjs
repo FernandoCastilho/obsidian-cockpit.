@@ -9,7 +9,8 @@ const points = (base, step) => Array.from({ length: 1000 }, (_, i) => day(i)).fi
     for (const width of [390, 1280]) {
       const series = {}
       for (const [prazo, add] of [[36, 0], [60, 0.5], [84, 1]]) for (const liberacao of [30, 90]) series[`TFB_${prazo}_${liberacao}`] = { prazo, liberacao, points: points(10 + add + (liberacao === 90 ? 0.2 : 0), 0.02) }
-      const file = { schemaVersion: 1, generatedAt: Date.now(), series, stale: {}, errors: [] }
+      const months = Array.from({ length: 60 }, (_, i) => [new Date(Date.UTC(2021, i, 1)).toISOString().slice(0, 10), Math.round((6 + i * 0.05) * 100) / 100])
+      const file = { schemaVersion: 1, generatedAt: Date.now(), series, tlp: { code: 27572, unit: 'a.a.', points: months }, stale: {}, errors: [] }
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/bndes.json*', (r) => r.fulfill({ json: file }))
@@ -30,9 +31,16 @@ const points = (base, step) => Array.from({ length: 1000 }, (_, i) => day(i)).fi
       assert.match(await p.locator('.desk-panel header small', { hasText: /TFB ·/ }).innerText(), /60 a 84 meses · liberação em 30 dias/)
       await p.getByRole('group', { name: 'Período da TFB' }).getByRole('button', { name: '3 meses' }).click()
       await p.locator('svg').last().waitFor()
-      assert.match(await p.locator('.bn-range').innerText(), /No período: \d{2}\/\d{2}\/\d{4} [\d,]+% → \d{2}\/\d{2}\/\d{4} [\d,]+% a\.a\. \(\+[\d,]+ p\.p\.\)/)
-      assert.ok(await p.locator('.bn-obs tbody tr').count() > 20)
-      assert.match(await p.locator('.bn-obs caption').innerText(), /mais recentes primeiro/)
+      assert.match(await p.locator('.bn-range').first().innerText(), /No período: \d{2}\/\d{2}\/\d{4} [\d,]+% → \d{2}\/\d{2}\/\d{4} [\d,]+% a\.a\. \(\+[\d,]+ p\.p\.\)/)
+      assert.ok(await p.locator('.bn-obs').first().locator('tbody tr').count() > 20)
+      assert.match(await p.locator('.bn-obs caption').first().innerText(), /mais recentes primeiro/)
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem horizontal da página')
+      // TLP: valor vigente, variações e histórico mensal próprio
+      const tlp = p.locator('.bn-tlp'); await tlp.waitFor()
+      assert.match(await tlp.locator('tbody tr').innerText(), /01\/12\/2025[\s\S]*8,95% a\.a\.[\s\S]*▲ \+0,05 p\.p\.[\s\S]*▲ \+0,60 p\.p\.[\s\S]*\d{2}\/\d{2}\/\d{4}/)
+      await p.getByRole('group', { name: 'Período da TLP' }).getByRole('button', { name: 'Tudo' }).click()
+      assert.match(await p.locator('.bn-range').last().innerText(), /No período: 01\/01\/2021 6,00% → 01\/12\/2025 8,95% a\.a\./)
+      assert.match(await p.locator('.bn-obs caption').last().innerText(), /TLP/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem horizontal da página')
       // TFB saiu do quadro de indexadores (aba Juros)
       await p.goto(base + '/#juros'); await p.locator('.idx-table').waitFor()

@@ -23,14 +23,32 @@ export function parseTxt(text) {
   return [...byDay].sort((a, b) => (a[0] < b[0] ? -1 : 1))
 }
 
-// results = { TFB_36_30: texto|null, ... } -> arquivo public/bndes.json (valores com 4 casas, para o arquivo ficar enxuto)
+// TLP (Taxa de Longo Prazo): série mensal do SGS do Banco Central em % a.a., um valor por mês de vigência, desde 2018 (início da TLP).
+export const TLP_SGS = 27572
+export const tlpUrl = (now = Date.now()) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${TLP_SGS}/dados?formato=json&dataInicial=01/01/2018&dataFinal=${new Date(now).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`
+// [{data: 'dd/mm/aaaa', valor: '8.12'}] -> [[AAAA-MM-DD, valor]] em ordem crescente, sem linhas inválidas
+export function parseTlp(rows) {
+  const byDay = new Map()
+  for (const r of Array.isArray(rows) ? rows : []) {
+    const m = DATE.exec(String(r?.data ?? ''))
+    const value = Number(r?.valor)
+    const iso = m ? `${m[3]}-${m[2]}-${m[1]}` : ''
+    const real = new Date(`${iso}T12:00:00Z`)
+    if (!m || !Number.isFinite(value) || value <= 0 || value > 100 || Number.isNaN(+real) || real.toISOString().slice(0, 10) !== iso) continue
+    byDay.set(iso, value)
+  }
+  return [...byDay].sort((a, b) => (a[0] < b[0] ? -1 : 1))
+}
+
+// results = { TFB_36_30: texto|null, ..., TLP: linhas do SGS|null } -> arquivo public/bndes.json (valores com 4 casas, para o arquivo ficar enxuto)
 export function buildBndes(results, errors = [], now = Date.now()) {
   const series = {}
   for (const s of BNDES_SERIES) {
     const points = parseTxt(results?.[s.key])
     if (points.length) series[s.key] = { prazo: s.prazo, liberacao: s.liberacao, points: points.map(([d, v]) => [d, Math.round(v * 1e4) / 1e4]) }
   }
-  return { schemaVersion: 1, generatedAt: now, series, errors }
+  const tlp = parseTlp(results?.TLP)
+  return { schemaVersion: 1, generatedAt: now, series, tlp: tlp.length ? { code: TLP_SGS, unit: 'a.a.', points: tlp } : null, errors }
 }
 
 // Série que falhou nesta coleta volta com o último dado publicado; `stale` guarda o instante da coleta original.
@@ -41,6 +59,10 @@ export function fillSeriesFromPrevious(out, prev) {
       out.series[key] = prev.series[key]
       stale[key] = prev.stale?.[key] ?? prev.generatedAt ?? null
     }
+  }
+  if (!out.tlp && prev?.tlp) {
+    out.tlp = prev.tlp
+    stale.TLP = prev.stale?.TLP ?? prev.generatedAt ?? null
   }
   out.stale = stale
   return out
