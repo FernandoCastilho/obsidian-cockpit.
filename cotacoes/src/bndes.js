@@ -43,7 +43,8 @@ export const TLP_DEFINICAO = 'Taxa de Longo Prazo. Custo financeiro de referênc
 
 // TLP mais recente, variação contra o mês anterior e contra 12 meses antes, e a próxima divulgação; null quando não há série.
 export function tlpView(data, now = Date.now()) {
-  const points = Array.isArray(data?.tlp?.points) ? data.tlp.points : []
+  const today = new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }) // o SGS já traz o mês seguinte no último dia útil
+  const points = Array.isArray(data?.tlp?.points) ? data.tlp.points.filter((p) => p[0] <= today) : []
   if (!points.length) return null
   const [date, value] = points.at(-1)
   return { points, date, value, text: `${nf(value)}% a.a.`, month: change(value, points.length > 1 ? points.at(-2) : null), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.TLP ?? null, nextRelease: tlpNextRelease(now) }

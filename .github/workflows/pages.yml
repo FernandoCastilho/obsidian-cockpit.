@@ -88,6 +88,11 @@ jobs:
         run: node scripts/fetch-bndes.mjs
         continue-on-error: true
         timeout-minutes: 5
+      - name: Coletar TFC e moedas contratuais do BNDES
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-moedas.mjs
+        continue-on-error: true
+        timeout-minutes: 8
       - name: Coletar feriados da China (dados oficiais)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-holidays.mjs

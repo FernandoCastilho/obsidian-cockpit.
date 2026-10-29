@@ -24,6 +24,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const commodities = useDataFile('commodities.json')
   const freight = useDataFile('freight.json')
   const bndes = useDataFile('bndes.json')
+  const moedas = useDataFile('moedas.json')
   const ipca = useDataFile('ipca.json')
   const calendar = useDataFile('calendar.json')
   const ipcaGroups = useDataFile('ipca-groups.json')
@@ -37,6 +38,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: 36 * H, weekdays: true },
       { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central)', at: indexadores.data?.generatedAt, maxAge: 6 * H, weekdays: true },
       { key: 'bndes', label: 'Taxa Fixa do BNDES (TFB)', at: bndes.data?.generatedAt, maxAge: 6 * H, weekdays: true },
+      { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: 6 * H, weekdays: true },
       { key: 'oil', label: 'Petróleo Brent (EIA)', at: oil.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'commodities', label: 'Commodities (EIA e Banco Mundial)', at: commodities.data?.generatedAt, maxAge: 72 * H, weekdays: true },
       { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: 72 * H, weekdays: true },
@@ -50,7 +52,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'bndes.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'ipca-groups.json', 'calendar.json']}>
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'ipca-groups.json', 'calendar.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>
