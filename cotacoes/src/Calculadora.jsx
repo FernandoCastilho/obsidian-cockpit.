@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Calculadora.css'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
-import { SYSTEMS, loan, parseDecimal } from './emprestimo.js'
+import { IOF_PJ, SYSTEMS, loan, parseDecimal } from './emprestimo.js'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -27,15 +27,19 @@ function CapitalDeGiro({ onBack }) {
   const [rateText, setRateText] = useState('2,00')
   const [unit, setUnit] = useState('am')
   const [system, setSystem] = useState('price')
+  const [iofFixedText, setIofFixedText] = useState('0,38')
+  const [iofDailyText, setIofDailyText] = useState('0,0082')
   const money = parseMoneyInput(valueText)
   const n = /^\d+$/.test(nText.trim()) ? Number(nText) : null
   const rate = parseDecimal(rateText)
+  const iofFixed = parseDecimal(iofFixedText), iofDaily = parseDecimal(iofDailyText)
   const errors = {
     value: money.ok ? null : money.error,
     n: n !== null && n >= 1 && n <= 600 ? null : 'Informe o prazo em meses, número inteiro de 1 a 600.',
     rate: rate !== null && rate <= 1000 ? null : 'Informe a taxa em %, por exemplo 2,00.',
+    iof: iofFixed !== null && iofFixed <= 100 && iofDaily !== null && iofDaily <= 100 ? null : 'Informe as alíquotas do IOF em %, por exemplo 0,38 e 0,0082.',
   }
-  const result = Object.values(errors).some(Boolean) ? null : loan({ value: money.value, n, rate, unit, system })
+  const result = Object.values(errors).some(Boolean) ? null : loan({ value: money.value, n, rate, unit, system, iof: { fixed: iofFixed, daily: iofDaily } })
   const sys = SYSTEMS.find((s) => s.id === system)
   const field = (key, label, control) => (
     <div className="cx-field">
@@ -70,6 +74,21 @@ function CapitalDeGiro({ onBack }) {
             </div>
             <p className="cx-hint">{sys.hint}</p>
           </div>
+          <details className="cx-iof">
+            <summary>Alíquotas do IOF (pessoa jurídica)</summary>
+            <div className="cx-iof-fields">
+              <div className="cx-field">
+                <label htmlFor="cx-iof-fixed">Adicional, uma vez (%)</label>
+                <input id="cx-iof-fixed" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofFixedText} onChange={(e) => setIofFixedText(e.target.value)} onFocus={(e) => e.target.select()} />
+              </div>
+              <div className="cx-field">
+                <label htmlFor="cx-iof-daily">Diária (% ao dia)</label>
+                <input id="cx-iof-daily" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofDailyText} onChange={(e) => setIofDailyText(e.target.value)} onFocus={(e) => e.target.select()} />
+              </div>
+            </div>
+            <p className="cx-error" id="cx-iof-err" role={errors.iof ? 'alert' : undefined}>{errors.iof ?? ''}</p>
+            <p className="cx-hint">Padrão: {IOF_PJ.fixed.toLocaleString('pt-BR')}% sobre o valor, uma vez, mais {IOF_PJ.daily.toLocaleString('pt-BR')}% ao dia sobre o principal de cada parcela, até {IOF_PJ.maxDays} dias (Decreto 12.499/2025). Confirme a alíquota vigente com seu banco.</p>
+          </details>
         </div>
       </article>
 
@@ -84,6 +103,11 @@ function CapitalDeGiro({ onBack }) {
             <small>{!result ? 'Preencha as condições gerais.' : result.system === 'price' ? `fixa, em ${result.n}x` : result.system === 'sac' ? `1ª parcela; a última é ${brl(result.last)}` : 'sem parcelas: pagamento único no vencimento'}</small>
           </div>
           <div>
+            <dt>IOF</dt>
+            <dd>{result ? brl(result.iof) : '—'}</dd>
+            <small>{result ? `adicional ${brl(result.iofFixed)} + diário ${brl(result.iofDaily)}` : ' '}</small>
+          </div>
+          <div>
             <dt>Juros Totais</dt>
             <dd>{result ? brl(result.interest) : '—'}</dd>
             <small>{result ? `${(result.interest / money.value * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}% do valor` : ' '}</small>
@@ -91,11 +115,11 @@ function CapitalDeGiro({ onBack }) {
           <div>
             <dt>Pagamento Final</dt>
             <dd>{result ? brl(result.total) : '—'}</dd>
-            <small>{result ? 'total pago: valor + juros' : ' '}</small>
+            <small>{result ? 'total pago: valor + juros + IOF' : ' '}</small>
           </div>
         </dl>
       </article>
-      <p className="status">Estimativa com a taxa informada, sem tarifas, IOF, seguros nem impostos. Taxa a.a. convertida por juros compostos. Não é o CET do contrato.</p>
+      <p className="status">Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. IOF de pessoa jurídica calculado sobre o principal de cada parcela, com meses de 365/12 dias (a tela não pede datas). Taxa a.a. convertida por juros compostos. Não é o CET do contrato.</p>
     </section>
   )
 }
