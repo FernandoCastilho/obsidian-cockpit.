@@ -4,6 +4,7 @@ import { marketDate } from './marketReturns.js'
 import { quoteAgeState } from './quoteFreshness.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
+const Calculadora = lazy(() => import('./Calculadora.jsx'))
 const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
@@ -250,8 +251,8 @@ export default function App() {
         </div>
       )}
       {tab !== 'resumo' && (
-        <header className={`top${['noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
-          {!['noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
+        <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
+          {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
           <AvisosButton className="clocks-info" />
         </header>
       )}
@@ -284,6 +285,8 @@ export default function App() {
           {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
+
+      {tab === 'calculadora' && <Calculadora view={sub} onView={(v) => goto('calculadora', v)} />}
 
       {tab === 'feriados' && <Feriados hol={hol} />}
 

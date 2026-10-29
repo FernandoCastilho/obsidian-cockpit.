@@ -28,7 +28,7 @@ const assert = require('node:assert/strict')
  })
  await page.goto(`${base}/#resumo`)
  await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).waitFor()
- for(const label of ['Juros','Feriados','Cenários','Notícias','Configurações','Mercado hoje']){
+ for(const label of ['Juros','Calculadoras','Feriados','Cenários','Notícias','Configurações','Mercado hoje']){
   await page.getByRole('navigation',{name:/Navegação principal|Seções/}).getByRole('button',{name:{'Configurações':/^Config(urações)?$/,'Mercado hoje':/^Mercado( hoje)?$/}[label]??label,exact:true}).click()
   await page.waitForTimeout(200)
   assert.equal(await page.getByRole('heading',{name:'Não foi possível exibir esta tela'}).count(),0,label)
