@@ -26,7 +26,7 @@ Base de preparação: produção `439794a` (PRs recentes preservadas). Sem alter
 ## Verificação
 
 - 188 testes Node aprovados e build Vite aprovado; não há scripts de lint ou tipos configurados neste pacote JavaScript.
-- Smoke existente: sete abas lazy, calculadoras sob demanda, gráfico e curva por teclado, modal/Escape, Voltar/Avançar e link direto FINIMP.
+- Smoke existente: sete abas lazy, gráfico e curva por teclado, modal/Escape, Voltar/Avançar e link direto do calendário (#cenarios/calendario).
 - Edge real instalado no FTC-NOTE, headless com perfil isolado, viewports 390/820/1440 × 1000. Fixtures sintéticas controlam vazio, falha e amostras anteriores; não certificam preços reais ou fórmulas financeiras.
 - Regressão reproduzível em `scripts/smoke-ux.cjs`, com Playwright disponível e Edge instalado. Aceita `SMOKE_BASE_URL` e `UX_QA_OUTPUT`. Os três tamanhos passaram, sem erros de página ou overflow; ajuda/câmera/atualização medidos em 44 × 44 px.
 - Evidências locais em `../oil-evidence/ux-fixes/` a partir da raiz do checkout: capturas por largura e `results.json`.

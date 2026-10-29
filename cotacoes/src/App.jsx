@@ -17,7 +17,6 @@ const Macro = lazy(() => import('./Macro.jsx'))
 const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
 const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
-const Calculadora = lazy(() => import('./Calculadora.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import Pracas from './Pracas.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
@@ -159,7 +158,7 @@ export default function App() {
     setPreset('custom')
     setRange({ start, end })
   }
-  // Endereço da tela: #aba ou #calculadora/finimp (calculadora aberta direto, que dá para favoritar e enviar).
+  // Endereço da tela: #aba ou #aba/assunto (ex.: #cenarios/calendario), que dá para favoritar e enviar.
   const readHash = () => {
     const [h, sub = ''] = window.location.hash.replace('#', '').split('/')
     return { tab: TABS.some((t) => t.id === h) ? h : 'resumo', sub }
@@ -251,8 +250,8 @@ export default function App() {
         </div>
       )}
       {tab !== 'resumo' && (
-        <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
-          {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
+        <header className={`top${['noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
+          {!['noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
           <AvisosButton className="clocks-info" />
         </header>
       )}
@@ -287,8 +286,6 @@ export default function App() {
       )}
 
       {tab === 'feriados' && <Feriados hol={hol} />}
-
-      {tab === 'calculadora' && <Calculadora curves={curves} hol={hol} view={sub} onView={(v) => goto('calculadora', v)} />}
 
       {tab === 'noticias' && (
         <>

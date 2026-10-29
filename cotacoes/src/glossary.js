@@ -1,7 +1,6 @@
 // Explicações curtas (frase simples, exemplo concreto, uso na mesa). Textos fixos, sem dados ao vivo.
 // a = o que é, em palavras do dia a dia; b = exemplo com números redondos; c = como isso ajuda na decisão.
 export const GLOSSARY = {
-  ncg: { t: 'Necessidade de capital de giro comercial', a: 'Estimativa de clientes mais estoque menos fornecedores, usando valores mensais e prazos médios.', b: 'Vendas de R$ 300 mil, custo vendido de R$ 210 mil e prazos de 30/40/30 dias resultam em NCG de R$ 370 mil.', c: 'Não é a NCG contábil completa nem recomendação de empréstimo. Recursos adicionais dependem também da reserva e da cobertura já existente.' },
   cotacao: {
     t: 'Cotação',
     a: 'Quanto custa 1 unidade da moeda estrangeira, em reais.',
@@ -128,64 +127,10 @@ export const GLOSSARY = {
     b: '"+2 bps" = subiu 0,02 ponto percentual desde o pregão anterior (100 bps = 1 ponto percentual). Passe o mouse para pausar.',
     c: 'Toque para abrir a aba Juros: lá cada indicador e gráfico tem o seu "?" com a explicação completa.',
   },
-  calculadora: {
-    t: 'Calculadora: operação × DI',
-    a: 'Compara uma operação com a alternativa de deixar o mesmo dinheiro no DI, pelo mesmo prazo.',
-    b: 'R$ 1 milhão por 1 ano a 105% do CDI. Se o DI projeta 13,9% ao ano, o CDI do período é ~13,9%, e 105% disso rende ~14,6%. A diferença em reais é o ganho sobre o DI.',
-    c: '"Equivale a % do CDI" traduz qualquer taxa para a régua do CDI. Se for maior que 100%, a operação paga mais que a curva já precifica.',
-  },
-  finimp: {
-    t: 'FINIMP',
-    a: 'Financiamento em moeda estrangeira para pagar uma importação. Você recebe (ou o fornecedor recebe) em dólar, euro ou iene e devolve com juros em data combinada.',
-    b: 'US$ 1 milhão por 180 dias a 6% ao ano, ACT/360: juros de US$ 30 mil (1 milhão × 6% × 180/360). Sem derivativo, o custo em reais depende do câmbio no pagamento.',
-    c: 'Aqui você informa a taxa e as datas; o app calcula os juros e o cronograma na moeda original. É uma simulação, não o contrato.',
-  },
-  finimpswap: {
-    t: 'FINIMP com swap para CDI',
-    a: 'Você toma o empréstimo em dólar e troca, por um swap, o custo para CDI + spread em reais. A cotação do banco mostra as duas pernas lado a lado.',
-    b: 'US$ 2,88 milhões (R$ 15 milhões) em 60 parcelas, 6 de carência: o dólar paga juros de 6,48% a.a. mais o IR; em reais você paga CDI + 2,50% a.a. sobre R$ 15 milhões.',
-    c: 'O IR sobre a remessa é pago por você (gross-up), então o custo em dólar é a taxa ÷ (1 − 15%). A coluna em reais é uma expectativa: depende do CDI futuro da curva DI.',
-  },
-  irGrossUp: {
-    t: 'IR gross-up',
-    a: 'Imposto de renda sobre os juros enviados ao exterior. No gross-up, quem toma o empréstimo paga o imposto além dos juros, para o banco receber a taxa cheia.',
-    b: 'Juros de 100 com IR de 15%: o imposto é 100 × 15 ÷ 85 = 17,65. Você paga 117,65.',
-    c: 'Por isso o custo total do ativo é a taxa ÷ (1 − alíquota): 6,48% vira 7,62% ao ano.',
-  },
-  regraJuros: {
-    t: 'Juros proporcionais × compostos',
-    a: 'Proporcional (linear): juros = saldo × taxa × fração do ano. Composta: juros = saldo × [(1+taxa)^fração − 1].',
-    b: '6% ao ano por meio ano: linear dá 3,00% do saldo; composta dá 2,96%.',
-    c: 'A regra vem do contrato. A diferença cresce com o prazo e com a taxa.',
-  },
-  convencao: {
-    t: 'ACT/360 × ACT/365F',
-    a: 'Como contar o tempo: dias corridos efetivos divididos por 360 ou por 365 (sempre 365, mesmo em ano bissexto).',
-    b: '180 dias a 6% ao ano: ACT/360 dá 3,000% de juros; ACT/365F dá 2,959%.',
-    c: 'ACT/360 cobra um pouco mais para o mesmo prazo. Use a que está no contrato; o app não escolhe por você.',
-  },
-  irRegressivo: {
-    t: 'IR regressivo do CDB',
-    a: 'Imposto sobre o rendimento: quanto mais tempo o dinheiro fica aplicado, menor a alíquota. Até 180 dias 22,5%; 181 a 360 dias 20%; 361 a 720 dias 17,5%; acima de 720 dias 15%.',
-    b: 'Rendeu R$ 10 mil em 120 dias: o IR é R$ 2.250 e você fica com R$ 7.750. Resgatar antes de 30 dias ainda paga IOF sobre o rendimento.',
-    c: 'Resgatar para cobrir uma necessidade de caixa perde o rendimento futuro e fixa o imposto. Compare com o custo do empréstimo: se o rendimento líquido é maior, vale manter a aplicação e tomar o empréstimo.',
-  },
   feriados: {
     t: 'Praças e feriados',
     a: 'Cada praça tem o seu calendário: onde é feriado, o mercado fecha e o dinheiro não liquida.',
     b: 'Pagar em USD numa quinta de Thanksgiving não funciona: Nova York fecha. Um pagamento marcado para essa data só entra no dia útil seguinte.',
     c: 'Marque as praças da sua operação. O app avisa quando uma data cai em feriado e sugere o próximo dia útil comum, mas nunca muda a data sozinho.',
-  },
-  giro: {
-    t: 'Capital de giro',
-    a: 'Empréstimo em reais para financiar a operação do dia a dia. Você recebe o valor e devolve em parcelas, com juros.',
-    b: 'R$ 500 mil em 12 meses a 1,8% ao mês: Price tem parcelas iguais; SAC começa com parcela maior e cai; bullet paga tudo no fim. Tarifas e IOF aumentam o custo efetivo acima da taxa.',
-    c: 'Compare pelo custo efetivo ao ano e pelo % do CDI, não só pela taxa mensal: é isso que permite comparar com outra proposta.',
-  },
-  aplicacao: {
-    t: 'Aplicação financeira',
-    a: 'Quanto um investimento rende até o vencimento: bruto, descontado o imposto, e o que isso representa do CDI.',
-    b: 'Um CDB de 100% do CDI por 1 ano, com CDI de 10%, rende 10% bruto e 8,25% líquido (IR de 17,5%). Uma LCI isenta que pague 90% do CDI rende 9% líquido, mais que o CDB.',
-    c: 'Para comparar ativos com impostos diferentes, olhe o líquido e o % do CDI líquido.',
   },
 }

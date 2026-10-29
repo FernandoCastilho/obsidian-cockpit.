@@ -281,30 +281,11 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .rates-top .qb { padding:6px 16px; font-size:.85rem; }
 @media (max-width: 560px) { .rates-top { padding:6px 10px; gap:6px; } }
 .pop { white-space:normal; }
-
-.calc-form { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:flex-end; margin-bottom:12px; }
-.calc-form label { display:flex; flex-direction:column; gap:4px; font-size:.8rem; color:var(--mut); }
-.calc-form input { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; min-width:140px; }
-.calc-verdict { margin:6px 0 12px; font-size:1.05rem; font-weight:700; }
-.calc-verdict.up { color:var(--up); } .calc-verdict.down { color:var(--down); }
-.calc-verdict small { display:block; color:var(--mut); font-weight:400; font-size:.8rem; margin-top:2px; }
-.calc td:first-child { text-align:left; color:var(--mut); }
-
-.calc-sub { margin:18px 0 8px; font-size:.95rem; }
 .rows { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
 .rows .row { display:flex; flex-wrap:wrap; gap:10px 14px; align-items:flex-end; }
 .rows .row label { display:flex; flex-direction:column; gap:4px; font-size:.8rem; color:var(--mut); }
 .rows .x { background:none; border:1px solid var(--line); color:var(--mut); border-radius:8px; width:32px; height:34px; cursor:pointer; font-size:1.1rem; }
-.finimp select, .calc-form select { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; }
-.finimp input[type=date], .finimp input[inputmode] { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; font-size:.95rem; min-width:140px; }
-.finimp .lbl { display:block; font-size:.8rem; color:var(--mut); margin-bottom:4px; }
-.finimp .chk { flex-direction:row; align-items:center; gap:8px; }
 .miss { margin:6px 0 10px; padding-left:20px; font-size:.9rem; line-height:1.5; }
-.calc-block { margin-top:14px; }
-.fin-table td, .fin-table th { white-space:nowrap; }
-.fin-table td:first-child { text-align:left; }
-.finimp .btn.small { font-size:.8rem; padding:6px 10px; }
-.calc-conv { margin:0 0 10px; font-size:.92rem; line-height:1.5; }
 
 .pracas { margin:0 0 12px; }
 .pracas .lbl { display:block; font-size:.8rem; color:var(--mut); margin-bottom:4px; }
@@ -325,64 +306,21 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 .opt dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:.85rem; }
 .opt dt { color:var(--mut); }
 .opt dd { margin:0; text-align:right; font-variant-numeric:tabular-nums; }
-.opt-total { margin:10px 0 0; padding-top:8px; border-top:1px solid var(--line); font-size:.95rem; }
 
 .start-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; }
 @media (max-width: 640px) { .start-grid { grid-template-columns:1fr; } }
 .start-card { text-align:left; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:14px; padding:16px; font:inherit; cursor:pointer; display:flex; flex-direction:column; gap:8px; min-height:150px; }
 .start-card:hover, .start-card:focus-visible { border-color:var(--mut); background:#1c2330; }
 .start-card b { font-size:1.1rem; }
-.start-chip { width:38px; height:38px; border-radius:10px; background:#21262d; display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#58a6ff; }
 .start-desc { color:var(--mut); font-size:.88rem; line-height:1.45; flex:1; }
 .start-go { color:#58a6ff; font-size:.85rem; font-weight:600; }
 
-/* Calculadoras: lista compacta de entrada e atalhos no Resumo */
-.calc-list { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; }
-@media (max-width: 640px) { .calc-list { grid-template-columns:1fr; } }
-.calc-item { display:flex; align-items:center; gap:12px; text-align:left; background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-height:64px; font:inherit; cursor:pointer; }
-.calc-item:hover, .calc-item:focus-visible { border-color:var(--mut); background:#1c2330; }
-.calc-item-text { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
-.calc-item-text b { font-size:1rem; }
-.calc-item-text small { color:var(--mut); font-size:.82rem; }
-.calc-item-go { color:var(--mut); font-size:1.4rem; }
-.calc-shortcuts { display:flex; flex-wrap:wrap; gap:8px; }
-.calc-shortcuts button { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:999px; padding:10px 16px; min-height:44px; font:inherit; font-size:.9rem; cursor:pointer; }
-.calc-shortcuts button:hover, .calc-shortcuts button:focus-visible { border-color:var(--mut); background:#1c2330; }
-.calc-shortcuts span { color:#58a6ff; font-weight:800; margin-right:4px; }
 
-/* Calculadoras: formulário e resultado; no desktop, resultado ao lado e fixo; no celular, barra de resultado */
-.calc-split { display:block; }
-.calc-out { scroll-margin-top:56px; }
-@media (min-width: 1000px) {
-  .calc-split { display:grid; grid-template-columns:minmax(360px, 440px) minmax(0, 1fr); gap:28px; align-items:start; }
-  .calc-out { position:sticky; top:112px; max-height:calc(100vh - 128px); overflow:auto; scrollbar-width:thin; }
-}
-.result-bar { display:none; }
-@media (max-width: 699px) {
-  .result-bar { display:flex; align-items:center; gap:10px; position:fixed; left:8px; right:8px; bottom:calc(76px + env(safe-area-inset-bottom)); z-index:30; min-height:56px; padding:8px 14px; background:#1c2330; color:var(--fg); border:1px solid #58a6ff; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,.5); font:inherit; text-align:left; cursor:pointer; }
-  .rb-text { display:flex; flex-direction:column; flex:1; min-width:0; }
-  .rb-text b { font-size:1rem; }
-  .rb-text small { color:var(--mut); font-size:.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-}
 
 /* Tabelas de cronograma: 1ª coluna fixa ao rolar; no celular, cada linha vira um cartão com rótulos */
-.fin-table td:first-child, .fin-table th:first-child { position:sticky; left:0; background:var(--card); z-index:1; }
-@media (max-width: 699px) {
-  .fin-table.cards thead { display:none; }
-  .fin-table.cards, .fin-table.cards tbody { display:block; }
-  .fin-table.cards tr { display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; padding:10px 2px; border-bottom:1px solid var(--line); }
-  .fin-table.cards td { display:block; border:0; padding:0; text-align:left; white-space:normal; position:static; }
-  .fin-table.cards td::before { content:attr(data-label); display:block; color:var(--mut); font-size:.72rem; margin-bottom:1px; }
-  .fin-table.cards td:first-child { grid-column:1 / -1; font-weight:700; }
-  .fin-table.cards td:first-child::before { display:none; }
-}
 
-/* Calculadoras: veredito neutro (verde/vermelho ficam para variação de mercado), selo "Melhor", premissas recolhidas */
-.calc-verdict { font-size:1.3rem; font-weight:700; color:var(--fg); border-left:3px solid var(--accent); padding-left:12px; }
-.calc-verdict.up, .calc-verdict.down { color:var(--fg); }
-.calc-verdict small { font-size:.82rem; }
+
 .opt.win { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset; }
-.badge-best { margin-left:8px; font-size:.68rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#0d1117; background:var(--accent); border-radius:6px; padding:2px 7px; vertical-align:middle; }
 .premissas { margin-top:10px; }
 .premissas summary { cursor:pointer; color:var(--mut); font-size:.85rem; }
 .status.note { color:var(--mut); font-size:.82rem; }
@@ -446,7 +384,7 @@ main.app { max-width: 1200px; margin: 0 auto; padding: 16px 16px 96px; }
 
 /* Foco visível em todos os controles */
 a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-.tile:focus-visible, .start-card:focus-visible, .calc-item:focus-visible, .qb:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.tile:focus-visible, .start-card:focus-visible, .qb:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
 /* Barras horizontais de comparação (base zero) */
 .hbars { display:flex; flex-direction:column; gap:8px; margin:6px 0 14px; }
 .hbar { display:grid; grid-template-columns:minmax(110px, 170px) 1fr auto; align-items:center; gap:10px; font-size:.85rem; }
@@ -460,9 +398,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .chip-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
 .chart-legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 2px; font-size:.85rem; color:var(--mut); }
 
-.ficha th { text-align:left; white-space:nowrap; width:1%; padding-right:18px; }
-.ficha td { text-align:left; }
-
 .clocks-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 18px; max-width:1200px; margin:0 auto; padding:6px 16px 0; font-size:.8rem; color:var(--mut); }
 .clocks-top .brt { display:inline-flex; align-items:baseline; gap:6px; text-align:left; }
 .clocks-top .brt b { color:var(--fg); font-variant-numeric:tabular-nums; font-size:.95rem; }
@@ -474,15 +409,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   .clocks-top .clock { display:grid; grid-template-columns:1fr 1fr; gap:2px 12px; width:100%; }
   .clocks-top .clock-one small { display:none; }
   .clocks-top .clock-one b { font-size:.82rem; }
-}
-/* calculadoras: cronograma completo (sem caixa de rolagem interna) e ficha empilhada no celular */
-.calc-out .table .scroll { max-height:none; overflow-x:auto; }
-.finimp .chk input { width:auto; flex:none; }
-@media (max-width: 699px) {
-  .ficha, .ficha tbody, .ficha tr, .ficha th, .ficha td { display:block; width:auto; }
-  .ficha tr { padding:8px 0; border-bottom:1px solid var(--line); }
-  .ficha th { font-size:.78rem; color:var(--mut); font-weight:500; padding:0; white-space:normal; }
-  .ficha td { padding:2px 0 0; font-size:1rem; overflow-wrap:anywhere; }
 }
 
 .pair-tile { cursor:default; }
@@ -519,61 +445,17 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .qb-old { color:#d29922; font-size:.72rem; }
 .rates-grid .qb small { font-size:.75rem; }
 @media (min-width: 700px) { .nav-top .tabs { justify-content:safe center; } }
-.swap-table td.yel, .swap-table th.yel { background:rgba(210,153,34,.14); }
-.swap-table { font-size:.8rem; font-variant-numeric:tabular-nums; }
-.swap-table tfoot th, .swap-table tfoot td { font-weight:700; border-top:2px solid var(--line); }
 .formulas { display:grid; gap:8px; margin:8px 0; }
 .formulas dt { font-weight:700; }
 .formulas dd { margin:0; color:var(--mut); }
 /* tabela larga (11 colunas): formulário em cima, resultado embaixo, em toda a largura */
-@media (min-width: 700px) {
-  .calc-split.stack { display:block; }
-  .calc-split.stack .calc-out { position:static; max-height:none; overflow:visible; margin-top:20px; }
-  .calc-split.stack .calc-form { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:flex-end; }
-  .calc-split.stack .calc-form label { flex:1 1 220px; }
-}
 
 /* relógios do topo: 5 praças numa linha, com sigla visível no celular */
 .clocks-top .clock { display:flex !important; justify-content:space-between; width:100%; }
 .clocks-top .clock-one small { display:inline !important; font-size:.68rem; }
 .clocks-top .clock-one { align-items:center; }
 
-/* calculadoras: ícones e FINIMP em etapas */
-.calc-icon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; }
-.fin-step { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin:0 0 12px; display:flex; flex-direction:column; gap:10px; }
-.fin-step .calc-sub { margin:0; display:flex; align-items:center; gap:8px; }
-.fin-step-head { display:flex; justify-content:space-between; align-items:center; }
-.fin-n { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--accent, #3987e5); color:#fff; font-size:.75rem; font-weight:700; }
-.fin-step input, .fin-step select { font-size:16px; min-height:42px; }
-.fin-step .row { display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:end; }
-.fin-more { border:1px dashed var(--line); border-radius:14px; padding:10px 14px; margin-bottom:12px; }
-.fin-more summary { cursor:pointer; color:var(--mut); }
 .btn.ghost { background:none; }
-
-/* FINIMP: correções de layout no celular */
-.finimp.calc-split { background:none; border:0; padding:0; box-shadow:none; }
-.fin-step, .fin-more { min-width:0; overflow:hidden; }
-.fin-step .row { grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; }
-.fin-step label { min-width:0; display:flex; flex-direction:column; gap:4px; }
-.fin-step input, .fin-step select { width:100%; max-width:100%; box-sizing:border-box; }
-.fin-step .calc-form { display:flex; flex-direction:column; gap:12px; }
-.fin-step .seg { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; width:100%; }
-.fin-step .seg button { min-height:42px; padding:6px 4px; font-size:.85rem; line-height:1.15; text-align:center; white-space:normal; }
-.fin-step > .status { margin:0; font-size:.82rem; }
-.fin-step .rows { gap:8px; }
-
-/* FINIMP: ficha da cotação compacta */
-.ficha-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px; display:flex; flex-direction:column; gap:12px; }
-.ficha-top { display:flex; flex-direction:column; gap:2px; }
-.ficha-top small { color:var(--mut); font-size:.78rem; }
-.ficha-top b { font-size:1.6rem; }
-.ficha-top span { color:var(--mut); font-size:.82rem; }
-.ficha-list { margin:0; display:flex; flex-direction:column; }
-.ficha-list > div { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-top:1px solid var(--line); }
-.ficha-list dt { color:var(--mut); font-size:.85rem; flex:none; }
-.ficha-list dd { margin:0; text-align:right; font-size:.9rem; }
-.fin-step .calc-form > div { display:flex; flex-direction:column; align-items:stretch; gap:6px; text-align:left; }
-.fin-step .lbl { display:flex; align-items:center; gap:6px; }
 
 .img-share { background:none; border:1px solid var(--line); color:inherit; border-radius:8px; width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; margin-left:6px; vertical-align:middle; cursor:pointer; }
 
@@ -653,8 +535,6 @@ section[aria-labelledby="r-moedas"] .img-share { width:30px; height:30px; margin
 .help button::after { display:none; }
 section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:44px; flex-shrink:0; }
 .help button:focus-visible, .img-share:focus-visible, .refresh-mini:focus-visible { outline:2px solid var(--fg); outline-offset:3px; }
-.calc .field-error { color:#ff9a94; white-space:normal; font-size:.85rem; line-height:1.45; }
-.calc input[aria-invalid="true"] { border-color:var(--down, #f38e8e); }
 .placeholder { gap:10px; }
 .tile-spark { min-width:0; }
 .tile-spark small { white-space:normal; overflow-wrap:anywhere; max-width:100%; text-align:right; }

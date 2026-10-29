@@ -216,11 +216,11 @@ main a:visited { color: #c9a24a; }
 
 /* ===== Repaginação das demais telas: títulos, cartões e controles no mesmo vocabulário ===== */
 :root { --r-card: 3px; }
-main.app .top h1, main.app .history-head h1, main.app .history-head h2, main.app section.macro > h2, main.app .market-context h2, main.app .sec-head:not(.terminal-titlebar) h2, main.app .fer-month h2, main.app .macro.calc h2 {
+main.app .top h1, main.app .history-head h1, main.app .history-head h2, main.app section.macro > h2, main.app .market-context h2, main.app .sec-head:not(.terminal-titlebar) h2, main.app .fer-month h2{
   display: flex; align-items: center; gap: 12px; margin: 0 0 10px;
   color: var(--amber); font: 700 .8rem/1.3 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase;
 }
-main.app .top h1::after, main.app .history-head h1::after, main.app .history-head h2::after, main.app section.macro > h2::after, main.app .market-context h2::after, main.app .sec-head:not(.terminal-titlebar) h2::after, main.app .fer-month h2::after, main.app .macro.calc h2::after {
+main.app .top h1::after, main.app .history-head h1::after, main.app .history-head h2::after, main.app section.macro > h2::after, main.app .market-context h2::after, main.app .sec-head:not(.terminal-titlebar) h2::after, main.app .fer-month h2::after{
   content: ''; flex: 1; height: 1px; background: var(--line);
 }
 .history-head > :first-child { flex: 1; min-width: 0; }
@@ -236,14 +236,11 @@ main.app .fer-month h2 { text-transform: uppercase; }
 .fer-count { margin: 6px 0 14px; }
 
 /* cartões, listas e controles: cantos quase retos */
-.card, .chart, .tile, .context-card, .ncg, .calc-item, .start-card, .fin-step, .ficha-card, .list, .feed, .wire, .holiday-notice, .update-notice, .resumo-chart, .executive-rates__scroll, .opt, .rate, .result-bar, .fin-more, .agenda li, .tip, .pop, .more-sheet { border-radius: var(--r-card); }
-.seg, .btn, .chips button, .curve-legend button, .calc-shortcuts button, .start-chip, .pair-sel, .fer-filter select, .calc-form input, .calc-form select, .finimp select, .finimp input[type=date], .finimp input[inputmode], .scenario-year select, .update-notice button, .fx-toggle, .img-share { border-radius: 2px; }
+.card, .chart, .tile, .context-card, .start-card, .list, .feed, .wire, .holiday-notice, .update-notice, .resumo-chart, .executive-rates__scroll, .opt, .rate, .agenda li, .tip, .pop, .more-sheet { border-radius: var(--r-card); }
+.seg, .btn, .chips button, .curve-legend button, .pair-sel, .fer-filter select, .scenario-year select, .update-notice button, .fx-toggle, .img-share { border-radius: 2px; }
 .context-card-trigger { border-radius: var(--r-card); }
 .sheet, .info-notice-dialog, .expandable-panel.is-dialog { border-radius: 4px; }
 .seg button[aria-pressed='true'], .chips button[aria-pressed='true'], .seg button.on { background: #1a1507; color: var(--amber); box-shadow: inset 0 -2px 0 var(--amber); }
-.calc-icon, .calc-item .calc-icon { color: var(--amber); }
-.calc-validation-notice { margin: 0 0 12px; padding: 6px 12px; background: transparent; border: 0; border-left: 3px solid var(--amber); border-radius: 0; color: var(--mut); font-size: .8rem; }
-.calc-validation-notice strong { color: var(--fg); }
 
 /* fonte nos cartões de Cenários: o botão que cobre o cartão não pode esconder o link */
 .context-card { position: relative; }
@@ -351,32 +348,7 @@ main.app .idx-defs dt { font-family: var(--mono, ui-monospace, monospace); font-
 main.app .idx-defs dd { margin: 0; color: var(--muted, #8a8a8a); font-size: 12.5px; line-height: 1.45; }
 main.app .idx-note { margin: 0; padding: 0 12px 12px; font-size: 12px; color: var(--muted, #8a8a8a); }
 
-/* ===== Calculadoras: formulário e resultado lado a lado, cabeçalho numa linha, aviso compacto ===== */
-main.app .calc > .calc-validation-notice { padding: 6px 12px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.4; border-radius: 2px; border-left-width: 3px; }
-main.app .calc > .history-head { flex-wrap: nowrap; align-items: center; gap: 16px; margin-bottom: 14px; }
-main.app .calc > .history-head .more { flex: none; white-space: nowrap; min-height: 44px; padding: 0 4px; color: var(--amber, #ffb000); }
-main.app .calc > .history-head .more:hover { text-decoration: underline; }
-@media (max-width: 599px) {
-  main.app .calc > .history-head { flex-wrap: wrap; gap: 4px 12px; }
-}
-@media (min-width: 1100px) {
-  main.app .calc .calc-split:not(.stack) { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 0 28px; align-items: start; }
-  main.app .calc .calc-split:not(.stack) .calc-in .calc-form { --calc-columns: 2; align-items: start; }
-  main.app .calc .calc-split:not(.stack) .calc-out { position: sticky; top: 118px; max-height: calc(100vh - 134px); overflow: auto; margin-top: 0; padding: 0 0 0 28px; border-top: 0; border-left: 1px solid var(--line); scrollbar-width: thin; }
-  main.app .calc .calc-split:not(.stack) .calc-out .options { grid-template-columns: minmax(0, 1fr); }
-}
-@media (min-width: 1100px) {
-  main.app .calc .calc-split:not(.stack) .calc-out .focus-table { font-size: 13px; }
-  main.app .calc .calc-split:not(.stack) .calc-out .focus-table td:first-child { min-width: 170px; }
-}
 
-/* ===== Campos de valor e memória das calculadoras ===== */
-main.app .money-wrap { position: relative; display: block; }
-main.app .money-wrap > i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-style: normal; font-family: var(--mono, ui-monospace, monospace); font-size: 12px; color: var(--muted, #8a8a8a); pointer-events: none; }
-main.app .money-wrap > input { padding-left: 42px !important; font-variant-numeric: tabular-nums; }
-main.app .calc-memory { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0 0 14px; padding: 6px 10px; font-size: 12px; color: var(--muted, #8a8a8a); border: 1px dashed var(--line); border-radius: 2px; }
-main.app .calc-memory .more { min-height: 44px; padding: 0 4px; color: var(--amber, #ffb000); }
-main.app .calc .calc-in > .calc-memory + .calc-sub, main.app .calc .calc-in > .calc-memory + .calc-form { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* ===== Ajustes de celular e tablet: alvos de toque, relógios e tabela de cenários ===== */
 main.app .scroll-hint { display: none; margin: 0 0 8px; font-size: 12px; color: var(--amber, #ffb000); }
