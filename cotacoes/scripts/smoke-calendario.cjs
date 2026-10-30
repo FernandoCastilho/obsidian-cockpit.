@@ -24,13 +24,15 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.ok(await table.locator('.cal-day').count() >= 1)
       // balão do evento: o que é, efeito na economia e ligação com o Brasil; sem categoria mapeada, impacto baixo
       await table.getByRole('button', { name: 'Impacto de CPI Flash Estimate y/y' }).click()
-      let pop = await p.locator('.pop').filter({ hasText: 'Inflação ao consumidor' }).first().innerText()
+      const balao = (titulo) => p.locator('.pop:visible').filter({ hasText: titulo })
+      const fechar = async (titulo) => { if (width < 700) await balao(titulo).getByRole('button', { name: 'Fechar' }).click(); else { await p.keyboard.press('Escape'); await p.mouse.move(0, 0); await p.evaluate(() => document.activeElement?.blur()) } await balao(titulo).waitFor({ state: 'hidden' }) }
+      let pop = await balao('CPI Flash Estimate y/y').innerText()
       assert.match(pop, /Na economia:/); assert.match(pop, /Brasil:[\s\S]*Zona do euro/); assert.match(pop, /Impacto:\s*Alto/)
-      if (width < 700) await p.getByRole('button', { name: 'Fechar' }).click(); else await p.keyboard.press('Escape')
+      await fechar('CPI Flash Estimate y/y')
       await table.getByRole('button', { name: 'Impacto de Xyz Gadget Index' }).click()
-      pop = await p.locator('.pop').filter({ hasText: 'Xyz Gadget Index' }).first().innerText()
+      pop = await balao('Xyz Gadget Index').innerText()
       assert.match(pop, /Impacto baixo/); assert.match(pop, /correlação direta relevante mapeada com o Brasil/); assert.match(pop, /classifica como alto/)
-      if (width < 700) await p.getByRole('button', { name: 'Fechar' }).click(); else await p.keyboard.press('Escape')
+      await fechar('Xyz Gadget Index')
       assert.match(await table.locator('.cal-time').first().innerText(), /^\d{2}:\d{2}$/)
       // impacto baixo entra ao ligar; país restringe
       await sec.getByRole('group', { name: 'Impacto dos eventos' }).getByRole('button', { name: 'Baixo' }).click()
