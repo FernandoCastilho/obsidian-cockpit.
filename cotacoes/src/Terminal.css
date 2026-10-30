@@ -298,6 +298,13 @@ main.app .fer-month h2 { text-transform: uppercase; }
 .learn-list { min-width: 0; background: var(--card); border: 1px solid var(--line); }
 .learn-list-title { margin: 0; padding: 8px 12px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
 .learn-list ul { list-style: none; margin: 0; padding: 0; }
+.learn-search { position: relative; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.learn-search input { width: 100%; min-height: 44px; padding: 0 40px 0 10px; background: #0a0a0a; border: 1px solid var(--line); border-radius: 2px; color: var(--fg); font: inherit; font-size: .88rem; }
+.learn-search input:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.learn-clear { position: absolute; right: 12px; top: 8px; min-width: 44px; min-height: 44px; background: none; border: 0; color: var(--mut); font-size: 1.2rem; cursor: pointer; }
+.learn-count { margin: 0; padding: 6px 12px; color: var(--mut); font-size: .72rem; border-bottom: 1px solid #1a1813; }
+.learn-topic { margin: 0; padding: 8px 12px 6px; background: #100f0b; border-bottom: 1px solid #1a1813; color: var(--amber); font: 700 .66rem/1.2 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.learn-group + .learn-group { border-top: 1px solid var(--line); }
 .learn-list li + li { border-top: 1px solid #1a1813; }
 .learn-list button { display: grid; gap: 2px; width: 100%; min-height: 56px; padding: 8px 12px; text-align: left; background: none; border: 0; border-left: 3px solid transparent; color: var(--fg); font: inherit; cursor: pointer; }
 .learn-list button b { font-size: .92rem; }

@@ -39,6 +39,22 @@ export const breakFunding = ({ captado, taxaFunding, anosDecorridos, taxaReaplic
   return Math.max(0, saldo * (((1 + taxaFunding) / (1 + taxaReaplicacao)) ** anosRestantes - 1))
 }
 
+// Remuneração pós-fixada CDI + spread: o spread compõe com o CDI (não se soma). Taxas anuais em fração.
+export const taxaCdiMaisSpread = (cdi, spread) => (1 + cdi) * (1 + spread) - 1
+
+// Juros de um prazo, a juros compostos: principal × ((1 + taxa anual)^t − 1), com t em fração do ano (CDI: dias úteis ÷ 252).
+export const jurosNoPrazo = ({ principal, taxaAnual, fracaoAno }) => principal * ((1 + taxaAnual) ** fracaoAno - 1)
+
+// FIDC: índice de subordinação (cotas subordinadas sobre o total de cotas) e a distribuição de uma perda da carteira.
+export const indiceSubordinacao = ({ senior, subordinada }) => subordinada / (senior + subordinada)
+// A perda consome primeiro a cota subordinada; só o que passa dela atinge a sênior.
+export const perdaNasCotas = ({ senior, subordinada, perda }) => ({ subordinada: Math.min(subordinada, perda), senior: Math.min(senior, Math.max(0, perda - subordinada)) })
+
+// Inflação acumulada: produto dos fatores mensais, não a soma. Taxas mensais em fração.
+export const inflacaoAcumulada = (mensais) => mensais.reduce((f, m) => f * (1 + m), 1) - 1
+// Juro real (equação de Fisher): (1 + nominal) ÷ (1 + inflação) − 1.
+export const juroReal = (nominal, inflacao) => (1 + nominal) / (1 + inflacao) - 1
+
 const EX_DIFERENCIAL = { brl: 0.14, usd: 0.04, spot: 5 }
 const EX_CUPOM = { spot: 5, futuro: 5.5, di: 0.14 }
 const EX_CUPOM_2 = { spot: 5, futuro: 5.25, di: 0.14 }
@@ -46,6 +62,10 @@ const EX_SOFR = { principal: 1_000_000, taxa: 0.043 }
 const EX_EURIBOR = { saldo: 200_000, indexador: 0.03, spread: 0.01 }
 const EX_FUNDING = { fontes: [{ nome: 'CDB', valor: 60, custo: 0.14 }, { nome: 'LCI', valor: 30, custo: 0.13 }, { nome: 'Capital próprio', valor: 10, custo: 0 }], taxaEmprestimo: 0.18 }
 const EX_LIQ = { principal: 1_000_000, taxa: 0.15, anosTotal: 2, anosDecorridos: 1, anosRestantes: 1, taxaMercado: 0.12, taxaFunding: 0.13 }
+const EX_DEB = { principal: 1_000_000, cdi: 0.14, spread: 0.02 }
+const EX_NC = { principal: 5_000_000, cdi: 0.14, spread: 0.03, diasUteis: 126 }
+const EX_FIDC = { senior: 7_000_000, subordinada: 3_000_000, perdas: [2_000_000, 4_000_000] }
+const EX_INFL = { mensal: 0.004, meses: 12, selic: 0.145 }
 const EX_CDS = { nocional: 10_000_000, pb: 200 }
 
 const money = (v, sym) => `${sym} ${nf(v, 0)}`
@@ -54,6 +74,7 @@ const pct = (f, d = 2) => `${nf(f * 100, d)}%`
 export const CONCEITOS = [
   {
     id: 'diferencial-de-juros',
+    topico: 'Juros e câmbio',
     nome: 'Diferencial de juros',
     frase: 'É a diferença entre a taxa de juros de duas moedas (ou países), por exemplo o juro em reais menos o juro em dólares.',
     crianca: [
@@ -92,6 +113,7 @@ export const CONCEITOS = [
   },
   {
     id: 'cupom-cambial',
+    topico: 'Juros e câmbio',
     nome: 'Cupom cambial',
     frase: 'É o juro em dólar que o mercado brasileiro está embutindo, calculado a partir do juro em reais e do dólar futuro.',
     crianca: [
@@ -130,6 +152,7 @@ export const CONCEITOS = [
   },
   {
     id: 'sofr',
+    topico: 'Juros e câmbio',
     nome: 'SOFR',
     frase: 'É a taxa de juros de um dia para empréstimos em dólar com garantia de títulos do Tesouro americano.',
     crianca: [
@@ -162,6 +185,7 @@ export const CONCEITOS = [
   },
   {
     id: 'euribor',
+    topico: 'Juros e câmbio',
     nome: 'Euribor',
     frase: 'É o juro de referência em euros para empréstimos entre bancos europeus, em prazos de uma semana a 12 meses.',
     crianca: [
@@ -195,6 +219,7 @@ export const CONCEITOS = [
   },
   {
     id: 'custo-de-funding',
+    topico: 'Funding e risco',
     nome: 'Custo de funding',
     frase: 'É quanto custa, em média, para uma instituição conseguir o dinheiro que depois empresta.',
     crianca: [
@@ -232,6 +257,7 @@ export const CONCEITOS = [
   },
   {
     id: 'liquidacao-antecipada',
+    topico: 'Operações de crédito',
     nome: 'Liquidação antecipada (na curva, a mercado e break funding)',
     frase: 'É pagar um contrato antes do vencimento; o valor a pagar muda conforme o contrato seja liquidado na curva ou a mercado, e pode vir com a cobrança de break funding.',
     crianca: [
@@ -275,6 +301,7 @@ export const CONCEITOS = [
   },
   {
     id: 'cds',
+    topico: 'Funding e risco',
     nome: 'CDS (Credit Default Swap)',
     frase: 'É um seguro contra calote de uma empresa ou de um país; o preço do seguro mede o risco percebido.',
     crianca: [
@@ -305,7 +332,180 @@ export const CONCEITOS = [
       resposta: 'O mercado passou a ver mais risco de crédito no país: proteger o mesmo valor ficou 100 pb (1 ponto percentual ao ano) mais caro.',
     },
   },
+  {
+    id: 'debenture',
+    topico: 'Operações de crédito',
+    nome: 'Debênture',
+    frase: 'É um título de dívida que uma empresa emite para pegar dinheiro emprestado direto de investidores, em vez de pegar no banco.',
+    crianca: [
+      'Uma empresa precisa de R$ 100 milhões para uma obra. Em vez de um banco emprestar tudo, ela divide a dívida em muitos pedaços iguais (as debêntures) e vende cada um a um investidor. Quem compra empresta; a empresa promete devolver o valor e pagar juros.',
+      'As regras ficam na escritura de emissão: prazo, remuneração (por exemplo CDI + 2% ao ano, IPCA + 7% ou taxa prefixada), datas de pagamento e garantias. Um agente fiduciário confere, em nome dos investidores, se a empresa cumpre o combinado.',
+    ],
+    analogia: 'É uma vaquinha formal: a empresa pede um pouco a muita gente, assina o que promete pagar e alguém independente (o agente fiduciário) confere se ela cumpre.',
+    lacunas: [
+      'Não é ação: o debenturista é credor, não sócio. Se a empresa quebrar, os credores recebem antes dos acionistas (existe a debênture conversível em ações, mas é um caso à parte).',
+      'Renda fixa não é risco zero: o risco é o de crédito da empresa emissora, e a debênture não tem a garantia do FGC. Quanto maior o risco, maior o spread que o mercado exige.',
+      'Na remuneração pós-fixada o spread compõe com o CDI: 14% de CDI com 2% de spread dão cerca de 16,3% ao ano, não 16%.',
+      'Debêntures incentivadas (de infraestrutura) têm benefício fiscal para a pessoa física; a regra tributária muda por lei, então confira a vigente.',
+      'O mercado secundário costuma ter menos liquidez que o de ações ou de títulos públicos: vender antes do vencimento pode custar um desconto.',
+    ],
+    preciso: {
+      texto: 'Título de crédito emitido por sociedade por ações, em série, com os termos definidos na escritura de emissão. O preço unitário (PU) é o valor nominal atualizado mais a remuneração acumulada. Na remuneração pós-fixada, o spread compõe com o CDI do período:',
+      formula: 'taxa efetiva = (1 + CDI) × (1 + spread) − 1   ·   juros = principal × [(1 + taxa)^t − 1]',
+    },
+    exemplo: (() => {
+      const e = EX_DEB
+      const taxa = taxaCdiMaisSpread(e.cdi, e.spread)
+      return {
+        titulo: `Investidor compra ${money(e.principal, 'R$')} em debêntures CDI + ${pct(e.spread, 0)}`,
+        passos: [
+          `CDI de ${pct(e.cdi, 0)} ao ano, mantido ao longo do ano (simplificação). Spread de ${pct(e.spread, 0)}.`,
+          `Taxa efetiva = ${nf(1 + e.cdi, 2)} × ${nf(1 + e.spread, 2)} − 1 = ${pct(taxa)} ao ano (e não ${pct(e.cdi + e.spread, 0)}).`,
+          `Juros em 1 ano = ${nf(e.principal, 0)} × ${pct(taxa)} = R$ ${nf(jurosNoPrazo({ principal: e.principal, taxaAnual: taxa, fracaoAno: 1 }), 0)}.`,
+        ],
+        resultado: `R$ ${nf(jurosNoPrazo({ principal: e.principal, taxaAnual: taxa, fracaoAno: 1 }), 0)} de juros em um ano, ${pct(taxa)} ao ano, antes de impostos e do risco de crédito.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz preços nem emissões de debêntures. O CDI, referência da remuneração pós-fixada, está em Juros.', tab: 'juros' },
+    teste: {
+      pergunta: 'Uma debênture paga CDI + 2% ao ano e o CDI sobe de 14% para 15%. O que acontece com a remuneração?',
+      resposta: `Sobe junto: de cerca de ${pct(taxaCdiMaisSpread(0.14, 0.02), 1)} para ${pct(taxaCdiMaisSpread(0.15, 0.02), 1)} ao ano. O spread de 2% continua o mesmo; só a parte do CDI muda.`,
+    },
+  },
+  {
+    id: 'nota-comercial',
+    topico: 'Operações de crédito',
+    nome: 'Nota comercial',
+    frase: 'É um título de dívida de curto prazo que a empresa emite para captar dinheiro de investidores, mais simples e rápido de montar que a debênture.',
+    crianca: [
+      'Se a debênture é o empréstimo coletivo de prazo longo e formal, a nota comercial é a versão curta e enxuta: a empresa precisa de capital de giro por alguns meses, emite notas e investidores as compram.',
+      'Como na debênture, há valor, prazo, data de pagamento e remuneração definidos (muitas vezes CDI + spread). Em geral há menos exigências e custo de emissão menor, o que a torna comum para capital de giro e para “pontes” até uma captação maior.',
+    ],
+    analogia: 'É um empréstimo-ponte com recibo: valor, prazo e juros no papel, mas sem toda a estrutura de uma debênture.',
+    lacunas: [
+      'Prazo curto não é segurança: o risco continua sendo o de crédito do emissor, e não há garantia do FGC.',
+      'Prazo curto obriga a empresa a refinanciar logo: se o mercado fechar na hora do vencimento, o risco é o de refinanciamento.',
+      'Na prática, as diferenças para a debênture são prazo (mais curto), formalização (mais enxuta) e uso (capital de giro, ponte). Ambas são dívida da empresa com remuneração definida.',
+      'Quem pode emitir, prazos e forma de oferta vêm da lei e da regulamentação da CVM, e já mudaram: confira a norma vigente antes de decidir.',
+    ],
+    preciso: {
+      texto: 'Título de crédito que representa promessa de pagamento em dinheiro, emitido por empresa, em geral com prazo curto e remuneração em taxa (prefixada ou pós-fixada). Os juros do prazo seguem o cálculo da debênture, com t em fração do ano (convenção do CDI: dias úteis ÷ 252):',
+      formula: 'juros = principal × [(1 + taxa)^t − 1]   ·   t = dias úteis ÷ 252',
+    },
+    exemplo: (() => {
+      const e = EX_NC
+      const taxa = taxaCdiMaisSpread(e.cdi, e.spread)
+      const t = e.diasUteis / 252
+      const juros = jurosNoPrazo({ principal: e.principal, taxaAnual: taxa, fracaoAno: t })
+      return {
+        titulo: `Capital de giro de ${money(e.principal, 'R$')} por ${e.diasUteis} dias úteis`,
+        passos: [
+          `Remuneração CDI + ${pct(e.spread, 0)}, com CDI de ${pct(e.cdi, 0)}: taxa efetiva = ${nf(1 + e.cdi, 2)} × ${nf(1 + e.spread, 2)} − 1 = ${pct(taxa)} ao ano.`,
+          `Prazo: ${e.diasUteis} ÷ 252 = ${nf(t, 2)} ano.`,
+          `Juros = ${nf(e.principal, 0)} × [(1 + ${pct(taxa)})^${nf(t, 2)} − 1] = R$ ${nf(juros, 0)}, ou ${pct(juros / e.principal)} sobre o valor captado.`,
+        ],
+        resultado: `Em meio ano, a empresa paga R$ ${nf(juros, 0)} de juros (${pct(juros / e.principal)} do valor) além de devolver o principal.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz emissões de notas comerciais. O CDI, referência da remuneração pós-fixada, está em Juros.', tab: 'juros' },
+    teste: {
+      pergunta: 'Por que uma empresa pode preferir uma nota comercial a uma debênture para cobrir uma necessidade de 6 meses?',
+      resposta: 'Porque a emissão é mais simples e barata e o prazo é curto: não compensa montar a estrutura de uma debênture de longo prazo para uma necessidade passageira.',
+    },
+  },
+  {
+    id: 'fidc',
+    topico: 'Operações de crédito',
+    nome: 'FIDC (Fundo de Investimento em Direitos Creditórios)',
+    frase: 'É um fundo que compra recebíveis (valores que empresas têm a receber) e financia a compra vendendo cotas a investidores.',
+    crianca: [
+      'Uma loja vende a prazo e só vai receber daqui a 60 dias, mas precisa do dinheiro hoje. Ela vende esses recebíveis ao FIDC com desconto. O fundo paga hoje e recebe dos clientes no vencimento.',
+      'Para ter o dinheiro, o fundo vende cotas a investidores, em camadas: a cota sênior é paga primeiro; a subordinada (muitas vezes ficando com o próprio vendedor dos recebíveis) absorve as primeiras perdas e protege a sênior.',
+    ],
+    analogia: 'É um prédio com andares: a perda entra pelo porão (cota subordinada) e só sobe ao andar de cima (sênior) se o porão encher.',
+    lacunas: [
+      'O investidor sênior depende da qualidade da carteira de recebíveis e do tamanho da subordinação, não só de quem vendeu os recebíveis. Mas inadimplência acima da subordinação atinge a sênior.',
+      'Mais subordinação protege mais a sênior, mas obriga o cedente a deixar mais capital no fundo; menos subordinação financia mais com dinheiro de terceiros e é mais arriscada.',
+      'Não é coberto pelo FGC. A liquidez das cotas costuma ser limitada, com amortização e resgate previstos no regulamento do fundo.',
+      'Quem pode investir (público geral ou só profissional) e as regras da carteira vêm da regulamentação da CVM e do regulamento de cada fundo: confira os dois.',
+    ],
+    preciso: {
+      texto: 'Fundo cujo ativo são direitos creditórios (duplicatas, recebíveis de cartão, financiamentos, créditos corporativos etc.) e cujo passivo são cotas seniores, eventualmente mezanino, e subordinadas. A perda da carteira é absorvida primeiro pela cota subordinada. A proteção da sênior é medida pelo índice de subordinação:',
+      formula: 'subordinação = subordinadas ÷ (sênior + subordinadas)   ·   perda na sênior = máx(0, perda − subordinadas)',
+    },
+    exemplo: (() => {
+      const e = EX_FIDC
+      const sub = indiceSubordinacao(e)
+      const [a, b] = e.perdas.map((perda) => ({ perda, ...perdaNasCotas({ ...e, perda }) }))
+      return {
+        titulo: `FIDC com carteira de ${money(e.senior + e.subordinada, 'R$')}`,
+        passos: [
+          `Cotas: sênior ${money(e.senior, 'R$')} e subordinada ${money(e.subordinada, 'R$')}. Subordinação = ${nf(e.subordinada, 0)} ÷ ${nf(e.senior + e.subordinada, 0)} = ${pct(sub, 0)}.`,
+          `Perda de ${money(a.perda, 'R$')} por inadimplência: a subordinada absorve tudo (${money(a.subordinada, 'R$')}) e fica com ${money(e.subordinada - a.subordinada, 'R$')}; a sênior perde ${money(a.senior, 'R$')}.`,
+          `Perda de ${money(b.perda, 'R$')}: a subordinada zera (${money(b.subordinada, 'R$')}) e a sênior perde ${money(b.senior, 'R$')}.`,
+        ],
+        resultado: `Com ${pct(sub, 0)} de subordinação, a sênior só sofre perda quando a inadimplência passa de ${pct(sub, 0)} da carteira.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz cotas de FIDC. Como referência de custo do crédito, veja o CDI e a curva DI em Juros.', tab: 'juros' },
+    teste: {
+      pergunta: 'Um FIDC tem 25% de subordinação e a carteira perde 30% por inadimplência. A cota sênior perde?',
+      resposta: 'Perde, sim. A subordinada (25% da carteira) absorve os primeiros 25 pontos e os 5% restantes atingem a sênior.',
+    },
+  },
+  {
+    id: 'inflacao',
+    topico: 'Inflação',
+    nome: 'Inflação (IPCA)',
+    frase: 'É o aumento generalizado e contínuo dos preços: o mesmo dinheiro compra menos com o tempo.',
+    crianca: [
+      'Se o lanche custava R$ 10 e hoje custa R$ 10,50, o preço subiu 5%. Se quase tudo sobe assim, mês após mês, há inflação, e o seu dinheiro perde poder de compra.',
+      'No Brasil, a inflação oficial é o IPCA, medido pelo IBGE: acompanha o preço de uma cesta que representa o consumo das famílias (alimentos, transporte, moradia etc.). O Banco Central persegue uma meta para ele, hoje de 3,0% ao ano, com tolerância de 1,5 ponto percentual para cima ou para baixo.',
+      'Para segurar a inflação, o Banco Central sobe a Selic: juro maior esfria o consumo e o crédito. Por isso Selic, curva de juros, câmbio e inflação andam juntos.',
+    ],
+    analogia: 'É o troco que encolhe: com os mesmos R$ 100 você compra hoje um pouco menos do que comprava no ano passado.',
+    lacunas: [
+      'Inflação é a variação dos preços, não o nível: inflação em queda não significa que os preços baixaram, só que sobem mais devagar. Preço só cai com deflação (inflação negativa).',
+      'O acumulado em 12 meses é composto, não a soma dos meses: doze meses de 0,4% dão cerca de 4,9%, não 4,8%.',
+      'Há mais de um índice: IPCA (oficial, usado na meta), INPC (famílias de menor renda) e IGP-M (FGV, usado em muitos reajustes de aluguel). Medem cestas diferentes e podem divergir.',
+      'Juro nominal não é juro real: o que sobra para quem aplica é o juro descontada a inflação.',
+    ],
+    preciso: {
+      texto: 'A inflação acumulada em n meses é o produto dos fatores mensais menos 1. O juro real, pela equação de Fisher, desconta a inflação do juro nominal:',
+      formula: 'acumulado = Π (1 + mês) − 1   ·   juro real = (1 + nominal) ÷ (1 + inflação) − 1',
+    },
+    exemplo: (() => {
+      const e = EX_INFL
+      const acc = inflacaoAcumulada(Array(e.meses).fill(e.mensal))
+      return {
+        titulo: `${e.meses} meses de inflação a ${pct(e.mensal, 1)} ao mês`,
+        passos: [
+          `Soma simples (errada): ${e.meses} × ${pct(e.mensal, 1)} = ${pct(e.meses * e.mensal, 1)}.`,
+          `Composto: (1 + ${nf(e.mensal, 3)})^${e.meses} − 1 = ${pct(acc)} em 12 meses.`,
+          `Com a Selic a ${pct(e.selic)} ao ano, o juro real = ${nf(1 + e.selic, 3)} ÷ ${nf(1 + acc, 4)} − 1 = ${pct(juroReal(e.selic, acc))} ao ano.`,
+        ],
+        resultado: `Inflação de ${pct(acc)} em 12 meses e juro real de ${pct(juroReal(e.selic, acc))} ao ano sobre a Selic de ${pct(e.selic)}.`,
+      }
+    })(),
+    noApp: { texto: 'O IPCA oficial, com histórico e o quadro “o que pesa”, está em Cenários › Outros.', tab: 'cenarios', view: 'outros' },
+    teste: {
+      pergunta: 'A inflação em 12 meses cai de 6% para 4%. Os preços caíram?',
+      resposta: 'Não. Eles seguem subindo, mas a um ritmo menor: 4% ao ano em vez de 6%. Preço só cai quando há deflação, isto é, inflação negativa.',
+    },
+  },
 ]
+
+export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação']
+
+// Busca por palavras (todas precisam aparecer), sem diferenciar acento nem maiúscula, no conteúdo inteiro do conceito.
+const plain = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+export const textoDeBusca = (c) => plain([c.nome, c.topico, c.frase, c.analogia, ...c.crianca, ...c.lacunas, c.preciso.texto, c.preciso.formula, c.exemplo.titulo, ...c.exemplo.passos, c.teste.pergunta, c.teste.resposta].join(' '))
+export function buscarConceitos(termo, lista = CONCEITOS) {
+  const palavras = plain(String(termo ?? '')).split(/\s+/).filter(Boolean)
+  return palavras.length ? lista.filter((c) => { const t = textoDeBusca(c); return palavras.every((w) => t.includes(w)) }) : lista
+}
+// Agrupa por tópico, na ordem de TOPICOS, sem mostrar tópico vazio.
+export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: lista.filter((c) => c.topico === topico) })).filter((g) => g.itens.length)
 
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
@@ -316,6 +516,8 @@ export const CONEXAO = {
     ['Cupom cambial', 'é a ponte entre o juro em reais e o juro em dólar.'],
     ['Custo de funding', 'é o resultado: benchmark + spread de risco, convertido na moeda em que a instituição empresta.'],
     ['Liquidação antecipada', 'mostra quanto vale pagar antes do vencimento: o saldo do contrato (na curva), o preço de hoje (a mercado) e a indenização pelo funding quebrado (break funding).'],
+    ['Debênture, nota comercial e FIDC', 'são três formas de a empresa captar crédito no mercado: dívida longa, dívida curta e venda de recebíveis. A remuneração costuma ser o CDI mais um spread de risco.'],
+    ['Inflação', 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.'],
   ],
 }
 
