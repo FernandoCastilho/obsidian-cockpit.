@@ -78,6 +78,10 @@ jobs:
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-policy-rates.mjs
         timeout-minutes: 5
+      - name: Coletar €STR (Banco Central Europeu)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-estr.mjs
+        timeout-minutes: 2
       - name: Coletar indexadores TR, TBF e TLP (Banco Central)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-indexadores.mjs
