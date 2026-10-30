@@ -9,7 +9,7 @@ import { useDataFile } from './useDataFile.js'
 import { isWeekendBR } from './market.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { SHORTCUTS, ageText, dataStatus } from './terminal.js'
-import { ATRASO_H, FONTES, NAVEGADOR, REGRAS } from './governanca.js'
+import { ATRASO_H, FONTES, NAVEGADOR, REGRAS, RESUMO } from './governanca.js'
 
 const H = 3600e3
 const STATE = { ok: ['Atualizado', 'up'], old: ['Atrasado', 'down'], missing: ['Indisponível', 'flat'] }
@@ -72,6 +72,9 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
         <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado.</p>
       </Panel>
       <Panel title="Governança dos dados" note="de onde vêm, com que frequência e quando atrasam" className="config-wide">
+        <h3 className="config-sub">Em resumo</h3>
+        <ul className="config-list config-resumo">{RESUMO.map((t) => <li key={t}>{t}</li>)}</ul>
+        <h3 className="config-sub">Fonte por fonte</h3>
         <div className="config-scroll" role="region" aria-label="Frequência de atualização de cada fonte" tabIndex={0}><table className="config-table config-gov">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
           <tbody>

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
-import { ATRASO_H, CRONS, FONTES, NAVEGADOR, REGRAS } from '../src/governanca.js'
+import { ATRASO_H, CRONS, FONTES, NAVEGADOR, REGRAS, RESUMO } from '../src/governanca.js'
 
 const yml = (f) => readFileSync(new URL(`../../.github/workflows/${f}`, import.meta.url), 'utf8')
 const config = readFileSync(new URL('../src/Config.jsx', import.meta.url), 'utf8')
@@ -34,4 +34,13 @@ test('texto do navegador e regras usam as constantes do código', () => {
   assert.match(NAVEGADOR[1], /a cada 10 min/)
   assert.match(NAVEGADOR[2], /1 a cada 60 s e 30 por dia/)
   assert.ok(REGRAS.length >= 4 && REGRAS.every((r) => r.length > 30))
+})
+
+test('resumo: o câmbio é o único de 5 em 5 minutos e coletar não é o dado mudar', () => {
+  assert.equal(RESUMO.length, 3)
+  assert.match(RESUMO[0], /Só o câmbio[\s\S]*5 em 5 minutos[\s\S]*pregão/)
+  assert.match(RESUMO[1], /de hora em hora/)
+  assert.match(RESUMO[2], /Coletar não é o mesmo que o número mudar/)
+  // o resumo cita o que a tabela diz: o câmbio é a única fonte de 5 em 5 minutos
+  assert.deepEqual(FONTES.filter((f) => /5 min/.test(f.coleta)).map((f) => f.id), ['cambio'])
 })
