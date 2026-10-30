@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, cupomCambial, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds } from '../src/educacao.js'
+import { CONCEITOS, CONEXAO, breakFunding, cupomCambial, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
-test('os seis conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'cds'])
+test('os sete conceitos pedidos existem, com ids únicos', () => {
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -22,7 +22,19 @@ test('cada conceito traz frase, explicação simples, lacunas, versão precisa, 
     assert.ok(c.noApp.texto.length > 10 && ['juros'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
-  assert.equal(CONEXAO.itens.length, 5)
+  assert.equal(CONEXAO.itens.length, 6)
+})
+
+test('liquidação antecipada: na curva, a mercado e break funding', () => {
+  const e = { principal: 1_000_000, taxa: 0.15, anosTotal: 2, anosDecorridos: 1, anosRestantes: 1, taxaMercado: 0.12 }
+  assert.ok(Math.abs(valorNaCurva(e) - 1_150_000) < 1e-6)
+  assert.ok(Math.abs(valorAMercado(e) - 1_180_803.5714) < 1e-3)
+  assert.ok(valorAMercado(e) > valorNaCurva(e), 'mercado abaixo do contrato: paga mais que na curva')
+  assert.ok(valorAMercado({ ...e, taxaMercado: 0.18 }) < valorNaCurva(e), 'mercado acima do contrato: paga menos')
+  assert.equal(valorAMercado({ ...e, taxaMercado: e.taxa, anosRestantes: 1 }), valorNaCurva(e))
+  const q = { captado: 1_000_000, taxaFunding: 0.13, anosDecorridos: 1, taxaReaplicacao: 0.12, anosRestantes: 1 }
+  assert.ok(Math.abs(breakFunding(q) - 10_089.2857) < 1e-3)
+  assert.equal(breakFunding({ ...q, taxaReaplicacao: 0.14 }), 0, 'reaplicar acima do funding não gera cobrança')
 })
 
 test('contas dos exemplos', () => {

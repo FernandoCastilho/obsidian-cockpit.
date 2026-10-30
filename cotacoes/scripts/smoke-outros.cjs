@@ -150,11 +150,14 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 6)
+      assert.equal(await p.locator('.learn-list li').count(), 7)
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /9,62%[\s\S]*R\$ 5,48/)
+      await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
+      await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()
+      assert.match(await p.locator('.learn-detail').innerText(), /Na curva[\s\S]*1\.150\.000[\s\S]*1\.180\.804[\s\S]*Break funding[\s\S]*10\.089/)
       await p.locator('.learn-list button', { hasText: 'SOFR' }).click()
       await p.locator('.learn-detail h2', { hasText: 'SOFR' }).waitFor()
       if (width >= 1000) { const l = await p.locator('.learn-list').boundingBox(), d = await p.locator('.learn-detail').boundingBox(); assert.ok(d.x > l.x + l.width - 1, 'explicação ao lado da lista') }
