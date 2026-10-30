@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir, rename } from 'node:fs/promises'
 import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { loadPrevious } from './prev-lib.mjs'
-import { COMMODITIES, WTI_URL, PINK_PAGE_URL, discoverPinkSheetUrl, buildWti, parsePinkRows, commodityFallback } from './commodities-lib.mjs'
+import { COMMODITIES, EIA_DAILY, PINK_PAGE_URL, discoverPinkSheetUrl, buildEiaDaily, parsePinkRows, commodityFallback } from './commodities-lib.mjs'
 
 const output = new URL('../public/commodities.json', import.meta.url)
 const now = new Date()
@@ -20,10 +20,11 @@ async function get(url) {
   if (!response.ok) throw new Error(`Fonte: HTTP ${response.status}`)
   return response
 }
-async function collectWti() {
-  try { return [buildWti(await (await get(WTI_URL)).text(), now)] }
-  catch (error) { console.warn(`WTI: ${error.message}`); return [commodityFallback('wti', await previous('wti'), error)] }
+async function collectDaily(id) {
+  try { return buildEiaDaily(id, await (await get(COMMODITIES.find(c => c.id === id).sourceUrl)).text(), now) }
+  catch (error) { console.warn(`${id}: ${error.message}`); return commodityFallback(id, await previous(id), error) }
 }
+const monthly = COMMODITIES.filter(c => !(c.id in EIA_DAILY))
 async function collectMonthly() {
   try {
     // Resolve the current workbook from the official landing page, not a frozen monthly URL.
@@ -32,13 +33,16 @@ async function collectMonthly() {
     if (buffer.length > 10_000_000) throw new Error('Banco Mundial: arquivo excessivamente grande')
     const parsed = spawnSync('python3', [fileURLToPath(new URL('./read-pink-sheet.py', import.meta.url))], { input: buffer, encoding: 'utf8', maxBuffer: 10_000_000, timeout: 30000 })
     if (parsed.error || parsed.status !== 0) throw new Error(`Banco Mundial: falha ao ler XLSX (${parsed.error?.message ?? parsed.stderr.trim()})`)
-    return parsePinkRows(JSON.parse(parsed.stdout), url, now)
+    const pink = parsePinkRows(JSON.parse(parsed.stdout), url, now)
+    // Série opcional que sumiu da planilha: preserva o último valor válido, marcado como desatualizado.
+    const missing = monthly.filter(c => !pink.some(p => p.id === c.id))
+    return [...pink, ...await Promise.all(missing.map(async c => commodityFallback(c.id, await previous(c.id), new Error('Banco Mundial: série ausente na planilha'))))]
   } catch (error) {
     console.warn(`Médias mensais: ${error.message}`)
-    return Promise.all(COMMODITIES.slice(1).map(async c => commodityFallback(c.id, await previous(c.id), error)))
+    return Promise.all(monthly.map(async c => commodityFallback(c.id, await previous(c.id), error)))
   }
 }
-const commodities = (await Promise.all([collectWti(), collectMonthly()])).flat()
+const commodities = (await Promise.all([...Object.keys(EIA_DAILY).map(collectDaily), collectMonthly()])).flat()
 const data = { schemaVersion: 1, generatedAt: now.toISOString(), commodities }
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 const temporary = new URL('../public/commodities.json.tmp', import.meta.url)

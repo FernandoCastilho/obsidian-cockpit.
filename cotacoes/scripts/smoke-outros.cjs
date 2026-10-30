@@ -21,6 +21,11 @@ const jp = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { 
   points: Array.from({ length: 40 }, (_, i) => ({ period: `${2023 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`, value: 100 + i * 1.5 })) } }
 const monthly = (v0) => Array.from({ length: 60 }, (_, i) => { const d = new Date(Date.UTC(2026, 8, 15)); d.setUTCMonth(d.getUTCMonth() - (59 - i)); return { period: d.toISOString().slice(0, 7), value: +(v0 * (1 + 0.1 * Math.sin(i / 8) + i / 600)).toFixed(2) } })
 const commodity = (id, label, unit, value, history) => ({ id, label, unit, nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet (fixture)', sourceUrl: 'https://www.worldbank.org/en/research/commodity-markets', benchmark: 'teste', value, period: '2026-09', releaseDate: '2026-10-02', checkedAt: '2026-10-05T00:00:00Z', stale: false, error: null, previousValue: null, previousPeriod: null, variationPct: null, variationBasis: 'mês anterior', history })
+const brlItem = (id, label, unit, value, extra = {}) => ({ ...commodity(id, label, unit, value, monthly(value * 0.9)), sourceName: 'Banco Central (fixture)', decimals: 2, ...extra })
+const weekly = (v0) => Array.from({ length: 70 }, (_, i) => { const d = new Date(Date.UTC(2026, 9, 24)); d.setUTCDate(d.getUTCDate() - 7 * (69 - i)); return { period: d.toISOString().slice(0, 10), value: +(v0 * (1 + i / 900)).toFixed(2) } })
+const fuel = (id, label, unit, value) => ({ ...commodity(id, label, unit, value, weekly(value * 0.95)), nature: 'média semanal ao consumidor', sourceName: 'ANP (fixture)', sourceUrl: 'https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/levantamento-de-precos-de-combustiveis-ultimas-semanas-pesquisadas', period: '2026-10-24', decimals: 2 })
+const commoditiesBrl = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [brlItem('ic-br', 'IC-Br · geral', 'índice', 462.94), brlItem('ic-br-agro', 'IC-Br · agropecuária', 'índice', 454.03), brlItem('ic-br-metal', 'IC-Br · metais', 'índice', 754.19), brlItem('ic-br-energia', 'IC-Br · energia', 'índice', 216.23), brlItem('soja-saca', 'Soja · R$/saca', 'R$/saca de 60 kg', 172.9, { nature: 'estimativa mensal' })] }
+const fuels = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [fuel('anp-gasolina', 'Gasolina comum · bomba', 'R$/litro', 6.51), fuel('anp-etanol', 'Etanol hidratado · bomba', 'R$/litro', 4.4), fuel('anp-diesel', 'Diesel S10 · bomba', 'R$/litro', 6.31), fuel('anp-glp', 'Gás de cozinha (botijão 13 kg)', 'R$/botijão 13 kg', 105.9)] }
 const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [commodity('gold', 'Ouro', 'USD/onça troy', 4319, monthly(4000)), commodity('iron-ore', 'Minério de ferro', 'USD/tonelada seca', 97.7, monthly(90)), commodity('soybeans', 'Soja', 'USD/tonelada', 524, []), commodity('corn', 'Milho', 'USD/tonelada', 239.6, monthly(230))] }
 ;(async () => {
   const b = await chromium.launch({ channel: process.env.SMOKE_CHANNEL || 'msedge', headless: true }), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
@@ -99,7 +104,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 14, 'uma linha por fonte')
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 16, 'uma linha por fonte')
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
       assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)
@@ -136,6 +141,8 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
       await p.route('**/divida.json*', (r) => r.fulfill({ json: divida }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
+      await p.route('**/commodities-brl.json*', (r) => r.fulfill({ json: commoditiesBrl }))
+      await p.route('**/fuels.json*', (r) => r.fulfill({ json: fuels }))
       await p.route('**/ipca-groups.json*', (r) => r.fulfill({ json: ipcaGroups }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
       // Cenários › Projeções: sinais ▲ ▼ = de cada banco contra o FOCUS, linha a linha
@@ -246,6 +253,19 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.deepEqual(await cd.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
       await cd.locator('.plot svg').first().waitFor()
       await p.keyboard.press('Escape'); await cd.waitFor({ state: 'hidden' })
+      // commodities em reais (IC-Br e soja) e combustíveis ao consumidor (ANP): tabelas próprias, com histórico semanal nos combustíveis
+      const brlT = p.locator('.ind-table', { hasText: 'IC-Br · geral' }); await brlT.waitFor()
+      assert.equal(await brlT.locator('tbody').count(), 5, 'quatro IC-Br e a soja em reais')
+      assert.match(await brlT.innerText(), /Soja · R\$\/saca[\s\S]*estimativa mensal/)
+      const fuT = p.locator('.ind-table', { hasText: 'Gasolina comum · bomba' }); await fuT.waitFor()
+      assert.equal(await fuT.locator('tbody').count(), 4, 'gasolina, etanol, diesel e gás de cozinha')
+      assert.match(await fuT.innerText(), /6,51[\s\S]*média semanal ao consumidor/)
+      await fuT.getByRole('button', { name: /Gasolina comum · bomba: abrir gráfico/ }).click()
+      const fh = p.getByRole('dialog', { name: /histórico de Gasolina comum/i }); await fh.waitFor()
+      assert.match(await fh.innerText(), /observações semanais/)
+      await fh.locator('.plot svg').first().waitFor()
+      await p.keyboard.press('Escape'); await fh.waitFor({ state: 'hidden' })
+      assert.equal(await p.getByText(/Cobertura parcial/).count(), 1, 'só a tabela de commodities em dólar está incompleta (fixture sem os novos ids)')
       // feriados: Londres, Tóquio e China entram na aba, com a bandeira do país em cada linha
       await p.goto(base + '/#feriados')
       await p.locator('.fer-filter select').waitFor()
@@ -257,13 +277,13 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 11)
+      assert.equal(await p.locator('.learn-list li').count(), 14)
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /9,62%[\s\S]*R\$ 5,48/)
       // tópicos e busca
-      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação'])
+      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação', 'Commodities'])
       const busca = p.getByRole('searchbox', { name: 'Buscar conceito' })
       await busca.fill('FIDC')
       assert.equal(await p.locator('.learn-list li').count(), 1)
@@ -271,7 +291,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await p.locator('.learn-count').innerText(), /1 conceito encontrado/)
       await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
       await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
-      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 11)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 14)
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /subordinação[\s\S]*30%[\s\S]*R\$ 1\.000\.000[\s\S]*R\$ 1\.000\.000/)
@@ -290,7 +310,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
       await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
-      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 11, 'um papel para cada conceito')
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 14, 'um papel para cada conceito')
       assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
       await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()

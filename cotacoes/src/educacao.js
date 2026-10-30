@@ -55,6 +55,10 @@ export const inflacaoAcumulada = (mensais) => mensais.reduce((f, m) => f * (1 + 
 // Juro real (equação de Fisher): (1 + nominal) ÷ (1 + inflação) − 1.
 export const juroReal = (nominal, inflacao) => (1 + nominal) / (1 + inflacao) - 1
 
+// Commodities: soja em dólar por tonelada vira real por saca de 60 kg; o galão americano (3,78541 L) vira litro.
+export const sacaEmReais = (usdPorTonelada, cambio) => usdPorTonelada * 0.06 * cambio
+export const galaoParaLitro = (usdPorGalao, cambio) => (usdPorGalao / 3.78541) * cambio
+
 const EX_DIFERENCIAL = { brl: 0.14, usd: 0.04, spot: 5 }
 const EX_CUPOM = { spot: 5, futuro: 5.5, di: 0.14 }
 const EX_CUPOM_2 = { spot: 5, futuro: 5.25, di: 0.14 }
@@ -66,6 +70,9 @@ const EX_DEB = { principal: 1_000_000, cdi: 0.14, spread: 0.02 }
 const EX_NC = { principal: 5_000_000, cdi: 0.14, spread: 0.03, diasUteis: 126 }
 const EX_FIDC = { senior: 7_000_000, subordinada: 3_000_000, perdas: [2_000_000, 4_000_000] }
 const EX_INFL = { mensal: 0.004, meses: 12, selic: 0.145 }
+const EX_SACA = { usd: 520, antes: 5, depois: 5.5 }
+const EX_ICBR = { indiceUsd: 1, altaDolar: 0.1, quedaUsd: -0.05 }
+const EX_BOMBA = { usdGalao: 2.2, cambio: 5.4, bomba: 6.5 }
 const EX_CDS = { nocional: 10_000_000, pb: 200 }
 
 const money = (v, sym) => `${sym} ${nf(v, 0)}`
@@ -493,9 +500,125 @@ export const CONCEITOS = [
       resposta: 'Não. Eles seguem subindo, mas a um ritmo menor: 4% ao ano em vez de 6%. Preço só cai quando há deflação, isto é, inflação negativa.',
     },
   },
+  {
+    id: 'commodities-e-cambio',
+    topico: 'Commodities',
+    nome: 'Commodities e câmbio',
+    frase: 'As commodities são cotadas em dólar no mundo todo; quem produz ou compra em reais sente o preço pelo dólar multiplicado pelo câmbio.',
+    crianca: [
+      'Soja, petróleo, minério e café têm um preço de referência mundial, quase sempre em dólar. Mas o produtor brasileiro paga as contas e recebe em reais. Se o dólar sobe, os mesmos dólares valem mais reais.',
+      'Por isso a soja pode ficar parada em dólar e mesmo assim render mais ao produtor: foi o dólar que subiu. O inverso também vale: com o real forte, o ganho em reais encolhe, ainda que o preço lá fora esteja estável.',
+      'Dos dois lados do negócio: o exportador torce por dólar alto; o importador de fertilizante e de diesel, por dólar baixo. É por isso que câmbio e commodities andam sempre juntos nas conversas.',
+    ],
+    analogia: 'É como vender algo em moeda estrangeira numa viagem: o preço da etiqueta não mudou, mas o troco em reais depende da cotação do dia.',
+    lacunas: [
+      'O preço em reais mistura duas variáveis: a commodity em dólar e o câmbio. Uma pode subir enquanto a outra anula o efeito; olhe as duas antes de concluir.',
+      'A referência internacional não é o preço que o produtor recebe: há prêmio de porto, frete, impostos e diferença de qualidade e de região.',
+      'Fertilizantes e combustíveis são insumos importados: dólar alto encarece o custo do agro ao mesmo tempo em que valoriza a receita.',
+    ],
+    preciso: {
+      texto: 'A conversão de uma commodity cotada em dólar por tonelada para real por saca de 60 kg usa o câmbio do período. Um mês de câmbio médio costuma ser usado para séries mensais:',
+      formula: 'R$/saca = US$/tonelada × 0,06 × câmbio (R$/US$)',
+    },
+    exemplo: (() => {
+      const e = EX_SACA
+      const a = sacaEmReais(e.usd, e.antes), b = sacaEmReais(e.usd, e.depois)
+      return {
+        titulo: `Soja a US$ ${nf(e.usd, 0)}/t com o dólar a R$ ${nf(e.antes, 2)} e a R$ ${nf(e.depois, 2)}`,
+        passos: [
+          `Com o dólar a R$ ${nf(e.antes, 2)}: ${nf(e.usd, 0)} × 0,06 × ${nf(e.antes, 2)} = R$ ${nf(a, 2)} por saca.`,
+          `Com o dólar a R$ ${nf(e.depois, 2)}: ${nf(e.usd, 0)} × 0,06 × ${nf(e.depois, 2)} = R$ ${nf(b, 2)} por saca.`,
+          `O preço em dólar não mudou; a saca subiu ${pct(b / a - 1, 1)} em reais só pelo câmbio.`,
+        ],
+        resultado: `Mesma soja em dólar, ${pct(b / a - 1, 1)} a mais em reais: o câmbio responde sozinho por toda a diferença.`,
+      }
+    })(),
+    noApp: { texto: 'A soja em dólar e a estimativa em R$/saca (dólar médio do mês) estão em Cenários › Commodities.', tab: 'cenarios', view: 'commodities' },
+    teste: {
+      pergunta: 'A soja cai 5% em dólar e o dólar sobe 10% no mesmo período. Em reais, a saca sobe ou cai?',
+      resposta: 'Sobe, cerca de 4,5%: 0,95 × 1,10 = 1,045. O efeito do câmbio mais que compensou a queda lá fora.',
+    },
+  },
+  {
+    id: 'ic-br',
+    topico: 'Commodities',
+    nome: 'IC-Br (índice de commodities)',
+    frase: 'É o índice do Banco Central que resume, em reais, o preço das commodities que mais pesam na economia brasileira.',
+    crianca: [
+      'Em vez de olhar soja, minério e petróleo um a um, o IC-Br junta tudo numa cesta com pesos que refletem o que o Brasil exporta, e acompanha o valor dessa cesta mês a mês.',
+      'Ele vem em quatro partes: o índice geral, e as cestas de agropecuária, de metais e de energia. Assim dá para ver qual setor puxa o movimento.',
+      'Como é calculado em reais, o índice mexe com dois fatores: o preço internacional das commodities e o câmbio. Dólar mais forte empurra o IC-Br para cima, ainda que o mundo esteja estável.',
+    ],
+    analogia: 'É o termômetro de uma cesta de compras do Brasil exportador: não diz o preço de cada produto, mas se a cesta inteira ficou mais cara ou mais barata.',
+    lacunas: [
+      'O IC-Br é um número-índice: o nível em si (por exemplo, 460) só tem sentido em comparação com meses anteriores. Olhe a variação.',
+      'Ele é medido em reais; por isso reflete o câmbio. Para isolar o efeito do mundo, compare com as mesmas commodities em dólar.',
+      'É mensal e divulgado com defasagem, ao contrário dos preços diários de petróleo e gás. Serve para tendência, não para acompanhar o dia.',
+    ],
+    preciso: {
+      texto: 'O índice em reais é, em essência, o índice em dólar multiplicado pela variação do câmbio. A variação em reais combina as duas:',
+      formula: 'variação em R$ = (1 + variação em US$) × (1 + variação do dólar) − 1',
+    },
+    exemplo: (() => {
+      const e = EX_ICBR
+      const v = (1 + e.quedaUsd) * (1 + e.altaDolar) - 1
+      return {
+        titulo: `Cesta cai ${pct(-e.quedaUsd, 0)} em dólar e o dólar sobe ${pct(e.altaDolar, 0)}`,
+        passos: [
+          `Em dólar: ${nf(e.indiceUsd, 2)} × (1 − ${nf(-e.quedaUsd, 2)}) = ${nf(e.indiceUsd * (1 + e.quedaUsd), 3)}.`,
+          `Em reais, com o dólar ${pct(e.altaDolar, 0)} mais alto: ${nf(1 + e.quedaUsd, 2)} × ${nf(1 + e.altaDolar, 2)} − 1 = ${pct(v, 1)}.`,
+        ],
+        resultado: `O IC-Br sobe ${pct(v, 1)} mesmo com as commodities ${pct(-e.quedaUsd, 0)} mais baratas lá fora: o câmbio inverteu o sinal.`,
+      }
+    })(),
+    noApp: { texto: 'O IC-Br geral, de agropecuária, metais e energia está em Cenários › Commodities, na tabela “Em reais”.', tab: 'cenarios', view: 'commodities' },
+    teste: {
+      pergunta: 'O IC-Br sobe 3% no mês. Isso quer dizer que as commodities ficaram 3% mais caras no mundo?',
+      resposta: 'Não necessariamente. O índice é em reais: parte da alta pode vir só do dólar mais forte. Compare com a variação em dólar para separar os dois efeitos.',
+    },
+  },
+  {
+    id: 'combustiveis',
+    topico: 'Commodities',
+    nome: 'Combustíveis: do petróleo à bomba',
+    frase: 'O preço na bomba parte do petróleo e dos derivados em dólar, passa pelo câmbio e ainda soma impostos, etanol, margens e frete.',
+    crianca: [
+      'O petróleo vira gasolina e diesel na refinaria. O valor dos derivados lá fora, em dólar por galão, é o ponto de partida do preço. Depois entram o câmbio, o frete, os tributos, a mistura de etanol na gasolina e as margens de distribuição e dos postos.',
+      'Por isso o preço da bomba não acompanha o petróleo no mesmo dia: há política de preços da refinaria, estoques e contratos no meio do caminho. Uma alta lá fora chega à bomba com atraso e diluída.',
+      'O diesel pesa muito além do carro: move caminhão e máquina agrícola, entra no frete de tudo e, por isso, aparece na inflação de forma indireta.',
+    ],
+    analogia: 'É como o preço de uma refeição: o ingrediente (derivado em dólar) é só uma parte da conta. O restante é cozinha, impostos e serviço.',
+    lacunas: [
+      'Converter o derivado de Nova York para reais por litro dá um piso de comparação, não o custo da refinaria brasileira: não inclui frete, impostos nem margens.',
+      'A gasolina vendida no posto tem mistura de etanol anidro. Uma parte do preço depende do etanol e do açúcar, não do petróleo.',
+      'O preço ao consumidor é uma média semanal de postos pesquisados pela ANP, com defasagem; já os derivados em Nova York são cotações diárias.',
+    ],
+    preciso: {
+      texto: 'Para comparar o derivado americano com a bomba brasileira, converte-se o galão em litro e o dólar em real:',
+      formula: 'R$/litro = (US$/galão ÷ 3,78541) × câmbio (R$/US$)',
+    },
+    exemplo: (() => {
+      const e = EX_BOMBA
+      const produto = galaoParaLitro(e.usdGalao, e.cambio)
+      return {
+        titulo: `Gasolina a US$ ${nf(e.usdGalao, 2)}/galão, dólar a R$ ${nf(e.cambio, 2)} e bomba a R$ ${nf(e.bomba, 2)}/litro`,
+        passos: [
+          `Em reais por litro: (${nf(e.usdGalao, 2)} ÷ 3,78541) × ${nf(e.cambio, 2)} = R$ ${nf(produto, 2)}.`,
+          `Na bomba o litro custa R$ ${nf(e.bomba, 2)}: o produto convertido responde por ${pct(produto / e.bomba, 0)}.`,
+          `O restante (${pct(1 - produto / e.bomba, 0)}) é imposto, etanol anidro na mistura, frete, distribuição e margem do posto.`,
+        ],
+        resultado: `Só ${pct(produto / e.bomba, 0)} do preço da bomba vem do derivado em dólar; por isso a gasolina reage menos que o petróleo.`,
+      }
+    })(),
+    noApp: { texto: 'Gás, diesel e gasolina de Nova York estão na tabela de commodities; os preços ao consumidor (ANP), na tabela “Combustíveis ao consumidor”, ambas em Cenários › Commodities.', tab: 'cenarios', view: 'commodities' },
+    teste: {
+      pergunta: 'O petróleo sobe 10% em um dia. A gasolina na bomba sobe 10% no dia seguinte?',
+      resposta: 'Em geral, não. Há política de preços, impostos, etanol, margens e defasagem no meio: a alta chega à bomba atrasada e menor do que 10%.',
+    },
+  },
 ]
 
-export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação']
+export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação', 'Commodities']
 
 // Busca por palavras (todas precisam aparecer), sem diferenciar acento nem maiúscula, no conteúdo inteiro do conceito.
 const plain = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -528,6 +651,11 @@ export const LIGACOES = [
   ['debenture', 'nota-comercial', 'Ambas são dívida da empresa com remuneração definida: a debênture é mais longa e formal, a nota comercial é curta e enxuta.'],
   ['debenture', 'fidc', 'Duas formas de captar no mercado: a debênture é dívida da empresa; o FIDC compra os recebíveis dela, e o investidor depende da carteira.'],
   ['debenture', 'inflacao', 'Debêntures indexadas ao IPCA pagam a inflação mais uma taxa real: quem compra se protege do aumento dos preços.'],
+  ['commodities-e-cambio', 'ic-br', 'O IC-Br é o preço das commodities já passado pelo câmbio: o índice em reais é o índice em dólar multiplicado pelo dólar.'],
+  ['commodities-e-cambio', 'combustiveis', 'O derivado cotado em dólar chega à bomba em reais: o câmbio converte o ponto de partida do preço do combustível.'],
+  ['commodities-e-cambio', 'diferencial-de-juros', 'Um diferencial de juros alto tende a atrair dólares e valorizar o real, o que barateia em reais as commodities cotadas em dólar.'],
+  ['ic-br', 'inflacao', 'Commodities agrícolas e de energia pressionam o IPCA com defasagem, por alimentos, combustíveis e insumos: o IC-Br antecipa parte dessa pressão.'],
+  ['combustiveis', 'inflacao', 'Gasolina pesa diretamente no IPCA, e o diesel entra de forma indireta pelo frete de praticamente tudo.'],
   ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: tomar dinheiro por pouco tempo (nota comercial) ou antecipar o que a empresa tem a receber (FIDC).'],
 ]
 
@@ -545,9 +673,12 @@ export const CONEXAO = {
     { id: 'nota-comercial', texto: 'é a dívida curta e enxuta da empresa, comum para capital de giro e ponte.' },
     { id: 'fidc', texto: 'é o fundo que compra recebíveis; a subordinação protege quem tem a cota sênior.' },
     { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
+    { id: 'commodities-e-cambio', texto: 'é a regra de conversão: o preço mundial em dólar vira preço em reais pelo câmbio.' },
+    { id: 'ic-br', texto: 'resume em reais a cesta de commodities do Brasil, mostrando se o conjunto ficou mais caro ou mais barato.' },
+    { id: 'combustiveis', texto: 'é o caminho do derivado em dólar até a bomba, onde entram câmbio, impostos, etanol e margens, e de onde parte da inflação.' },
   ],
   // O caminho que une tudo, de ponta a ponta.
-  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures e notas comerciais → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro.',
+  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures e notas comerciais → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
 }
 
 // Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.

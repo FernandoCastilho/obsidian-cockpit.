@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, LIGACOES, TOPICOS, conexoesDe, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
+import { sacaEmReais, galaoParaLitro, CONCEITOS, CONEXAO, LIGACOES, TOPICOS, conexoesDe, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
-test('os onze conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao'])
+test('os conceitos pedidos existem, com ids únicos', () => {
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -156,4 +156,15 @@ test('todos os conceitos formam uma só rede de ligações', () => {
   const vistos = new Set([CONCEITOS[0].id]), fila = [CONCEITOS[0].id]
   while (fila.length) for (const x of conexoesDe(fila.shift())) if (!vistos.has(x.id)) { vistos.add(x.id); fila.push(x.id) }
   assert.equal(vistos.size, CONCEITOS.length, 'todos os conceitos formam uma só rede')
+})
+
+test('commodities: soja em R$/saca e galão em litro', () => {
+  assert.ok(Math.abs(sacaEmReais(520, 5) - 156) < 1e-9)
+  assert.ok(Math.abs(sacaEmReais(520, 5.5) - 171.6) < 1e-9)
+  assert.ok(Math.abs(galaoParaLitro(3.78541, 5) - 5) < 1e-9)
+  const byId = (id) => CONCEITOS.find((c) => c.id === id)
+  assert.match(byId('commodities-e-cambio').exemplo.resultado, /10,0%/)
+  assert.match(byId('ic-br').exemplo.resultado, /4,5%/)
+  assert.match(byId('combustiveis').exemplo.passos.join(' '), /3,14/)
+  assert.ok(['commodities-e-cambio', 'ic-br', 'combustiveis'].every((id) => byId(id).topico === 'Commodities' && byId(id).noApp.view === 'commodities'))
 })
