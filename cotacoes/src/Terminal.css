@@ -38,7 +38,7 @@ body { background: var(--bg); }
   main.app { max-width: 1760px; padding: 6px 6px 24px; }
   .status.src { margin: 0 0 6px; font-size: .75rem; }
   .topbar { height: 42px; align-items: stretch; background: #000; border-bottom: 1px solid var(--line); }
-  .topbar-brand { display: flex; align-items: center; gap: 6px; padding: 0 16px; background: var(--amber); color: #000; font-weight: 800; font-size: .8rem; letter-spacing: .14em; white-space: nowrap; }
+  .topbar-brand { display: flex; align-items: center; gap: 6px; padding: 0 16px; background: var(--amber); color: #000; font-weight: 800; font-size: .86rem; letter-spacing: .04em; white-space: nowrap; }
   .topbar-brand span { font-weight: 500; opacity: .7; }
   .topbar button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
   .topbar-tabs { display: flex; flex: 1; min-width: 0; }
