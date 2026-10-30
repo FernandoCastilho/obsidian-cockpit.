@@ -10,16 +10,13 @@ import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useState } from 'react'
-import Explain from './Explain.jsx'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
-import Help from './Help.jsx'
 const Macro = lazy(() => import('./Macro.jsx'))
 const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
 const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
-import Pracas from './Pracas.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
@@ -40,7 +37,7 @@ import { useCurves } from './useCurves.js'
 import ParityChart from './ParityChart.jsx'
 const Projecoes = lazy(() => import('./Projecoes.jsx'))
 import { DISCLAIMER } from './whatsapp.js'
-import { MAX_DAYS, fromInput, fullWindow, historyRangeError, toInput, useHistory } from './useHistory.js'
+import { MAX_DAYS, fromInput, fullWindow, historyRangeError, toInput } from './useHistory.js'
 
 // cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
@@ -123,7 +120,7 @@ function Sheet({ onClose, children }) {
 }
 
 export default function App() {
-  const { quotes, direction, error, errors, updatedAt, via, reload, refresh, refreshing, limits } = useQuotes(POLL_MS)
+  const { quotes, error, updatedAt, via, refresh, refreshing, limits } = useQuotes(POLL_MS)
   const quoteAgeWarning = quotes && CURRENCIES.some(c => !!quoteAgeState(quotes[c.code]))
   const macro = useMacro()
   const curves = useCurves()

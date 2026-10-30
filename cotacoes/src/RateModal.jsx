@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
-import { CdiChart, PRESETS, RateChart, RatesPeriod, SelicChart, fromInput, rangeFor } from './Macro.jsx'
+import { CdiChart, RateChart, RatesPeriod, SelicChart, fromInput, rangeFor } from './Macro.jsx'
 
 const rate = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}% a.a.`
 const TITLES = { selic: 'Selic meta', cdi: 'CDI', di1: 'DI 1 ano' }

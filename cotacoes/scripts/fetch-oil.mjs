@@ -10,7 +10,7 @@ try {
   data = buildOilData(parseOilHtml(await response.text()))
 } catch (error) {
   let local = null
-  try { local = JSON.parse(await readFile(output, 'utf8')) } catch {}
+  try { local = JSON.parse(await readFile(output, 'utf8')) } catch { /* ignora */ }
   const remote = await loadPrevious('oil.json')
   const previous = [local, remote].filter(isValidOilData).sort((a, b) => b.observationDate.localeCompare(a.observationDate) || b.generatedAt.localeCompare(a.generatedAt))[0]
   data = oilFallback(previous, error)

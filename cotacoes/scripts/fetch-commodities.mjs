@@ -8,7 +8,7 @@ import { COMMODITIES, WTI_URL, PINK_PAGE_URL, discoverPinkSheetUrl, buildWti, pa
 const output = new URL('../public/commodities.json', import.meta.url)
 const now = new Date()
 let local = null
-try { local = JSON.parse(await readFile(output, 'utf8')) } catch {}
+try { local = JSON.parse(await readFile(output, 'utf8')) } catch { /* ignora */ }
 let remotePromise
 const previous = async id => {
   remotePromise ??= loadPrevious('commodities.json')

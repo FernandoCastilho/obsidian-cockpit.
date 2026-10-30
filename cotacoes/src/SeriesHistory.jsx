@@ -4,11 +4,11 @@ import DateRangePicker from './DateRangePicker.jsx'
 import Expandable from './Expandable.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
 import { contextDate } from './marketContext.js'
+import { nf } from './format.js'
 
 const PRESETS = [[3, '3 meses'], [6, '6 meses'], [12, '12 meses'], [24, '2 anos'], [60, '5 anos'], [120, '10 anos'], ['all', 'Tudo']]
 const isDay = (p) => /^\d{4}-\d{2}-\d{2}$/.test(p)
 const tOf = (p) => Date.parse(isDay(p) ? `${p}T12:00:00Z` : `${p}-15T12:00:00Z`)
-const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const startFor = (last, months) => { const d = new Date(tOf(last)); d.setUTCMonth(d.getUTCMonth() - months); return d.toISOString().slice(0, isDay(last) ? 10 : 7) }
 
 // Histórico de uma referência (commodity) em tela cheia: período e escala no topo, gráfico com seleção de trecho e tabela de observações.

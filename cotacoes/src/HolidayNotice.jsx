@@ -34,7 +34,6 @@ export default function HolidayNotice({ hol, days = 30, list = false }) {
   if (list) return <div className="holiday-notice" role="status">{up.length > 0 && items}{note}</div>
   // Resumo: uma linha com o primeiro dia de feriado e as praças; o resto fica recolhido
   const first = up[0]
-  const same = first ? up.filter((u) => u.date === first.date).map((u) => calLabel(u.cal)) : []
   const dates = new Set(up.map((u) => u.date)).size
   return (
     <details className="holiday-notice compact">

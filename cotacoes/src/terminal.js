@@ -2,6 +2,7 @@
 // Só formata o que o app já coleta; não consulta fontes nem calcula taxas novas.
 import { liveCross } from './parity.js'
 import { brentReturns } from './oilReference.js'
+import { nf } from './format.js'
 
 // Ordem do terminal (diferente da barra inferior do celular). Os ids são os mesmos de Nav.jsx.
 export const DESK_TABS = [
@@ -50,7 +51,6 @@ export function parseCommand(text) {
 }
 
 
-const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 export const toneOf = (v) => (Number.isFinite(v) && v > 0 ? 'up' : Number.isFinite(v) && v < 0 ? 'down' : 'flat')
 
 // Uma variação que arredonda para zero na unidade exibida (0,00% ou 0 bps) não pode ter seta nem cor de alta ou baixa.

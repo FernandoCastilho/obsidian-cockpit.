@@ -2,23 +2,14 @@
 // dos recursos; TLP: série mensal da moeda 777 do BNDES em % a.a.).
 import { tlpNextRelease } from './indexadores.js'
 import { JUMP_HINT, isJump } from './jumps.js'
+import { nf, shiftMonths, atOrBefore } from './format.js'
 export const PRAZOS = [36, 60, 84, 120]
 export const LIBERACOES = [30, 90]
 export const PRAZO_LABEL = { 36: 'até 36 meses', 60: '36 a 60 meses', 84: '60 a 84 meses', 120: '84 a 120 meses' }
 export const TFB_DEFINICAO = 'Taxa Fixa do BNDES. Custo financeiro prefixado, que já incorpora a sobretaxa de referência, por faixa de prazo do financiamento e por prazo até a liberação dos recursos (30 ou 90 dias). A taxa final do cliente ainda soma os spreads do BNDES e do agente financeiro.'
 export const keyOf = (prazo, liberacao) => `TFB_${prazo}_${liberacao}`
 
-const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
-const t12 = (iso) => Date.parse(`${iso}T12:00:00Z`)
-const shiftMonths = (iso, n) => { const d = new Date(t12(iso)); d.setUTCMonth(d.getUTCMonth() + n); return d.toISOString().slice(0, 10) }
-export const dmy = (iso) => iso.split('-').reverse().join('/')
 
-// Última observação em ou antes de `limit` (AAAA-MM-DD); null se a série começa depois.
-function atOrBefore(points, limit) {
-  let found = null
-  for (const p of points) { if (p[0] <= limit) found = p; else break }
-  return found
-}
 // Variação em pontos percentuais, com seta (▲ subiu, ▼ caiu, = igual); null quando falta a referência.
 // kind: tipo da série quando a variação é a de um dia (só ela leva o selo de salto); sem kind, nunca marca salto.
 export function change(value, ref, kind = null) {

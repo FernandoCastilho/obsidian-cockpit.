@@ -1,6 +1,7 @@
 // Apresentação da TFC e das moedas contratuais do BNDES (arquivo moedas.json, coletado de /Moedas/um<código>.txt).
 // O catálogo espelha scripts/moedas-lib.mjs (um teste trava a igualdade).
-import { change, dmy } from './bndes.js'
+import { change } from './bndes.js'
+import { nf, dmy, shiftMonths, atOrBefore } from './format.js'
 import { JUMP_HINT, isJump } from './jumps.js'
 
 export const TFC_SERIES = [
@@ -25,10 +26,6 @@ export const GROUPS = {
 export const TFC_DEFINICAO = 'Séries TFC publicadas pelo BNDES em Moedas Contratuais, uma por produto, porte e prazo (siglas e códigos C01 a C26 como na tabela do BNDES; o banco não detalha a sigla na consulta). Em % ao ano; valor diário em dia útil.'
 export const MOEDAS_DEFINICAO = 'Moedas e indicadores contratuais usados em contratos do BNDES, com o código da tabela de Moedas Contratuais: dólar (604), Selic acumulada (143), sobretaxa fixa Selic (024), TLP-IPCA (236) e as TFB baseadas em TR (TR1 e TR2). Valores como publicados pelo BNDES.'
 
-const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
-const t12 = (iso) => Date.parse(`${iso}T12:00:00Z`)
-const shiftMonths = (iso, n) => { const d = new Date(t12(iso)); d.setUTCMonth(d.getUTCMonth() + n); return d.toISOString().slice(0, 10) }
-const atOrBefore = (points, limit) => { let f = null; for (const p of points) { if (p[0] <= limit) f = p; else break } return f }
 // Variação percentual com seta (níveis: dólar, índice da Selic); null quando falta a referência.
 // id: código da série quando a variação é a de um dia (só ela leva o selo de salto).
 export function changePct(value, ref, id = null) {

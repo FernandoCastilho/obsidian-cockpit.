@@ -520,7 +520,7 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
   const [oilRequest] = useState(0)
-  const oil = useDataFile('oil.json')
+  useDataFile('oil.json')
   const ipcaFile = useDataFile('ipca.json')
   const ipcaSeries = useMemo(() => { try { return ipcaFile.data ? normalizeIpca(ipcaFile.data) : null } catch { return null } }, [ipcaFile.data])
   return (

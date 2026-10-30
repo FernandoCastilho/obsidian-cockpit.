@@ -1,8 +1,7 @@
 import { Aviso } from './Avisos.jsx'
 import { freightBase, freightContext } from './freight.js'
-import Sparkline from './Sparkline.jsx'
 import IndicatorHistory from './IndicatorHistory.jsx'
-import { normalizeIndicatorHistory, monthLabel } from './indicatorHistory.js'
+import { normalizeIndicatorHistory } from './indicatorHistory.js'
 import { useEffect, useState } from 'react'
 import { MARKET_IDS, COMMODITY_IDS, contextItems, contextDate, contextValue, brentContext } from './marketContext.js'
 import './MarketContext.css'
@@ -41,19 +40,6 @@ function useContextFile(file, parse) {
 const parseMarket = data => contextItems(data, 'indicators', MARKET_IDS)
 const parseCommodities = data => contextItems(data, 'commodities', COMMODITY_IDS)
 const parseBrent = data => { const item = brentContext(data); if (!item) throw new Error('Brent inválido'); return item }
-function Card({item, failed, history, historyLoading, historyFailed, onOpen}) {
-  return <article className={`context-card${onOpen ? ' context-interactive' : ''}`}>
-    {onOpen && <button className="context-card-trigger" aria-label={`${item.label}: abrir histórico e detalhes`} onClick={onOpen} />}
-    <h3>{item.label}</h3>
-    <p className="context-number">{contextValue(item)} <span>{item.unit}</span></p>
-    <p className="context-nature">{item.nature}{item.benchmark ? ` · ${item.benchmark}` : ''}</p>
-    <dl><div><dt>Referência</dt><dd>{contextDate(item.period)}</dd></div><div><dt>Divulgação</dt><dd>{contextDate(item.releaseDate)}</dd></div></dl>
-    {item.note && <Aviso title={item.label}><p className="context-note">{item.note}</p></Aviso>}
-    {(failed || item.stale || item.value === null) && <p role="status" className="context-warning">{item.value === null ? 'Dado indisponível. Não representa zero.' : 'Último dado preservado; atualização não confirmada.'}</p>}
-    {onOpen && <div className="context-mini">{history?.points?.length > 1 ? <><Sparkline points={history.points.slice(-12).map(p=>({bid:p.value}))} tone="flat" height={70}/><span>{monthLabel(history.points.slice(-12)[0].period)} a {monthLabel(history.points.at(-1).period)} · Abrir gráfico ›</span></> : <span>{historyLoading ? 'Carregando histórico…' : history?.unavailableReason || (historyFailed ? 'Histórico indisponível no momento' : 'Histórico ainda não disponível')} · Ver detalhes ›</span>}</div>}
-    <Aviso title={`${item.label} · fonte`}><footer><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName || 'Fonte oficial'} ↗</a><span>Conferência: {contextDate(item.checkedAt?.slice(0,10))}</span></footer></Aviso>
-  </article>
-}
 const fnum = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const fsgn = (v, d = 2, suffix = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + fnum(Math.abs(v), d) + suffix
 const ftone = v => v > 0 ? 'up' : v < 0 ? 'down' : 'flat'
