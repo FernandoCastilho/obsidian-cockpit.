@@ -1,6 +1,6 @@
 {
-  "name": "Cotações de mercado",
-  "short_name": "Cotações",
+  "name": "Painel Especialista",
+  "short_name": "Painel Especialista",
   "description": "Câmbio (USD, EUR, JPY, CNH), juros, curvas, SOFR, Focus e agenda de mercado.",
   "lang": "pt-BR",
   "start_url": "./",
