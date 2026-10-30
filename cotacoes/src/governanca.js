@@ -32,6 +32,13 @@ export const FONTES = [
   { id: 'calendar', chaves: ['calendar'], nome: 'Calendário econômico', origem: 'Forex Factory, BLS, BEA, Fed', coleta: HORA, muda: 'Conforme os órgãos publicam as agendas', atraso: `${ATRASO_H.calendar} h` },
 ]
 
+// Resumo no topo do painel: a resposta curta para "tudo é atualizado de 5 em 5 minutos?".
+export const RESUMO = [
+  'Só o câmbio é coletado de 5 em 5 minutos, e apenas no pregão (9h30 às 18h, segunda a sexta, horário de Brasília). Fora do pregão, 1 vez por hora em dias úteis; no fim de semana, nada.',
+  'Juros, curvas, BNDES, petróleo, commodities, notícias e calendário são coletados de hora em hora nos dias úteis. IPCA e dívida bruta, no máximo a cada 6 horas; frete marítimo, 1 vez por dia.',
+  'Coletar não é o mesmo que o número mudar: o dado só muda quando o órgão publica. O CDI e a curva DI mudam 1 vez por dia útil, a Selic a cada reunião do Copom (cerca de 6 semanas), e o IPCA e a dívida bruta 1 vez por mês. O CDI pode ser coletado 20 vezes no dia e mostrar o mesmo valor em todas.',
+]
+
 const min = (ms) => Math.round(ms / 60000)
 // Como o navegador lê e atualiza (valores vêm das constantes do código, não de texto digitado).
 export const NAVEGADOR = [
