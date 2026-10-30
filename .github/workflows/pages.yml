@@ -121,6 +121,10 @@ jobs:
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-ipca.mjs
         timeout-minutes: 2
+      - name: Coletar dívida bruta do governo geral (Banco Central)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-divida.mjs
+        timeout-minutes: 4
       - name: Coletar IPCA por grupos (IBGE)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-ipca-groups.mjs

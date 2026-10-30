@@ -6,6 +6,7 @@ import IndicatorTable from './IndicatorTable.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import { useDataFile } from './useDataFile.js'
 import { ipcaRows, ipcaSeries, normalizeIpca } from './ipca.js'
+import { dividaRows, dividaSeries, normalizeDivida } from './divida.js'
 import { nf } from './format.js'
 
 const sgn = (v, d, unit = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + unit
@@ -18,6 +19,27 @@ export default function Outros({ macro }) {
   const rows = useMemo(() => (parsed ? ipcaRows(parsed) : []), [parsed])
   const [openId, setOpenId] = useState(null)
   const row = rows.find((r) => r.metric.id === openId)
+  const divida = useDataFile('divida.json')
+  const dParsed = useMemo(() => { try { return divida.data ? normalizeDivida(divida.data) : null } catch { return null } }, [divida.data])
+  const dRows = useMemo(() => (dParsed ? dividaRows(dParsed) : []), [dParsed])
+  const [dOpenId, setDOpenId] = useState(null)
+  const dRow = dRows.find((r) => r.metric.id === dOpenId)
+  const dFailed = divida.status === 'error' || (divida.status === 'ok' && !dParsed)
+  const dTable = dRows.map((r) => {
+    const m = r.metric, u = m.pct ? '%' : '', d = m.decimals
+    const delta = (v) => (v == null ? { text: '—' } : { text: sgn(v, d, m.pct ? ' p.p.' : '') })
+    return {
+      id: m.id, flag: 'BRL', name: m.label, sub: 'Governo Geral · Banco Central',
+      cells: [
+        { text: r.last ? `${nf(r.last.value, d)}${u}` : '—' },
+        r.prev ? { text: `${nf(r.prev.value, d)}${u}` } : { text: '—' },
+        delta(r.delta),
+        r.yearAgo ? { text: `${nf(r.yearAgo.value, d)}${u}` } : { text: '—' },
+        { text: r.peak ? `${nf(r.peak.value, d)}${u} · ${monthName(r.peak.period)}` : '—' },
+        { text: r.last ? monthName(r.last.period) : '—' },
+      ],
+    }
+  })
   const failed = file.status === 'error' || (file.status === 'ok' && !parsed)
   const fmt = (r, v) => nf(v, r.metric.decimals)
   const tableRows = rows.map((r) => {
@@ -35,7 +57,7 @@ export default function Outros({ macro }) {
   })
   return (
     <div className="outros" aria-labelledby="outros-title" role="region">
-      <div className="ctx-head"><h2 id="outros-title">Outros</h2><RefreshButton files={['ipca.json', 'ipca-groups.json', 'oil.json', 'commodities.json', 'macro.json']} label="Inflação" /></div>
+      <div className="ctx-head"><h2 id="outros-title">Outros</h2><RefreshButton files={['ipca.json', 'divida.json', 'ipca-groups.json', 'oil.json', 'commodities.json', 'macro.json']} label="Inflação" /></div>
       <h3>Inflação · IPCA</h3>
       {!parsed && <p role="status">{failed ? 'Não foi possível carregar o IPCA. Tente novamente mais tarde.' : 'Carregando IPCA…'}</p>}
       {parsed && (
@@ -52,6 +74,29 @@ export default function Outros({ macro }) {
         </>
       )}
       <InflacaoPesos macro={macro} />
+      <h3>Dívida pública · Dívida Bruta do Governo Geral (DBGG)</h3>
+      {!dParsed && <p role="status">{dFailed ? 'Não foi possível carregar a dívida bruta. Tente novamente mais tarde.' : 'Carregando dívida bruta…'}</p>}
+      {dParsed && (
+        <>
+          <IndicatorTable
+            caption={`Dívida bruta do governo geral · último mês divulgado: ${dRows[0]?.last ? monthName(dRows[0].last.period) : '—'}`}
+            ariaLabel="Tabela da dívida bruta; role para ver todas as colunas"
+            columns={[{ label: 'Último' }, { label: 'Mês anterior' }, { label: 'Variação', small: '(vs mês ant.)' }, { label: 'Ano anterior', small: '(mesmo mês)' }, { label: 'Máxima da série' }, { label: 'Referência' }]}
+            rows={dTable}
+            onOpen={setDOpenId}
+          />
+          {dParsed.stale && <p className="status stale" role="status">Última série disponível; a atualização do Banco Central não foi confirmada.</p>}
+          <Aviso title="Dívida bruta · fonte e método"><p className="ind-note">Dívida Bruta do Governo Geral (DBGG): governo federal, INSS e governos estaduais e municipais, sem as empresas estatais e sem o Banco Central. Saldo ao fim do mês, divulgado pelo Banco Central nas Estatísticas Fiscais, em R$ e em % do PIB (PIB acumulado em 12 meses). Série mensal desde dez/2006, sem recálculo; o Banco Central revisa meses anteriores quando muda a metodologia ou o PIB. Em Variação, a diferença da razão está em pontos percentuais do PIB e a do saldo, em R$ bilhões. Conferência: {new Date(dParsed.checkedAt).toLocaleDateString('pt-BR')}. <a href={dParsed.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: Banco Central ↗</a></p></Aviso>
+        </>
+      )}
+      {dRow && (
+        <IndicatorHistory
+          item={{ id: dRow.metric.id, label: dRow.metric.label, unit: dRow.metric.unit, decimals: dRow.metric.decimals, sourceUrl: dParsed.sourceUrl, sourceName: dParsed.sourceName, checkedAt: dParsed.checkedAt }}
+          series={{ id: dRow.metric.id, unit: dRow.metric.unit, frequency: 'monthly', points: dividaSeries(dParsed, dRow.metric), sourceName: dParsed.sourceName, sourceUrl: dParsed.sourceUrl, checkedAt: dParsed.checkedAt, revisionNote: 'O Banco Central pode revisar meses anteriores (metodologia, PIB e dados dos entes); o painel mostra o que está na série do SGS.' }}
+          failed={!!dParsed.stale}
+          onClose={() => setDOpenId(null)}
+        />
+      )}
       {row && (
         <IndicatorHistory
           item={{ id: row.metric.id, label: `IPCA · ${row.metric.label}`, unit: row.metric.unit, decimals: row.metric.decimals, sourceUrl: parsed.sourceUrl, sourceName: parsed.sourceName, checkedAt: parsed.checkedAt }}

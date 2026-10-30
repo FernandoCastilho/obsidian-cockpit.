@@ -1,4 +1,4 @@
-// Cenários › Outros (IPCA) e Frete marítimo: tabela no formato do Mercado; clicar abre o gráfico em tela cheia com filtros no topo.
+// Cenários › Outros (IPCA e dívida bruta) e Frete marítimo: tabela no formato do Mercado; clicar abre o gráfico em tela cheia com filtros no topo.
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
 const points = []
 let index = 100
@@ -8,6 +8,8 @@ for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
   points.push({ period: `${y}-${String(m).padStart(2, '0')}`, mom: +mom.toFixed(2), ytd: +(mom * m).toFixed(2), y12: +(mom * 12).toFixed(2), index: +index.toFixed(2) })
 }
 const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/1737', checkedAt: new Date().toISOString(), stale: false, points } }
+const divida = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'divida-bruta', sourceName: 'Banco Central (fixture de teste)', sourceUrl: 'https://www.bcb.gov.br/estatisticas/historicoestatisticassetorpublico', checkedAt: new Date().toISOString(), stale: false,
+  points: Array.from({ length: 30 }, (_, i) => ({ period: `${2024 + Math.floor((i + 3) / 12)}-${String(((i + 3) % 12) + 1).padStart(2, '0')}`, pib: +(72 + i * 0.2).toFixed(1), brl: Math.round(8200000 + i * 60000) })) } }
 const grp = (id, name, a, b) => ({ id, name, byPeriod: { '2026-08': a, '2026-09': b } })
 const ipcaGroups = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca-groups', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/7060', checkedAt: new Date().toISOString(), stale: false, periods: ['2026-08', '2026-09'], groups: [
   grp(7169, 'Índice geral', { mom: 0.2, weight: 100, ytd: 3, y12: 4.5 }, { mom: 0.5, weight: 100, ytd: 3.5, y12: 4.7 }),
@@ -25,6 +27,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
+      await p.route('**/divida.json*', (r) => r.fulfill({ json: divida }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/ipca-groups.json*', (r) => r.fulfill({ json: ipcaGroups }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
@@ -57,7 +60,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await card.innerText(), /%[\s\S]*p\.p\./)
       await card.click()
       await p.waitForURL('**/#cenarios/outros')
-      const table = p.locator('.ind-table')
+      const table = p.locator('.ind-table').first()
       await table.waitFor()
       assert.equal(await table.locator('tbody').count(), 4, 'quatro leituras do IPCA')
       assert.match(await table.innerText(), /Acumulado em 12 meses/)
@@ -74,6 +77,17 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       for (const label of ['Câmbio', 'Petróleo', 'Soja', 'Milho', 'Expectativas', 'Juros']) await ft.getByRole('rowheader', { name: new RegExp(label) }).waitFor()
       assert.match(await ft.locator('tr', { hasText: 'Expectativas' }).innerText(), /4,50%.*meta 3,0%/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
+      // dívida bruta do governo geral: tabela própria abaixo do quadro de inflação; a linha abre o histórico
+      const dt = p.locator('.ind-table').nth(1); await dt.waitFor()
+      assert.equal(await dt.locator('tbody').count(), 2, 'duas leituras da dívida bruta')
+      assert.match(await dt.innerText(), /Máxima da série[\s\S]*DBGG · % do PIB[\s\S]*DBGG · saldo em R\$ bilhões/)
+      assert.match(await dt.locator('tbody').first().innerText(), /77,8%/, 'último valor em % do PIB com uma casa')
+      await p.getByRole('button', { name: /DBGG . % do PIB: abrir gráfico/ }).click()
+      const dd = p.getByRole('dialog', { name: /histórico de DBGG/i }); await dd.waitFor()
+      assert.equal(await dd.locator('.chart-filters').count(), 1)
+      await dd.locator('.plot svg').first().waitFor()
+      await p.keyboard.press('Escape'); await dd.waitFor({ state: 'hidden' })
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem lateral com a tabela da dívida')
       await p.getByRole('button', { name: 'Acumulado em 12 meses: abrir gráfico' }).click()
       const d = p.getByRole('dialog', { name: /histórico de IPCA/ })
       await d.waitFor()
@@ -92,7 +106,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await d.waitFor({ state: 'hidden' })
       // frete marítimo: mesma tabela; a linha abre o gráfico
       await p.goto(base + '/#cenarios/frete')
-      const f = p.locator('.ind-table')
+      const f = p.locator('.ind-table', { hasText: 'Transporte marítimo' })
       await f.waitFor()
       assert.match(await f.innerText(), /Δ mês %[\s\S]*12 meses %[\s\S]*Ano %/)
       assert.equal(await f.locator('tbody').count(), 2, 'EUA e Japão')
@@ -106,7 +120,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await fd.waitFor({ state: 'hidden' })
       // atividade e emprego: tabela; a linha abre o gráfico em tela cheia
       await p.goto(base + '/#cenarios/atividade')
-      const at = p.locator('.ind-table'); await at.waitFor()
+      const at = p.locator('.ind-table', { hasText: 'Payroll' }); await at.waitFor()
       assert.equal(await at.locator('tbody').count(), 5, 'cinco indicadores de atividade e emprego')
       assert.match(await at.innerText(), /Anterior[\s\S]*Variação[\s\S]*Ano anterior/)
       await at.getByRole('button', { name: /Payroll . EUA: abrir gráfico/ }).click()
@@ -116,7 +130,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await ad.waitFor({ state: 'hidden' })
       // commodities: tabela com variações; a linha com histórico abre o gráfico, a sem histórico não abre
       await p.goto(base + '/#cenarios/commodities')
-      const ct = p.locator('.ind-table'); await ct.waitFor()
+      const ct = p.locator('.ind-table', { hasText: 'Ouro' }); await ct.waitFor()
       assert.match(await ct.innerText(), /Δ %[\s\S]*12 meses %[\s\S]*Ano %/)
       assert.equal(await ct.getByRole('button', { name: /Soja: histórico indisponível/ }).isDisabled(), true)
       await ct.getByRole('button', { name: /Ouro: abrir gráfico/ }).click()
