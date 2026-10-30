@@ -17,6 +17,7 @@ const RatesSnapshot = lazy(() => import('./RatesSnapshot.jsx'))
 const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
+import AvisoInicial from './AvisoInicial.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
@@ -230,6 +231,7 @@ export default function App() {
         <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
         <p><i>{DISCLAIMER}</i></p>
       </>}>
+    <AvisoInicial />
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
