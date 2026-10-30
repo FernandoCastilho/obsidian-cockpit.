@@ -37,7 +37,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'macro', label: 'Juros e Focus (Banco Central, NY Fed)', at: macro.data?.generatedAt, maxAge: ATRASO_H.macro * H, weekdays: true },
       { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: ATRASO_H.curves * H, weekdays: true },
       { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: ATRASO_H.news * H, weekdays: true },
-      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: ATRASO_H.policy * H, weekdays: true },
+      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoJ)', at: policy.data?.generatedAt, maxAge: ATRASO_H.policy * H, weekdays: true },
       { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central e BNDES)', at: indexadores.data?.generatedAt, maxAge: ATRASO_H.indexadores * H, weekdays: true },
       { key: 'bndes', label: 'Taxa Fixa do BNDES (TFB)', at: bndes.data?.generatedAt, maxAge: ATRASO_H.bndes * H, weekdays: true },
       { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: ATRASO_H.moedas * H, weekdays: true },

@@ -40,6 +40,20 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
       await ctx.close()
     }
+    // Juros: sem Reino Unido e com a bandeira de cada país nas linhas e nos títulos dos gráficos
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      await p.goto(base + '/#juros'); await p.locator('.executive-rates__table tbody tr').first().waitFor()
+      const linhas = p.locator('.executive-rates__table tbody tr .executive-rates__name')
+      const n = await linhas.count()
+      assert.ok(n >= 6, 'Selic, CDI, SOFR, Fed, BCE e BoJ')
+      assert.equal(await p.locator('.executive-rates__table tbody tr .executive-rates__name .flag').count(), n, 'bandeira em cada linha')
+      const corpo = await p.locator('main').innerText()
+      assert.doesNotMatch(corpo, /Reino Unido|Bank Rate|Bank of England|BoE/, 'sem Reino Unido em Juros')
+      assert.match(await p.locator('.executive-rates__table tbody').innerText(), /Área do euro · BCE[\s\S]*Japão/)
+      assert.ok(await p.locator('.chart h3 .flag').count() >= 3, 'bandeira nos títulos dos gráficos')
+      await p.close()
+    }
     // governança dos dados em Configurações: tabela por fonte, regras e nenhuma rolagem lateral da página
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })

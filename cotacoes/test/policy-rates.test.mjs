@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { parseFedPolicy, parseEcbPolicy, parseBoePolicy, preservePolicySeries, normalizePolicyPoints } from '../scripts/policy-rates-lib.mjs'
+import { parseFedPolicy, parseEcbPolicy, preservePolicySeries, normalizePolicyPoints } from '../scripts/policy-rates-lib.mjs'
 import { policyRows } from '../src/policyRates.js'
 
 // Small structural fixtures matching the official tables; test values only.
@@ -13,10 +13,6 @@ test('Fed parser keeps both target bounds and the effective date; skips old sing
 test('BCE parser reads deposit column, carries year and removes footnote, including negative rates',()=>{
  const html=`Date (with effect from) Deposit facility <table><tr><td><strong>2026</strong></td><td>16 Sep.</td><td>2.50</td><td>2.65</td></tr><tr><td>2014</td><td>10 Sep.<sup>4</sup></td><td>−0.20</td><td>0.05</td></tr><tr><td>&nbsp;</td><td>11 Jun.</td><td>&minus;0.10</td><td>0.15</td></tr></table>`
  const p=parseEcbPolicy(html);assert.deepEqual(p.map(p=>[p.date,p.value]),[['2014-06-11',-.1],['2014-09-10',-.2],['2026-09-16',2.5]])
-})
-test('BoE parser uses Date Changed and unambiguous century for1975+ archive',()=>{
- const p=parseBoePolicy(`Official Bank Rate Date Changed <table><tr><td>18 Dec 25</td><td>3.75</td></tr><tr><td>05 Mar 09</td><td>0.50</td></tr><tr><td>20 Jan 75</td><td>11.25</td></tr></table>`)
- assert.deepEqual(p.map(p=>p.date),['1975-01-20','2009-03-05','2025-12-18']);assert.equal(p.at(-1).value,3.75)
 })
 test('invalid, empty or conflicting policy observations fail closed; fallback preserves timestamp and valid zero',()=>{
  assert.throws(()=>normalizePolicyPoints([]),/Nenhuma/)

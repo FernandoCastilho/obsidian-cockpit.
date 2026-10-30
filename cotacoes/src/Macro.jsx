@@ -1,3 +1,5 @@
+import Flag from './Flag.jsx'
+import { bandeiraDe } from './paises.js'
 import RefreshButton from './RefreshButton.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { Aviso } from './Avisos.jsx'
@@ -24,7 +26,7 @@ export function RateChart({ id, title, subtitle, color, points, history, step, s
     <article className="chart" style={{ '--series': color }}>
       <header>
         <h3>
-          <i className="swatch" /> {title}
+          <i className="swatch" /> <Flag code={bandeiraDe(title)} width={18} height={12} />{title}
           <small>{subtitle}</small>
           {help && <Explain id={help} />}
         </h3>

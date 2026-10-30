@@ -1,6 +1,8 @@
 import RefreshButton from './RefreshButton.jsx'
 import { useId } from 'react'
 import { Aviso } from './Avisos.jsx'
+import Flag from './Flag.jsx'
+import { bandeiraDe } from './paises.js'
 import './ExecutiveRatesTable.css'
 
 export const EXECUTIVE_RATE_PERIODS = [
@@ -73,7 +75,7 @@ export default function ExecutiveRatesTable({
             {rows.map((row) => (
               <tr key={row.id}>
                 <th scope="row" className="executive-rates__indicator">
-                  <span className="executive-rates__name">{row.label}</span>
+                  <span className="executive-rates__name"><Flag code={bandeiraDe(row.label)} width={18} height={12} />{row.label}</span>
                   {row.unit && <span className="executive-rates__unit">{row.unit}</span>}
                 </th>
                 {periods.map((period) => <RateCell key={period.id} cell={row.cells?.[period.id]} metaId={`${id}-${row.id}-${period.id}`} />)}

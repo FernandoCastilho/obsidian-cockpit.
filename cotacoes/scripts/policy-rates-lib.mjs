@@ -2,7 +2,6 @@
 export const POLICY_SOURCES = {
   FED: 'https://www.federalreserve.gov/monetarypolicy/openmarket.htm',
   ECB: 'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html',
-  BOE: 'https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp',
   BOJ: 'https://www.boj.or.jp/en/mopo/mpmdeci/index.htm',
 }
 const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
@@ -60,21 +59,6 @@ export function parseEcbPolicy(html) {
     if (!year || !md || value == null) continue
     const date = policyDate(Number(md[1]), md[2], year)
     if (date) points.push({date,value,sourceUrl:POLICY_SOURCES.ECB})
-  }
-  return normalizePolicyPoints(points)
-}
-export function parseBoePolicy(html) {
-  if (!/Official Bank Rate/i.test(plain(html)) || !/Date Changed/i.test(plain(html))) throw new Error('Tabela Bank Rate não reconhecida')
-  const points = []
-  for (const c of rows(html)) {
-    const d = /^(\d{1,2}) (\w{3}) (\d{2}|\d{4})$/.exec(c[0] || '')
-    const value = numeric(c[1] || '')
-    if (!d || value == null) continue
-    // Database history begins in 1975. Restrict to unambiguous recent history;
-    // two-digit dates below 75 belong to 2000+, not hypothetical future decades.
-    const y = d[3].length === 4 ? Number(d[3]) : Number(d[3]) >= 75 ? 1900 + Number(d[3]) : 2000 + Number(d[3])
-    const date = policyDate(Number(d[1]),d[2],y)
-    if (date) points.push({date,value,sourceUrl:POLICY_SOURCES.BOE})
   }
   return normalizePolicyPoints(points)
 }

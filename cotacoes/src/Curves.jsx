@@ -1,3 +1,5 @@
+import Flag from './Flag.jsx'
+import { bandeiraDe } from './paises.js'
 import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useId, useMemo, useState } from 'react'
@@ -81,7 +83,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
       {!bare && (
         <header>
           <h3>
-            {title}
+            <Flag code={bandeiraDe(title)} width={18} height={12} />{title}
             <small>{subtitle}</small>
             <Explain id={help} />
           </h3>

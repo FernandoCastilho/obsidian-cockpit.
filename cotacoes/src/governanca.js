@@ -22,7 +22,7 @@ export const FONTES = [
   { id: 'macro', chaves: ['macro'], nome: 'CDI, Selic, PTAX, SOFR e Focus', origem: 'Banco Central, NY Fed', coleta: HORA, muda: 'CDI, PTAX e SOFR a cada dia útil; Selic a cada reunião do Copom (cerca de 6 semanas); Focus toda segunda, 9h30', atraso: `${ATRASO_H.macro} h` },
   { id: 'curves', chaves: ['curves'], nome: 'Curvas DI x pré, cupom cambial e Treasuries', origem: 'B3, Tesouro dos EUA', coleta: HORA, muda: 'Uma vez por dia útil, com o ajuste do dia', atraso: `${ATRASO_H.curves} h` },
   { id: 'news', chaves: ['news'], nome: 'Notícias', origem: 'Fontes públicas de notícias', coleta: HORA, muda: 'Ao longo do dia', atraso: `${ATRASO_H.news} h` },
-  { id: 'policy', chaves: ['policy'], nome: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', origem: 'Bancos centrais e BIS', coleta: HORA, muda: 'A cada decisão do banco central', atraso: `${ATRASO_H.policy} h` },
+  { id: 'policy', chaves: ['policy'], nome: 'Juros de política monetária (Fed, BCE, BoJ)', origem: 'Bancos centrais e BIS', coleta: HORA, muda: 'A cada decisão do banco central', atraso: `${ATRASO_H.policy} h` },
   { id: 'indexadores', chaves: ['indexadores'], nome: 'TR, TBF e TLP', origem: 'Banco Central, BNDES', coleta: HORA, muda: 'TR e TBF diárias; TLP mensal', atraso: `${ATRASO_H.indexadores} h` },
   { id: 'bndes', chaves: ['bndes', 'moedas'], nome: 'TFB, TFC e moedas contratuais do BNDES', origem: 'BNDES', coleta: HORA, muda: 'Dias úteis, conforme a divulgação do BNDES', atraso: `${ATRASO_H.bndes} h` },
   { id: 'oil', chaves: ['oil', 'commodities'], nome: 'Petróleo Brent e commodities', origem: 'EIA, Banco Mundial', coleta: HORA, muda: 'Brent e algumas commodities por dia útil; as do Banco Mundial, uma vez por mês', atraso: `${ATRASO_H.oil} h` },
