@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
 import './Calendario.css'
 import Flag from './Flag.jsx'
+import Help from './Help.jsx'
 import { hasFlag } from './flags.js'
 import RefreshButton from './RefreshButton.jsx'
 import { useDataFile } from './useDataFile.js'
+import { explicarEvento, NIVEL } from './calendarImpact.js'
 import { COUNTRIES, PERIODS, countryOf, dayKey, filterEvents, groupByDay, mergeEvents, TZ } from './calendar.js'
 
 const IMPACTS = [['high', 'Alto'], ['medium', 'Médio'], ['low', 'Baixo']]
@@ -13,6 +15,20 @@ const dayLabel = (key, today) => {
   return key === today ? `${d} · hoje` : d
 }
 const SOURCE_LABELS = { ff: 'Forex Factory', bls: 'BLS', bea: 'BEA', fomc: 'Federal Reserve' }
+
+// Balão "?" do evento: o que é, efeito na economia e ligação com o Brasil; sem categoria mapeada, diz que o impacto é baixo.
+function EventHelp({ e }) {
+  const x = explicarEvento(e)
+  return (
+    <Help label={`Impacto de ${e.title}`} wide fixed>
+      <b className="ex-t">{e.title}</b>
+      {x.mapeado && <span className="ex"><i>{x.nome}:</i> {x.oque}</span>}
+      <span className="ex"><i>Na economia:</i> {x.economia}</span>
+      <span className="ex"><i>Brasil:</i> {x.brasil}</span>
+      <span className="ex"><i>Impacto:</i> {x.mapeado ? `${NIVEL[x.nivel] ?? x.nivel}, segundo a fonte.` : `Baixo${x.nivelFonte && x.nivelFonte !== 'low' ? ` para o Brasil (a fonte o classifica como ${(NIVEL[x.nivelFonte] ?? x.nivelFonte).toLowerCase()} para o mercado local)` : ''}.`}</span>
+    </Help>
+  )
+}
 
 function ImpactMark({ impact }) {
   const n = impact === 'high' ? 3 : impact === 'medium' ? 2 : impact === 'low' ? 1 : 0
@@ -66,7 +82,7 @@ export default function Calendario() {
                     <tr key={`${e.src}${e.t}${e.title}${e.country}`} className={`cal-row ${e.impact}${e.t < now ? ' past' : ''}`}>
                       <td className="cal-time">{hour(e.t)}</td>
                       <td className="cal-country-cell">{c.flag && hasFlag(c.flag) ? <Flag code={c.flag} width={18} height={12} /> : null} <span className="cal-cname">{c.name}</span></td>
-                      <th scope="row" className="cal-title" title={`Fonte: ${e.source}`}>{e.title}{e.tentative && <em className="tent"> previsto</em>}</th>
+                      <th scope="row" className="cal-title" title={`Fonte: ${e.source}`}>{e.title}{e.tentative && <em className="tent"> previsto</em>}<EventHelp e={e} /></th>
                       <td><ImpactMark impact={e.impact} /></td>
                       <td>{e.forecast ?? '—'}</td>
                       <td>{e.previous ?? '—'}</td>

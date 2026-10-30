@@ -11,6 +11,7 @@ export default function Explain({ id, align = 'left', fixed = false }) {
       <span className="ex">{g.a}</span>
       <span className="ex"><i>Exemplo:</i> {g.b}</span>
       <span className="ex"><i>Na prática:</i> {g.c}</span>
+      {g.d && <span className="ex"><i>Para dominar:</i> {g.d}</span>}
     </Help>
   )
 }

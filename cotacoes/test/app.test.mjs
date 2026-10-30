@@ -200,6 +200,7 @@ test('glossário: toda explicação tem as quatro partes e todo id usado no app 
   for (const [id, g] of Object.entries(GLOSSARY)) {
     for (const k of ['t', 'a', 'b', 'c']) assert.ok(g[k] && g[k].length > (k === 't' ? 2 : 10), `${id}.${k}`)
     assert.ok(g.a.length + g.b.length + g.c.length < 520, `${id} longo demais para um popover`)
+    if (g.d) assert.ok(g.d.length > 80 && g.d.length < 420, `${id}.d fora do tamanho`)
   }
   const used = new Set()
   for (const f of ['App', 'Resumo', 'Macro', 'Sofr', 'Curves', 'CdiFuturo', 'HistoryChart', 'ParityChart', 'Projecoes', 'Agenda', 'News']) {
@@ -289,4 +290,9 @@ test('Juros: toda linha do quadro e todo indexador tem tooltip com texto no glos
   for (const k of ['tr', 'tbf', 'tlp']) assert.ok(GLOSSARY[k], `indexador ${k} sem tooltip`)
   assert.match(readFileSync(new URL('../src/Indexadores.jsx', import.meta.url), 'utf8'), /<Explain id=\{r\.key\.toLowerCase\(\)\}/)
   assert.match(readFileSync(new URL('../src/Macro.jsx', import.meta.url), 'utf8'), /help="estr"/)
+})
+
+test('glossário: todo indicador de Juros traz "Para dominar" (o que mais um especialista precisa saber)', () => {
+  const juros = ['selic', 'cdi', 'sofr', 'sofrMedia', 'di1', 'ust10', 'curvaDi', 'cupom', 'fedFaixa', 'estr', 'bceDeposito', 'bojMeta', 'tr', 'tbf', 'tlp', 'curvaEuro', 'treasuries', 'cdiFuturo', 'focus']
+  for (const id of juros) assert.ok(GLOSSARY[id]?.d, `${id} sem "Para dominar"`)
 })
