@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, TOPICOS, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
+import { CONCEITOS, CONEXAO, LIGACOES, TOPICOS, conexoesDe, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
@@ -22,7 +22,7 @@ test('cada conceito traz frase, explicação simples, lacunas, versão precisa, 
     assert.ok(c.noApp.texto.length > 10 && ['juros', 'cenarios'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
-  assert.equal(CONEXAO.itens.length, 8)
+  assert.equal(CONEXAO.itens.length, CONCEITOS.length)
 })
 
 test('liquidação antecipada: na curva, a mercado e break funding', () => {
@@ -129,4 +129,31 @@ test('busca: todas as palavras, sem acento nem maiúscula, no conteúdo inteiro'
   assert.deepEqual(ids('fidc debenture'), [], 'todas as palavras precisam aparecer')
   assert.equal(ids('  ').length, CONCEITOS.length, 'busca vazia mostra tudo')
   assert.deepEqual(ids('zzzxyz'), [])
+})
+
+test('mapa de conexões cobre todos os conceitos: ao criar um conceito, atualize CONEXAO e LIGACOES', () => {
+  const ids = CONCEITOS.map((c) => c.id)
+  assert.deepEqual(CONEXAO.itens.map((i) => i.id).sort(), [...ids].sort(), 'todo conceito tem seu papel no quadro, sem sobra')
+  assert.ok(CONEXAO.itens.every((i) => i.texto.length > 20))
+  assert.ok(CONEXAO.cadeia.length > 60)
+  const pares = new Set()
+  for (const [a, b, porque] of LIGACOES) {
+    assert.ok(ids.includes(a) && ids.includes(b), `${a} ↔ ${b}: conceito inexistente`)
+    assert.notEqual(a, b, 'ligação consigo mesmo')
+    assert.ok(porque.length > 30, `${a} ↔ ${b}: explique a ligação`)
+    const k = [a, b].sort().join('|'); assert.ok(!pares.has(k), `${k} repetida`); pares.add(k)
+  }
+  for (const id of ids) assert.ok(conexoesDe(id).length >= 1, `${id} sem nenhuma ligação`)
+})
+test('ligações valem nos dois sentidos e cada conceito aponta para si mesmo nunca', () => {
+  for (const [a, b, porque] of LIGACOES) {
+    assert.ok(conexoesDe(a).some((x) => x.id === b && x.porque === porque), `${a} → ${b}`)
+    assert.ok(conexoesDe(b).some((x) => x.id === a && x.porque === porque), `${b} → ${a}`)
+  }
+  for (const c of CONCEITOS) assert.ok(conexoesDe(c.id).every((x) => x.id !== c.id))
+})
+test('todos os conceitos formam uma só rede de ligações', () => {
+  const vistos = new Set([CONCEITOS[0].id]), fila = [CONCEITOS[0].id]
+  while (fila.length) for (const x of conexoesDe(fila.shift())) if (!vistos.has(x.id)) { vistos.add(x.id); fila.push(x.id) }
+  assert.equal(vistos.size, CONCEITOS.length, 'todos os conceitos formam uma só rede')
 })

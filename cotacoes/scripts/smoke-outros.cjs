@@ -206,6 +206,10 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /subordinação[\s\S]*30%[\s\S]*R\$ 1\.000\.000[\s\S]*R\$ 1\.000\.000/)
+      // conexões: em cada conceito, "Conecta com" leva ao conceito ligado; o quadro geral cobre todos
+      assert.match(await p.locator('.learn-detail').innerText(), /Conecta com[\s\S]*Liquidação antecipada ›[\s\S]*Debênture ›[\s\S]*Nota comercial ›/i)
+      await p.locator('.learn-detail .learn-conecta .learn-link', { hasText: 'Debênture' }).click()
+      await p.locator('.learn-detail h2', { hasText: 'Debênture' }).waitFor()
       await busca.fill('')
       for (const [nome, rx] of [['Debênture', /16,28%[\s\S]*162\.800/], ['Nota comercial', /17,42%[\s\S]*0,50 ano/], ['Inflação', /4,91%[\s\S]*9,1\d%/]]) {
         await p.locator('.learn-list button', { hasText: nome }).first().click()
@@ -215,6 +219,10 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-detail .learn-go').click(); await p.waitForURL('**/#cenarios/outros')
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
+      const geral = p.locator('.learn-detail')
+      await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 11, 'um papel para cada conceito')
+      assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
       await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /Na curva[\s\S]*1\.150\.000[\s\S]*1\.180\.804[\s\S]*Break funding[\s\S]*10\.089/)
