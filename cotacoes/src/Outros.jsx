@@ -29,7 +29,7 @@ export default function Outros({ macro }) {
     const m = r.metric, u = m.pct ? '%' : '', d = m.decimals
     const delta = (v) => (v == null ? { text: '—' } : { text: sgn(v, d, m.pct ? ' p.p.' : '') })
     return {
-      id: m.id, flag: 'BRL', name: m.label, sub: 'Governo Geral · Banco Central',
+      id: m.id, flag: 'BRL', name: m.label, sub: 'Governo Geral',
       cells: [
         { text: r.last ? `${nf(r.last.value, d)}${u}` : '—' },
         r.prev ? { text: `${nf(r.prev.value, d)}${u}` } : { text: '—' },
@@ -45,7 +45,7 @@ export default function Outros({ macro }) {
   const tableRows = rows.map((r) => {
     const pct = r.metric.rate
     return {
-      id: r.metric.id, flag: 'BRL', name: r.metric.label, sub: pct ? 'IPCA · IBGE' : 'IPCA · IBGE · base dez/1993',
+      id: r.metric.id, flag: 'BRL', name: r.metric.label, sub: pct ? 'IPCA' : 'IPCA · base dez/1993',
       cells: [
         { text: r.last ? `${fmt(r, r.last.value)}${pct ? '%' : ''}` : '—' },
         { text: r.prev ? `${fmt(r, r.prev.value)}${pct ? '%' : ''}` : '—' },
@@ -69,8 +69,8 @@ export default function Outros({ macro }) {
             rows={tableRows}
             onOpen={setOpenId}
           />
-          {parsed.stale && <p className="status stale" role="status">Última série disponível; a atualização do IBGE não foi confirmada.</p>}
-          <Aviso title="IPCA · fonte e método"><p className="ind-note">IPCA do IBGE (Sistema Nacional de Índices de Preços ao Consumidor Amplo), tabela 1737 do SIDRA, série completa desde dez/1979. Variação mensal, acumulados no ano e em 12 meses e número-índice (dez/1993 = 100) são os valores divulgados pelo IBGE, sem recálculo. Em Variação, os percentuais são diferença em pontos percentuais; no número-índice, variação relativa. Conferência: {new Date(parsed.checkedAt).toLocaleDateString('pt-BR')}. <a href={parsed.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: IBGE ↗</a></p></Aviso>
+          {parsed.stale && <p className="status stale" role="status">Última série disponível; a atualização não foi confirmada.</p>}
+          <Aviso title="IPCA · método"><p className="ind-note">IPCA (Índice Nacional de Preços ao Consumidor Amplo), série completa desde dez/1979. Variação mensal, acumulados no ano e em 12 meses e número-índice (dez/1993 = 100) são os valores divulgados oficialmente, sem recálculo. Em Variação, os percentuais são diferença em pontos percentuais; no número-índice, variação relativa. Conferência: {new Date(parsed.checkedAt).toLocaleDateString('pt-BR')}.</p></Aviso>
         </>
       )}
       <InflacaoPesos macro={macro} />
@@ -85,8 +85,8 @@ export default function Outros({ macro }) {
             rows={dTable}
             onOpen={setDOpenId}
           />
-          {dParsed.stale && <p className="status stale" role="status">Última série disponível; a atualização do Banco Central não foi confirmada.</p>}
-          <Aviso title="Dívida bruta · fonte e método"><p className="ind-note">Dívida Bruta do Governo Geral (DBGG): governo federal, INSS e governos estaduais e municipais, sem as empresas estatais e sem o Banco Central. Saldo ao fim do mês, divulgado pelo Banco Central nas Estatísticas Fiscais, em R$ e em % do PIB (PIB acumulado em 12 meses). Série mensal desde dez/2006, sem recálculo; o Banco Central revisa meses anteriores quando muda a metodologia ou o PIB. Em Variação, a diferença da razão está em pontos percentuais do PIB e a do saldo, em R$ bilhões. Conferência: {new Date(dParsed.checkedAt).toLocaleDateString('pt-BR')}. <a href={dParsed.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: Banco Central ↗</a></p></Aviso>
+          {dParsed.stale && <p className="status stale" role="status">Última série disponível; a atualização não foi confirmada.</p>}
+          <Aviso title="Dívida bruta · método"><p className="ind-note">Dívida Bruta do Governo Geral (DBGG): governo federal, INSS e governos estaduais e municipais, sem as empresas estatais e sem o Banco Central. Saldo ao fim do mês, divulgado nas Estatísticas Fiscais, em R$ e em % do PIB (PIB acumulado em 12 meses). Série mensal desde dez/2006, sem recálculo; meses anteriores são revisados quando muda a metodologia ou o PIB. Em Variação, a diferença da razão está em pontos percentuais do PIB e a do saldo, em R$ bilhões. Conferência: {new Date(dParsed.checkedAt).toLocaleDateString('pt-BR')}.</p></Aviso>
         </>
       )}
       {dRow && (

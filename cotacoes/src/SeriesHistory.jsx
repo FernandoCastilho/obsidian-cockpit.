@@ -48,7 +48,6 @@ export default function SeriesHistory({ item, points, onClose }) {
           </div>
         </>
       )}
-      <p><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: {item.sourceName || 'fonte oficial'} ↗</a></p>
     </Expandable>
   )
 }

@@ -52,6 +52,7 @@ export const NAVEGADOR = [
 ]
 
 export const REGRAS = [
+  'Origem, API e frequência de cada referência ficam na Base de dados, nesta tela. Os painéis mostram só a data e a hora da última atualização, além de ressalvas curtas que mudam a leitura do número.',
   'Se uma fonte falha, o app mantém o último dado publicado e marca "Atrasado" quando passa do prazo; o número não é inventado nem estimado.',
   'Uma validação automática confere a coerência dos dados a cada publicação e abre um alerta quando encontra problema.',
   'Fim de semana e feriados: não há coleta de dias úteis, e o app mostra o último dado de sexta ou do último dia útil.',

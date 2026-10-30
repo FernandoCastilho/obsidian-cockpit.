@@ -46,7 +46,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
     <section className="macro" aria-labelledby="cdif-h">
       <h2 id="cdif-h">CDI futuro</h2>
       {curves.status === 'loading' && <div className="placeholder">Carregando curva DI…</div>}
-      {curves.status !== 'loading' && !pts && <p className="status">CDI futuro indisponível: depende da curva DI x pré da B3, que não veio na última atualização.</p>}
+      {curves.status !== 'loading' && !pts && <p className="status">CDI futuro indisponível: depende da curva DI x pré, que não veio na última atualização.</p>}
       {pts && (
         <article className="chart">
           <header>
@@ -93,8 +93,8 @@ export default function CdiFuturo({ curves, macro, hol }) {
             </table>
             </div>
           </details>
-          <Aviso title="CDI futuro · fonte e método"><p className="status">
-            Fonte: B3, DI x pré de {dm(today.date)}. É o CDI que o mercado precifica, com prêmio de risco embutido, não uma projeção oficial. "CDI médio até lá" é a taxa composta do DI até o vértice; "a termo no trecho" é a taxa implícita entre o horizonte anterior e este. Para a visão de analistas, veja o Boletim Focus (Selic).
+          <Aviso title="CDI futuro · método"><p className="status">
+            DI x pré de {dm(today.date)}. É o CDI que o mercado precifica, com prêmio de risco embutido, não uma projeção oficial. "CDI médio até lá" é a taxa composta do DI até o vértice; "a termo no trecho" é a taxa implícita entre o horizonte anterior e este. Para a visão de analistas, veja o Boletim Focus (Selic).
           </p></Aviso>
         </article>
       )}

@@ -352,7 +352,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
       <div ref={ref}>
         {chart(width)}
       </div>
-      <footer className="terminal-chart-source muted">{rows.filter(r => r.st.data).map(r => r.code + ': ' + (r.st.data.feed || 'AwesomeAPI') + (r.st.data.generatedAt ? ' · arquivo de ' + dataTimestamp(r.st.data.generatedAt) : ' · data do arquivo não disponível')).join(' | ')}</footer>
+      <footer className="terminal-chart-source muted">{rows.filter(r => r.st.data).map(r => r.code + ': ' + (r.st.data.generatedAt ? 'atualizado em ' + dataTimestamp(r.st.data.generatedAt) : 'data da atualização não disponível')).join(' | ')}</footer>
     </div>
     {big && (
       <Overlay onClose={() => setBig(false)}>
@@ -451,18 +451,18 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
 
 
         <OilTile table openRequest={oilRequest} spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
-        <Aviso title="Câmbio · fontes, datas e metodologia">
+        <Aviso title="Câmbio · datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; Δ dia (R$) do cruzamento: razão atual menos a razão dos fechamentos anteriores das duas pontas. Não há PTAX oficial do yuan: a coluna mostra referência cruzada (PTAX do dólar ÷ USD/CNH no horário do boletim), só com cotações das duas pontas a até 15 min dele. CNY não é CNH.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
             <b>{q?.source || c.code}/BRL:</b> <span className={quoteAgeState(q) ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : quoteAgeState(q) ? quoteAgeState(q) + ' · ' : '') + dataTimestamp(q.timestamp)}</span>
-            {' · '}{q ? q.fallback ? 'BCE · referência diária' : q.cross ? 'AwesomeAPI · CNH offshore por cruzamento' : 'AwesomeAPI' : 'Aguardando fonte válida'}
-            {p && <> · BCB PTAX venda, boletim {p.kind}, {p.date.split('-').reverse().join('/')}, R$ por 1 {c.code}</>}
+            {' · '}{q ? q.cross ? 'CNH offshore por cruzamento' : q.fallback ? 'referência diária' : '' : 'Aguardando cotação válida'}
+            {p && <> · PTAX venda, boletim {p.kind}, {p.date.split('-').reverse().join('/')}, R$ por 1 {c.code}</>}
             {['month', 'year'].map(k => <span key={k}> · {k === 'month' ? 'Mês' : 'Ano'}: {r[k] ? `base ${r[k].baseDate.split('-').reverse().join('/')} → ${r[k].endDate.split('-').reverse().join('/')}` : 'sem base/cobertura compatível'}</span>)}
           </li> })}</ul>
-          <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série AwesomeAPI. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
-          <p>PTAX é referência oficial independente, não spot. <a href="https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes" target="_blank" rel="noreferrer">BCB: cotações e boletins</a> · <a href="https://docs.awesomeapi.com.br/api-de-moedas" target="_blank" rel="noreferrer">AwesomeAPI: cotações e histórico</a>. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
-          <p>Cotação do dia: última referência recebida, não um feed em tempo real. A coleta central é de 5 min na janela configurada e horária fora dela em dias úteis, com pausa de coleta no fim de semana; o navegador verifica a cada minuto e o arquivo também pode ter cache. “Dado antigo” sinaliza horário da fonte há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. A fonte não informa abertura/fechamento do mercado: ausência de novo preço não é tratada como mercado fechado.</p>
+          <p>Acumulados: (última observação diária ÷ última observação diária anterior ao início do mês/ano − 1) × 100, mesma série diária. Dias civis em America/Sao_Paulo. Barras do dia atual excluídas; lacunas superiores a 7 dias junto à base ou ao fim impedem o cálculo. {daily.status === 'error' ? 'Falha ao consultar o histórico dos acumulados.' : daily.status === 'loading' ? 'Carregando histórico dos acumulados.' : 'Arquivo histórico: ' + dataTimestamp(daily.data?.generatedAt)}</p>
+          <p>PTAX é referência oficial independente, não spot. Gráficos: {spark.label}; histórico desde {toInput(limits.start).split('-').reverse().join('/')}, sujeito a lacunas.</p>
+          <p>Cotação do dia: última referência recebida, não um feed em tempo real. “Dado antigo” sinaliza horário há mais de 10 min; esse limite não é garantia de latência. O horário original permanece indicado acima. Ausência de novo preço não é tratada como mercado fechado.</p>
           </Aviso>
       </section>
       {compareOpen && <Expandable modal label="Comparar moedas" onClose={closeCompare}>

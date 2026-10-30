@@ -89,7 +89,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           </div>
         )}
         {next && <p className="bn-def">Próxima divulgação da TLP: {dmy(next)}.</p>}
-        {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré da B3 do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré da B3 ou sem TFB no dia da curva.'}</p>}
+        {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         <FilterScope>
           <h3 className="bn-sub">Histórico · {series.name}</h3>
@@ -104,9 +104,9 @@ export default function Bndes({ view = '', onView = () => {} }) {
           </ul>
         </details>
         <details className="bn-src">
-          <summary>Definição e fonte · {fam.label}</summary>
+          <summary>Definição · {fam.label}</summary>
           <p className="bn-def">{fam.definition}</p>
-          <p className="bn-def">{fam.source} Variações em pontos percentuais (dólar e Selic acumulada, em %) contra o dia útil anterior e as datas de um mês e um ano antes, ou a mais próxima anterior; sem histórico suficiente, a coluna fica vazia. Atualizado a cada coleta horária.</p>
+          <p className="bn-def">Variações em pontos percentuais (dólar e Selic acumulada, em %) contra o dia útil anterior e as datas de um mês e um ano antes, ou a mais próxima anterior; sem histórico suficiente, a coluna fica vazia.</p>
         </details>
         <Aviso title="BNDES · taxas e moedas"><p className="bn-def">O BNDES não detalha a sigla TFC na consulta de Moedas Contratuais; os nomes e códigos seguem a tabela do banco. A TFB (taxa fixa) e a TFC são séries diferentes. O período escolhido vale para todas as séries; séries que começam depois do início do período mostram só o que existe. O endereço da página guarda a série e o período: copie-o para compartilhar{sel ? ` (${sel.name})` : ''}.</p></Aviso>
       </Panel>

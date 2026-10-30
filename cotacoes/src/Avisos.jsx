@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useId, useMemo, useR
 import { createPortal } from 'react-dom'
 import './Avisos.css'
 
-// Central de avisos: fontes, metodologia e ressalvas ficam atrás de um "i" discreto, em vez de espalhadas pelo texto.
+// Central de avisos: metodologia e ressalvas ficam atrás de um "i" discreto, em vez de espalhadas pelo texto.
 // Cada trecho de aviso da tela usa <Aviso>; ele só ocupa lugar na janela do "i" (e só existe no DOM enquanto ela está aberta).
 // Alertas funcionais (dado atrasado, falha de coleta, erro de campo) continuam no lugar: são estado, não aviso.
 const Ctx = createContext({ target: null, register: () => () => {}, open: () => {}, flag: false })
@@ -39,7 +39,7 @@ export function AvisosProvider({ general, children }) {
       <dialog ref={dialog} className="info-notice-dialog" aria-labelledby={titleId} onKeyDown={containFocus}
         onClose={() => { setOpen(false); opener.current?.focus?.() }}
         onClick={(e) => { if (e.target === e.currentTarget) close() }}>
-        <div className="info-notice-head"><h2 id={titleId}>Informações, fontes e avisos gerais</h2><button type="button" autoFocus className="btn" onClick={close}>Fechar</button></div>
+        <div className="info-notice-head"><h2 id={titleId}>Informações e avisos gerais</h2><button type="button" autoFocus className="btn" onClick={close}>Fechar</button></div>
         <div className="avisos-body" ref={setNode} />
         <section className="aviso aviso-geral"><h3>Aviso geral</h3>{general}</section>
       </dialog>
@@ -51,7 +51,7 @@ export function AvisosProvider({ general, children }) {
 export function AvisosButton({ className = '' }) {
   const { open, flag } = useContext(Ctx)
   return (
-    <button type="button" className={`avisos-btn ${className}`} aria-label="Informações, fontes e avisos gerais" aria-haspopup="dialog" title={flag ? 'Informações e avisos desta tela (há aviso importante)' : 'Informações, fontes e avisos'} data-flag={flag ? 'on' : undefined} onClick={open}>
+    <button type="button" className={`avisos-btn ${className}`} aria-label="Informações e avisos gerais" aria-haspopup="dialog" title={flag ? 'Informações e avisos desta tela (há aviso importante)' : 'Informações e avisos'} data-flag={flag ? 'on' : undefined} onClick={open}>
       <span aria-hidden="true">ⓘ</span>
     </button>
   )

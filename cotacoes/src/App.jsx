@@ -206,9 +206,8 @@ export default function App() {
           {error
             ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
             : updatedAt
-              ? `Câmbio — consulta de ${dataTimestamp(updatedAt)} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
+              ? `Câmbio — atualizado em ${dataTimestamp(updatedAt)}`
               : 'Carregando…'}
-          {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB · coleta a cada 5 min no pregão</span>}
             <button
               type="button"
               className="refresh-mini"
@@ -228,7 +227,7 @@ export default function App() {
   return (
     <AvisosProvider general={<>
         <p><strong>Aviso:</strong> Conteúdo meramente informativo e ilustrativo, baseado em fontes públicas. As simulações são hipotéticas e não constituem recomendação, oferta ou garantia de resultado. Os dados podem apresentar defasagens ou imprecisões e devem ser conferidos nas fontes oficiais antes de qualquer decisão. O uso é de responsabilidade do usuário, observadas as responsabilidades previstas na legislação aplicável.</p>
-        <p>Fonte: AwesomeAPI (câmbio), Banco Central, B3, NY Fed e Tesouro dos EUA · yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH</p>
+        <p>Yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH. Origem, API e frequência de cada dado: Configurações › Base de dados.</p>
         <p><i>{DISCLAIMER}</i></p>
       </>}>
     <AvisoInicial />

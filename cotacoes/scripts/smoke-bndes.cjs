@@ -110,7 +110,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       // spread contra o DI (TFB do dia da curva menos DI do mesmo prazo) e CSV para o Power Query
       await p.goto(base + '/#bndes/tfb/TFB_60_90?p=12m'); await p.locator('.bn-scroll').first().waitFor()
       const spread = p.locator('.bn-scroll').first().locator('thead th', { hasText: 'Spread DI' })
-      assert.match(await p.locator('.bn-def', { hasText: 'Spread DI:' }).innerText(), /TFB de 25\/09\/2026 menos a taxa DI x pré da B3 do mesmo dia/)
+      assert.match(await p.locator('.bn-def', { hasText: 'Spread DI:' }).innerText(), /TFB de 25\/09\/2026 menos a taxa DI x pré do mesmo dia/)
       if (width < 640) {
         assert.equal(await spread.isVisible(), false)
         assert.match(await p.locator('tr.bn-extra').first().innerText(), /Spread DI [+−]\d+,\d\d p\.p\./)
@@ -127,7 +127,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await csv.locator('summary').click()
       await noOverflow()
       // definição e fonte recolhidas; sem rolagem horizontal da página
-      assert.equal(await p.locator('details.bn-src', { hasText: 'Definição e fonte' }).getAttribute('open'), null)
+      assert.equal(await p.locator('details.bn-src', { hasText: 'Definição' }).getAttribute('open'), null)
       await noOverflow()
       // TFB saiu do quadro de indexadores (aba Juros)
       await p.goto(base + '/#juros'); await p.locator('.idx-table').waitFor()

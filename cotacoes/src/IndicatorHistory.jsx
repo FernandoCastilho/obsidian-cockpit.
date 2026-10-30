@@ -36,7 +36,6 @@ export default function IndicatorHistory({item,series,loading,failed,onClose}) {
    </> : <p role="status">Sem observações no período selecionado. Ausência não significa zero.</p>}
   </>}
   {series?.revisionNote && <p className="context-method">{series.revisionNote}</p>}
-  <p><a href={series?.sourceUrl || item.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: {series?.sourceName || item.sourceName} ↗</a></p>
   <p className="context-method">Conferência: {(series?.checkedAt || item.checkedAt)?.slice(0,10).split('-').reverse().join('/') || 'não informada'}. A conferência não altera a competência da observação.</p>
  </Expandable>
 }
