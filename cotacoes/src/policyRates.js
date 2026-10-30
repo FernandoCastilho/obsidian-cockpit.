@@ -1,9 +1,9 @@
 import { displayDate } from './ratesSnapshot.js'
 
 const DEFINITIONS = [
-  ['FED','EUA · Fed (faixa-alvo)','Federal Reserve / FOMC'],
-  ['ECB','Área do euro · BCE (depósito)','Banco Central Europeu'],
-  ['BOJ','Japão · Meta overnight','Bank of Japan'],
+  ['FED','EUA · Fed (faixa-alvo)','Federal Reserve / FOMC','fedFaixa'],
+  ['ECB','Área do euro · BCE (depósito)','Banco Central Europeu','bceDeposito'],
+  ['BOJ','Japão · Meta overnight','Bank of Japan','bojMeta'],
 ]
 const n = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})
 function pointValue(p) {
@@ -12,11 +12,11 @@ function pointValue(p) {
   return null
 }
 export function policyRows(data,periods,{loading=false,error=false,now=Date.now()}={}) {
-  return DEFINITIONS.map(([id,label,source]) => {
+  return DEFINITIONS.map(([id,label,source,help]) => {
     const series = data?.series?.[id]
     const pending = error || series?.stale || (series?.checkedAt && now - series.checkedAt > 36*3600e3)
     const points = series?.usagePending ? [] : series?.points || []
-    return {id,label,unit:'Política monetária · % a.a.',cells:Object.fromEntries(periods.map(period => {
+    return {id,label,help,unit:'Política monetária · % a.a.',cells:Object.fromEntries(periods.map(period => {
       const p = points.filter(p=>/^\d{4}-\d{2}-\d{2}$/.test(p.date || '') && p.date <= period.date && pointValue(p)!=null)
         .reduce((a,b)=>!a || b.date>a.date ? b : a,null)
       return [period.id,{

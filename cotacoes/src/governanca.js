@@ -12,7 +12,7 @@ export const CRONS = {
 }
 
 // Idade máxima, em horas, antes de o app marcar a fonte como "Atrasado" (no fim de semana, fontes de dias úteis não atrasam).
-export const ATRASO_H = { macro: 6, curves: 6, news: 6, policy: 36, estr: 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
+export const ATRASO_H = { macro: 6, curves: 6, news: 6, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
 
 const HORA = 'De hora em hora nos dias úteis (0h17 às 23h17)'
 
@@ -24,6 +24,7 @@ export const FONTES = [
   { id: 'news', chaves: ['news'], nome: 'Notícias', origem: 'Fontes públicas de notícias', coleta: HORA, muda: 'Ao longo do dia', atraso: `${ATRASO_H.news} h` },
   { id: 'policy', chaves: ['policy'], nome: 'Juros de política monetária (Fed, BCE, BoJ)', origem: 'Bancos centrais e BIS', coleta: HORA, muda: 'A cada decisão do banco central', atraso: `${ATRASO_H.policy} h` },
   { id: 'estr', chaves: ['estr'], nome: '€STR (taxa overnight do BCE)', origem: 'Banco Central Europeu', coleta: HORA, muda: 'A cada dia útil europeu, publicada de manhã (horário de Frankfurt) para o dia anterior', atraso: `${ATRASO_H.estr} h` },
+  { id: 'euro-curve', chaves: ['euro-curve'], nome: 'Curva de juros do euro (3 meses a 30 anos)', origem: 'Banco Central Europeu', coleta: HORA, muda: 'A cada dia útil europeu, com a curva do dia anterior', atraso: `${ATRASO_H['euro-curve']} h` },
   { id: 'indexadores', chaves: ['indexadores'], nome: 'TR, TBF e TLP', origem: 'Banco Central, BNDES', coleta: HORA, muda: 'TR e TBF diárias; TLP mensal', atraso: `${ATRASO_H.indexadores} h` },
   { id: 'bndes', chaves: ['bndes', 'moedas'], nome: 'TFB, TFC e moedas contratuais do BNDES', origem: 'BNDES', coleta: HORA, muda: 'Dias úteis, conforme a divulgação do BNDES', atraso: `${ATRASO_H.bndes} h` },
   { id: 'oil', chaves: ['oil', 'commodities'], nome: 'Petróleo Brent e commodities', origem: 'EIA, Banco Mundial', coleta: HORA, muda: 'Brent e algumas commodities por dia útil; as do Banco Mundial, uma vez por mês', atraso: `${ATRASO_H.oil} h` },

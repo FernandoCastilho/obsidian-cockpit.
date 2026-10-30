@@ -19,7 +19,7 @@ export function estrRow(series, periods, { loading = false, error = false } = {}
   const pending = error || series?.stale
   const source = series?.sourceName || 'Banco Central Europeu · €STR'
   return {
-    id: 'ESTR', label: 'Área do euro · €STR overnight', unit: 'Mercado overnight · % a.a.',
+    id: 'ESTR', label: 'Área do euro · €STR overnight', help: 'estr', unit: 'Mercado overnight · % a.a.',
     cells: Object.fromEntries(periods.map((period) => {
       const p = series ? lastAt(series.points, period.date) : null
       return [period.id, p

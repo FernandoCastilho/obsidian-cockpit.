@@ -31,5 +31,6 @@ export function snapshotRows({macro, periods, errors={}}) {
     const points=series.map(([t,value])=>({date:iso(new Date(t)),value,status:key==='selic'?'Vigente desde a data indicada':undefined}))
     add(id,label,key==='selic'?'Política monetária · % a.a.':'Mercado overnight · % a.a.',points,source,v=>`${number(v)}%`,errors.macro || (macro?.stale?.[key] ? 'Última série disponível; fonte pendente' : undefined))
   }
-  return rows
+  const HELP = { SELIC: 'selic', CDI: 'cdi', SOFR: 'sofr' }
+  return rows.map((r) => ({ ...r, help: HELP[r.id] }))
 }

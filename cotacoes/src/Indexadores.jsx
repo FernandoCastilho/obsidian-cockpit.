@@ -2,6 +2,7 @@ import { Aviso } from './Avisos.jsx'
 import { useDataFile } from './useDataFile.js'
 import { Panel } from './TerminalDesk.jsx'
 import { indexRows } from './indexadores.js'
+import Explain from './Explain.jsx'
 
 const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 
@@ -23,7 +24,7 @@ export default function Indexadores() {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.key}>
-                  <th scope="row"><b>{r.key}</b><small>{r.name}</small></th>
+                  <th scope="row"><b>{r.key}</b><Explain id={r.key.toLowerCase()} /><small>{r.name}</small></th>
                   <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
                   <td className="num">{r.annualText ?? '—'}</td>
                   <td>{r.missing ? '—' : r.period}</td>

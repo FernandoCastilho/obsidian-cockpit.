@@ -277,3 +277,16 @@ test('cotações: CNH ganha variação absoluta pelos fechamentos anteriores das
   assert.ok(withLegs.delta < 0)
   assert.equal((await run(undefined)).delta, null)
 })
+
+import { policyRows as _policyRows } from '../src/policyRates.js'
+import { estrRow as _estrRow } from '../src/estr.js'
+import { snapshotRows as _snapshotRows } from '../src/ratesSnapshot.js'
+test('Juros: toda linha do quadro e todo indexador tem tooltip com texto no glossário', () => {
+  const periods = [{ id: 'day', date: '2026-10-29' }]
+  const rows = [..._snapshotRows({ macro: {}, periods }), ..._policyRows({ series: {} }, periods), _estrRow(null, periods)]
+  assert.deepEqual(rows.map((r) => r.id), ['SELIC', 'CDI', 'SOFR', 'FED', 'ECB', 'BOJ', 'ESTR'])
+  for (const r of rows) assert.ok(r.help && GLOSSARY[r.help], `linha ${r.id} sem tooltip`)
+  for (const k of ['tr', 'tbf', 'tlp']) assert.ok(GLOSSARY[k], `indexador ${k} sem tooltip`)
+  assert.match(readFileSync(new URL('../src/Indexadores.jsx', import.meta.url), 'utf8'), /<Explain id=\{r\.key\.toLowerCase\(\)\}/)
+  assert.match(readFileSync(new URL('../src/Macro.jsx', import.meta.url), 'utf8'), /help="estr"/)
+})
