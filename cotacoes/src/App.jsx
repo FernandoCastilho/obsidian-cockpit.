@@ -162,7 +162,9 @@ export default function App() {
   }
   // Endereço da tela: #aba ou #aba/assunto (ex.: #cenarios/calendario), que dá para favoritar e enviar.
   const readHash = () => {
-    const [h, sub = ''] = window.location.hash.replace('#', '').split('/')
+    const raw = window.location.hash.replace('#', '')
+    const i = raw.indexOf('/')
+    const h = i < 0 ? raw : raw.slice(0, i), sub = i < 0 ? '' : raw.slice(i + 1) // o BNDES guarda série e período depois da primeira barra
     return { tab: TABS.some((t) => t.id === h) ? h : 'resumo', sub }
   }
   const [tab, setTab] = useState(() => readHash().tab)
@@ -182,16 +184,16 @@ export default function App() {
   }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
   const cenView = CEN_VIEWS.some((v) => v.id === sub) ? sub : 'projecoes'
-  const goto = (id, to = '') => {
+  const goto = (id, to = '', replace = false) => {
     setTab(id)
     setSub(to)
     try {
       const hash = `#${id}${to ? `/${to}` : ''}`
-      if (window.location.hash !== hash) window.history.pushState(null, '', hash)
+      if (window.location.hash !== hash) window.history[replace ? 'replaceState' : 'pushState'](null, '', hash)
     } catch {
       /* sem histórico (ex.: arquivo local) */
     }
-    window.scrollTo({ top: 0 })
+    if (!(id === 'bndes' && tab === 'bndes')) window.scrollTo({ top: 0 }) // escolher série e período na aba BNDES não leva ao topo
   }
   const openCurrency = CURRENCIES.find((c) => c.code === open)
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
@@ -287,7 +289,7 @@ export default function App() {
         </>
       )}
 
-      {tab === 'bndes' && <Bndes />}
+      {tab === 'bndes' && <Bndes view={sub} onView={(v, replace) => goto('bndes', v, replace)} />}
 
       {tab === 'calculadora' && <Calculadora view={sub} onView={(v) => goto('calculadora', v)} />}
 

@@ -22,7 +22,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await p.route('**/indexadores.json*', (r) => r.fulfill({ json: { schemaVersion: 1, generatedAt: Date.now(), series: {}, stale: {}, errors: [] } }))
       await p.goto(base + '/#bndes')
       const fam = p.getByRole('group', { name: 'Família de séries' }); await fam.waitFor()
-      const tbl = () => p.locator('.bn-scroll').first().locator('tbody tr')
+      const tbl = () => p.locator('.bn-scroll').first().locator('tbody tr:not(.bn-extra)')
       const pressed = async (group, name) => (await p.getByRole('group', { name: group }).getByRole('button', { name, exact: true }).getAttribute('aria-pressed')) === 'true'
       const noOverflow = async () => assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem horizontal da página')
       assert.deepEqual(await fam.getByRole('button').allInnerTexts(), ['TFB', 'TLP', 'TFC', 'Moedas'])
@@ -49,7 +49,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       // TLP: uma linha, próxima divulgação, histórico mensal sob o mesmo período
       await fam.getByRole('button', { name: 'TLP', exact: true }).click()
       assert.equal(await tbl().count(), 1)
-      assert.match(await tbl().first().innerText(), /TLP[\s\S]*8,95% a\.a\.[\s\S]*▲ \+0,05 p\.p\.[\s\S]*▲ \+0,60 p\.p\./)
+      assert.match(await p.locator('.bn-scroll').first().locator('tbody').innerText(), /TLP[\s\S]*8,95% a\.a\.[\s\S]*▲ \+0,05 p\.p\.[\s\S]*▲ \+0,60 p\.p\./, 'Mês e Ano: colunas no computador, linha extra no celular')
       assert.match(await p.locator('.bn-def').first().innerText(), /Próxima divulgação da TLP: \d{2}\/\d{2}\/\d{4}\./)
       assert.equal(await pressed('Período da série', '3 meses'), true, 'um único filtro de período: continua em 3 meses')
       await p.getByRole('group', { name: 'Período da série' }).getByRole('button', { name: 'Tudo', exact: true }).click()
@@ -73,6 +73,39 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.match(await tbl().nth(2).innerText(), /SOBRETAXA FIXA SELIC[\s\S]*indisponível/)
       await tbl().nth(0).getByRole('button').click()
       assert.match(await p.locator('.bn-range').innerText(), /No período: .* R\$ [\d,]+ → .* R\$ [\d,]+ \(\+[\d,]+%\)/)
+      // cartões de resumo, link direto e Voltar
+      const cards = p.getByRole('group', { name: 'Resumo do dia' })
+      assert.equal(await cards.getByRole('button').count(), 4)
+      assert.match(await cards.getByRole('button', { name: /TFC_60\.90/ }).innerText(), /TFC_60\.90[\s\S]*% a\.a\.[\s\S]*\d{2}\/\d{2}\/\d{4}/i)
+      assert.match(await cards.getByRole('button', { name: /TLP/ }).innerText(), /vs mês anterior/i)
+      await p.goto(base + '/#bndes/tfc/C02?p=3m'); await p.waitForFunction(() => /C02/.test(document.querySelector('.bn')?.innerText ?? ''))
+      assert.equal(await pressed('Família de séries', 'TFC'), true, 'o link abre na família TFC')
+      assert.match(await p.locator('.bn-sub').nth(1).innerText(), /TFC_120\.90 \(C02\)/i)
+      assert.equal(await pressed('Período da série', '3 meses'), true, 'e no período do link')
+      await cards.getByRole('button', { name: /Dólar contratual/ }).click()
+      assert.match(await p.evaluate(() => location.hash), /^#bndes\/moedas\/604\?p=3m$/, 'o cartão grava série e período no endereço')
+      await p.getByRole('group', { name: 'Período da série' }).getByRole('button', { name: '6 meses', exact: true }).click()
+      assert.match(await p.evaluate(() => location.hash), /^#bndes\/moedas\/604\?p=6m$/)
+      await p.goBack()
+      assert.match(await p.evaluate(() => location.hash), /^#bndes\/tfc\/C02\?p=3m$/, 'Voltar pula a troca de período (substitui) e volta à série anterior')
+      assert.equal(await pressed('Família de séries', 'TFC'), true)
+      await p.goto(base + '/#bndes/tfc/NAOEXISTE?p=xx'); await p.getByRole('group', { name: 'Família de séries' }).waitFor()
+      assert.match(await p.locator('.bn-sub').nth(1).innerText(), /TFC_60\.90 \(C01\)/i, 'série desconhecida cai na padrão da família')
+      assert.equal(await pressed('Período da série', '12 meses'), true, 'período inválido cai em 12 meses')
+      // celular: Mês e Ano saem da tabela e aparecem sob a linha tocada; no computador seguem como colunas
+      const month = p.locator('.bn-scroll').first().locator('thead th', { hasText: 'Mês' })
+      if (width < 640) {
+        assert.equal(await month.isVisible(), false, 'celular: coluna Mês escondida')
+        assert.match(await p.locator('tr.bn-extra').first().innerText(), /Mês[\s\S]*Ano/)
+      } else {
+        assert.equal(await month.isVisible(), true); assert.equal(await p.locator('tr.bn-extra').first().isVisible(), false)
+      }
+      if (width < 640) {
+        await p.goto(base + '/#bndes/tfb/TFB_60_90?p=12m'); await p.locator('.bn-scroll').first().waitFor()
+        assert.equal(await p.locator('.bn-scroll').first().evaluate((e) => e.scrollWidth <= e.clientWidth + 1), true, 'celular: Série, Valor, Dia e Data cabem sem rolar para o lado')
+        assert.match(await p.locator('.bn-scroll').first().locator('tbody tr').first().innerText(), /\d{2}\/\d{2}$/m, 'celular: data curta (dd/mm)')
+      }
+      await noOverflow()
       // definição e fonte recolhidas; sem rolagem horizontal da página
       assert.equal(await p.locator('details.bn-src').getAttribute('open'), null)
       await noOverflow()
