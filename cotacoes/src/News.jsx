@@ -24,11 +24,8 @@ const Tickers = ({ codes, colors }) =>
 export default function News({ colors }) {
   const { data, error } = useNews()
   const [filter, setFilter] = useState('ALL')
-  const all = useMemo(() => buildFeed(data?.news, 'ALL', 60), [data])
   const feed = useMemo(() => buildFeed(data?.news, filter, 60), [data, filter])
-  const strip = all.slice(0, 14)
   const generated = data?.generatedAt && new Date(data.generatedAt)
-  const seconds = Math.max(40, strip.length * 8)
 
   return (
     <section className="news">

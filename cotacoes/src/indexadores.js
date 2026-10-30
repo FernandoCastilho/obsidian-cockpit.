@@ -1,6 +1,6 @@
 // Apresentação dos indexadores TR, TBF e TLP (arquivo indexadores.json: TR e TBF do SGS do Banco Central; TLP da moeda 777 do BNDES).
 import { addDays, isBusinessDay } from './holidays.js'
-const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
+import { nf } from './format.js'
 const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
 
 export const DEFINICOES = {

@@ -3,7 +3,7 @@ import {loadPrevious} from './prev-lib.mjs'
 import {FREIGHT_API,parseFreight,freightFile} from './freight-lib.mjs'
 const output=new URL('../public/freight.json',import.meta.url),now=new Date().toISOString()
 let local
-try{local=JSON.parse(await readFile(output,'utf8'))}catch{}
+try{local=JSON.parse(await readFile(output,'utf8'))}catch{/* ignora */}
 const remote=await loadPrevious('freight.json')
 const previous=[local,remote].filter(f=>f?.series?.id==='freight-us-ppi' && f.series.points?.length).sort((a,b)=>Date.parse(b.series.checkedAt)-Date.parse(a.series.checkedAt))[0]
 let result

@@ -6,7 +6,7 @@ import { MOEDAS_CATALOG } from './moedas-lib.mjs'
 export const CSV_FILES = ['tfb.csv', 'tlp.csv', 'tfc.csv', 'moedas.csv']
 export const HEADER = ['serie', 'nome', 'data', 'valor', 'unidade']
 const esc = (v) => (/[",\r\n;]/.test(String(v)) ? `"${String(v).replaceAll('"', '""')}"` : String(v))
-export const toCsv = (rows) => `﻿${[HEADER, ...rows].map((r) => r.map(esc).join(',')).join('\r\n')}\r\n`
+export const toCsv = (rows) => `\uFEFF${[HEADER, ...rows].map((r) => r.map(esc).join(',')).join('\r\n')}\r\n`
 const rowsOf = (id, nome, points, unidade) => (Array.isArray(points) ? points : []).map(([d, v]) => [id, nome, d, v, unidade])
 
 // { bndes, moedas } (conteúdo dos JSON gerados) -> { 'tfb.csv': texto, ... }. Série ausente simplesmente não gera linhas.

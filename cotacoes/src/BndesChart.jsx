@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
-import { dmy } from './bndes.js'
+import { dmy } from './format.js'
 
 const PRESETS = [[3, '3 meses'], [6, '6 meses'], [12, '12 meses'], [24, '2 anos'], [60, '5 anos'], ['all', 'Tudo']]
 const tOf = (iso) => Date.parse(`${iso}T12:00:00Z`)

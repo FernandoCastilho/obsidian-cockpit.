@@ -1,7 +1,7 @@
+import { nf } from './format.js'
 // Aba "Aprender": conceitos explicados em linguagem simples. Os números dos exemplos saem das funções abaixo (testadas),
 // nunca digitados no texto, para a tela não mostrar uma conta errada. Exemplos são didáticos, não cotações de mercado.
 
-const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 
 // Paridade coberta de juros: (1 + i_BRL) = (1 + i_USD) × F / S  →  i_USD = (1 + i_BRL) × S / F − 1 (taxas anuais compostas, para o exemplo).
 export const cupomCambial = ({ spot, futuro, di }) => ((1 + di) * spot) / futuro - 1

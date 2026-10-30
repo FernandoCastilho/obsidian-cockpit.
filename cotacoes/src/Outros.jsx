@@ -5,9 +5,9 @@ import InflacaoPesos from './InflacaoPesos.jsx'
 import IndicatorTable from './IndicatorTable.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import { useDataFile } from './useDataFile.js'
-import { IPCA_METRICS, ipcaRows, ipcaSeries, normalizeIpca } from './ipca.js'
+import { ipcaRows, ipcaSeries, normalizeIpca } from './ipca.js'
+import { nf } from './format.js'
 
-const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const sgn = (v, d, unit = '') => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + unit
 const monthName = (period) => new Date(`${period}-15T12:00:00Z`).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric', timeZone: 'UTC' }).replace('.', '')
 

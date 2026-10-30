@@ -94,14 +94,14 @@ export function parsePinkRows(rows, sourceUrl, now = new Date()) {
     // Modern iron-ore spot observations are USD/dry tonne, despite the legacy XLSX dmtu header.
     if (i === 0 && latest.period < '2008-12') throw new Error('Banco Mundial: minério em unidade histórica incompatível')
     let previous = null
-    if (dated.length > 1) { try { previous = point(dated.at(-2)) } catch {} }
+    if (dated.length > 1) { try { previous = point(dated.at(-2)) } catch { /* ignora */ } }
     if (previous) {
       const priorMonth = new Date(`${latest.period}-01T00:00:00Z`); priorMonth.setUTCMonth(priorMonth.getUTCMonth() - 1)
       if (previous.period !== priorMonth.toISOString().slice(0,7)) previous = null
     }
     // Série mensal para o gráfico (últimos 20 anos); mês sem valor válido fica de fora, nunca vira zero.
     const history = []
-    for (const row of dated.slice(-HISTORY_MONTHS)) { try { history.push(point(row)) } catch {} }
+    for (const row of dated.slice(-HISTORY_MONTHS)) { try { history.push(point(row)) } catch { /* ignora */ } }
     return { ...item(COMMODITIES[i+1], latest, previous, releaseDate, sourceUrl, now), history }
   })
 }

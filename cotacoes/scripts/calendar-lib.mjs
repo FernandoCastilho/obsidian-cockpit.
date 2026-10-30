@@ -40,7 +40,7 @@ function vevents(text) {
     const body = m[1]
     const field = (name) => new RegExp(`^${name}([^:\\n]*):(.*)$`, 'm').exec(body)
     const dt = field('DTSTART'), summary = field('SUMMARY')
-    return { dtParams: dt?.[1] ?? '', dt: dt?.[2]?.trim(), summary: summary?.[2]?.trim().replace(/\\,/g, ',').replace(/\;/g, ';') }
+    return { dtParams: dt?.[1] ?? '', dt: dt?.[2]?.trim(), summary: summary?.[2]?.trim().replace(/\\,/g, ',').replace(/;/g, ';') }
   })
 }
 

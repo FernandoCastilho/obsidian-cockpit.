@@ -20,6 +20,7 @@ jobs:
             cotacoes/package-lock.json
             caixa/package-lock.json
       - run: npm ci
+      - run: npm run lint
       - run: npm test
       - run: npm run build
       - name: App Caixa (testes e build, como no deploy)
@@ -63,3 +64,15 @@ jobs:
             UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
             echo "::endgroup::"
           done
+      - name: Capturas de tela dos smokes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-capturas
+          path: |
+            ${{ runner.temp }}/qa-ux
+            ${{ runner.temp }}/qa-t
+            ${{ runner.temp }}/qa-w
+            ${{ runner.temp }}/qa-f
+          if-no-files-found: ignore
+          retention-days: 7

@@ -6,8 +6,8 @@ import { useCentralDaily } from './useHistory.js'
 import { accumulatedReturns } from './marketReturns.js'
 import { brentReturns } from './oilReference.js'
 import { FOCUS_BAND, THRESHOLDS, factorRows, groupRows, normalizeIpcaGroups } from './inflacao.js'
+import { nf } from './format.js'
 
-const nf = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const sg = (v, d = 2) => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d)
 const monthName = (period) => new Date(`${period}-15T12:00:00Z`).toLocaleDateString('pt-BR', { month: 'short', year: '2-digit', timeZone: 'UTC' }).replace('.', '').replace(' de ', '/')
 const TREND = { up: ['▲', 'acima do mês anterior'], down: ['▼', 'abaixo do mês anterior'], same: ['=', 'igual ao mês anterior'] }

@@ -5,7 +5,7 @@ import { collectBisJapan } from './bis-policy.mjs'
 
 const output = new URL('../public/policy-rates.json', import.meta.url)
 let local
-try { local = JSON.parse(await readFile(output, 'utf8')) } catch {}
+try { local = JSON.parse(await readFile(output, 'utf8')) } catch { /* ignora */ }
 const remote = await loadPrevious('policy-rates.json')
 const now = Date.now(), out = { schemaVersion:1, generatedAt:now, series:{}, errors:[] }
 async function table(id, parse) {
