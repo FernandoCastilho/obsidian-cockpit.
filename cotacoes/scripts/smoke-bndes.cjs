@@ -132,7 +132,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       // TFB saiu do quadro de indexadores (aba Juros)
       await p.goto(base + '/#juros'); await p.locator('.idx-table').waitFor()
       assert.doesNotMatch(await p.locator('.idx-table').innerText(), /TFB/)
-      if (width >= 900) { await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes') }
+      if (width >= 900) { assert.match(await p.locator('.topbar-brand').innerText(), /^Painel\s*Especialista$/, 'marca da barra superior'); await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes') }
       assert.deepEqual(errors, [])
     }
     console.log('PASS aba BNDES: famílias com período único, tabelas, observações recolhidas e menu (390 e 1280)')

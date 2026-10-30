@@ -48,7 +48,7 @@ export default function TopBar({ tab, onTab, feed, feedAt }) {
   return (
     <div className="topbar">
       <div className="topbar-brand">
-        COTAÇÕES<span>TERMINAL</span>
+        Painel<span>Especialista</span>
       </div>
       <nav className="topbar-tabs" aria-label="Navegação principal">
         {DESK_TABS.map((t, i) => (
