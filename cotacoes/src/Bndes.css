@@ -52,3 +52,20 @@
   .bn-pick { white-space:normal; line-height:1.25; }
   .bn-yr { display:none; }
 }
+.bn-spread { font-family:var(--mono, ui-monospace, monospace); white-space:nowrap; }
+.bn-csv { list-style:none; margin:6px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; font-size:12px; }
+.bn-csv code { color:var(--mut, #8a8a8a); word-break:break-all; }
+@media (max-width:639px) { .bn-table .bn-extra td { white-space:normal; line-height:1.7; } }
+@media (max-width:639px) {
+  .bn-table th, .bn-table td, .bn-table .num, .bn-delta { font-size:11px; }
+  .bn-pick { max-width:96px; }
+  .bn-pick small { display:none; }
+}
+@media (max-width:639px) {
+  .bn-main { table-layout:fixed; width:100%; }
+  .bn-main thead th:nth-child(1) { width:35%; }
+  .bn-main thead th:nth-child(2) { width:26%; }
+  .bn-main thead th:nth-child(3) { width:26%; }
+  .bn-main tbody td, .bn-main tbody th { overflow-wrap:anywhere; }
+  .bn-main .bn-pick { max-width:none; }
+}

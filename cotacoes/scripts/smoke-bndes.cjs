@@ -18,6 +18,8 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/bndes.json*', (r) => r.fulfill({ json: file }))
+      const curve = [[1, 14.7], [756, 13.6], [1260, 13.7], [1764, 13.76], [2520, 13.8]]
+      await p.route('**/curves.json*', (r) => r.fulfill({ json: { generatedAt: Date.now(), br: { sourceDate: '2026-09-25', curves: { '2026-09-25': curve } }, stale: {}, errors: [] } }))
       await p.route('**/moedas.json*', (r) => r.fulfill({ json: moedas }))
       await p.route('**/indexadores.json*', (r) => r.fulfill({ json: { schemaVersion: 1, generatedAt: Date.now(), series: {}, stale: {}, errors: [] } }))
       await p.goto(base + '/#bndes')
@@ -31,7 +33,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.equal(await pressed('Período da série', '12 meses'), true)
       // TFB: 8 linhas, colunas, série ausente marcada
       assert.equal(await tbl().count(), 8, '4 prazos x 2 liberações')
-      assert.deepEqual(await p.locator('.bn-scroll').first().locator('thead th').allInnerTexts().then((a) => a.map((t) => t.toLowerCase())), ['série', 'valor', 'dia', 'mês', 'ano', 'data'])
+      assert.deepEqual(await p.locator('.bn-scroll').first().locator('thead th').allInnerTexts().then((a) => a.map((t) => t.toLowerCase())), ['série', 'valor', 'dia', 'mês', 'ano', 'spread di', 'data'])
       assert.match(await tbl().nth(0).innerText(), /até 36 meses · 30 dias[\s\S]*% a\.a\.[\s\S]*▲ \+0,02 p\.p\./)
       assert.match(await tbl().nth(6).innerText(), /84 a 120 meses · 30 dias[\s\S]*indisponível/, 'série ausente fica marcada, não vira zero')
       // observações do período recolhidas por padrão; abrem sob demanda
@@ -105,9 +107,27 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
         assert.equal(await p.locator('.bn-scroll').first().evaluate((e) => e.scrollWidth <= e.clientWidth + 1), true, 'celular: Série, Valor, Dia e Data cabem sem rolar para o lado')
         assert.match(await p.locator('.bn-scroll').first().locator('tbody tr').first().innerText(), /\d{2}\/\d{2}$/m, 'celular: data curta (dd/mm)')
       }
+      // spread contra o DI (TFB do dia da curva menos DI do mesmo prazo) e CSV para o Power Query
+      await p.goto(base + '/#bndes/tfb/TFB_60_90?p=12m'); await p.locator('.bn-scroll').first().waitFor()
+      const spread = p.locator('.bn-scroll').first().locator('thead th', { hasText: 'Spread DI' })
+      assert.match(await p.locator('.bn-def', { hasText: 'Spread DI:' }).innerText(), /TFB de 25\/09\/2026 menos a taxa DI x pré da B3 do mesmo dia/)
+      if (width < 640) {
+        assert.equal(await spread.isVisible(), false)
+        assert.match(await p.locator('tr.bn-extra').first().innerText(), /Spread DI [+−]\d+,\d\d p\.p\./)
+      } else {
+        assert.equal(await spread.isVisible(), true)
+        assert.match(await p.locator('.bn-scroll').first().locator('tbody tr').nth(3).innerText(), /[+−]\d+,\d\d p\.p\./)
+        assert.match(await p.locator('.bn-spread').first().getAttribute('title'), /TFB .*% \(25\/09\/2026\) menos DI .*% no vértice de (756|1260|1764|2520) dias úteis \(25\/09\/2026\)/)
+      }
+      const csv = p.locator('details.bn-src', { hasText: 'Dados para o Excel' })
+      assert.equal(await csv.getAttribute('open'), null, 'CSV recolhido por padrão')
+      await csv.locator('summary').click()
+      assert.deepEqual(await csv.locator('a[download]').evaluateAll((as) => as.map((a) => a.getAttribute('href'))), ['./csv/tfb.csv', './csv/tlp.csv', './csv/tfc.csv', './csv/moedas.csv'])
+      assert.match(await csv.locator('code').first().innerText(), /\/csv\/tfb\.csv$/)
+      await csv.locator('summary').click()
       await noOverflow()
       // definição e fonte recolhidas; sem rolagem horizontal da página
-      assert.equal(await p.locator('details.bn-src').getAttribute('open'), null)
+      assert.equal(await p.locator('details.bn-src', { hasText: 'Definição e fonte' }).getAttribute('open'), null)
       await noOverflow()
       // TFB saiu do quadro de indexadores (aba Juros)
       await p.goto(base + '/#juros'); await p.locator('.idx-table').waitFor()
