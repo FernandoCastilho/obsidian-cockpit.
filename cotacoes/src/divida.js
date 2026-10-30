@@ -1,7 +1,7 @@
 import { shiftMonths } from './format.js'
 // Dívida Bruta do Governo Geral (Banco Central): valida o arquivo coletado e monta as leituras da tela.
 export const DIVIDA_METRICS = [
-  { id: 'divida-pib', field: 'pib', label: 'DBGG · % do PIB', unit: '% do PIB', decimals: 1, pct: true },
+  { id: 'divida-pib', field: 'pib', label: 'DBGG · % do PIB', unit: '% do PIB', decimals: 2, pct: true },
   { id: 'divida-brl', field: 'brl', label: 'DBGG · saldo em R$ bilhões', unit: 'R$ bilhões', decimals: 0, scale: 1e-3 },
 ]
 

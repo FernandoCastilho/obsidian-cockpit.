@@ -46,3 +46,11 @@ test('dívida bruta: arquivo de outra série ou com meses repetidos é recusado'
   assert.throws(() => normalizeDivida({ series: { id: 'ipca', points: [], checkedAt: 'x' } }), /inválido/)
   assert.throws(() => normalizeDivida({ series: { id: 'divida-bruta', checkedAt: 'x', points: [{ period: '2025-01' }, { period: '2025-01' }] } }), /inválido/)
 })
+
+test('dívida bruta: % do PIB com duas casas, para a variação pequena não sumir no arredondamento', () => {
+  assert.equal(DIVIDA_METRICS[0].decimals, 2)
+  const f = dividaFile([{ period: '2026-08', pib: 82.87, brl: 11054954.37 }, { period: '2026-09', pib: 82.93, brl: 11113782.53 }], '2026-10-30T00:00:00Z')
+  const [pib] = dividaRows({ ...f.series, points: [...Array.from({ length: 12 }, (_, i) => ({ period: `2025-${String(i + 1).padStart(2, '0')}`, pib: 80, brl: 1e7 })), ...f.series.points] })
+  assert.ok(Math.abs(pib.delta - 0.06) < 1e-9)
+  assert.equal(pib.last.value.toFixed(2), '82.93'); assert.equal(pib.prev.value.toFixed(2), '82.87')
+})
