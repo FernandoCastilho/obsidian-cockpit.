@@ -56,13 +56,15 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const linhas = p.locator('.executive-rates__table tbody tr .executive-rates__name')
       const n = await linhas.count()
       assert.ok(n >= 7, 'Selic, CDI, SOFR, Fed, €STR, BCE e BoJ')
+      await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).filter({ hasText: /\d,\d{3}%/ }).first().waitFor() // o arquivo simulado chega depois da primeira renderização
       assert.match(await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).first().innerText(), /Área do euro · €STR overnight[\s\S]*\d,\d{3}%/)
       assert.equal(await p.locator('.executive-rates__table tbody tr .executive-rates__name .flag').count(), n, 'bandeira em cada linha')
       const corpo = await p.locator('main').innerText()
       assert.doesNotMatch(corpo, /Reino Unido|Bank Rate|Bank of England|BoE/, 'sem Reino Unido em Juros')
       assert.match(await p.locator('.executive-rates__table tbody').innerText(), /Área do euro · BCE[\s\S]*Japão/)
-      assert.ok(await p.locator('.chart h3 .flag').count() >= 4, 'bandeira nos títulos dos gráficos (CDI, Selic, SOFR e €STR)')
       await p.locator('.chart h3', { hasText: 'Área do euro · €STR' }).first().waitFor()
+      await p.locator('.chart h3', { hasText: 'Brasil · CDI' }).first().waitFor()
+      assert.ok(await p.locator('.chart h3 .flag').count() >= 4, 'bandeira nos títulos dos gráficos (CDI, Selic, SOFR e €STR)')
       await p.close()
     }
     // governança dos dados em Configurações: tabela por fonte, regras e nenhuma rolagem lateral da página
