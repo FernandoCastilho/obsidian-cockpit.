@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { liveCross } from '../src/parity.js'
-import { ageText, brentItem, changeText, dataStatus, feedState, ipcaItem, kpiItems, parseCommand, tapeItems } from '../src/terminal.js'
+import { ageText, brentItem, changeText, dataStatus, feedState, ipcaItem, ipcaSpark, kpiItems, kpiSparks, monthlyCloses, sparkTone, parseCommand, tapeItems } from '../src/terminal.js'
 
 const q = (bid, pct, extra = {}) => ({ bid, ask: bid, high: bid, low: bid, pct, timestamp: Date.now(), ...extra })
 const quotes = { USD: q(5, 1, { source: 'USD' }), EUR: q(6, -0.5, { source: 'EUR' }), JPY: q(0.034, 0.2, { source: 'JPY' }), CNH: q(0.74, 0.1, { source: 'CNH' }) }
@@ -179,4 +179,58 @@ test('comandos levam ao assunto certo dentro de Cenários', () => {
   assert.deepEqual(parseCommand('frete'), { kind: 'tab', id: 'cenarios', sub: 'frete' })
   assert.deepEqual(parseCommand('focus'), { kind: 'tab', id: 'cenarios', sub: 'projecoes' })
   assert.deepEqual(parseCommand('cenários'), { kind: 'tab', id: 'cenarios', sub: '' })
+})
+
+const D = (iso) => Date.parse(`${iso}T12:00:00Z`)
+const NOW = D('2026-10-30')
+const daily = (from, to, f) => { const out = []; for (let t = D(from); t <= D(to); t += 864e5) { const wd = new Date(t).getUTCDay(); if (wd && wd < 6) out.push([t, f(t)]) } return out }
+
+test('minigráfico do CDI: fechamento dos 12 meses anteriores mais a última observação, só com dados reais', () => {
+  const cdi = daily('2025-01-02', '2026-10-29', (t) => (t < D('2026-03-01') ? 14.9 : 14.15))
+  const s = monthlyCloses(cdi, NOW)
+  assert.equal(s.length, 13)
+  assert.equal(s.at(-1).t, D('2026-10-29')); assert.equal(s.at(-1).bid, 14.15)
+  assert.equal(s[0].bid, 14.9); assert.ok(s.every((p) => cdi.some((c) => c[0] === p.t && c[1] === p.bid)), 'cada ponto é uma observação do arquivo')
+  assert.ok(s.every((p, i) => i === 0 || p.t > s[i - 1].t))
+})
+test('minigráfico do CDI: sem dado novo, dado parado ou pouco histórico não gera gráfico', () => {
+  assert.deepEqual(monthlyCloses([], NOW), [])
+  assert.deepEqual(monthlyCloses(undefined, NOW), [])
+  assert.deepEqual(monthlyCloses(daily('2025-01-02', '2026-10-01', () => 14.9), NOW), [], 'última observação com mais de 10 dias')
+  assert.deepEqual(monthlyCloses(daily('2026-08-03', '2026-10-29', () => 14.9), NOW), [], 'menos de 7 pontos')
+  assert.deepEqual(monthlyCloses([[D('2026-10-29'), NaN], [D('2026-10-28'), null]], NOW), [])
+})
+test('minigráfico do CDI: mês com lacuna na fonte é descartado, não preenchido', () => {
+  const cdi = [...daily('2025-10-01', '2026-03-31', () => 14.9), ...daily('2026-06-01', '2026-10-29', () => 14.15)]
+  const s = monthlyCloses(cdi, NOW)
+  assert.ok(s.every((p) => !(p.t > D('2026-04-10') && p.t < D('2026-05-31'))), 'abr e mai sem observação')
+  assert.ok(s.length < 13 && s.length >= 7)
+})
+test('minigráfico da Selic: série em degraus, vale o último valor em vigor no fim de cada mês', () => {
+  const selic = [[D('2023-08-02'), 13.25], [D('2025-01-29'), 12.25], [D('2025-06-18'), 15], [D('2026-03-18'), 14.5], [D('2026-10-29'), 14.5]]
+  const s = monthlyCloses(selic, NOW, { step: true })
+  assert.equal(s.length, 13); assert.equal(s[0].bid, 15); assert.equal(s.at(-1).bid, 14.5)
+  assert.ok(s.some((p) => p.bid === 15) && s.some((p) => p.bid === 14.5))
+  assert.ok(s.every((p) => [13.25, 12.25, 15, 14.5].includes(p.bid)), 'nenhum valor inventado')
+})
+test('minigráfico do IPCA: últimos 12 meses divulgados; poucos meses ou nulos não geram gráfico', () => {
+  const pts = Array.from({ length: 20 }, (_, i) => ({ period: `${2025 + Math.floor((i + 2) / 12)}-${String(((i + 2) % 12) + 1).padStart(2, '0')}`, y12: 4 + i * 0.1 }))
+  const s = ipcaSpark({ points: pts })
+  assert.equal(s.length, 12); assert.equal(s.at(-1).bid, pts.at(-1).y12); assert.equal(s[0].bid, pts[8].y12)
+  assert.deepEqual(ipcaSpark({ points: pts.slice(0, 5) }), [])
+  assert.deepEqual(ipcaSpark({ points: [{ period: '2026-09', y12: null }] }), [])
+  assert.deepEqual(ipcaSpark(null), [])
+  const gap = ipcaSpark({ points: [pts[19], pts[15], pts[10], pts[18], pts[17], pts[16], pts[14], pts[13]] })
+  assert.equal(gap.length, 8, 'mês ausente não é preenchido')
+})
+test('kpiSparks junta CDI, Selic e IPCA e devolve vazio sem dados', () => {
+  assert.deepEqual(kpiSparks({}, NOW), { cdi: [], selic: [], IPCA: [] })
+  const k = kpiSparks({ macro: { cdi: daily('2025-01-02', '2026-10-29', () => 14.15), selic: [[D('2025-06-18'), 15], [D('2026-10-29'), 15]] }, ipca: null }, NOW)
+  assert.equal(k.cdi.length, 13); assert.equal(k.selic.length, 13); assert.deepEqual(k.IPCA, [])
+})
+
+test('cor do minigráfico de 12 meses segue o próprio gráfico', () => {
+  assert.equal(sparkTone([{ bid: 14.9 }, { bid: 14.5 }]), 'down')
+  assert.equal(sparkTone([{ bid: 4.2 }, { bid: 4.9 }]), 'up')
+  assert.equal(sparkTone([{ bid: 14.5 }, { bid: 14.6 }, { bid: 14.5 }]), 'flat')
 })

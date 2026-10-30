@@ -38,6 +38,29 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
       await ctx.close()
     }
+    // minigráficos de IPCA, Selic e CDI nos cards do Mercado: só com dados observados, nada inventado
+    {
+      const day = 864e5, now = Date.now(), noon = (t) => { const d = new Date(t); d.setUTCHours(12, 0, 0, 0); return d.getTime() }
+      const cdi = [], selic = [[noon(now - 700 * day), 14.9], [noon(now - 200 * day), 14.5], [noon(now - 2 * day), 14.5]]
+      for (let t = now - 420 * day; t <= now - day; t += day) { const w = new Date(t).getUTCDay(); if (w && w < 6) cdi.push([noon(t), t < now - 200 * day ? 14.9 : 14.4]) }
+      const macroOk = { generatedAt: now, cdi, selic, sofr: [], sofrAvg: [], ptax: {}, ptaxHist: {}, focus: null }
+      for (const [label, macro, expected] of [['com dados', macroOk, true], ['sem dados', { ...macroOk, cdi: [], selic: [[noon(now - 2 * day), 14.5]] }, false]]) {
+        const p = await b.newPage({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' })
+        await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
+        await p.route('**/macro.json*', (r) => r.fulfill({ json: macro }))
+        await p.goto(base + '/#resumo')
+        const cards = p.locator('.kpis .kpi'); await cards.first().waitFor()
+        const spark = (name) => cards.filter({ hasText: name }).first().locator('.kpi-spark[role="img"]')
+        for (const name of ['Selic', 'CDI']) assert.equal(await spark(name).count(), expected ? 1 : 0, `${name} ${label}`)
+        assert.equal(await spark('IPCA 12m').count(), 1, 'IPCA sempre tem 12 meses divulgados')
+        if (expected) {
+          assert.match(await spark('CDI').getAttribute('aria-label'), /CDI: fechamento mensal, 12 meses/)
+          assert.match(await spark('IPCA 12m').getAttribute('aria-label'), /IPCA: últimos 12 meses divulgados/)
+          assert.ok(await spark('CDI').locator('svg path.line').count() > 0)
+        }
+        await p.close()
+      }
+    }
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
@@ -165,11 +188,33 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 7)
+      assert.equal(await p.locator('.learn-list li').count(), 11)
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /9,62%[\s\S]*R\$ 5,48/)
+      // tópicos e busca
+      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação'])
+      const busca = p.getByRole('searchbox', { name: 'Buscar conceito' })
+      await busca.fill('FIDC')
+      assert.equal(await p.locator('.learn-list li').count(), 1)
+      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Operações de crédito'], 'só o tópico com resultado')
+      assert.match(await p.locator('.learn-count').innerText(), /1 conceito encontrado/)
+      await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
+      await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 11)
+      await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
+      await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
+      assert.match(await p.locator('.learn-detail').innerText(), /subordinação[\s\S]*30%[\s\S]*R\$ 1\.000\.000[\s\S]*R\$ 1\.000\.000/)
+      await busca.fill('')
+      for (const [nome, rx] of [['Debênture', /16,28%[\s\S]*162\.800/], ['Nota comercial', /17,42%[\s\S]*0,50 ano/], ['Inflação', /4,91%[\s\S]*9,1\d%/]]) {
+        await p.locator('.learn-list button', { hasText: nome }).first().click()
+        await p.locator('.learn-detail h2', { hasText: nome }).waitFor()
+        assert.match(await p.locator('.learn-detail').innerText(), rx, nome)
+      }
+      await p.locator('.learn-detail .learn-go').click(); await p.waitForURL('**/#cenarios/outros')
+      await p.goto(base + '/#aprender')
+      await p.locator('.learn-list').waitFor()
       await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /Na curva[\s\S]*1\.150\.000[\s\S]*1\.180\.804[\s\S]*Break funding[\s\S]*10\.089/)

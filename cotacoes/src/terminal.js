@@ -128,6 +128,50 @@ export function kpiItems(quotes, rates, ipca) {
   return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ipcaItem(ipca), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
 }
 
+// Minigráficos dos cards de CDI, Selic e IPCA, só com dados observados: nada é preenchido nem interpolado.
+// CDI e Selic: fechamento de cada um dos 12 meses anteriores (último valor observado até o fim do mês) mais a última observação.
+// Mês sem observação fica de fora. A Selic é uma série em degraus (só os dias de mudança estão no arquivo), então vale o último valor em vigor;
+// no CDI, que é diário, uma observação mais de 7 dias antes do fim do mês é lacuna e o mês é descartado. Série parada há mais de 10 dias: sem gráfico.
+const DAY = 864e5
+const MIN_SPARK = 7
+export function monthlyCloses(points, now = Date.now(), { months = 12, step = false } = {}) {
+  const pts = (Array.isArray(points) ? points : []).filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1])).sort((a, b) => a[0] - b[0])
+  const last = pts.at(-1)
+  if (!last || now - last[0] > 10 * DAY) return []
+  const ref = new Date(last[0])
+  const out = []
+  for (let k = months; k >= 1; k--) {
+    const end = Date.UTC(ref.getUTCFullYear(), ref.getUTCMonth() - k + 1, 1) - 1
+    let found = null
+    for (const p of pts) { if (p[0] <= end) found = p; else break }
+    if (found && (step || end - found[0] <= 7 * DAY)) out.push({ t: found[0], bid: found[1] })
+  }
+  out.push({ t: last[0], bid: last[1] })
+  return out.length >= MIN_SPARK ? out : []
+}
+
+// IPCA em 12 meses: os últimos 12 meses divulgados (os que existem; mês ausente não é preenchido).
+export function ipcaSpark(series) {
+  const pts = (series?.points ?? []).filter((p) => Number.isFinite(p?.y12) && /^\d{4}-\d{2}$/.test(p.period)).sort((a, b) => a.period.localeCompare(b.period))
+  const idx = (p) => Number(p.period.slice(0, 4)) * 12 + Number(p.period.slice(5))
+  const last = pts.at(-1)
+  if (!last) return []
+  const out = pts.filter((p) => idx(last) - idx(p) < 12).map((p) => ({ t: Date.parse(`${p.period}-15T12:00:00Z`), bid: p.y12 }))
+  return out.length >= MIN_SPARK ? out : []
+}
+
+export const kpiSparks = ({ macro, ipca }, now = Date.now()) => ({
+  cdi: monthlyCloses(macro?.cdi, now),
+  selic: monthlyCloses(macro?.selic, now, { step: true }),
+  IPCA: ipcaSpark(ipca),
+})
+// Cor do minigráfico de 12 meses: pela variação do próprio gráfico (primeiro contra último ponto), não pela do dia mostrada no card.
+export const sparkTone = (points) => {
+  const d = points.at(-1).bid - points[0].bid
+  return Math.abs(d) < 0.005 ? 'flat' : d > 0 ? 'up' : 'down'
+}
+export const SPARK_NOTE = { cdi: 'fechamento mensal, 12 meses', selic: 'fechamento mensal, 12 meses', IPCA: 'últimos 12 meses divulgados' }
+
 // Estado do indicador "dados" da barra superior, a partir do que App.jsx já sabe sobre as cotações.
 export function feedState({ error, aged, hasQuotes }) {
   if (error) return 'err'

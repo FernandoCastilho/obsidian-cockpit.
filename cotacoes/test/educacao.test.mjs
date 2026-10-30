@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CONCEITOS, CONEXAO, breakFunding, cupomCambial, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
+import { CONCEITOS, CONEXAO, TOPICOS, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
-test('os sete conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds'])
+test('os onze conceitos pedidos existem, com ids únicos', () => {
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -19,10 +19,10 @@ test('cada conceito traz frase, explicação simples, lacunas, versão precisa, 
     assert.ok(c.lacunas.length >= 2, c.id)
     assert.ok(c.preciso.texto.length > 40 && c.preciso.formula.length > 5, c.id)
     assert.ok(c.exemplo.passos.length >= 2 && c.exemplo.resultado.length > 10, c.id)
-    assert.ok(c.noApp.texto.length > 10 && ['juros'].includes(c.noApp.tab), c.id)
+    assert.ok(c.noApp.texto.length > 10 && ['juros', 'cenarios'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
-  assert.equal(CONEXAO.itens.length, 6)
+  assert.equal(CONEXAO.itens.length, 8)
 })
 
 test('liquidação antecipada: na curva, a mercado e break funding', () => {
@@ -87,4 +87,46 @@ test('aba Aprender: comandos levam ao conceito certo e há 9 abas no terminal', 
   assert.deepEqual(parseCommand('funding'), { kind: 'tab', id: 'aprender', sub: 'custo-de-funding' })
   assert.deepEqual(parseCommand('educação'), { kind: 'tab', id: 'aprender', sub: '' })
   assert.deepEqual(parseCommand('sofr'), { kind: 'tab', id: 'juros', sub: '' })
+})
+
+test('crédito: CDI + spread compõe e os juros do prazo são compostos', () => {
+  assert.ok(Math.abs(taxaCdiMaisSpread(0.14, 0.02) - 0.1628) < 1e-12)
+  assert.ok(Math.abs(jurosNoPrazo({ principal: 1_000_000, taxaAnual: 0.1628, fracaoAno: 1 }) - 162_800) < 1e-6)
+  const nc = jurosNoPrazo({ principal: 5_000_000, taxaAnual: taxaCdiMaisSpread(0.14, 0.03), fracaoAno: 126 / 252 })
+  assert.ok(Math.abs(nc - 418_026) < 5, `nota comercial ${nc}`)
+  assert.equal(jurosNoPrazo({ principal: 100, taxaAnual: 0.2, fracaoAno: 0 }), 0)
+})
+test('FIDC: a subordinada absorve a perda primeiro; a sênior só perde o excedente', () => {
+  const f = { senior: 7_000_000, subordinada: 3_000_000 }
+  assert.ok(Math.abs(indiceSubordinacao(f) - 0.3) < 1e-12)
+  assert.deepEqual(perdaNasCotas({ ...f, perda: 2_000_000 }), { subordinada: 2_000_000, senior: 0 })
+  assert.deepEqual(perdaNasCotas({ ...f, perda: 4_000_000 }), { subordinada: 3_000_000, senior: 1_000_000 })
+  assert.deepEqual(perdaNasCotas({ ...f, perda: 99_000_000 }), { subordinada: 3_000_000, senior: 7_000_000 }, 'a sênior nunca perde mais que o que tem')
+  assert.deepEqual(perdaNasCotas({ senior: 75, subordinada: 25, perda: 30 }), { subordinada: 25, senior: 5 })
+})
+test('inflação: acumulado é composto e juro real desconta a inflação', () => {
+  assert.ok(Math.abs(inflacaoAcumulada(Array(12).fill(0.004)) - 0.04907) < 1e-5)
+  assert.equal(inflacaoAcumulada([]), 0)
+  assert.ok(Math.abs(juroReal(0.145, 0.0491) - 0.0914) < 1e-3)
+  assert.equal(juroReal(0.1, 0.1), 0)
+})
+test('cada conceito pertence a um tópico existente e os tópicos agrupam sem perder conceito', () => {
+  assert.ok(CONCEITOS.every((c) => TOPICOS.includes(c.topico)), 'tópico válido')
+  const g = porTopico(CONCEITOS)
+  assert.deepEqual(g.map((x) => x.topico), TOPICOS)
+  assert.equal(g.reduce((n, x) => n + x.itens.length, 0), CONCEITOS.length)
+  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc'])
+  assert.deepEqual(porTopico([CONCEITOS[0]]).map((x) => x.topico), ['Juros e câmbio'], 'tópico vazio não aparece')
+})
+test('busca: todas as palavras, sem acento nem maiúscula, no conteúdo inteiro', () => {
+  const ids = (t) => buscarConceitos(t).map((c) => c.id)
+  assert.deepEqual(ids('fidc'), ['fidc'])
+  assert.ok(ids('DEBENTURE').includes('debenture'), 'sem acento')
+  assert.ok(ids('debênture').includes('debenture'), 'com acento')
+  assert.ok(ids('break funding').includes('liquidacao-antecipada'))
+  assert.ok(ids('recebiveis').includes('fidc'), 'termo do texto, não só do título')
+  assert.ok(ids('ipca').includes('inflacao'))
+  assert.deepEqual(ids('fidc debenture'), [], 'todas as palavras precisam aparecer')
+  assert.equal(ids('  ').length, CONCEITOS.length, 'busca vazia mostra tudo')
+  assert.deepEqual(ids('zzzxyz'), [])
 })

@@ -1,6 +1,6 @@
 import { Aviso } from './Avisos.jsx'
-import { useEffect, useRef } from 'react'
-import { CONCEITOS, CONEXAO } from './educacao.js'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { CONCEITOS, CONEXAO, buscarConceitos, porTopico } from './educacao.js'
 import { Panel } from './TerminalDesk.jsx'
 
 // Aba Aprender: lista de conceitos à esquerda; o conceito escolhido abre à direita (frase, explicação simples, lacunas, versão precisa, exemplo, teste).
@@ -43,7 +43,7 @@ function Concept({ c, goto }) {
 
           <p className="learn-app">
             <span className="learn-tag">No app</span>{c.noApp.texto}{' '}
-            <button type="button" className="learn-go" onClick={() => goto(c.noApp.tab)}>Abrir ›</button>
+            <button type="button" className="learn-go" onClick={() => goto(c.noApp.tab, c.noApp.view)}>Abrir ›</button>
           </p>
         </div>
       </Panel>
@@ -54,6 +54,9 @@ function Concept({ c, goto }) {
 export default function Aprender({ view = '', goto }) {
   const chosen = CONCEITOS.find((c) => c.id === view)
   const detail = useRef(null)
+  const [termo, setTermo] = useState('')
+  const achados = useMemo(() => buscarConceitos(termo), [termo])
+  const grupos = useMemo(() => porTopico(achados), [achados])
   // no celular a explicação fica abaixo da lista: leva a tela até ela ao escolher um conceito
   useEffect(() => {
     if (chosen && detail.current && window.matchMedia?.('(max-width: 999px)').matches) {
@@ -66,16 +69,26 @@ export default function Aprender({ view = '', goto }) {
       <div className="learn-split">
         <nav className="learn-list" aria-label="Conceitos">
           <h2 className="learn-list-title">Conceitos</h2>
-          <ul>
-            {CONCEITOS.map((c) => (
-              <li key={c.id}>
-                <button type="button" className={view === c.id ? 'on' : ''} aria-current={view === c.id ? 'true' : undefined} onClick={() => goto('aprender', c.id)}>
-                  <b>{c.nome.replace(/ \(.*\)/, '')}</b>
-                  <small>{c.frase.length > 70 ? `${c.frase.slice(0, 68).trimEnd()}…` : c.frase}</small>
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div className="learn-search" role="search">
+            <input type="search" value={termo} onChange={(e) => setTermo(e.target.value)} placeholder="Buscar conceito…" aria-label="Buscar conceito" autoComplete="off" />
+            {termo && <button type="button" className="learn-clear" onClick={() => setTermo('')} aria-label="Limpar busca">×</button>}
+          </div>
+          <p className="learn-count" role="status">{termo.trim() ? (achados.length ? `${achados.length} ${achados.length === 1 ? 'conceito encontrado' : 'conceitos encontrados'}` : 'Nenhum conceito encontrado. Tente outra palavra.') : `${CONCEITOS.length} conceitos em ${grupos.length} tópicos`}</p>
+          {grupos.map((g) => (
+            <section key={g.topico} className="learn-group" aria-labelledby={`learn-topic-${g.topico.replace(/\W+/g, '-')}`}>
+              <h3 id={`learn-topic-${g.topico.replace(/\W+/g, '-')}`} className="learn-topic">{g.topico}</h3>
+              <ul>
+                {g.itens.map((c) => (
+                  <li key={c.id}>
+                    <button type="button" className={view === c.id ? 'on' : ''} aria-current={view === c.id ? 'true' : undefined} onClick={() => goto('aprender', c.id)}>
+                      <b>{c.nome.replace(/ \(.*\)/, '')}</b>
+                      <small>{c.frase.length > 70 ? `${c.frase.slice(0, 68).trimEnd()}…` : c.frase}</small>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </nav>
         <section className="learn-detail" ref={detail} aria-live="polite" aria-label="Explicação do conceito">
           {chosen ? <Concept key={chosen.id} c={chosen} goto={goto} /> : (

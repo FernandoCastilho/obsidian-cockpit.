@@ -5,7 +5,7 @@ import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { kpiItems, tapeItems } from './terminal.js'
+import { SPARK_NOTE, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
 import Flag from './Flag.jsx'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
@@ -74,16 +74,18 @@ function useDaySeries() {
 
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
 // Clique abre o gráfico da moeda ou a aba de juros.
-export function KpiRow({ quotes, rates, ipca, colors, onOpen, onRate, goto, status }) {
+export function KpiRow({ quotes, rates, ipca, macro, colors, onOpen, onRate, goto, status }) {
   const series = useDaySeries()
   const items = kpiItems(quotes, rates, ipca)
+  const sparks = kpiSparks({ macro, ipca })
   if (!items.length) return status ?? null
   return (
     <section className="kpi-block" aria-labelledby="kpi-title">
       <h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
-        const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code]
+        const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code] ?? sparks[i.key]
+        const note = !series[i.code] && sparks[i.key]?.length ? `${i.label.replace(/ 12m$/, '')}: ${SPARK_NOTE[i.key]}` : null
         return (
           <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate || i.key === 'IPCA' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'outros') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
             <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate || i.key === 'IPCA' ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'IPCA' && <small>IBGE{i.note ? ` · ${i.note}` : ''}</small>}</span>
@@ -91,7 +93,7 @@ export function KpiRow({ quotes, rates, ipca, colors, onOpen, onRate, goto, stat
             <span className={`kpi-change ${i.tone}`}>
               {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}
             </span>
-            {points?.length > 1 && <span className="kpi-spark"><Sparkline points={points} tone={i.tone} height={30} /></span>}
+            {points?.length > 1 && <span className="kpi-spark" {...(note ? { role: 'img', 'aria-label': note, title: note } : {})}><Sparkline points={points} tone={note ? sparkTone(points) : i.tone} height={30} /></span>}
           </button>
         )
       })}
