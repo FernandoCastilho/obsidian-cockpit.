@@ -1,21 +1,31 @@
 import { spawnSync } from 'node:child_process'
 const get = async (u, t = 'text') => { const r = await fetch(u, { signal: AbortSignal.timeout(40000), headers: { 'user-agent': 'Mozilla/5.0' } }); console.log(r.status, u); if (!r.ok) return null; return t === 'buf' ? Buffer.from(await r.arrayBuffer()) : r.text() }
 const tryit = async (name, fn) => { try { await fn() } catch (e) { console.log('ERRO', name, e.message) } }
-for (const c of [27574, 27575, 27576, 27577, 1, 11752, 11753]) await tryit('sgs' + c, async () => { console.log('SGS', c, (await get(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.${c}/dados/ultimos/3?formato=json`))?.replace(/\s+/g, ' ')) })
-for (const p of ['RNGWHHD', 'EER_EPD2DXL0_PF4_Y35NY_DPGD', 'EER_EPMRU_PF4_Y35NY_DPGD']) await tryit(p, async () => {
-  const h = await get(`https://www.eia.gov/dnav/pet/hist/${p}.htm`); if (!h) return
+for (const u of ['https://www.eia.gov/dnav/ng/hist/rngwhhdd.htm', 'https://www.eia.gov/dnav/pet/hist/EER_EPD2DXL0_PF4_Y35NY_DPGD.htm']) await tryit(u, async () => {
+  const h = await get(u); if (!h) return
   const t = h.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ')
-  console.log(p, t.match(/[^.]{0,120}\(Dollars per [^)]*\)/i)?.[0], '|', t.match(/Release Date:[^A-Z]*[\d/]+/i)?.[0], '|', t.match(/Next Release Date:[^A-Z]*[\d/]+/i)?.[0])
-  console.log([...h.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m => m[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()).filter(x => /^\d{4}\s/.test(x)).slice(-3))
-})
-await tryit('pink', async () => {
-  const html = await get('https://www.worldbank.org/en/research/commodity-markets'); const m = html.match(/href\s*=\s*["']([^"']+CMO-Historical-Data-Monthly\.xlsx)["']/i); console.log('link', m?.[1])
-  const buf = await get(new URL(m[1], 'https://www.worldbank.org').href, 'buf')
-  const out = spawnSync('python3', ['cotacoes/scripts/read-pink-sheet.py'], { input: buf, encoding: 'utf8', maxBuffer: 50e6 }); const rows = JSON.parse(out.stdout)
-  const i = rows.findIndex(r => Object.values(r).includes('Soybeans')); const h = rows[i], u = rows[i + 1]
-  for (const k of Object.keys(h)) console.log('COL', k, '|', h[k], '|', u[k])
+  console.log(t.match(/[^.]{0,100}\(Dollars per [^)]*\)/i)?.[0], '|', t.match(/Release Date:[^A-Z]*[\d/]+/i)?.[0])
+  const rows = [...h.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(m => [...m[1].matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(c => c[1].replace(/<[^>]*>/g, '').replace(/&nbsp;|&#160;/g, ' ').replace(/\s+/g, ' ').trim()))
+  console.log('rows', rows.length); for (const r of rows.filter(r => r.length > 4).slice(0, 3)) console.log(JSON.stringify(r)); for (const r of rows.filter(r => r.length > 4).slice(-3)) console.log(JSON.stringify(r))
 })
 await tryit('anp', async () => {
-  const h = await get('https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/levantamento-de-precos-de-combustiveis-ultimas-semanas-pesquisadas')
-  if (h) console.log([...h.matchAll(/href="([^"]+\.(?:xlsx|xls|csv))"/gi)].map(m => m[1]).slice(0, 15))
+  const buf = await get('https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/arquivos-lpc/2026/resumo_semanal_lpc_2026_10_18-2026_10_24.xlsx', 'buf'); if (!buf) return
+  const py = `
+import sys,io,zipfile,re,xml.etree.ElementTree as ET
+z=zipfile.ZipFile(io.BytesIO(sys.stdin.buffer.read())); print(z.namelist())
+ns={'m':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+print(re.findall(r'<sheet [^>]*>',z.read('xl/workbook.xml').decode()))
+ss=[''.join(t.text or '' for t in si.findall('.//m:t',ns)) for si in ET.fromstring(z.read('xl/sharedStrings.xml')).findall('m:si',ns)]
+for n in sorted(x for x in z.namelist() if x.startswith('xl/worksheets/sheet')):
+  print('==',n)
+  r=ET.fromstring(z.read(n))
+  for i,row in enumerate(r.findall('m:sheetData/m:row',ns)):
+    if i>14: break
+    out=[]
+    for c in row.findall('m:c',ns):
+      v=c.find('m:v',ns)
+      if v is not None: out.append(c.get('r')+'='+(ss[int(v.text)] if c.get('t')=='s' else v.text))
+    print(out)
+`
+  const o = spawnSync('python3', ['-c', py], { input: buf, encoding: 'utf8', maxBuffer: 50e6 }); console.log(o.stdout.slice(0, 6000), o.stderr.slice(0, 500))
 })
