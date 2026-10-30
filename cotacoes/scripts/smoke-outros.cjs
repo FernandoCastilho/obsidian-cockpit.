@@ -10,6 +10,8 @@ for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
 const ipca = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/1737', checkedAt: new Date().toISOString(), stale: false, points } }
 const divida = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'divida-bruta', sourceName: 'Banco Central (fixture de teste)', sourceUrl: 'https://www.bcb.gov.br/estatisticas/historicoestatisticassetorpublico', checkedAt: new Date().toISOString(), stale: false,
   points: Array.from({ length: 30 }, (_, i) => ({ period: `${2024 + Math.floor((i + 3) / 12)}-${String(((i + 3) % 12) + 1).padStart(2, '0')}`, pib: +(72 + i * 0.2).toFixed(1), brl: Math.round(8200000 + i * 60000) })) } }
+// últimos dois meses com a diferença de 0,06 p.p. que uma casa decimal esconderia (82,9% e 82,9%)
+divida.series.points.at(-2).pib = 82.87; divida.series.points.at(-1).pib = 82.93
 const grp = (id, name, a, b) => ({ id, name, byPeriod: { '2026-08': a, '2026-09': b } })
 const ipcaGroups = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'ipca-groups', sourceName: 'IBGE · SIDRA (fixture de teste)', sourceUrl: 'https://sidra.ibge.gov.br/tabela/7060', checkedAt: new Date().toISOString(), stale: false, periods: ['2026-08', '2026-09'], groups: [
   grp(7169, 'Índice geral', { mom: 0.2, weight: 100, ytd: 3, y12: 4.5 }, { mom: 0.5, weight: 100, ytd: 3.5, y12: 4.7 }),
@@ -132,7 +134,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const dt = p.locator('.ind-table').nth(1); await dt.waitFor()
       assert.equal(await dt.locator('tbody').count(), 2, 'duas leituras da dívida bruta')
       assert.match(await dt.innerText(), /Máxima da série[\s\S]*DBGG · % do PIB[\s\S]*DBGG · saldo em R\$ bilhões/)
-      assert.match(await dt.locator('tbody').first().innerText(), /77,8%/, 'último valor em % do PIB com uma casa')
+      assert.match(await dt.locator('tbody').first().innerText(), /82,93%[\s\S]*82,87%[\s\S]*\+0,06 p\.p\./, '% do PIB com duas casas, como o BCB publica: variação de 0,06 p.p. visível')
       await p.getByRole('button', { name: /DBGG . % do PIB: abrir gráfico/ }).click()
       const dd = p.getByRole('dialog', { name: /histórico de DBGG/i }); await dd.waitFor()
       assert.equal(await dd.locator('.chart-filters').count(), 1)
