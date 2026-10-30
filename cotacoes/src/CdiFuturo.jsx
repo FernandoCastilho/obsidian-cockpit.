@@ -1,3 +1,4 @@
+import Flag from './Flag.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { Aviso } from './Avisos.jsx'
@@ -50,7 +51,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
         <article className="chart">
           <header>
             <h3>
-              CDI a termo implícito
+              <Flag code="BRL" width={18} height={12} />CDI a termo implícito
               <Explain id="cdiFuturo" />
               <small>% a.a., taxa a termo do DI no intervalo que você escolher</small>
             </h3>

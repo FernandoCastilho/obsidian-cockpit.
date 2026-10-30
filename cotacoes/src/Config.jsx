@@ -27,6 +27,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const bndes = useDataFile('bndes.json')
   const moedas = useDataFile('moedas.json')
   const ipca = useDataFile('ipca.json')
+  const estr = useDataFile('estr.json')
   const divida = useDataFile('divida.json')
   const calendar = useDataFile('calendar.json')
   const ipcaGroups = useDataFile('ipca-groups.json')
@@ -37,7 +38,8 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'macro', label: 'Juros e Focus (Banco Central, NY Fed)', at: macro.data?.generatedAt, maxAge: ATRASO_H.macro * H, weekdays: true },
       { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: ATRASO_H.curves * H, weekdays: true },
       { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: ATRASO_H.news * H, weekdays: true },
-      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: ATRASO_H.policy * H, weekdays: true },
+      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoJ)', at: policy.data?.generatedAt, maxAge: ATRASO_H.policy * H, weekdays: true },
+      { key: 'estr', label: 'Taxa €STR (Banco Central Europeu)', at: estr.data?.generatedAt, maxAge: ATRASO_H.estr * H, weekdays: true },
       { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central e BNDES)', at: indexadores.data?.generatedAt, maxAge: ATRASO_H.indexadores * H, weekdays: true },
       { key: 'bndes', label: 'Taxa Fixa do BNDES (TFB)', at: bndes.data?.generatedAt, maxAge: ATRASO_H.bndes * H, weekdays: true },
       { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: ATRASO_H.moedas * H, weekdays: true },
@@ -55,7 +57,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'estr.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>

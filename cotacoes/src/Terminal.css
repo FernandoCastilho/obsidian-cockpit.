@@ -444,3 +444,6 @@ main.app .cen-nav { margin: 0 0 12px; }
 .ind-table .market-open b .flag { margin-right: 4px; }
 main.app .idx-table .idx-rel { min-width: 220px; }
 main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a); }
+
+/* bandeira ao lado do nome do país em tabelas e títulos de gráficos de juros */
+.executive-rates__name .flag, .chart h3 .flag { margin-right: 6px; vertical-align: -2px; }

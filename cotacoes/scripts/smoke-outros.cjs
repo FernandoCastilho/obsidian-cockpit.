@@ -40,12 +40,39 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
       await ctx.close()
     }
+    // Juros: sem Reino Unido e com a bandeira de cada país nas linhas e nos títulos dos gráficos
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      const hoje = Date.now(), dia = 864e5
+      const estr = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'estr', sourceName: 'BCE (fixture de teste)', sourceUrl: 'https://www.ecb.europa.eu/', checkedAt: new Date().toISOString(), stale: false,
+        points: Array.from({ length: 400 }, (_, i) => ({ date: new Date(hoje - (400 - i) * dia).toISOString().slice(0, 10), value: +(1.9 + i * 0.0005).toFixed(3) })) } }
+      await p.route('**/estr.json*', (r) => r.fulfill({ json: estr }))
+      // macro simulado: no CI não há arquivos de dados reais (eles são gerados no deploy), então os gráficos de Juros precisam deles
+      const dias = Array.from({ length: 400 }, (_, i) => { const d = new Date(hoje - (400 - i) * dia); d.setUTCHours(12, 0, 0, 0); return d.getTime() })
+      const macro = { generatedAt: hoje, focus: null, ptax: {}, ptaxHist: {}, sofrAvg: dias.map((t) => [t, 3.2, 3.3, 3.4]),
+        cdi: dias.map((t, i) => [t, +(14.1 + (i % 7) * 0.01).toFixed(2)]), selic: [[dias[0], 14.5], [dias[200], 14.25]], sofr: dias.map((t, i) => [t, +(4.3 - i * 0.003).toFixed(2), 4.2, 4.4]) }
+      await p.route('**/macro.json*', (r) => r.fulfill({ json: macro }))
+      await p.goto(base + '/#juros'); await p.locator('.executive-rates__table tbody tr').first().waitFor()
+      const linhas = p.locator('.executive-rates__table tbody tr .executive-rates__name')
+      const n = await linhas.count()
+      assert.ok(n >= 7, 'Selic, CDI, SOFR, Fed, €STR, BCE e BoJ')
+      await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).filter({ hasText: /\d,\d{3}%/ }).first().waitFor() // o arquivo simulado chega depois da primeira renderização
+      assert.match(await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).first().innerText(), /Área do euro · €STR overnight[\s\S]*\d,\d{3}%/)
+      assert.equal(await p.locator('.executive-rates__table tbody tr .executive-rates__name .flag').count(), n, 'bandeira em cada linha')
+      const corpo = await p.locator('main').innerText()
+      assert.doesNotMatch(corpo, /Reino Unido|Bank Rate|Bank of England|BoE/, 'sem Reino Unido em Juros')
+      assert.match(await p.locator('.executive-rates__table tbody').innerText(), /Área do euro · BCE[\s\S]*Japão/)
+      await p.locator('.chart h3', { hasText: 'Área do euro · €STR' }).first().waitFor()
+      await p.locator('.chart h3', { hasText: 'Brasil · CDI' }).first().waitFor()
+      assert.ok(await p.locator('.chart h3 .flag').count() >= 4, 'bandeira nos títulos dos gráficos (CDI, Selic, SOFR e €STR)')
+      await p.close()
+    }
     // governança dos dados em Configurações: tabela por fonte, regras e nenhuma rolagem lateral da página
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 12, 'uma linha por fonte')
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 13, 'uma linha por fonte')
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
       assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)

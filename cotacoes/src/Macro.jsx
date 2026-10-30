@@ -1,3 +1,5 @@
+import Flag from './Flag.jsx'
+import { bandeiraDe } from './paises.js'
 import RefreshButton from './RefreshButton.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
 import { Aviso } from './Avisos.jsx'
@@ -6,11 +8,13 @@ import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { Plot, fmtDate, useWidth } from './HistoryChart.jsx'
 import SofrChart from './Sofr.jsx'
+import { useDataFile } from './useDataFile.js'
+import { estrChartPoints, normalizeEstr } from './estr.js'
 
 const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const rate = (v) => `${n2(v)}% a.a.`
 const DAY = 864e5
-const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6' }
+const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6', ESTR: '#e0b341' }
 
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))
@@ -24,7 +28,7 @@ export function RateChart({ id, title, subtitle, color, points, history, step, s
     <article className="chart" style={{ '--series': color }}>
       <header>
         <h3>
-          <i className="swatch" /> {title}
+          <i className="swatch" /> <Flag code={bandeiraDe(title)} width={18} height={12} />{title}
           <small>{subtitle}</small>
           {help && <Explain id={help} />}
         </h3>
@@ -151,10 +155,36 @@ export function SelicChart({ macro, range }) {
   )
 }
 
+// €STR (BCE): taxa overnight da zona do euro, no mesmo formato do CDI e da SOFR.
+export function EstrChart({ series, range }) {
+  const all = useMemo(() => estrChartPoints(series), [series])
+  const from = range.start.getTime()
+  const to = range.end.getTime() + DAY
+  const points = useMemo(() => all.filter((p) => p.t >= from && p.t <= to), [all, from, to])
+  const last = series.points.at(-1)
+  return (
+    <RateChart
+      id="ESTR"
+      title="Área do euro · €STR"
+      subtitle="BCE · taxa overnight, dias úteis"
+      color={COLORS.ESTR}
+      points={points}
+      history={all}
+      fmt={rate}
+      label="€STR"
+      refresh={['estr.json']}
+      note={`${last ? `Último: ${rate(last.value)} em ${last.date.split('-').reverse().join('/')} · ` : ''}Série desde ${series.points[0].date.split('-').reverse().join('/')} · Média ponderada aparada das operações overnight não garantidas em euro. Fonte: Banco Central Europeu (€STR).`}
+    />
+  )
+}
+
 const STALE_LABELS = { cdi: 'CDI', selic: 'Selic', sofr: 'SOFR', sofrAvg: 'médias da SOFR', focus: 'Boletim Focus', ptax: 'PTAX' }
 const stamp = (t) => (t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida')
 
 export default function Macro({ macro: m }) {
+  const estrFile = useDataFile('estr.json')
+  let estr = null
+  try { estr = estrFile.data ? normalizeEstr(estrFile.data) : null } catch { /* arquivo inválido: o gráfico não aparece */ }
   const [preset, setPreset] = useState('365')
   const [range, setRange] = useState(() => rangeFor(365))
   const onPreset = (p) => {
@@ -190,6 +220,7 @@ export default function Macro({ macro: m }) {
           {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} /> : <p className="status">CDI indisponível no momento.</p>}
           {m.data.selic?.length ? <SelicChart macro={m.data} range={range} /> : <p className="status">Selic indisponível no momento.</p>}
           {m.data.sofr?.length ? <SofrChart macro={m.data} range={range} /> : <p className="status">SOFR indisponível no momento.</p>}
+          {estr?.points.length ? <EstrChart series={estr} range={range} /> : <p className="status">{estrFile.status === 'loading' ? 'Carregando €STR…' : '€STR indisponível no momento.'}</p>}
         </div>
       )}
     </section>

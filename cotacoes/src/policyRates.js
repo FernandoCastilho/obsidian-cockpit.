@@ -3,7 +3,6 @@ import { displayDate } from './ratesSnapshot.js'
 const DEFINITIONS = [
   ['FED','EUA · Fed (faixa-alvo)','Federal Reserve / FOMC'],
   ['ECB','Área do euro · BCE (depósito)','Banco Central Europeu'],
-  ['BOE','Reino Unido · Bank Rate','Bank of England'],
   ['BOJ','Japão · Meta overnight','Bank of Japan'],
 ]
 const n = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})

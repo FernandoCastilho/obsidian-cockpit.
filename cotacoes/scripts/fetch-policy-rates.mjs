@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
-import { POLICY_SOURCES, parseFedPolicy, parseEcbPolicy, parseBoePolicy, normalizePolicyPoints, preservePolicySeries } from './policy-rates-lib.mjs'
+import { POLICY_SOURCES, parseFedPolicy, parseEcbPolicy, normalizePolicyPoints, preservePolicySeries } from './policy-rates-lib.mjs'
 import { collectBisJapan } from './bis-policy.mjs'
 
 const output = new URL('../public/policy-rates.json', import.meta.url)
@@ -13,7 +13,7 @@ async function table(id, parse) {
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
   return {points:parse(await response.text()),sourceUrl:POLICY_SOURCES[id],checkedAt:now}
 }
-await Promise.all(Object.entries({FED:parseFedPolicy,ECB:parseEcbPolicy,BOE:parseBoePolicy,BOJ:null}).map(async ([id,parse]) => {
+await Promise.all(Object.entries({FED:parseFedPolicy,ECB:parseEcbPolicy,BOJ:null}).map(async ([id,parse]) => {
   const previous = [local?.series?.[id],remote?.series?.[id]].filter(s => s && (id !== 'BOJ' || s.provider === 'BIS')).sort((a,b)=>(b.checkedAt||0)-(a.checkedAt||0))[0]
   try {
     const series = id === 'BOJ' ? await collectBisJapan(now) : await table(id,parse)

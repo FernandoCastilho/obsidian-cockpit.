@@ -1,3 +1,4 @@
+import Flag from './Flag.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
@@ -100,7 +101,7 @@ export default function SofrChart({ macro, range }) {
     <article className="chart curve" style={{ '--series': SERIES[0].color }}>
       <header>
         <h3>
-          <i className="swatch" /> SOFR
+          <i className="swatch" /> <Flag code="USD" width={18} height={12} />SOFR
           <small>EUA · overnight, taxa do dia</small>
           <Explain id="sofr" />
         </h3>
