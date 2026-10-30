@@ -12,7 +12,7 @@ export const CRONS = {
 }
 
 // Idade máxima, em horas, antes de o app marcar a fonte como "Atrasado" (no fim de semana, fontes de dias úteis não atrasam).
-export const ATRASO_H = { macro: 6, curves: 6, news: 6, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
+export const ATRASO_H = { macro: 6, curves: 6, news: 6, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, 'commodities-brl': 72, fuels: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
 
 const HORA = 'De hora em hora nos dias úteis (0h17 às 23h17)'
 
@@ -27,7 +27,9 @@ export const FONTES = [
   { id: 'euro-curve', chaves: ['euro-curve'], nome: 'Curva de juros do euro (3 meses a 30 anos)', origem: 'Banco Central Europeu', coleta: HORA, muda: 'A cada dia útil europeu, com a curva do dia anterior', atraso: `${ATRASO_H['euro-curve']} h` },
   { id: 'indexadores', chaves: ['indexadores'], nome: 'TR, TBF e TLP', origem: 'Banco Central, BNDES', coleta: HORA, muda: 'TR e TBF diárias; TLP mensal', atraso: `${ATRASO_H.indexadores} h` },
   { id: 'bndes', chaves: ['bndes', 'moedas'], nome: 'TFB, TFC e moedas contratuais do BNDES', origem: 'BNDES', coleta: HORA, muda: 'Dias úteis, conforme a divulgação do BNDES', atraso: `${ATRASO_H.bndes} h` },
-  { id: 'oil', chaves: ['oil', 'commodities'], nome: 'Petróleo Brent e commodities', origem: 'EIA, Banco Mundial', coleta: HORA, muda: 'Brent e algumas commodities por dia útil; as do Banco Mundial, uma vez por mês', atraso: `${ATRASO_H.oil} h` },
+  { id: 'oil', chaves: ['oil', 'commodities'], nome: 'Petróleo, gás, diesel, gasolina e demais commodities', origem: 'EIA, Banco Mundial', coleta: HORA, muda: 'Brent, WTI, gás natural, diesel e gasolina de Nova York a cada dia útil; as do Banco Mundial (metais, grãos, açúcar, café, fertilizantes), uma vez por mês', atraso: `${ATRASO_H.oil} h` },
+  { id: 'commodities-brl', chaves: ['commodities-brl'], nome: 'IC-Br e soja em R$/saca', origem: 'Banco Central (SGS), Banco Mundial', coleta: HORA, muda: 'Uma vez por mês (IC-Br e soja em dólar são mensais)', atraso: `${ATRASO_H['commodities-brl']} h` },
+  { id: 'fuels', chaves: ['fuels'], nome: 'Combustíveis ao consumidor (gasolina, etanol, diesel e gás de cozinha)', origem: 'ANP', coleta: HORA, muda: 'Uma vez por semana, no resumo do Levantamento de Preços', atraso: `${ATRASO_H.fuels} h` },
   { id: 'ipca', chaves: ['ipca', 'ipca-groups'], nome: 'IPCA e IPCA por grupos', origem: 'IBGE (SIDRA)', coleta: 'No máximo 1 consulta a cada 6 h', muda: 'Uma vez por mês, na divulgação do IBGE', atraso: `${ATRASO_H.ipca} h` },
   { id: 'divida', chaves: ['divida'], nome: 'Dívida bruta do governo geral', origem: 'Banco Central (SGS)', coleta: 'No máximo 1 consulta a cada 6 h', muda: 'Uma vez por mês, na divulgação do Banco Central', atraso: `${ATRASO_H.divida} h` },
   { id: 'freight', chaves: ['freight', 'freight-jp'], nome: 'Transporte marítimo (EUA e Japão)', origem: 'BLS, Banco do Japão', coleta: 'No máximo 1 consulta por dia', muda: 'Uma vez por mês', atraso: `${ATRASO_H.freight} h` },
@@ -37,7 +39,7 @@ export const FONTES = [
 // Resumo no topo do painel: a resposta curta para "tudo é atualizado de 5 em 5 minutos?".
 export const RESUMO = [
   'Só o câmbio é coletado de 5 em 5 minutos, e apenas no pregão (9h30 às 18h, segunda a sexta, horário de Brasília). Fora do pregão, 1 vez por hora em dias úteis; no fim de semana, nada.',
-  'Juros, €STR, curvas, BNDES, petróleo, commodities, notícias e calendário são coletados de hora em hora nos dias úteis. IPCA e dívida bruta, no máximo a cada 6 horas; frete marítimo, 1 vez por dia.',
+  'Juros, €STR, curvas, BNDES, petróleo, commodities, combustíveis, notícias e calendário são coletados de hora em hora nos dias úteis. IPCA e dívida bruta, no máximo a cada 6 horas; frete marítimo, 1 vez por dia.',
   'Coletar não é o mesmo que o número mudar: o dado só muda quando o órgão publica. O CDI e a curva DI mudam 1 vez por dia útil, a Selic a cada reunião do Copom (cerca de 6 semanas), e o IPCA e a dívida bruta 1 vez por mês. O CDI pode ser coletado 20 vezes no dia e mostrar o mesmo valor em todas.',
 ]
 

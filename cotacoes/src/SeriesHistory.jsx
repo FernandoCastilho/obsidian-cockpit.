@@ -38,7 +38,7 @@ export default function SeriesHistory({ item, points, onClose }) {
             </div>
             {bad && <p role="alert">O início não pode ser posterior ao fim.</p>}
           </ChartFilters>
-          <p className="muted">Cobertura: {label(list[0].period)} a {label(list.at(-1).period)} · {list.length} observações {daily ? 'diárias' : 'mensais'}. Períodos sem dado não são preenchidos.</p>
+          <p className="muted">Cobertura: {label(list[0].period)} a {label(list.at(-1).period)} · {list.length} observações {daily ? (/semanal/.test(item.nature) ? 'semanais' : 'diárias') : 'mensais'}. Períodos sem dado não são preenchidos.</p>
           {plot.length > 1 && !bad
             ? <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code={`commodity-${item.id}`} intraday={false} fmt={fmt} vfmt={(v) => nf(v)} dateLabel={daily ? undefined : (t) => contextDate(new Date(t).toISOString().slice(0, 7))} label={item.label} labels /></div>
             : <p role="status">{bad ? 'Ajuste o período.' : 'Poucas observações no período; escolha um intervalo maior.'}</p>}

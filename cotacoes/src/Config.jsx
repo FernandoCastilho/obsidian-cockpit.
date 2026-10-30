@@ -23,6 +23,8 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const oil = useDataFile('oil.json')
   const indexadores = useDataFile('indexadores.json')
   const commodities = useDataFile('commodities.json')
+  const commoditiesBrl = useDataFile('commodities-brl.json')
+  const fuels = useDataFile('fuels.json')
   const freight = useDataFile('freight.json')
   const bndes = useDataFile('bndes.json')
   const moedas = useDataFile('moedas.json')
@@ -47,6 +49,8 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: ATRASO_H.moedas * H, weekdays: true },
       { key: 'oil', label: 'Petróleo Brent (EIA)', at: oil.data?.generatedAt, maxAge: ATRASO_H.oil * H, weekdays: true },
       { key: 'commodities', label: 'Commodities (EIA e Banco Mundial)', at: commodities.data?.generatedAt, maxAge: ATRASO_H.commodities * H, weekdays: true },
+      { key: 'commodities-brl', label: 'IC-Br e soja em R$/saca (Banco Central e Banco Mundial)', at: commoditiesBrl.data?.generatedAt, maxAge: ATRASO_H['commodities-brl'] * H, weekdays: true },
+      { key: 'fuels', label: 'Combustíveis ao consumidor (ANP)', at: fuels.data?.generatedAt, maxAge: ATRASO_H.fuels * H, weekdays: true },
       { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: ATRASO_H.freight * H, weekdays: true },
       { key: 'freight-jp', label: 'Transporte marítimo Japão (Banco do Japão)', at: freightJp.data?.generatedAt, maxAge: ATRASO_H['freight-jp'] * H, weekdays: true },
       { key: 'ipca', label: 'IPCA (IBGE)', at: ipca.data?.generatedAt, maxAge: ATRASO_H.ipca * H, weekdays: true },
@@ -59,7 +63,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   )
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
+      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
         <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
           <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
           <tbody>

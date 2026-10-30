@@ -118,6 +118,14 @@ jobs:
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-commodities.mjs
         timeout-minutes: 3
+      - name: Coletar commodities em reais (IC-Br e soja em R$/saca)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-commodities-brl.mjs
+        timeout-minutes: 3
+      - name: Coletar preços de combustíveis ao consumidor (ANP)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-fuels.mjs
+        timeout-minutes: 8
       - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-freight.mjs
