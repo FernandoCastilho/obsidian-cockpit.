@@ -110,13 +110,13 @@ export function CdiChart({ macro, range }) {
       id="CDI"
       title="Brasil · CDI"
       help="cdi"
-      subtitle="B3 · taxa anualizada"
+      subtitle="taxa anualizada"
       color={COLORS.CDI}
       points={points}
       history={history}
       fmt={rate}
       label="CDI"
-      note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${first ? `Série disponível desde ${fmtDate(first[0], true)} · ` : ''}Fonte: B3, via Banco Central (SGS 4389).`}
+      note={`${last ? `Último: ${rate(last[1])} em ${fmtDate(last[0], true)} · ` : ''}${first ? `Série disponível desde ${fmtDate(first[0], true)}` : ''}`}
     />
   )
 }
@@ -150,7 +150,7 @@ export function SelicChart({ macro, range }) {
       step
       fmt={rate}
       label="Meta Selic"
-      note={`${last ? `Atual: ${rate(last[1])} · ` : ''}Fonte: Banco Central (SGS 432).`}
+      note={last ? `Atual: ${rate(last[1])}` : ''}
     />
   )
 }
@@ -174,7 +174,7 @@ export function EstrChart({ series, range }) {
       fmt={rate}
       label="€STR"
       refresh={['estr.json']}
-      note={`${last ? `Último: ${rate(last.value)} em ${last.date.split('-').reverse().join('/')} · ` : ''}Série desde ${series.points[0].date.split('-').reverse().join('/')} · Média ponderada aparada das operações overnight não garantidas em euro. Fonte: Banco Central Europeu (€STR).`}
+      note={`${last ? `Último: ${rate(last.value)} em ${last.date.split('-').reverse().join('/')} · ` : ''}Série desde ${series.points[0].date.split('-').reverse().join('/')} · Média ponderada aparada das operações overnight não garantidas em euro.`}
     />
   )
 }
@@ -205,15 +205,15 @@ export default function Macro({ macro: m }) {
         <h2>Histórico das taxas de juros</h2>
         <RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
       </div>
-      {m.status === 'loading' && <p className="status">Carregando dados do Banco Central…</p>}
-      {m.status === 'error' && <p className="status">Dados do Banco Central indisponíveis no momento ({m.error}).</p>}
+      {m.status === 'loading' && <p className="status">Carregando dados…</p>}
+      {m.status === 'error' && <p className="status">Dados indisponíveis no momento ({m.error}).</p>}
       {m.stale && <p className="status stale">Atualização pendente; mantidas as últimas taxas disponíveis.</p>}
       {m.status === 'ok' && m.data.generatedAt && (Date.now() - m.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
-        <p className="status stale">Atenção: os dados do Banco Central foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
+        <p className="status stale">Atenção: os dados foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
       )}
       {m.status === 'ok' && Object.keys(m.data.stale ?? {}).some(k => ['cdi', 'selic', 'sofr', 'sofrAvg'].includes(k)) && (
         <p className="status stale">
-          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(m.data.stale).filter(([k]) => ['cdi', 'selic', 'sofr', 'sofrAvg'].includes(k)).map(([k, t]) => `${STALE_LABELS[k] ?? k} (coletado em ${stamp(t)})`).join(', ')}.
+          Atualização indisponível na última coleta; mantido o último dado publicado: {Object.entries(m.data.stale).filter(([k]) => ['cdi', 'selic', 'sofr', 'sofrAvg'].includes(k)).map(([k, t]) => `${STALE_LABELS[k] ?? k} (coletado em ${stamp(t)})`).join(', ')}.
         </p>
       )}
       {m.status === 'ok' && (

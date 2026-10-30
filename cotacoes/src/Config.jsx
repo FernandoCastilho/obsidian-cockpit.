@@ -1,4 +1,5 @@
 import InstallApp from './InstallApp.jsx'
+import BaseDados from './BaseDados.jsx'
 import Novidades from './Novidades.jsx'
 import { Panel } from './TerminalDesk.jsx'
 import { centralMaxAge } from './useQuotes.js'
@@ -102,6 +103,9 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
         <h3 className="config-sub">Regras</h3>
         <ul className="config-list">{REGRAS.map((t) => <li key={t}>{t}</li>)}</ul>
         <p className="config-note">Horários em Brasília. Coleta é a consulta do app às fontes; o dado só muda quando o órgão de origem publica.</p>
+      </Panel>
+      <Panel title="Base de dados" note="órgão, API, série e arquivo de cada referência" className="config-wide">
+        <BaseDados />
       </Panel>
       <div className="config-side">
         <Panel title="Atalhos" note="teclado">

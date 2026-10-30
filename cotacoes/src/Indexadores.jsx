@@ -12,7 +12,7 @@ export default function Indexadores() {
   const rows = indexRows(file.data)
   const loading = file.status === 'loading'
   return (
-    <Panel title="Indexadores · TR · TBF · TLP" note="Banco Central e BNDES" refresh={['indexadores.json']}>
+    <Panel title="Indexadores · TR · TBF · TLP" refresh={['indexadores.json']}>
       {file.status === 'error' && !file.data ? (
         <p className="status">Indexadores indisponíveis agora ({file.error}). Eles voltam na próxima coleta.</p>
       ) : (
@@ -41,7 +41,7 @@ export default function Indexadores() {
           <div key={r.family}><dt>{r.family}</dt><dd>{r.definition}</dd></div>
         ))}
       </dl>
-      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. A TLP vem em % ao ano. Fonte: Banco Central (SGS) para TR e TBF; BNDES (moeda 777) para a TLP, a mesma série da aba BNDES. A coluna Divulgação traz a regra de publicação (Res. CMN 4.624/2018 para TR e TBF; 4.600/2017 para a TLP) e as datas calculadas com o calendário de feriados do Brasil. A Taxa Fixa do BNDES (TFB) fica na aba BNDES. Atualizado a cada coleta horária.</p></Aviso>
+      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. A TLP vem em % ao ano. A coluna Divulgação traz a regra de publicação (Res. CMN 4.624/2018 para TR e TBF; 4.600/2017 para a TLP) e as datas calculadas com o calendário de feriados do Brasil. A Taxa Fixa do BNDES (TFB) fica na aba BNDES.</p></Aviso>
     </Panel>
   )
 }

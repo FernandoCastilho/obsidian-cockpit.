@@ -14,7 +14,6 @@ const dayLabel = (key, today) => {
   const d = new Date(`${key}T12:00:00Z`).toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' })
   return key === today ? `${d} · hoje` : d
 }
-const SOURCE_LABELS = { ff: 'Forex Factory', bls: 'BLS', bea: 'BEA', fomc: 'Federal Reserve' }
 
 // Balão "?" do evento: o que é, efeito na economia e ligação com o Brasil; sem categoria mapeada, diz que o impacto é baixo.
 function EventHelp({ e }) {
@@ -68,7 +67,7 @@ export default function Calendario() {
         </label>
       </div>
       {failed && <p className="status stale" role="status">Não foi possível carregar o calendário coletado; mostrando só a agenda do Brasil.</p>}
-      {stale.length > 0 && <p className="status stale" role="status">Fonte indisponível na última coleta; mantidos os últimos dados: {stale.map((k) => SOURCE_LABELS[k] ?? k).join(', ')}.</p>}
+      {stale.length > 0 && <p className="status stale" role="status">Parte dos dados não foi atualizada na última coleta; mantidos os últimos dados disponíveis.</p>}
       {days.length === 0 ? <p className="status" role="status">Nenhum evento neste filtro. Amplie o período ou inclua impacto médio e baixo.</p> : (
         <div className="cal-wrap" role="region" aria-label="Eventos do calendário econômico" tabIndex={0}>
           <table className="cal-table">
@@ -82,7 +81,7 @@ export default function Calendario() {
                     <tr key={`${e.src}${e.t}${e.title}${e.country}`} className={`cal-row ${e.impact}${e.t < now ? ' past' : ''}`}>
                       <td className="cal-time">{hour(e.t)}</td>
                       <td className="cal-country-cell">{c.flag && hasFlag(c.flag) ? <Flag code={c.flag} width={18} height={12} /> : null} <span className="cal-cname">{c.name}</span></td>
-                      <th scope="row" className="cal-title" title={`Fonte: ${e.source}`}>{e.title}{e.tentative && <em className="tent"> previsto</em>}<EventHelp e={e} /></th>
+                      <th scope="row" className="cal-title">{e.title}{e.tentative && <em className="tent"> previsto</em>}<EventHelp e={e} /></th>
                       <td><ImpactMark impact={e.impact} /></td>
                       <td>{e.forecast ?? '—'}</td>
                       <td>{e.previous ?? '—'}</td>
@@ -94,7 +93,7 @@ export default function Calendario() {
           </table>
         </div>
       )}
-      <p className="status">Horário de Brasília. Fontes: Forex Factory (eventos do mundo, com previsto e anterior), BLS e BEA (EUA, calendários oficiais), Federal Reserve (FOMC) e agenda curada do Brasil (Copom, IPCA, Focus; IBGE e Banco Central não oferecem feed automático acessível, por isso IPCA e IPCA-15 aparecem como "previsto"). {file.data?.generatedAt ? `Última coleta: ${new Date(file.data.generatedAt).toLocaleString('pt-BR', { timeZone: TZ })}.` : ''} Feed gratuito do Forex Factory cobre só a semana corrente; o restante vem dos calendários oficiais. Sem valor realizado.</p>
+      <p className="status">Horário de Brasília. IPCA e IPCA-15 aparecem como "previsto" enquanto a data não é confirmada. Sem valor realizado.</p>
     </section>
   )
 }

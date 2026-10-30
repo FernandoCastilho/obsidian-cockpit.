@@ -150,7 +150,7 @@ export default function SofrChart({ macro, range }) {
       <Aviso title="SOFR · EUA"><p className="status">
         {last ? `Último: ${pct(last[1])} em ${fmtDate(last[0], true)} · ` : ''}
         {first ? `Série desde ${fmtDate(first[0], true)} · ` : ''}
-        Taxa crua do dia; as médias (compostas) e a faixa de percentis são opcionais na legenda. Fonte: Federal Reserve Bank of New York.
+        Taxa crua do dia; as médias (compostas) e a faixa de percentis são opcionais na legenda.
       </p></Aviso>
     </article>
   )

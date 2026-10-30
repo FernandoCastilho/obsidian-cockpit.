@@ -146,7 +146,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
       </div>
       <Aviso title={title}><p className="status">{source}</p>
       {compare[0]?.date && <p className="status">Referência: {day(data.sourceDate || compare[0].date)}{data.checkedAt ? ` · Conferência dos vértices: ${dataTimestamp(data.checkedAt)}` : ''}.</p>}</Aviso>
-      {data.discoveryPending && <p className="status stale" role="status">Catálogo de datas B3 indisponível. Vértices conferidos somente nas datas oficiais já conhecidas; não foi possível confirmar uma referência mais recente.</p>}
+      {data.discoveryPending && <p className="status stale" role="status">Catálogo de datas indisponível. Vértices conferidos somente nas datas oficiais já conhecidas; não foi possível confirmar uma referência mais recente.</p>}
       {!data.discoveryPending && data.warnings?.length>0 && <p className="status stale" role="status">Comparações históricas com pendência: {data.warnings.join(' · ')}</p>}
     </article>
   )
@@ -160,7 +160,7 @@ export function CurvePanel({ curves: c }) {
     <>
       {c.stale && <p className="status stale" role="status">Não foi possível atualizar as curvas. Mantida a última coleta disponível.</p>}
       {c.data?.br ? (
-        <CurveChart bare help="curvaDi" title="Brasil · DI x pré" subtitle="B3, taxa % a.a. por prazo em dias úteis" data={c.data.br} mode="br" source="Fonte: B3, Taxas referenciais (DI x pré), calculadas a partir dos ajustes dos futuros de DI. Atualizado a cada hora; a B3 publica após o fechamento do pregão." />
+        <CurveChart bare help="curvaDi" title="Brasil · DI x pré" subtitle="taxa % a.a. por prazo em dias úteis" data={c.data.br} mode="br" source="Taxas referenciais calculadas a partir dos ajustes dos futuros de DI; publicadas após o fechamento do pregão." />
       ) : (
         <p className="status">Curva DI indisponível nesta atualização.</p>
       )}
@@ -177,7 +177,7 @@ function EuroCurve() {
   return (
     <>
       {(data.stale || f.stale) && <p className="status stale" role="status">Não foi possível atualizar a curva do euro. Mantida a última coleta disponível.</p>}
-      <CurveChart help="curvaEuro" title="Área do euro · Curva soberana AAA" subtitle="BCE, taxa spot % a.a. por vencimento" data={data} mode="us" source="Fonte: Banco Central Europeu, curva de juros da área do euro (títulos soberanos com classificação AAA, taxa spot estimada pelo modelo de Svensson). Não é o rendimento de um título específico, como o Bund alemão, e a taxa spot difere da par yield usada nas Treasuries, então a comparação com a curva dos EUA é de formato e não de nível exato." />
+      <CurveChart help="curvaEuro" title="Área do euro · Curva soberana AAA" subtitle="taxa spot % a.a. por vencimento" data={data} mode="us" source="Títulos soberanos da área do euro com classificação AAA, taxa spot estimada pelo modelo de Svensson. Não é o rendimento de um título específico, como o Bund alemão, e a taxa spot difere da par yield usada nas Treasuries, então a comparação com a curva dos EUA é de formato e não de nível exato." />
     </>
   )
 }
@@ -194,24 +194,24 @@ export default function Curves({ curves: c }) {
       )}
       {c.status === 'ok' && Object.keys(c.data.stale ?? {}).length > 0 && (
         <p className="status stale">
-          Fonte indisponível na última atualização; mantido o último dado publicado: {Object.entries(c.data.stale).map(([k, t]) => `${{ br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' }[k] ?? k} (coletado em ${t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'})`).join(', ')}.
+          Atualização indisponível na última coleta; mantido o último dado publicado: {Object.entries(c.data.stale).map(([k, t]) => `${{ br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' }[k] ?? k} (coletado em ${t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'})`).join(', ')}.
         </p>
       )}
       {c.status === 'error' && <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>}
       {c.status === 'ok' && (
         <div className="charts">
           {d.br ? (
-            <CurveChart help="curvaDi" title="Brasil · DI x pré" subtitle="B3, taxa % a.a. por prazo em dias úteis" data={d.br} mode="br" source="Fonte: B3, Taxas referenciais (DI x pré), calculadas a partir dos ajustes dos futuros de DI. Atualizado a cada hora; a B3 publica após o fechamento do pregão." />
+            <CurveChart help="curvaDi" title="Brasil · DI x pré" subtitle="taxa % a.a. por prazo em dias úteis" data={d.br} mode="br" source="Taxas referenciais calculadas a partir dos ajustes dos futuros de DI; publicadas após o fechamento do pregão." />
           ) : (
             <p className="status">Curva DI indisponível nesta atualização.</p>
           )}
           {d.cc ? (
-            <CurveChart help="cupom" title="Brasil · Cupom cambial" subtitle="B3, DI x dólar, % a.a. por prazo em dias úteis" data={d.cc} mode="br" source="Fonte: B3, Taxas referenciais (DI x dólar), cupom cambial a partir dos ajustes dos futuros. Vértices curtos (menos de 1 mês) omitidos por serem muito ruidosos. Atualizado a cada hora; a B3 publica após o fechamento." />
+            <CurveChart help="cupom" title="Brasil · Cupom cambial" subtitle="DI x dólar, % a.a. por prazo em dias úteis" data={d.cc} mode="br" source="Cupom cambial a partir dos ajustes dos futuros. Vértices curtos (menos de 1 mês) omitidos por serem muito ruidosos; publicado após o fechamento." />
           ) : (
             <p className="status">Curva do cupom cambial indisponível nesta atualização.</p>
           )}
           {d.us ? (
-            <CurveChart help="treasuries" title="EUA · Treasuries" subtitle="Par yield curve, % a.a. por vencimento" data={d.us} mode="us" source="Fonte: Departamento do Tesouro dos EUA (Daily Treasury Par Yield Curve Rates). É a curva de títulos públicos, não de futuros; fechamento do dia anterior ou do dia, conforme a divulgação." />
+            <CurveChart help="treasuries" title="EUA · Treasuries" subtitle="Par yield curve, % a.a. por vencimento" data={d.us} mode="us" source="Curva de títulos públicos (par yield), não de futuros; fechamento do dia anterior ou do dia, conforme a divulgação." />
           ) : (
             <p className="status">Curva dos EUA indisponível nesta atualização.</p>
           )}

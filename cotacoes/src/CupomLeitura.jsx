@@ -86,7 +86,7 @@ export default function CupomLeitura({ curves }) {
         </>
       )}
       <Aviso title="Cupom cambial · como ler">
-        <p className="status">DI pré e cupom (B3) e Treasuries (Tesouro dos EUA) já coletados. Convenções aproximadas: cupom é linear em 360 dias corridos (dias corridos ≈ dias úteis × 365/252) e é convertido em taxa efetiva anual para ser comparado ao DI e ao Treasury. <b>Desvalorização implícita</b> = (1 + DI) ÷ (1 + cupom efetivo) − 1: o que a taxa de juros em reais e o cupom, juntos, embutem para o dólar em 12 meses (não é previsão). <b>Cupom − UST</b>: prêmio de risco Brasil em dólar. Leitura descritiva, sem recomendação.</p>
+        <p className="status">DI pré, cupom e Treasuries já coletados. Convenções aproximadas: cupom é linear em 360 dias corridos (dias corridos ≈ dias úteis × 365/252) e é convertido em taxa efetiva anual para ser comparado ao DI e ao Treasury. <b>Desvalorização implícita</b> = (1 + DI) ÷ (1 + cupom efetivo) − 1: o que a taxa de juros em reais e o cupom, juntos, embutem para o dólar em 12 meses (não é previsão). <b>Cupom − UST</b>: prêmio de risco Brasil em dólar. Leitura descritiva, sem recomendação.</p>
       </Aviso>
     </section>
   )

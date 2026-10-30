@@ -349,11 +349,11 @@ export default function HistoryChart({ currency, color, start, end, day, onDay }
       {pts && h.stale && <p className="status stale" role="status">Não foi possível atualizar. Mantida a última série disponível. {h.error}</p>}
       {pts && intraday && (
         <p className="status">
-          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Pontos a cada 5 min no horário comercial'} · arquivo intraday de {dataTimestamp(h.data.generatedAt)} · Fonte: {h.data.feed ?? 'Yahoo Finance'}
+          {h.data.resolution === '1 h' ? 'Uma amostra por hora' : 'Pontos a cada 5 min no horário comercial'} · atualizado em {dataTimestamp(h.data.generatedAt)}
         </p>
       )}
       {pts && !intraday && h.data?.feed && (
-        <p className="status stale">Fonte principal indisponível: mostrando a referência diária do {h.data.feed}, sem máxima e mínima do dia.</p>
+        <p className="status stale">Série intradiária indisponível: mostrando a referência diária, sem máxima e mínima do dia.</p>
       )}
       {pts && (
         <details className="table" open={tableOpen} onToggle={(e) => setTableOpen(e.currentTarget.open)}>

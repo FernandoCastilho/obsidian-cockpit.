@@ -91,12 +91,12 @@ export default function ExecutiveRatesTable({
         </table>
       </div>
       <div className="executive-rates__sr-only">
-        <ul>{rows.map(row => <li key={row.id}><b>{row.label} · {row.unit}</b><ul>{periods.map(period => { const cell = row.cells?.[period.id]; return <li key={period.id} id={`${id}-${row.id}-${period.id}`}><b>{period.label}:</b> {cell?.date || 'Data indisponível'} · {cell?.status || 'Observação na data indicada'} · {cell?.source || 'Fonte indisponível'}</li> })}</ul></li>)}</ul>
+        <ul>{rows.map(row => <li key={row.id}><b>{row.label} · {row.unit}</b><ul>{periods.map(period => { const cell = row.cells?.[period.id]; return <li key={period.id} id={`${id}-${row.id}-${period.id}`}><b>{period.label}:</b> {cell?.date || 'Data indisponível'} · {cell?.status || 'Observação na data indicada'}</li> })}</ul></li>)}</ul>
       </div>
       <Aviso title={title}>
         {description && <p>{description}</p>}
         {footnote && <p>{footnote}</p>}
-        <ul>{rows.map(row => <li key={row.id}><b>{row.label} · {row.unit}</b><ul>{periods.map(period => { const cell = row.cells?.[period.id], url = /^https?:\/\//i.test(cell?.sourceUrl || '') ? cell.sourceUrl : null; return <li key={period.id}><b>{period.label}:</b> {cell?.date || 'Data indisponível'} · {cell?.status || 'Observação na data indicada'} · {url ? <a href={url} target="_blank" rel="noopener noreferrer">{cell?.source}</a> : cell?.source || 'Fonte indisponível'}</li> })}</ul></li>)}</ul>
+        <ul>{rows.map(row => <li key={row.id}><b>{row.label} · {row.unit}</b><ul>{periods.map(period => { const cell = row.cells?.[period.id]; return <li key={period.id}><b>{period.label}:</b> {cell?.date || 'Data indisponível'} · {cell?.status || 'Observação na data indicada'}</li> })}</ul></li>)}</ul>
       </Aviso>
     </section>
   )

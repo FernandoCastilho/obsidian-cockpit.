@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { collectedAt } from './useDataFile.js'
+import { collectedAt, useCollectedAt } from './useDataFile.js'
 import { requestRefresh } from './refreshBus.js'
 import './RefreshButton.css'
 
+const stampText = (t) => new Date(t).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 const hm = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 
 // Botão "atualizar" de um painel. Dois modos:
@@ -12,6 +13,7 @@ export default function RefreshButton({ files = [], label, custom }) {
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const timer = useRef(null)
+  const stamp = useCollectedAt(custom ? [] : files)
   useEffect(() => () => clearTimeout(timer.current), [])
   const say = (m) => { setMsg(m); clearTimeout(timer.current); timer.current = setTimeout(() => setMsg(''), 9000) }
   const run = async () => {
@@ -28,9 +30,10 @@ export default function RefreshButton({ files = [], label, custom }) {
     } finally { setBusy(false) }
   }
   const working = busy || custom?.busy
-  const title = custom?.title ?? 'Atualizar este painel. A fonte é coletada de hora em hora; o botão traz o último dado publicado.'
+  const title = custom?.title ?? 'Atualizar este painel. O botão traz o último dado publicado.'
   return (
     <span className="refresh-wrap">
+      {stamp && <small className="refresh-stamp"><span className="refresh-stamp__lbl">Atualizado em </span>{stampText(stamp)}</small>}
       {msg && <small className="refresh-msg" aria-hidden="true">{msg.replace(/^Consultado às /, '').replace(' · coleta das ', ' · coleta ')}</small>}
       <button type="button" className="refresh-btn" onClick={run} disabled={working || custom?.disabled} aria-label={`Atualizar ${label}`} title={title}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={working ? 'spin' : ''} aria-hidden="true">

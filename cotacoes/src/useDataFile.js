@@ -52,5 +52,26 @@ export function useDataFile(file) {
   return state
 }
 
+// generatedAt vem como número (ms) ou texto ISO, conforme o coletor.
+const stampOf = (v) => (typeof v === 'string' ? Date.parse(v) : Number(v)) || 0
+
 // Hora da coleta mais recente entre os arquivos (ms), ou null.
-export const collectedAt = (files) => Math.max(0, ...files.map((f) => resources.get(f)?.state?.data?.generatedAt ?? 0)) || null
+export const collectedAt = (files) => Math.max(0, ...files.map((f) => stampOf(resources.get(f)?.state?.data?.generatedAt))) || null
+
+// Mesma hora, mas carregando os arquivos (leitura compartilhada com as telas) e atualizando quando uma nova coleta chega.
+export function useCollectedAt(files) {
+  const key = files.join('|')
+  const [at, setAt] = useState(() => collectedAt(files))
+  useEffect(() => {
+    const list = key ? key.split('|') : []
+    const update = () => setAt(collectedAt(list))
+    const stops = list.map((file) => {
+      const r = resource(file)
+      r.listeners.add(update)
+      return [r, startVisiblePolling(() => loadDataFile(file), DATA_POLL_MS)]
+    })
+    update()
+    return () => stops.forEach(([r, stop]) => { stop(); r.listeners.delete(update) })
+  }, [key])
+  return at
+}

@@ -44,7 +44,7 @@ export default function InflacaoPesos({ macro }) {
           </p>
           <div className="infl-wrap" role="region" aria-label="IPCA por grupos; role para ver todas as colunas" tabIndex={0}>
             <table className="infl-table">
-              <caption>IPCA por grupos · {monthName(groups.period)} · IBGE</caption>
+              <caption>IPCA por grupos · {monthName(groups.period)}</caption>
               <thead><tr><th scope="col">Grupo</th><th scope="col" title="Peso do grupo no índice do mês">Peso %</th><th scope="col">Mês %</th><th scope="col" title="Peso × variação do mês ÷ 100: quanto o grupo somou ao IPCA, em pontos percentuais (aproximado)">Contribuição p.p.</th><th scope="col">vs mês anterior</th><th scope="col">12 meses %</th></tr></thead>
               <tbody>
                 {groups.rows.map((r) => {
@@ -63,7 +63,7 @@ export default function InflacaoPesos({ macro }) {
               </tbody>
             </table>
           </div>
-          {series.stale && <p className="status stale" role="status">Última série disponível; a atualização do IBGE não foi confirmada.</p>}
+          {series.stale && <p className="status stale" role="status">Última série disponível; a atualização não foi confirmada.</p>}
         </>
       )}
       <h3 id="infl-fatores">Fatores fora do índice</h3>
@@ -83,8 +83,8 @@ export default function InflacaoPesos({ macro }) {
           </tbody>
         </table>
       </div>
-      <Aviso title="Inflação · fontes e método">
-        <p className="ind-note">IPCA por grupos: IBGE, SIDRA tabela 7060 (peso e variação mensais; 12 meses). Contribuição = peso × variação do mês ÷ 100, aproximada: o IBGE publica o impacto exato, que usa o peso do mês anterior. Câmbio: histórico central (variação no mês e no ano); petróleo: Brent spot da EIA; grãos: média mensal contra a anterior (Banco Mundial/EIA); expectativas: Boletim Focus (mediana) contra a meta de {nf(FOCUS_BAND.target, 1)}% com banda de {nf(FOCUS_BAND.floor, 1)}% a {nf(FOCUS_BAND.ceiling, 1)}%; juros: Selic meta. Efeito: <b>pressiona</b> quando o câmbio sobe {nf(THRESHOLDS.fx, 0)}% ou mais no mês, o Brent {nf(THRESHOLDS.brent, 0)}% ou mais, os grãos {nf(THRESHOLDS.grains, 0)}% ou mais, ou o Focus de 2026 passa do teto da banda; <b>alivia</b> no movimento contrário (Focus: na meta ou abaixo). Leitura direcional de curto prazo, não é projeção do IPCA. Não cobertos: energia elétrica (bandeira tarifária), preços administrados, salários e serviços.</p>
+      <Aviso title="Inflação · método">
+        <p className="ind-note">IPCA por grupos (peso e variação mensais; 12 meses). Contribuição = peso × variação do mês ÷ 100, aproximada: o órgão oficial publica o impacto exato, que usa o peso do mês anterior. Câmbio: histórico central (variação no mês e no ano); petróleo: Brent spot; grãos: média mensal contra a anterior; expectativas: Boletim Focus (mediana) contra a meta de {nf(FOCUS_BAND.target, 1)}% com banda de {nf(FOCUS_BAND.floor, 1)}% a {nf(FOCUS_BAND.ceiling, 1)}%; juros: Selic meta. Efeito: <b>pressiona</b> quando o câmbio sobe {nf(THRESHOLDS.fx, 0)}% ou mais no mês, o Brent {nf(THRESHOLDS.brent, 0)}% ou mais, os grãos {nf(THRESHOLDS.grains, 0)}% ou mais, ou o Focus de 2026 passa do teto da banda; <b>alivia</b> no movimento contrário (Focus: na meta ou abaixo). Leitura direcional de curto prazo, não é projeção do IPCA. Não cobertos: energia elétrica (bandeira tarifária), preços administrados, salários e serviços.</p>
       </Aviso>
     </section>
   )

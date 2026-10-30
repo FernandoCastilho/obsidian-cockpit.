@@ -15,7 +15,7 @@ export default function Agenda() {
       {events.length ? (
         <ul>
           {events.map((e) => (
-            <li key={e.kind + e.t} className={dayKey(e.t) === today ? 'today' : ''} title={`Fonte: ${e.source}`}>
+            <li key={e.kind + e.t} className={dayKey(e.t) === today ? 'today' : ''}>
               <span className="when">
                 <b>{dayKey(e.t) === today ? 'Hoje' : fmtDay(e.t)}</b> {fmtTime(e.t)}
               </span>
@@ -29,7 +29,7 @@ export default function Agenda() {
         <p className="status">Sem eventos cadastrados nos próximos dias.</p>
       )}
       <p className="status">
-        Copom, FOMC e payroll seguem os calendários oficiais; IPCA e IPCA-15 são datas previstas, a conferir no IBGE. Lista conferida em {CHECKED.split('-').reverse().join('/')}.
+        Copom, FOMC e payroll seguem os calendários oficiais; IPCA e IPCA-15 são datas previstas, a conferir na divulgação oficial. Lista conferida em {CHECKED.split('-').reverse().join('/')}.
       </p>
     </section>
   )

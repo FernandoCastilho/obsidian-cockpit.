@@ -112,6 +112,21 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
       await p.close()
     }
+    // base de dados em Configurações: uma linha por referência, com órgão, API e arquivo; busca; sem rolagem lateral
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      await p.goto(base + '/#config')
+      const bd = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Base de dados' }) }); await bd.waitFor()
+      assert.ok(await bd.locator('.config-base tbody tr').count() >= 40, 'uma linha por referência')
+      const t = await bd.innerText()
+      assert.match(t, /economia\.awesomeapi\.com\.br\/json\/last/); assert.match(t, /SGS 432/); assert.match(t, /resumo_semanal_lpc/); assert.match(t, /BLS\.gov não pode atestar/)
+      await bd.getByLabel('Buscar na base de dados').fill('SGS 4389')
+      assert.equal(await bd.locator('.config-base tbody tr').count(), 1, 'a busca filtra por série')
+      assert.match(await bd.locator('.config-base tbody tr').innerText(), /CDI/)
+      await bd.getByLabel('Buscar na base de dados').fill('xyz inexistente'); assert.match(await bd.innerText(), /Nenhuma referência encontrada/)
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
+      await p.close()
+    }
     // minigráficos de IPCA, Selic e CDI nos cards do Mercado: só com dados observados, nada inventado
     {
       const day = 864e5, now = Date.now(), noon = (t) => { const d = new Date(t); d.setUTCHours(12, 0, 0, 0); return d.getTime() }
@@ -265,6 +280,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await fh.innerText(), /observações semanais/)
       await fh.locator('.plot svg').first().waitFor()
       await p.keyboard.press('Escape'); await fh.waitFor({ state: 'hidden' })
+      // o painel mostra só a data e a hora da última atualização: carimbo no cabeçalho e nenhuma fonte no texto
+      assert.match(await p.locator('.refresh-stamp').first().innerText(), /\d{2}\/\d{2}\/\d{4}/)
+      assert.doesNotMatch(await p.locator('.market-context').innerText(), /Fonte:|AwesomeAPI|SGS \d|EIA|Banco Mundial|ANP/)
       assert.equal(await p.getByText(/Cobertura parcial/).count(), 1, 'só a tabela de commodities em dólar está incompleta (fixture sem os novos ids)')
       // feriados: Londres, Tóquio e China entram na aba, com a bandeira do país em cada linha
       await p.goto(base + '/#feriados')
