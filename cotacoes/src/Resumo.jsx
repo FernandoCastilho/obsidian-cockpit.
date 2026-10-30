@@ -525,7 +525,7 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
   const ipcaSeries = useMemo(() => { try { return ipcaFile.data ? normalizeIpca(ipcaFile.data) : null } catch { return null } }, [ipcaFile.data])
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
+      <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
       <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} oilRequest={oilRequest} /></div>
     </div>

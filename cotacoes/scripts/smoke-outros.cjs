@@ -38,6 +38,29 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
       await ctx.close()
     }
+    // minigráficos de IPCA, Selic e CDI nos cards do Mercado: só com dados observados, nada inventado
+    {
+      const day = 864e5, now = Date.now(), noon = (t) => { const d = new Date(t); d.setUTCHours(12, 0, 0, 0); return d.getTime() }
+      const cdi = [], selic = [[noon(now - 700 * day), 14.9], [noon(now - 200 * day), 14.5], [noon(now - 2 * day), 14.5]]
+      for (let t = now - 420 * day; t <= now - day; t += day) { const w = new Date(t).getUTCDay(); if (w && w < 6) cdi.push([noon(t), t < now - 200 * day ? 14.9 : 14.4]) }
+      const macroOk = { generatedAt: now, cdi, selic, sofr: [], sofrAvg: [], ptax: {}, ptaxHist: {}, focus: null }
+      for (const [label, macro, expected] of [['com dados', macroOk, true], ['sem dados', { ...macroOk, cdi: [], selic: [[noon(now - 2 * day), 14.5]] }, false]]) {
+        const p = await b.newPage({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' })
+        await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
+        await p.route('**/macro.json*', (r) => r.fulfill({ json: macro }))
+        await p.goto(base + '/#resumo')
+        const cards = p.locator('.kpis .kpi'); await cards.first().waitFor()
+        const spark = (name) => cards.filter({ hasText: name }).first().locator('.kpi-spark[role="img"]')
+        for (const name of ['Selic', 'CDI']) assert.equal(await spark(name).count(), expected ? 1 : 0, `${name} ${label}`)
+        assert.equal(await spark('IPCA 12m').count(), 1, 'IPCA sempre tem 12 meses divulgados')
+        if (expected) {
+          assert.match(await spark('CDI').getAttribute('aria-label'), /CDI: fechamento mensal, 12 meses/)
+          assert.match(await spark('IPCA 12m').getAttribute('aria-label'), /IPCA: últimos 12 meses divulgados/)
+          assert.ok(await spark('CDI').locator('svg path.line').count() > 0)
+        }
+        await p.close()
+      }
+    }
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
