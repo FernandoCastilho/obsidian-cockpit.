@@ -9,6 +9,7 @@ import { useDataFile } from './useDataFile.js'
 import { isWeekendBR } from './market.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { SHORTCUTS, ageText, dataStatus } from './terminal.js'
+import { ATRASO_H, FONTES, NAVEGADOR, REGRAS } from './governanca.js'
 
 const H = 3600e3
 const STATE = { ok: ['Atualizado', 'up'], old: ['Atrasado', 'down'], missing: ['Indisponível', 'flat'] }
@@ -33,21 +34,21 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const rows = dataStatus(
     [
       { key: 'quotes', label: `Câmbio${quotesVia ? ` · ${quotesVia === 'central' ? 'coleta central' : quotesVia === 'direto' ? 'consulta direta' : 'fonte reserva'}` : ''}`, at: quotesAt ? new Date(quotesAt).getTime() : null, maxAge: centralMaxAge(), weekdays: false },
-      { key: 'macro', label: 'Juros e Focus (Banco Central, NY Fed)', at: macro.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: 36 * H, weekdays: true },
-      { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central e BNDES)', at: indexadores.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'bndes', label: 'Taxa Fixa do BNDES (TFB)', at: bndes.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: 6 * H, weekdays: true },
-      { key: 'oil', label: 'Petróleo Brent (EIA)', at: oil.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'commodities', label: 'Commodities (EIA e Banco Mundial)', at: commodities.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'freight-jp', label: 'Transporte marítimo Japão (Banco do Japão)', at: freightJp.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'ipca', label: 'IPCA (IBGE)', at: ipca.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'divida', label: 'Dívida bruta do governo geral (Banco Central)', at: divida.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'ipca-groups', label: 'IPCA por grupos (IBGE)', at: ipcaGroups.data?.generatedAt, maxAge: 72 * H, weekdays: true },
-      { key: 'calendar', label: 'Calendário econômico', at: calendar.data?.generatedAt, maxAge: 12 * H, weekdays: true },
+      { key: 'macro', label: 'Juros e Focus (Banco Central, NY Fed)', at: macro.data?.generatedAt, maxAge: ATRASO_H.macro * H, weekdays: true },
+      { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: ATRASO_H.curves * H, weekdays: true },
+      { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: ATRASO_H.news * H, weekdays: true },
+      { key: 'policy', label: 'Juros de política monetária (Fed, BCE, BoE, BoJ)', at: policy.data?.generatedAt, maxAge: ATRASO_H.policy * H, weekdays: true },
+      { key: 'indexadores', label: 'Indexadores TR, TBF e TLP (Banco Central e BNDES)', at: indexadores.data?.generatedAt, maxAge: ATRASO_H.indexadores * H, weekdays: true },
+      { key: 'bndes', label: 'Taxa Fixa do BNDES (TFB)', at: bndes.data?.generatedAt, maxAge: ATRASO_H.bndes * H, weekdays: true },
+      { key: 'moedas', label: 'TFC e moedas contratuais (BNDES)', at: moedas.data?.generatedAt, maxAge: ATRASO_H.moedas * H, weekdays: true },
+      { key: 'oil', label: 'Petróleo Brent (EIA)', at: oil.data?.generatedAt, maxAge: ATRASO_H.oil * H, weekdays: true },
+      { key: 'commodities', label: 'Commodities (EIA e Banco Mundial)', at: commodities.data?.generatedAt, maxAge: ATRASO_H.commodities * H, weekdays: true },
+      { key: 'freight', label: 'Transporte marítimo (BLS)', at: freight.data?.generatedAt, maxAge: ATRASO_H.freight * H, weekdays: true },
+      { key: 'freight-jp', label: 'Transporte marítimo Japão (Banco do Japão)', at: freightJp.data?.generatedAt, maxAge: ATRASO_H['freight-jp'] * H, weekdays: true },
+      { key: 'ipca', label: 'IPCA (IBGE)', at: ipca.data?.generatedAt, maxAge: ATRASO_H.ipca * H, weekdays: true },
+      { key: 'divida', label: 'Dívida bruta do governo geral (Banco Central)', at: divida.data?.generatedAt, maxAge: ATRASO_H.divida * H, weekdays: true },
+      { key: 'ipca-groups', label: 'IPCA por grupos (IBGE)', at: ipcaGroups.data?.generatedAt, maxAge: ATRASO_H['ipca-groups'] * H, weekdays: true },
+      { key: 'calendar', label: 'Calendário econômico', at: calendar.data?.generatedAt, maxAge: ATRASO_H.calendar * H, weekdays: true },
     ],
     Date.now(),
     isWeekendBR(),
@@ -69,6 +70,27 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
           </tbody>
         </table></div>
         <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado.</p>
+      </Panel>
+      <Panel title="Governança dos dados" note="de onde vêm, com que frequência e quando atrasam" className="config-wide">
+        <div className="config-scroll" role="region" aria-label="Frequência de atualização de cada fonte" tabIndex={0}><table className="config-table config-gov">
+          <thead><tr><th scope="col">Fonte</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
+          <tbody>
+            {FONTES.map((f) => (
+              <tr key={f.id}>
+                <th scope="row">{f.nome}</th>
+                <td data-label="Origem">{f.origem}</td>
+                <td data-label="Coleta">{f.coleta}</td>
+                <td data-label="Quando o dado muda">{f.muda}</td>
+                <td data-label="Atrasado após">{f.atraso}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table></div>
+        <h3 className="config-sub">No seu navegador</h3>
+        <ul className="config-list">{NAVEGADOR.map((t) => <li key={t}>{t}</li>)}</ul>
+        <h3 className="config-sub">Regras</h3>
+        <ul className="config-list">{REGRAS.map((t) => <li key={t}>{t}</li>)}</ul>
+        <p className="config-note">Horários em Brasília. Coleta é a consulta do app às fontes; o dado só muda quando o órgão de origem publica.</p>
       </Panel>
       <div className="config-side">
         <Panel title="Atalhos" note="teclado">
