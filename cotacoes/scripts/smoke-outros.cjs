@@ -23,6 +23,21 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
 ;(async () => {
   const b = await chromium.launch({ channel: process.env.SMOKE_CHANNEL || 'msedge', headless: true }), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
   try {
+    // aviso de entrada: aparece a cada abertura do app, fecha com o botão e não volta ao trocar de aba
+    for (const width of [390, 1280]) {
+      const ctx = await b.newContext({ viewport: { width, height: 800 }, serviceWorkers: 'block' })
+      await ctx.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => false }))
+      const p = await ctx.newPage()
+      await p.goto(base + '/#resumo')
+      const aviso = p.getByRole('dialog', { name: 'Aviso' }); await aviso.waitFor()
+      assert.match(await aviso.innerText(), /aplicativo educacional[\s\S]*informação ilustrativa[\s\S]*Não representa compromisso nem informações atualizadas on-line/)
+      const box = await aviso.boundingBox(); assert.ok(box.x >= 0 && box.x + box.width <= width, 'aviso cabe na largura')
+      await aviso.getByRole('button', { name: 'Entendi' }).click(); await aviso.waitFor({ state: 'hidden' })
+      await p.goto(base + '/#juros'); assert.equal(await p.getByRole('dialog', { name: 'Aviso' }).count(), 0, 'não reaparece ao trocar de aba')
+      await p.reload(); await p.getByRole('dialog', { name: 'Aviso' }).waitFor()
+      await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
+      await ctx.close()
+    }
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
@@ -150,11 +165,14 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 6)
+      assert.equal(await p.locator('.learn-list li').count(), 7)
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /9,62%[\s\S]*R\$ 5,48/)
+      await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
+      await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()
+      assert.match(await p.locator('.learn-detail').innerText(), /Na curva[\s\S]*1\.150\.000[\s\S]*1\.180\.804[\s\S]*Break funding[\s\S]*10\.089/)
       await p.locator('.learn-list button', { hasText: 'SOFR' }).click()
       await p.locator('.learn-detail h2', { hasText: 'SOFR' }).waitFor()
       if (width >= 1000) { const l = await p.locator('.learn-list').boundingBox(), d = await p.locator('.learn-detail').boundingBox(); assert.ok(d.x > l.x + l.width - 1, 'explicação ao lado da lista') }

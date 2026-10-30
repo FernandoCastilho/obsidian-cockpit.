@@ -27,12 +27,25 @@ export const custoMedio = (fontes) => {
 // Prêmio anual de um CDS: spread em pontos-base × valor protegido (100 pb = 1% ao ano).
 export const premioCds = (nocional, pontosBase) => (nocional * pontosBase) / 10000
 
+// Liquidação antecipada de um contrato prefixado, juros compostos anuais.
+// Na curva: o saldo cresce pela taxa contratada até a data (principal × (1 + taxa)^anos decorridos).
+export const valorNaCurva = ({ principal, taxa, anosDecorridos }) => principal * (1 + taxa) ** anosDecorridos
+// A mercado: o valor de resgate no vencimento, trazido a valor presente pela taxa de mercado do prazo que falta.
+export const valorAMercado = ({ principal, taxa, anosTotal, taxaMercado, anosRestantes }) => (principal * (1 + taxa) ** anosTotal) / (1 + taxaMercado) ** anosRestantes
+// Break funding: o credor mantém a captação até o vencimento (saldo × (1 + taxa de funding)^restante) e só consegue reaplicar o que recebe à taxa de mercado.
+// O custo é a diferença, a valor presente pela taxa de reaplicação; nunca negativo (reaplicar acima do funding não gera cobrança).
+export const breakFunding = ({ captado, taxaFunding, anosDecorridos, taxaReaplicacao, anosRestantes }) => {
+  const saldo = captado * (1 + taxaFunding) ** anosDecorridos
+  return Math.max(0, saldo * (((1 + taxaFunding) / (1 + taxaReaplicacao)) ** anosRestantes - 1))
+}
+
 const EX_DIFERENCIAL = { brl: 0.14, usd: 0.04, spot: 5 }
 const EX_CUPOM = { spot: 5, futuro: 5.5, di: 0.14 }
 const EX_CUPOM_2 = { spot: 5, futuro: 5.25, di: 0.14 }
 const EX_SOFR = { principal: 1_000_000, taxa: 0.043 }
 const EX_EURIBOR = { saldo: 200_000, indexador: 0.03, spread: 0.01 }
 const EX_FUNDING = { fontes: [{ nome: 'CDB', valor: 60, custo: 0.14 }, { nome: 'LCI', valor: 30, custo: 0.13 }, { nome: 'Capital próprio', valor: 10, custo: 0 }], taxaEmprestimo: 0.18 }
+const EX_LIQ = { principal: 1_000_000, taxa: 0.15, anosTotal: 2, anosDecorridos: 1, anosRestantes: 1, taxaMercado: 0.12, taxaFunding: 0.13 }
 const EX_CDS = { nocional: 10_000_000, pb: 200 }
 
 const money = (v, sym) => `${sym} ${nf(v, 0)}`
@@ -218,6 +231,49 @@ export const CONCEITOS = [
     },
   },
   {
+    id: 'liquidacao-antecipada',
+    nome: 'Liquidação antecipada (na curva, a mercado e break funding)',
+    frase: 'É pagar um contrato antes do vencimento; o valor a pagar muda conforme o contrato seja liquidado na curva ou a mercado, e pode vir com a cobrança de break funding.',
+    crianca: [
+      'Você financiou R$ 1 milhão a uma taxa fixa por dois anos e quer quitar com um ano de antecedência. Quanto pagar? Há duas formas de calcular.',
+      'Na curva: o saldo cresce todo dia pela taxa contratada, como se o contrato seguisse normalmente, e você paga esse saldo. É a conta do contrato; não olha o que o mercado paga de juros hoje.',
+      'A mercado: o contrato vale hoje o que vale o dinheiro que ele ainda vai render, descontado pela taxa de mercado do prazo que falta. Se o mercado paga menos do que o seu contrato, o contrato “vale mais” e você paga mais do que o saldo na curva; se o mercado paga mais, paga menos.',
+      'Break funding (custo de quebra) é a indenização que o credor cobra por ter captado dinheiro a uma taxa e prazo fixos para emprestar a você: ao receber antes, ele só consegue reaplicar a uma taxa menor e fica com um buraco. A cláusula do contrato diz se e como isso é cobrado.',
+    ],
+    analogia: 'É como cancelar um aluguel antes do fim: o saldo contábil é o que falta pagar (na curva); o valor de mercado é o quanto o dono perde ou ganha se alugar de novo pelos preços de hoje; o break funding é a multa para cobrir o buraco que ele fica.',
+    lacunas: [
+      'Na curva não é “sem custo”: é o valor contábil. Quem liquida na curva um contrato que rende menos que o mercado paga pouco; quem liquida um que rende mais deixa o credor no prejuízo, e é aí que entra a cobrança de quebra.',
+      'A mercado e break funding atacam o mesmo problema (a diferença entre a taxa do contrato e a taxa de hoje) por caminhos diferentes. Em geral, o contrato prevê um ou outro, ou fixa uma regra própria; somar os dois pelo mesmo efeito seria cobrar em dobro.',
+      'Break funding mede a perda do credor com a captação (taxa de funding contra taxa de reaplicação), não a perda com o contrato (taxa do contrato contra taxa de mercado). Por isso nunca é negativo: se ele reaplica acima do funding, não há o que cobrar.',
+      'Os termos e a fórmula exata dependem do contrato e da instituição (em operações do BNDES, das condições da linha); a conta abaixo é o esqueleto, não a cláusula.',
+    ],
+    preciso: {
+      texto: 'Com taxa contratada i, prazo total T, tempo decorrido t, resto r = T − t, taxa de mercado m, taxa de funding f e taxa de reaplicação m (juros compostos anuais):',
+      formula: 'curva = P × (1 + i)^t   ·   mercado = P × (1 + i)^T ÷ (1 + m)^r   ·   break funding = saldo do funding × [((1 + f) ÷ (1 + m))^r − 1], mínimo zero',
+    },
+    exemplo: (() => {
+      const e = EX_LIQ
+      const curva = valorNaCurva(e)
+      const mercado = valorAMercado(e)
+      const quebra = breakFunding({ captado: e.principal, taxaFunding: e.taxaFunding, anosDecorridos: e.anosDecorridos, taxaReaplicacao: e.taxaMercado, anosRestantes: e.anosRestantes })
+      return {
+        titulo: `Empréstimo de ${money(e.principal, 'R$')} a ${pct(e.taxa, 0)} ao ano, quitado com um ano de antecedência`,
+        passos: [
+          `Contrato prefixado de ${e.anosTotal} anos; liquidação após ${e.anosDecorridos} ano. A taxa de mercado para o ano que falta está em ${pct(e.taxaMercado, 0)}.`,
+          `Na curva = ${nf(e.principal, 0)} × ${nf(1 + e.taxa, 2)}^${e.anosDecorridos} = R$ ${nf(curva, 0)}.`,
+          `A mercado: no vencimento o contrato valeria R$ ${nf(e.principal * (1 + e.taxa) ** e.anosTotal, 0)}; trazido a valor presente por ${pct(e.taxaMercado, 0)} em ${e.anosRestantes} ano, dá R$ ${nf(mercado, 0)}, ou seja, R$ ${nf(mercado - curva, 0)} a mais que na curva, porque o contrato rende mais do que o mercado paga hoje.`,
+          `Break funding: o credor captou ${money(e.principal, 'R$')} a ${pct(e.taxaFunding, 0)}, e a captação já vale R$ ${nf(e.principal * (1 + e.taxaFunding) ** e.anosDecorridos, 0)}. Reaplicando a ${pct(e.taxaMercado, 0)} em vez de ${pct(e.taxaFunding, 0)}, falta R$ ${nf(quebra, 0)} a valor presente.`,
+        ],
+        resultado: `Na curva R$ ${nf(curva, 0)}; a mercado R$ ${nf(mercado, 0)}; break funding de R$ ${nf(quebra, 0)} (só o que cobre a captação, conforme o contrato).`,
+      }
+    })(),
+    noApp: { texto: 'A taxa de mercado do prazo que falta vem da curva DI x pré, em Juros; para a TFB e a TLP do BNDES, veja as abas Juros e BNDES.', tab: 'juros' },
+    teste: {
+      pergunta: 'A taxa de mercado cai de 12% para 8% depois que você contratou a 15% fixos. Liquidar na curva ou a mercado custa mais?',
+      resposta: 'A mercado custa mais. O seu contrato rende 15% e o mercado paga 8%, então o valor presente dos fluxos que faltam sobe. Na curva o saldo não muda com a taxa de mercado, por isso é o menor dos dois.',
+    },
+  },
+  {
     id: 'cds',
     nome: 'CDS (Credit Default Swap)',
     frase: 'É um seguro contra calote de uma empresa ou de um país; o preço do seguro mede o risco percebido.',
@@ -259,6 +315,7 @@ export const CONEXAO = {
     ['CDS', 'é o prêmio pelo risco de crédito: quanto mais alto, mais caro captar.'],
     ['Cupom cambial', 'é a ponte entre o juro em reais e o juro em dólar.'],
     ['Custo de funding', 'é o resultado: benchmark + spread de risco, convertido na moeda em que a instituição empresta.'],
+    ['Liquidação antecipada', 'mostra quanto vale pagar antes do vencimento: o saldo do contrato (na curva), o preço de hoje (a mercado) e a indenização pelo funding quebrado (break funding).'],
   ],
 }
 

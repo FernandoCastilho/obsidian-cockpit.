@@ -1,0 +1,5 @@
+.aviso-inicial { max-width: min(440px, calc(100vw - 32px)); padding: 20px; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-top: 3px solid var(--warn); border-radius: 12px; }
+.aviso-inicial::backdrop { background: rgba(0, 0, 0, .65); }
+.aviso-inicial h2 { margin: 0 0 8px; font-size: 1.05rem; }
+.aviso-inicial p { margin: 0 0 16px; line-height: 1.5; }
+.aviso-inicial .btn { min-height: 44px; padding-inline: 20px; border-color: var(--accent); }
