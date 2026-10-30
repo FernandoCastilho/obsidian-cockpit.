@@ -65,7 +65,7 @@ body { background: var(--bg); }
 }
 @media (min-width: 1000px) and (max-width: 1299px) {
   .topbar-clocks { display: none; }
-  .topbar-brand span, .topbar-feed:not(.err) { font-size: 0; }
+  .topbar-feed:not(.err) { font-size: 0; }
   .topbar-feed b { font-size: .72rem; }
   .topbar-feed span { margin-right: 7px; }
   .topbar-tabs button { padding: 0 8px; font-size: .66rem; }
