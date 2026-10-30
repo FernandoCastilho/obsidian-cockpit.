@@ -93,6 +93,11 @@ jobs:
         run: node scripts/fetch-moedas.mjs
         continue-on-error: true
         timeout-minutes: 8
+      - name: Gerar CSV das séries do BNDES (Power Query)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/export-csv.mjs
+        continue-on-error: true
+        timeout-minutes: 2
       - name: Coletar feriados da China (dados oficiais)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-holidays.mjs

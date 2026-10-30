@@ -1,4 +1,5 @@
 // Visão única da aba BNDES: famílias (TFB, TLP, TFC, Moedas) com as mesmas colunas e a série escolhida para o gráfico.
+import { tfbSpread } from './spread.js'
 import { PRAZO_LABEL, TFB_DEFINICAO, TLP_DEFINICAO, bndesRows, pointsOf as tfbPoints, tlpView } from './bndes.js'
 import { MOEDAS_DEFINICAO, TFC_DEFINICAO, GROUPS, groupRows, pointsOf as moedaPoints } from './moedas.js'
 
@@ -13,8 +14,9 @@ export const DEFAULT_SELECTION = { tfb: 'TFB_60_90', tlp: 'TLP', tfc: 'C01', moe
 const toRow = (r, id, name, sub) => ({ id, name, sub, missing: !!r.missing, text: r.text, day: r.day ?? null, month: r.month ?? null, year: r.year ?? null, date: r.date, stale: r.stale ?? null })
 
 // Linhas da tabela de uma família (mesmas colunas em todas): série, valor, variações no dia, mês e ano, data.
-export function familyRows(family, bndes, moedas, now = Date.now()) {
-  if (family === 'tfb') return bndesRows(bndes).map((r) => toRow(r, r.key, `${PRAZO_LABEL[r.prazo]} · ${r.liberacao} dias`, `${r.key} · % a.a.`))
+// `br`: curva DI x pré da B3 (curves.br); com ela, as linhas da TFB ganham o spread contra o DI.
+export function familyRows(family, bndes, moedas, now = Date.now(), br = null) {
+  if (family === 'tfb') return bndesRows(bndes).map((r) => ({ ...toRow(r, r.key, `${PRAZO_LABEL[r.prazo]} · ${r.liberacao} dias`, `${r.key} · % a.a.`), spread: tfbSpread(tfbPoints(bndes, r.key), br, r.prazo), hasSpread: true }))
   if (family === 'tlp') {
     const v = tlpView(bndes, now)
     return [v ? { ...toRow({ ...v, missing: false }, 'TLP', 'TLP', '777 · % a.a. · mensal'), nextRelease: v.nextRelease } : { id: 'TLP', name: 'TLP', sub: '777 · % a.a. · mensal', missing: true }]
