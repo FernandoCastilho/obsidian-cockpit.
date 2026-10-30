@@ -1,18 +1,23 @@
-// Indexadores do crédito: TR, TBF e TLP (SGS do Banco Central). A TFB (BNDES) tem coleta própria em bndes-lib.mjs. Sem dependências.
+// Indexadores do crédito: TR e TBF (SGS do Banco Central) e TLP (arquivo da moeda 777 do BNDES, a mesma fonte da aba BNDES: uma fonte só,
+// sem dois números para a mesma taxa). A TFB tem coleta própria em bndes-lib.mjs. Sem dependências.
 import { brDate, toBr } from './macro-lib.mjs'
+import { parseMoeda } from './moedas-lib.mjs'
 
 // TR e TBF: séries diárias em % a.m., cada ponto vale para o período que começa em `data` e termina em `dataFim`.
 // TLP: série mensal em % a.a., um ponto por mês de vigência.
 export const INDEXADORES = {
   TR: { source: 'SGS', code: 226, name: 'Taxa Referencial', unit: 'a.m.', keep: 30, days: 45 },
   TBF: { source: 'SGS', code: 253, name: 'Taxa Básica Financeira', unit: 'a.m.', keep: 30, days: 45 },
-  TLP: { source: 'SGS', code: 27572, name: 'Taxa de Longo Prazo', unit: 'a.a.', keep: 18, days: 600 },
+  TLP: { source: 'BNDES', code: 777, name: 'Taxa de Longo Prazo', unit: 'a.a.', keep: 18, days: 600 },
 }
 
 // Séries diárias do SGS exigem janela de datas (o atalho /ultimos/N devolve HTTP 400 para elas).
 export const sgsWindow = (code, days, now = Date.now()) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${code}/dados?formato=json&dataInicial=${toBr(now - days * 864e5)}&dataFinal=${toBr(now)}`
 
-export const urlOf = (def, now = Date.now()) => sgsWindow(def.code, def.days, now)
+// Arquivo da moeda do BNDES (data dd/mm/aaaa, valor com vírgula) -> linhas { data: AAAA-MM-DD, valor }, como o parseIndexador entende.
+export const bndesUrl = (code) => `https://www.bndes.gov.br/Moedas/um${code}.txt`
+export const bndesRows = (text) => parseMoeda(text).map(([data, valor]) => ({ data, valor }))
+export const urlOf = (def, now = Date.now()) => (def.source === 'BNDES' ? bndesUrl(def.code) : sgsWindow(def.code, def.days, now))
 
 // [{data, dataFim?, valor}] -> { latest, history } com pontos { start, end, value } (ms UTC ao meio-dia); null se nada válido.
 export function parseIndexador(rows, keep = 30, now = Date.now()) {

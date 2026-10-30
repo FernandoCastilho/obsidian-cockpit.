@@ -1,8 +1,12 @@
 // Quais blocos de dados estão sendo servidos com o último dado publicado (fonte fora do ar) há mais de `hours` horas.
+import { BNDES_SERIES } from './bndes-lib.mjs'
+import { MOEDAS_CATALOG } from './moedas-lib.mjs'
 const LABELS = {
   macro: { cdi: 'CDI', selic: 'Selic', sofr: 'SOFR', sofrAvg: 'médias da SOFR', focus: 'Boletim Focus', ptax: 'PTAX' },
   curves: { br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' },
-  indexadores: { TR: 'TR', TBF: 'TBF', TLP: 'TLP', TFB36: 'TFB 36 meses', TFB60: 'TFB 60 meses', TFB84: 'TFB 84 meses', TFB120: 'TFB 120 meses' },
+  indexadores: { TR: 'TR', TBF: 'TBF', TLP: 'TLP' },
+  bndes: { ...Object.fromEntries(BNDES_SERIES.map((s) => [s.key, `TFB ${s.prazo} meses, liberação em ${s.liberacao} dias`])), TLP: 'TLP (BNDES)' },
+  moedas: Object.fromEntries(MOEDAS_CATALOG.map((c) => [c.id, `${c.name} (${c.id})`])),
   news: { USD: 'notícias do USD', EUR: 'notícias do EUR', JPY: 'notícias do JPY', CNH: 'notícias do CNH' },
 }
 

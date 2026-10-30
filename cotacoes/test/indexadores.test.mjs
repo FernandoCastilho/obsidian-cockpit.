@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { INDEXADORES, buildIndexadores, sgsWindow, fillSeriesFromPrevious, parseIndexador, urlOf } from '../scripts/indexadores-lib.mjs'
+import { INDEXADORES, bndesRows, buildIndexadores, sgsWindow, fillSeriesFromPrevious, parseIndexador, urlOf } from '../scripts/indexadores-lib.mjs'
 import { anual, indexRows } from '../src/indexadores.js'
 
 const NOW = Date.UTC(2026, 9, 27, 15)
@@ -53,9 +53,15 @@ test('janela de datas do SGS (séries diárias não aceitam /ultimos)', () => {
   assert.ok(Object.values(INDEXADORES).every((d) => d.days >= d.keep))
 })
 
-test('endereços: SGS por janela de datas', () => {
+test('endereços: TR e TBF no SGS; TLP no arquivo da moeda 777 do BNDES (mesma fonte da aba BNDES)', () => {
   assert.match(urlOf(INDEXADORES.TR, NOW), /api\.bcb\.gov\.br.*sgs\.226/)
-  assert.ok(!Object.values(INDEXADORES).some((d) => d.source === 'BNDES'), 'a TFB tem coleta própria')
+  assert.equal(urlOf(INDEXADORES.TLP, NOW), 'https://www.bndes.gov.br/Moedas/um777.txt')
+  assert.equal(INDEXADORES.TLP.source, 'BNDES')
+  assert.deepEqual(bndesRows('   data   ;     valor\r\n01/10/2026;       8,120000\r\n01/09/2026;       8,300000\r\n01/11/2026;       7,900000\r\n'), [{ data: '2026-09-01', valor: 8.3 }, { data: '2026-10-01', valor: 8.12 }, { data: '2026-11-01', valor: 7.9 }])
+  const p = parseIndexador(bndesRows('01/10/2026;  8,12\n01/09/2026;  8,30\n01/12/2026;  7,90\n'), 18, NOW)
+  assert.equal(p.latest.value, 8.12, 'mês futuro já publicado não vale ainda')
+  const rows = indexRows(buildIndexadores({ TLP: bndesRows('01/10/2026; 8,12\n01/09/2026; 8,30\n') }, [], NOW))
+  assert.equal(rows.find((r) => r.key === 'TLP').sourceText, 'BNDES 777')
 })
 
 import { DIVULGACAO, dailyDue, lastBusinessDay, tlpNextRelease } from '../src/indexadores.js'

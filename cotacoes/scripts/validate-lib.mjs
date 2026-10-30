@@ -1,5 +1,8 @@
 // Validação cruzada dos dados publicados (quotes, history, intraday e PTAX). Devolve achados; nunca lança.
 // Objetivo: pegar dado errado ou ausente (ex.: uma ponta do cruzamento CNH) antes de o usuário ver.
+import { MOEDAS_CATALOG } from './moedas-lib.mjs'
+import { BNDES_SERIES } from './bndes-lib.mjs'
+import { isJump } from '../src/jumps.js'
 const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
 const CODES = ['USD', 'EUR', 'JPY', 'CNH']
 const pos = (v) => Number.isFinite(Number(v)) && Number(v) > 0
@@ -91,6 +94,57 @@ export function validateIntraday(file, now = Date.now()) {
   return CODES.flatMap((code) => checkSeries('intraday', code, file.series[code]?.points, JUMP.intraday, now, 72, 20, (p) => p?.[0], (p) => p?.[1]))
 }
 
-export function validateAll({ quotes, history, intraday, macro }, now = Date.now()) {
-  return [...validateQuotes(quotes, now), ...validateAgainstPtax(quotes, macro), ...validateHistory(history, now), ...validateIntraday(intraday, now)]
+// TFB, TFC e moedas contratuais do BNDES: série ausente, sem dado novo, valor implausível ou salto recente (últimas observações).
+// `stale` (coleta falhou e o arquivo reaproveitou o dado anterior) vai pelo relatório de dados desatualizados.
+const MAX_AGE_DAYS = { default: 6, '024': 120, 236: 50, TR1: 40, TR2: 40, TLP: 40 }
+const RECENT = 3 // variações das últimas observações que entram na checagem de salto (o alerta se resolve sozinho quando saem da janela)
+const ptNum = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
+const brDay = (iso) => iso.split('-').reverse().join('/')
+const todaySP = (now) => new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' })
+
+function checkBndesSeries(area, code, points, { kind, id }, now) {
+  const out = []
+  const today = todaySP(now)
+  const pts = Array.isArray(points) ? points.filter((p) => p[0] <= today) : []
+  if (!pts.length) return [{ area, message: `${code}: sem observação até hoje` }]
+  const [lastDay, lastValue] = pts.at(-1)
+  const age = Math.floor((Date.parse(`${today}T12:00:00Z`) - Date.parse(`${lastDay}T12:00:00Z`)) / 864e5)
+  const max = MAX_AGE_DAYS[id] ?? MAX_AGE_DAYS.default
+  if (age > max) out.push({ area, message: `${code}: último dado de ${brDay(lastDay)}, há ${age} dias (limite ${max})` })
+  if (kind === 'rate' && !(lastValue > 0 && lastValue <= 100)) out.push({ area, message: `${code}: valor fora do plausível (${lastValue})` })
+  if (kind === 'level' && !(lastValue > 0)) out.push({ area, message: `${code}: valor fora do plausível (${lastValue})` })
+  for (let i = Math.max(1, pts.length - RECENT); i < pts.length; i++) {
+    const [d, v] = pts[i], [, prev] = pts[i - 1]
+    const diff = kind === 'level' ? (prev ? (v / prev - 1) * 100 : NaN) : v - prev
+    if (isJump(kind, diff, id)) out.push({ area, message: `${code}: salto de ${diff > 0 ? '+' : '−'}${ptNum(Math.abs(diff))}${kind === 'level' ? '%' : ' p.p.'} em ${brDay(d)} (${ptNum(prev, 4)} → ${ptNum(v, 4)}); confira a fonte do BNDES` })
+  }
+  return out
+}
+
+export function validateBndes({ bndes, moedas }, now = Date.now()) {
+  const out = []
+  if (!bndes?.series) out.push({ area: 'bndes', message: 'bndes.json ausente ou inválido' })
+  else {
+    for (const s of BNDES_SERIES) {
+      if (!bndes.series[s.key]) out.push({ area: 'bndes', message: `${s.key}: série ausente` })
+      else out.push(...checkBndesSeries('bndes', s.key, bndes.series[s.key].points, { kind: 'rate', id: s.key }, now))
+    }
+    if (!bndes.tlp) out.push({ area: 'bndes', message: 'TLP: série ausente' })
+    else out.push(...checkBndesSeries('bndes', 'TLP', bndes.tlp.points, { kind: 'rate', id: 'TLP' }, now))
+  }
+  if (!moedas?.series) out.push({ area: 'moedas', message: 'moedas.json ausente ou inválido' })
+  else {
+    for (const c of MOEDAS_CATALOG) {
+      if (!moedas.series[c.id]) out.push({ area: 'moedas', message: `${c.name} (${c.id}): série ausente` })
+      else out.push(...checkBndesSeries('moedas', `${c.name} (${c.id})`, moedas.series[c.id].points, c, now))
+    }
+  }
+  return out
+}
+
+export function validateAll(input, now = Date.now()) {
+  const { quotes, history, intraday, macro } = input
+  const base = [...validateQuotes(quotes, now), ...validateAgainstPtax(quotes, macro), ...validateHistory(history, now), ...validateIntraday(intraday, now)]
+  // BNDES e moedas só entram quando quem chama passa os arquivos (null = não coletado, vira achado)
+  return 'bndes' in input || 'moedas' in input ? [...base, ...validateBndes({ bndes: input.bndes, moedas: input.moedas }, now)] : base
 }

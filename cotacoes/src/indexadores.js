@@ -1,4 +1,4 @@
-// Apresentação dos indexadores TR, TBF e TLP (arquivo indexadores.json: SGS do Banco Central).
+// Apresentação dos indexadores TR, TBF e TLP (arquivo indexadores.json: TR e TBF do SGS do Banco Central; TLP da moeda 777 do BNDES).
 import { addDays, isBusinessDay } from './holidays.js'
 const nf = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
@@ -17,7 +17,7 @@ export const INDEX_KEYS = ['TR', 'TBF', 'TLP']
 export const DIVULGACAO = {
   TR: { rule: 'Diária, até o 1º dia útil seguinte à data de referência', norm: 'Res. CMN 4.624/2018 (Banco Central)' },
   TBF: { rule: 'Diária, até o 1º dia útil seguinte à data de referência', norm: 'Res. CMN 4.624/2018 (Banco Central)' },
-  TLP: { rule: 'Mensal, no último dia útil do mês anterior ao da vigência', norm: 'Res. CMN 4.600/2017 (Banco Central)' },
+  TLP: { rule: 'Mensal, no último dia útil do mês anterior ao da vigência', norm: 'Res. CMN 4.600/2017 (Banco Central); valor: BNDES, moeda 777' },
 }
 const ymd = (ms) => new Date(ms).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' })
 const brIso = (s) => s.split('-').reverse().join('/')
@@ -73,7 +73,7 @@ export function indexRows(data, now = Date.now()) {
       family: FAMILIA(key),
       name: s.name,
       code: s.code,
-      sourceText: `SGS ${s.code}`,
+      sourceText: `${s.source === 'BNDES' ? 'BNDES' : 'SGS'} ${s.code}`,
       unit: s.unit,
       value: latest.value,
       text: `${nf(latest.value, s.unit === 'a.m.' ? 4 : 2)}% ${s.unit}`,
