@@ -507,17 +507,48 @@ export function buscarConceitos(termo, lista = CONCEITOS) {
 // Agrupa por tópico, na ordem de TOPICOS, sem mostrar tópico vazio.
 export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: lista.filter((c) => c.topico === topico) })).filter((g) => g.itens.length)
 
+// MAPA DE CONEXÕES. Regra do projeto: ao criar ou alterar um conceito, atualize aqui o papel dele (CONEXAO.itens) e as ligações com os
+// outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
+// LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
+export const LIGACOES = [
+  ['diferencial-de-juros', 'cupom-cambial', 'O cupom cambial é o diferencial de juros depois de passar pelo dólar futuro: a parte do juro em reais que sobra em dólar.'],
+  ['diferencial-de-juros', 'sofr', 'A SOFR é o juro em dólar contra o qual se mede o diferencial: quanto maior o juro em reais sobre ela, maior o diferencial.'],
+  ['diferencial-de-juros', 'inflacao', 'Diferencial nominal não é real: descontando a inflação de cada país, o ganho verdadeiro entre as moedas pode ser outro.'],
+  ['cupom-cambial', 'sofr', 'O cupom cambial é o juro em dólar embutido no mercado brasileiro; a diferença dele para a SOFR mostra o prêmio de estar no país.'],
+  ['cupom-cambial', 'custo-de-funding', 'O cupom cambial converte o custo de captar em dólar para reais (swap): é a ponte que fecha a conta do funding externo.'],
+  ['sofr', 'euribor', 'São os benchmarks “sem risco” de cada moeda, dólar e euro, a base sobre a qual se soma o spread.'],
+  ['sofr', 'custo-de-funding', 'Captar em dólar custa SOFR mais o spread de crédito de quem capta.'],
+  ['euribor', 'custo-de-funding', 'Captar em euro custa Euribor mais o spread de crédito de quem capta.'],
+  ['custo-de-funding', 'cds', 'O CDS mede o risco percebido: quando sobe, o spread exigido e o custo de funding sobem junto.'],
+  ['custo-de-funding', 'liquidacao-antecipada', 'O break funding cobra o custo de quebrar a captação (funding) que financiava o contrato liquidado antes do prazo.'],
+  ['custo-de-funding', 'debenture', 'A debênture é uma fonte de funding da empresa: seu custo é o CDI (ou o IPCA) mais o spread de risco.'],
+  ['cds', 'debenture', 'O CDS é um seguro contra calote; o risco de crédito que ele precifica é o mesmo que define o spread da debênture.'],
+  ['liquidacao-antecipada', 'debenture', 'Quitar ou resgatar uma debênture antes do vencimento pode ser na curva ou a mercado, e os contratos costumam prever uma cobrança de quebra.'],
+  ['liquidacao-antecipada', 'fidc', 'Vender recebíveis ao FIDC com desconto é trazer valor futuro a valor presente, a mesma conta da liquidação a mercado.'],
+  ['debenture', 'nota-comercial', 'Ambas são dívida da empresa com remuneração definida: a debênture é mais longa e formal, a nota comercial é curta e enxuta.'],
+  ['debenture', 'fidc', 'Duas formas de captar no mercado: a debênture é dívida da empresa; o FIDC compra os recebíveis dela, e o investidor depende da carteira.'],
+  ['debenture', 'inflacao', 'Debêntures indexadas ao IPCA pagam a inflação mais uma taxa real: quem compra se protege do aumento dos preços.'],
+  ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: tomar dinheiro por pouco tempo (nota comercial) ou antecipar o que a empresa tem a receber (FIDC).'],
+]
+
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
-    ['Diferencial de juros', 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.'],
-    ['SOFR e Euribor', 'são os benchmarks de cada moeda: o preço “sem risco” do dinheiro em dólar e em euro.'],
-    ['CDS', 'é o prêmio pelo risco de crédito: quanto mais alto, mais caro captar.'],
-    ['Cupom cambial', 'é a ponte entre o juro em reais e o juro em dólar.'],
-    ['Custo de funding', 'é o resultado: benchmark + spread de risco, convertido na moeda em que a instituição empresta.'],
-    ['Liquidação antecipada', 'mostra quanto vale pagar antes do vencimento: o saldo do contrato (na curva), o preço de hoje (a mercado) e a indenização pelo funding quebrado (break funding).'],
-    ['Debênture, nota comercial e FIDC', 'são três formas de a empresa captar crédito no mercado: dívida longa, dívida curta e venda de recebíveis. A remuneração costuma ser o CDI mais um spread de risco.'],
-    ['Inflação', 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.'],
+    { id: 'diferencial-de-juros', texto: 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.' },
+    { id: 'cupom-cambial', texto: 'é a ponte entre o juro em reais e o juro em dólar.' },
+    { id: 'sofr', texto: 'é o benchmark do dólar: o preço “sem risco” do dinheiro em dólar.' },
+    { id: 'euribor', texto: 'é o benchmark do euro, o equivalente europeu da SOFR.' },
+    { id: 'custo-de-funding', texto: 'é o resultado: benchmark + spread de risco, convertido na moeda em que a instituição empresta.' },
+    { id: 'cds', texto: 'é o prêmio pelo risco de crédito: quanto mais alto, mais caro captar.' },
+    { id: 'liquidacao-antecipada', texto: 'mostra quanto vale pagar antes do vencimento: o saldo do contrato (na curva), o preço de hoje (a mercado) e a indenização pelo funding quebrado (break funding).' },
+    { id: 'debenture', texto: 'é a dívida longa e formal da empresa com investidores: CDI ou IPCA mais um spread.' },
+    { id: 'nota-comercial', texto: 'é a dívida curta e enxuta da empresa, comum para capital de giro e ponte.' },
+    { id: 'fidc', texto: 'é o fundo que compra recebíveis; a subordinação protege quem tem a cota sênior.' },
+    { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
   ],
+  // O caminho que une tudo, de ponta a ponta.
+  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures e notas comerciais → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro.',
 }
 
+// Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.
+export const conexoesDe = (id) => LIGACOES.filter(([a, b]) => a === id || b === id).map(([a, b, porque]) => ({ id: a === id ? b : a, porque }))

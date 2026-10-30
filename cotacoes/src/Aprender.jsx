@@ -1,6 +1,8 @@
 import { Aviso } from './Avisos.jsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CONCEITOS, CONEXAO, buscarConceitos, porTopico } from './educacao.js'
+import { CONCEITOS, CONEXAO, LIGACOES, buscarConceitos, conexoesDe, porTopico } from './educacao.js'
+
+const nomeCurto = (id) => CONCEITOS.find((c) => c.id === id)?.nome.replace(/ \(.*\)/, '') ?? id
 import { Panel } from './TerminalDesk.jsx'
 
 // Aba Aprender: lista de conceitos à esquerda; o conceito escolhido abre à direita (frase, explicação simples, lacunas, versão precisa, exemplo, teste).
@@ -39,6 +41,15 @@ function Concept({ c, goto }) {
               <summary>Ver resposta</summary>
               <p>{c.teste.resposta}</p>
             </details>
+          </details>
+
+          <details open>
+            <summary>Conecta com</summary>
+            <ul className="learn-conecta">
+              {conexoesDe(c.id).map((x) => (
+                <li key={x.id}><button type="button" className="learn-link" onClick={() => goto('aprender', x.id)}>{nomeCurto(x.id)} ›</button> {x.porque}</li>
+              ))}
+            </ul>
           </details>
 
           <p className="learn-app">
@@ -95,7 +106,13 @@ export default function Aprender({ view = '', goto }) {
             <Panel title={CONEXAO.titulo} note="escolha um conceito ao lado">
               <div className="learn-body">
                 <ul className="learn-links">
-                  {CONEXAO.itens.map(([k, d]) => <li key={k}><strong>{k}</strong> {d}</li>)}
+                  {CONEXAO.itens.map((i) => <li key={i.id}><button type="button" className="learn-link" onClick={() => goto('aprender', i.id)}>{nomeCurto(i.id)}</button> {i.texto}</li>)}
+                </ul>
+                <h3>O caminho de ponta a ponta</h3>
+                <p>{CONEXAO.cadeia}</p>
+                <h3>Quem se liga a quem</h3>
+                <ul className="learn-links">
+                  {LIGACOES.map(([a, b, porque]) => <li key={`${a}-${b}`}><strong>{nomeCurto(a)} ↔ {nomeCurto(b)}</strong> {porque}</li>)}
                 </ul>
                 <p className="learn-note">Escolha um conceito na lista para abrir a explicação.</p>
               </div>
