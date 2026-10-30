@@ -208,7 +208,7 @@ export default function App() {
             : updatedAt
               ? `Câmbio — consulta de ${dataTimestamp(updatedAt)} · ${via === 'central' ? 'coleta central' : via === 'direto' ? 'consulta direta' : 'fonte reserva'}`
               : 'Carregando…'}
-          {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB · atualiza a cada 10 min</span>}
+          {updatedAt && !error && <span className="src-more"> · fonte: AwesomeAPI e BCB · coleta a cada 5 min no pregão</span>}
             <button
               type="button"
               className="refresh-mini"

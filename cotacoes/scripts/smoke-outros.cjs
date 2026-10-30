@@ -38,6 +38,19 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.getByRole('dialog', { name: 'Aviso' }).waitFor({ state: 'hidden' })
       await ctx.close()
     }
+    // governança dos dados em Configurações: tabela por fonte, regras e nenhuma rolagem lateral da página
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      await p.goto(base + '/#config')
+      const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 12, 'uma linha por fonte')
+      const txt = await gov.innerText()
+      assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
+      assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
+      if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
+      await p.close()
+    }
     // minigráficos de IPCA, Selic e CDI nos cards do Mercado: só com dados observados, nada inventado
     {
       const day = 864e5, now = Date.now(), noon = (t) => { const d = new Date(t); d.setUTCHours(12, 0, 0, 0); return d.getTime() }
