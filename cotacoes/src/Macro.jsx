@@ -166,6 +166,7 @@ export function EstrChart({ series, range }) {
     <RateChart
       id="ESTR"
       title="Área do euro · €STR"
+      help="estr"
       subtitle="BCE · taxa overnight, dias úteis"
       color={COLORS.ESTR}
       points={points}

@@ -65,6 +65,20 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).filter({ hasText: /\d,\d{3}%/ }).first().waitFor() // o arquivo simulado chega depois da primeira renderização
       assert.match(await p.locator('.executive-rates__table tbody tr', { hasText: '€STR' }).first().innerText(), /Área do euro · €STR overnight[\s\S]*\d,\d{3}%/)
       assert.equal(await p.locator('.executive-rates__table tbody tr .executive-rates__name .flag').count(), n, 'bandeira em cada linha')
+      // tooltips: toda linha do quadro tem o "?" e o balão abre inteiro (não cortado pela rolagem da tabela)
+      const helps = p.locator('.executive-rates__table tbody tr .executive-rates__name .help button')
+      assert.equal(await helps.count(), n, 'tooltip em cada linha do quadro')
+      for (const [rot, rx] of [['Selic meta', /meta é definida pelo Copom/], ['CDI overnight', /B3 calcula a média/], ['SOFR overnight', /mediana, ponderada pelo volume/], ['Fed', /faixa/], ['€STR', /sem os 25% menores/], ['BCE', /piso do juro/], ['Japão', /Banco do Japão/]]) {
+        const btn = p.locator('.executive-rates__table tbody tr', { hasText: rot }).first().locator('.help button')
+        await btn.hover(); const tip = p.locator('[role="tooltip"]'); await tip.waitFor()
+        assert.match(await tip.innerText(), rx, rot)
+        const box = await tip.boundingBox()
+        assert.ok(box.x >= 0 && box.x + box.width <= width + 1 && box.y >= 0, `balão de ${rot} dentro da tela`)
+        const topo = await tip.evaluate((el) => { const r = el.getBoundingClientRect(); const e = document.elementFromPoint(r.left + r.width / 2, r.top + Math.min(r.height / 2, 30)); return !!e?.closest('[role="tooltip"]') })
+        assert.ok(topo, `balão de ${rot} visível por inteiro, sem ficar atrás ou cortado`)
+        if (width < 700) { await tip.locator('.pop-close').click(); assert.equal(await p.locator('[role="tooltip"]').count(), 0, `no celular o balão de ${rot} fecha pelo botão Fechar`) }
+        await p.mouse.move(2, 2)
+      }
       const corpo = await p.locator('main').innerText()
       assert.doesNotMatch(corpo, /Reino Unido|Bank Rate|Bank of England|BoE/, 'sem Reino Unido em Juros')
       assert.match(await p.locator('.executive-rates__table tbody').innerText(), /Área do euro · BCE[\s\S]*Japão/)
