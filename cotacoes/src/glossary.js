@@ -85,6 +85,12 @@ export const GLOSSARY = {
     b: 'Se a curva em reais paga 14% e o dólar deve subir 4%, o cupom é ~10%: o que sobra em dólar.',
     c: 'Sobe quando há muita procura por dólar no mercado local; é um termômetro do aperto de dólar.',
   },
+  curvaEuro: {
+    t: 'Curva de juros da área do euro',
+    a: 'Os juros dos títulos de governo mais bem avaliados (AAA) da zona do euro para cada prazo, de 3 meses a 30 anos. O BCE estima a curva por um modelo (Svensson) a partir dos preços desses títulos.',
+    b: 'Se o prazo de 10 anos paga mais que o de 3 meses, a curva é inclinada para cima, o normal em economia sem sinal de recessão próxima.',
+    c: 'É a referência de preço do dinheiro em euro por prazo, o equivalente europeu das Treasuries; ao lado do €STR (overnight), mostra o juro de curto e de longo prazo na zona do euro.',
+  },
   treasuries: {
     t: 'Curva do Tesouro dos EUA',
     a: 'Os juros dos títulos do governo americano para cada prazo, de 1 mês a 30 anos.',

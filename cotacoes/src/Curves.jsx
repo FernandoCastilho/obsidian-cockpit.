@@ -10,6 +10,8 @@ import { dataTimestamp } from './dataTimestamp.js'
 import Explain from './Explain.jsx'
 import { useWidth } from './HistoryChart.jsx'
 import CupomLeitura from './CupomLeitura.jsx'
+import { useDataFile } from './useDataFile.js'
+import { normalizeEuroCurve } from './euroCurve.js'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
@@ -166,6 +168,20 @@ export function CurvePanel({ curves: c }) {
   )
 }
 
+// Curva soberana da área do euro (BCE): arquivo próprio, então aparece mesmo se a coleta das curvas do Brasil e dos EUA estiver pendente.
+function EuroCurve() {
+  const f = useDataFile('euro-curve.json')
+  let data = null
+  try { data = f.data ? normalizeEuroCurve(f.data) : null } catch { /* arquivo inválido: mostra indisponível */ }
+  if (!data) return <p className="status">{f.status === 'loading' ? 'Carregando curva do euro…' : 'Curva do euro indisponível nesta atualização.'}</p>
+  return (
+    <>
+      {(data.stale || f.stale) && <p className="status stale" role="status">Não foi possível atualizar a curva do euro. Mantida a última coleta disponível.</p>}
+      <CurveChart help="curvaEuro" title="Área do euro · Curva soberana AAA" subtitle="BCE, taxa spot % a.a. por vencimento" data={data} mode="us" source="Fonte: Banco Central Europeu, curva de juros da área do euro (títulos soberanos com classificação AAA, taxa spot estimada pelo modelo de Svensson). Não é o rendimento de um título específico, como o Bund alemão, e a taxa spot difere da par yield usada nas Treasuries, então a comparação com a curva dos EUA é de formato e não de nível exato." />
+    </>
+  )
+}
+
 export default function Curves({ curves: c }) {
   const d = c.data
   return (
@@ -201,6 +217,7 @@ export default function Curves({ curves: c }) {
           )}
         </div>
       )}
+      <div className="charts"><EuroCurve /></div>
       {c.status === 'ok' && d.cc && d.br && <CupomLeitura curves={d} />}
     </section>
   )

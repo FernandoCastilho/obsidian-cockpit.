@@ -52,6 +52,12 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const macro = { generatedAt: hoje, focus: null, ptax: {}, ptaxHist: {}, sofrAvg: dias.map((t) => [t, 3.2, 3.3, 3.4]),
         cdi: dias.map((t, i) => [t, +(14.1 + (i % 7) * 0.01).toFixed(2)]), selic: [[dias[0], 14.5], [dias[200], 14.25]], sofr: dias.map((t, i) => [t, +(4.3 - i * 0.003).toFixed(2), 4.2, 4.4]) }
       await p.route('**/macro.json*', (r) => r.fulfill({ json: macro }))
+      // curva do euro simulada: 3 datas de comparação com os 10 prazos do BCE
+      const prazos = [[0.25, '3M'], [0.5, '6M'], [1, '1A'], [2, '2A'], [3, '3A'], [5, '5A'], [7, '7A'], [10, '10A'], [20, '20A'], [30, '30A']]
+      const datas = [[hoje - dia, 'hoje', 'Último dia'], [hoje - 8 * dia, 'w1', '1 semana'], [hoje - 32 * dia, 'm1', '1 mês']].map(([t, id, label]) => ({ id, label, days: 0, date: new Date(t).toISOString().slice(0, 10) }))
+      const euroCurve = { schemaVersion: 1, generatedAt: new Date().toISOString(), curve: { id: 'euro-curve', sourceName: 'BCE (fixture de teste)', sourceUrl: 'https://www.ecb.europa.eu/', checkedAt: new Date().toISOString(), stale: false, sourceDate: datas[0].date, compare: datas,
+        curves: Object.fromEntries(datas.map((d, k) => [d.date, prazos.map(([anos, rot], j) => [anos, +(2.5 + j * 0.12 - k * 0.1).toFixed(4), rot])])) } }
+      await p.route('**/euro-curve.json*', (r) => r.fulfill({ json: euroCurve }))
       await p.goto(base + '/#juros'); await p.locator('.executive-rates__table tbody tr').first().waitFor()
       const linhas = p.locator('.executive-rates__table tbody tr .executive-rates__name')
       const n = await linhas.count()
@@ -64,6 +70,13 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await p.locator('.executive-rates__table tbody').innerText(), /Área do euro · BCE[\s\S]*Japão/)
       await p.locator('.chart h3', { hasText: 'Área do euro · €STR' }).first().waitFor()
       await p.locator('.chart h3', { hasText: 'Brasil · CDI' }).first().waitFor()
+      const curvaEuro = p.locator('.chart', { has: p.locator('h3', { hasText: 'Área do euro · Curva soberana AAA' }) })
+      await curvaEuro.waitFor()
+      assert.ok(await curvaEuro.locator('h3 .flag').count() === 1, 'bandeira da zona do euro na curva')
+      assert.equal(await curvaEuro.locator('.curve-legend button').count(), 3, 'três datas de comparação')
+      assert.ok(await curvaEuro.locator('svg path').count() >= 3, 'uma linha por data')
+      const eixo = await curvaEuro.locator('svg text.tick').allTextContents()
+      assert.ok(eixo.includes('3M') && eixo.includes('30A'), 'eixo do 3M ao 30A')
       assert.ok(await p.locator('.chart h3 .flag').count() >= 4, 'bandeira nos títulos dos gráficos (CDI, Selic, SOFR e €STR)')
       await p.close()
     }
@@ -72,7 +85,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 13, 'uma linha por fonte')
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 14, 'uma linha por fonte')
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
       assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)
