@@ -1,19 +1,19 @@
-// Coleta TR, TBF e TLP (SGS do Banco Central) e grava public/indexadores.json. Rodado a cada hora pelo GitHub Actions.
+// Coleta TR e TBF (SGS do Banco Central) e TLP (moeda 777 do BNDES) e grava public/indexadores.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
-import { INDEXADORES, buildIndexadores, fillSeriesFromPrevious, urlOf } from './indexadores-lib.mjs'
+import { INDEXADORES, bndesRows, buildIndexadores, fillSeriesFromPrevious, urlOf } from './indexadores-lib.mjs'
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const errors = []
 
 // O Banco Central responde 502/lento com frequência: várias tentativas.
-async function getJson(url, label, tries = 4) {
+async function getJson(url, label, { tries = 4, text = false } = {}) {
   let last
   for (let i = 1; i <= tries; i++) {
     try {
-      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-indexadores)', accept: 'application/json' }, signal: AbortSignal.timeout(40000) })
+      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-indexadores)', accept: text ? 'text/plain,*/*' : 'application/json' }, signal: AbortSignal.timeout(40000) })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return await res.json()
+      return text ? await res.text() : await res.json()
     } catch (e) {
       last = e
       await sleep(2500 * i)
@@ -24,7 +24,10 @@ async function getJson(url, label, tries = 4) {
 }
 
 const results = {}
-for (const [key, def] of Object.entries(INDEXADORES)) results[key] = await getJson(urlOf(def), `${key} (${def.source} ${def.code})`)
+for (const [key, def] of Object.entries(INDEXADORES)) {
+  const raw = await getJson(urlOf(def), `${key} (${def.source} ${def.code})`, { text: def.source === 'BNDES' })
+  results[key] = def.source === 'BNDES' && raw ? bndesRows(raw) : raw
+}
 const out = fillSeriesFromPrevious(buildIndexadores(results, errors), await loadPrevious('indexadores.json'))
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(new URL('../public/indexadores.json', import.meta.url), `${JSON.stringify(out)}\n`)

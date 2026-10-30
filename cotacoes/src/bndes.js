@@ -1,6 +1,7 @@
 // Apresentação da Taxa Fixa do BNDES (TFB) e da TLP: arquivo bndes.json (TFB: série diária em % a.a. por prazo e dias até a liberação
 // dos recursos; TLP: série mensal da moeda 777 do BNDES em % a.a.).
 import { tlpNextRelease } from './indexadores.js'
+import { JUMP_HINT, isJump } from './jumps.js'
 export const PRAZOS = [36, 60, 84, 120]
 export const LIBERACOES = [30, 90]
 export const PRAZO_LABEL = { 36: 'até 36 meses', 60: '36 a 60 meses', 84: '60 a 84 meses', 120: '84 a 120 meses' }
@@ -19,11 +20,12 @@ function atOrBefore(points, limit) {
   return found
 }
 // Variação em pontos percentuais, com seta (▲ subiu, ▼ caiu, = igual); null quando falta a referência.
-export function change(value, ref) {
+// kind: tipo da série quando a variação é a de um dia (só ela leva o selo de salto); sem kind, nunca marca salto.
+export function change(value, ref, kind = null) {
   if (!Number.isFinite(value) || !ref) return null
   const diff = value - ref[1]
   const flat = Math.abs(diff) < 0.005
-  return { diff, ref: ref[0], dir: flat ? 'same' : diff > 0 ? 'up' : 'down', text: flat ? '= 0,00 p.p.' : `${diff > 0 ? '▲ +' : '▼ −'}${nf(Math.abs(diff))} p.p.` }
+  return { diff, ref: ref[0], dir: flat ? 'same' : diff > 0 ? 'up' : 'down', text: flat ? '= 0,00 p.p.' : `${diff > 0 ? '▲ +' : '▼ −'}${nf(Math.abs(diff))} p.p.`, jump: isJump(kind, diff), hint: JUMP_HINT }
 }
 
 // Pontos [[AAAA-MM-DD, valor]] de uma série, ou [] quando ela não existe.
@@ -35,7 +37,7 @@ export function bndesRows(data) {
     const key = keyOf(prazo, liberacao), points = pointsOf(data, key), base = { key, prazo, liberacao, label: PRAZO_LABEL[prazo] }
     if (!points.length) return { ...base, missing: true }
     const [date, value] = points.at(-1)
-    return { ...base, date, value, text: `${nf(value)}% a.a.`, day: change(value, points.length > 1 ? points.at(-2) : null), month: change(value, atOrBefore(points, shiftMonths(date, -1))), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[key] ?? null }
+    return { ...base, date, value, text: `${nf(value)}% a.a.`, day: change(value, points.length > 1 ? points.at(-2) : null, 'rate'), month: change(value, atOrBefore(points, shiftMonths(date, -1))), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[key] ?? null }
   }))
 }
 
@@ -47,5 +49,5 @@ export function tlpView(data, now = Date.now()) {
   const points = Array.isArray(data?.tlp?.points) ? data.tlp.points.filter((p) => p[0] <= today) : []
   if (!points.length) return null
   const [date, value] = points.at(-1)
-  return { points, date, value, text: `${nf(value)}% a.a.`, month: change(value, points.length > 1 ? points.at(-2) : null), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.TLP ?? null, nextRelease: tlpNextRelease(now) }
+  return { points, date, value, text: `${nf(value)}% a.a.`, month: change(value, points.length > 1 ? points.at(-2) : null, 'rate'), year: change(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.TLP ?? null, nextRelease: tlpNextRelease(now) }
 }

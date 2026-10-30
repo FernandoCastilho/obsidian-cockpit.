@@ -14,6 +14,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       const file = { schemaVersion: 1, generatedAt: Date.now(), series, tlp: { code: 777, unit: 'a.a.', points: months }, stale: {}, errors: [] }
       const t0 = Date.UTC(2025, 5, 2)
       const moedas = { schemaVersion: 1, generatedAt: Date.now(), stale: {}, errors: [], series: { C01: { points: daily(t0, 520, 12, 0.01, 6) }, C02: { points: daily(t0, 520, 12.5, 0.01, 6) }, 604: { points: daily(t0, 520, 5, 0.001, 4) }, 143: { points: daily(t0, 520, 4, 0.002, 6) }, TR1: { points: [['2026-09-01', 3.64], ['2026-10-01', 3.6], ['2099-01-01', 9]] } } }
+      { const sp = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }), pts = moedas.series.C02.points.filter((x) => x[0] <= sp); pts[pts.length - 1][1] += 2 } // salto de 2 p.p. no último dia da TFC_120.90
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/bndes.json*', (r) => r.fulfill({ json: file }))
@@ -58,6 +59,9 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.equal(await tbl().count(), 24)
       assert.match(await tbl().nth(0).innerText(), /TFC_60\.90[\s\S]*% a\.a\.[\s\S]*▲ \+0,01 p\.p\./)
       assert.match(await tbl().nth(5).innerText(), /TFC_TR_120\.90[\s\S]*indisponível/)
+      assert.doesNotMatch(await tbl().nth(0).innerText(), /salto/i, 'variação normal não leva selo')
+      assert.match(await tbl().nth(1).innerText(), /▲ \+2,0\d p\.p\.\s*salto/i, 'variação do dia acima do limite leva o selo salto')
+      assert.equal(await tbl().nth(1).getByRole('img', { name: /salto: .*confira a fonte do BNDES/i }).count(), 1)
       assert.equal(await pressed('Período da série', 'Tudo'), true, 'o período segue valendo na TFC')
       await tbl().nth(1).getByRole('button').click()
       assert.match(await p.locator('.bn-sub').nth(1).innerText(), /TFC_120\.90 \(C02\)/i)

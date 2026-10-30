@@ -1,6 +1,7 @@
 // Apresentação da TFC e das moedas contratuais do BNDES (arquivo moedas.json, coletado de /Moedas/um<código>.txt).
 // O catálogo espelha scripts/moedas-lib.mjs (um teste trava a igualdade).
 import { change, dmy } from './bndes.js'
+import { JUMP_HINT, isJump } from './jumps.js'
 
 export const TFC_SERIES = [
   ['C01', 'TFC_60.90'], ['C02', 'TFC_120.90'], ['C03', 'TFC_MPME_60.90'], ['C04', 'TFC_MPME_120.90'], ['C05', 'TFC_TR_60.90'], ['C06', 'TFC_TR_120.90'],
@@ -29,11 +30,12 @@ const t12 = (iso) => Date.parse(`${iso}T12:00:00Z`)
 const shiftMonths = (iso, n) => { const d = new Date(t12(iso)); d.setUTCMonth(d.getUTCMonth() + n); return d.toISOString().slice(0, 10) }
 const atOrBefore = (points, limit) => { let f = null; for (const p of points) { if (p[0] <= limit) f = p; else break } return f }
 // Variação percentual com seta (níveis: dólar, índice da Selic); null quando falta a referência.
-export function changePct(value, ref) {
+// id: código da série quando a variação é a de um dia (só ela leva o selo de salto).
+export function changePct(value, ref, id = null) {
   if (!Number.isFinite(value) || !ref || !ref[1]) return null
   const diff = (value / ref[1] - 1) * 100
   const flat = Math.abs(diff) < 0.005
-  return { diff, ref: ref[0], dir: flat ? 'same' : diff > 0 ? 'up' : 'down', text: flat ? '= 0,00%' : `${diff > 0 ? '▲ +' : '▼ −'}${nf(Math.abs(diff), 2)}%` }
+  return { diff, ref: ref[0], dir: flat ? 'same' : diff > 0 ? 'up' : 'down', text: flat ? '= 0,00%' : `${diff > 0 ? '▲ +' : '▼ −'}${nf(Math.abs(diff), 2)}%`, jump: id != null && isJump('level', diff, id), hint: JUMP_HINT }
 }
 // Pontos até `now` (dia de São Paulo): o BNDES publica valores de datas futuras (Selic acumulada de amanhã, TR do mês seguinte)
 // e o valor vigente hoje é o último com data até hoje.
@@ -47,8 +49,8 @@ export function groupRows(data, group, now = Date.now()) {
     const points = pointsOf(data, s.id, now)
     if (!points.length) return { ...s, missing: true }
     const [date, value] = points.at(-1)
-    const delta = s.kind === 'level' ? changePct : change
-    return { ...s, date, value, text: s.kind === 'rate' ? `${nf(value, 2)}% a.a.` : s.kind === 'pct' ? `${nf(value, 2)}%` : `${s.unit === 'R$' ? 'R$ ' : ''}${nf(value, decimals(s))}`, day: delta(value, points.length > 1 ? points.at(-2) : null), month: delta(value, atOrBefore(points, shiftMonths(date, -1))), year: delta(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[s.id] ?? null, points: points.length }
+    const delta = s.kind === 'level' ? (v, r, day) => changePct(v, r, day ? s.id : null) : (v, r, day) => change(v, r, day ? s.kind : null)
+    return { ...s, date, value, text: s.kind === 'rate' ? `${nf(value, 2)}% a.a.` : s.kind === 'pct' ? `${nf(value, 2)}%` : `${s.unit === 'R$' ? 'R$ ' : ''}${nf(value, decimals(s))}`, day: delta(value, points.length > 1 ? points.at(-2) : null, true), month: delta(value, atOrBefore(points, shiftMonths(date, -1))), year: delta(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[s.id] ?? null, points: points.length }
   })
 }
 export { dmy }

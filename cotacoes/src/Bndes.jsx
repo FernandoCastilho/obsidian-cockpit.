@@ -9,7 +9,7 @@ import { DEFAULT_SELECTION, FAMILIES, familyRows, seriesFor } from './bndesView.
 import './Bndes.css'
 
 const stamp = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
-const Delta = ({ c }) => (c ? <span className={`bn-delta bn-${c.dir}`} title={`em relação a ${dmy(c.ref)}`}>{c.text}</span> : <span className="muted">—</span>)
+const Delta = ({ c }) => (c ? <><span className={`bn-delta bn-${c.dir}`} title={`em relação a ${dmy(c.ref)}`}>{c.text}</span>{c.jump && <span className="bn-jump" role="img" aria-label={`salto: ${c.hint}`} title={c.hint}>salto</span>}</> : <span className="muted">—</span>)
 
 // Aba BNDES: uma só área de trabalho. Abas por família (TFB, TLP, TFC, Moedas) escolhem a tabela; clicar numa linha troca a série do gráfico;
 // o período (atalhos e datas) é único e vale para todas as séries; as observações do período ficam recolhidas.

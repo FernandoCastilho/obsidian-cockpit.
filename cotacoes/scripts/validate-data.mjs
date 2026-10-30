@@ -8,8 +8,9 @@ const get = async (name) => {
     return res.ok ? await res.json() : null
   } catch { return null }
 }
-let macro = null
-try { macro = JSON.parse(await readFile(new URL('../public/macro.json', import.meta.url), 'utf8')) } catch { /* sem PTAX local */ }
-const items = validateAll({ quotes: await get('quotes.json'), history: await get('history.json'), intraday: await get('intraday.json'), macro })
+const local = async (f) => { try { return JSON.parse(await readFile(new URL(`../public/${f}.json`, import.meta.url), 'utf8')) } catch { return null } }
+const macro = await local('macro') // PTAX recém-coletada
+const bndes = await local('bndes'), moedas = await local('moedas')
+const items = validateAll({ quotes: await get('quotes.json'), history: await get('history.json'), intraday: await get('intraday.json'), macro, bndes, moedas })
 await writeFile(`${process.env.RUNNER_TEMP ?? '/tmp'}/validation.json`, JSON.stringify({ items }))
 console.log(items.length ? `Validação: ${items.length} problema(s)\n${items.map((i) => `- [${i.area}] ${i.message}`).join('\n')}` : 'Validação: dados consistentes')
