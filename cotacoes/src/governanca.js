@@ -12,7 +12,7 @@ export const CRONS = {
 }
 
 // Idade máxima, em horas, antes de o app marcar a fonte como "Atrasado" (no fim de semana, fontes de dias úteis não atrasam).
-export const ATRASO_H = { macro: 6, curves: 6, news: 6, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, 'commodities-brl': 72, fuels: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
+export const ATRASO_H = { macro: 6, curves: 6, news: 6, 'reforma-tributaria': 6, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, 'commodities-brl': 72, fuels: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
 
 const HORA = 'De hora em hora nos dias úteis (0h17 às 23h17)'
 
@@ -22,6 +22,7 @@ export const FONTES = [
   { id: 'macro', chaves: ['macro'], nome: 'CDI, Selic, PTAX, SOFR e Focus', origem: 'Banco Central, NY Fed', coleta: HORA, muda: 'CDI, PTAX e SOFR a cada dia útil; Selic a cada reunião do Copom (cerca de 6 semanas); Focus toda segunda, 9h30', atraso: `${ATRASO_H.macro} h` },
   { id: 'curves', chaves: ['curves'], nome: 'Curvas DI x pré, cupom cambial e Treasuries', origem: 'B3, Tesouro dos EUA', coleta: HORA, muda: 'Uma vez por dia útil, com o ajuste do dia', atraso: `${ATRASO_H.curves} h` },
   { id: 'news', chaves: ['news'], nome: 'Notícias', origem: 'Fontes públicas de notícias', coleta: HORA, muda: 'Ao longo do dia', atraso: `${ATRASO_H.news} h` },
+  { id: 'reforma', chaves: ['reforma-tributaria'], nome: 'Reforma tributária (matérias da semana)', origem: 'Google Notícias', coleta: HORA, muda: 'Ao longo do dia; o histórico acumula os últimos 7 dias', atraso: `${ATRASO_H['reforma-tributaria']} h` },
   { id: 'policy', chaves: ['policy'], nome: 'Juros de política monetária (Fed, BCE, BoJ)', origem: 'Bancos centrais e BIS', coleta: HORA, muda: 'A cada decisão do banco central', atraso: `${ATRASO_H.policy} h` },
   { id: 'estr', chaves: ['estr'], nome: '€STR (taxa overnight do BCE)', origem: 'Banco Central Europeu', coleta: HORA, muda: 'A cada dia útil europeu, publicada de manhã (horário de Frankfurt) para o dia anterior', atraso: `${ATRASO_H.estr} h` },
   { id: 'euro-curve', chaves: ['euro-curve'], nome: 'Curva de juros do euro (3 meses a 30 anos)', origem: 'Banco Central Europeu', coleta: HORA, muda: 'A cada dia útil europeu, com a curva do dia anterior', atraso: `${ATRASO_H['euro-curve']} h` },

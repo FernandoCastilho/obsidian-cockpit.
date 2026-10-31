@@ -104,12 +104,40 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 16, 'uma linha por fonte')
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 17, 'uma linha por fonte')
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
       assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
+      await p.close()
+    }
+    // Resumo › Notícias: aba "Reforma tributária" ao lado de "Manchetes", com a semana por dia, filtro de dia e busca
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      p.on('pageerror', (e) => errors.push(e.message))
+      const agora = Date.now(), h = 36e5
+      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * h })
+      const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
+        mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
+        mat('Imposto seletivo entra em debate na Câmara', 30, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55, 'Valor Econômico')] }
+      await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
+      await p.goto(base + '/#resumo')
+      const painel = p.locator('.desk-panel', { has: p.getByRole('tab', { name: 'Reforma tributária' }) }); await painel.waitFor()
+      assert.equal(await painel.getByRole('tab', { name: 'Manchetes' }).getAttribute('aria-selected'), 'true', 'abre em Manchetes')
+      await painel.getByRole('tab', { name: 'Reforma tributária' }).click()
+      assert.equal(await painel.getByRole('tab', { name: 'Reforma tributária' }).getAttribute('aria-selected'), 'true')
+      const lista = painel.locator('.reforma'); await lista.locator('li').first().waitFor()
+      assert.equal(await lista.locator('li').count(), 5, 'todas as matérias da semana')
+      assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
+      assert.match(await painel.innerText(), /5 matérias · últimos 7 dias/); assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
+      await lista.getByLabel('Buscar nas matérias').fill('cashback'); assert.equal(await lista.locator('li').count(), 1)
+      await lista.getByLabel('Buscar nas matérias').fill('xyz'); assert.match(await lista.innerText(), /Nenhuma matéria para esse filtro/)
+      await lista.getByLabel('Buscar nas matérias').fill('')
+      await lista.locator('.reforma-days button').nth(1).click(); assert.ok(await lista.locator('li').count() < 5 && await lista.locator('li').count() >= 1, 'filtra por dia')
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
+      await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()
+      assert.deepEqual(errors, [])
       await p.close()
     }
     // base de dados em Configurações: uma linha por referência, com órgão, API e arquivo; busca; sem rolagem lateral
