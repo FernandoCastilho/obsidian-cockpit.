@@ -18,6 +18,7 @@ const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import AvisoInicial from './AvisoInicial.jsx'
+import Laser from './Laser.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
 const Config = lazy(() => import('./Config.jsx'))
@@ -231,6 +232,7 @@ export default function App() {
         <p><i>{DISCLAIMER}</i></p>
       </>}>
     <AvisoInicial />
+    <Laser />
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />

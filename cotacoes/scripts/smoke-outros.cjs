@@ -92,7 +92,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const curvaEuro = p.locator('.chart', { has: p.locator('h3', { hasText: 'Área do euro · Curva soberana AAA' }) })
       await curvaEuro.waitFor()
       assert.ok(await curvaEuro.locator('h3 .flag').count() === 1, 'bandeira da zona do euro na curva')
-      assert.equal(await curvaEuro.locator('.curve-legend button').count(), 3, 'três datas de comparação')
+      assert.equal(await curvaEuro.locator('.curve-legend > button').count(), 3, 'três datas de comparação')
       assert.ok(await curvaEuro.locator('svg path').count() >= 3, 'uma linha por data')
       const eixo = await curvaEuro.locator('svg text.tick').allTextContents()
       assert.ok(eixo.includes('3M') && eixo.includes('30A'), 'eixo do 3M ao 30A')
@@ -145,6 +145,33 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await lista.locator('.reforma-days button').nth(1).click(); assert.ok(await lista.locator('li').count() < 5 && await lista.locator('li').count() >= 1, 'filtra por dia')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()
+      assert.deepEqual(errors, [])
+      await p.close()
+    }
+    // laser pointer (estilo Excalidraw): botão discreto liga, arrastar risca, o traço se apaga sozinho, Esc e novo clique param; funciona dentro de diálogo modal
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      p.on('pageerror', (e) => errors.push(e.message))
+      await p.goto(base + '/#config')
+      const botao = p.getByRole('button', { name: 'Laser pointer: riscar a tela' }); await botao.waitFor()
+      const box = await botao.boundingBox(); assert.ok(box.width >= 44 && box.height >= 44, 'área de toque de 44 px')
+      assert.equal(await botao.getAttribute('aria-pressed'), 'false'); assert.equal(await p.locator('.laser-canvas').count(), 0)
+      const pixels = () => p.evaluate(() => { const c = document.querySelector('.laser-canvas'); if (!c) return -1; const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 40) n++; return n })
+      await botao.click(); await p.locator('.laser-canvas').waitFor()
+      assert.equal(await p.getByRole('button', { name: 'Laser pointer: riscar a tela' }).getAttribute('aria-pressed'), 'true')
+      await p.mouse.move(60, 200); await p.mouse.down(); for (let i = 1; i <= 14; i++) await p.mouse.move(60 + i * 12, 200 + Math.sin(i / 2) * 40); await p.mouse.up()
+      assert.ok(await pixels() > 300, 'o traço aparece na tela')
+      await p.waitForTimeout(2000)
+      assert.equal(await pixels(), 0, 'o traço se apaga sozinho, aos poucos')
+      await p.keyboard.press('Escape'); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
+      assert.equal(await p.getByRole('button', { name: 'Laser pointer: riscar a tela' }).getAttribute('aria-pressed'), 'false')
+      await p.keyboard.press('Alt+l'); await p.locator('.laser-canvas').waitFor()
+      await p.getByRole('button', { name: 'Laser pointer: riscar a tela' }).click(); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
+      // dentro de um diálogo modal (tela ampliada), a camada vai para dentro dele
+      await p.getByRole('button', { name: 'Informações e avisos gerais', exact: true }).first().click(); await p.locator('dialog[open]').first().waitFor()
+      await p.keyboard.press('Alt+l'); await p.locator('dialog[open] .laser-canvas').waitFor()
+      await p.keyboard.press('Escape'); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
+      assert.equal(await p.locator('dialog[open]').count() >= 1, true, 'o primeiro Esc para o laser sem fechar o diálogo')
       assert.deepEqual(errors, [])
       await p.close()
     }

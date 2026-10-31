@@ -1,0 +1,24 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { DECAY_MS, MAX_WIDTH, lifeOf, styleOf, prune, trim } from '../src/laser.js'
+
+test('o traço se apaga aos poucos: mais fino e mais transparente com a idade, sem sumir de repente', () => {
+  assert.equal(lifeOf(0), 1); assert.equal(lifeOf(DECAY_MS), 0); assert.equal(lifeOf(DECAY_MS * 3), 0)
+  const novo = styleOf(0), meio = styleOf(DECAY_MS / 2), velho = styleOf(DECAY_MS * 0.95)
+  assert.equal(novo.width, MAX_WIDTH); assert.equal(novo.alpha, 1)
+  assert.ok(meio.width < novo.width && meio.alpha < novo.alpha && velho.width < meio.width && velho.alpha < meio.alpha)
+  assert.ok(velho.width > 0 && styleOf(DECAY_MS).width > 0, 'a largura nunca chega a zero')
+})
+test('pontos velhos saem e traços vazios somem; o traço em andamento fica', () => {
+  const now = 10_000, p = (age) => ({ x: 0, y: 0, t: now - age })
+  assert.equal(trim([p(10), p(DECAY_MS + 1), p(DECAY_MS - 1)], now).length, 2)
+  const out = prune([{ drawing: false, points: [p(DECAY_MS + 5), p(DECAY_MS + 9)] }, { drawing: false, points: [p(5), p(9)] }, { drawing: true, points: [] }], now)
+  assert.equal(out.length, 2); assert.ok(out.some((s) => s.drawing))
+})
+test('botão discreto, atalho Alt+L e Esc, camada dentro do diálogo modal aberto', () => {
+  const src = readFileSync(new URL('../src/Laser.jsx', import.meta.url), 'utf8')
+  assert.ok(src.includes("e.key.toLowerCase() === 'l'") && src.includes("e.key === 'Escape'") && src.includes('aria-pressed={on}') && src.includes('dialog[open]'))
+  assert.match(readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8'), /<Laser \/>/)
+  assert.match(readFileSync(new URL('../src/terminal.js', import.meta.url), 'utf8'), /Alt \+ L/)
+})

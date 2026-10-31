@@ -1,0 +1,13 @@
+/* Laser pointer: botão discreto no canto e camada de desenho em tela cheia */
+.laser-btn { position: fixed; right: 6px; bottom: 76px; z-index: 2147483000; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; }
+@media (min-width: 900px) { .laser-btn { bottom: 14px; right: 10px; } }
+.laser-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff3b30; opacity: .38; transition: opacity .15s, box-shadow .15s, transform .15s; }
+.laser-btn:hover .laser-dot, .laser-btn:focus-visible .laser-dot { opacity: .9; transform: scale(1.25); }
+.laser-btn:focus-visible { outline: 2px solid var(--amber, #ffb000); outline-offset: -6px; border-radius: 8px; }
+.laser-btn.on .laser-dot { opacity: 1; box-shadow: 0 0 10px 3px rgba(255, 59, 48, .75); }
+.laser-canvas { position: fixed; inset: 0; z-index: 2147482999; width: 100vw; height: 100vh; touch-action: none; user-select: none;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='5' fill='%23ff3b30' fill-opacity='.9'/%3E%3Ccircle cx='10' cy='10' r='2' fill='white'/%3E%3C/svg%3E") 10 10, crosshair; }
+.laser-hint { position: fixed; left: 50%; top: 10px; z-index: 2147483000; margin: 0; padding: 4px 12px; transform: translateX(-50%); background: rgba(0, 0, 0, .72); color: #fff; font: 600 .72rem system-ui, sans-serif; border-radius: 999px; pointer-events: none; animation: laser-hint 2.8s forwards; }
+@keyframes laser-hint { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .laser-dot { transition: none; } }
+@media print { .laser-btn, .laser-canvas, .laser-hint { display: none; } }
