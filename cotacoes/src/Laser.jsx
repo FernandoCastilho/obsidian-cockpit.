@@ -95,6 +95,22 @@ function Camada() {
   return <canvas ref={ref} className="laser-canvas" aria-hidden="true" data-laser="on" />
 }
 
+// Primeiro encaixe `.laser-slot` visível (o cabeçalho muda com a aba e com a largura da tela).
+const slotNow = () => [...document.querySelectorAll('.laser-slot')].find((el) => el.offsetParent !== null) ?? null
+function useSlot() {
+  const [slot, setSlot] = useState(null)
+  useEffect(() => {
+    let raf = 0
+    const check = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => setSlot((cur) => { const n = slotNow(); return n === cur ? cur : n })) }
+    check()
+    const mo = new MutationObserver(check)
+    mo.observe(document.body, { subtree: true, childList: true })
+    addEventListener('resize', check)
+    return () => { cancelAnimationFrame(raf); mo.disconnect(); removeEventListener('resize', check) }
+  }, [])
+  return slot
+}
+
 // Botão discreto (um ponto no canto) que liga e desliga o laser; Ctrl + ~ ou Ctrl + " alterna (Alt+L também) e Esc para.
 export default function Laser() {
   const [on, setOn] = useState(false)
@@ -122,11 +138,14 @@ export default function Laser() {
       <span className="laser-dot" aria-hidden="true" />
     </button>
   )
+  // Lugar do botão: o encaixe visível no cabeçalho (ao lado do "i"), para não cobrir dados; sem encaixe, fica flutuando no canto.
+  // Com um diálogo modal aberto e o laser ligado, o botão vai para dentro do diálogo (fora dele não dá para clicar).
+  const slot = useSlot()
+  const inDialog = on && host && host !== document.body
   return (
     <>
-      {!on && botao}
-      {on && host && createPortal(<><Camada />{botao}<p className="laser-hint" role="status">Laser ligado: clique normal · arraste para riscar · Ctrl retângulo · Shift seta · Esc para parar</p></>, host)}
-      {on && !host && botao}
+      {on && host && createPortal(<><Camada />{inDialog && botao}<p className="laser-hint" role="status">Laser ligado: clique normal · arraste para riscar · Ctrl retângulo · Shift seta · Esc para parar</p></>, host)}
+      {!inDialog && (slot ? createPortal(botao, slot) : botao)}
     </>
   )
 }

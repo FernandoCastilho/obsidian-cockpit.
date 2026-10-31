@@ -518,10 +518,11 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
   const [rateOpen, setRateOpen] = useState(null)
   useDataFile('oil.json')
   const ipcaFile = useDataFile('ipca.json')
+  const indices = useDataFile('indices.json')
   const ipcaSeries = useMemo(() => { try { return ipcaFile.data ? normalizeIpca(ipcaFile.data) : null } catch { return null } }, [ipcaFile.data])
   return (
     <div className="terminal-desk">
-      <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
+      <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} ibov={indices.data} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
       <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
     </div>
@@ -565,13 +566,13 @@ export function MoveAgenda({ goto, colors }) {
       <section aria-labelledby="r-agenda">
         <div className="sec-head">
           <h2 id="r-agenda">Agenda econômica <Explain id="agenda" /></h2>
-          <button type="button" className="more" onClick={() => goto('cenarios')}>Ver agenda ›</button>
+          <button type="button" className="more" onClick={() => goto('cenarios', 'calendario')}>Ver agenda ›</button>
         </div>
         <ul className="list">
           {events.length ? (
             events.map((e) => (
               <li key={e.kind + e.t}>
-                <button type="button" onClick={() => goto('cenarios')}>
+                <button type="button" onClick={() => goto('cenarios', 'calendario')}>
                   <span className="dotbadge cal">{e.kind}</span>
                   <span className="list-text">
                     <b>{e.label}</b>

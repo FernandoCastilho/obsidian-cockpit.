@@ -243,7 +243,7 @@ export default function App() {
     {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
-        <AvisosButton className="clocks-info" />
+        <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
       </div>
     )}
     <main className="app">
@@ -258,7 +258,7 @@ export default function App() {
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
           {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
-          <AvisosButton className="clocks-info" />
+          <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
         </header>
       )}
 

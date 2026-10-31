@@ -65,6 +65,7 @@ export default function TopBar({ tab, onTab, feed, feedAt }) {
         {feedAt && feed !== 'loading' && <b>{feedAt}</b>}
       </div>
       <AvisosButton className="topbar-info" />
+      <span className="laser-slot laser-slot-top" />
     </div>
   )
 }

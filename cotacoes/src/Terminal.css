@@ -47,7 +47,6 @@ body { background: var(--bg); }
   .topbar-tabs button:hover { color: var(--fg); background: #0f0e0b; }
   .topbar-tabs button.on { background: var(--amber); color: #000; }
   .topbar-tabs button.on i { color: #0009; }
-  @media (max-width: 1400px) { .topbar-tabs button { gap: 5px; padding: 0 8px; letter-spacing: .03em; } .topbar-clocks { gap: 10px; padding: 0 10px; } .topbar-feed { padding: 0 10px; } }
   .topbar-clocks { display: flex; align-items: center; gap: 14px; padding: 0 14px; border-left: 1px solid var(--line); font: .72rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .topbar-clocks b { margin-right: 6px; color: var(--mut); font: 600 .66rem system-ui, sans-serif; }
   .topbar-feed { display: flex; align-items: center; gap: 7px; padding: 0 14px; border-left: 1px solid var(--line); font: 700 .66rem system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; color: var(--mut); }
@@ -502,3 +501,13 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .estado-erro { color: #ff6b5f; }
 .estado-aviso { color: #d29922; }
 .estado-info .estado-ponto { opacity: .55; }
+
+/* Mercado: Selic, CDI e DI 1 ano já aparecem na faixa do topo no computador; os cartões ficam só no celular, onde não há faixa */
+@media (min-width: 700px) { .kpi.kpi-taxa { display: none; } }
+
+/* Barra superior estreita (1000 a 1400 px): menos respiro nas abas para caber as 10 seções, os relógios e o botão do laser */
+@media (max-width: 1400px) { .topbar-tabs button { gap: 5px; padding: 0 8px; letter-spacing: .03em; } .topbar-clocks { gap: 10px; padding: 0 10px; } .topbar-feed { padding: 0 10px; } }
+@media (max-width: 1299px) { .topbar-tabs button { gap: 4px; padding: 0 6px; letter-spacing: .02em; } .topbar-clocks { gap: 8px; padding: 0 8px; } .topbar-feed { padding: 0 8px; } }
+/* 1000 a 1199 px: o estado da coleta fica só no ponto colorido (o texto continua para leitor de tela) */
+@media (max-width: 1199px) { .topbar-feed { font-size: 0; gap: 0; padding: 0 12px; } .topbar-feed b { display: none; } }
+@media (max-width: 1199px) { .topbar-tabs button { padding: 0 5px; letter-spacing: 0; font-size: .68rem; } .topbar-clocks { padding: 0 6px; } .topbar-brand { padding: 0 10px; } }

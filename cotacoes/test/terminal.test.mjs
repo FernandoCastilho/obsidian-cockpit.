@@ -234,3 +234,16 @@ test('cor do minigráfico de 12 meses segue o próprio gráfico', () => {
   assert.equal(sparkTone([{ bid: 4.2 }, { bid: 4.9 }]), 'up')
   assert.equal(sparkTone([{ bid: 14.5 }, { bid: 14.6 }, { bid: 14.5 }]), 'flat')
 })
+
+import { ibovItem, ibovSpark } from '../src/terminal.js'
+import { toIndexPoints } from '../scripts/indices-lib.mjs'
+test('Ibovespa: último fechamento, variação sobre o anterior e minigráfico de 30 dias; sem dado, sem cartão', () => {
+  const d = (s) => Date.parse(`${s}T20:00:00Z`)
+  const file = { series: { ibov: { points: [[d('2026-10-29'), 130000], [d('2026-10-30'), 127400]], stale: false } } }
+  const it = ibovItem(file)
+  assert.equal(it.value, '127.400'); assert.ok(Math.abs(it.change - -2) < 1e-9); assert.equal(it.note, '30/10'); assert.equal(it.unit, 'pct')
+  assert.equal(ibovItem({ series: { ibov: { points: [[d('2026-10-30'), 127400]] } } }).change, null)
+  assert.equal(ibovItem(null), null); assert.equal(ibovItem({ series: {} }), null)
+  assert.equal(ibovSpark({ series: { ibov: { points: Array.from({ length: 40 }, (_, i) => [i, 100 + i]) } } }).length, 30)
+  assert.deepEqual(toIndexPoints([[1, 127400.6], [2, 0], [3, NaN], [NaN, 5]]), [[1, 127401]])
+})

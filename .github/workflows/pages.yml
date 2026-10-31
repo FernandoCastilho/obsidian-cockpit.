@@ -125,6 +125,11 @@ jobs:
         run: node scripts/fetch-insumos-precos.mjs
         timeout-minutes: 2
         continue-on-error: true
+      - name: Coletar fechamento diário do Ibovespa (Yahoo)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-indices.mjs
+        timeout-minutes: 2
+        continue-on-error: true
       - name: Coletar referência diária de petróleo Brent (EIA)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-oil.mjs
