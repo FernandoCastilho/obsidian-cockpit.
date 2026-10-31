@@ -4,7 +4,7 @@ Base: `26b6868d49f109f2d2c1778c29a6e01aa8286472`, produção com UX PR142. Check
 
 ## DI — diagnóstico e correção
 
-O log do deploy [40296587119](https://github.com/FernandoCastilho/obsidian-cockpit./actions/runs/40296587119), às09h06UTC/06h06BRT, registra `B3 PRE datas: resposta vazia (HTTP 200)`. DOL respondeu na mesma execução. Não há evidência de mudança de endpoint ou de erro da taxa em si. Na reprodução local, o catálogo voltou a responder e a última referência oficial continuava23/10/2026; GetList devolveu280 vértices PRE. A referência diária não é uma cotação intraday e não precisa mudar antes de nova publicação B3.
+O log do deploy [40296587119](https://github.com/FernandoCastilho/painel-especialista/actions/runs/40296587119), às09h06UTC/06h06BRT, registra `B3 PRE datas: resposta vazia (HTTP 200)`. DOL respondeu na mesma execução. Não há evidência de mudança de endpoint ou de erro da taxa em si. Na reprodução local, o catálogo voltou a responder e a última referência oficial continuava23/10/2026; GetList devolveu280 vértices PRE. A referência diária não é uma cotação intraday e não precisa mudar antes de nova publicação B3.
 
 `b3-collector.mjs` valida resposta e paginação, repete falhas transitórias e usa datas oficiais já conhecidas quando o catálogo falha. Essa recuperação mantém `discoveryPending` e aviso: não confirma que a data conhecida seja a mais recente. Falha em página da última curva impede publicação truncada; o snapshot anterior é preservado. Comparações antigas faltantes são preservadas/omitidas com aviso. Instrumento, vértices, quantidade total e duplicação são validados. Números decimais numéricos ou com ponto não perdem a casa decimal; vazio não vira zero.
 
@@ -24,7 +24,7 @@ Observações de leitura, sem dispatch, mudança de cron ou executor concorrente
 | 09h39min59s | Zero pontos pós09h30 em USD/EUR/JPY/CNH |
 | 09h45min30s | Mesmo arquivo e zero pontos pós-abertura nos quatro pares |
 
-GitHub confirmou workflow `active` na branch padrão `claude/obsidian-plugin-analysis-bagjz3`. A partida prevista para09h20 não apareceu entre as execuções consultadas; última execução observada [40294690904](https://github.com/FernandoCastilho/obsidian-cockpit./actions/runs/40294690904) às05h47, uma rodada. Não se observou fila ou job ativo da sessão. A API não informa a causa interna da ausência do evento.
+GitHub confirmou workflow `active` na branch padrão `claude/obsidian-plugin-analysis-bagjz3`. A partida prevista para09h20 não apareceu entre as execuções consultadas; última execução observada [40294690904](https://github.com/FernandoCastilho/painel-especialista/actions/runs/40294690904) às05h47, uma rodada. Não se observou fila ou job ativo da sessão. A API não informa a causa interna da ausência do evento.
 
 O [GitHub documenta atrasos e eventual descarte de agendamentos](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule). Isso é uma limitação conhecida e hipótese compatível, não prova da causa interna deste evento. As mudanças137/140 do laço só atuam depois da partida. Sucesso de um job anterior não comprova cadência. A janela observada é inicial, não cobre o pregão inteiro. Regularidade permanece pendente/reprovada neste intervalo; início manual autorizado poderia testar o laço, mas não provaria disparo automático. Não foi criado serviço, cron alternativo ou nova credencial.
 

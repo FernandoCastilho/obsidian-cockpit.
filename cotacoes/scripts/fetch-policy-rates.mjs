@@ -9,7 +9,7 @@ try { local = JSON.parse(await readFile(output, 'utf8')) } catch { /* ignora */ 
 const remote = await loadPrevious('policy-rates.json')
 const now = Date.now(), out = { schemaVersion:1, generatedAt:now, series:{}, errors:[] }
 async function table(id, parse) {
-  const response = await fetch(POLICY_SOURCES[id], { headers:{'user-agent':'Obsidian-Cockpit policy rates (public official tables)'}, signal:AbortSignal.timeout(30000) })
+  const response = await fetch(POLICY_SOURCES[id], { headers:{'user-agent':'Painel-Especialista policy rates (public official tables)'}, signal:AbortSignal.timeout(30000) })
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
   return {points:parse(await response.text()),sourceUrl:POLICY_SOURCES[id],checkedAt:now}
 }
