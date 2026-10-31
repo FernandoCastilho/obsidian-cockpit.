@@ -69,3 +69,18 @@
   .bn-main tbody td, .bn-main tbody th { overflow-wrap:anywhere; }
   .bn-main .bn-pick { max-width:none; }
 }
+
+/* Comparar séries no mesmo gráfico */
+.bn-cmp-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 12px; color: var(--mut); font-size: .76rem; }
+.bn-cmp-bar button { min-height: 32px; padding: 0 10px; background: transparent; color: var(--fg); border: 1px solid var(--line); font: 600 .74rem system-ui, sans-serif; cursor: pointer; }
+.bn-cmp-bar button:hover:not(:disabled), .bn-cmp-bar button:focus-visible { border-color: var(--amber); color: var(--amber); }
+.bn-cmp-bar button:disabled { opacity: .45; cursor: default; }
+.bn-cmp { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin: -8px 2px -8px -8px; cursor: pointer; }
+.bn-cmp input { width: 18px; height: 18px; accent-color: var(--amber); cursor: pointer; }
+.ml-mode { margin: 0 12px 6px; }
+.ml { padding: 0 4px; }
+.ml-legend { list-style: none; margin: 6px 0 0; padding: 0 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 2px 14px; font-size: .76rem; }
+.ml-legend li { display: flex; align-items: center; gap: 7px; padding: 3px 0; min-width: 0; border-bottom: 1px solid #1a1813; }
+.ml-legend i { flex: none; width: 10px; height: 10px; border-radius: 2px; }
+.ml-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--mut); }
+.ml-val { font-variant-numeric: tabular-nums; color: var(--fg); }
