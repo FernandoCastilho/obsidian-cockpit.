@@ -5,7 +5,7 @@ import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { SPARK_NOTE, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
+import { SPARK_NOTE, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
 import Flag from './Flag.jsx'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
@@ -74,10 +74,10 @@ function useDaySeries() {
 
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
 // Clique abre o gráfico da moeda ou a aba de juros.
-export function KpiRow({ quotes, rates, ipca, macro, colors, onOpen, onRate, goto, status }) {
+export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRate, goto, status }) {
   const series = useDaySeries()
-  const items = kpiItems(quotes, rates, ipca)
-  const sparks = kpiSparks({ macro, ipca })
+  const items = kpiItems(quotes, rates, ipca, ibov)
+  const sparks = { ...kpiSparks({ macro, ipca }), IBOV: ibovSpark(ibov) }
   if (!items.length) return status ?? null
   return (
     <section className="kpi-block" aria-labelledby="kpi-title">
@@ -87,8 +87,8 @@ export function KpiRow({ quotes, rates, ipca, macro, colors, onOpen, onRate, got
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code] ?? sparks[i.key]
         const note = !series[i.code] && sparks[i.key]?.length ? `${i.label.replace(/ 12m$/, '')}: ${SPARK_NOTE[i.key]}` : null
         return (
-          <button key={i.key} type="button" className="kpi" style={{ '--series': i.rate || i.key === 'IPCA' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'outros') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: abrir gráfico`}>
-            <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate || i.key === 'IPCA' ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'IPCA' && <small>IBGE{i.note ? ` · ${i.note}` : ''}</small>}</span>
+          <button key={i.key} type="button" className={`kpi${i.rate ? ' kpi-taxa' : ''}`} style={{ '--series': i.rate || i.key === 'IPCA' || i.key === 'IBOV' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'outros') : i.key === 'IBOV' ? goto('noticias') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: ${i.key === 'IBOV' ? 'abrir notícias' : 'abrir gráfico'}`}>
+            <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate || i.key === 'IPCA' || i.key === 'IBOV' ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'IPCA' && <small>IBGE{i.note ? ` · ${i.note}` : ''}</small>}{i.key === 'IBOV' && <small>pontos · fech.{i.note ? ` ${i.note}` : ''}{i.stale ? ' · sem atualização' : ''}</small>}</span>
             <span className="kpi-value">{i.value}</span>
             <span className={`kpi-change ${i.tone}`}>
               {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}
@@ -144,7 +144,7 @@ export function AgendaList({ goto, limit = 5 }) {
     <ul className="desk-agenda">
       {events.map((e) => (
         <li key={e.kind + e.t}>
-          <button type="button" onClick={() => goto('cenarios')}>
+          <button type="button" onClick={() => goto('cenarios', 'calendario')}>
             <time dateTime={new Date(e.t).toISOString()}>{day(e.t)} <b>{hour(e.t)}</b></time>
             <span className="tag">{e.kind}</span>
             <span>{e.label}</span>

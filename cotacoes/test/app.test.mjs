@@ -306,3 +306,9 @@ test('curvas de juros: cada gráfico explica a seleção de períodos (último d
   }
   assert.ok(src.includes('curve-legend-title'))
 })
+
+test('manchetes: a mesma matéria com links diferentes (mesmo título e veículo) aparece uma vez, com as duas etiquetas', () => {
+  const news = { USD: [{ title: 'Itaú corta projeção de PIB de 2027 para 0,5%', link: 'https://n/1', source: 'Valor Econômico', t: 2 }], MKT: [{ title: 'Itaú corta projeção de PIB de 2027 para 0,5%', link: 'https://n/2', source: 'Valor Econômico', t: 2 }, { title: 'Outra', link: 'https://n/3', source: 'Valor Econômico', t: 1 }] }
+  const feed = buildFeed(news)
+  assert.equal(feed.length, 2); assert.deepEqual(feed[0].codes, ['USD', 'MKT'])
+})

@@ -12,15 +12,17 @@ const pct = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${num(Math.abs(v))}%`
 const unitBr = (u) => ({ 'USD/tonelada': 'R$/tonelada', 'USD/tonelada seca': 'R$/tonelada seca', 'USD/barril': 'R$/barril', 'USD/galão': 'R$/galão' })[u]
 
 // Cartão de preço do insumo: valor em US$ (e em R$ pelo dólar de hoje) e a variação sobre a observação anterior.
-function Preco({ item, usd, diario }) {
+function Preco({ item, usd, usdLabel, diario }) {
   const brl = unitBr(item.unit) && usd ? item.value * usd : null
   const d = item.decimals ?? 2
   return (
     <div className="setor-preco">
       <b>{item.label}</b> <small className="muted">{item.nature} · {item.benchmark}</small>
       <p className="setor-valor">{num(item.value, d)} <small>{item.unit}</small>{item.variationPct != null && <span className={`pct ${item.variationPct > 0 ? 'up' : item.variationPct < 0 ? 'down' : 'flat'}`}> {pct(item.variationPct)} <small className="muted">({item.variationBasis})</small></span>}</p>
-      {brl != null && <p className="muted">≈ R$ {num(brl, 0)} {unitBr(item.unit).replace('R$', '')} · dólar de hoje R$ {num(usd, 4)}. Conversão simples, sem prêmio, frete nem impostos.</p>}
+      {brl != null && <p className="muted">≈ R$ {num(brl, 0)} {unitBr(item.unit).replace('R$', '')} · {usdLabel} R$ {num(usd, 4)}. Conversão simples, sem prêmio, frete nem impostos.</p>}
+      {item.stale && <Estado tipo="aviso">Fonte sem atualização na última coleta; mantido o último preço publicado.</Estado>}
       <small className="muted">Referência de {item.period.split('-').reverse().join('/')} · coletado em {dataTimestamp(item.checkedAt)}</small>
+      {diario?.stale && <Estado tipo="aviso">Preço diário sem atualização na última coleta; mantido o último fechamento.</Estado>}
       {diario && <p className="muted">Preço diário aproximado (contrato futuro COMEX, atrasado e não oficial): <b>{num(diario.points.at(-1)[1], 0)} {diario.unit}</b> em {new Date(diario.points.at(-1)[0]).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}.</p>}
     </div>
   )
@@ -35,7 +37,9 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const todos = useMemo(() => { try { return temas.data ? normalizeTemas(temas.data) : {} } catch { return {} } }, [temas.data])
   const insumo = INSUMOS.find((i) => i.id === id)
   const tema = todos[id]
-  const usd = quotes?.USD?.bid
+  const q = quotes?.USD, usd = q?.bid
+  // O dólar da conversão pode ser a referência de reserva (BCE, dia anterior) ou a última cotação mantida quando a fonte falha: o texto diz qual é.
+  const usdLabel = q?.fallback ? 'dólar de referência (dia anterior)' : q?.stale ? 'última cotação do dólar disponível' : 'dólar de hoje'
   const itens = insumo ? (comm.data?.commodities ?? []).filter((c) => insumo.commodity.includes(c.id) && Number.isFinite(c.value)) : []
   const serie = insumo?.daily ? diario.data?.series?.[insumo.daily] : null
   const tabs = [...SETORES.map((t) => ({ id: t.id, label: t.label, grupo: 'Setores' })), ...INSUMOS.map((t) => ({ id: t.id, label: t.label, grupo: 'Insumos' }))]
@@ -44,7 +48,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
       <Panel title="Setores e insumos" tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={['temas.json', 'commodities.json', 'insumos-precos.json']}>
         {insumo && (
           <div className="setor-insumo">
-            {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} diario={serie} />) : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
+            {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} usdLabel={usdLabel} diario={serie} />) : comm.status === 'loading' ? <Estado>Carregando o preço…</Estado> : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
             <div className="setor-cols">
               <section aria-label="O que mexe no preço"><h3>O que mexe no preço</h3><ul>{insumo.move.map((m) => <li key={m}>{m}</li>)}</ul></section>
               <section aria-label="Ficha da visita"><h3>Ficha da visita</h3><ul>{insumo.visita.map((m) => <li key={m}>{m}</li>)}</ul></section>
@@ -53,7 +57,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
         )}
         {temas.status === 'loading' && <Estado>Carregando as matérias…</Estado>}
         {temas.status === 'error' && !tema && <Estado tipo="erro" erro={temas.error}>Matérias indisponíveis no momento.</Estado>}
-        {tema && <NoticiasPorDia data={tema} ariaLabel={`${tema.label}: matérias da semana`} />}
+        {tema && <NoticiasPorDia key={id} data={tema} ariaLabel={`${tema.label}: matérias da semana`} />}
         {temas.data && !tema && temas.status !== 'loading' && <Estado>Ainda não há matérias coletadas para este assunto.</Estado>}
       </Panel>
     </div>

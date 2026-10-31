@@ -114,6 +114,18 @@ export function ipcaItem(series) {
   return { key: 'IPCA', code: 'IPCA', label: 'IPCA 12m', value: `${nf(last.y12, 2)}%`, change: prev ? last.y12 - prev.y12 : null, unit: 'pp', note }
 }
 
+// Ibovespa (arquivo indices.json, fechamento diário do Yahoo, atrasado): último fechamento e variação sobre o anterior, com a data.
+export function ibovItem(file) {
+  const s = file?.series?.ibov
+  const pts = (s?.points ?? []).filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]) && p[1] > 0)
+  const last = pts.at(-1), prev = pts.at(-2)
+  if (!last) return null
+  const note = new Date(last[0]).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })
+  return { key: 'IBOV', code: 'IBOV', label: 'Ibovespa', value: nf(last[1], 0), change: prev ? (last[1] / prev[1] - 1) * 100 : null, unit: 'pct', note, stale: !!s.stale }
+}
+// Minigráfico do Ibovespa: os últimos 30 fechamentos.
+export const ibovSpark = (file) => (file?.series?.ibov?.points ?? []).slice(-30).map(([t, v]) => ({ t, bid: v }))
+
 // Faixa corrida sob a barra superior: câmbio, paridade, juros de referência e Brent (EIA, com data).
 export function tapeItems(quotes, rates, oil) {
   const p = parityItem(quotes)
@@ -122,12 +134,12 @@ export function tapeItems(quotes, rates, oil) {
 }
 
 // Indicadores do topo do Mercado: dólar, euro, paridade, IPCA em 12 meses (IBGE, quando há série) e os três juros de referência do Brasil.
-export function kpiItems(quotes, rates, ipca) {
+export function kpiItems(quotes, rates, ipca, ibov) {
   const fx = fxItems(quotes)
   const p = parityItem(quotes)
   const byKey = Object.fromEntries(rateItems(rates).map((r) => [r.key, r]))
   const pick = (...keys) => keys.map((k) => byKey[k]).filter(Boolean)
-  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ipcaItem(ipca), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
+  return withTone([fx.find((i) => i.code === 'USD'), fx.find((i) => i.code === 'EUR'), p, ipcaItem(ipca), ibovItem(ibov), ...pick('selic', 'cdi', 'di1')].filter(Boolean))
 }
 
 // Minigráficos dos cards de CDI, Selic e IPCA, só com dados observados: nada é preenchido nem interpolado.
