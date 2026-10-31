@@ -237,7 +237,7 @@ main.app .fer-month h2 { text-transform: uppercase; }
 
 /* cartões, listas e controles: cantos quase retos */
 .card, .chart, .tile, .context-card, .start-card, .list, .feed, .wire, .holiday-notice, .update-notice, .resumo-chart, .executive-rates__scroll, .opt, .rate, .agenda li, .tip, .pop, .more-sheet { border-radius: var(--r-card); }
-.seg, .btn, .chips button, .curve-legend button, .pair-sel, .fer-filter select, .scenario-year select, .update-notice button, .fx-toggle, .img-share { border-radius: 2px; }
+.seg, .btn, .chips button, .curve-legend > button, .pair-sel, .fer-filter select, .scenario-year select, .update-notice button, .fx-toggle, .img-share { border-radius: 2px; }
 .context-card-trigger { border-radius: var(--r-card); }
 .sheet, .info-notice-dialog, .expandable-panel.is-dialog { border-radius: 4px; }
 .seg button[aria-pressed='true'], .chips button[aria-pressed='true'], .seg button.on { background: #1a1507; color: var(--amber); box-shadow: inset 0 -2px 0 var(--amber); }

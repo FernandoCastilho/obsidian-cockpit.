@@ -293,6 +293,16 @@ test('Juros: toda linha do quadro e todo indexador tem tooltip com texto no glos
 })
 
 test('glossário: todo indicador de Juros traz "Para dominar" (o que mais um especialista precisa saber)', () => {
-  const juros = ['selic', 'cdi', 'sofr', 'sofrMedia', 'di1', 'ust10', 'curvaDi', 'cupom', 'fedFaixa', 'estr', 'bceDeposito', 'bojMeta', 'tr', 'tbf', 'tlp', 'curvaEuro', 'treasuries', 'cdiFuturo', 'focus']
+  const juros = ['selic', 'cdi', 'sofr', 'sofrMedia', 'di1', 'ust10', 'curvaDi', 'cupom', 'fedFaixa', 'estr', 'bceDeposito', 'bojMeta', 'tr', 'tbf', 'tlp', 'curvaEuro', 'treasuries', 'cdiFuturo', 'focus', 'periodosDi', 'periodosCupom', 'periodosUst', 'periodosEuro']
   for (const id of juros) assert.ok(GLOSSARY[id]?.d, `${id} sem "Para dominar"`)
+})
+
+test('curvas de juros: cada gráfico explica a seleção de períodos (último dia, 1 semana… 1 ano) e a regra da data', () => {
+  const src = readFileSync(new URL('../src/Curves.jsx', import.meta.url), 'utf8')
+  for (const id of ['periodosDi', 'periodosCupom', 'periodosUst', 'periodosEuro']) {
+    assert.ok(src.includes(`'${id}'`), `${id} ligado ao gráfico`)
+    const g = GLOSSARY[id]
+    assert.match(g.a, /Último dia/); assert.match(g.a, /1 semana/); assert.match(g.a, /1 ano/); assert.match(g.b, /fim de semana ou feriado/)
+  }
+  assert.ok(src.includes('curve-legend-title'))
 })

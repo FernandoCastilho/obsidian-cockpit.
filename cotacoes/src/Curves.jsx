@@ -27,6 +27,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
   const [announcement, setAnnouncement] = useState('')
   const chartId = useId()
   const compare = data?.compare ?? []
+  const periodHelp = { curvaDi: 'periodosDi', cupom: 'periodosCupom', treasuries: 'periodosUst', curvaEuro: 'periodosEuro' }[help]
   const shown = compare.filter((c) => !off.has(c.date))
 
   const g = useMemo(() => {
@@ -93,6 +94,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
         </header>
       )}
       <div className="curve-legend">
+        {periodHelp && <span className="curve-legend-title">Curvas de comparação <Explain id={periodHelp} /></span>}
         {compare.map((c, i) => (
           <button key={c.date} type="button" className={off.has(c.date) ? 'series-hidden' : 'series-visible'} aria-pressed={!off.has(c.date)} style={{ '--series': SHADES[i % SHADES.length] }} onClick={() => setOff((o) => { const n = new Set(o); n.has(c.date) ? n.delete(c.date) : n.add(c.date); return n })}>
             <i className="swatch" /> {c.label} <small>{day(c.date)} · {off.has(c.date) ? 'Oculta' : 'Visível'}</small>
