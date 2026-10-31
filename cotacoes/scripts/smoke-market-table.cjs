@@ -3,12 +3,12 @@ const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:ass
 ;(async()=>{
  const browser=await chromium.launch(require('./smoke-launch.cjs')()),base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:8768',out=process.env.TABLE_QA_OUTPUT||'table-qa';fs.mkdirSync(out,{recursive:true});const results=[]
  try{for(const width of [390,820,1440]){
- const ctx=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block'}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));let mode='ok';const now=Date.now(),day=864e5
+ const ctx=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block'}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));let mode='ok';const now=Date.now(),day=864e5,brt=new Date(now-3*36e5),iso=(d)=>d.toISOString().slice(0,10),yearEnd=iso(new Date(Date.UTC(brt.getUTCFullYear(),0,0))),monthEnd=iso(new Date(Date.UTC(brt.getUTCFullYear(),brt.getUTCMonth(),0))),lastDay=iso(new Date(now-day-3*36e5)) // datas relativas a hoje: a série precisa terminar a até 7 dias do fim para o acumulado ser calculado (em janeiro, fim do ano e do mês coincidem e este teste não vale)
  await ctx.route('**/*',route=>{
   const u=new URL(route.request().url()),name=u.pathname.split('/').pop()
   if(name==='intraday.json')return mode==='ok'?route.fulfill({json:{generatedAt:now,series:Object.fromEntries(['USD','EUR','JPY','CNH'].map(c=>[c,{points:[[now-600000,5],[now-300000,5.1],[now,5.2]]}]))}}):route.abort()
   if(name==='macro.json')return route.fulfill({json:{generatedAt:now,cdi:[[now-day,12]],selic:[[now-day,12]],sofr:[[now-day,4]],ptax:Object.fromEntries(['USD','EUR','JPY'].map(c=>[c,{sell:c==='JPY'?.03491:5.03,date:'2026-10-23',kind:'Fechamento PTAX'}])),ptaxHist:{}}})
-  if(name==='history.json')return route.fulfill({json:{generatedAt:now,source:'AwesomeAPI',series:Object.fromEntries(['USD','EUR','JPY','CNH'].map(c=>[c,{source:c,points:[['2025-12-31',4],['2026-09-30',5],['2026-10-23',5.5]].map(([d,bid])=>({t:Date.parse(d+'T20:00Z'),bid}))}]))}})
+  if(name==='history.json')return route.fulfill({json:{generatedAt:now,source:'AwesomeAPI',series:Object.fromEntries(['USD','EUR','JPY','CNH'].map(c=>[c,{source:c,points:[[yearEnd,4],[monthEnd,5],[lastDay,5.5]].map(([d,bid])=>({t:Date.parse(d+'T20:00Z'),bid}))}]))}})
   if(u.hostname==='economia.awesomeapi.com.br')return mode==='ok'?route.fulfill({json:Object.fromEntries(['USDBRL','EURBRL','JPYBRL','USDCNH'].map((c,i)=>[c,{bid:String(i===2?.03355:5.4511),ask:String(i===2?.0336:5.46),high:'6',low:'.01',pctChange:i===1?'-0.52':'0.51',varBid:i===2?'0.00002':i===1?'-.0284':'.0277',timestamp:String(Math.floor(now/1000))}]))}):route.abort()
   if(u.hostname==='api.frankfurter.dev')return mode==='reserve'?route.fulfill({json:{date:new Date(now-day).toISOString().slice(0,10),rates:{BRL:5.12}}}):route.abort()
   if(u.origin===base)return route.continue();return route.abort()
