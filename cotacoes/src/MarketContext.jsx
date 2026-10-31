@@ -10,6 +10,7 @@ import IndicatorTable from './IndicatorTable.jsx'
 import SeriesHistory from './SeriesHistory.jsx'
 import { seriesStats } from './seriesStats.js'
 import { monthlyStats } from './monthlyStats.js'
+import Estado from './Estado.jsx'
 import { onRefresh } from './refreshBus.js'
 
 function useContextFile(file, parse) {
@@ -63,7 +64,7 @@ function FreightTable({entries, onOpen}) {
     }
   }).filter(Boolean)
   const pending = entries.some(e => e.state.failed || e.state.data?.series.stale)
-  if (!rows.length) return <p role="status">Dado indisponível. Não representa zero.</p>
+  if (!rows.length) return <Estado tipo="aviso">Dado indisponível. Não representa zero.</Estado>
   return <>
     <IndicatorTable
       caption="Índices mensais de preços do transporte marítimo · EUA e Japão"
@@ -72,7 +73,7 @@ function FreightTable({entries, onOpen}) {
       rows={rows}
       onOpen={onOpen}
     />
-    {pending && <p role="status" className="context-warning">Último dado preservado em ao menos uma fonte; atualização não confirmada.</p>}
+    {pending && <Estado tipo="aviso">Último dado preservado em ao menos uma fonte; atualização não confirmada.</Estado>}
   </>
 }
 // Commodities no mesmo formato da tabela do Mercado: último, anterior, variação, 12 meses e ano; a linha abre o histórico quando há série.
@@ -105,7 +106,7 @@ function CommodityTable({items, failed, onOpen, caption = 'Commodities · refer�
       rows={rows}
       onOpen={onOpen}
     />
-    {(failed || items.some(i => i.stale || i.value === null)) && <p role="status" className="context-warning">Último dado preservado ou indisponível em alguma referência; atualização não confirmada. Dado ausente não representa zero.</p>}
+    {(failed || items.some(i => i.stale || i.value === null)) && <Estado tipo="aviso">Último dado preservado ou indisponível em alguma referência; atualização não confirmada. Dado ausente não representa zero.</Estado>}
   </>
 }
 // Atividade e emprego em tabela (mesmo formato do Mercado): último, anterior, variação na unidade do indicador e mesmo mês do ano anterior.
@@ -140,13 +141,13 @@ function ActivityTable({items, series, failed, historyFailed, historyLoading, on
       rows={rows}
       onOpen={onOpen}
     />
-    {(failed || historyFailed) && <p role="status" className="context-warning">Último dado preservado; atualização não confirmada.</p>}
-    {historyLoading && <p role="status" className="ind-note">Carregando histórico para as comparações…</p>}
-    {items.some(i=>i.value===null) && <p role="status" className="context-warning">Dado indisponível em algum indicador. Não representa zero.</p>}
+    {(failed || historyFailed) && <Estado tipo="aviso">Último dado preservado; atualização não confirmada.</Estado>}
+    {historyLoading && <Estado>Carregando histórico para as comparações…</Estado>}
+    {items.some(i=>i.value===null) && <Estado tipo="aviso">Dado indisponível em algum indicador. Não representa zero.</Estado>}
   </>
 }
 function Cards({state, children}) {
-  return <>{!state.data && <p role="status">{state.failed ? 'Não foi possível carregar os dados.' : 'Carregando dados…'}</p>}{children}</>
+  return <>{!state.data && <Estado tipo={state.failed ? 'erro' : 'info'}>{state.failed ? 'Não foi possível carregar os dados.' : 'Carregando dados…'}</Estado>}{children}</>
 }
 export default function MarketContext({ part = '' }) {
   const [open,setOpen] = useState(null)
@@ -167,27 +168,27 @@ export default function MarketContext({ part = '' }) {
     {(!part || part === 'atividade') && <section aria-labelledby="market-context-heading"><div className="ctx-head"><h2 id="market-context-heading">Indicadores de mercado</h2><RefreshButton files={['market-indicators.json', 'indicator-history.json']} label="Indicadores de mercado" /></div>
       <Aviso title="Atividade e emprego"><p className="context-intro">Atividade e emprego. Indicadores observados, não projeções. Competências e datas de divulgação diferem.</p></Aviso>
       <Cards state={market}>{market.data && <ActivityTable items={market.data} series={history.data} historyFailed={history.failed} historyLoading={!history.data&&!history.failed} failed={market.failed} onOpen={id=>setOpen(market.data.find(i=>i.id===id))} />}</Cards>
-      {market.data && market.data.length < MARKET_IDS.length && <p role="status">Cobertura parcial: alguns indicadores não puderam ser carregados.</p>}
+      {market.data && market.data.length < MARKET_IDS.length && <Estado tipo="aviso">Cobertura parcial: alguns indicadores não puderam ser carregados.</Estado>}
       <Aviso title="Atividade e emprego · método"><p className="context-method">Leituras conferidas manualmente; não há atualização automática destes indicadores. PMI ISM em pontos: acima de 50 indica expansão; abaixo de 50, contração. Saldos de emprego podem ser negativos e sujeitos a revisão.</p></Aviso>
     </section>}
     {(!part || part === 'commodities') && <section aria-labelledby="commodities-context-heading"><div className="ctx-head"><h2 id="commodities-context-heading">Commodities</h2><RefreshButton files={['commodities.json', 'oil.json', 'commodities-brl.json', 'fuels.json']} label="Commodities" /></div>
       <Aviso title="Commodities"><p className="context-intro">Referências internacionais em dólar. Petróleo spot diário e demais produtos em médias mensais, não preços em tempo real nem contratos futuros.</p></Aviso>
-      {!all.length && <p role="status">{commodities.failed || brent.failed ? 'Não foi possível carregar as referências.' : 'Carregando referências…'}</p>}
+      {!all.length && <Estado tipo={commodities.failed || brent.failed ? 'erro' : 'info'}>{commodities.failed || brent.failed ? 'Não foi possível carregar as referências.' : 'Carregando referências…'}</Estado>}
       {all.length > 0 && <CommodityTable items={all} failed={commodities.failed || brent.failed} onOpen={id => setOpenCommodity(all.find(i => i.id === id))} />}
-      {all.length > 0 && (!brent.data || !commodities.data || commodities.data.length < COMMODITY_IDS.length) && <p role="status">Cobertura parcial: uma das fontes ainda não está disponível.</p>}
+      {all.length > 0 && (!brent.data || !commodities.data || commodities.data.length < COMMODITY_IDS.length) && <Estado tipo="aviso">Cobertura parcial: uma das fontes ainda não está disponível.</Estado>}
       <Aviso title="Commodities · método"><p className="context-method">Em falhas, o painel preserva a última referência. A data da atualização não é a data do preço. Frequência de publicação e unidades variam; valores ausentes nunca são convertidos em zero. Petróleo, gás natural, diesel e gasolina de Nova York: spot diário (gás em US$/MMBtu; derivados em US$/galão, na costa leste dos EUA, antes de impostos, margens e frete). Açúcar e café: média mensal convertida de US$/kg para US¢/libra-peso, a unidade de mercado.</p></Aviso>
       {brl.data && <>
         <CommodityTable items={brl.data} failed={brl.failed} onOpen={id => setOpenCommodity(brl.data.find(i => i.id === id))} caption="Em reais · IC-Br e soja" ariaLabel="Tabela de commodities em reais; role para ver todas as colunas" />
-        {brl.data.length < BRL_IDS.length && <p role="status">Cobertura parcial: parte dos índices em reais não está disponível.</p>}
+        {brl.data.length < BRL_IDS.length && <Estado tipo="aviso">Cobertura parcial: parte dos índices em reais não está disponível.</Estado>}
         <Aviso title="Em reais · método"><p className="context-method">IC-Br: índice de commodities calculado em reais a partir das cotações internacionais e do câmbio; mensal. Soja em R$/saca: estimativa própria, igual à soja FOB Golfo EUA (US$/tonelada) × 0,06 (saca de 60 kg) × dólar médio do mês. É uma referência de nível e de tendência: não é o preço pago ao produtor, que varia com prêmio de porto, frete e região.</p></Aviso>
       </>}
-      {!brl.data && brl.failed && <p role="status">Não foi possível carregar as commodities em reais.</p>}
+      {!brl.data && brl.failed && <Estado tipo="erro">Não foi possível carregar as commodities em reais.</Estado>}
       {fuels.data && <>
         <CommodityTable items={fuels.data} failed={fuels.failed} onOpen={id => setOpenCommodity(fuels.data.find(i => i.id === id))} caption="Combustíveis ao consumidor" ariaLabel="Tabela de combustíveis ao consumidor; role para ver todas as colunas" />
-        {fuels.data.length < FUEL_IDS.length && <p role="status">Cobertura parcial: algum combustível não está disponível.</p>}
+        {fuels.data.length < FUEL_IDS.length && <Estado tipo="aviso">Cobertura parcial: algum combustível não está disponível.</Estado>}
         <Aviso title="Combustíveis · método"><p className="context-method">Média semanal de revenda nos postos pesquisados no Brasil (domingo a sábado), já com impostos e margens. A semana mostrada é a última divulgada, com defasagem de alguns dias. Diesel: tipo S10. O histórico começa na primeira coleta do painel e cresce a cada semana.</p></Aviso>
       </>}
-      {!fuels.data && fuels.failed && <p role="status">Não foi possível carregar os preços de combustíveis.</p>}
+      {!fuels.data && fuels.failed && <Estado tipo="erro">Não foi possível carregar os preços de combustíveis.</Estado>}
     </section>}
     {(!part || part === 'frete') && <section aria-labelledby="freight-heading"><div className="ctx-head"><h2 id="freight-heading">Transporte marítimo · referência de preços</h2><RefreshButton files={['freight.json', 'freight-jp.json']} label="Transporte marítimo" /></div>
       <Aviso title="Transporte marítimo"><p className="context-intro">Índices de preços do transporte marítimo dos EUA e do Japão, em bases diferentes: compare as variações, não os níveis. Não medem fretes por rota (China–Brasil, Europa–Brasil); não substituem orçamento de transportadora.</p></Aviso>

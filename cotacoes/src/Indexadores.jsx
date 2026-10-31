@@ -3,6 +3,7 @@ import { useDataFile } from './useDataFile.js'
 import { Panel } from './TerminalDesk.jsx'
 import { indexRows } from './indexadores.js'
 import Explain from './Explain.jsx'
+import Estado from './Estado.jsx'
 
 const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 
@@ -14,7 +15,7 @@ export default function Indexadores({ onBndes }) {
   return (
     <Panel title="Indexadores · TR · TBF · TLP" refresh={['indexadores.json']}>
       {file.status === 'error' && !file.data ? (
-        <p className="status">Indexadores indisponíveis agora ({file.error}). Eles voltam na próxima coleta.</p>
+        <Estado tipo="erro" erro={file.error}>Indexadores indisponíveis agora. Voltam na próxima coleta.</Estado>
       ) : (
         <div className="idx-scroll" role="region" aria-label="Indexadores TR, TBF e TLP" tabIndex={0}>
           <table className="idx-table">

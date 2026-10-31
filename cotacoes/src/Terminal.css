@@ -486,6 +486,19 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .setor-cols { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .setor-cols h3 { margin: 0 0 4px; font-size: .9rem; }
 .setor-cols ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
-.setores .desk-panel > header { flex-wrap: wrap; }
-.setores .desk-tabs { flex-wrap: wrap; flex-basis: 100%; }
+.setores .desk-panel > header { flex-wrap: wrap; align-items: center; }
+.setores .desk-tabs { flex: 0 1 auto; flex-wrap: wrap; row-gap: 0; align-items: center; align-self: center; }
+.setores .desk-panel > header small { margin-left: auto; }
+.setores .desk-tabs button { padding: 0 7px; letter-spacing: .06em; }
+/* rótulo de grupo nas abas (Setores | Insumos): separa os dois blocos sem criar outra linha */
+.desk-tabs-grupo { align-self: center; padding: 0 8px 0 10px; color: #7a7566; font: 600 .6rem/1 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; border-left: 1px solid var(--line, #1d1b15); }
+.desk-tabs-grupo:first-child { border-left: 0; padding-left: 2px; }
 .idx-link { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }
+
+/* Estados de painel (carregando, vazio, aviso, erro): uma linha discreta, sem competir com o dado */
+.estado { display: flex; align-items: baseline; gap: 8px; margin: 6px 0; font-size: .76rem; line-height: 1.35; color: var(--mut, #8a8576); }
+.estado small { color: inherit; opacity: .75; font-size: inherit; }
+.estado-ponto { flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; transform: translateY(-1px); }
+.estado-erro { color: #ff6b5f; }
+.estado-aviso { color: #d29922; }
+.estado-info .estado-ponto { opacity: .55; }

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Panel } from './TerminalDesk.jsx'
 import NoticiasPorDia from './NoticiasPorDia.jsx'
+import Estado from './Estado.jsx'
 import { useDataFile } from './useDataFile.js'
 import { normalizeTemas } from './reforma.js'
 import { INSUMOS, SETORES, parseSetor } from './insumos.js'
@@ -37,23 +38,23 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const usd = quotes?.USD?.bid
   const itens = insumo ? (comm.data?.commodities ?? []).filter((c) => insumo.commodity.includes(c.id) && Number.isFinite(c.value)) : []
   const serie = insumo?.daily ? diario.data?.series?.[insumo.daily] : null
-  const tabs = [...SETORES, ...INSUMOS].map((t) => ({ id: t.id, label: t.label }))
+  const tabs = [...SETORES.map((t) => ({ id: t.id, label: t.label, grupo: 'Setores' })), ...INSUMOS.map((t) => ({ id: t.id, label: t.label, grupo: 'Insumos' }))]
   return (
     <div className="setores">
       <Panel title="Setores e insumos" tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={['temas.json', 'commodities.json', 'insumos-precos.json']}>
         {insumo && (
           <div className="setor-insumo">
-            {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} diario={serie} />) : <p className="status" role="status">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</p>}
+            {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} diario={serie} />) : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
             <div className="setor-cols">
               <section aria-label="O que mexe no preço"><h3>O que mexe no preço</h3><ul>{insumo.move.map((m) => <li key={m}>{m}</li>)}</ul></section>
               <section aria-label="Ficha da visita"><h3>Ficha da visita</h3><ul>{insumo.visita.map((m) => <li key={m}>{m}</li>)}</ul></section>
             </div>
           </div>
         )}
-        {temas.status === 'loading' && <p className="status" role="status">Carregando as matérias…</p>}
-        {temas.status === 'error' && !tema && <p className="status" role="status">Matérias indisponíveis no momento.</p>}
+        {temas.status === 'loading' && <Estado>Carregando as matérias…</Estado>}
+        {temas.status === 'error' && !tema && <Estado tipo="erro" erro={temas.error}>Matérias indisponíveis no momento.</Estado>}
         {tema && <NoticiasPorDia data={tema} ariaLabel={`${tema.label}: matérias da semana`} />}
-        {temas.data && !tema && temas.status !== 'loading' && <p className="status" role="status">Ainda não há matérias coletadas para este assunto.</p>}
+        {temas.data && !tema && temas.status !== 'loading' && <Estado>Ainda não há matérias coletadas para este assunto.</Estado>}
       </Panel>
     </div>
   )

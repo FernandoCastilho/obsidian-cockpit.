@@ -6,6 +6,7 @@ import Explain from './Explain.jsx'
 import { CURRENCIES } from './useQuotes.js'
 import { useNews } from './useNews.js'
 import { buildFeed } from './feed.js'
+import Estado from './Estado.jsx'
 
 const stamp = (t) => {
   if (!t) return '—'
@@ -34,7 +35,7 @@ export default function News({ colors }) {
         <RefreshButton files={['news.json']} label="Notícias" />
       </div>
       {!data && !error && <p className="status">Carregando notícias…</p>}
-      {error && <p className="status">Notícias indisponíveis no momento ({error}).</p>}
+      {error && <Estado tipo="erro" erro={error}>Notícias indisponíveis no momento.</Estado>}
       {data && Object.keys(data.stale ?? {}).length > 0 && (
         <p className="status stale">Sem manchetes novas para {Object.keys(data.stale).join(', ')}; mantidas as da última coleta bem-sucedida.</p>
       )}

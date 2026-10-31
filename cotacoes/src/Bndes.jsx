@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { Aviso } from './Avisos.jsx'
+import Estado from './Estado.jsx'
 import { FilterScope } from './ChartFilters.jsx'
 import ComparaSeries from './BndesCompare.jsx'
 import SeriesChart from './BndesChart.jsx'
@@ -83,7 +84,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
             <small role="status">{compare.length >= 2 ? `${compare.length} séries no gráfico${noCompare < compare.length ? ` (${noCompare} desta família)` : ''}` : compare.length === 1 ? 'Marque ao menos duas séries' : 'Marque duas ou mais séries'}</small>
           </div>
         )}
-        {error ? <p className="status">Séries indisponíveis agora ({error}). Elas voltam na próxima coleta.</p> : (
+        {error ? <Estado tipo="erro" erro={error}>Séries indisponíveis agora. Voltam na próxima coleta.</Estado> : (
           <div className={`bn-scroll ${rows.length > 8 ? 'bn-grp' : ''}`} role="region" aria-label={`${fam.title}; role para ver todas as colunas`} tabIndex={0}>
             <table className="bn-table bn-main">
               <thead><tr><th scope="col">Série</th><th scope="col">Valor</th><th scope="col">Dia</th><th scope="col" className="bn-wide">Mês</th><th scope="col" className="bn-wide">Ano</th>{hasSpread && <th scope="col" className="bn-wide" title="TFB menos a taxa DI x pré (B3) do mesmo prazo e do mesmo dia da curva">Spread DI</th>}<th scope="col">Data</th></tr></thead>

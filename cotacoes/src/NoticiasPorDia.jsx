@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { dayOf, groupByDay, searchItems } from './reforma.js'
+import Estado from './Estado.jsx'
 
 const TZ = 'America/Sao_Paulo'
 const dayLabel = (key, today) => {
@@ -23,7 +24,7 @@ export default function NoticiasPorDia({ data, label = 'matérias', ariaLabel = 
   const total = shown.reduce((n, d) => n + d.count, 0)
   return (
     <div className="reforma" aria-label={ariaLabel}>
-      {data?.stale && <p className="status stale" role="status">Atualização indisponível na última coleta; mantidas as matérias anteriores.</p>}
+      {data?.stale && <Estado tipo="aviso">Atualização indisponível na última coleta; mantidas as matérias anteriores.</Estado>}
       <div className="reforma-controls">
         <div className="seg reforma-days" role="group" aria-label="Dia da semana">
           <button type="button" aria-pressed={day === 'all'} onClick={() => setDay('all')}>Semana · {found.length}</button>
@@ -33,7 +34,7 @@ export default function NoticiasPorDia({ data, label = 'matérias', ariaLabel = 
           <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ex.: preço, China, tarifa" />
         </label>
       </div>
-      {shown.length === 0 ? <p className="status" role="status">{data.items.length ? 'Nenhuma matéria para esse filtro.' : 'Nenhuma matéria sobre o tema nos últimos 7 dias.'}</p> : (
+      {shown.length === 0 ? <Estado>{data.items.length ? 'Nenhuma matéria para esse filtro.' : 'Nenhuma matéria sobre o tema nos últimos 7 dias.'}</Estado> : (
         <div className="reforma-list">
           <p className="muted reforma-count" role="status">{total} {total === 1 ? 'matéria' : 'matérias'} · últimos {data.windowDays} dias · horário de Brasília. Títulos da imprensa agrupados por dia; não são resumo nem análise do conteúdo.</p>
           {shown.map((d) => (

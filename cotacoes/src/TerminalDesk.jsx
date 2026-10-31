@@ -113,7 +113,10 @@ export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, 
           <>
             <h2 className="sr-only">{active.label}</h2>
             <div className="desk-tabs" role="tablist" aria-label={title}>
-              {tabs.map((t) => <button key={t.id} type="button" role="tab" aria-selected={t.id === active.id} onClick={() => onTab(t.id)}>{t.label}</button>)}
+              {tabs.map((t, i) => [
+                t.grupo && t.grupo !== tabs[i - 1]?.grupo ? <span key={`g-${t.grupo}`} className="desk-tabs-grupo" aria-hidden="true">{t.grupo}</span> : null,
+                <button key={t.id} type="button" role="tab" aria-selected={t.id === active.id} title={t.grupo ? `${t.grupo}: ${t.label}` : undefined} onClick={() => onTab(t.id)}>{t.label}</button>,
+              ])}
             </div>
             {(active.note ?? note) && <small>{active.note ?? note}</small>}
             {(active.refresh ?? refresh) && <RefreshButton files={active.refresh ?? refresh} label={active.label} />}

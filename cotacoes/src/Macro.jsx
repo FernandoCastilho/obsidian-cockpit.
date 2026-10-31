@@ -10,6 +10,7 @@ import { Plot, fmtDate, useWidth } from './HistoryChart.jsx'
 import SofrChart from './Sofr.jsx'
 import { useDataFile } from './useDataFile.js'
 import { estrChartPoints, normalizeEstr } from './estr.js'
+import Estado from './Estado.jsx'
 
 const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const rate = (v) => `${n2(v)}% a.a.`
@@ -206,7 +207,7 @@ export default function Macro({ macro: m }) {
         <RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
       </div>
       {m.status === 'loading' && <p className="status">Carregando dados…</p>}
-      {m.status === 'error' && <p className="status">Dados indisponíveis no momento ({m.error}).</p>}
+      {m.status === 'error' && <Estado tipo="erro" erro={m.error}>Dados indisponíveis no momento.</Estado>}
       {m.stale && <p className="status stale">Atualização pendente; mantidas as últimas taxas disponíveis.</p>}
       {m.status === 'ok' && m.data.generatedAt && (Date.now() - m.data.generatedAt > 3 * 3600e3) && !isWeekendBR() && (
         <p className="status stale">Atenção: os dados foram coletados há mais de 3 horas; a atualização automática pode ter parado.</p>
