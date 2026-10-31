@@ -15,6 +15,7 @@ export const COMMODITIES = [
   { id: 'ny-diesel', label: 'Diesel · Nova York', unit: 'USD/galão', nature: 'spot diário', sourceName: 'EIA', sourceUrl: NY_DIESEL_URL, benchmark: 'ULSD nº 2 • New York Harbor', decimals: 3 },
   { id: 'ny-gasoline', label: 'Gasolina · Nova York', unit: 'USD/galão', nature: 'spot diário', sourceName: 'EIA', sourceUrl: NY_GASOLINE_URL, benchmark: 'Convencional regular • FOB New York Harbor', decimals: 3 },
   { id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Grau A • LME' },
+  { id: 'aluminum', label: 'Alumínio', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'LME • 99,5% de pureza' },
   { id: 'sugar', label: 'Açúcar', unit: 'US¢/libra-peso', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Preço mundial do açúcar bruto', decimals: 2 },
   { id: 'coffee', label: 'Café arábica', unit: 'US¢/libra-peso', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Arábica • indicador da ICO', decimals: 2 },
   { id: 'urea', label: 'Ureia', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Fertilizante nitrogenado • spot' },
@@ -106,7 +107,7 @@ export function parsePinkRows(rows, sourceUrl, now = new Date()) {
   // a série fica de fora (o coletor preserva o último valor válido) em vez de derrubar a leitura inteira.
   const definitions = [
     ['iron-ore', 'Iron ore, cfr spot', ['($/dmtu)', '($/dmt)'], 1, true], ['soybeans', 'Soybeans', ['($/mt)'], 1, true], ['corn', 'Maize', ['($/mt)'], 1, true], ['gold', 'Gold', ['($/troy oz)'], 1, true],
-    ['copper', 'Copper', ['($/mt)'], 1, false], ['sugar', 'Sugar, world', ['($/kg)'], CENTS_PER_LB, false], ['coffee', 'Coffee, Arabica', ['($/kg)'], CENTS_PER_LB, false],
+    ['copper', 'Copper', ['($/mt)'], 1, false], ['aluminum', 'Aluminum', ['($/mt)'], 1, false], ['sugar', 'Sugar, world', ['($/kg)'], CENTS_PER_LB, false], ['coffee', 'Coffee, Arabica', ['($/kg)'], CENTS_PER_LB, false],
     ['urea', 'Urea', ['($/mt)'], 1, false], ['dap', 'DAP', ['($/mt)'], 1, false],
   ]
   const dated = rows.filter(r => /^\d{4}M(?:0[1-9]|1[0-2])$/.test(r.A ?? '')).sort((a,b) => a.A.localeCompare(b.A))

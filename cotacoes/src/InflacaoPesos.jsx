@@ -1,11 +1,12 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import IpcaGrupoChart from './IpcaGrupoChart.jsx'
 import './InflacaoPesos.css'
 import { Aviso } from './Avisos.jsx'
 import { useDataFile } from './useDataFile.js'
 import { useCentralDaily } from './useHistory.js'
 import { accumulatedReturns } from './marketReturns.js'
 import { brentReturns } from './oilReference.js'
-import { FOCUS_BAND, THRESHOLDS, factorRows, groupRows, normalizeIpcaGroups } from './inflacao.js'
+import { FOCUS_BAND, THRESHOLDS, factorRows, groupMonthly, groupRows, normalizeIpcaGroups } from './inflacao.js'
 import { nf } from './format.js'
 
 const sg = (v, d = 2) => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d)
@@ -20,6 +21,7 @@ export default function InflacaoPesos({ macro }) {
   const commodities = useDataFile('commodities.json')
   const daily = useCentralDaily()
   const series = useMemo(() => { try { return groupsFile.data ? normalizeIpcaGroups(groupsFile.data) : null } catch { return null } }, [groupsFile.data])
+  const [picked, setPicked] = useState(null)
   const groups = useMemo(() => (series?.groups?.length ? groupRows(series) : null), [series])
   const factors = useMemo(() => {
     const m = macro?.data
@@ -50,8 +52,8 @@ export default function InflacaoPesos({ macro }) {
                 {groups.rows.map((r) => {
                   const t = r.trend && TREND[r.trend]
                   return (
-                    <tr key={r.id} className={r.general ? 'infl-general' : r.id === groups.top?.id ? 'infl-top' : r.id === groups.bottom?.id ? 'infl-bottom' : undefined}>
-                      <th scope="row">{r.name}</th>
+                    <tr key={r.id} className={`infl-row${r.general ? ' infl-general' : r.id === groups.top?.id ? ' infl-top' : r.id === groups.bottom?.id ? ' infl-bottom' : ''}${picked === r.id ? ' infl-on' : ''}`} onClick={() => setPicked(picked === r.id ? null : r.id)}>
+                      <th scope="row"><button type="button" className="infl-pick-btn" aria-pressed={picked === r.id} aria-label={`Ver a variação mensal de ${r.name} nos últimos 12 meses`} onClick={(e) => { e.stopPropagation(); setPicked(picked === r.id ? null : r.id) }}>{r.name}</button></th>
                       <td>{r.weight == null ? '—' : nf(r.weight)}</td>
                       <td>{r.mom == null ? '—' : sg(r.mom)}</td>
                       <td>{r.contribution == null ? '—' : sg(r.contribution)}</td>
@@ -63,6 +65,8 @@ export default function InflacaoPesos({ macro }) {
               </tbody>
             </table>
           </div>
+          {picked == null && <p className="muted infl-hint">Clique em um grupo (por exemplo, Alimentação e bebidas) para ver como ele se comportou mês a mês nos últimos 12 meses.</p>}
+          {picked != null && (() => { const g = groups.rows.find((x) => x.id === picked); const months = groupMonthly(series, picked); return g && months ? <IpcaGrupoChart key={picked} name={g.name} months={months} onClose={() => setPicked(null)} /> : null })()}
           {series.stale && <p className="status stale" role="status">Última série disponível; a atualização não foi confirmada.</p>}
         </>
       )}

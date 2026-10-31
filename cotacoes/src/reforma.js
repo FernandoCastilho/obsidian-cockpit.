@@ -29,3 +29,14 @@ export function searchItems(items, term) {
   const words = plain(term ?? '').split(/\s+/).filter(Boolean)
   return words.length ? items.filter((i) => { const t = plain(`${i.title} ${i.source}`); return words.every((w) => t.includes(w)) }) : items
 }
+
+// Arquivo de temas (setores e insumos): { temas: { id: { label, grupo, items } } } -> dados de um tema no mesmo formato da reforma tributária.
+export function normalizeTemas(data) {
+  if (!data || typeof data !== 'object' || !data.temas || typeof data.temas !== 'object') throw new Error('Arquivo de temas inválido')
+  const out = {}
+  for (const [id, t] of Object.entries(data.temas)) {
+    if (!t || !Array.isArray(t.items)) continue
+    out[id] = { label: t.label, grupo: t.grupo, generatedAt: data.generatedAt, stale: !!data.stale, windowDays: data.windowDays ?? 7, items: t.items.filter((i) => i && typeof i.title === 'string' && i.title && /^https?:\/\//.test(i.link ?? '') && Number.isFinite(i.t)).sort((a, b) => b.t - a.t) }
+  }
+  return out
+}

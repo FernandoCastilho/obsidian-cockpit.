@@ -10,6 +10,7 @@ import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
+import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
@@ -451,7 +452,9 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
         <section className="currency-comparison" aria-labelledby="comparison-title"><h2 id="comparison-title">Comparar moedas</h2>
           <h3>Taxa entre duas moedas</h3><ParityTile quotes={quotes} spark={spark} onOpen={code => { closeCompare(); openSelected(code) }} color={colors?.PAR} />
           <h3>Evolução comparada em percentual</h3>
-          <ChartFilters><div className="seg" role="group" aria-label="Período do comparador">{SPARK.map(p => <button type="button" key={p.id} aria-pressed={compareSpark.id === p.id} onClick={() => setCompareSpark(p)}>{p.label}</button>)}</div></ChartFilters>
+          <ChartFilters><div className="seg" role="group" aria-label="Período do comparador">{SPARK.map(p => <button type="button" key={p.id} aria-pressed={compareSpark.id === p.id} onClick={() => setCompareSpark(p)}>{p.label}</button>)}</div>
+            <DateRangePicker label="Período personalizado" start={compareSpark.range ? toInput(compareSpark.range.start) : compareSpark.day ?? toInput(new Date(Date.now() - (compareSpark.days ?? 1) * 864e5))} end={compareSpark.range ? toInput(compareSpark.range.end) : compareSpark.day ?? toInput(limits.end)} min={toInput(limits.start)} max={toInput(limits.end)} onChange={(a, b) => setCompareSpark(a === b ? { id: 'custom-day', label: `Dia ${a.split('-').reverse().join('/')}`, intraday: true, day: a } : { id: 'custom', label: `${a.split('-').reverse().join('/')} → ${b.split('-').reverse().join('/')}`, range: { start: fromInput(a), end: fromInput(b) } })} />
+          </ChartFilters>
           <ResumoChart comparison colors={colors} spark={compareSpark} selection={compareSelection} onSelection={setCompareSelection} onPrevious={day => setCompareSpark({ id:'previous', label:`Amostras de ${day.split('-').reverse().join('/')}`, intraday:true, day })} />
         </section>
       </Expandable>}

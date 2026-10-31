@@ -11,6 +11,7 @@ export const DESK_TABS = [
   { id: 'cenarios', label: 'Cenários' },
   { id: 'noticias', label: 'Notícias' },
   { id: 'bndes', label: 'BNDES' },
+  { id: 'setores', label: 'Setores' },
   { id: 'calculadora', label: 'Calculadoras' },
   { id: 'feriados', label: 'Feriados' },
   { id: 'aprender', label: 'Aprender' },
@@ -34,6 +35,7 @@ const TAB = {
   COMMODITIES: ['cenarios', 'commodities'], PETROLEO: ['cenarios', 'commodities'], BRENT: ['cenarios', 'commodities'], OURO: ['cenarios', 'commodities'],
   FRETE: ['cenarios', 'frete'],
   BNDES: ['bndes'], TFB: ['bndes'],
+  SETORES: ['setores'], COBRE: ['setores', 'cobre'], ALUMINIO: ['setores', 'aluminio'], ACO: ['setores', 'aco'], TELECOM: ['setores', 'telecom'], INDUSTRIA: ['setores', 'industria'], VAREJO: ['setores', 'comercio'],
   CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'], GIRO: ['calculadora', 'giro'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
   FERIADOS: ['feriados'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
@@ -201,6 +203,6 @@ export function ageText(ageMs) {
 }
 
 export const SHORTCUTS = [
-  ['Alt + 1 … 9', 'Mercado, Juros, Cenários, Notícias, BNDES, Calculadoras, Feriados, Aprender, Config'],
+  ['Alt + 1 … 9, 0', 'Mercado, Juros, Cenários, Notícias, BNDES, Setores, Calculadoras, Feriados, Aprender, Config'],
   ['Alt + L', 'Laser pointer: liga e desliga o traço que se apaga sozinho (Esc também para)'],
 ]

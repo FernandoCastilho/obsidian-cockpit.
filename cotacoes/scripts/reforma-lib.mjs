@@ -24,10 +24,10 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, ' ')
 const validItem = (it) => it && typeof it.title === 'string' && it.title.trim() && /^https?:\/\//.test(it.link ?? '') && Number.isFinite(it.t) && it.t > 0
 
 // Junta as matérias novas às já publicadas, tira repetidas (mesmo link ou mesmo título), descarta o que passou da janela e ordena da mais recente.
-export function mergeItems(fresh, previous, now = Date.now(), windowDays = WINDOW_DAYS) {
+export function mergeItems(fresh, previous, now = Date.now(), windowDays = WINDOW_DAYS, keep = relevante) {
   const seenLink = new Set(), seenTitle = new Set(), out = []
   const limit = now - windowDays * 864e5
-  for (const it of [...fresh, ...previous].filter(validItem).filter((x) => relevante(x.title)).sort((a, b) => b.t - a.t)) {
+  for (const it of [...fresh, ...previous].filter(validItem).filter((x) => keep(x.title)).sort((a, b) => b.t - a.t)) {
     const k = norm(it.title)
     if (it.t < limit || it.t > now + 36e5 || seenLink.has(it.link) || seenTitle.has(k)) continue
     seenLink.add(it.link); seenTitle.add(k)

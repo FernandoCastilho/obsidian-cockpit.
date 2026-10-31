@@ -31,6 +31,21 @@ export function groupRows(series) {
   return { period, prev, rows, top: top && top.contribution > 0 ? top : null, bottom: bottom && bottom.contribution < 0 ? bottom : null }
 }
 
+// Mês a mês de um grupo: variação, peso, contribuição aproximada e 12 meses, em ordem cronológica. Mês sem dado fica com null, nunca com zero.
+export function groupMonthly(series, id) {
+  const g = series?.groups?.find((x) => x.id === id)
+  if (!g) return null
+  return series.periods.map((period) => {
+    const d = g.byPeriod?.[period] ?? {}
+    return { period, mom: finite(d.mom) ? d.mom : null, weight: finite(d.weight) ? d.weight : null, y12: finite(d.y12) ? d.y12 : null, contribution: finite(d.weight) && finite(d.mom) ? (d.weight * d.mom) / 100 : null }
+  })
+}
+
+// Acumulado composto dos meses informados: (1 + m1)(1 + m2)... − 1, em %. Só calcula com todos os meses presentes.
+export function compound(months) {
+  return months.length && months.every((m) => finite(m)) ? (months.reduce((f, m) => f * (1 + m / 100), 1) - 1) * 100 : null
+}
+
 // pressão (sobe além do limiar), alívio (cai além do limiar), neutro; sem número, sem leitura.
 export const signalOf = (value, threshold) => (!finite(value) ? null : value >= threshold ? 'pressure' : value <= -threshold ? 'relief' : 'neutral')
 
