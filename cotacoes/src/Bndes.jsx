@@ -41,8 +41,16 @@ export default function Bndes({ view = '', onView = () => {} }) {
   const hasSpread = !!rows[0]?.hasSpread
   const spreadDate = rows.find((r) => r.spread)?.spread.curveDate
   const sel = rows.find((r) => r.id === id)
-  const compareItems = useMemo(() => compare.map((cid) => { const s = seriesFor(family, cid, bndes.data, moedas.data); const r = rows.find((x) => x.id === cid); return { id: cid, name: r?.name ?? s.name, short: r?.name ?? s.name, unit: s.unit, decimals: s.decimals, list: s.list } }), [compare, family, rows, bndes.data, moedas.data])
+  // A comparação vale entre famílias: cada código é procurado na família a que pertence; o nome leva a sigla da família (TFB · …, TFC · …).
+  const familyOf = useMemo(() => Object.fromEntries(FAMILIES.flatMap((f) => ids[f.id].map((cid) => [cid, f.id]))), [ids])
+  const compareItems = useMemo(() => compare.filter((cid) => familyOf[cid]).map((cid) => {
+    const f = familyOf[cid], label = FAMILIES.find((x) => x.id === f).label
+    const s = seriesFor(f, cid, bndes.data, moedas.data), r = rowsByFamily[f].find((x) => x.id === cid)
+    const nome = r?.name ?? s.name, name = nome.toUpperCase().startsWith(label) ? nome : `${label} · ${nome}`
+    return { id: cid, name, short: name, unit: s.unit, decimals: s.decimals, list: s.list }
+  }), [compare, familyOf, rowsByFamily, bndes.data, moedas.data])
   const toggleCompare = (cid) => go({ compare: compare.includes(cid) ? compare.filter((x) => x !== cid) : [...compare, cid] }, true)
+  const noCompare = compare.filter((cid) => familyOf[cid] === family).length
   const period = { preset, custom, setPreset: (v) => go({ preset: v, custom: null }, true), setCustom: (c) => go({ custom: c }, true) }
 
   return (
@@ -64,15 +72,15 @@ export default function Bndes({ view = '', onView = () => {} }) {
 
       <Panel title="BNDES · taxas e moedas contratuais" note="BNDES" refresh={['bndes.json', 'moedas.json']}>
         <div className="seg bn-fam" role="group" aria-label="Família de séries">
-          {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined, compare: [] })}>{f.label}</button>)}
+          {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined })}>{f.label}</button>)}
         </div>
         <h3 className="bn-sub">{fam.title}</h3>
         {!error && rows.length > 1 && (
           <div className="bn-cmp-bar" role="group" aria-label="Comparar séries no mesmo gráfico">
-            <span>Comparar no mesmo gráfico:</span>
-            <button type="button" onClick={() => go({ compare: rows.filter((r) => !r.missing).map((r) => r.id) }, true)}>Marcar todas</button>
+            <span>Comparar no mesmo gráfico (vale entre famílias, ex.: TFB com TFC):</span>
+            <button type="button" onClick={() => go({ compare: [...new Set([...compare, ...rows.filter((r) => !r.missing).map((r) => r.id)])] }, true)}>Marcar todas desta família</button>
             <button type="button" onClick={() => go({ compare: [] }, true)} disabled={!compare.length}>Limpar</button>
-            <small role="status">{compare.length >= 2 ? `${compare.length} séries no gráfico` : compare.length === 1 ? 'Marque ao menos duas séries' : 'Marque duas ou mais séries'}</small>
+            <small role="status">{compare.length >= 2 ? `${compare.length} séries no gráfico${noCompare < compare.length ? ` (${noCompare} desta família)` : ''}` : compare.length === 1 ? 'Marque ao menos duas séries' : 'Marque duas ou mais séries'}</small>
           </div>
         )}
         {error ? <p className="status">Séries indisponíveis agora ({error}). Elas voltam na próxima coleta.</p> : (
@@ -103,9 +111,9 @@ export default function Bndes({ view = '', onView = () => {} }) {
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         <FilterScope>
-          {compare.length >= 2 ? (
+          {compareItems.length >= 2 ? (
             <>
-              <h3 className="bn-sub">Comparação · {compare.length} séries · {fam.label}</h3>
+              <h3 className="bn-sub">Comparação · {compareItems.length} séries · {[...new Set(compare.map((cid) => FAMILIES.find((x) => x.id === familyOf[cid])?.label).filter(Boolean))].join(' + ')}</h3>
               <ComparaSeries items={compareItems} loading={loading} period={period} />
             </>
           ) : (

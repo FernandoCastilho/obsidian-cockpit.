@@ -35,7 +35,8 @@ test('comparar: c=A,B,C vale com duas ou mais séries conhecidas da família; vo
   assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,C02', ids).compare, ['C01', 'C02'])
   assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,NAO,C02', ids).compare, ['C01', 'C02'], 'série desconhecida é ignorada')
   assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01', ids).compare, [], 'uma só não é comparação')
-  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=604,143', ids).compare, [], 'séries de outra família não valem')
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,TFB_60_90', ids).compare, ['C01', 'TFB_60_90'], 'a comparação atravessa as famílias (TFC com TFB)')
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,604,XYZ', ids).compare, ['C01', '604'], 'código de qualquer família vale; desconhecido é ignorado')
   assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,C01,C02', ids).compare, ['C01', 'C02'], 'sem repetição')
   const r = { family: 'tfb', id: 'TFB_60_90', preset: 24, custom: null, compare: ['TFB_36_30', 'TFB_60_90'] }
   assert.equal(buildRoute(r), 'tfb/TFB_60_90?p=2a&c=TFB_36_30,TFB_60_90')

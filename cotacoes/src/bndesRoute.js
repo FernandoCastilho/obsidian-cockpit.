@@ -1,5 +1,5 @@
 // Endereço da aba BNDES: #bndes/<família>/<série>?p=<período>, para colar no e-mail ou no Teams e abrir exatamente no mesmo gráfico.
-// Comparação: c=ID1,ID2,... (duas ou mais séries da mesma família no mesmo gráfico).
+// Comparação: c=ID1,ID2,... (duas ou mais séries, de qualquer família, no mesmo gráfico: TFB com TFC, por exemplo).
 // Período: p=3m, 6m, 12m, 2a, 5a ou tudo; ou d=AAAA-MM-DD..AAAA-MM-DD para um intervalo de datas.
 import { DEFAULT_SELECTION, FAMILIES } from './bndesView.js'
 
@@ -22,7 +22,9 @@ export function parseRoute(sub, ids = {}) {
   if (DAY.test(a ?? '') && DAY.test(b ?? '') && a <= b) custom = { start: a, end: b }
   else if (q.get('p') in PRESET_OF) preset = PRESET_OF[q.get('p')]
   // c=A,B,C: séries da mesma família no mesmo gráfico (só vale com duas ou mais, todas conhecidas)
-  const wanted = [...new Set(String(q.get('c') ?? '').split(',').filter(Boolean))].filter((v) => !valid || valid.includes(v))
+  // A comparação atravessa as famílias (ex.: TFB com TFC): vale o código de qualquer série conhecida.
+  const known = new Set(Object.values(ids).flat())
+  const wanted = [...new Set(String(q.get('c') ?? '').split(',').filter(Boolean))].filter((v) => !known.size || known.has(v))
   const compare = wanted.length >= 2 ? wanted : []
   return { family, id, preset, custom, compare }
 }
