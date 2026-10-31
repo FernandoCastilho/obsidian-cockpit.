@@ -185,6 +185,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.route('**/divida.json*', (r) => r.fulfill({ json: divida }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/commodities-brl.json*', (r) => r.fulfill({ json: commoditiesBrl }))
+      await p.route('**/oil.json*', (r) => r.fulfill({ json: { benchmark: 'Brent', kind: 'spot', unit: 'USD/barril', value: 103.4, observationDate: '2026-10-27', releaseDate: '2026-10-28', generatedAt: new Date().toISOString(), stale: false, error: null, sourceName: 'EIA (fixture)', points: Array.from({ length: 40 }, (_, i) => { const d = new Date(Date.UTC(2026, 9, 27) - (39 - i) * 864e5); return { date: d.toISOString().slice(0, 10), value: +(95 + i * 0.2).toFixed(2) } }) } }))
       await p.route('**/fuels.json*', (r) => r.fulfill({ json: fuels }))
       await p.route('**/ipca-groups.json*', (r) => r.fulfill({ json: ipcaGroups }))
       await p.route('**/freight-jp.json*', (r) => r.fulfill({ json: jp }))
@@ -296,6 +297,8 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.deepEqual(await cd.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
       await cd.locator('.plot svg').first().waitFor()
       await p.keyboard.press('Escape'); await cd.waitFor({ state: 'hidden' })
+      // o petróleo (Brent) mora aqui, na tabela de Commodities, e não mais solto no Mercado
+      assert.match(await ct.innerText(), /Petróleo Brent/)
       // commodities em reais (IC-Br e soja) e combustíveis ao consumidor (ANP): tabelas próprias, com histórico semanal nos combustíveis
       const brlT = p.locator('.ind-table', { hasText: 'IC-Br · geral' }); await brlT.waitFor()
       assert.equal(await brlT.locator('tbody').count(), 5, 'quatro IC-Br e a soja em reais')

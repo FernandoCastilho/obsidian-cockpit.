@@ -6,16 +6,15 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
     for (const width of [390, 1440]) {
       const p = await b.newPage({ viewport: { width, height: 1100 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      await p.goto(base + '/#resumo')
-      await p.getByRole('button', { name: 'Petróleo Brent: abrir histórico' }).click()
-      const d = p.getByRole('dialog', { name: 'histórico do petróleo Brent' })
+      // o histórico do Brent abre da tabela de Cenários › Commodities (gráfico compartilhado com as demais referências)
+      await p.goto(base + '/#cenarios/commodities')
+      await p.getByRole('button', { name: 'Petróleo Brent: abrir gráfico e histórico' }).click()
+      const d = p.getByRole('dialog', { name: /histórico de Petróleo Brent/i })
       await d.waitFor()
-      await d.getByRole('group', { name: 'Período do petróleo' }).getByRole('button', { name: 'Ano', exact: true }).click()
+      await d.getByRole('group', { name: 'Período da referência' }).getByRole('button', { name: '12 meses', exact: true }).click()
       // tela cheia só com "Fechar"; filtros (período e escala) num único bloco acima do gráfico
       assert.deepEqual(await d.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
       assert.equal(await d.locator('.chart-filters').count(), 1)
-      assert.equal(await d.locator('.chart-filters').getByRole('group', { name: 'Escala do gráfico' }).count(), 1)
-      assert.equal(await d.getByRole('group', { name: 'Escala do gráfico' }).count(), 1, 'escala não se repete fora do bloco de filtros')
       const full = await d.boundingBox(); assert.ok(full.width >= width - 1 && full.height >= 1099, 'diálogo ocupa a tela')
       assert.ok((await d.locator('.chart-filters').boundingBox()).y < (await d.locator('.plot svg').first().boundingBox()).y, 'filtros acima do gráfico')
       const svg = d.locator('.plot svg').first()
@@ -39,14 +38,6 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await panel.waitFor()
       await p.mouse.click(bb.x + bb.width * 0.4, bb.y + 100)
       assert.equal(await panel.count(), 0)
-      // escala: hora indisponível em série diária; mês agrupa e o rótulo vira mês/ano
-      const scale = d.getByRole('group', { name: 'Escala do gráfico' })
-      assert.equal(await scale.getByRole('button', { name: 'Escala por hora' }).isDisabled(), true)
-      await scale.getByRole('button', { name: 'Escala por mês' }).click()
-      assert.equal(await scale.getByRole('button', { name: 'Escala por mês' }).getAttribute('aria-pressed'), 'true')
-      await p.mouse.move(bb.x + bb.width - 40, bb.y + 100)
-      assert.match(await d.locator('.tip').first().innerText(), /^[a-zç]{3,4}\.? de 20\d\d|^[a-zç]{3,4} de 20\d\d/i)
-      await scale.getByRole('button', { name: 'Auto: escala original dos dados' }).click()
       // teclado: Shift + setas seleciona
       await svg.focus(); await p.keyboard.press('Home'); await p.keyboard.down('Shift'); for (let i = 0; i < 5; i++) await p.keyboard.press('ArrowRight'); await p.keyboard.up('Shift')
       await panel.waitFor()

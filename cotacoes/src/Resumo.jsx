@@ -10,8 +10,6 @@ import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
-import OilTile from './OilTile.jsx'
-import { selectedPeriod } from './summaryPeriod.js'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
@@ -390,7 +388,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
   const [newsTab, setNewsTab] = useState('manchetes')
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
@@ -404,28 +402,10 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
   const [compareSelection, setCompareSelection] = useState(['USD', 'EUR'])
   const [compareSpark, setCompareSpark] = useState(SPARK[0])
   const compareTrigger = useRef(null)
-  const today = marketDate(Date.now())
   const closeCompare = () => { setCompareOpen(false); requestAnimationFrame(() => compareTrigger.current?.focus()) }
 
-  const [sparkId, setSparkId] = useState('day')
-  const [custom, setCustom] = useState(null)
-  const [dates, setDates] = useState(() => ({ start: marketDate(Date.now()), end: marketDate(Date.now()) }))
-  const [dateError, setDateError] = useState('')
-  useEffect(() => { if (sparkId === 'day') setDates({ start: today, end: today }) }, [today, sparkId])
-  const spark = (sparkId === 'custom' || sparkId === 'previous') ? custom : SPARK.find((s) => s.id === sparkId)
+  const spark = SPARK.find((s) => s.id === 'day')
   const limits = fullWindow(fromInput(marketDate(Date.now())))
-  const choosePreset = (s) => {
-    setSparkId(s.id); setDateError('')
-    const end = limits.end, start = new Date(end)
-    if (!s.intraday) start.setDate(start.getDate() - s.days)
-    setDates({ start: toInput(start), end: toInput(end) })
-  }
-  const applyDates = (next) => {
-    setDates(next)
-    const selection = selectedPeriod(next.start, next.end)
-    setDateError(selection.error || '')
-    if (!selection.error) { if (next.start === today && next.end === today) { setSparkId('day') } else { setCustom(selection); setSparkId('custom') } }
-  }
   const openSelected = code => { if (CURRENCIES.some(c => c.code === code)) setSelection([code]); onOpen(code, spark) }
   return (
       <Expandable label="Mercado hoje">
@@ -452,7 +432,6 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
         </div>
 
 
-        <OilTile table openRequest={oilRequest} spark={spark} dates={dates} presets={SPARK} onDates={applyDates} onPreset={choosePreset} dateError={dateError} />
         <Aviso title="Câmbio · datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
           <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; Δ dia (R$) do cruzamento: razão atual menos a razão dos fechamentos anteriores das duas pontas. Não há PTAX oficial do yuan: a coluna mostra referência cruzada (PTAX do dólar ÷ USD/CNH no horário do boletim), só com cotações das duas pontas a até 15 min dele. CNY não é CNH.</p>
@@ -525,7 +504,6 @@ function MarketNews({ bare = false }) {
 export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
-  const [oilRequest] = useState(0)
   useDataFile('oil.json')
   const ipcaFile = useDataFile('ipca.json')
   const ipcaSeries = useMemo(() => { try { return ipcaFile.data ? normalizeIpca(ipcaFile.data) : null } catch { return null } }, [ipcaFile.data])
@@ -533,7 +511,7 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
     <div className="terminal-desk">
       <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} oilRequest={oilRequest} /></div>
+      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
     </div>
   )
 }
