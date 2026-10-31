@@ -47,3 +47,16 @@ test('a aba aparece ao lado de Manchetes e a coleta está no deploy', () => {
   assert.ok(resumo.includes("label: 'Manchetes'") && resumo.includes("label: 'Reforma tributária'") && resumo.includes('<ReformaTributaria />'))
   assert.match(readFileSync(new URL('../../.github/workflows/pages.yml', import.meta.url), 'utf8'), /node scripts\/fetch-reforma\.mjs/)
 })
+
+import { normalizeTemas } from '../src/reforma.js'
+import { parseSetor } from '../src/insumos.js'
+test('temas: normaliza por assunto, descarta itens inválidos e ordena do mais novo ao mais antigo', () => {
+  const out = normalizeTemas({ generatedAt: 1, temas: { cobre: { label: 'Cobre', grupo: 'insumo', items: [{ title: 'A', link: 'https://x/a', t: 1 }, { title: 'B', link: 'https://x/b', t: 2 }, { title: '', link: 'https://x/c', t: 3 }, { title: 'D', link: 'javascript:1', t: 4 }] } } })
+  assert.deepEqual(out.cobre.items.map((i) => i.title), ['B', 'A'])
+  assert.throws(() => normalizeTemas({}))
+})
+test('setores: id desconhecido volta ao primeiro setor', () => {
+  assert.equal(parseSetor('cobre'), 'cobre')
+  assert.equal(parseSetor('xyz'), 'industria')
+  assert.equal(parseSetor(''), 'industria')
+})

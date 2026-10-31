@@ -104,12 +104,38 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 17, 'uma linha por fonte')
+      assert.equal(await gov.locator('.config-gov tbody tr').count(), 19, 'uma linha por fonte')
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
       assert.match(await gov.locator('.config-gov tbody tr', { hasText: 'Dívida bruta' }).innerText(), /72 h/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
+      await p.close()
+    }
+    // Setores: aba depois de BNDES, com notícias por dia e, nos insumos, preço, "o que mexe" e ficha da visita
+    for (const width of [390, 1280]) {
+      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      p.on('pageerror', (e) => errors.push(e.message))
+      const agora = Date.now(), h = 36e5
+      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * h })
+      const temas = { schemaVersion: 1, generatedAt: agora, windowDays: 7, stale: false, errors: [], temas: {
+        industria: { label: 'Indústria', grupo: 'setor', items: [mat('Produção industrial cai com juros altos', 2)] },
+        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30)] } } }
+      const comm = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: new Date().toISOString(), variationPct: 2.5, variationBasis: 'mês anterior' }] }
+      await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
+      await p.route('**/commodities.json*', (r) => r.fulfill({ json: comm }))
+      await p.goto(base + '/#setores')
+      const painel = p.locator('.setores .desk-panel'); await painel.waitFor()
+      await painel.locator('.reforma li').first().waitFor()
+      assert.match(await painel.innerText(), /Produção industrial cai/)
+      await painel.getByRole('tab', { name: 'Cobre' }).click()
+      await painel.locator('.setor-preco').waitFor()
+      assert.match(await painel.locator('.setor-preco').innerText(), /10\.000,00/)
+      assert.ok(await painel.locator('.reforma li').count() === 2, 'notícias do cobre')
+      assert.equal(await painel.getByRole('region', { name: 'O que mexe no preço' }).count(), 1)
+      assert.equal(await painel.getByRole('region', { name: 'Ficha da visita' }).count(), 1)
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
+      assert.deepEqual(errors, [])
       await p.close()
     }
     // Resumo › Notícias: aba "Reforma tributária" ao lado de "Manchetes", com a semana por dia, filtro de dia e busca

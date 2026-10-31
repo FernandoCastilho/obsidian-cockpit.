@@ -32,13 +32,13 @@ function Clocks() {
 }
 
 // Barra superior do terminal (computador): marca, seções, relógios e estado dos dados.
-// Atalho: Alt+1 a Alt+9 trocam de seção (as teclas F1 a F12 ficam com o navegador).
+// Atalho: Alt+1 a Alt+9 (e Alt+0 para a 10ª) trocam de seção (as teclas F1 a F12 ficam com o navegador).
 export default function TopBar({ tab, onTab, feed, feedAt }) {
   useEffect(() => {
     const onKey = (e) => {
-      if (e.altKey && !e.ctrlKey && !e.metaKey && /^[1-9]$/.test(e.key)) {
+      if (e.altKey && !e.ctrlKey && !e.metaKey && /^[0-9]$/.test(e.key)) {
         e.preventDefault()
-        onTab(DESK_TABS[Number(e.key) - 1].id)
+        onTab(DESK_TABS[(Number(e.key) + 9) % 10]?.id ?? DESK_TABS[0].id)
       }
     }
     document.addEventListener('keydown', onKey)
@@ -52,7 +52,7 @@ export default function TopBar({ tab, onTab, feed, feedAt }) {
       </div>
       <nav className="topbar-tabs" aria-label="Navegação principal">
         {DESK_TABS.map((t, i) => (
-          <button key={t.id} type="button" className={t.id === tab ? 'on' : ''} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)} title={`Alt+${i + 1}`}>
+          <button key={t.id} type="button" className={t.id === tab ? 'on' : ''} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)} title={`Alt+${(i + 1) % 10}`}>
             <i aria-hidden="true">{i + 1}</i>
             {t.label}
           </button>

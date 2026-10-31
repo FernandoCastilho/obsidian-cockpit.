@@ -47,6 +47,7 @@ body { background: var(--bg); }
   .topbar-tabs button:hover { color: var(--fg); background: #0f0e0b; }
   .topbar-tabs button.on { background: var(--amber); color: #000; }
   .topbar-tabs button.on i { color: #0009; }
+  @media (max-width: 1400px) { .topbar-tabs button { gap: 5px; padding: 0 8px; letter-spacing: .03em; } .topbar-clocks { gap: 10px; padding: 0 10px; } .topbar-feed { padding: 0 10px; } }
   .topbar-clocks { display: flex; align-items: center; gap: 14px; padding: 0 14px; border-left: 1px solid var(--line); font: .72rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .topbar-clocks b { margin-right: 6px; color: var(--mut); font: 600 .66rem system-ui, sans-serif; }
   .topbar-feed { display: flex; align-items: center; gap: 7px; padding: 0 14px; border-left: 1px solid var(--line); font: 700 .66rem system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; color: var(--mut); }
@@ -476,3 +477,14 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 
 /* bandeira ao lado do nome do país em tabelas e títulos de gráficos de juros */
 .executive-rates__name .flag, .chart h3 .flag { margin-right: 6px; vertical-align: -2px; }
+
+/* Aba Setores: preço do insumo, o que mexe nele e a ficha da visita */
+.setor-insumo { display: grid; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.setor-preco p { margin: 4px 0; }
+.setor-valor { font-size: 1.25rem; font-weight: 600; }
+.setor-valor small { font-size: .8rem; font-weight: 400; }
+.setor-cols { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.setor-cols h3 { margin: 0 0 4px; font-size: .9rem; }
+.setor-cols ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.setores .desk-panel > header { flex-wrap: wrap; }
+.setores .desk-tabs { flex-wrap: wrap; flex-basis: 100%; }
