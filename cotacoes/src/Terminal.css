@@ -488,3 +488,4 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .setor-cols ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .setores .desk-panel > header { flex-wrap: wrap; }
 .setores .desk-tabs { flex-wrap: wrap; flex-basis: 100%; }
+.idx-link { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }

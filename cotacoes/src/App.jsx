@@ -52,6 +52,7 @@ const CEN_VIEWS = [
   { id: 'atividade', label: 'Atividade e emprego' },
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
+  { id: 'indexadores', label: 'Indexadores' },
   { id: 'outros', label: 'Outros' },
 ]
 const PRESETS = [
@@ -275,7 +276,6 @@ export default function App() {
           <Macro macro={macro} />
           <CdiFuturo curves={curves} macro={macro.data} hol={hol} />
           <Curves curves={curves} />
-          <Indexadores />
         </>
       )}
 
@@ -286,7 +286,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros macro={macro} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros macro={macro} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
 

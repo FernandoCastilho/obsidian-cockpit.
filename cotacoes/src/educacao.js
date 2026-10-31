@@ -300,7 +300,7 @@ export const CONCEITOS = [
         resultado: `Na curva R$ ${nf(curva, 0)}; a mercado R$ ${nf(mercado, 0)}; break funding de R$ ${nf(quebra, 0)} (só o que cobre a captação, conforme o contrato).`,
       }
     })(),
-    noApp: { texto: 'A taxa de mercado do prazo que falta vem da curva DI x pré, em Juros; para a TFB e a TLP do BNDES, veja as abas Juros e BNDES.', tab: 'juros' },
+    noApp: { texto: 'A taxa de mercado do prazo que falta vem da curva DI x pré, em Juros; para a TFB e a TLP do BNDES, veja a aba BNDES e, em Cenários, o assunto Indexadores (TR, TBF e TLP).', tab: 'juros' },
     teste: {
       pergunta: 'A taxa de mercado cai de 12% para 8% depois que você contratou a 15% fixos. Liquidar na curva ou a mercado custa mais?',
       resposta: 'A mercado custa mais. O seu contrato rende 15% e o mercado paga 8%, então o valor presente dos fluxos que faltam sobe. Na curva o saldo não muda com a taxa de mercado, por isso é o menor dos dois.',
