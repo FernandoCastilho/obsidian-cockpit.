@@ -24,18 +24,18 @@ test('EIA diária rejeita série ou unidade trocada e URL de outra série', () =
 })
 const pink = () => [
   { A: 'World Bank Commodity Price Data (The Pink Sheet)' }, { A: 'monthly prices in nominal US dollars, 1960 to present' }, { A: 'Updated on October 02, 2026' },
-  { B: 'Iron ore, cfr spot', C: 'Soybeans', D: 'Maize', E: 'Gold', F: 'Sugar, world', G: 'Coffee, Arabica', H: 'Copper', I: 'Urea ', J: 'DAP' },
-  { B: '($/dmtu)', C: '($/mt)', D: '($/mt)', E: '($/troy oz)', F: '($/kg)', G: '($/kg)', H: '($/mt)', I: '($/mt)', J: '($/mt)' },
-  { A: '2026M08', B: '96.3', C: '482', D: '224', E: '4411', F: '0.40', G: '9.00', H: '9800', I: '420', J: '700' },
-  { A: '2026M09', B: '97.7', C: '524', D: '239.6', E: '4319', F: '0.42', G: '9.50', H: '10100', I: '430', J: '710' },
+  { B: 'Iron ore, cfr spot', C: 'Soybeans', D: 'Maize', E: 'Gold', F: 'Sugar, world', G: 'Coffee, Arabica', H: 'Copper', I: 'Urea ', J: 'DAP', K: 'Aluminum' },
+  { B: '($/dmtu)', C: '($/mt)', D: '($/mt)', E: '($/troy oz)', F: '($/kg)', G: '($/kg)', H: '($/mt)', I: '($/mt)', J: '($/mt)', K: '($/mt)' },
+  { A: '2026M08', B: '96.3', C: '482', D: '224', E: '4411', F: '0.40', G: '9.00', H: '9800', I: '420', J: '700', K: '2500' },
+  { A: '2026M09', B: '97.7', C: '524', D: '239.6', E: '4319', F: '0.42', G: '9.50', H: '10100', I: '430', J: '710', K: '2550' },
 ]
 const url = 'https://thedocs.worldbank.org/en/doc/example/related/CMO-Historical-Data-Monthly.xlsx'
 test('Pink Sheet: açúcar e café saem em US¢/libra-peso; cobre e fertilizantes em USD/tonelada', () => {
   const r = Object.fromEntries(parsePinkRows(pink(), url, now).map(c => [c.id, c]))
-  assert.deepEqual(Object.keys(r).sort(), ['coffee', 'copper', 'corn', 'dap', 'gold', 'iron-ore', 'soybeans', 'sugar', 'urea'])
+  assert.deepEqual(Object.keys(r).sort(), ['aluminum', 'coffee', 'copper', 'corn', 'dap', 'gold', 'iron-ore', 'soybeans', 'sugar', 'urea'])
   assert.ok(Math.abs(r.sugar.value - 0.42 * CENTS_PER_LB) < 1e-9); assert.equal(r.sugar.unit, 'US¢/libra-peso'); assert.ok(r.sugar.value > 15 && r.sugar.value < 25)
   assert.ok(Math.abs(r.coffee.previousValue - 9 * CENTS_PER_LB) < 1e-9)
-  assert.equal(r.copper.value, 10100); assert.equal(r.urea.value, 430)
+  assert.equal(r.copper.value, 10100); assert.equal(r.aluminum.value, 2550); assert.equal(r.urea.value, 430)
   assert.ok(Object.values(r).every(c => validCommodity(c, c.id)))
 })
 test('Pink Sheet: série opcional com unidade trocada ou coluna ausente sai sem derrubar as obrigatórias', () => {
@@ -97,4 +97,13 @@ test('ANP: histórico acumula por semana sem duplicar e a variação só vale co
   assert.equal(gap.variationPct, null)
   assert.throws(() => fuelItems({}, now))
   assert.equal(fuelFallback([it], new Error('x'))[0].stale, true); assert.equal(fuelFallback([], new Error('x')).length, 4)
+})
+test('preço diário do cobre: libra → tonelada, pontos inválidos de fora, desatualizado quando tudo é reaproveitado', async () => {
+  const { LB_PER_TONNE, INSUMOS_PRECOS, toDailyPoints, dailyFile } = await import('../scripts/insumos-precos-lib.mjs')
+  const def = INSUMOS_PRECOS[0]
+  assert.equal(def.symbol, 'HG=F'); assert.equal(def.unit, 'USD/tonelada')
+  const pts = toDailyPoints([[1, 5], [2, NaN], [3, 0], [4, 5.2]], def)
+  assert.deepEqual(pts, [[1, Math.round(5 * LB_PER_TONNE * 100) / 100], [4, Math.round(5.2 * LB_PER_TONNE * 100) / 100]])
+  assert.ok(pts[0][1] > 10000 && pts[0][1] < 12000, 'US$ 5/lb ≈ US$ 11.000/t')
+  assert.equal(dailyFile({ cobre: { stale: true } }, 1).stale, true); assert.equal(dailyFile({ cobre: { stale: false } }, 1).stale, false)
 })

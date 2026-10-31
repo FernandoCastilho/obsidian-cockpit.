@@ -54,3 +54,15 @@ test('fatores: expectativa dentro da banda é neutra, na meta ou abaixo alivia; 
   const empty = factorRows({})
   assert.ok(empty.every((r) => r.signal === null && r.reading === '—'))
 })
+
+test('mês a mês de um grupo: ordem cronológica, mês sem dado fica nulo e acumulado composto', async () => {
+  const { groupMonthly, compound } = await import('../src/inflacao.js')
+  const series = { periods: ['2026-07', '2026-08', '2026-09'], groups: [{ id: 7170, name: 'Alimentação e bebidas', byPeriod: { '2026-07': { mom: -0.3, weight: 21, y12: 4 }, '2026-09': { mom: 0.83, weight: 21.5, y12: 4.66 } } }] }
+  const m = groupMonthly(series, 7170)
+  assert.deepEqual(m.map((x) => x.period), ['2026-07', '2026-08', '2026-09'])
+  assert.equal(m[1].mom, null); assert.equal(m[1].contribution, null); assert.ok(Math.abs(m[2].contribution - 0.17845) < 1e-9)
+  assert.equal(groupMonthly(series, 999), null)
+  assert.equal(compound([m[0].mom, m[1].mom]), null, 'sem todos os meses não há acumulado')
+  assert.ok(Math.abs(compound([1, 1, 1]) - 3.0301) < 1e-9)
+  assert.equal(compound([]), null)
+})
