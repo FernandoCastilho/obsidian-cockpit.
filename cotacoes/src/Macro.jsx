@@ -222,7 +222,7 @@ export default function Macro({ macro: m }) {
           {m.data.cdi?.length ? <CdiChart macro={m.data} range={range} /> : <p className="status">CDI indisponível no momento.</p>}
           {m.data.selic?.length ? <SelicChart macro={m.data} range={range} /> : <p className="status">Selic indisponível no momento.</p>}
           {m.data.sofr?.length ? <SofrChart macro={m.data} range={range} /> : <p className="status">SOFR indisponível no momento.</p>}
-          {estr?.points.length ? <EstrChart series={estr} range={range} /> : <p className="status">{estrFile.status === 'loading' ? 'Carregando €STR…' : '€STR indisponível no momento.'}</p>}
+          {estr?.points.length ? <EstrChart series={estr} range={range} /> : <Estado tipo={estrFile.status === 'loading' ? 'info' : 'erro'}>{estrFile.status === 'loading' ? 'Carregando €STR…' : '€STR indisponível no momento.'}</Estado>}
         </div>
       )}
     </section>
