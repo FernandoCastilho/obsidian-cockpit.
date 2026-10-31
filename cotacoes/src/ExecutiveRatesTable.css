@@ -113,3 +113,11 @@
   .executive-rates__table td { padding: 11px 12px; }
   .executive-rates__hint { display: block; margin: 0 0 8px; color: var(--mut); font-size: .75rem; line-height: 1.4; }
 }
+
+/* Juros de referência: coluna do nome mais larga e linhas mais baixas (o nome não quebra em três linhas) */
+@media (min-width: 700px) {
+  .executive-rates__indicator-column { width: 310px; }
+  .executive-rates__table th, .executive-rates__table td { padding-top: 7px; padding-bottom: 7px; }
+  .executive-rates__name { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .executive-rates__unit { margin-top: 1px; }
+}

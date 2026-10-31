@@ -107,3 +107,14 @@ test('preço diário do cobre: libra → tonelada, pontos inválidos de fora, de
   assert.ok(pts[0][1] > 10000 && pts[0][1] < 12000, 'US$ 5/lb ≈ US$ 11.000/t')
   assert.equal(dailyFile({ cobre: { stale: true } }, 1).stale, true); assert.equal(dailyFile({ cobre: { stale: false } }, 1).stale, false)
 })
+
+import { filtraVeiculos, MIN_PREFERIDOS } from '../scripts/temas-lib.mjs'
+import { FILING, pick } from '../scripts/news-lib.mjs'
+test('notícias: registros da SEC (Form 4, 13F…) ficam de fora; temas preferem veículos de referência quando há cobertura', () => {
+  assert.ok(FILING.test('Formulário 4 Blue Biofuels Inc: Chris J. Kneppers (Diretor)')); assert.ok(FILING.test('Form 4 Acme Corp')); assert.ok(!FILING.test('Formação de preços do cobre'))
+  assert.equal(pick([{ title: 'Form 4 X', link: 'https://a', t: 1 }, { title: 'Dólar sobe', link: 'https://b', t: 2 }], 5).length, 1)
+  const bons = Array.from({ length: MIN_PREFERIDOS }, (_, i) => ({ title: `v${i}`, source: 'Valor Econômico' }))
+  const fracos = [{ title: 'x', source: 'Jornal da Fronteira' }, { title: 'y', source: 'AcreNews' }]
+  assert.equal(filtraVeiculos([...bons, ...fracos]).length, MIN_PREFERIDOS, 'com cobertura suficiente, só os de referência')
+  assert.equal(filtraVeiculos([bons[0], ...fracos]).length, 3, 'pouca cobertura: mantém tudo')
+})

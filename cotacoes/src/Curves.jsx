@@ -51,7 +51,8 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
     const yTicks = Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
     const xTicks = labels
       ? labels.filter((_, i) => i % (width < 520 ? 3 : 2) === 0 || i === labels.length - 1).map((l) => ({ x: X([l[0]]), t: l[1] }))
-      : [0, 1, 2, 3, 5, 7, 10].filter((y) => y <= x1 + 0.01).map((y) => ({ x: M.l + (y / (x1 || 1)) * iw, t: `${y}a` }))
+      : [0, 1, 2, 3, 5, 7, 10, 15, 20, 30].filter((y) => y <= x1 + 0.01).map((y) => ({ x: M.l + (y / (x1 || 1)) * iw, t: `${y}a` }))
+          .reduce((acc, t) => (!acc.length || t.x - acc.at(-1).x >= 30 ? [...acc, t] : acc), []) // pelo menos 30 px entre rótulos: sem encavalar
     return { series, X, Y, yTicks, xTicks }
   }, [shown.map((s) => s.date).join(), width, data, mode])
 

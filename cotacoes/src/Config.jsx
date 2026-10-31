@@ -70,34 +70,27 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
     Date.now(),
     isWeekendBR(),
   )
+  // Uma linha por fonte: o estado e a coleta vêm das chaves que ela cobre (vale o pior estado e a coleta mais antiga).
+  const RANK = { missing: 2, old: 1, ok: 0 }
+  const fontes = FONTES.map((f) => {
+    const mine = rows.filter((r) => f.chaves.includes(r.key))
+    const worst = mine.reduce((w, r) => (!w || RANK[r.state] > RANK[w.state] || (RANK[r.state] === RANK[w.state] && (r.at ?? 0) < (w.at ?? 0)) ? r : w), null)
+    return { ...f, state: worst?.state ?? 'missing', at: worst?.at ?? null, ageMs: worst?.ageMs ?? null }
+  })
   return (
     <div className="config-desk">
-      <Panel title="Estado dos dados" note="última coleta de cada fonte" refresh={['macro.json', 'curves.json', 'news.json', 'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
-        <div className="config-scroll" role="region" aria-label="Estado de cada fonte de dados" tabIndex={0}><table className="config-table">
-          <thead><tr><th scope="col">Fonte</th><th scope="col">Última coleta</th><th scope="col">Idade</th><th scope="col">Estado</th></tr></thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.key}>
-                <th scope="row">{r.label}</th>
-                <td>{r.at ? dataTimestamp(r.at) : '—'}</td>
-                <td>{ageText(r.ageMs)}</td>
-                <td><span className={`chip ${STATE[r.state][1]}`}>{STATE[r.state][0]}</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table></div>
-        <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado.</p>
-      </Panel>
-      <Panel title="Governança dos dados" note="de onde vêm, com que frequência e quando atrasam" className="config-wide">
+      <Panel title="Governança dos dados" note="estado, origem e frequência de cada fonte" className="config-wide" refresh={['macro.json', 'curves.json', 'news.json', 'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
         <h3 className="config-sub">Em resumo</h3>
         <ul className="config-list config-resumo">{RESUMO.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="config-sub">Fonte por fonte</h3>
-        <div className="config-scroll" role="region" aria-label="Frequência de atualização de cada fonte" tabIndex={0}><table className="config-table config-gov">
-          <thead><tr><th scope="col">Fonte</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
+        <div className="config-scroll" role="region" aria-label="Estado, origem e frequência de cada fonte" tabIndex={0}><table className="config-table config-gov">
+          <thead><tr><th scope="col">Fonte</th><th scope="col">Estado</th><th scope="col">Última coleta</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
           <tbody>
-            {FONTES.map((f) => (
+            {fontes.map((f) => (
               <tr key={f.id}>
                 <th scope="row">{f.nome}</th>
+                <td data-label="Estado"><span className={`chip ${STATE[f.state][1]}`}>{STATE[f.state][0]}</span></td>
+                <td data-label="Última coleta">{f.at ? `${dataTimestamp(f.at)} · ${ageText(f.ageMs)}` : '—'}</td>
                 <td data-label="Origem">{f.origem}</td>
                 <td data-label="Coleta">{f.coleta}</td>
                 <td data-label="Quando o dado muda">{f.muda}</td>
@@ -106,11 +99,11 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
             ))}
           </tbody>
         </table></div>
+        <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado. Horários em Brasília. Coleta é a consulta do app às fontes; o dado só muda quando o órgão de origem publica.</p>
         <h3 className="config-sub">No seu navegador</h3>
         <ul className="config-list">{NAVEGADOR.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="config-sub">Regras</h3>
         <ul className="config-list">{REGRAS.map((t) => <li key={t}>{t}</li>)}</ul>
-        <p className="config-note">Horários em Brasília. Coleta é a consulta do app às fontes; o dado só muda quando o órgão de origem publica.</p>
       </Panel>
       <Panel title="Base de dados" note="órgão, API, série e arquivo de cada referência" className="config-wide">
         <BaseDados />

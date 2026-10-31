@@ -34,6 +34,8 @@ export const canonicalSource = (item) => {
   return item.source || 'Google Notícias'
 }
 
+// Registros de órgão regulador (Form 4, 13F, 8-K…) não são notícia de mercado: ficam de fora.
+export const FILING = /^(form|formul[aá]rio)\s+(3|4|5|13f|8-k|10-q|10-k|sc 13[dg]|144)\b/i
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, ' ').trim()
 
 export function pick(items, limit) {
@@ -41,7 +43,7 @@ export function pick(items, limit) {
   const out = []
   for (const it of [...items].sort((a, b) => b.t - a.t)) {
     const k = norm(it.title)
-    if (!it.title || !/^https?:\/\//.test(it.link) || seen.has(k)) continue
+    if (!it.title || !/^https?:\/\//.test(it.link) || seen.has(k) || FILING.test(it.title)) continue
     seen.add(k)
     out.push(it)
     if (out.length >= limit) break

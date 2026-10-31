@@ -25,8 +25,7 @@ import { periodChange } from './stats.js'
 import { flagSvg } from './flags.js'
 import Flag from './Flag.jsx'
 import { shareQuotesImage } from './shareImage.js'
-import { rateTiles, topHeadlines } from './snapshot.js'
-import { upcoming } from './agenda.js'
+import { rateTiles } from './snapshot.js'
 import { useNews } from './useNews.js'
 import Sparkline from './Sparkline.jsx'
 import { Plot, useWidth, fmtTime } from './HistoryChart.jsx'
@@ -46,12 +45,6 @@ const SPARK = [
 ]
 const toneOf = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat')
 const NAMES = { USD: 'Dólar', EUR: 'Euro', JPY: 'Iene', CNH: 'Yuan' }
-const ago = (t) => {
-  const min = Math.max(0, Math.round((Date.now() - t) / 60000))
-  if (min < 60) return `há ${min} min`
-  const h = Math.round(min / 60)
-  return h < 24 ? `há ${h} h` : new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
-}
 
 // Janela do minigráfico: recorte do histórico de 360 dias que já está em cache (sem consulta nova).
 function useWindow(spark) {
@@ -529,64 +522,3 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
   )
 }
 
-// "O que move o mercado" e "Agenda econômica": ficam na aba Notícias.
-export function MoveAgenda({ goto, colors }) {
-  const news = useNews()
-  const heads = topHeadlines(news.data)
-  const events = upcoming(new Date(), 14).slice(0, 3)
-  const fmtDay = (t) => new Date(t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' }).replace('.', '')
-  const fmtTime = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
-
-  return (
-    <div className="resumo">
-      <section aria-labelledby="r-move">
-        <div className="sec-head">
-          <h2 id="r-move">O que move o mercado <Explain id="noticias" /></h2>
-        </div>
-        <ul className="list">
-          {heads.length ? (
-            heads.map((n) => (
-              <li key={n.code + n.link}>
-                <a href={n.link} target="_blank" rel="noopener noreferrer">
-                  <span className="dotbadge" style={{ background: colors[n.code] ?? 'var(--amber)' }}>{n.code === 'MERCADO' ? 'MKT' : n.code}</span>
-                  <span className="list-text">
-                    <b>{n.title}</b>
-                    <small className="muted">{n.source} · {ago(n.t)}{n.original ? ' · traduzida' : ''}</small>
-                  </span>
-                </a>
-              </li>
-            ))
-          ) : (
-            <li className="status">{news.error ? 'Notícias indisponíveis no momento.' : 'Carregando notícias…'}</li>
-          )}
-        </ul>
-
-      </section>
-
-      <section aria-labelledby="r-agenda">
-        <div className="sec-head">
-          <h2 id="r-agenda">Agenda econômica <Explain id="agenda" /></h2>
-          <button type="button" className="more" onClick={() => goto('cenarios', 'calendario')}>Ver agenda ›</button>
-        </div>
-        <ul className="list">
-          {events.length ? (
-            events.map((e) => (
-              <li key={e.kind + e.t}>
-                <button type="button" onClick={() => goto('cenarios', 'calendario')}>
-                  <span className="dotbadge cal">{e.kind}</span>
-                  <span className="list-text">
-                    <b>{e.label}</b>
-                    <small className="muted">{fmtDay(e.t)} · {fmtTime(e.t)} · Brasília</small>
-                  </span>
-                </button>
-              </li>
-            ))
-          ) : (
-            <li className="status">Sem eventos nos próximos dias.</li>
-          )}
-        </ul>
-
-      </section>
-    </div>
-  )
-}

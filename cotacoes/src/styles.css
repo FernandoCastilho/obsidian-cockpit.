@@ -583,3 +583,6 @@ section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:
 .expandable-panel.is-modal > .expandable-controls .btn { min-height:44px; min-width:44px; padding:6px 16px; color:var(--fg); background:var(--card); border:1px solid var(--line); font-size:.9rem; }
 .expandable-panel.is-modal > .expandable-controls .btn:hover { border-color:var(--amber, #e5b453); color:var(--amber, #e5b453); }
 .chart-filters .period { flex-direction:row; flex-wrap:wrap; align-items:center; gap:8px 16px; }
+
+/* Histórico das taxas de juros (CDI, Selic, SOFR, €STR): 2 × 2, sem gráfico sozinho na segunda linha */
+@media (min-width: 700px) { .macro .charts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
