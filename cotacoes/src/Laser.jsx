@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { COLOR, DECAY_MS, arrowHead, isDrag, kindOf, lifeOf, shapeAlpha, styleOf, trim } from './laser.js'
+import { COLOR, DECAY_MS, arrowHead, atalho, isDrag, kindOf, lifeOf, shapeAlpha, styleOf, trim } from './laser.js'
 import './Laser.css'
 
 // Onde a camada de desenho entra: dentro do diálogo modal aberto (senão ele ficaria por cima e travaria o ponteiro) ou no corpo da página.
@@ -95,7 +95,7 @@ function Camada() {
   return <canvas ref={ref} className="laser-canvas" aria-hidden="true" data-laser="on" />
 }
 
-// Botão discreto (um ponto no canto) que liga e desliga o laser; Alt+L alterna e Esc para.
+// Botão discreto (um ponto no canto) que liga e desliga o laser; Ctrl + ~ ou Ctrl + " alterna (Alt+L também) e Esc para.
 export default function Laser() {
   const [on, setOn] = useState(false)
   const [host, setHost] = useState(null)
@@ -104,7 +104,7 @@ export default function Laser() {
   const toggle = useCallback(() => setOn((v) => !v), [])
   useEffect(() => {
     const key = (e) => {
-      if (e.altKey && !e.ctrlKey && !e.metaKey && e.key.toLowerCase() === 'l') { e.preventDefault(); setOn((v) => !v) }
+      if (atalho(e)) { e.preventDefault(); setOn((v) => !v) }
       else if (e.key === 'Escape' && onRef.current) { e.preventDefault(); e.stopPropagation(); setOn(false) }
     }
     addEventListener('keydown', key, true)
@@ -118,7 +118,7 @@ export default function Laser() {
     return () => mo.disconnect()
   }, [on])
   const botao = (
-    <button type="button" className={`laser-btn${on ? ' on' : ''}`} aria-pressed={on} aria-label="Laser pointer: riscar a tela" title="Laser pointer (Alt+L): com ele ligado, o mouse segue normal (clique); arraste para riscar, com Ctrl faz retângulo e com Shift, seta. Clique de novo, ou Esc, para parar" onClick={toggle}>
+    <button type="button" className={`laser-btn${on ? ' on' : ''}`} aria-pressed={on} aria-label="Laser pointer: riscar a tela" title={'Laser pointer (Ctrl + ~ ou Ctrl + "): com ele ligado, o mouse segue normal (clique); arraste para riscar, com Ctrl faz retângulo e com Shift, seta. Clique de novo, ou Esc, para parar'} onClick={toggle}>
       <span className="laser-dot" aria-hidden="true" />
     </button>
   )

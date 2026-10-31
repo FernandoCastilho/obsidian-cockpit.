@@ -205,7 +205,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.keyboard.press('Escape'); await p.keyboard.press('Escape'); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
       await p.locator('dialog[open]').first().waitFor({ state: 'detached' }).catch(() => {})
       assert.equal(await p.getByRole('button', { name: 'Laser pointer: riscar a tela' }).getAttribute('aria-pressed'), 'false')
-      await p.keyboard.press('Alt+l'); await p.locator('.laser-canvas').waitFor()
+      await p.keyboard.press('Control+Backquote'); await p.locator('.laser-canvas').waitFor()
+      await p.keyboard.press('Control+Backquote'); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
+      await p.keyboard.press('Control+Shift+Backquote'); await p.locator('.laser-canvas').waitFor()
       await p.getByRole('button', { name: 'Laser pointer: riscar a tela' }).click(); await p.locator('.laser-canvas').waitFor({ state: 'detached' })
       // dentro de um diálogo modal (tela ampliada), a camada vai para dentro dele
       await p.getByRole('button', { name: 'Informações e avisos gerais', exact: true }).first().click(); await p.locator('dialog[open]').first().waitFor()

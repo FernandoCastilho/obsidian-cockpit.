@@ -16,11 +16,11 @@ test('pontos velhos saem e traços vazios somem; o traço em andamento fica', ()
   const out = prune([{ drawing: false, points: [p(DECAY_MS + 5), p(DECAY_MS + 9)] }, { drawing: false, points: [p(5), p(9)] }, { drawing: true, points: [] }], now)
   assert.equal(out.length, 2); assert.ok(out.some((s) => s.drawing))
 })
-test('botão discreto, atalho Alt+L e Esc, camada dentro do diálogo modal aberto', () => {
+test('botão discreto, atalho Ctrl+~ / Ctrl+" (Alt+L reserva) e Esc, camada dentro do diálogo modal aberto', () => {
   const src = readFileSync(new URL('../src/Laser.jsx', import.meta.url), 'utf8')
-  assert.ok(src.includes("e.key.toLowerCase() === 'l'") && src.includes("e.key === 'Escape'") && src.includes('aria-pressed={on}') && src.includes('dialog[open]'))
+  assert.ok(src.includes('atalho(e)') && src.includes("e.key === 'Escape'") && src.includes('aria-pressed={on}') && src.includes('dialog[open]'))
   assert.match(readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8'), /<Laser \/>/)
-  assert.match(readFileSync(new URL('../src/terminal.js', import.meta.url), 'utf8'), /Alt \+ L/)
+  assert.match(readFileSync(new URL('../src/terminal.js', import.meta.url), 'utf8'), /Ctrl \+ ~/)
 })
 
 import { DRAG_PX, arrowHead, isDrag, kindOf, shapeAlpha } from '../src/laser.js'
@@ -34,4 +34,15 @@ test('retângulo e seta: inteiros enquanto segura, apagam depois de soltar; cabe
   const [h1, h2] = arrowHead({ x: 0, y: 0 }, { x: 100, y: 0 }, 16)
   assert.ok(h1.x < 100 && h2.x < 100 && h1.y * h2.y < 0, 'as duas pontas ficam antes da ponta, uma de cada lado')
   assert.ok(Math.abs(Math.hypot(h1.x - 100, h1.y) - 16) < 1e-9)
+})
+
+import { atalho } from '../src/laser.js'
+test('atalho do laser: Ctrl + ~ ou Ctrl + " (qualquer teclado), Alt + L de reserva; nada de Ctrl + Alt nem Meta', () => {
+  assert.equal(atalho({ ctrlKey: true, code: 'Backquote', key: '~' }), true, 'EUA: Ctrl + ~')
+  assert.equal(atalho({ ctrlKey: true, code: 'Backquote', key: '"' }), true, 'ABNT2: Ctrl + "')
+  assert.equal(atalho({ ctrlKey: true, code: 'Quote', key: 'Dead' }), true, 'ABNT2: tecla do ~ (tecla morta)')
+  assert.equal(atalho({ ctrlKey: true, key: '~' }), true); assert.equal(atalho({ ctrlKey: true, key: '"' }), true)
+  assert.equal(atalho({ altKey: true, key: 'L' }), true); assert.equal(atalho({ altKey: true, key: 'x' }), false)
+  assert.equal(atalho({ ctrlKey: true, altKey: true, code: 'Backquote' }), false); assert.equal(atalho({ ctrlKey: true, metaKey: true, code: 'Backquote' }), false)
+  assert.equal(atalho({ ctrlKey: true, key: 'a', code: 'KeyA' }), false); assert.equal(atalho({}), false)
 })
