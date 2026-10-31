@@ -28,7 +28,7 @@ const Bndes = lazy(() => import('./Bndes.jsx'))
 const Setores = lazy(() => import('./Setores.jsx'))
 import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
-import Resumo, { MoveAgenda } from './Resumo.jsx'
+import Resumo from './Resumo.jsx'
 import TopBar from './TopBar.jsx'
 import { Tape } from './TerminalDesk.jsx'
 import { feedState } from './terminal.js'
@@ -301,7 +301,7 @@ export default function App() {
       {tab === 'noticias' && (
         <>
           <News colors={COLORS} />
-          <MoveAgenda goto={goto} colors={COLORS} />
+          <p className="noticias-agenda">Agenda da semana (Copom, IPCA, payroll…) em <button type="button" className="linklike" onClick={() => goto('cenarios', 'calendario')}>Cenários › Calendário econômico</button>.</p>
         </>
       )}
 

@@ -308,9 +308,10 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const infl = p.locator('section.infl'); await infl.waitFor()
       assert.ok((await infl.boundingBox()).y > (await table.boundingBox()).y, 'quadro abaixo da tabela do IPCA')
       const g = infl.locator('table').first()
-      assert.equal(await g.locator('tbody tr').count(), 3)
+      assert.equal(await g.locator('tbody tr').count(), 2, 'só os grupos: o índice geral já está na tabela Inflação · IPCA')
+      assert.doesNotMatch(await g.innerText(), /Índice geral/)
       assert.match(await g.innerText(), /Alimentação e bebidas[\s\S]*\+0,22[\s\S]*Transportes[\s\S]*−0,10/)
-      assert.equal(await g.getByRole('img', { name: 'acima do mês anterior' }).count(), 2, 'geral e alimentação aceleram; transportes cai')
+      assert.equal(await g.getByRole('img', { name: 'acima do mês anterior' }).count(), 1, 'alimentação acelera; transportes cai')
       assert.equal(await g.getByRole('img', { name: 'abaixo do mês anterior' }).count(), 1)
       assert.match(await infl.locator('p.infl-summary').innerText(), /maior pressão veio de Alimentação e bebidas[\s\S]*maior alívio, de Transportes/)
       // clicar no grupo abre o gráfico mês a mês (barras da variação mensal), com valores ao passar o mouse, tabela e Fechar

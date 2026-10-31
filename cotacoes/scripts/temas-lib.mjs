@@ -50,4 +50,12 @@ export const relevanteTema = (tema, title) => tema.termos.test(title) && (!tema.
 export function temasFile(porTema, now, { stale = false, errors = [] } = {}) {
   return { schemaVersion: 1, generatedAt: now, windowDays: WINDOW_DAYS, stale, errors, temas: Object.fromEntries(TEMAS.map((t) => [t.id, { label: t.label, grupo: t.grupo, items: porTema[t.id] ?? [] }])) }
 }
-export const mergeTema = (tema, fresh, previous, now) => mergeItems(fresh, previous, now, WINDOW_DAYS, (title) => relevanteTema(tema, title))
+// Veículos de economia e negócios de referência. Quando um assunto já tem matérias suficientes deles na semana, os demais ficam de fora
+// (evita portais regionais e agregadores); assunto com pouca cobertura mantém tudo para não ficar vazio.
+export const PREFERIDOS = /valor|folha|estad[aã]o|globo|g1\b|cnn|infomoney|exame|bloomberg|reuters|investing|money times|poder360|uol|veja|[ée]poca|brazil journal|seu dinheiro|bnamericas|ag[eê]ncia brasil|ag[eê]ncia de not[ií]cias da ind[uú]stria|cni|brasil mineral|not[ií]cias de minera[cç][aã]o|mining|teletime|tele\.?s[ií]ntese|mobile time|converge|e-investidor|neofeed|cnbc|financial times|wall street journal|forbes|istoé dinheiro|isto[eé] dinheiro|correio braziliense|o tempo|zero hora|gaúchazh|agência estado|broadcast|metr[oó]poles|band|r7|sbt|valor international/i
+export const MIN_PREFERIDOS = 6
+export function filtraVeiculos(items) {
+  const bons = items.filter((i) => PREFERIDOS.test(i.source ?? ''))
+  return bons.length >= MIN_PREFERIDOS ? bons : items
+}
+export const mergeTema = (tema, fresh, previous, now) => filtraVeiculos(mergeItems(fresh, previous, now, WINDOW_DAYS, (title) => relevanteTema(tema, title)))

@@ -511,3 +511,5 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 /* 1000 a 1199 px: o estado da coleta fica só no ponto colorido (o texto continua para leitor de tela) */
 @media (max-width: 1199px) { .topbar-feed { font-size: 0; gap: 0; padding: 0 12px; } .topbar-feed b { display: none; } }
 @media (max-width: 1199px) { .topbar-tabs button { padding: 0 5px; letter-spacing: 0; font-size: .68rem; } .topbar-clocks { padding: 0 6px; } .topbar-brand { padding: 0 10px; } }
+.noticias-agenda { margin: 12px 0 4px; color: var(--mut); font-size: .8rem; }
+.linklike { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }

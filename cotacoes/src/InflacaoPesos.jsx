@@ -49,7 +49,7 @@ export default function InflacaoPesos({ macro }) {
               <caption>IPCA por grupos · {monthName(groups.period)}</caption>
               <thead><tr><th scope="col">Grupo</th><th scope="col" title="Peso do grupo no índice do mês">Peso %</th><th scope="col">Mês %</th><th scope="col" title="Peso × variação do mês ÷ 100: quanto o grupo somou ao IPCA, em pontos percentuais (aproximado)">Contribuição p.p.</th><th scope="col">vs mês anterior</th><th scope="col">12 meses %</th></tr></thead>
               <tbody>
-                {groups.rows.map((r) => {
+                {groups.rows.filter((r) => !r.general).map((r) => { // o índice geral já está na tabela "Inflação · IPCA" acima
                   const t = r.trend && TREND[r.trend]
                   return (
                     <tr key={r.id} className={`infl-row${r.general ? ' infl-general' : r.id === groups.top?.id ? ' infl-top' : r.id === groups.bottom?.id ? ' infl-bottom' : ''}${picked === r.id ? ' infl-on' : ''}`} onClick={() => setPicked(picked === r.id ? null : r.id)}>
