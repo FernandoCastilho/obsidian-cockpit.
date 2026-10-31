@@ -508,5 +508,6 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 /* Barra superior estreita (1000 a 1400 px): menos respiro nas abas para caber as 10 seções, os relógios e o botão do laser */
 @media (max-width: 1400px) { .topbar-tabs button { gap: 5px; padding: 0 8px; letter-spacing: .03em; } .topbar-clocks { gap: 10px; padding: 0 10px; } .topbar-feed { padding: 0 10px; } }
 @media (max-width: 1299px) { .topbar-tabs button { gap: 4px; padding: 0 6px; letter-spacing: .02em; } .topbar-clocks { gap: 8px; padding: 0 8px; } .topbar-feed { padding: 0 8px; } }
-/* 1000 a 1099 px: o estado da coleta fica só no ponto colorido (o texto continua para leitor de tela) */
-@media (max-width: 1099px) { .topbar-feed { font-size: 0; gap: 0; padding: 0 12px; } .topbar-feed b { display: none; } }
+/* 1000 a 1199 px: o estado da coleta fica só no ponto colorido (o texto continua para leitor de tela) */
+@media (max-width: 1199px) { .topbar-feed { font-size: 0; gap: 0; padding: 0 12px; } .topbar-feed b { display: none; } }
+@media (max-width: 1199px) { .topbar-tabs button { padding: 0 5px; letter-spacing: 0; font-size: .68rem; } .topbar-clocks { padding: 0 6px; } .topbar-brand { padding: 0 10px; } }
