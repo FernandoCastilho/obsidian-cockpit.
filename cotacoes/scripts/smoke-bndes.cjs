@@ -27,7 +27,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       const tbl = () => p.locator('.bn-scroll').first().locator('tbody tr:not(.bn-extra)')
       const pressed = async (group, name) => (await p.getByRole('group', { name: group }).getByRole('button', { name, exact: true }).getAttribute('aria-pressed')) === 'true'
       const noOverflow = async () => assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem horizontal da página')
-      assert.deepEqual(await fam.getByRole('button').allInnerTexts(), ['TFB', 'TLP', 'TFC', 'Moedas'])
+      assert.deepEqual(await fam.getByRole('button').allTextContents(), ['TFB', 'TLP', 'TFC', 'Moedas']) // textContent: as abas aparecem em caixa alta só pelo CSS
       // padrão: TFB 60 meses, liberação em 90 dias, 12 meses
       assert.match(await p.locator('.bn-sub').nth(1).innerText(), /TFB · 36 a 60 meses · liberação em 90 dias/i)
       assert.equal(await pressed('Período da série', '12 meses'), true)

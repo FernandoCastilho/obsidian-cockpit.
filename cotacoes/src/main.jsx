@@ -4,6 +4,7 @@ import ErrorBoundary from './ErrorBoundary.jsx'
 import App from './App.jsx'
 import './styles.css'
 import './Terminal.css'
+import './Abas.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

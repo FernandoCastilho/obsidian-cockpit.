@@ -10,6 +10,8 @@ import { dataTimestamp } from './dataTimestamp.js'
 import { comparisonSeries } from './comparisonSeries.js'
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
+import Estado from './Estado.jsx'
+import { mensagemErro } from './erro.js'
 import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
@@ -302,8 +304,8 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
   }).filter((r) => sel.includes(r.code))
   const { available: ready, comparable, incomplete } = comparisonSeries(rows)
   const staleCodes = rows.filter((r) => r.st.stale).map((r) => r.code)
-  const incompleteNote = incomplete.length > 0 && <p className="status" role="status">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.status === 'empty' ? 'sem amostras na data selecionada' : r.st.error || 'aguardando cotações'}`).join(' · ')}</p>
-  const staleNote = staleCodes.length > 0 && <p className="status stale" role="status">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</p>
+  const incompleteNote = incomplete.length > 0 && <Estado tipo="aviso">{incomplete.map((r) => `${r.code}: ${r.points.length === 1 ? `uma cotação no período (${brl(r.points[0].bid)}); aguardando outra para calcular variação` : r.st.status === 'empty' ? 'sem amostras na data selecionada' : r.st.error ? `histórico indisponível · ${mensagemErro(r.st.error)}` : 'aguardando cotações'}`).join(' · ')}</Estado>
+  const staleNote = staleCodes.length > 0 && <Estado tipo="aviso">Não foi possível atualizar {staleCodes.join(', ')}. Mantida a última série disponível.</Estado>
   const failed = rows.every((r) => r.st.status === 'error')
   const one = rows.length === 1
   const r0 = rows[0]
