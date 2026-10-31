@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Aviso } from './Avisos.jsx'
 import { FilterScope } from './ChartFilters.jsx'
+import ComparaSeries from './BndesCompare.jsx'
 import SeriesChart from './BndesChart.jsx'
 import { Panel } from './TerminalDesk.jsx'
 import { useDataFile } from './useDataFile.js'
@@ -28,7 +29,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
   const rowsByFamily = useMemo(() => Object.fromEntries(FAMILIES.map((f) => [f.id, familyRows(f.id, bndes.data, moedas.data, Date.now(), br)])), [bndes.data, moedas.data, br])
   const ids = useMemo(() => Object.fromEntries(FAMILIES.map((f) => [f.id, rowsByFamily[f.id].map((r) => r.id)])), [rowsByFamily])
   const route = parseRoute(view, ids)
-  const { family, id, preset, custom } = route
+  const { family, id, preset, custom, compare } = route
   const go = (patch, replace = false) => onView(buildRoute({ ...route, ...patch }), replace)
   const fam = FAMILIES.find((f) => f.id === family)
   const rows = rowsByFamily[family]
@@ -40,6 +41,8 @@ export default function Bndes({ view = '', onView = () => {} }) {
   const hasSpread = !!rows[0]?.hasSpread
   const spreadDate = rows.find((r) => r.spread)?.spread.curveDate
   const sel = rows.find((r) => r.id === id)
+  const compareItems = useMemo(() => compare.map((cid) => { const s = seriesFor(family, cid, bndes.data, moedas.data); const r = rows.find((x) => x.id === cid); return { id: cid, name: r?.name ?? s.name, short: r?.name ?? s.name, unit: s.unit, decimals: s.decimals, list: s.list } }), [compare, family, rows, bndes.data, moedas.data])
+  const toggleCompare = (cid) => go({ compare: compare.includes(cid) ? compare.filter((x) => x !== cid) : [...compare, cid] }, true)
   const period = { preset, custom, setPreset: (v) => go({ preset: v, custom: null }, true), setCustom: (c) => go({ custom: c }, true) }
 
   return (
@@ -61,9 +64,17 @@ export default function Bndes({ view = '', onView = () => {} }) {
 
       <Panel title="BNDES · taxas e moedas contratuais" note="BNDES" refresh={['bndes.json', 'moedas.json']}>
         <div className="seg bn-fam" role="group" aria-label="Família de séries">
-          {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined })}>{f.label}</button>)}
+          {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined, compare: [] })}>{f.label}</button>)}
         </div>
         <h3 className="bn-sub">{fam.title}</h3>
+        {!error && rows.length > 1 && (
+          <div className="bn-cmp-bar" role="group" aria-label="Comparar séries no mesmo gráfico">
+            <span>Comparar no mesmo gráfico:</span>
+            <button type="button" onClick={() => go({ compare: rows.filter((r) => !r.missing).map((r) => r.id) }, true)}>Marcar todas</button>
+            <button type="button" onClick={() => go({ compare: [] }, true)} disabled={!compare.length}>Limpar</button>
+            <small role="status">{compare.length >= 2 ? `${compare.length} séries no gráfico` : compare.length === 1 ? 'Marque ao menos duas séries' : 'Marque duas ou mais séries'}</small>
+          </div>
+        )}
         {error ? <p className="status">Séries indisponíveis agora ({error}). Elas voltam na próxima coleta.</p> : (
           <div className={`bn-scroll ${rows.length > 8 ? 'bn-grp' : ''}`} role="region" aria-label={`${fam.title}; role para ver todas as colunas`} tabIndex={0}>
             <table className="bn-table bn-main">
@@ -71,7 +82,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
               <tbody>
                 {rows.flatMap((r) => [
                   <tr key={r.id} className={r.id === id ? 'bn-on' : undefined}>
-                    <th scope="row"><button type="button" className="bn-pick" aria-pressed={r.id === id} aria-label={`Ver histórico: ${r.name} (${r.id})`} onClick={() => go({ id: r.id })}>{r.name}<small>{r.sub}</small></button></th>
+                    <th scope="row">{rows.length > 1 && <label className="bn-cmp"><input type="checkbox" checked={compare.includes(r.id)} disabled={r.missing} onChange={() => toggleCompare(r.id)} /><span className="sr-only">Comparar {r.name}</span></label>}<button type="button" className="bn-pick" aria-pressed={r.id === id} aria-label={`Ver histórico: ${r.name} (${r.id})`} onClick={() => go({ id: r.id })}>{r.name}<small>{r.sub}</small></button></th>
                     {r.missing ? <td colSpan={hasSpread ? 6 : 5} className="muted">{loading ? 'carregando' : 'indisponível'}</td> : (
                       <>
                         <td className="num">{r.text}{r.stale && <em className="old"> · dado anterior ({stamp(r.stale)})</em>}</td>
@@ -92,8 +103,17 @@ export default function Bndes({ view = '', onView = () => {} }) {
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         <FilterScope>
-          <h3 className="bn-sub">Histórico · {series.name}</h3>
-          <SeriesChart list={series.list} name={series.name} code={series.code} label="série" kind={series.kind} loading={loading} decimals={series.decimals} unit={series.unit} period={period} />
+          {compare.length >= 2 ? (
+            <>
+              <h3 className="bn-sub">Comparação · {compare.length} séries · {fam.label}</h3>
+              <ComparaSeries items={compareItems} loading={loading} period={period} />
+            </>
+          ) : (
+            <>
+              <h3 className="bn-sub">Histórico · {series.name}</h3>
+              <SeriesChart list={series.list} name={series.name} code={series.code} label="série" kind={series.kind} loading={loading} decimals={series.decimals} unit={series.unit} period={period} />
+            </>
+          )}
         </FilterScope>
 
         <details className="bn-src">

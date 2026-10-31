@@ -13,20 +13,32 @@ test('endereço vazio ou inválido cai no padrão: TFB 60 meses, liberação em 
 })
 
 test('família, série e período do endereço; série de outra família ou desconhecida usa a padrão da família', () => {
-  assert.deepEqual(parseRoute('tfc/C02?p=3m', ids), { family: 'tfc', id: 'C02', preset: 3, custom: null })
-  assert.deepEqual(parseRoute('moedas/604?p=tudo', ids), { family: 'moedas', id: '604', preset: 'all', custom: null })
-  assert.deepEqual(parseRoute('tlp/TLP?p=5a', ids), { family: 'tlp', id: 'TLP', preset: 60, custom: null })
+  assert.deepEqual(parseRoute('tfc/C02?p=3m', ids), { family: 'tfc', id: 'C02', preset: 3, custom: null, compare: [] })
+  assert.deepEqual(parseRoute('moedas/604?p=tudo', ids), { family: 'moedas', id: '604', preset: 'all', custom: null, compare: [] })
+  assert.deepEqual(parseRoute('tlp/TLP?p=5a', ids), { family: 'tlp', id: 'TLP', preset: 60, custom: null, compare: [] })
   assert.equal(parseRoute('tfc/604?p=3m', ids).id, 'C01', '604 não é série da TFC')
   assert.equal(parseRoute('tfc', ids).id, 'C01')
-  assert.deepEqual(parseRoute('tfc/C01?d=2026-01-02..2026-03-04', ids), { family: 'tfc', id: 'C01', preset: 12, custom: { start: '2026-01-02', end: '2026-03-04' } })
+  assert.deepEqual(parseRoute('tfc/C01?d=2026-01-02..2026-03-04', ids), { family: 'tfc', id: 'C01', preset: 12, custom: { start: '2026-01-02', end: '2026-03-04' }, compare: [] })
   assert.equal(parseRoute('tfc/C01?d=2026-03-04..2026-01-02', ids).custom, null, 'intervalo invertido é ignorado')
   assert.equal(parseRoute('tfc/C01?d=x..y&p=6m', ids).preset, 6)
 })
 
 test('buildRoute é completo e volta pelo parse; família nova sem série usa a padrão', () => {
   for (const r of [{ family: 'tfb', id: 'TFB_36_30', preset: 24, custom: null }, { family: 'moedas', id: '143', preset: 'all', custom: null }, { family: 'tfc', id: 'C02', preset: 12, custom: { start: '2026-01-02', end: '2026-03-04' } }]) {
-    assert.deepEqual(parseRoute(buildRoute(r), ids), { ...r, preset: r.custom ? 12 : r.preset })
+    assert.deepEqual(parseRoute(buildRoute(r), ids), { ...r, compare: [], preset: r.custom ? 12 : r.preset })
   }
   assert.equal(buildRoute({ family: 'tlp', id: undefined, preset: 12, custom: null }), 'tlp/TLP?p=12m')
-  assert.equal(buildRoute({ family: 'tfc', id: 'C02', preset: 3, custom: null }), 'tfc/C02?p=3m')
+  assert.equal(buildRoute({ family: 'tfc', id: 'C02', preset: 3, custom: null, compare: [] }), 'tfc/C02?p=3m')
+})
+
+test('comparar: c=A,B,C vale com duas ou mais séries conhecidas da família; volta pelo parse', () => {
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,C02', ids).compare, ['C01', 'C02'])
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,NAO,C02', ids).compare, ['C01', 'C02'], 'série desconhecida é ignorada')
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01', ids).compare, [], 'uma só não é comparação')
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=604,143', ids).compare, [], 'séries de outra família não valem')
+  assert.deepEqual(parseRoute('tfc/C01?p=12m&c=C01,C01,C02', ids).compare, ['C01', 'C02'], 'sem repetição')
+  const r = { family: 'tfb', id: 'TFB_60_90', preset: 24, custom: null, compare: ['TFB_36_30', 'TFB_60_90'] }
+  assert.equal(buildRoute(r), 'tfb/TFB_60_90?p=2a&c=TFB_36_30,TFB_60_90')
+  assert.deepEqual(parseRoute(buildRoute(r), ids), r)
+  assert.equal(buildRoute({ ...r, compare: ['TFB_36_30'] }), 'tfb/TFB_60_90?p=2a', 'menos de duas não entra no endereço')
 })
