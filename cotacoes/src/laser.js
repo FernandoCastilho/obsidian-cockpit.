@@ -15,3 +15,15 @@ export function prune(strokes, now) {
 }
 // Descarta pontos velhos de um traço em andamento (mantém o rastro curto, como o laser).
 export const trim = (points, now) => points.filter((p) => now - p.t < DECAY_MS)
+
+// Gestos: um clique simples passa para a página; arrastar risca. Com Ctrl o gesto vira retângulo; com Shift, seta (Ctrl vale mais se os dois estiverem apertados).
+export const DRAG_PX = 5
+export const kindOf = ({ ctrlKey, shiftKey } = {}) => (ctrlKey ? 'rect' : shiftKey ? 'arrow' : 'free')
+export const isDrag = (a, b, limit = DRAG_PX) => Math.hypot(b.x - a.x, b.y - a.y) > limit
+// Retângulo e seta ficam inteiros enquanto o botão está apertado e se apagam aos poucos depois de soltar.
+export const shapeAlpha = (now, releasedAt) => (releasedAt == null ? 1 : lifeOf(now - releasedAt))
+// Duas pontas da cabeça da seta, de comprimento `len`, abertas a `spread` rad da linha a→b.
+export function arrowHead(a, b, len = 16, spread = Math.PI / 7) {
+  const ang = Math.atan2(b.y - a.y, b.x - a.x)
+  return [ang + Math.PI - spread, ang + Math.PI + spread].map((t) => ({ x: b.x + len * Math.cos(t), y: b.y + len * Math.sin(t) }))
+}

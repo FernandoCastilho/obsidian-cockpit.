@@ -22,3 +22,16 @@ test('botão discreto, atalho Alt+L e Esc, camada dentro do diálogo modal abert
   assert.match(readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8'), /<Laser \/>/)
   assert.match(readFileSync(new URL('../src/terminal.js', import.meta.url), 'utf8'), /Alt \+ L/)
 })
+
+import { DRAG_PX, arrowHead, isDrag, kindOf, shapeAlpha } from '../src/laser.js'
+test('gestos: clique simples passa; arrastar risca; Ctrl faz retângulo e Shift, seta (Ctrl vale mais)', () => {
+  assert.equal(kindOf({}), 'free'); assert.equal(kindOf({ ctrlKey: true }), 'rect'); assert.equal(kindOf({ shiftKey: true }), 'arrow'); assert.equal(kindOf({ ctrlKey: true, shiftKey: true }), 'rect'); assert.equal(kindOf(), 'free')
+  assert.equal(isDrag({ x: 0, y: 0 }, { x: 3, y: 3 }), false, 'tremida do clique não é arrasto')
+  assert.equal(isDrag({ x: 0, y: 0 }, { x: DRAG_PX + 1, y: 0 }), true)
+})
+test('retângulo e seta: inteiros enquanto segura, apagam depois de soltar; cabeça da seta aponta para trás da ponta', () => {
+  assert.equal(shapeAlpha(5000, undefined), 1); assert.equal(shapeAlpha(5000, 5000), 1); assert.equal(shapeAlpha(5000 + DECAY_MS, 5000), 0)
+  const [h1, h2] = arrowHead({ x: 0, y: 0 }, { x: 100, y: 0 }, 16)
+  assert.ok(h1.x < 100 && h2.x < 100 && h1.y * h2.y < 0, 'as duas pontas ficam antes da ponta, uma de cada lado')
+  assert.ok(Math.abs(Math.hypot(h1.x - 100, h1.y) - 16) < 1e-9)
+})

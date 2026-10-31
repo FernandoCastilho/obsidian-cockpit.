@@ -204,5 +204,5 @@ export function ageText(ageMs) {
 
 export const SHORTCUTS = [
   ['Alt + 1 … 9, 0', 'Mercado, Juros, Cenários, Notícias, BNDES, Setores, Calculadoras, Feriados, Aprender, Config'],
-  ['Alt + L', 'Laser pointer: liga e desliga o traço que se apaga sozinho (Esc também para)'],
+  ['Alt + L', 'Laser pointer: liga e desliga (Esc também para). Ligado, o mouse segue normal: clique clica; arrastar risca; Ctrl + arrastar faz um retângulo; Shift + arrastar, uma seta. Tudo se apaga sozinho'],
 ]
