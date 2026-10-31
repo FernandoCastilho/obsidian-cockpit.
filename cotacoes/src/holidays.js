@@ -66,6 +66,11 @@ const minasGerais = (y) => sortMap([[iso(y, 8, 15), 'Assunção de Nossa Senhora
 const fixed = (list) => (y) => sortMap(list.map(([m, d, n]) => [iso(y, m, d), n]))
 const spEstado = fixed([[7, 9, 'Revolução Constitucionalista']])
 const spCidade = fixed([[1, 25, 'Aniversário de São Paulo']])
+// Curitiba: aniversário da cidade (29/03) e padroeira Nossa Senhora da Luz dos Pinhais (08/09); estado do Paraná: Emancipação Política (19/12).
+// Corpus Christi (móvel) já está no calendário nacional.
+const paEstado = fixed([[12, 19, 'Emancipação Política do Paraná']])
+const curitibaCidade = fixed([[3, 29, 'Aniversário de Curitiba'], [9, 8, 'Nossa Senhora da Luz dos Pinhais (padroeira)']])
+const curitiba = (y) => sortMap([...curitibaCidade(y), ...paEstado(y)])
 const sorocaba = fixed([[8, 15, 'Aniversário de Sorocaba']])
 const barueri = fixed([[3, 26, 'Aniversário de Barueri'], [6, 24, 'São João Batista (padroeiro)']])
 const cascavel = fixed([[11, 14, 'Aniversário de Cascavel']])
@@ -156,9 +161,12 @@ export const CALENDARS = [
   { id: 'BR', label: 'Brasil (B3/ANBIMA)', short: 'Brasil', rule: brazil },
   { id: 'SP', label: 'São Paulo (cidade e estado)', short: 'São Paulo', rule: saoPaulo },
   { id: 'MG', label: 'Minas Gerais (Belo Horizonte)', short: 'Minas Gerais', rule: minasGerais },
+  { id: 'PR', label: 'Curitiba (cidade e estado)', short: 'Curitiba', rule: curitiba },
   { id: 'NY', label: 'Nova York (Federal Reserve)', short: 'Nova York', rule: newYork },
   { id: 'SPE', label: 'Estado de São Paulo', short: 'Estado SP', rule: spEstado, hidden: true },
   { id: 'SPC', label: 'Cidade de São Paulo', short: 'São Paulo (cidade)', rule: spCidade, hidden: true },
+  { id: 'PRE', label: 'Estado do Paraná', short: 'Estado PR', rule: paEstado, hidden: true },
+  { id: 'CWB', label: 'Cidade de Curitiba', short: 'Curitiba (cidade)', rule: curitibaCidade, hidden: true },
   { id: 'SOR', label: 'Sorocaba', short: 'Sorocaba', rule: sorocaba, hidden: true },
   { id: 'BAR', label: 'Barueri (Alphaville)', short: 'Barueri', rule: barueri, hidden: true },
   { id: 'CVL', label: 'Cascavel', short: 'Cascavel', rule: cascavel, hidden: true },

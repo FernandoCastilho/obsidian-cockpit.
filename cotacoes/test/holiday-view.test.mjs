@@ -19,3 +19,16 @@ test('holiday view filters exact plaza and preserves multi-plaza events', () => 
   assert.deepEqual(groupHolidayRows(rows, 'BR').flatMap((g) => g.rows).map((r) => r.name), ['Finados', 'Ano Novo'])
   assert.deepEqual(groupHolidayRows(rows, 'SOR'), [])
 })
+
+test('Curitiba: aniversário (29/03), padroeira (08/09) e Emancipação do Paraná (19/12), sem duplicar o calendário nacional', async () => {
+  const { holidayMap, isBusinessDay, calFlag, calLabel, CALENDARS } = await import('../src/holidays.js')
+  const cwb = holidayMap('CWB', 2026), pr = holidayMap('PR', 2026), est = holidayMap('PRE', 2026)
+  assert.equal(cwb.get('2026-03-29'), 'Aniversário de Curitiba'); assert.match(cwb.get('2026-09-08'), /Nossa Senhora da Luz dos Pinhais/)
+  assert.equal(cwb.size, 2); assert.equal(est.get('2026-12-19'), 'Emancipação Política do Paraná')
+  assert.deepEqual([...pr.keys()], ['2026-03-29', '2026-09-08', '2026-12-19'], 'praça Curitiba = cidade + estado, em ordem de data')
+  assert.equal(isBusinessDay('2026-09-08', 'PR'), false); assert.equal(isBusinessDay('2026-09-08', 'BR'), true, 'só vale na praça de Curitiba')
+  assert.equal(isBusinessDay('2026-09-09', 'PR'), true)
+  assert.equal(calFlag('PR'), 'BRL'); assert.equal(calLabel('PR'), 'Curitiba')
+  assert.ok(CALENDARS.find((c) => c.id === 'PR' && !c.hidden) && CALENDARS.find((c) => c.id === 'CWB')?.hidden && CALENDARS.find((c) => c.id === 'PRE')?.hidden)
+  for (const y of [2025, 2027, 2028]) assert.equal(holidayMap('PR', y).size, 3, String(y))
+})

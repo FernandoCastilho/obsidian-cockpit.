@@ -9,6 +9,8 @@ const LIST = [
   { id: 'BR', where: 'Nacional' },
   { id: 'SPE', where: 'Estado de SP' },
   { id: 'SPC', where: 'São Paulo (capital)' },
+  { id: 'PRE', where: 'Estado do Paraná' },
+  { id: 'CWB', where: 'Curitiba' },
   { id: 'SOR', where: 'Sorocaba' },
   { id: 'BAR', where: 'Barueri (Alphaville)' },
   { id: 'MG', where: 'Belo Horizonte' },
