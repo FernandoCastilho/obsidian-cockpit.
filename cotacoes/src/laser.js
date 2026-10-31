@@ -27,3 +27,11 @@ export function arrowHead(a, b, len = 16, spread = Math.PI / 7) {
   const ang = Math.atan2(b.y - a.y, b.x - a.x)
   return [ang + Math.PI - spread, ang + Math.PI + spread].map((t) => ({ x: b.x + len * Math.cos(t), y: b.y + len * Math.sin(t) }))
 }
+
+// Atalho que liga e desliga: Ctrl + ~ (teclado dos EUA, Shift + a tecla Backquote) ou Ctrl + " (ABNT2, Shift + a mesma posição de tecla). Vale pela tecla física
+// (Backquote; Quote cobre o ~ do ABNT2) e pelo caractere. Alt + L continua como reserva.
+export const atalho = (e) => {
+  if (e.metaKey) return false
+  if (e.ctrlKey && !e.altKey) return e.code === 'Backquote' || e.code === 'Quote' || e.key === '~' || e.key === '"'
+  return !!e.altKey && !e.ctrlKey && String(e.key).toLowerCase() === 'l'
+}
