@@ -161,9 +161,13 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       // definição e fonte recolhidas; sem rolagem horizontal da página
       assert.equal(await p.locator('details.bn-src', { hasText: 'Definição' }).getAttribute('open'), null)
       await noOverflow()
-      // TFB saiu do quadro de indexadores (aba Juros)
-      await p.goto(base + '/#juros'); await p.locator('.idx-table').waitFor()
+      // indexadores TR, TBF e TLP moram só em Cenários › Indexadores (não repetem em Juros); a TLP aponta para o histórico na aba BNDES
+      await p.goto(base + '/#juros'); await p.locator('.desk-panel').first().waitFor({ state: 'attached' }); await p.waitForLoadState('networkidle')
+      assert.equal(await p.locator('.idx-table').count(), 0, 'Juros não traz mais os indexadores')
+      await p.goto(base + '/#cenarios/indexadores'); await p.locator('.idx-table').waitFor()
+      assert.equal(await p.locator('.idx-table').count(), 1)
       assert.doesNotMatch(await p.locator('.idx-table').innerText(), /TFB/)
+      await p.getByRole('button', { name: 'Histórico na aba BNDES' }).click(); await p.waitForURL('**/#bndes/tlp/TLP')
       if (width >= 900) { assert.match(await p.locator('.topbar-brand').innerText(), /^Painel\s*Especialista$/, 'marca da barra superior'); for (const w of [1000, 1100, 1299]) { await p.setViewportSize({ width: w, height: 800 }); const sp = await p.locator('.topbar-brand span').boundingBox(); assert.ok(sp && sp.width > 40, `"Especialista" visível (não só no texto) a ${w}px`); assert.equal(await p.evaluate(() => { const t = document.querySelector('.topbar-tabs'); return t.scrollWidth > t.clientWidth + 1 }), false, `abas sem corte a ${w}px`) } await p.setViewportSize({ width, height: 900 }); await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes') }
       assert.deepEqual(errors, [])
     }

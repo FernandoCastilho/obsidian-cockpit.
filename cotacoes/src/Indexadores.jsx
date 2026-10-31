@@ -7,7 +7,7 @@ import Explain from './Explain.jsx'
 const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 
 // Indexadores TR e TBF (Banco Central) e TLP (BNDES): valor vigente, período de vigência e equivalente anual.
-export default function Indexadores() {
+export default function Indexadores({ onBndes }) {
   const file = useDataFile('indexadores.json')
   const rows = indexRows(file.data)
   const loading = file.status === 'loading'
@@ -24,7 +24,7 @@ export default function Indexadores() {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.key}>
-                  <th scope="row"><b>{r.key}</b><Explain id={r.key.toLowerCase()} /><small>{r.name}</small></th>
+                  <th scope="row"><b>{r.key}</b><Explain id={r.key.toLowerCase()} /><small>{r.name}</small>{r.key === 'TLP' && onBndes && <small><button type="button" className="idx-link" onClick={onBndes}>Histórico na aba BNDES</button></small>}</th>
                   <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
                   <td className="num">{r.annualText ?? '—'}</td>
                   <td>{r.missing ? '—' : r.period}</td>
