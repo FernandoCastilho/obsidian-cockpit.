@@ -110,6 +110,11 @@ jobs:
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
+      - name: Coletar matérias da semana sobre a reforma tributária (Google Notícias)
+        if: github.event.schedule != '30 12 * * 1'
+        run: node scripts/fetch-reforma.mjs
+        timeout-minutes: 3
+        continue-on-error: true
       - name: Coletar referência diária de petróleo Brent (EIA)
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-oil.mjs

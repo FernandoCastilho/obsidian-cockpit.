@@ -15,6 +15,7 @@ import { selectedPeriod } from './summaryPeriod.js'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
+import ReformaTributaria from './ReformaTributaria.jsx'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
@@ -390,6 +391,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest }) {
+  const [newsTab, setNewsTab] = useState('manchetes')
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -445,7 +447,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, oilRequest })
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Manchetes" note="por moeda" refresh={['news.json']}><MarketNews bare /></Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'reforma' ? <ReformaTributaria /> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -505,6 +507,10 @@ export function RatesTop({ macro, curves, onOpen }) {
   )
 }
 
+const NEWS_TABS = [
+  { id: 'manchetes', label: 'Manchetes', note: 'por moeda', refresh: ['news.json'] },
+  { id: 'reforma', label: 'Reforma tributária', note: 'a semana, por dia', refresh: ['reforma-tributaria.json'] },
+]
 function MarketNews({ bare = false }) {
   const news = useNews()
   const headlines = buildFeed(news.data?.news, 'ALL', 8)
