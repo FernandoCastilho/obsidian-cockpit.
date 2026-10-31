@@ -168,3 +168,14 @@ test('commodities: soja em R$/saca e galão em litro', () => {
   assert.match(byId('combustiveis').exemplo.passos.join(' '), /3,14/)
   assert.ok(['commodities-e-cambio', 'ic-br', 'combustiveis'].every((id) => byId(id).topico === 'Commodities' && byId(id).noApp.view === 'commodities'))
 })
+
+import { mensagemErro } from '../src/erro.js'
+test('erro para o usuário: sem texto técnico (JSON inválido, HTTP, rede)', () => {
+  assert.equal(mensagemErro(new Error('Unexpected token \'<\', "<!doctype "... is not valid JSON')), 'Arquivo ainda não publicado ou em formato inesperado')
+  assert.equal(mensagemErro('HTTP 404'), 'Arquivo ainda não publicado')
+  assert.equal(mensagemErro('HTTP 503'), 'Fonte fora do ar')
+  assert.equal(mensagemErro(new TypeError('Failed to fetch')), 'Sem conexão com a fonte')
+  assert.equal(mensagemErro(''), 'Sem resposta da fonte'); assert.equal(mensagemErro(null), 'Sem resposta da fonte')
+  assert.equal(mensagemErro('algo estranho'), 'Fonte indisponível')
+  for (const t of ['Unexpected token', 'HTTP 404', 'Failed to fetch', 'x']) assert.doesNotMatch(mensagemErro(t), /Unexpected|doctype|JSON|HTTP|fetch/i)
+})

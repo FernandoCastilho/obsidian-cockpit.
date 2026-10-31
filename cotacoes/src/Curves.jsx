@@ -12,6 +12,7 @@ import { useWidth } from './HistoryChart.jsx'
 import CupomLeitura from './CupomLeitura.jsx'
 import { useDataFile } from './useDataFile.js'
 import { normalizeEuroCurve } from './euroCurve.js'
+import Estado from './Estado.jsx'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
@@ -157,7 +158,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
 // Curva DI x pré sozinha, para o painel do Mercado (a aba Juros continua com as três curvas).
 export function CurvePanel({ curves: c }) {
   if (!c || c.status === 'loading') return <div className="placeholder">Carregando curvas…</div>
-  if (c.status === 'error') return <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>
+  if (c.status === 'error') return <Estado tipo="erro" erro={c.error}>Curvas de juros indisponíveis agora.</Estado>
   return (
     <>
       {c.stale && <p className="status stale" role="status">Não foi possível atualizar as curvas. Mantida a última coleta disponível.</p>}
@@ -199,7 +200,7 @@ export default function Curves({ curves: c }) {
           Atualização indisponível na última coleta; mantido o último dado publicado: {Object.entries(c.data.stale).map(([k, t]) => `${{ br: 'DI x pré', cc: 'cupom cambial', us: 'Treasuries' }[k] ?? k} (coletado em ${t ? new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida'})`).join(', ')}.
         </p>
       )}
-      {c.status === 'error' && <p className="status">Curvas de juros indisponíveis agora ({c.error}).</p>}
+      {c.status === 'error' && <Estado tipo="erro" erro={c.error}>Curvas de juros indisponíveis agora.</Estado>}
       {c.status === 'ok' && (
         <div className="charts">
           {d.br ? (
