@@ -296,7 +296,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // Ibovespa no Mapa de variação; Selic/CDI/DI 1 ano só no celular (no computador já estão na faixa do topo)
       const ibov = p.locator('.kpis .kpi', { hasText: 'Ibovespa' }); await ibov.waitFor()
       assert.match(await ibov.innerText(), /127\.400[\s\S]*2,00%/)
-      if (width >= 700) assert.equal(await p.locator('.kpis .kpi-taxa:visible').count(), 0, 'no computador os juros ficam só na faixa do topo'); else assert.ok(await p.locator('.kpis .kpi-taxa:visible').count() >= 1, 'no celular os cartões de juros continuam')
+      if (width >= 700) assert.equal(await p.locator('.kpis .kpi-taxa:visible').count(), 0, 'no computador os juros ficam só na faixa do topo'); else assert.equal(await p.locator('.kpis .kpi-taxa:visible').count(), await p.locator('.kpis .kpi-taxa').count(), 'no celular os cartões de juros continuam visíveis') // depende só do CSS, não de quando os juros carregam
       assert.match(await card.innerText(), /%[\s\S]*p\.p\./)
       await card.click()
       await p.waitForURL('**/#cenarios/outros')
