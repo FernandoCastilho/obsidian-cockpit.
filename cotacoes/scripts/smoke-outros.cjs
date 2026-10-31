@@ -122,9 +122,17 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
         mat('Imposto seletivo entra em debate na Câmara', 30, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55, 'Valor Econômico')] }
       await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
+      const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - h })
+      await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
       await p.goto(base + '/#resumo')
       const painel = p.locator('.desk-panel', { has: p.getByRole('tab', { name: 'Reforma tributária' }) }); await painel.waitFor()
       assert.equal(await painel.getByRole('tab', { name: 'Manchetes' }).getAttribute('aria-selected'), 'true', 'abre em Manchetes')
+      // Manchetes: bandeira das moedas de que cada matéria fala (busca + título)
+      const flags = painel.locator('.market-news li .news-flags'); await flags.first().waitFor()
+      assert.equal(await flags.count(), 3, 'uma linha de bandeiras por matéria que cita moeda; a de soja não tem')
+      assert.equal(await painel.locator('.market-news li', { hasText: 'Dólar sobe' }).locator('.news-flags').getAttribute('aria-label'), 'Moedas citadas: dólar')
+      assert.equal(await painel.locator('.market-news li', { hasText: 'iene dispara' }).locator('.news-flags .flag').count(), 2, 'iene e real (Ibovespa), as duas citadas no título')
+      assert.equal(await painel.locator('.market-news li', { hasText: 'Safra de soja' }).locator('.news-flags').count(), 0)
       await painel.getByRole('tab', { name: 'Reforma tributária' }).click()
       assert.equal(await painel.getByRole('tab', { name: 'Reforma tributária' }).getAttribute('aria-selected'), 'true')
       const lista = painel.locator('.reforma'); await lista.locator('li').first().waitFor()

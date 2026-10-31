@@ -437,7 +437,7 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 .terminal-news > .desk-panel { flex: 1; border: 0; border-radius: 0; background: transparent; }
 .terminal-news .desk-panel-body { padding: 0; }
 .desk-tabs { display: flex; gap: 2px; flex: 1; min-width: 0; align-self: stretch; }
-.desk-tabs button { min-height: 28px; padding: 0 10px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: #5d5a50; font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.desk-tabs button { white-space: nowrap; min-height: 28px; padding: 0 10px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: #5d5a50; font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
 .desk-tabs button[aria-selected="true"] { color: var(--amber); border-bottom-color: var(--amber); }
 .desk-tabs button:hover, .desk-tabs button:focus-visible { color: var(--fg); }
 @media (max-width: 560px) { .desk-tabs button { min-height: 44px; padding: 0 8px; letter-spacing: .06em; } }
@@ -459,6 +459,7 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 .reforma li small { display: block; margin-top: 2px; color: var(--mut); font-size: .68rem; }
 .terminal-news .market-news ul { list-style: none; margin: 0; padding: 0; max-height: 430px; overflow-y: auto; }
 .terminal-news .market-news li { padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.news-flags { display: inline-flex; gap: 3px; margin-right: 6px; vertical-align: -1px; }
 .terminal-news .market-news li a { color: var(--fg); text-decoration: none; }
 .terminal-news .market-news li a:hover { color: var(--amber); }
 .terminal-news .market-news li small { display: block; margin-top: 2px; color: var(--mut); }

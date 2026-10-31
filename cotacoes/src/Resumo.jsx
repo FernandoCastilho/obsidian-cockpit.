@@ -14,6 +14,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
 import ReformaTributaria from './ReformaTributaria.jsx'
+import { moedasDaManchete, nomeDaMoeda } from './moedasNoTexto.js'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
 import { liveCross, mergeDaily, mergeTicks } from './parity.js'
@@ -487,9 +488,15 @@ export function RatesTop({ macro, curves, onOpen }) {
 }
 
 const NEWS_TABS = [
-  { id: 'manchetes', label: 'Manchetes', note: 'por moeda', refresh: ['news.json'] },
-  { id: 'reforma', label: 'Reforma tributária', note: 'a semana, por dia', refresh: ['reforma-tributaria.json'] },
+  { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
+  { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
 ]
+// Bandeira das moedas de que a manchete provavelmente fala (as da busca e as citadas no título).
+function MoedasCitadas({ item }) {
+  const codes = moedasDaManchete(item)
+  if (!codes.length) return null
+  return <span className="news-flags" role="img" aria-label={`Moedas citadas: ${codes.map(nomeDaMoeda).join(', ')}`} title={`Moedas citadas: ${codes.map(nomeDaMoeda).join(', ')}`}>{codes.map(c => <Flag key={c} code={c} width={18} height={12} />)}</span>
+}
 function MarketNews({ bare = false }) {
   const news = useNews()
   const headlines = buildFeed(news.data?.news, 'ALL', 8)
@@ -497,7 +504,7 @@ function MarketNews({ bare = false }) {
     {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Últimos títulos preservados.' : ''}</p>}
     {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes; títulos anteriores preservados.</p>}
     {!headlines.length && <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias disponíveis.'}</p>}
-    <ul>{headlines.map(n => <li key={n.link}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
+    <ul>{headlines.map(n => <li key={n.link}><MoedasCitadas item={n} /><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
