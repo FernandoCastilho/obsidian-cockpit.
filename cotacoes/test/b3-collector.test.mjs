@@ -30,23 +30,30 @@ test('catalogue failure can recheck known official dates but does not claim newe
  assert.match(data.warnings[0],/mais recente não confirmada/)
  await assert.rejects(()=>collectB3Curve('PRE',1,{request:async()=>{throw new Error('resposta vazia')}}),/datas/)
 })
-test('comparação não pode ser cópia da curva do último dia: tenta outros formatos de data e, se a B3 ignorar a data, omite',async()=>{
- const cat=['2026-10-30T00:00:00','2026-10-29T00:00:00','2026-10-23T00:00:00']
- const curva=(v)=>page([row(1,v)])
- // B3 ignora qualquer data: tudo igual → só o último dia, com aviso; cópia antiga também não é reaproveitada
- const previous={curves:{'2026-10-29':[[1,13.65]]}}
- const ignora=await collectB3Curve('PRE',1,{previous,request:async route=>route==='GetDate'?cat:curva(13.65)})
- assert.deepEqual(ignora.compare.map(c=>c.date),['2026-10-30'])
- assert.match(ignora.warnings.join(' '),/devolveu a curva do último dia/)
- // B3 só respeita dd/mm/aaaa: comparações chegam com os valores certos
+test('B3: consulta só o último dia, com a data em aaaa-mm-dd (a B3 ignora a data e não entrega dias anteriores)',async()=>{
  const pedidos=[]
- const br=await collectB3Curve('PRE',1,{request:async(route,p)=>{if(route==='GetDate')return cat;pedidos.push(p.date);const m=String(p.date).match(/^(\d{2})\/10\/2026$/);return curva(m?13+Number(m[1])/100:13.30)}})
- assert.deepEqual(br.compare.map(c=>c.date),['2026-10-30','2026-10-29','2026-10-23'])
- assert.deepEqual(br.curves['2026-10-29'],[[1,13.29]]);assert.deepEqual(br.curves['2026-10-23'],[[1,13.23]])
- assert.equal(pedidos[0],'2026-10-30T00:00:00','o último dia é pedido no formato do catálogo')
- // B3 respeita o formato do catálogo: uma chamada por comparação
- const n=[];await collectB3Curve('PRE',1,{request:async(route,p)=>{if(route==='GetDate')return cat;n.push(p.date);return curva({'2026-10-30T00:00:00':13.3,'2026-10-29T00:00:00':13.29,'2026-10-23T00:00:00':13.23}[p.date] ?? 13.3)}})
- assert.deepEqual(n,cat)
+ const data=await collectB3Curve('PRE',1,{request:async(route,p)=>{if(route==='GetDate')return ['2026-10-30T00:00:00','2026-10-29T00:00:00','2026-10-23T00:00:00'];pedidos.push(p.date);return page([row(1)])}})
+ assert.deepEqual(pedidos,['2026-10-30'])
+ assert.deepEqual(data.compare.map(c=>c.date),['2026-10-30']);assert.equal(data.sourceDate,'2026-10-30')
+})
+test('histórico próprio: guarda um dia por pregão, poda após 400 dias e monta as comparações só com curvas reais',async()=>{
+ const { addToHistory, emptyHistory, withHistory, KEEP_DAYS } = await import('../scripts/curves-history.mjs')
+ let h=emptyHistory()
+ h=addToHistory(h,'br','2026-10-23',[[1,13.5]])
+ h=addToHistory(h,'br','2026-10-29',[[1,13.6]])
+ h=addToHistory(h,'br','2026-10-30',[[1,13.65]])
+ h=addToHistory(h,'br','2026-10-30',[[1,13.66]]) // republicação do mesmo dia substitui
+ h=addToHistory(h,'br','lixo',[[1,1]])
+ assert.deepEqual(Object.keys(h.br).sort(),['2026-10-23','2026-10-29','2026-10-30'])
+ const set={sourceDate:'2026-10-30',compare:[{date:'2026-10-30'}],curves:{'2026-10-30':[[1,13.66]]}}
+ const pub=withHistory(set,h.br)
+ assert.deepEqual(pub.compare.map(c=>[c.label,c.date]),[['Último dia','2026-10-30'],['1 dia','2026-10-29'],['1 semana','2026-10-23']])
+ assert.deepEqual(pub.curves['2026-10-29'],[[1,13.6]]);assert.equal(pub.historyDays,3)
+ // só o último dia no histórico: sem comparação
+ assert.deepEqual(withHistory(set,{}).compare.map(c=>c.date),['2026-10-30'])
+ // poda
+ const velho=addToHistory(addToHistory(emptyHistory(),'cc','2025-01-02',[[30,5]]),'cc','2026-10-30',[[30,5.1]])
+ assert.deepEqual(Object.keys(velho.cc),['2026-10-30'],`mais de ${KEEP_DAYS} dias sai`)
 })
 test('app: comparação idêntica ao último dia some (dados já publicados com cópia)',async()=>{
  const { semCopias } = await import('../src/useCurves.js')

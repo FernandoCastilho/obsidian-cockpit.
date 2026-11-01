@@ -4,6 +4,7 @@ import { collectB3Curve } from './b3-collector.mjs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
 import { parseTreasury, pickDates } from './curves-lib.mjs'
+import { addToHistory, emptyHistory, withHistory } from './curves-history.mjs'
 
 const UA = { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', accept: 'application/json, text/csv, */*' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -60,6 +61,38 @@ else {out.br=previous?.br ?? null;out.cc=previous?.cc ?? null;console.log('B3: '
 }
 
 fillFromPrevious(out, previous, ['br', 'cc', 'us'])
+
+// Histórico próprio das curvas da B3 (a B3 só entrega o último dia). Falha de rede ao ler o histórico interrompe a coleta
+// (o deploy da hora falha e a próxima tenta de novo), para nunca publicar um histórico zerado por engano.
+async function loadHistory(repo = process.env.GITHUB_REPOSITORY) {
+  const [owner, name] = (repo ?? '').split('/')
+  if (!owner || !name) return emptyHistory()
+  let last
+  for (let i = 1; i <= 4; i++) {
+    try {
+      const res = await fetch(`https://${owner.toLowerCase()}.github.io/${name}/curves-history.json?t=${Date.now()}`, { signal: AbortSignal.timeout(20000) })
+      if (res.status === 404) return emptyHistory()
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const j = await res.json()
+      if (!j || typeof j !== 'object') throw new Error('arquivo inválido')
+      return { ...emptyHistory(), ...j }
+    } catch (e) { last = e; await sleep(2000 * i) }
+  }
+  throw new Error(`histórico das curvas indisponível: ${last.message}`)
+}
+let history = await loadHistory()
+for (const key of ['br', 'cc']) {
+  // semente: a curva mais recente já publicada é real (as comparações antigas eram cópias e não entram)
+  const prev = previous?.[key]
+  if (prev?.sourceDate && prev.curves?.[prev.sourceDate] && !history[key]?.[prev.sourceDate]) history = addToHistory(history, key, prev.sourceDate, prev.curves[prev.sourceDate])
+  const cur = out[key]
+  if (cur?.sourceDate && cur.curves?.[cur.sourceDate] && !out.stale?.[key]) history = addToHistory(history, key, cur.sourceDate, cur.curves[cur.sourceDate])
+  if (cur) out[key] = withHistory(cur, history[key])
+}
+history.updatedAt = Date.now()
+await mkdir(new URL('../public/', import.meta.url), { recursive: true })
+await writeFile(new URL('../public/curves-history.json', import.meta.url), JSON.stringify(history))
+console.log('Histórico das curvas B3:', ['br', 'cc'].map((k) => `${k} ${Object.keys(history[k] || {}).length} dias`).join(', '))
 if(decision.reason==='calendário B3 do ano não verificado')for(const key of ['br','cc'])if(out[key])out.stale[key]=previous?.stale?.[key] ?? previous?.generatedAt ?? null
 for(const key of ['br','cc']) if(!decision.run && previous?.stale?.[key])out.stale[key]=previous.stale[key]
 for(const key of ['br','cc']) if(out[key]?.discoveryPending) out.stale[key]=previous?.stale?.[key] ?? previous?.generatedAt ?? null

@@ -591,3 +591,5 @@ section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:
 
 /* Histórico das taxas de juros (CDI, Selic, SOFR, €STR): 2 × 2, sem gráfico sozinho na segunda linha */
 @media (min-width: 700px) { .macro .charts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pop.wide:has(.ex-ler) { width:min(460px, calc(100vw - 32px)); } /* "?" de gráfico com "Como ler o gráfico": balão mais largo e menos alto */
+@media (max-width: 560px) { .pop.wide:has(.ex-ler) { width:auto; max-height:70vh; overflow-y:auto; } }

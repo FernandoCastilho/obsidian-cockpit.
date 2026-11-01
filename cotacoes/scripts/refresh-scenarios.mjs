@@ -3,7 +3,7 @@ import {fileURLToPath} from 'node:url'
 import {resolve} from 'node:path'
 import {loadPrevious} from './prev-lib.mjs'
 import {collectFocus,preserveFocus} from './focus-collector.mjs'
-export const RETAIN_FILES=['macro.json','curves.json','news.json','feriados.json','oil.json','commodities.json','freight.json','policy-rates.json']
+export const RETAIN_FILES=['macro.json','curves.json','curves-history.json','news.json','feriados.json','oil.json','commodities.json','freight.json','policy-rates.json']
 const saveFile=async(file,out)=>{await mkdir(new URL('../public/',import.meta.url),{recursive:true});await writeFile(new URL('../public/'+file,import.meta.url),JSON.stringify(out))}
 export async function refreshScenarios({load=loadPrevious,collect=collectFocus,save=saveFile,now=Date.now()}={}) {
  const retained={}

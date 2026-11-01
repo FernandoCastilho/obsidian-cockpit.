@@ -173,14 +173,14 @@ export const GLOSSARY = {
     a: 'Cada linha é a curva da data indicada: "Último dia" é a mais recente publicada; "1 dia" é a do dia anterior; "1 semana", "1 mês", "3 meses", "6 meses" e "1 ano" ficam 7, 30, 91, 182 e 365 dias corridos antes da última.',
     b: 'Sem curva no dia exato (fim de semana ou feriado), vale a mais recente anterior; a data real aparece ao lado do nome.',
     c: 'Compare a linha de hoje com as antigas: subiu, o mercado passou a embutir juros maiores; desceu, menores.',
-    d: 'Abertura (prazos longos subindo mais) sugere prêmio de prazo e risco fiscal; subida nos curtos com fechamento sugere expectativa de aperto. Datas repetidas aparecem uma vez.',
+    d: 'Abertura (prazos longos subindo mais) sugere prêmio de prazo e risco fiscal; subida nos curtos com fechamento sugere expectativa de aperto. Datas repetidas aparecem uma vez. A B3 só publica o último dia; as datas anteriores vêm do histórico que o painel guarda a cada pregão, desde 30/10/2026.',
   },
   periodosCupom: {
     t: 'Curvas de comparação: cupom cambial',
     a: 'Cada linha é a curva da data indicada: "Último dia" é a mais recente publicada; "1 dia" é a do dia anterior; "1 semana", "1 mês", "3 meses", "6 meses" e "1 ano" ficam 7, 30, 91, 182 e 365 dias corridos antes da última.',
     b: 'Sem curva no dia exato (fim de semana ou feriado), vale a mais recente anterior; a data real aparece ao lado do nome.',
     c: 'Cupom subindo indica dólar mais caro de obter no mercado local; caindo, alívio na demanda por dólar.',
-    d: 'Compare por prazo: choques de curto prazo costumam vir de fluxo de dólar; os de longo, de juros e risco-país. Datas repetidas aparecem uma vez.',
+    d: 'Compare por prazo: choques de curto prazo costumam vir de fluxo de dólar; os de longo, de juros e risco-país. Datas repetidas aparecem uma vez. A B3 só publica o último dia; as datas anteriores vêm do histórico que o painel guarda a cada pregão, desde 30/10/2026.',
   },
   periodosUst: {
     t: 'Curvas de comparação: Treasuries',
