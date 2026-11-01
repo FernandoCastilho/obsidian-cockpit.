@@ -1,5 +1,17 @@
 // Explicações curtas (frase simples, exemplo concreto, uso na mesa). Textos fixos, sem dados ao vivo.
 // a = o que é, em palavras do dia a dia; b = exemplo com números redondos; c = como isso ajuda na decisão.
+// Tipo de taxa nas linhas da tabela "Juros de referência" (vai dentro do "?" de cada linha).
+export const TIPOS_TAXA = {
+  'Mercado overnight': 'Taxa observada no mercado overnight: empréstimos de 1 dia entre instituições financeiras, em que o dinheiro sai hoje e volta no dia útil seguinte (no Brasil, entre bancos; nos EUA, com garantia de títulos do Tesouro). É calculada a partir das operações efetivamente feitas no dia, então mostra o custo real do dinheiro de curtíssimo prazo e anda colada na taxa do banco central.',
+  'Política monetária': 'Taxa definida pelo banco central em reunião do seu comitê. Não é negociada no mercado: muda por degraus, só nas decisões, e serve de alvo para as taxas de mercado de 1 dia.',
+}
+
+// "Mercado overnight · % a.a." → tipo (explicado no "?") e unidade; quando todas as linhas têm a mesma unidade, ela vai para o cabeçalho.
+export function splitUnit(unit = '') {
+  const i = unit.lastIndexOf(' · ')
+  return i < 0 ? { tipo: '', unidade: unit } : { tipo: unit.slice(0, i), unidade: unit.slice(i + 3) }
+}
+
 export const GLOSSARY = {
   cotacao: {
     t: 'Cotação',

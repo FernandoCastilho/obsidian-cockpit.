@@ -31,8 +31,12 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
     const b = ref.current.getBoundingClientRect()
     const w = popRef.current.offsetWidth, h = popRef.current.offsetHeight
     const left = Math.min(Math.max(8, b.left - 8), Math.max(8, window.innerWidth - w - 8))
-    const top = b.bottom + 6 + h > window.innerHeight - 8 && b.top - 6 - h >= 8 ? b.top - 6 - h : b.bottom + 6
-    setPos({ top, left })
+    const below = window.innerHeight - 8 - (b.bottom + 6), above = b.top - 6 - 8
+    // cabe embaixo → embaixo; senão cabe em cima → em cima; senão, do lado com mais espaço, com rolagem dentro do balão
+    if (h <= below) setPos({ top: b.bottom + 6, left })
+    else if (h <= above) setPos({ top: b.top - 6 - h, left })
+    else if (below >= above) setPos({ top: b.bottom + 6, left, maxHeight: below })
+    else setPos({ top: 8, left, maxHeight: above })
   }, [show, fixed]) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!fixed || mobile || !show) return
@@ -55,7 +59,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   }, [pinned])
 
   const pop = (
-        <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={fixed && !mobile ? { position: 'fixed', top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto' } : shift ? { transform: `translateX(${shift}px)` } : undefined}>
+        <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={fixed && !mobile ? { position: 'fixed', zIndex: 70, top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto', ...(pos?.maxHeight ? { maxHeight: pos.maxHeight, overflowY: 'auto' } : {}) } : shift ? { transform: `translateX(${shift}px)` } : undefined}>
           {children}
           {(pinned || fixed) && mobile && <button type="button" className="pop-close" onClick={() => { setPinned(false); setHover(false) }}>Fechar</button>}
         </span>

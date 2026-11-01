@@ -513,3 +513,4 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 @media (max-width: 1199px) { .topbar-tabs button { padding: 0 5px; letter-spacing: 0; font-size: .68rem; } .topbar-clocks { padding: 0 6px; } .topbar-brand { padding: 0 10px; } }
 .noticias-agenda { margin: 12px 0 4px; color: var(--mut); font-size: .8rem; }
 .linklike { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }
+.executive-rates .executive-rates__table thead .executive-rates__indicator span { text-transform: none; letter-spacing: 0; } /* unidade (% a.a.) sem caixa alta */

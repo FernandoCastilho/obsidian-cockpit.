@@ -4,6 +4,7 @@ import { Aviso } from './Avisos.jsx'
 import Flag from './Flag.jsx'
 import Explain from './Explain.jsx'
 import { bandeiraDe } from './paises.js'
+import { TIPOS_TAXA, splitUnit } from './glossary.js'
 import './ExecutiveRatesTable.css'
 
 export const EXECUTIVE_RATE_PERIODS = [
@@ -45,6 +46,8 @@ export default function ExecutiveRatesTable({
   const id = useId()
   const titleId = `${id}-title`
   const hintId = `${id}-hint`
+  const units = [...new Set(rows.map((r) => splitUnit(r.unit).unidade).filter(Boolean))]
+  const commonUnit = units.length === 1 ? units[0] : ''
 
   return (
     <section className="executive-rates" aria-labelledby={titleId}>
@@ -68,7 +71,7 @@ export default function ExecutiveRatesTable({
           </colgroup>
           <thead>
             <tr>
-              <th scope="col" className="executive-rates__indicator">Indicador <span>Unidade</span></th>
+              <th scope="col" className="executive-rates__indicator">Indicador <span>{commonUnit || 'Unidade'}</span></th>
               {periods.map((period) => <th key={period.id} scope="col">{period.label}</th>)}
             </tr>
           </thead>
@@ -76,8 +79,16 @@ export default function ExecutiveRatesTable({
             {rows.map((row) => (
               <tr key={row.id}>
                 <th scope="row" className="executive-rates__indicator">
-                  <span className="executive-rates__name"><Flag code={bandeiraDe(row.label)} width={18} height={12} />{row.label}{row.help && <Explain id={row.help} fixed />}</span>
-                  {row.unit && <span className="executive-rates__unit">{row.unit}</span>}
+                  {(() => {
+                    const { tipo, unidade } = splitUnit(row.unit)
+                    const extra = tipo && TIPOS_TAXA[tipo] ? { t: tipo, a: TIPOS_TAXA[tipo] } : null
+                    // com explicação do tipo no "?" e unidade no cabeçalho, a linha fica só com o nome (mais baixa)
+                    const resto = commonUnit ? (extra || !tipo ? '' : tipo) : extra ? unidade : row.unit
+                    return <>
+                      <span className="executive-rates__name"><Flag code={bandeiraDe(row.label)} width={18} height={12} />{row.label}{row.help && <Explain id={row.help} fixed tipo={extra} />}</span>
+                      {resto && <span className="executive-rates__unit">{resto}</span>}
+                    </>
+                  })()}
                 </th>
                 {periods.map((period) => <RateCell key={period.id} cell={row.cells?.[period.id]} metaId={`${id}-${row.id}-${period.id}`} />)}
               </tr>
