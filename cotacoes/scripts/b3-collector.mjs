@@ -33,23 +33,42 @@ export async function collectB3Curve(id, minDays, { previous, request = requestB
     warnings.push(`Catálogo B3 ${id} indisponível (${error.message}); consulta limitada às datas oficiais já conhecidas. Referência mais recente não confirmada.`)
   }
   const picks=pickDates(dates), curves={}
+  // texto da data como veio no catálogo (ex.: 2026-10-23T00:00:00), para pedir a curva no mesmo formato
+  const raw=new Map((Array.isArray(dates)?dates:[]).map(d=>[String(d).slice(0,10),String(d)]))
+  const fetchCurve=async(date)=>{
+    const rows=[]
+    let pages=1, totalRecords
+    for(let page=1;page<=pages;page++) {
+      const data=await request('GetList',{language:'pt-br',id,pageNumber:page,pageSize:100,date})
+      if(page===1) { pages=data.page.totalPages; totalRecords=data.page.totalRecords }
+      if(data.page.totalPages!==pages || data.page.totalRecords!==totalRecords) throw new Error('paginação mudou durante a consulta')
+      rows.push(...data.results)
+    }
+    if(!Number.isInteger(totalRecords) || rows.length!==totalRecords) throw new Error('curva incompleta: quantidade de vértices difere do total informado')
+    const pts=parseB3(rows,minDays)
+    if(!pts.length || rows.some(row=>row.code!==id || row.day252==null || String(row.day252).trim()==='' || !Number.isFinite(Number(row.day252)) || !parseB3([row],0).length) || new Set(pts.map(p=>p[0])).size!==pts.length) throw new Error('instrumento incorreto ou vértices ausentes, inválidos ou duplicados')
+    return pts
+  }
+  const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b)
+  let latest=null
   for (const p of picks) {
     try {
-      const rows=[]
-      let pages=1, totalRecords
-      for(let page=1;page<=pages;page++) {
-        const data=await request('GetList',{language:'pt-br',id,pageNumber:page,pageSize:100,date:p.date})
-        if(page===1) { pages=data.page.totalPages; totalRecords=data.page.totalRecords }
-        if(data.page.totalPages!==pages || data.page.totalRecords!==totalRecords) throw new Error('paginação mudou durante a consulta')
-        rows.push(...data.results)
+      if(p===picks[0]) { latest=curves[p.date]=await fetchCurve(raw.get(p.date) ?? p.date); continue }
+      // Se a B3 ignora a data pedida, devolve a curva do último dia: isso não pode virar uma "comparação" igual à de hoje.
+      // Tenta o formato do catálogo, o ISO e o brasileiro; aceita o primeiro que traz uma curva diferente da mais recente.
+      const [y,m,d]=p.date.split('-')
+      let pts=null, tried=[]
+      for(const fmt of [...new Set([raw.get(p.date) ?? p.date, p.date, `${d}/${m}/${y}`])]) {
+        tried.push(fmt)
+        const got=await fetchCurve(fmt)
+        if(!same(got,latest)) { pts=got; if(fmt!==tried[0]) console.log(`B3 ${id} ${p.date}: curva obtida com a data no formato ${fmt}`); break }
       }
-      if(!Number.isInteger(totalRecords) || rows.length!==totalRecords) throw new Error('curva incompleta: quantidade de vértices difere do total informado')
-      const pts=parseB3(rows,minDays)
-      if(!pts.length || rows.some(row=>row.code!==id || row.day252==null || String(row.day252).trim()==='' || !Number.isFinite(Number(row.day252)) || !parseB3([row],0).length) || new Set(pts.map(p=>p[0])).size!==pts.length) throw new Error('instrumento incorreto ou vértices ausentes, inválidos ou duplicados')
+      if(!pts) throw new Error(`a B3 devolveu a curva do último dia para esta data (formatos ${tried.join(', ')})`)
       curves[p.date]=pts
     } catch(error) {
       if(p===picks[0]) throw new Error(`B3 ${id} ${p.date}: ${error.message}`)
-      if(previous?.curves?.[p.date]) curves[p.date]=previous.curves[p.date]
+      const prev=previous?.curves?.[p.date]
+      if(prev && !same(prev,latest)) curves[p.date]=prev
       warnings.push(`B3 ${id} comparação ${p.date}: ${error.message}${curves[p.date] ? '; vértices anteriores preservados' : '; comparação omitida'}`)
     }
   }
