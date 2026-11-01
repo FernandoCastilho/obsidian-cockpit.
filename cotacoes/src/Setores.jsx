@@ -28,7 +28,7 @@ function Preco({ item, usd, usdLabel, diario }) {
   )
 }
 
-// Aba Setores: escolha um setor ou insumo e veja o que a imprensa publicou na semana, por dia; nos insumos, o preço, o que mexe nele e a ficha da visita.
+// Aba Setores e Insumos: escolha Setores ou Insumos e depois o assunto e veja o que a imprensa publicou na semana, por dia; nos insumos, o preço, o que mexe nele e a ficha da visita.
 export default function Setores({ view = '', onView = () => {}, quotes }) {
   const id = parseSetor(view)
   const temas = useDataFile('temas.json')
@@ -42,10 +42,17 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const usdLabel = q?.fallback ? 'dólar de referência (dia anterior)' : q?.stale ? 'última cotação do dólar disponível' : 'dólar de hoje'
   const itens = insumo ? (comm.data?.commodities ?? []).filter((c) => insumo.commodity.includes(c.id) && Number.isFinite(c.value)) : []
   const serie = insumo?.daily ? diario.data?.series?.[insumo.daily] : null
-  const tabs = [...SETORES.map((t) => ({ id: t.id, label: t.label, grupo: 'Setores' })), ...INSUMOS.map((t) => ({ id: t.id, label: t.label, grupo: 'Insumos' }))]
+  // Dois botões no topo (Setores | Insumos); embaixo, só as abas do grupo escolhido. Insumos separados em Metais e Energia.
+  const secao = insumo ? 'insumos' : 'setores'
+  const tabs = secao === 'insumos' ? INSUMOS.map((t) => ({ id: t.id, label: t.label, grupo: t.grupo })) : SETORES.map((t) => ({ id: t.id, label: t.label }))
   return (
     <div className="setores">
-      <Panel title="Setores e insumos" tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={['temas.json', 'commodities.json', 'insumos-precos.json']}>
+      <nav className="learn-nav cen-nav setores-secao" aria-label="Setores ou insumos">
+        {[['setores', 'Setores', SETORES[0].id], ['insumos', 'Insumos', INSUMOS[0].id]].map(([k, label, first]) => (
+          <button key={k} type="button" className={secao === k ? 'on' : ''} aria-current={secao === k ? 'true' : undefined} onClick={() => secao !== k && onView(first)}>{label}</button>
+        ))}
+      </nav>
+      <Panel title={secao === 'insumos' ? 'Insumos e matérias-primas' : 'Setores da economia'} tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={secao === 'insumos' ? ['temas.json', 'commodities.json', 'insumos-precos.json'] : ['temas.json']}>
         {insumo && (
           <div className="setor-insumo">
             {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} usdLabel={usdLabel} diario={serie} />) : comm.status === 'loading' ? <Estado>Carregando o preço…</Estado> : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}

@@ -265,7 +265,7 @@ export default function App() {
       )}
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
-          {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{TABS.find((t) => t.id === tab).label}</h1>}
+          {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{tab === 'setores' ? 'Setores e Insumos' : TABS.find((t) => t.id === tab).label}</h1>}
           <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
         </header>
       )}
