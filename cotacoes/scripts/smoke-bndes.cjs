@@ -68,6 +68,13 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await noOverflow()
       await barra.getByRole('button', { name: 'Limpar' }).click()
       assert.equal(await p.locator('.ml').count(), 0); assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Histórico/i)
+      // a primeira série marcada fica marcada (antes ela se perdia); os atalhos junto ao gráfico juntam TFB, TLP, TFC e dólar
+      await p.locator('.bn-cmp input:not(:disabled)').first().check()
+      assert.equal(await p.locator('.bn-cmp input:not(:disabled)').first().isChecked(), true, 'uma série marcada continua marcada')
+      assert.match(await barra.locator('small').innerText(), /Marque ao menos duas/)
+      await p.getByRole('group', { name: /Comparar no gráfico: TFB/ }).getByRole('button', { name: 'TLP', exact: true }).click()
+      assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Comparação · 2 séries · TFB \+ TLP/i)
+      await barra.getByRole('button', { name: 'Limpar' }).click()
       // comparação entre famílias: as 6 da TFB mais uma da TFC no mesmo gráfico
       await barra.getByRole('button', { name: 'Marcar todas' }).click()
       await fam.getByRole('button', { name: 'TFC', exact: true }).click()

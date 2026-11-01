@@ -25,11 +25,12 @@ export function parseRoute(sub, ids = {}) {
   // A comparação atravessa as famílias (ex.: TFB com TFC): vale o código de qualquer série conhecida.
   const known = new Set(Object.values(ids).flat())
   const wanted = [...new Set(String(q.get('c') ?? '').split(',').filter(Boolean))].filter((v) => !known.size || known.has(v))
-  const compare = wanted.length >= 2 ? wanted : []
+  // a seleção fica no endereço desde a primeira série marcada (antes, com uma só, ela se perdia e nunca chegava a duas)
+  const compare = wanted
   return { family, id, preset, custom, compare }
 }
 
 // Sempre completo (família, série e período), para o endereço copiado reproduzir a tela.
 export function buildRoute({ family, id, preset, custom, compare = [] }) {
-  return `${family}/${id ?? DEFAULT_SELECTION[family]}?${custom ? `d=${custom.start}..${custom.end}` : `p=${PRESET_CODE[preset] ?? '12m'}`}${compare.length >= 2 ? `&c=${compare.join(',')}` : ''}`
+  return `${family}/${id ?? DEFAULT_SELECTION[family]}?${custom ? `d=${custom.start}..${custom.end}` : `p=${PRESET_CODE[preset] ?? '12m'}`}${compare.length ? `&c=${compare.join(',')}` : ''}`
 }

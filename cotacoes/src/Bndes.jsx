@@ -76,7 +76,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined })}>{f.label}</button>)}
         </div>
         <h3 className="bn-sub">{fam.title}</h3>
-        {!error && rows.length > 1 && (
+        {!error && rows.length > 0 && (
           <div className="bn-cmp-bar" role="group" aria-label="Comparar séries no mesmo gráfico">
             <span>Comparar no mesmo gráfico (vale entre famílias, ex.: TFB com TFC):</span>
             <button type="button" onClick={() => go({ compare: [...new Set([...compare, ...rows.filter((r) => !r.missing).map((r) => r.id)])] }, true)}>Marcar todas desta família</button>
@@ -91,7 +91,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
               <tbody>
                 {rows.flatMap((r) => [
                   <tr key={r.id} className={r.id === id ? 'bn-on' : undefined}>
-                    <th scope="row">{rows.length > 1 && <label className="bn-cmp"><input type="checkbox" checked={compare.includes(r.id)} disabled={r.missing} onChange={() => toggleCompare(r.id)} /><span className="sr-only">Comparar {r.name}</span></label>}<button type="button" className="bn-pick" aria-pressed={r.id === id} aria-label={`Ver histórico: ${r.name} (${r.id})`} onClick={() => go({ id: r.id })}>{r.name}<small>{r.sub}</small></button></th>
+                    <th scope="row">{<label className="bn-cmp"><input type="checkbox" checked={compare.includes(r.id)} disabled={r.missing} onChange={() => toggleCompare(r.id)} /><span className="sr-only">Comparar {r.name}</span></label>}<button type="button" className="bn-pick" aria-pressed={r.id === id} aria-label={`Ver histórico: ${r.name} (${r.id})`} onClick={() => go({ id: r.id })}>{r.name}<small>{r.sub}</small></button></th>
                     {r.missing ? <td colSpan={hasSpread ? 6 : 5} className="muted">{loading ? 'carregando' : 'indisponível'}</td> : (
                       <>
                         <td className="num">{r.text}{r.stale && <em className="old"> · dado anterior ({stamp(r.stale)})</em>}</td>
@@ -111,6 +111,18 @@ export default function Bndes({ view = '', onView = () => {} }) {
         {next && <p className="bn-def">Próxima divulgação da TLP: {dmy(next)}.</p>}
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
+        {!error && (
+          <div className="seg bn-quick" role="group" aria-label="Comparar no gráfico: TFB, TLP, TFC e dólar">
+            <span className="bn-quick-label">Comparar no gráfico:</span>
+            {CARDS.map(([, cid, label]) => {
+              const on = compare.includes(cid)
+              // sem comparação aberta, o primeiro clique junta a série do gráfico com a escolhida
+              const next = on ? compare.filter((x) => x !== cid) : compare.length ? [...compare, cid] : [...new Set([id, cid])]
+              return <button key={cid} type="button" aria-pressed={on} onClick={() => go({ compare: next }, true)}>{label}</button>
+            })}
+            {compare.length > 0 && <button type="button" onClick={() => go({ compare: [] }, true)}>Limpar</button>}
+          </div>
+        )}
         <FilterScope>
           {compareItems.length >= 2 ? (
             <>
