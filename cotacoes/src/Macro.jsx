@@ -202,8 +202,10 @@ export default function Macro({ macro: m }) {
   }
   return (
     <section className="macro">
-      <div className="history-head">
-        <h2>Histórico das taxas de juros</h2>
+      <h2>Histórico das taxas de juros</h2>
+      {/* dois níveis: o período (aqui) vale para os quatro gráficos; o "Agrupar" de cada gráfico só muda a granularidade dos pontos */}
+      <div className="juros-period">
+        <p className="juros-period-label" id="juros-period-label">Período dos quatro gráficos abaixo</p>
         <RatesPeriod range={range} preset={preset} onPreset={onPreset} onDates={onDates} />
       </div>
       {m.status === 'loading' && <p className="status">Carregando dados…</p>}

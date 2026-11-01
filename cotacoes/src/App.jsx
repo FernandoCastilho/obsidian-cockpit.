@@ -53,7 +53,8 @@ const CEN_VIEWS = [
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
   { id: 'indexadores', label: 'Indexadores' },
-  { id: 'outros', label: 'Outros' },
+  { id: 'inflacao', label: 'Inflação' },
+  { id: 'fiscal', label: 'Fiscal' },
 ]
 const PRESETS = [
   { id: 'day', label: 'Dia (intraday)', days: 0 },
@@ -184,7 +185,7 @@ export default function App() {
     }
   }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
-  const cenView = CEN_VIEWS.some((v) => v.id === sub) ? sub : 'projecoes'
+  const cenView = sub === 'outros' ? 'inflacao' : CEN_VIEWS.some((v) => v.id === sub) ? sub : 'projecoes' // #cenarios/outros (endereço antigo) abre Inflação
   const goto = (id, to = '', replace = false) => {
     setTab(id)
     setSub(to)
@@ -196,6 +197,11 @@ export default function App() {
     }
     if (!(id === 'bndes' && tab === 'bndes')) window.scrollTo({ top: 0 }) // escolher série e período na aba BNDES não leva ao topo
   }
+  useEffect(() => { // endereço antigo (#cenarios/outros) vira o novo, sem nova entrada no histórico
+    if (tab !== 'cenarios' || sub !== 'outros') return
+    setSub('inflacao')
+    try { window.history.replaceState(null, '', '#cenarios/inflacao') } catch { /* sem histórico */ }
+  }, [tab, sub])
   const openCurrency = CURRENCIES.find((c) => c.code === open)
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
   const quoteRefresh = { run: refresh, busy: refreshing, disabled: refreshing || limits.wait > 0 || limits.left <= 0, title: limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Consulta a cotação agora, direto na fonte. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).${wait}` }
@@ -286,7 +292,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'outros' ? <Outros macro={macro} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'inflacao' || cenView === 'fiscal' ? <Outros macro={macro} part={cenView} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
         </>
       )}
 

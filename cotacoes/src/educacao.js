@@ -494,7 +494,7 @@ export const CONCEITOS = [
         resultado: `Inflação de ${pct(acc)} em 12 meses e juro real de ${pct(juroReal(e.selic, acc))} ao ano sobre a Selic de ${pct(e.selic)}.`,
       }
     })(),
-    noApp: { texto: 'O IPCA oficial, com histórico e o quadro “o que pesa”, está em Cenários › Outros.', tab: 'cenarios', view: 'outros' },
+    noApp: { texto: 'O IPCA oficial, com histórico e o quadro “o que pesa”, está em Cenários › Inflação.', tab: 'cenarios', view: 'inflacao' },
     teste: {
       pergunta: 'A inflação em 12 meses cai de 6% para 4%. Os preços caíram?',
       resposta: 'Não. Eles seguem subindo, mas a um ritmo menor: 4% ao ano em vez de 6%. Preço só cai quando há deflação, isto é, inflação negativa.',
