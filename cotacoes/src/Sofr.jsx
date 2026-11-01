@@ -103,7 +103,7 @@ export default function SofrChart({ macro, range }) {
         <h3>
           <i className="swatch" /> <Flag code="USD" width={18} height={12} />SOFR
           <small>EUA · overnight, taxa do dia</small>
-          <Explain id="sofr" />
+          <Explain id="sofr" grafico />
         </h3>
         <RefreshButton files={['macro.json']} label="SOFR" />
       </header>

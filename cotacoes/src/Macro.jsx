@@ -31,7 +31,7 @@ export function RateChart({ id, title, subtitle, color, points, history, step, s
         <h3>
           <i className="swatch" /> <Flag code={bandeiraDe(title)} width={18} height={12} />{title}
           <small>{subtitle}</small>
-          {help && <Explain id={help} />}
+          {help && <Explain id={help} grafico />}
         </h3>
         <div className="parity-actions">
           <RefreshButton files={refresh} label={title} />

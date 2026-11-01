@@ -52,7 +52,7 @@ export default function CdiFuturo({ curves, macro, hol }) {
           <header>
             <h3>
               <Flag code="BRL" width={18} height={12} />CDI a termo implícito
-              <Explain id="cdiFuturo" />
+              <Explain id="cdiFuturo" grafico />
               <small>% a.a., taxa a termo do DI no intervalo que você escolher</small>
             </h3>
             <RefreshButton files={['curves.json', 'macro.json']} label="CDI futuro" />

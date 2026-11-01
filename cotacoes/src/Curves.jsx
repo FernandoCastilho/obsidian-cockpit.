@@ -90,7 +90,7 @@ function CurveChart({ title, subtitle, data, mode, source, help, bare = false })
           <h3>
             <Flag code={bandeiraDe(title)} width={18} height={12} />{title}
             <small>{subtitle}</small>
-            <Explain id={help} />
+            <Explain id={help} grafico />
           </h3>
           <RefreshButton files={['curves.json']} label={title} />
         </header>
