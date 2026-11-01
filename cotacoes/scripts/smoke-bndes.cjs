@@ -75,6 +75,13 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await p.getByRole('group', { name: /Comparar no gráfico: TFB/ }).getByRole('button', { name: 'TLP', exact: true }).click()
       assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Comparação · 2 séries · TFB \+ TLP/i)
       await barra.getByRole('button', { name: 'Limpar' }).click()
+      // atalho embaixo do gráfico: TFB e TFC de mesmo prazo (60 meses · 90 dias) num clique; segundo clique desfaz
+      const prazo = p.getByRole('group', { name: 'Comparar TFB e TFC de mesmo prazo' })
+      const b60 = prazo.getByRole('button', { name: /^60 meses · 90 dias/ })
+      await b60.click()
+      assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Comparação · 3 séries · TFB \+ TFC/i)
+      assert.equal(await b60.getAttribute('aria-pressed'), 'true')
+      await b60.click(); assert.equal(await b60.getAttribute('aria-pressed'), 'false')
       // comparação entre famílias: as 6 da TFB mais uma da TFC no mesmo gráfico
       await barra.getByRole('button', { name: 'Marcar todas' }).click()
       await fam.getByRole('button', { name: 'TFC', exact: true }).click()
