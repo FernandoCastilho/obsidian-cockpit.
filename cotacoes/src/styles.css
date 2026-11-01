@@ -99,6 +99,11 @@ dl .span2 { grid-column: 1 / -1; }
 dd .muted { color:var(--mut); font-size:.72rem; }
 .macro { margin-top:40px; }
 .macro .charts > .status { margin:0; align-self:center; }
+.macro .charts > .charts-full { grid-column:1 / -1; }
+.macro .charts-full .cupom-leitura { margin-top:0; }
+.juros-period { display:flex; flex-direction:column; gap:6px; margin:0 0 16px; }
+.juros-period-label { margin:0; color:var(--mut); font-size:.8rem; }
+.seg-label { align-self:center; padding:0 6px 0 2px; color:var(--mut); font-size:.75rem; white-space:nowrap; }
 .focus-table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
 .focus-table th, .focus-table td { padding:8px 10px; text-align:right; border-bottom:1px solid var(--line); }
 .focus-table thead th { color:var(--mut); font-weight:500; font-size:.8rem; }
