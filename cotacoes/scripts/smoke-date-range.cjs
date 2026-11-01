@@ -54,6 +54,18 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await p.keyboard.press('ArrowRight'); await p.keyboard.press('Enter')
       await p.keyboard.press('ArrowRight'); await p.keyboard.press('Enter')
       await cal.waitFor({ state: 'hidden' })
+      // digitar as datas: vem preenchido com o período atual; data impossível mostra o motivo; Enter aplica (com máscara dd/mm/aaaa)
+      await trigger.click(); await cal.waitFor()
+      const [ini, fim] = [cal.getByLabel('Início'), cal.getByLabel('Fim')]
+      assert.match(await ini.inputValue(), /^\d{2}\/\d{2}\/\d{4}$/)
+      const fimTxt = await fim.inputValue()
+      await ini.fill('31/02/2026'); await cal.getByRole('button', { name: 'Aplicar' }).click()
+      assert.match(await cal.locator('.drp-err').innerText(), /Data inválida\. Use dd\/mm\/aaaa/)
+      await ini.fill(''); await ini.pressSequentially(fimTxt.replace(/\//g, ''))
+      assert.equal(await ini.inputValue(), fimTxt, 'máscara põe as barras')
+      await ini.press('Enter'); await cal.waitFor({ state: 'hidden' })
+      const um = fimTxt.replace(/\/(\d{2})(\d{2})$/, '/$2')
+      assert.equal(await trigger.innerText(), `${um} → ${um}`, 'período de um dia digitado')
       await d.locator('.expandable-controls button').first().click()
       assert.deepEqual(errors, [])
     }

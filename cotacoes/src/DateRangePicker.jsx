@@ -1,10 +1,10 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import './DateRangePicker.css'
-import { clamp, long, monthCells, monthName, monthShort, outside, pair, parts, preview, shift, shiftMonth, short, valid, monthKey } from './dateRange.js'
+import { clamp, long, monthCells, monthName, monthShort, outside, pair, parts, preview, shift, shiftMonth, short, valid, monthKey, parseTyped, maskTyped, typedText } from './dateRange.js'
 
 const WEEK = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
-// Período em uma linha só: "dd/mm/aa → dd/mm/aa". Abre um calendário; clica no início, depois no fim.
+// Período em uma linha só: "dd/mm/aa → dd/mm/aa". Abre um calendário; clica no início, depois no fim, ou digita as duas datas.
 // mode="month" escolhe meses (séries mensais). Valores e limites em texto ISO.
 export default function DateRangePicker({ start, end, min, max, mode = 'day', label = 'Período', onChange }) {
   const id = useId()
@@ -16,13 +16,14 @@ export default function DateRangePicker({ start, end, min, max, mode = 'day', la
   const [focusKey, setFocusKey] = useState(null)
   const [pos, setPos] = useState(null)
   const [panels, setPanels] = useState(1)
+  const [typed, setTyped] = useState({ a: '', b: '', erro: '' })
   const trigger = useRef(null), pop = useRef(null)
   const ok = valid(start, mode) && valid(end, mode)
 
   const close = (focus = true) => { setOpen(false); setAnchor(null); setHover(null); setFocusKey(null); if (focus) trigger.current?.focus() }
   const show = () => {
     const base = ok ? start : max ?? min
-    setView(base); setAnchor(null); setHover(null); setFocusKey(base); setPanels(!month && window.innerWidth >= 640 ? 2 : 1); setOpen(true)
+    setView(base); setAnchor(null); setHover(null); setFocusKey(base); setTyped({ a: ok ? typedText(start, mode) : '', b: ok ? typedText(end, mode) : '', erro: '' }); setPanels(!month && window.innerWidth >= 640 ? 2 : 1); setOpen(true)
   }
 
   useLayoutEffect(() => {
@@ -58,6 +59,19 @@ export default function DateRangePicker({ start, end, min, max, mode = 'day', la
     close()
   }
 
+  // datas digitadas: aplica com Enter ou no botão; fora do limite ou inválida mostra o motivo
+  const fmt = month ? 'mm/aaaa' : 'dd/mm/aaaa'
+  const applyTyped = (e) => {
+    e?.preventDefault()
+    const a = parseTyped(typed.a, mode), b = parseTyped(typed.b, mode)
+    if (!a || !b) return setTyped((t) => ({ ...t, erro: `Data inválida. Use ${fmt}.` }))
+    const [s, f] = pair(a, b)
+    if (outside(s, min, max) || outside(f, min, max)) return setTyped((t) => ({ ...t, erro: `Fora do período disponível${min ? `: de ${short(min, mode)}` : ''}${max ? ` até ${short(max, mode)}` : ''}.` }))
+    onChange?.(s, f)
+    close()
+  }
+  const typeField = (k) => (e) => setTyped((t) => ({ ...t, [k]: maskTyped(e.target.value, mode), erro: '' }))
+
   const move = (v) => {
     const c = clamp(v, min, max)
     setFocusKey(c)
@@ -92,7 +106,7 @@ export default function DateRangePicker({ start, end, min, max, mode = 'day', la
   const stepView = (n) => setView(shiftMonth(view, mode, n * (month ? 1 : 1)))
   const years = month ? [viewParts.y] : null
   const monthsShown = month ? [] : Array.from({ length: panels }, (_, i) => { const t = viewParts.y * 12 + viewParts.m + i; return { y: Math.floor(t / 12), m: t % 12 } })
-  const hint = anchor ? `Início ${short(anchor, mode)}. Escolha a data final.` : 'Escolha a data inicial.'
+  const hint = anchor ? `Início ${short(anchor, mode)}. Escolha a data final.` : 'Escolha a data inicial (ou digite as datas acima).'
   const title = month ? String(viewParts.y) : monthsShown.map(({ y, m }) => `${monthName(m)} de ${y}`).join(' · ')
 
   return (
@@ -104,6 +118,12 @@ export default function DateRangePicker({ start, end, min, max, mode = 'day', la
       </button>
       {open && (
         <div ref={pop} id={id} className="drp-pop" role="dialog" aria-label={`${label}: calendário`} style={pos ? { left: pos.left, top: pos.top } : { visibility: 'hidden' }} onKeyDown={onKey}>
+          <form className="drp-type" onSubmit={applyTyped} noValidate>
+            <label>Início<input type="text" inputMode="numeric" autoComplete="off" placeholder={fmt} value={typed.a} onChange={typeField('a')} aria-describedby={`${id}-err`} /></label>
+            <label>Fim<input type="text" inputMode="numeric" autoComplete="off" placeholder={fmt} value={typed.b} onChange={typeField('b')} aria-describedby={`${id}-err`} /></label>
+            <button type="submit" className="drp-apply">Aplicar</button>
+            <p id={`${id}-err`} className="drp-err" role="alert">{typed.erro}</p>
+          </form>
           <div className="drp-head">
             <button type="button" className="drp-nav" aria-label={month ? 'Ano anterior' : 'Mês anterior'} onClick={() => stepView(-1)}>‹</button>
             <strong className="drp-title" aria-live="polite">{title}</strong>

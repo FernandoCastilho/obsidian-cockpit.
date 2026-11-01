@@ -60,3 +60,32 @@ export function preview({ anchor, hover, start, end }) {
   if (anchor) return pair(anchor, hover ?? anchor)
   return [start, end]
 }
+
+// Digitação no calendário: "dd/mm/aaaa" (ou dd/mm/aa, com ponto ou hífen; também só os dígitos) e, no modo mensal, "mm/aaaa".
+const fullYear = (y) => (y.length === 2 ? 2000 + Number(y) : Number(y))
+export function parseTyped(text, mode) {
+  const t = String(text ?? '').trim()
+  if (mode === 'month') {
+    const m = t.match(/^(\d{1,2})[/.-](\d{2}|\d{4})$/) || t.match(/^(\d{2})(\d{4})$/)
+    if (!m) return null
+    const v = monthKey(fullYear(m[2]), Number(m[1]) - 1)
+    return valid(v, mode) ? v : null
+  }
+  const m = t.match(/^(\d{1,2})[/.-](\d{1,2})[/.-](\d{2}|\d{4})$/) || t.match(/^(\d{2})(\d{2})(\d{4}|\d{2})$/)
+  if (!m) return null
+  const v = dayKey(fullYear(m[3]), Number(m[2]) - 1, Number(m[1]))
+  return valid(v, mode) ? v : null
+}
+// Máscara enquanto digita só números: 31102026 → 31/10/2026 (102026 → 10/2026 no modo mensal).
+export function maskTyped(text, mode) {
+  const s = String(text ?? '')
+  if (!/^[\d/]*$/.test(s)) return s
+  const d = s.replace(/\D/g, '').slice(0, mode === 'month' ? 6 : 8)
+  return mode === 'month' ? (d.length > 2 ? `${d.slice(0, 2)}/${d.slice(2)}` : d)
+    : d.length > 4 ? `${d.slice(0, 2)}/${d.slice(2, 4)}/${d.slice(4)}` : d.length > 2 ? `${d.slice(0, 2)}/${d.slice(2)}` : d
+}
+export function typedText(v, mode) {
+  if (!valid(v, mode)) return ''
+  const { y, m, d } = parts(v)
+  return mode === 'month' ? `${p2(m + 1)}/${y}` : `${p2(d)}/${p2(m + 1)}/${y}`
+}
