@@ -1,0 +1,9 @@
+{
+  "_como_usar": "Para mandar um recado a quem usa o app: troque ativo para true, escreva titulo e texto e salve (commit). Em uns 5 minutos aparece um pop-up para quem está com o app aberto e, depois, para quem abrir. Cada pessoa vê cada recado uma vez; mudar o titulo ou o texto conta como recado novo. nivel: info ou urgente. de/ate (opcionais): início e fim da exibição, ex. 2026-11-07T18:00:00-03:00. Para encerrar, volte ativo para false.",
+  "ativo": false,
+  "nivel": "info",
+  "titulo": "",
+  "texto": "",
+  "de": "",
+  "ate": ""
+}

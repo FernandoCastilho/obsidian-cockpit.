@@ -18,6 +18,7 @@ const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import AvisoInicial from './AvisoInicial.jsx'
+import Recado from './Recado.jsx'
 import Laser from './Laser.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
@@ -240,6 +241,7 @@ export default function App() {
         <p><i>{DISCLAIMER}</i></p>
       </>}>
     <AvisoInicial />
+    <Recado />
     <Laser />
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} />
