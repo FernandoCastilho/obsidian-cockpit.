@@ -17,6 +17,11 @@ const Delta = ({ c }) => (c ? <><span className={`bn-delta bn-${c.dir}`} title={
 
 // Cartões do topo: "como está hoje" em poucos segundos; tocar leva ao histórico da série.
 const CSV = [['tfb.csv', 'TFB (8 séries)'], ['tlp.csv', 'TLP'], ['tfc.csv', 'TFC (24 séries)'], ['moedas.csv', 'Moedas contratuais']]
+// TFB e TFC comparáveis: mesma sigla de prazo (meses) e liberação (dias); MPME = micro, pequenas e médias empresas.
+const MESMO_PRAZO = [
+  ['60 meses · 90 dias (TFB, TFC e TFC MPME)', ['TFB_60_90', 'C01', 'C03']],
+  ['120 meses · 90 dias (TFB, TFC e TFC MPME)', ['TFB_120_90', 'C02', 'C04']],
+]
 const CARDS = [['tfb', 'TFB_60_90', 'TFB 60 meses · 90 dias', 'day'], ['tlp', 'TLP', 'TLP', 'month'], ['tfc', 'C01', 'TFC_60.90', 'day'], ['moedas', '604', 'Dólar contratual', 'day']]
 
 // Aba BNDES: uma só área de trabalho. Abas por família (TFB, TLP, TFC, Moedas) escolhem a tabela; clicar numa linha ou num cartão troca a série
@@ -136,6 +141,19 @@ export default function Bndes({ view = '', onView = () => {} }) {
             </>
           )}
         </FilterScope>
+
+        {!error && (
+          <div className="bn-prazo">
+            <div className="seg bn-quick" role="group" aria-label="Comparar TFB e TFC de mesmo prazo">
+              <span className="bn-quick-label">Mesmo prazo, TFB × TFC:</span>
+              {MESMO_PRAZO.map(([label, ids]) => {
+                const on = compare.length === ids.length && ids.every((x) => compare.includes(x))
+                return <button key={label} type="button" aria-pressed={on} onClick={() => go({ compare: on ? [] : ids }, true)}>{label}</button>
+              })}
+            </div>
+            <p className="bn-def">Pares pela sigla do BNDES (prazo em meses e liberação em dias: TFC_60.90 ↔ TFB_60_90). TFB de 36 e 84 meses e de liberação em 30 dias não têm TFC correspondente; as TFC_TR são corrigidas pela TR, não prefixadas, e ficam fora.</p>
+          </div>
+        )}
 
         <details className="bn-src">
           <summary>Dados para o Excel (CSV)</summary>
