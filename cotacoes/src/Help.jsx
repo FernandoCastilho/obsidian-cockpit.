@@ -13,10 +13,25 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   const mobile = typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 560px)').matches
   const [shift, setShift] = useState(0)
   const [pos, setPos] = useState(null)
+  // Balões longos ("wide", ex.: gráficos com "Como ler") também flutuam pela janela, como os de tabela.
+  const floating = (fixed || wide) && !mobile
+  // O balão flutuante fica fora do "?": um intervalo curto deixa o mouse atravessar até ele sem fechar.
+  const leaveTimer = useRef(null)
+  const enter = () => { clearTimeout(leaveTimer.current); setHover(true) }
+  const leave = () => { clearTimeout(leaveTimer.current); leaveTimer.current = setTimeout(() => setHover(false), floating ? 220 : 0) }
+  useEffect(() => () => clearTimeout(leaveTimer.current), [])
+  // um balão aberto por vez: abrir outro "?" fecha este na hora (sem esperar o intervalo de saída)
+  useEffect(() => {
+    if (!show) return
+    window.dispatchEvent(new CustomEvent('help-open', { detail: id }))
+    const other = (e) => { if (e.detail !== id) { clearTimeout(leaveTimer.current); setHover(false); setPinned(false) } }
+    window.addEventListener('help-open', other)
+    return () => window.removeEventListener('help-open', other)
+  }, [show, id])
 
   // Mantém o balão dentro da janela (perto da borda direita ou esquerda ele deslocava para fora da tela).
   useLayoutEffect(() => {
-    if (fixed) return
+    if (floating) return
     if (!show || !popRef.current) return setShift(0)
     const r = popRef.current.getBoundingClientRect()
     const base = r.left - shift
@@ -25,26 +40,39 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
     setShift(base + w > max ? max - (base + w) : base < 8 ? 8 - base : 0)
   }, [show]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Balão "fixed": mede o botão e o balão, mantém dentro da janela (abre para cima se faltar espaço embaixo) e fecha ao rolar a página.
+  // Balão "fixed" (tabelas e gráficos): portal no corpo da página, ao lado do "?", sem rolagem interna. Começa estreito e alarga
+  // (formato retangular, deitado) até caber inteiro na altura da janela; prefere a direita do botão, depois a esquerda, e só então
+  // embaixo/em cima. Fecha ao rolar a página.
   useLayoutEffect(() => {
-    if (!fixed || mobile || !show || !ref.current || !popRef.current) return setPos(null)
-    const b = ref.current.getBoundingClientRect()
-    const w = popRef.current.offsetWidth, h = popRef.current.offsetHeight
-    const left = Math.min(Math.max(8, b.left - 8), Math.max(8, window.innerWidth - w - 8))
-    const below = window.innerHeight - 8 - (b.bottom + 6), above = b.top - 6 - 8
-    // cabe embaixo → embaixo; senão cabe em cima → em cima; senão, do lado com mais espaço, com rolagem dentro do balão
-    if (h <= below) setPos({ top: b.bottom + 6, left })
-    else if (h <= above) setPos({ top: b.top - 6 - h, left })
-    else if (below >= above) setPos({ top: b.bottom + 6, left, maxHeight: below })
-    else setPos({ top: 8, left, maxHeight: above })
-  }, [show, fixed]) // eslint-disable-line react-hooks/exhaustive-deps
+    if (!floating || !show || !ref.current || !popRef.current) return setPos(null)
+    const el = popRef.current, b = ref.current.getBoundingClientRect()
+    const vw = window.innerWidth, vh = window.innerHeight, room = vh - 16
+    const maxW = Math.max(240, vw - 16)
+    let w = Math.min(el.offsetWidth || 290, maxW), h
+    for (const cand of [w, 420, 520, 640, 760, 900, maxW]) {
+      w = Math.min(cand, maxW)
+      el.style.width = `${w}px`
+      h = el.offsetHeight
+      if (h <= Math.min(room, 440)) break // deitado: alarga até ficar baixo (ou até a largura máxima)
+    }
+    const right = vw - 8 - (b.right + 8), leftRoom = b.left - 8 - 8
+    let left
+    if (w <= right) left = b.right + 8
+    else if (w <= leftRoom) left = b.left - 8 - w
+    else left = Math.min(Math.max(8, b.left - 8), Math.max(8, vw - w - 8))
+    const side = w <= right || w <= leftRoom
+    let top
+    if (side) top = Math.min(Math.max(8, b.top + b.height / 2 - h / 2), Math.max(8, vh - 8 - h)) // ao lado, centralizado no botão
+    else top = b.bottom + 6 + h <= vh - 8 ? b.bottom + 6 : b.top - 6 - h >= 8 ? b.top - 6 - h : Math.max(8, vh - 8 - h)
+    setPos({ top, left, width: w })
+  }, [show, floating])
   useEffect(() => {
-    if (!fixed || mobile || !show) return
+    if (!floating || !show) return
     const close = () => { setHover(false); setPinned(false) }
     window.addEventListener('scroll', close, true)
     window.addEventListener('resize', close)
     return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close) }
-  }, [fixed, show]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [floating, show])
 
   useEffect(() => {
     if (!pinned) return
@@ -59,7 +87,8 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   }, [pinned])
 
   const pop = (
-        <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={fixed && !mobile ? { position: 'fixed', zIndex: 70, top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto', ...(pos?.maxHeight ? { maxHeight: pos.maxHeight, overflowY: 'auto' } : {}) } : shift ? { transform: `translateX(${shift}px)` } : undefined}>
+        <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={floating ? { position: 'fixed', zIndex: 70, top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto', maxWidth: 'none', ...(pos?.width ? { width: pos.width } : {}) } : shift ? { transform: `translateX(${shift}px)` } : undefined}
+          onPointerEnter={floating ? enter : undefined} onPointerLeave={floating ? leave : undefined}>
           {children}
           {(pinned || fixed) && mobile && <button type="button" className="pop-close" onClick={() => { setPinned(false); setHover(false) }}>Fechar</button>}
         </span>
@@ -69,8 +98,8 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
     <span
       className="help"
       ref={ref}
-      onPointerEnter={(e) => e.pointerType === 'mouse' && setHover(true)}
-      onPointerLeave={() => setHover(false)}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && enter()}
+      onPointerLeave={leave}
     >
       <button
         type="button"
@@ -84,7 +113,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
         ?
       </button>
       {show && pinned && mobile && <span className="pop-backdrop" onClick={() => setPinned(false)} aria-hidden="true" />}
-      {show && (fixed ? createPortal(pop, document.body) : pop)}
+      {show && (floating ? createPortal(pop, document.body) : pop)}
     </span>
   )
 }
