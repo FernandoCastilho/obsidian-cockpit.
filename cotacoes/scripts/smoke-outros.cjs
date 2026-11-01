@@ -1,4 +1,4 @@
-// Cenários › Outros (IPCA e dívida bruta) e Frete marítimo: tabela no formato do Mercado; clicar abre o gráfico em tela cheia com filtros no topo.
+// Cenários › Inflação (IPCA) e › Fiscal (dívida bruta) e Frete marítimo: tabela no formato do Mercado; clicar abre o gráfico em tela cheia com filtros no topo.
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
 const points = []
 let index = 100
@@ -287,7 +287,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // menu na ordem pedida
       const names = await p.getByRole('navigation', { name: /Navegação principal|Seções/ }).getByRole('button').allInnerTexts()
       if (width >= 700) assert.deepEqual(names.slice(0, 3).map((t) => t.trim().toLowerCase().split(' ')[0]), ['mercado', 'juros', 'cenários'])
-      // card do topo do Mercado: IPCA 12m no lugar do Brent; clique leva a Cenários › Outros
+      // card do topo do Mercado: IPCA 12m no lugar do Brent; clique leva a Cenários › Inflação
       await p.route('**/indices.json*', (r) => r.fulfill({ json: { schemaVersion: 1, generatedAt: Date.now(), stale: false, errors: [], series: { ibov: { symbol: '^BVSP', unit: 'pontos', points: Array.from({ length: 10 }, (_, i) => [Date.now() - (10 - i) * 864e5, 130000 - (i === 9 ? 2600 : 0)]), stale: false } } } }))
       await p.goto(base + '/#resumo')
       const card = p.locator('.kpis .kpi', { hasText: 'IPCA 12m' })
@@ -299,7 +299,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width >= 700) assert.equal(await p.locator('.kpis .kpi-taxa:visible').count(), 0, 'no computador os juros ficam só na faixa do topo'); else assert.equal(await p.locator('.kpis .kpi-taxa:visible').count(), await p.locator('.kpis .kpi-taxa').count(), 'no celular os cartões de juros continuam visíveis') // depende só do CSS, não de quando os juros carregam
       assert.match(await card.innerText(), /%[\s\S]*p\.p\./)
       await card.click()
-      await p.waitForURL('**/#cenarios/outros')
+      await p.waitForURL('**/#cenarios/inflacao')
+      assert.equal((await p.locator('.cen-nav button[aria-current="true"]').textContent()).trim(), 'Inflação')
+      assert.equal(await p.locator('.cen-nav button', { hasText: /^Outros$/ }).count(), 0, 'sem a aba genérica Outros')
       const table = p.locator('.ind-table').first()
       await table.waitFor()
       assert.equal(await table.locator('tbody').count(), 4, 'quatro leituras do IPCA')
@@ -331,8 +333,12 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       for (const label of ['Câmbio', 'Petróleo', 'Soja', 'Milho', 'Expectativas', 'Juros']) await ft.getByRole('rowheader', { name: new RegExp(label) }).waitFor()
       assert.match(await ft.locator('tr', { hasText: 'Expectativas' }).innerText(), /4,50%.*meta 3,0%/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
-      // dívida bruta do governo geral: tabela própria abaixo do quadro de inflação; a linha abre o histórico
-      const dt = p.locator('.ind-table').nth(1); await dt.waitFor()
+      // dívida bruta do governo geral: assunto próprio (Cenários › Fiscal), fora da tela de inflação; a linha abre o histórico
+      assert.equal(await p.locator('.ind-table').count(), 1, 'a tela de Inflação não traz a dívida')
+      await p.locator('.cen-nav button', { hasText: 'Fiscal' }).click(); await p.waitForURL('**/#cenarios/fiscal')
+      assert.equal((await p.locator('#outros-title').textContent()).trim(), 'Fiscal')
+      assert.equal(await p.locator('section.infl').count(), 0, 'o quadro da inflação fica em Inflação')
+      const dt = p.locator('.ind-table').first(); await dt.waitFor()
       assert.equal(await dt.locator('tbody').count(), 2, 'duas leituras da dívida bruta')
       assert.match(await dt.innerText(), /Máxima da série[\s\S]*DBGG · % do PIB[\s\S]*DBGG · saldo em R\$ bilhões/)
       assert.match(await dt.locator('tbody').first().innerText(), /82,93%[\s\S]*82,87%[\s\S]*\+0,06 p\.p\./, '% do PIB com duas casas, como o BCB publica: variação de 0,06 p.p. visível')
@@ -342,6 +348,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await dd.locator('.plot svg').first().waitFor()
       await p.keyboard.press('Escape'); await dd.waitFor({ state: 'hidden' })
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem lateral com a tabela da dívida')
+      // endereço antigo (#cenarios/outros) abre Inflação e vira o novo
+      await p.goto(base + '/#cenarios/outros'); await p.waitForURL('**/#cenarios/inflacao')
+      await p.locator('.ind-table').first().waitFor()
       await p.getByRole('button', { name: 'Acumulado em 12 meses: abrir gráfico' }).click()
       const d = p.getByRole('dialog', { name: /histórico de IPCA/ })
       await d.waitFor()
@@ -454,7 +463,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
         await p.locator('.learn-detail h2', { hasText: nome }).waitFor()
         assert.match(await p.locator('.learn-detail').innerText(), rx, nome)
       }
-      await p.locator('.learn-detail .learn-go').click(); await p.waitForURL('**/#cenarios/outros')
+      await p.locator('.learn-detail .learn-go').click(); await p.waitForURL('**/#cenarios/inflacao')
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
@@ -468,7 +477,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-detail h2', { hasText: 'SOFR' }).waitFor()
       if (width >= 1000) { const l = await p.locator('.learn-list').boundingBox(), d = await p.locator('.learn-detail').boundingBox(); assert.ok(d.x > l.x + l.width - 1, 'explicação ao lado da lista') }
       assert.deepEqual(errors, [])
-      console.log(width + ' PASS IPCA em Outros (tabela, gráfico em tela cheia, filtros no topo) e frete em tabela')
+      console.log(width + ' PASS IPCA em Inflação, dívida em Fiscal (tabela, gráfico em tela cheia, filtros no topo) e frete em tabela')
       await p.close()
     }
   } finally { await b.close() }

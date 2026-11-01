@@ -14,7 +14,7 @@ const monthName = (period) => new Date(`${period}-15T12:00:00Z`).toLocaleDateStr
 const TREND = { up: ['▲', 'acima do mês anterior'], down: ['▼', 'abaixo do mês anterior'], same: ['=', 'igual ao mês anterior'] }
 const SIGNAL = { pressure: ['▲ Pressiona', 'pressiona a inflação'], relief: ['▼ Alivia', 'alivia a inflação'], neutral: ['= Neutro', 'neutro para a inflação'] }
 
-// Cenários › Outros › "Inflação · o que pesa": IPCA por grupo (IBGE) e fatores de fora do índice, no cenário atual.
+// Cenários › Inflação › "Inflação · o que pesa": IPCA por grupo (IBGE) e fatores de fora do índice, no cenário atual.
 export default function InflacaoPesos({ macro }) {
   const groupsFile = useDataFile('ipca-groups.json')
   const oil = useDataFile('oil.json')

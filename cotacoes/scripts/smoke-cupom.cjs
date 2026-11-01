@@ -17,6 +17,15 @@ const curves = { generatedAt: Date.now(), br: set(14.3, -0.2), cc: set(5.2, -0.1
       await p.goto(base + '/#juros')
       const s = p.locator('.cupom-leitura'); await s.waitFor(); await s.scrollIntoViewIfNeeded()
       const txt = await s.innerText()
+      // leitura logo abaixo da curva do cupom (antes das Treasuries e da curva do euro), na largura toda
+      const box = async (t) => (await p.locator('section.macro article.chart', { hasText: t }).first().boundingBox())
+      const lb = await s.boundingBox(), cc = await box('Brasil · Cupom cambial'), us = await box('EUA · Treasuries')
+      assert.ok(lb.y > cc.y && lb.y < us.y, 'leitura entre a curva do cupom e a dos EUA')
+      if (width >= 700) assert.ok(lb.width > cc.width * 1.5, 'leitura ocupa a linha inteira')
+      // juros: um período geral, rotulado, logo abaixo do título; nos gráficos, só o "Agrupar"
+      assert.match(await p.locator('.juros-period-label').innerText(), /Período dos quatro gráficos/)
+      const h = await p.getByRole('heading', { name: 'Histórico das taxas de juros' }).boundingBox(), per = await p.locator('.juros-period').boundingBox()
+      assert.ok(per.y > h.y, 'período abaixo do título')
       // explicação da seleção de períodos em cada curva (DI x pré, cupom cambial, Treasuries)
       const titulos = p.locator('.curve-legend-title'); await titulos.first().waitFor()
       assert.equal(await titulos.count(), 3, 'uma explicação por curva')

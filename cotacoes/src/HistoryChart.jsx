@@ -48,7 +48,8 @@ export function Plot({ points, scales = true, ...props }) {
   const active = options.find((o) => o.id === scale && o.enabled)
   const view = useMemo(() => (active ? resample(points, active.id) : points), [points, active])
   const picker = options.some((o) => o.enabled) && (
-        <div className="seg scale-seg" role="group" aria-label="Escala do gráfico">
+        <div className="seg scale-seg" role="group" aria-label="Agrupar os pontos do gráfico">
+          <span className="seg-label" aria-hidden="true">Agrupar:</span>
           <button type="button" aria-pressed={!active} aria-label="Auto: escala original dos dados" title="Escala original dos dados" onClick={() => setScale('auto')}>Auto</button>
           {options.map((o) => <button type="button" key={o.id} aria-pressed={active?.id === o.id} disabled={!o.enabled} aria-label={`Escala por ${o.label.toLowerCase()}`} title={o.enabled ? o.title : o.reason} onClick={() => setScale(o.id)}>{o.label}</button>)}
         </div>
