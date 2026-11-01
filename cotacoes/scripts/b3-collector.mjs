@@ -32,27 +32,24 @@ export async function collectB3Curve(id, minDays, { previous, request = requestB
     discoveryPending=true
     warnings.push(`Catálogo B3 ${id} indisponível (${error.message}); consulta limitada às datas oficiais já conhecidas. Referência mais recente não confirmada.`)
   }
-  const picks=pickDates(dates), curves={}
-  for (const p of picks) {
-    try {
-      const rows=[]
-      let pages=1, totalRecords
-      for(let page=1;page<=pages;page++) {
-        const data=await request('GetList',{language:'pt-br',id,pageNumber:page,pageSize:100,date:p.date})
-        if(page===1) { pages=data.page.totalPages; totalRecords=data.page.totalRecords }
-        if(data.page.totalPages!==pages || data.page.totalRecords!==totalRecords) throw new Error('paginação mudou durante a consulta')
-        rows.push(...data.results)
-      }
-      if(!Number.isInteger(totalRecords) || rows.length!==totalRecords) throw new Error('curva incompleta: quantidade de vértices difere do total informado')
-      const pts=parseB3(rows,minDays)
-      if(!pts.length || rows.some(row=>row.code!==id || row.day252==null || String(row.day252).trim()==='' || !Number.isFinite(Number(row.day252)) || !parseB3([row],0).length) || new Set(pts.map(p=>p[0])).size!==pts.length) throw new Error('instrumento incorreto ou vértices ausentes, inválidos ou duplicados')
-      curves[p.date]=pts
-    } catch(error) {
-      if(p===picks[0]) throw new Error(`B3 ${id} ${p.date}: ${error.message}`)
-      if(previous?.curves?.[p.date]) curves[p.date]=previous.curves[p.date]
-      warnings.push(`B3 ${id} comparação ${p.date}: ${error.message}${curves[p.date] ? '; vértices anteriores preservados' : '; comparação omitida'}`)
+  // A B3 só entrega a curva do último dia (diagnóstico de 01/11/2026: GetList devolve a mesma curva para qualquer data pedida
+  // em aaaa-mm-dd e lista vazia em outros formatos). Por isso só a data mais recente é consultada; as comparações saem do
+  // histórico que o próprio painel guarda a cada pregão (curves-history.mjs).
+  const picks=pickDates(dates).slice(0,1), curves={}
+  const rows=[]
+  let pages=1, totalRecords
+  try {
+    for(let page=1;page<=pages;page++) {
+      const data=await request('GetList',{language:'pt-br',id,pageNumber:page,pageSize:100,date:picks[0]?.date})
+      if(page===1) { pages=data.page.totalPages; totalRecords=data.page.totalRecords }
+      if(data.page.totalPages!==pages || data.page.totalRecords!==totalRecords) throw new Error('paginação mudou durante a consulta')
+      rows.push(...data.results)
     }
-  }
+    if(!Number.isInteger(totalRecords) || rows.length!==totalRecords) throw new Error('curva incompleta: quantidade de vértices difere do total informado')
+    const pts=parseB3(rows,minDays)
+    if(!pts.length || rows.some(row=>row.code!==id || row.day252==null || String(row.day252).trim()==='' || !Number.isFinite(Number(row.day252)) || !parseB3([row],0).length) || new Set(pts.map(p=>p[0])).size!==pts.length) throw new Error('instrumento incorreto ou vértices ausentes, inválidos ou duplicados')
+    if(picks[0]) curves[picks[0].date]=pts
+  } catch(error) { throw new Error(`B3 ${id} ${picks[0]?.date}: ${error.message}`) }
   if(!picks.length || !curves[picks[0].date]) throw new Error(`B3 ${id}: nenhuma curva completa`)
   return {compare:picks.filter(p=>curves[p.date]),curves,checkedAt:now,sourceDate:picks[0].date,discoveryPending,warnings}
 }

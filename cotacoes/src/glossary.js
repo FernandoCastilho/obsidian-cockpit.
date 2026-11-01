@@ -55,6 +55,7 @@ export const GLOSSARY = {
     b: 'A 10% ao ano, R$ 100 emprestados rendem R$ 10 em um ano. A Selic é a referência para quase todos os outros juros.',
     c: 'Selic alta encarece crédito e atrai capital de fora, o que tende a segurar o dólar. Muda por degraus, só nas reuniões.',
     d: 'Meta e efetiva diferem: a efetiva (Selic over) fica cerca de 0,10 p.p. abaixo da meta. O Copom se reúne 8 vezes por ano, decide na quarta, depois do fechamento, e a ata sai na terça seguinte. O efeito no crédito e na inflação leva de 6 a 18 meses. Referência: meta de inflação de 3% (tolerância de 1,5 p.p.).',
+    l: "Eixo horizontal: o tempo, no período escolhido acima dos gráficos; eixo vertical: a taxa em % a.a. em cada dia. O número no canto é quanto a taxa variou no período, em pontos percentuais. Passe o mouse para ver o valor de um dia; arraste sobre o gráfico para medir a variação entre duas datas; \"Agrupar\" só muda a granularidade (dia, mês, ano), não o período. A Selic meta anda em degraus: cada degrau é uma decisão do Copom, e trechos retos são períodos sem mudança."
   },
   cdi: {
     t: 'CDI',
@@ -62,6 +63,7 @@ export const GLOSSARY = {
     b: 'Um CDB que paga "100% do CDI" rende o mesmo que o CDI. Se o CDI é 10% ao ano, rende ~10%.',
     c: 'É a régua da renda fixa no Brasil: tudo que rende em reais é comparado a ele.',
     d: 'Fica cerca de 0,10 p.p. abaixo da Selic meta. Base de 252 dias úteis: o fator diário é (1 + CDI)^(1/252) e o rendimento do período é o produto dos fatores diários, não a soma. Indexa CDBs, debêntures e o swap DI x pré; contratos usam CDI + spread ou % do CDI.',
+    l: "Eixo horizontal: o tempo, no período escolhido acima dos gráficos; eixo vertical: a taxa em % a.a. em cada dia. O número no canto é quanto a taxa variou no período, em pontos percentuais. Passe o mouse para ver o valor de um dia; arraste sobre o gráfico para medir a variação entre duas datas; \"Agrupar\" só muda a granularidade (dia, mês, ano), não o período. O CDI anda colado na Selic, um pouco abaixo; a distância entre o CDI e a SOFR é o diferencial de juros que atrai capital para o real."
   },
   sofr: {
     t: 'SOFR',
@@ -69,6 +71,7 @@ export const GLOSSARY = {
     b: 'Dívidas em dólar costumam ser "SOFR + spread". Se a SOFR é 4% e o spread 2%, o juro é ~6%.',
     c: 'A diferença Selic − SOFR mostra quanto o Brasil paga a mais que os EUA; é parte da atração do real.',
     d: 'Substituiu a LIBOR em dólar (descontinuada em 2023). É garantida por títulos do Tesouro, logo quase sem risco de crédito. Pode saltar no fim de mês e em datas de liquidação do Tesouro. Contratos usam SOFR composta ou a SOFR a prazo (Term SOFR), com base de 360 dias.',
+    l: "Eixo horizontal: o tempo, no período escolhido acima dos gráficos; eixo vertical: a taxa em % a.a. em cada dia. O número no canto é quanto a taxa variou no período, em pontos percentuais. Passe o mouse para ver o valor de um dia; arraste sobre o gráfico para medir a variação entre duas datas; \"Agrupar\" só muda a granularidade (dia, mês, ano), não o período. A SOFR acompanha a faixa do Fed; saltos de um dia em fim de mês ou de trimestre são comuns e não mudam a tendência."
   },
   sofrMedia: {
     t: 'Médias da SOFR',
@@ -97,6 +100,7 @@ export const GLOSSARY = {
     b: 'Se a curva desce para a direita, o mercado aposta que os juros vão cair. Se sobe, aposta em alta ou em mais risco.',
     c: 'Ligue as datas na legenda: o desvio entre a linha de hoje e a de 1 mês atrás mostra como a aposta mudou.',
     d: 'Vértices em dias úteis (base 252), ligados por interpolação. A taxa a termo entre dois vértices é (1 + longa)^(du2/252) ÷ (1 + curta)^(du1/252) − 1, escalada ao período. Curva inclinada embute prêmio de prazo e risco fiscal; curva plana ou invertida indica aperto monetário.',
+    l: "Eixo horizontal: o prazo, em anos úteis a partir de hoje (0a é amanhã; 10a, daqui a 10 anos). Eixo vertical: a taxa em % a.a. que o mercado cobra até aquele prazo; cada ponto é um vértice. Leia em três passos. 1) Nível: onde a curva toda está (perto de 15% é juro alto). 2) Formato: subindo para a direita, o mercado pede mais para prazos longos (prêmio de prazo, risco fiscal ou alta esperada); descendo, espera cortes da Selic; com corcova, alta no curto prazo e queda depois. 3) Movimento: ligue as datas da legenda; a linha de hoje acima da antiga quer dizer juros embutidos maiores. Se só a ponta longa subiu, a curva abriu (risco); se só a curta, aposta em Selic maior. Passe o mouse para ver cada vértice."
   },
   cupom: {
     t: 'Cupom cambial',
@@ -104,6 +108,7 @@ export const GLOSSARY = {
     b: 'Se a curva em reais paga 14% e o dólar deve subir 4%, o cupom é ~10%: o que sobra em dólar.',
     c: 'Sobe quando há muita procura por dólar no mercado local; é um termômetro do aperto de dólar.',
     d: 'Calculado em base linear de 360 dias corridos, a partir da curva DI e do dólar futuro. Cupom alto com DI estável sinaliza dólar escasso no mercado local. Compare com a SOFR: a diferença é o prêmio de se financiar em dólar via Brasil.',
+    l: "Mesmos eixos da curva DI (prazo em anos úteis × % a.a.), mas a taxa é o juro em dólar. Nível alto indica dólar escasso aqui: quem precisa de dólar no Brasil paga caro por ele. Compare com as Treasuries: a distância entre o cupom e o Treasury do mesmo prazo é o prêmio do Brasil em dólar. Ligue as datas: cupom subindo com o DI parado sugere aperto de dólar no mercado local. Vértices de menos de 1 mês oscilam demais e ficam fora. A \"leitura de cenário\" logo abaixo resume esses números."
   },
   fedFaixa: {
     t: 'Fed: faixa-alvo da taxa de juros',
@@ -118,6 +123,7 @@ export const GLOSSARY = {
     b: 'Se o €STR está em 2,44% e o BCE paga 2,50% de depósito, o dinheiro de 1 dia no mercado custa um pouco menos que o piso do BCE.',
     c: 'É o benchmark "sem risco" do euro: dívidas em euro costumam ser "€STR + spread".',
     d: 'Substituiu o EONIA em 2022. Dívidas de prazo mais longo usam a Euribor (3 e 6 meses), que é uma taxa a prazo. A diferença entre €STR e depósito do BCE mostra o excesso de liquidez no sistema. Meta de inflação do BCE: 2%.',
+    l: "Eixo horizontal: o tempo, no período escolhido acima dos gráficos; eixo vertical: a taxa em % a.a. em cada dia. O número no canto é quanto a taxa variou no período, em pontos percentuais. Passe o mouse para ver o valor de um dia; arraste sobre o gráfico para medir a variação entre duas datas; \"Agrupar\" só muda a granularidade (dia, mês, ano), não o período. O €STR acompanha a taxa de depósito do BCE, um pouco abaixo; os degraus são decisões do BCE."
   },
   bceDeposito: {
     t: 'BCE: taxa de depósito',
@@ -160,20 +166,21 @@ export const GLOSSARY = {
     b: 'Se o prazo de 10 anos paga mais que o de 3 meses, a curva é inclinada para cima, o normal em economia sem sinal de recessão próxima.',
     c: 'É a referência de preço do dinheiro em euro por prazo, o equivalente europeu das Treasuries; ao lado do €STR (overnight), mostra o juro de curto e de longo prazo na zona do euro.',
     d: 'A curva usa só emissores AAA da zona do euro (como a Alemanha), então fica abaixo do que Itália ou França pagam. O diferencial desses países contra o Bund alemão mede o risco-país europeu. Em crédito, a referência é a curva de swaps de Euribor.',
+    l: "Mesmos eixos das Treasuries (vencimento × % a.a., aqui taxa spot). Compare o formato e o nível com a curva americana: a diferença entre os juros dos EUA e do euro é o que move o par EUR/USD. Inclinação para cima é o normal; achatada ou invertida indica expectativa de cortes do BCE. Ligue as datas para ver se o movimento veio da ponta curta (BCE) ou da longa (prêmio de prazo)."
   },
   periodosDi: {
     t: 'Curvas de comparação: DI x pré',
     a: 'Cada linha é a curva da data indicada: "Último dia" é a mais recente publicada; "1 dia" é a do dia anterior; "1 semana", "1 mês", "3 meses", "6 meses" e "1 ano" ficam 7, 30, 91, 182 e 365 dias corridos antes da última.',
     b: 'Sem curva no dia exato (fim de semana ou feriado), vale a mais recente anterior; a data real aparece ao lado do nome.',
     c: 'Compare a linha de hoje com as antigas: subiu, o mercado passou a embutir juros maiores; desceu, menores.',
-    d: 'Abertura (prazos longos subindo mais) sugere prêmio de prazo e risco fiscal; subida nos curtos com fechamento sugere expectativa de aperto. Datas repetidas aparecem uma vez.',
+    d: 'Abertura (prazos longos subindo mais) sugere prêmio de prazo e risco fiscal; subida nos curtos com fechamento sugere expectativa de aperto. Datas repetidas aparecem uma vez. A B3 só publica o último dia; as datas anteriores vêm do histórico que o painel guarda a cada pregão, desde 30/10/2026.',
   },
   periodosCupom: {
     t: 'Curvas de comparação: cupom cambial',
     a: 'Cada linha é a curva da data indicada: "Último dia" é a mais recente publicada; "1 dia" é a do dia anterior; "1 semana", "1 mês", "3 meses", "6 meses" e "1 ano" ficam 7, 30, 91, 182 e 365 dias corridos antes da última.',
     b: 'Sem curva no dia exato (fim de semana ou feriado), vale a mais recente anterior; a data real aparece ao lado do nome.',
     c: 'Cupom subindo indica dólar mais caro de obter no mercado local; caindo, alívio na demanda por dólar.',
-    d: 'Compare por prazo: choques de curto prazo costumam vir de fluxo de dólar; os de longo, de juros e risco-país. Datas repetidas aparecem uma vez.',
+    d: 'Compare por prazo: choques de curto prazo costumam vir de fluxo de dólar; os de longo, de juros e risco-país. Datas repetidas aparecem uma vez. A B3 só publica o último dia; as datas anteriores vêm do histórico que o painel guarda a cada pregão, desde 30/10/2026.',
   },
   periodosUst: {
     t: 'Curvas de comparação: Treasuries',
@@ -195,6 +202,7 @@ export const GLOSSARY = {
     b: 'Normalmente prazos longos pagam mais. Quando os curtos pagam mais (curva invertida), o mercado costuma ver desaceleração à frente.',
     c: 'É a base de preço de todo o crédito em dólar no mundo.',
     d: 'Inversão (juro curto acima do longo) antecedeu várias recessões americanas, com defasagem de 6 a 24 meses. Termos de mesa: steepening (curva abre) e flattening (fecha); bull é queda de taxa, bear é alta. Cada prazo mistura juro real e inflação esperada.',
+    l: "Eixo horizontal: os vencimentos dos títulos americanos (1 mês a 30 anos), em posições iguais, não proporcionais ao tempo. Eixo vertical: o rendimento em % a.a. O normal é subir para a direita. Invertida (curtos acima dos longos): o mercado espera cortes do Fed porque vê desaceleração. Ligue as datas: a curva toda subindo encarece o dólar no mundo e costuma pressionar moedas como o real; só a ponta curta mexendo é mudança de expectativa sobre o Fed; só a longa, prêmio de prazo ou risco fiscal americano."
   },
   cdiFuturo: {
     t: 'CDI futuro',
@@ -202,6 +210,7 @@ export const GLOSSARY = {
     b: 'Se o CDI de hoje é 14,9% e o "a termo" para daqui a 1 ano é 13,5%, o mercado aposta em queda de juros. "Médio até lá" é a média do caminho todo; "no trecho" é só aquele pedaço.',
     c: 'Não é previsão oficial: inclui um prêmio de risco. Compare com o Focus para ver onde mercado e analistas divergem.',
     d: 'É a taxa a termo da curva DI: (1 + taxa até o fim)^(du_fim/252) ÷ (1 + taxa até o início)^(du_início/252) − 1. Inclui prêmio de risco e de prazo, então tende a ficar acima do que o mercado realmente espera. Contratos de CDI + spread repassam essa expectativa ao custo.',
+    l: "Eixo horizontal: as datas à frente; eixo vertical: o CDI que o mercado embute para cada momento (taxa a termo, % a.a.). Linha descendo quer dizer que o mercado precifica cortes da Selic; subindo, altas; os degraus acompanham as reuniões do Copom. Na tabela por horizonte, \"CDI médio até lá\" é o que vale para uma aplicação ou dívida até aquela data, e \"a termo no trecho\" é só aquele pedaço. Compare com a Selic de hoje e com o Focus."
   },
   focus: {
     t: 'Boletim Focus',

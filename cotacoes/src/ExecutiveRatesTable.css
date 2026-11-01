@@ -121,3 +121,11 @@
   .executive-rates__name { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
   .executive-rates__unit { margin-top: 1px; }
 }
+
+/* Computador com mouse: o "?" dos juros de referência ocupa 28 px de altura (largura de 44 px mantida), e as linhas ficam mais baixas.
+   No toque (celular/tablet) continua a área de 44 px. */
+@media (min-width: 700px) and (pointer: fine) {
+  .executive-rates__table tbody th, .executive-rates__table tbody td { padding-top: 4px; padding-bottom: 4px; }
+  .executive-rates__name .help button:not(.pop-close) { height: 28px; }
+  .executive-rates__name .help button:not(.pop-close)::after { inset: -4px -14px; }
+}
