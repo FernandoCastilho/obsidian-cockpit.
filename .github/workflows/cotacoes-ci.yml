@@ -1,7 +1,7 @@
 name: Cotações CI
 on:
   pull_request:
-    paths: ['cotacoes/**', 'caixa/**', '.github/workflows/cotacoes-ci.yml']
+    paths: ['cotacoes/**', 'caixa/**', 'treino/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -28,6 +28,11 @@ jobs:
         run: |
           npm ci
           npm test
+          npm run build
+      - name: App Treino (build, como no deploy)
+        working-directory: treino/frontend
+        run: |
+          npm ci
           npm run build
   smoke:
     runs-on: ubuntu-latest
