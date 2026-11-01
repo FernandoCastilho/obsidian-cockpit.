@@ -3,3 +3,7 @@
 .aviso-inicial h2 { margin: 0 0 8px; font-size: 1.05rem; }
 .aviso-inicial p { margin: 0 0 16px; line-height: 1.5; }
 .aviso-inicial .btn { min-height: 44px; padding-inline: 20px; border-color: var(--accent); }
+.recado { border-top-color: var(--accent); }
+.recado.recado-urgente { border-top-color: var(--down); }
+.recado .recado-tag { margin: 0 0 4px; color: var(--mut); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+.recado #recado-text { white-space: pre-line; }
