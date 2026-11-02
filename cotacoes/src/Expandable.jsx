@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { FilterScope } from './ChartFilters.jsx'
+import { reduceMotion } from './motion.js'
 
 // O mesmo conteúdo permanece montado ao ampliar: filtros e seleções são preservados.
 // O diálogo nativo mantém foco e Escape dentro da vista ampliada, inclusive no celular.
@@ -22,6 +23,14 @@ export default function Expandable({ children, label, modal = false, onClose }) 
     el.setAttribute('open', '')
   }, [active])
   const restore = () => setFull(false)
+  // Detalhe (modal) abre como gaveta lateral em cortina; ao fechar, a cortina recolhe (0,25 s) antes de sair.
+  const [closing, setClosing] = useState(false)
+  const close = () => {
+    if (!modal || closing) return
+    if (reduceMotion()) { onClose?.(); return }
+    setClosing(true)
+    setTimeout(() => onClose?.(), 240)
+  }
   const containFocus = e => {
     if (!active || e.key !== 'Tab') return
     const targets = [...ref.current.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.getClientRects().length)
@@ -30,13 +39,17 @@ export default function Expandable({ children, label, modal = false, onClose }) 
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus() }
   }
   return (
-    <dialog ref={ref} className={`expandable-panel${active ? ' is-dialog' : ''}${full ? ' is-full' : ''}${modal ? ' is-modal' : ''}`} aria-label={label}
+    <dialog ref={ref} className={`expandable-panel${active ? ' is-dialog' : ''}${full ? ' is-full' : ''}${modal ? ' is-modal' : ''}${closing ? ' is-closing' : ''}`} aria-label={label}
       onKeyDown={containFocus}
-      onCancel={(e) => { e.preventDefault(); full ? restore() : onClose?.() }}
-      onClick={(e) => { if (modal && e.target === e.currentTarget) onClose?.() }}>
+      onCancel={(e) => { e.preventDefault(); full ? restore() : close() }}
+      onClick={(e) => {
+        if (!modal || e.target !== e.currentTarget) return
+        const r = e.currentTarget.getBoundingClientRect() // só fecha no clique fora da gaveta (no fundo escurecido)
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close()
+      }}>
       <div className="expandable-controls">
         {modal
-          ? <button type="button" className="btn" onClick={onClose} aria-label="Fechar detalhes">Fechar ×</button>
+          ? <button type="button" className="btn" onClick={close} aria-label="Fechar detalhes">Fechar ×</button>
           : <button type="button" className="btn" aria-label={`${full ? 'Restaurar' : 'Maximizar'} ${label}`} aria-pressed={full} onClick={() => setFull((v) => !v)}>{full ? '↙ Restaurar' : '⛶ Tela cheia'}</button>}
       </div>
       {modal ? <FilterScope><div className="expandable-body">{children}</div></FilterScope> : children}

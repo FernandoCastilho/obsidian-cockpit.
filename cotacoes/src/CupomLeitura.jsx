@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { cascade } from './motion.js'
 import './CupomLeitura.css'
 import { Aviso } from './Avisos.jsx'
 import { Plot, useWidth } from './HistoryChart.jsx'
@@ -59,10 +60,10 @@ export default function CupomLeitura({ curves }) {
           {changes.length ? (
             <>
               <div className="cl-bars" role="group" aria-label="Variação do cupom por prazo, em bps">
-                {changes.filter((c) => KEY.has(c.du)).map((c) => (
-                  <div className="cl-bar" key={c.du}>
+                {changes.filter((c) => KEY.has(c.du)).map((c, i) => (
+                  <div className="cl-bar" key={`${from}-${c.du}`}>
                     <span className="cl-bar-label">{duLabel(c.du)}</span>
-                    <span className="cl-bar-track" aria-hidden="true"><i className={c.bps >= 0 ? 'up' : 'down'} style={{ width: `${Math.max(2, (Math.abs(c.bps) / max) * 100)}%` }} /></span>
+                    <span className="cl-bar-track" aria-hidden="true"><i className={`bar-grow ${c.bps >= 0 ? 'up' : 'down'}`} style={{ width: `${Math.max(2, (Math.abs(c.bps) / max) * 100)}%`, ...cascade(i) }} /></span>
                     <b className="cl-bar-val">{sg(c.bps, 0)} bps</b>
                   </div>
                 ))}
