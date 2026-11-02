@@ -115,7 +115,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           </div>
         )}
         {next && <p className="bn-def">Próxima divulgação da TLP: {dmy(next)}.</p>}
-        {(family === 'tlp' || (compareItems.length >= 2 && compare.includes('TLP'))) && <p className="bn-def bn-tlp-note">{TLP_NOTE}</p>}
+        {(family === 'tlp' || (compareItems.length >= 2 && compare.includes('TLP'))) && <p className="bn-def bn-tlp-note">{family === 'tlp' ? TLP_NOTE : `${TLP_LABEL}: ${TLP_NOTE}`}</p>}
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         {!error && (

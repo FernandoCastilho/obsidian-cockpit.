@@ -80,6 +80,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Comparação · 2 séries · TFB \+ TLP/i)
       assert.equal(await p.locator('.ml .ml-name', { hasText: 'TLP — parcela prefixada' }).getAttribute('title'), 'TLP — parcela prefixada')
       assert.match(await p.locator('.ml-svg').getAttribute('aria-label'), /TLP — parcela prefixada/)
+      assert.equal(await p.locator('.bn-tlp-note').innerText(), 'TLP — parcela prefixada: Acrescida do IPCA. Não inclui os spreads do BNDES e do banco.')
       assert.equal(await p.locator('.bn-tlp-note').isVisible(), true, 'nota visível também na comparação a partir da TFB')
       await noOverflow()
       if (outputDir) { await p.locator('.bn-sub').nth(1).scrollIntoViewIfNeeded(); await p.screenshot({ path: `${outputDir}/tlp-${width}-comparacao.png` }) }
