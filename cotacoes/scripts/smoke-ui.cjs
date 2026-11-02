@@ -21,7 +21,7 @@ const assert = require('node:assert/strict')
  }
  await context.route('**/*',route=>{
   const url=new URL(route.request().url()),name=url.pathname.split('/').pop()
-  if(url.hostname==='economia.awesomeapi.com.br')return route.fulfill({json:Object.fromEntries(['USDBRL','EURBRL','JPYBRL','USDCNH'].map(c=>[c,{bid:'5',ask:'5.01',high:'5.1',low:'4.9',pctChange:'1',timestamp:String(now/1000)}]))})
+  if(url.hostname==='economia.awesomeapi.com.br')return route.fulfill({json:Object.fromEntries(['USDBRL','EURBRL','JPYBRL','USDCNH'].map(c=>[c,{bid:c==='JPYBRL'?'.035':'5',ask:c==='JPYBRL'?'.0351':'5.01',high:c==='JPYBRL'?'.036':'5.1',low:c==='JPYBRL'?'.034':'4.9',pctChange:'1',timestamp:String(now/1000)}]))})
   if(fixtures[name])return route.fulfill({json:fixtures[name]})
   if(url.origin===new URL(base).origin)return route.continue()
   return route.abort()
