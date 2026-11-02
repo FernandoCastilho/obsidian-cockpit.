@@ -9,7 +9,8 @@ const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { fadeIn } from './motion.js'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
 const Macro = lazy(() => import('./Macro.jsx'))
@@ -202,6 +203,11 @@ export default function App() {
     setSub('inflacao')
     try { window.history.replaceState(null, '', '#cenarios/inflacao') } catch { /* sem histórico */ }
   }, [tab, sub])
+  // Troca de tela preservada da atualização publicada em paralelo.
+  const viewKey = ['cenarios', 'setores', 'calculadora', 'aprender'].includes(tab) ? `${tab}/${tab !== 'cenarios' ? sub.split('/')[0] : cenView}` : tab
+  const mainRef = useRef(null)
+  const viewAnim = useRef(null)
+  useLayoutEffect(() => { viewAnim.current = fadeIn(mainRef.current, viewAnim.current) }, [viewKey])
   const openCurrency = CURRENCIES.find((c) => c.code === open)
   const wait = limits.wait > 0 ? ` (${limits.wait}s)` : ''
   const quoteRefresh = { run: refresh, busy: refreshing, disabled: refreshing || limits.wait > 0 || limits.left <= 0, title: limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Consulta a cotação agora, direto na fonte. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).${wait}` }
@@ -253,7 +259,7 @@ export default function App() {
         <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
       </div>
     )}
-    <main className="app">
+    <main className="app" ref={mainRef}>
 
       <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (
