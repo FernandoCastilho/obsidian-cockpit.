@@ -609,7 +609,11 @@ section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:
   .bar-grow { transform-origin:left center; animation:bar-grow-x .5s cubic-bezier(.2,.8,.2,1) both; animation-delay:var(--bar-delay, 0ms); }
   .bar-grow-y { transform-box:fill-box; transform-origin:center bottom; animation:bar-grow-y .5s cubic-bezier(.2,.8,.2,1) both; animation-delay:var(--bar-delay, 0ms); }
   .bar-grow-y.neg { transform-origin:center top; }
+  /* balão do "?": surge em 0,16 s (esmaece e sobe 4 px). Usa `translate`, separado do `transform` que o
+     reposiciona na borda da tela, e não muda o tamanho, então a medição do balão não é afetada. */
+  .pop { animation:pop-in .16s cubic-bezier(.2,.8,.2,1) both; }
 }
+@keyframes pop-in { from { opacity:0; translate:0 4px; } }
 @keyframes curtain-in { from { clip-path:inset(0 0 0 100%); } to { clip-path:inset(0 0 0 0); } }
 @keyframes curtain-out { from { clip-path:inset(0 0 0 0); } to { clip-path:inset(0 0 0 100%); } }
 @keyframes fade-in { from { opacity:0; } }

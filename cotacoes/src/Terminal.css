@@ -492,6 +492,8 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 /* rótulo de grupo nas abas (Setores | Insumos): separa os dois blocos sem criar outra linha */
 .desk-tabs-grupo { align-self: center; padding: 0 8px 0 10px; color: #7a7566; font: 600 .6rem/1 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; border-left: 1px solid var(--line, #1d1b15); }
 .desk-tabs-grupo:first-child { border-left: 0; padding-left: 2px; }
+.desk-tabs-grupo { display: inline-flex; align-items: center; gap: 6px; color: #a8a18c; }
+.desk-tabs-icone { font-size: .95rem; letter-spacing: 0; line-height: 1; }
 .idx-link { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }
 
 /* Estados de painel (carregando, vazio, aviso, erro): uma linha discreta, sem competir com o dado */

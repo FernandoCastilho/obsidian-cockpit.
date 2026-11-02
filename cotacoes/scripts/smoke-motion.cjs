@@ -33,6 +33,27 @@ const out = process.env.SMOKE_OUT || '/tmp'
         }
         // valores já no final, sem contagem
         assert.match(await s.locator('.cl-bar-val').first().innerText(), /bps$/)
+        // balão do "?": surge curto (< 0,2 s); com reduzir movimento, aparece direto
+        await p.getByRole('button', { name: 'O que é: Curvas de comparação: Treasuries' }).click()
+        const tip = p.locator('[role=tooltip]').filter({ hasText: 'Curvas de comparação: Treasuries' }).first(); await tip.waitFor()
+        const ta = (await anims(tip)).find((a) => a.name === 'pop-in')
+        if (calm) assert.ok(!ta, 'reduzir movimento: balão sem animação')
+        else assert.ok(ta && ta.dur <= 200 && ta.iter === 1, `balão < 0,2 s: ${JSON.stringify(ta)}`)
+        await p.keyboard.press('Escape'); if (width < 700) await p.locator('.pop-close:visible').first().click().catch(() => {})
+        if (width < 700) {
+          // celular: balão da tabela de juros fica na frente das colunas fixas das linhas de baixo (nada o cobre)
+          const ajudas = p.locator('.executive-rates__name .help > button'); await ajudas.first().waitFor()
+          await ajudas.nth(2).scrollIntoViewIfNeeded(); await ajudas.nth(2).click()
+          const pop = p.locator('.pop').first(); await pop.waitFor(); await p.waitForTimeout(250)
+          const bb = await pop.boundingBox()
+          const tapado = await p.evaluate(({ x, y, w, h }) => {
+            const el = document.querySelector('.pop'), pts = [[.25, .3], [.5, .5], [.2, .7], [.75, .6], [.5, .85]]
+            return pts.filter(([a, b]) => !el.contains(document.elementFromPoint(x + w * a, y + h * b))).length
+          }, { x: bb.x, y: bb.y, w: bb.width, h: bb.height })
+          assert.equal(tapado, 0, 'nada cobre o balão no celular')
+          await p.screenshot({ path: `${out}/motion-390-balao-juros.png` })
+          await pop.getByRole('button', { name: 'Fechar' }).click(); await pop.waitFor({ state: 'hidden' })
+        }
         await p.waitForTimeout(1000)
         // 2) detalhe do indicador: gaveta em cortina (lateral no computador, tela toda no celular)
         await p.goto(base + '/#cenarios/commodities')
