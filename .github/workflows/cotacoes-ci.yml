@@ -43,7 +43,6 @@ jobs:
     env:
       SMOKE_BASE_URL: http://127.0.0.1:8768
       SMOKE_CHANNEL: chromium
-      CAIXA_QA_OUTPUT: ${{ runner.temp }}/qa-caixa
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -72,7 +71,7 @@ jobs:
         run: |
           for s in smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-calculadora smoke-bndes smoke-recado smoke-motion smoke-caixa; do
             echo "::group::$s"
-            UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
+            CAIXA_QA_OUTPUT="$RUNNER_TEMP/qa-caixa" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
             echo "::endgroup::"
           done
       - name: Capturas de tela dos smokes
