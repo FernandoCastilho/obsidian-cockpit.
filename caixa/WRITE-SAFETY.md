@@ -35,6 +35,10 @@ O diário é reservado ao aplicativo, oculto e sinalizado/protegido contra ediç
 
 ## Validação
 
-A evidência final de testes automatizados, navegação e ensaios nativos será registrada neste arquivo antes da liberação. O ensaio nativo é necessário: ARRAYFORMULA deve envolver toda a divisão usada por LOOKUP; a divisão fora desse contexto retornava o primeiro evento no Google Sheets real.
+Ensaio nativo executado em cópia integral, com fontes fictícias separadas: concorrentes com mesma revisão (primeiro aceito, segundo recusado), UUID idêntico repetido (recusado), origem reordenada, mudança manual durante o envio, ambas as escolhas de conciliação, origem removida preservada no histórico, IDs distintos apenas por maiúsculas/minúsculas, valor zero e texto literal iniciado por igual. O diário cresceu além das 100 linhas iniciais e a fonte recebeu registro na linha 105; as visões acompanharam ambos. Formatos monetários diferentes entre fonte e diário não geraram conflito falso.
+
+O conjunto limpo de visões foi instalado sobre os 543 lançamentos e 25 contas fixas da cópia. A comparação nativa de todas as 10.674 células, incluindo cabeçalhos, confirmou equivalência de valores, tipos e vazios. Os cinco totais migrados conservaram os resultados; P6 e P7 foram preservados. Datas e valores têm formatação própria nas visões. A verificação visual nativa foi limitada aos metadados de formatação porque a conexão de navegador estava indisponível.
+
+Testes Node, builds e homologação da interface: aguardam CI desta versão. O ensaio nativo é necessário: ARRAYFORMULA deve envolver toda a divisão usada por LOOKUP; a divisão fora desse contexto retornava o primeiro evento no Google Sheets real.
 
 Referências primárias: [AppendCellsRequest](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#AppendCellsRequest), [batchUpdate](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/batchUpdate).
