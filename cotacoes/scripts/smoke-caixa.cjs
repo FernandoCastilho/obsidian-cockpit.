@@ -251,7 +251,7 @@ async function main() {
       const { TraceMap, originalPositionFor } = require('@jridgewell/trace-mapping')
       for (const exception of activeSession.service.exceptions) for (const frame of exception.frames) {
         if (!frame.url?.startsWith(BASE)) continue
-        try { const map = await (await activeSession.page.request.get(frame.url + '.map')).json(); frame.original = originalPositionFor(new TraceMap(map), { line: frame.line + 1, column: frame.column }) } catch {}
+        try { const map = await (await activeSession.page.request.get(frame.url + '.map')).json(); frame.original = originalPositionFor(new TraceMap(map), { line: frame.line + 1, column: frame.column }) } catch { /* Sem mapa disponível, manter a posição compilada. */ }
       }
       const diagnostic = { exceptions: activeSession.service.exceptions, error: error.message, posts: activeSession.service.posts.length, writeErrors: activeSession.service.writeErrors, flags: activeSession.service.journal.slice(1).map(r => [r[2], r[11]]), screen: await activeSession.page.locator('body').innerText().catch(() => '') }
       console.error(JSON.stringify(diagnostic, null, 2))

@@ -31,6 +31,7 @@ jobs:
         working-directory: caixa
         run: |
           npm ci
+          ../cotacoes/node_modules/.bin/eslint src --config ../cotacoes/eslint.config.js
           npm test
           npm run build
   smoke:
