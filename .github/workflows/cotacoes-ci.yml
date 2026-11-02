@@ -57,7 +57,7 @@ jobs:
         working-directory: caixa
         run: |
           npm ci
-          npm run build
+          npm run build -- --sourcemap
           cp -R dist ../cotacoes/dist/caixa
       - name: Instalar Playwright e Chromium
         run: |

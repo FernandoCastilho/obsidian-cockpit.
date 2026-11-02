@@ -23,7 +23,7 @@ async function main() {
   const browser = await chromium.launch({ headless: true, channel: process.env.SMOKE_CHANNEL || 'chromium' })
   const row = (aba, values) => TABLES[aba].headers.map(h => values[h] ?? '')
   const makeService = (configured = true) => ({
-    configured, journal: [JOURNAL_HEADERS], posts: [], writeErrors: [], race: false, loseResponse: false, hold: null,
+    configured, journal: [JOURNAL_HEADERS], posts: [], writeErrors: [], exceptions: [], race: false, loseResponse: false, hold: null,
     raw: {
       Pessoas: [['pessoa_id', 'nome', 'tipo', 'ativa'], ['P-TESTE', 'Pessoa exemplo', 'pessoa', 'Sim']],
       Contas: [['conta_id', 'banco_id', 'pessoa_id', 'nome', 'apelido', 'tipo', 'ativa'], ['C-TESTE', 'B-TESTE', 'P-TESTE', 'Conta exemplo', 'Conta exemplo', 'corrente', 'Sim']],
@@ -93,6 +93,15 @@ async function main() {
     })
     const page = await context.newPage()
     page.on('pageerror', e => failures.push(e.message))
+    const client = await context.newCDPSession(page)
+    const scripts = new Map()
+    client.on('Debugger.scriptParsed', info => scripts.set(info.scriptId, info.url))
+    client.on('Debugger.paused', async info => {
+      if (info.data?.description?.includes('is not defined')) service.exceptions.push({ description: info.data.description, frames: info.callFrames.slice(0, 6).map(frame => ({ name: frame.functionName, url: frame.url || scripts.get(frame.location.scriptId), line: frame.location.lineNumber, column: frame.location.columnNumber })) })
+      await client.send('Debugger.resume').catch(() => {})
+    })
+    await client.send('Debugger.enable')
+    await client.send('Debugger.setPauseOnExceptions', { state: 'all' })
     activeSession = { page, context, service }
     await page.goto(BASE)
     return activeSession
@@ -119,7 +128,7 @@ async function main() {
     const missing = await session(makeService(false))
     await openFixed(missing.page)
     assert.equal(await paid(missing.page).isDisabled(), true)
-    await missing.page.screenshot({ path: path.join(OUT, 'caixa-sem-diario-390.png'), fullPage: true })
+    await missing.page.screenshot({ path: path.join(OUT, 'caixa-sem-diario-390.png'), fullPage: true, animations: 'disabled' })
     assert.equal(missing.service.posts.length, 0)
     await missing.context.close()
 
@@ -133,7 +142,7 @@ async function main() {
     assertSafe(normal.service)
     for (const width of [390, 820, 1280]) {
       await normal.page.setViewportSize({ width, height: 900 })
-      await normal.page.screenshot({ path: path.join(OUT, 'caixa-fixas-' + width + '.png'), fullPage: true })
+      await normal.page.screenshot({ path: path.join(OUT, 'caixa-fixas-' + width + '.png'), fullPage: true, animations: 'disabled' })
       assert.equal(await normal.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Rolagem horizontal em ' + width)
     }
 
@@ -148,7 +157,7 @@ async function main() {
     assert.equal(await dialog.getByText('O que mudou na planilha', { exact: true }).count(), 1)
     for (const width of [390, 820, 1280]) {
       await normal.page.setViewportSize({ width, height: 900 })
-      await normal.page.screenshot({ path: path.join(OUT, 'caixa-revisao-' + width + '.png'), fullPage: true })
+      await normal.page.screenshot({ path: path.join(OUT, 'caixa-revisao-' + width + '.png'), fullPage: true, animations: 'disabled' })
       assert.equal(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth), true, 'Modal com rolagem horizontal')
     }
     assert.equal(await dialog.getByRole('button').evaluateAll(items => items.every(el => el.getBoundingClientRect().height >= 44 && el.getBoundingClientRect().width >= 44)), true, 'Controles do modal devem ter 44 px')
@@ -239,10 +248,15 @@ async function main() {
     console.log('Caixa smoke: demo, configuração, identidade, concorrência, reconciliação, recuperação, rascunhos e layouts OK')
   } catch (error) {
     if (activeSession && !activeSession.page.isClosed()) {
-      const diagnostic = { error: error.message, posts: activeSession.service.posts.length, writeErrors: activeSession.service.writeErrors, flags: activeSession.service.journal.slice(1).map(r => [r[2], r[11]]), screen: await activeSession.page.locator('body').innerText().catch(() => '') }
+      const { TraceMap, originalPositionFor } = require('@jridgewell/trace-mapping')
+      for (const exception of activeSession.service.exceptions) for (const frame of exception.frames) {
+        if (!frame.url?.startsWith(BASE)) continue
+        try { const map = await (await activeSession.page.request.get(frame.url + '.map')).json(); frame.original = originalPositionFor(new TraceMap(map), { line: frame.line + 1, column: frame.column }) } catch {}
+      }
+      const diagnostic = { exceptions: activeSession.service.exceptions, error: error.message, posts: activeSession.service.posts.length, writeErrors: activeSession.service.writeErrors, flags: activeSession.service.journal.slice(1).map(r => [r[2], r[11]]), screen: await activeSession.page.locator('body').innerText().catch(() => '') }
       console.error(JSON.stringify(diagnostic, null, 2))
       await fs.writeFile(path.join(OUT, 'caixa-falha.json'), JSON.stringify(diagnostic, null, 2))
-      await activeSession.page.screenshot({ path: path.join(OUT, 'caixa-falha.png'), fullPage: true }).catch(() => {})
+      await activeSession.page.screenshot({ path: path.join(OUT, 'caixa-falha.png'), fullPage: true, animations: 'disabled' }).catch(() => {})
     }
     throw error
   } finally {
