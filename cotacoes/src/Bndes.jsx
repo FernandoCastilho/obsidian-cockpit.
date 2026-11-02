@@ -10,19 +10,20 @@ import { useCurves } from './useCurves.js'
 import { dmy } from './format.js'
 import { FAMILIES, familyRows, seriesFor } from './bndesView.js'
 import { buildRoute, parseRoute } from './bndesRoute.js'
+import { TLP_LABEL, TLP_NOTE } from './tlp.js'
 import './Bndes.css'
 
 const stamp = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
 const Delta = ({ c }) => (c ? <><span className={`bn-delta bn-${c.dir}`} title={`em relação a ${dmy(c.ref)}`}>{c.text}</span>{c.jump && <span className="bn-jump" role="img" aria-label={`salto: ${c.hint}`} title={c.hint}>salto</span>}</> : <span className="muted">—</span>)
 
 // Cartões do topo: "como está hoje" em poucos segundos; tocar leva ao histórico da série.
-const CSV = [['tfb.csv', 'TFB (8 séries)'], ['tlp.csv', 'TLP'], ['tfc.csv', 'TFC (24 séries)'], ['moedas.csv', 'Moedas contratuais']]
+const CSV = [['tfb.csv', 'TFB (8 séries)'], ['tlp.csv', TLP_LABEL], ['tfc.csv', 'TFC (24 séries)'], ['moedas.csv', 'Moedas contratuais']]
 // TFB e TFC comparáveis: mesma sigla de prazo (meses) e liberação (dias); MPME = micro, pequenas e médias empresas.
 const MESMO_PRAZO = [
   ['60 meses · 90 dias (TFB, TFC e TFC MPME)', ['TFB_60_90', 'C01', 'C03']],
   ['120 meses · 90 dias (TFB, TFC e TFC MPME)', ['TFB_120_90', 'C02', 'C04']],
 ]
-const CARDS = [['tfb', 'TFB_60_90', 'TFB 60 meses · 90 dias', 'day'], ['tlp', 'TLP', 'TLP', 'month'], ['tfc', 'C01', 'TFC_60.90', 'day'], ['moedas', '604', 'Dólar contratual', 'day']]
+const CARDS = [['tfb', 'TFB_60_90', 'TFB 60 meses · 90 dias', 'day'], ['tlp', 'TLP', TLP_LABEL, 'month'], ['tfc', 'C01', 'TFC_60.90', 'day'], ['moedas', '604', 'Dólar contratual', 'day']]
 
 // Aba BNDES: uma só área de trabalho. Abas por família (TFB, TLP, TFC, Moedas) escolhem a tabela; clicar numa linha ou num cartão troca a série
 // do gráfico; o período (atalhos e datas) é único e vale para todas as séries; as observações ficam recolhidas. Tudo mora no endereço
@@ -53,7 +54,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
     const f = familyOf[cid], label = FAMILIES.find((x) => x.id === f).label
     const s = seriesFor(f, cid, bndes.data, moedas.data), r = rowsByFamily[f].find((x) => x.id === cid)
     const nome = r?.name ?? s.name, name = nome.toUpperCase().startsWith(label) ? nome : `${label} · ${nome}`
-    return { id: cid, name, short: name, unit: s.unit, decimals: s.decimals, list: s.list }
+    return { id: cid, name, short: f === 'tlp' ? 'TLP · prefixada' : name, unit: s.unit, decimals: s.decimals, list: s.list }
   }), [compare, familyOf, rowsByFamily, bndes.data, moedas.data])
   const toggleCompare = (cid) => go({ compare: compare.includes(cid) ? compare.filter((x) => x !== cid) : [...compare, cid] }, true)
   const noCompare = compare.filter((cid) => familyOf[cid] === family).length
@@ -114,6 +115,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           </div>
         )}
         {next && <p className="bn-def">Próxima divulgação da TLP: {dmy(next)}.</p>}
+        {(family === 'tlp' || (compareItems.length >= 2 && compare.includes('TLP'))) && <p className="bn-def bn-tlp-note">{TLP_NOTE}</p>}
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         {!error && (

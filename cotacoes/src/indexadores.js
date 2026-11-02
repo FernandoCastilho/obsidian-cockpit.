@@ -1,15 +1,16 @@
 // Apresentação dos indexadores TR, TBF e TLP (arquivo indexadores.json: TR e TBF do SGS do Banco Central; TLP da moeda 777 do BNDES).
 import { addDays, isBusinessDay } from './holidays.js'
 import { nf } from './format.js'
+import { TLP_LABEL, TLP_DEFINITION } from './tlp.js'
 const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
 
 export const DEFINICOES = {
   TR: 'Taxa Referencial. Calculada pelo Banco Central a partir da TBF, com um redutor. Corrige a poupança (0,5% a.m. + TR, quando a Selic está acima de 8,5% a.a.), o FGTS e parte do crédito imobiliário.',
   TBF: 'Taxa Básica Financeira. Média das taxas de captação (CDB/RDB prefixados) dos grandes bancos, calculada pelo Banco Central. É a base para calcular a TR.',
-  TLP: 'Taxa de Longo Prazo. Referência do BNDES, no lugar da TJLP, ligada às taxas de mercado dos títulos públicos. Valor mensal, em % ao ano.',
+  TLP: TLP_DEFINITION,
 }
 const FAMILIA = (key) => key
-const NOMES = { TR: 'Taxa Referencial', TBF: 'Taxa Básica Financeira', TLP: 'Taxa de Longo Prazo' }
+const NOMES = { TR: 'Taxa Referencial', TBF: 'Taxa Básica Financeira', TLP: TLP_LABEL }
 export const INDEX_KEYS = ['TR', 'TBF', 'TLP']
 
 // Quando o governo costuma divulgar cada indexador. TR e TBF: Res. CMN 4.624/2018 (até o 1º dia útil posterior ao dia de referência);
@@ -71,7 +72,7 @@ export function indexRows(data, now = Date.now()) {
     return {
       key,
       family: FAMILIA(key),
-      name: s.name,
+      name: key === 'TLP' ? TLP_LABEL : s.name,
       code: s.code,
       sourceText: `${s.source === 'BNDES' ? 'BNDES' : 'SGS'} ${s.code}`,
       unit: s.unit,

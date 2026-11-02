@@ -68,7 +68,7 @@ export default function MultiLinhas({ series, width, fmt, ariaLabel }) {
       </svg>
       <ul className="ml-legend" aria-label="Séries do gráfico e valor na data escolhida">
         {series.map((s) => { const p = at(s); return (
-          <li key={s.key} data-key={s.key}><i style={{ background: s.color }} aria-hidden="true" /><span className="ml-name">{s.name}</span><b className="ml-val">{hoverAt == null ? fmt(s.points.at(-1)?.v ?? NaN) : p ? fmt(p.v) : '—'}</b></li>
+          <li key={s.key} data-key={s.key}><i style={{ background: s.color }} aria-hidden="true" /><span className="ml-name" title={s.name}>{s.name}</span><b className="ml-val">{hoverAt == null ? fmt(s.points.at(-1)?.v ?? NaN) : p ? fmt(p.v) : '—'}</b></li>
         ) })}
       </ul>
       <p className="chart-access-text" role="status" aria-live="polite">{hoverAt != null && `${dmy(hoverAt)} · ${series.map((s) => `${s.name}: ${at(s) ? fmt(at(s).v) : '—'}`).join(' · ')}`}</p>

@@ -3,6 +3,7 @@
 // Ao criar ou trocar uma fonte, atualize esta lista (o teste confere que todo arquivo coletado tem linha aqui).
 // Campos: nome (o que é), orgao (quem publica), api (endereço consultado pelo coletor; {x} = parte variável),
 // pagina (página pública para conferir), arquivo (arquivo publicado que o app lê), serie (código/identificador), freq (como é coletado).
+import { TLP_LABEL } from './tlp.js'
 const SGS = (c) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${c}/dados?formato=json`
 const EIA = 'https://www.eia.gov/dnav/pet/hist/'
 const PINK = 'https://www.worldbank.org/en/research/commodity-markets'
@@ -25,7 +26,7 @@ export const BASE_DADOS = [
     { nome: 'Histórico das curvas DI x pré e cupom cambial (guardado pelo painel)', orgao: 'B3 (coleta diária do painel)', api: 'https://sistemaswebb3-derivativos.b3.com.br/referenceRatesProxy/Search', pagina: 'https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-de-derivativos/precos-referenciais/taxas-referenciais-bm-fbovespa/', arquivo: 'curves-history.json', serie: 'Uma curva por pregão, até 400 dias; base das comparações (1 dia a 1 ano), pois a B3 só publica o último dia', freq: 'Junto da coleta das curvas; ganha 1 dia por pregão' },
     { nome: 'TR (Taxa Referencial)', orgao: 'Banco Central do Brasil', api: SGS(226), pagina: 'https://www.bcb.gov.br/estatisticas/indicadoresreferenciais', arquivo: 'indexadores.json', serie: 'SGS 226', freq: 'De hora em hora; diária' },
     { nome: 'TBF (Taxa Básica Financeira)', orgao: 'Banco Central do Brasil', api: SGS(253), pagina: 'https://www.bcb.gov.br/estatisticas/indicadoresreferenciais', arquivo: 'indexadores.json', serie: 'SGS 253', freq: 'De hora em hora; diária' },
-    { nome: 'TLP (Taxa de Longo Prazo)', orgao: 'BNDES', api: 'https://www.bndes.gov.br/Moedas/um777.txt', pagina: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxa-de-longo-prazo-tlp', arquivo: 'indexadores.json', serie: 'Moeda 777 do BNDES', freq: 'De hora em hora; muda 1 vez por mês' },
+    { nome: TLP_LABEL, orgao: 'BNDES', api: 'https://www.bndes.gov.br/Moedas/um777.txt', pagina: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxa-de-longo-prazo-tlp', arquivo: 'indexadores.json', serie: 'Moeda 777 do BNDES — parcela prefixada', freq: 'De hora em hora; muda 1 vez por mês' },
   ] },
   { grupo: 'Juros no exterior', itens: [
     { nome: 'SOFR e médias de 30, 90 e 180 dias', orgao: 'Federal Reserve Bank of New York', api: 'https://markets.newyorkfed.org/api/rates/secured/sofr/search.json e …/sofrai/search.json', pagina: 'https://www.newyorkfed.org/markets/reference-rates/sofr', arquivo: 'macro.json', serie: 'SOFR e SOFR Averages & Index', freq: 'De hora em hora; muda 1 vez por dia útil' },

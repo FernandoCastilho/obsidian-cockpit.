@@ -1,6 +1,7 @@
 // Apresentação da Taxa Fixa do BNDES (TFB) e da TLP: arquivo bndes.json (TFB: série diária em % a.a. por prazo e dias até a liberação
 // dos recursos; TLP: série mensal da moeda 777 do BNDES em % a.a.).
 import { tlpNextRelease } from './indexadores.js'
+import { TLP_DEFINITION } from './tlp.js'
 import { JUMP_HINT, isJump } from './jumps.js'
 import { nf, shiftMonths, atOrBefore } from './format.js'
 export const PRAZOS = [36, 60, 84, 120]
@@ -32,7 +33,7 @@ export function bndesRows(data) {
   }))
 }
 
-export const TLP_DEFINICAO = 'Taxa de Longo Prazo. Custo financeiro de referência do BNDES no lugar da TJLP, ligado às taxas de mercado dos títulos públicos (NTN-B). Vale o mês inteiro, em % ao ano; a taxa final do cliente ainda soma os spreads do BNDES e do agente financeiro.'
+export const TLP_DEFINICAO = TLP_DEFINITION
 
 // TLP mais recente, variação contra o mês anterior e contra 12 meses antes, e a próxima divulgação; null quando não há série.
 export function tlpView(data, now = Date.now()) {
