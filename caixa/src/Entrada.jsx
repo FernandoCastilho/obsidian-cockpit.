@@ -7,9 +7,9 @@ export default function Entrada({ onEntrar, onDemo, erro, ocupado }) {
       <h1>Caixa</h1>
       <p className="entrada-texto">O resultado do mês, as contas a pagar e os lançamentos da família, lidos direto da sua planilha no Google Drive.</p>
       <button className="primario" onClick={onEntrar} disabled={ocupado}>{ocupado ? 'Entrando…' : 'Entrar com Google'}</button>
-      <button className="secundario" onClick={onDemo}>Ver com dados de exemplo</button>
+      <button className="secundario" onClick={onDemo} disabled={ocupado}>Ver com dados de exemplo</button>
       {erro && <p className="erro" role="alert">{erro}</p>}
-      <p className="entrada-rodape">Os dados ficam na sua planilha. Este aparelho guarda só a sessão, e ela some ao sair.</p>
+      <p className="entrada-rodape">Os dados ficam na sua planilha. Se uma alteração ficar sem confirmação, atualize antes de continuar. Ao sair, os dados deste aparelho são apagados.</p>
     </main>
   )
 }

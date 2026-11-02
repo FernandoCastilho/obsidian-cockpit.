@@ -24,7 +24,7 @@ export default function Classificar({ lancamento: l, data, onEscolher, onFechar,
             <small>{dataCurta(l.data)} · {l.contaNome}{l.status !== 'realizado' && ' · previsto'}</small>
           </div>
           <Dinheiro valor={l.valor} />
-          <button className="fechar" onClick={onFechar} aria-label="Fechar"><Icone nome="fechar" /></button>
+          <button className="fechar" disabled={ocupado} onClick={onFechar} aria-label="Fechar"><Icone nome="fechar" /></button>
         </header>
         <p className="rotulo">{l.semCategoria ? 'Escolha a categoria' : `Hoje: ${l.categoriaNome} · ${l.subNome}`}</p>
         <label className="busca"><Icone nome="busca" /><input autoFocus value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar categoria" /></label>

@@ -8,8 +8,8 @@ export const lerToken = () => {
     return t && t.exp > Date.now() + 60000 ? t.value : null
   } catch { return null }
 }
-const guardar = (value, s) => { try { sessionStorage.setItem(KEY, JSON.stringify({ value, exp: Date.now() + s * 1000 })) } catch {} }
-export const esquecerToken = () => { try { sessionStorage.removeItem(KEY) } catch {} }
+const guardar = (value, s) => { try { sessionStorage.setItem(KEY, JSON.stringify({ value, exp: Date.now() + s * 1000 })) } catch { /* A sessão em memória ainda pode ser usada sem persistência. */ } }
+export const esquecerToken = () => { try { sessionStorage.removeItem(KEY) } catch { /* Armazenamento indisponível; a interface também limpa o estado em memória. */ } }
 
 const carregarGsi = () => new Promise((ok, erro) => {
   if (window.google?.accounts?.oauth2) return ok()
@@ -43,5 +43,5 @@ export async function entrar(clientId) {
 export function sair() {
   const t = lerToken()
   esquecerToken()
-  try { if (t && window.google?.accounts?.oauth2) window.google.accounts.oauth2.revoke(t, () => {}) } catch {}
+  try { if (t && window.google?.accounts?.oauth2) window.google.accounts.oauth2.revoke(t, () => {}) } catch { /* A saída local permanece válida mesmo se a revogação falhar. */ }
 }
