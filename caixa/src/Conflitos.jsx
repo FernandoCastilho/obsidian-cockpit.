@@ -50,7 +50,7 @@ export default function Conflitos({ records, data, ocupado, erro, onFechar, onRe
       <div className="recon-corpo">
         {records.length > 1 && <ul className="recon-registros" aria-label="Registros para revisar">{records.map((x) => <li key={chave(x)}><button type="button" disabled={ocupado} aria-pressed={chave(x) === chave(r)} onClick={() => setSelecionado(chave(x))}>{descricao(x)} <small>{x.id}</small></button></li>)}</ul>}
         <p className="recon-nome"><b>{descricao(r)}</b><small>{r.id}{r.aba === 'ContasFixas' && ' · ' + r.periodo.split('-').reverse().join('/')}</small></p>
-        <p id="recon-explica">O histórico será preservado. As duas opções incorporam os demais campos da planilha.</p>
+        <p id="recon-explica">{diferencas.length ? 'A escolha vale para os campos abaixo. Os demais campos serão atualizados com os dados da planilha. O histórico será preservado.' : 'O histórico será preservado.'}</p>
         {externas.length > 0 && <section aria-label="O que mudou na planilha"><p><b>O que mudou na planilha</b></p><dl className="recon-compara recon-externas">{externas.map(({ campo, antes, agora }) => <div key={campo}><dt>{LABELS[campo] ?? campo.replaceAll('_', ' ')}</dt><dd><span>Antes</span><b>{mostrar(campo, antes, data)}</b></dd><dd><span>Agora</span><b>{mostrar(campo, agora, data)}</b></dd></div>)}</dl></section>}
         {manter ? (diferencas.length ? <dl className="recon-compara">{diferencas.map(({ campo, manter: a, origem: b }) => <div key={campo}>
           <dt>{LABELS[campo] ?? campo.replaceAll('_', ' ')}</dt>

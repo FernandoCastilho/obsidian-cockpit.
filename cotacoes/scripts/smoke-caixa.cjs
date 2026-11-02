@@ -44,6 +44,7 @@ async function main() {
       return stored
     },
   })
+  let activeSession
   async function session(service, { auth = true, width = 390 } = {}) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
     if (auth) await context.addInitScript(() => sessionStorage.setItem('caixa:token', JSON.stringify({ value: 'TOKEN_FICTICIO', exp: Date.now() + 3600000 })))
@@ -92,8 +93,9 @@ async function main() {
     })
     const page = await context.newPage()
     page.on('pageerror', e => failures.push(e.message))
+    activeSession = { page, context, service }
     await page.goto(BASE)
-    return { page, context, service }
+    return activeSession
   }
   const fixed = page => page.locator('li.linha.fixa').filter({ hasText: 'Energia teste' })
   const openFixed = async page => {
@@ -235,6 +237,14 @@ async function main() {
     await uncertain.context.close()
     assert.deepEqual(failures, [], 'Erros JavaScript na interface')
     console.log('Caixa smoke: demo, configuração, identidade, concorrência, reconciliação, recuperação, rascunhos e layouts OK')
+  } catch (error) {
+    if (activeSession && !activeSession.page.isClosed()) {
+      const diagnostic = { error: error.message, posts: activeSession.service.posts.length, writeErrors: activeSession.service.writeErrors, flags: activeSession.service.journal.slice(1).map(r => [r[2], r[11]]), screen: await activeSession.page.locator('body').innerText().catch(() => '') }
+      console.error(JSON.stringify(diagnostic, null, 2))
+      await fs.writeFile(path.join(OUT, 'caixa-falha.json'), JSON.stringify(diagnostic, null, 2))
+      await activeSession.page.screenshot({ path: path.join(OUT, 'caixa-falha.png'), fullPage: true }).catch(() => {})
+    }
+    throw error
   } finally {
     await browser.close()
   }
