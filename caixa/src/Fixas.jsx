@@ -10,6 +10,7 @@ function Linha({ f, acoes, ocupado }) {
   const [texto, setTexto] = useState('')
   const semValor = f.padrao === null && f.mes === null
   const salvar = () => {
+    if (ocupado) return
     const n = Number(texto.replace(/\./g, '').replace(',', '.'))
     setEditando(false)
     if (texto.trim() !== '' && Number.isFinite(n) && n >= 0) acoes.valorMes(f, n)
@@ -29,9 +30,9 @@ function Linha({ f, acoes, ocupado }) {
         </small>
       </span>
       {editando ? (
-        <input className="edita" autoFocus inputMode="decimal" value={texto} onChange={(e) => setTexto(e.target.value)} onBlur={salvar} onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()} placeholder="0,00" />
+        <input className="edita" disabled={ocupado} autoFocus inputMode="decimal" value={texto} onChange={(e) => setTexto(e.target.value)} onBlur={salvar} onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()} placeholder="0,00" />
       ) : (
-        <button className={`valor-btn${semValor ? ' ambar' : ''}`} onClick={() => { setTexto(valorDaFixa(f) ? String(valorDaFixa(f)).replace('.', ',') : ''); setEditando(true) }}>
+        <button className={`valor-btn${semValor ? ' ambar' : ''}`} disabled={ocupado} onClick={() => { setTexto(valorDaFixa(f) ? String(valorDaFixa(f)).replace('.', ',') : ''); setEditando(true) }}>
           {semValor ? 'definir valor' : <Dinheiro valor={-valorDaFixa(f)} />}
         </button>
       )}
