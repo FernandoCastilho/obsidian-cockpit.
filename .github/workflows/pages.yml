@@ -48,7 +48,8 @@ jobs:
         run: npm test
       - name: Atualizar Focus semanal preservando os demais dados publicados
         if: github.event.schedule == '30 12 * * 1'
-        run: node scripts/refresh-scenarios.mjs
+        run: node scripts/refresh-scenarios.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"
+        timeout-minutes: 5
       - name: Coletar notícias
         if: github.event.schedule != '30 12 * * 1'
         run: node scripts/fetch-news.mjs
@@ -188,6 +189,9 @@ jobs:
           cd ../cotacoes
           mkdir -p dist/caixa
           cp -R ../caixa/dist/. dist/caixa/
+      - name: Conferir todas as bases preservadas no pacote semanal
+        if: github.event.schedule == '30 12 * * 1'
+        run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-data-snapshot.json"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: cotacoes/dist

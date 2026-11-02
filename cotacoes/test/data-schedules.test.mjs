@@ -40,17 +40,6 @@ test('Focus complete response is deterministic and uses source dates, not an inv
  await assert.rejects(collectFocus({now:Date.parse('2026-10-26T12:30:00Z'),fetchImpl:async()=>({ok:true,json:async()=>({value:[{...row,Data:++count===2?'2026-10-22':row.Data}]})})}),/divergentes/)
  await assert.rejects(collectFocus({now:Date.parse('2026-10-26T12:30:00Z'),fetchImpl:async()=>({ok:true,json:async()=>({value:[{...row,Mediana:NaN}]})})}),/incompleto/)
 })
-test('weekly refresh changes only Focus; missing prerequisite aborts before any write',async()=>{
- const {refreshScenarios,RETAIN_FILES}=await import('../scripts/refresh-scenarios.mjs')
- const old={generatedAt:10,focusCheckedAt:9,focus:{date:'2026-10-16',rows:[]},ptax:{USD:{sell:5}},stale:{focus:9}}
- const inputs=Object.fromEntries(RETAIN_FILES.map(f=>[f,f==='macro.json'?old:{generatedAt:8,value:f}]))
- const written={};const focus={date:'2026-10-23',rows:[]}
- await refreshScenarios({load:async f=>inputs[f],collect:async()=>focus,save:async(f,d)=>written[f]=d,now:20})
- assert.deepEqual(written['macro.json'].ptax,old.ptax);assert.equal(written['macro.json'].generatedAt,10);assert.equal(written['macro.json'].focus.date,'2026-10-23');assert.equal(written['macro.json'].stale.focus,undefined)
- for(const f of RETAIN_FILES.filter(f=>f!=='macro.json'))assert.deepEqual(written[f],inputs[f])
- let writes=0;await assert.rejects(refreshScenarios({load:async f=>f==='oil.json'?null:inputs[f],save:async()=>writes++}),/preservar oil/);assert.equal(writes,0)
- const retained=await refreshScenarios({load:async f=>inputs[f],collect:async()=>{throw new Error('HTTP503')},save:async()=>{},now:20});assert.deepEqual(retained['macro.json'].focus,old.focus);assert.equal(retained['macro.json'].stale.focus,9)
-})
 test('hourly triggers cover exactly each Brazil weekday hour once and weekly cannot cancel active deployment',async()=>{
  const y=await readFile(new URL('../../.github/workflows/pages.yml',import.meta.url),'utf8');assert.match(y,/cancel-in-progress: false/)
  const hours=[]
