@@ -39,6 +39,23 @@ Ensaio nativo executado em cópia integral, com fontes fictícias separadas: con
 
 O conjunto limpo de visões foi instalado sobre os 543 lançamentos e 25 contas fixas da cópia. A comparação nativa de todas as 10.674 células, incluindo cabeçalhos, confirmou equivalência de valores, tipos e vazios. Os cinco totais migrados conservaram os resultados; P6 e P7 foram preservados. Datas e valores têm formatação própria nas visões. A verificação visual nativa foi limitada aos metadados de formatação porque a conexão de navegador estava indisponível.
 
-Testes Node, builds e homologação da interface: aguardam CI desta versão. O ensaio nativo é necessário: ARRAYFORMULA deve envolver toda a divisão usada por LOOKUP; a divisão fora desse contexto retornava o primeiro evento no Google Sheets real.
+A suíte do CI contém 462 testes do painel e 86 do Caixa, além de lint e builds dos dois aplicativos. O roteiro smoke-caixa usa somente dados fictícios e cobre pagamento, valor, classificação, concorrência, conciliação, confirmação perdida, fechamento de rascunho por ponteiro/teclado e layouts de 390/820/1280 px. A execução vigente está nos [checks do PR 249](https://github.com/FernandoCastilho/painel-especialista/pull/249/checks); uma revisão só está liberada após esses checks e a conferência das capturas. O ensaio nativo é necessário: ARRAYFORMULA deve envolver toda a divisão usada por LOOKUP; a divisão fora desse contexto retornava o primeiro evento no Google Sheets real.
 
 Referências primárias: [AppendCellsRequest](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#AppendCellsRequest), [batchUpdate](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/batchUpdate).
+
+## Matriz de aceitação
+
+| Critério | Teste e evidência | Resultado registrado |
+|---|---|---|
+| Identidade e campos permitidos, sem escrita na origem | journal.test.mjs, sheets.test.mjs e inspeção do pedido appendCells | Núcleo aprovado no CI; fluxo compilado conferido em smoke-caixa |
+| Concorrentes da mesma revisão e UUID repetido | Fórmula executada no Sheets e fixture native-journal.json; reducer local | Passou no ensaio nativo de 02/11/2026 |
+| Reordenação, mudança manual, origem ausente e conciliação | Núcleo, integração nativa e roteiro de interface | Ensaio nativo passou; interface vinculada aos checks da revisão |
+| Resultado incerto sem reenvio e rascunho preservado | sheets.test.mjs e cenários de resposta perdida em smoke-caixa | Núcleo aprovado; navegador vinculado aos checks da revisão |
+| Botões, teclado, foco e layouts | smoke-caixa; capturas publicadas no artefato smoke-capturas | Parecer visual e execução vinculados ao PR |
+| Valores, tipos, vazios e totais nativos | Comparação nativa de 10.674 células e cinco totais na cópia integral | Passou em 02/11/2026; P6 e P7 preservados |
+
+## Contenção e restauração
+
+Antes de qualquer operação aceita em produção, uma reversão pode manter as bases intactas e restaurar apenas as cinco fórmulas de totais a partir da cópia de segurança, após conferir que o diário continua vazio. Não apagar o diário por tentativa automática de desfazer erro.
+
+Depois de haver operações aceitas, não voltar ao leitor antigo das abas-base: isso ocultaria os valores confirmados no diário. Em incidente, preparar uma versão de consulta que preserve o leitor consolidado e bloqueie novas gravações, mantendo bases e diário para diagnóstico. Uma restauração integral exige preservar ambos e conciliar o último estado confirmado; não substituir o arquivo em uso por uma cópia anterior que descarte o histórico. Essas ações administrativas dependem de autorização para seu alvo e efeito.
