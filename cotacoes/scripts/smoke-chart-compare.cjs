@@ -15,7 +15,11 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       // tela cheia só com "Fechar"; filtros (período e escala) num único bloco acima do gráfico
       assert.deepEqual(await d.locator('.expandable-controls button').allInnerTexts(), ['Fechar ×'])
       assert.equal(await d.locator('.chart-filters').count(), 1)
-      const full = await d.boundingBox(); assert.ok(full.width >= width - 1 && full.height >= 1099, 'diálogo ocupa a tela')
+      await p.waitForTimeout(600) // cortina da gaveta termina de abrir
+      const full = await d.boundingBox()
+      // celular: tela inteira; computador (≥ 900 px): gaveta lateral encostada à direita, altura toda
+      const drawerW = width >= 900 ? Math.min(860, width) : width
+      assert.ok(Math.abs(full.width - drawerW) <= 1 && Math.abs(full.x + full.width - width) <= 1 && full.height >= 1099, `detalhe como gaveta (${JSON.stringify(full)})`)
       assert.ok((await d.locator('.chart-filters').boundingBox()).y < (await d.locator('.plot svg').first().boundingBox()).y, 'filtros acima do gráfico')
       const svg = d.locator('.plot svg').first()
       await svg.waitFor(); await svg.scrollIntoViewIfNeeded()
