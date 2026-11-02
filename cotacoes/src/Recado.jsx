@@ -35,6 +35,7 @@ export default function Recado() {
   useEffect(() => {
     const el = ref.current
     if (!aberto || !el) return undefined
+    if (document.querySelector('dialog:modal')) { setAberto(false); return undefined }
     if (!el.open) el.showModal()
     return () => { if (el.open) el.close() }
   }, [aberto, recado])

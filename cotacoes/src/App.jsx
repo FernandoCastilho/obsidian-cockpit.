@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { dataTimestamp } from './dataTimestamp.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
@@ -9,7 +10,6 @@ const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { fadeIn } from './motion.js'
 import { CURRENCIES, REFRESH_DAILY_MAX, useQuotes } from './useQuotes.js'
 import HistoryChart from './HistoryChart.jsx'
@@ -19,6 +19,7 @@ const Curves = lazy(() => import('./Curves.jsx'))
 const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import AvisoInicial from './AvisoInicial.jsx'
+import ConceitoDiario from './ConceitoDiario.jsx'
 import Recado from './Recado.jsx'
 import Laser from './Laser.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
@@ -186,6 +187,7 @@ export default function App() {
     }
   }, [])
   const [open, setOpen] = useState(null) // código da moeda (ou 'PAR') com o detalhe aberto
+  const [avisoFechado, setAvisoFechado] = useState(() => !!navigator.webdriver)
   const cenView = sub === 'outros' ? 'inflacao' : CEN_VIEWS.some((v) => v.id === sub) ? sub : 'projecoes' // #cenarios/outros (endereço antigo) abre Inflação
   const goto = (id, to = '', replace = false) => {
     setTab(id)
@@ -245,7 +247,8 @@ export default function App() {
         <p>Yuan: CNH (offshore), por cruzamento USD/BRL ÷ USD/CNH. Origem, API e frequência de cada dado: Configurações › Base de dados.</p>
         <p><i>{DISCLAIMER}</i></p>
       </>}>
-    <AvisoInicial />
+    <AvisoInicial onDismiss={() => setAvisoFechado(true)} />
+    <ConceitoDiario ready={avisoFechado} goto={goto} />
     <Recado />
     <Laser />
     <header className="term-head">

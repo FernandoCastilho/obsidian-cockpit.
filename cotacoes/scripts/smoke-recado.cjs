@@ -7,6 +7,8 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       const ctx = await b.newContext({ viewport: { width, height: 800 }, serviceWorkers: 'block' }), p = await ctx.newPage(), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await ctx.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => false })) // o aviso inicial e o recado não aparecem para navegador automatizado
+      // A fila completa é coberta em smoke-conceito-diario; aqui o conceito já foi lido hoje.
+      await ctx.addInitScript(() => localStorage.setItem('aprender-conceito-dia', new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())))
       let file = { ativo: true, nivel: 'urgente', titulo: 'Manutenção hoje', texto: 'O painel fica fora do ar das 18h às 19h.\nObrigado.' }
       await ctx.route('**/recado.json*', (r) => r.fulfill({ json: file }))
       await p.goto(base + '/#resumo')

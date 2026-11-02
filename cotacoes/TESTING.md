@@ -1,5 +1,9 @@
 # Verificações
 
+## Conceito diário
+
+`node --test test/conceito-diario.test.mjs` verifica conteúdo real, ciclo diário e persistência separada. `node scripts/smoke-conceito-diario.cjs` testa o build na origem `SMOKE_BASE_URL` (padrão 8768): entrada após o aviso, retorno no mesmo dia, virada de São Paulo com navegador em outro fuso, aviso aberto durante a virada, navegação para o conceito completo, foco, teclado, Escape e fila com Recado, em 390 e 1280 px com reduced motion. Capturas em `CONCEITO_QA_OUTPUT` (padrão `conceito-qa`). Sem armazenamento persistente, a deduplicação vale apenas para a sessão montada; outro navegador ou perfil possui histórico próprio.
+
 - `npm ci`, `npm test`, `npm run build` executam a suíte de lógica e o build.
 - Os testes unitários não certificam fórmulas financeiras nem substituem revisão das convenções e das fontes.
 
