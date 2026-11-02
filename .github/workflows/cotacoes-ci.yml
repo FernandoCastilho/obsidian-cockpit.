@@ -22,7 +22,11 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+      - name: Preparar ensaio semanal com dados simulados
+        run: node test/helpers/weekly-package.mjs "$RUNNER_TEMP/weekly-package-test.json"
       - run: npm run build
+      - name: Conferir preservação no build real
+        run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-package-test.json"
       - name: App Caixa (testes e build, como no deploy)
         working-directory: caixa
         run: |
