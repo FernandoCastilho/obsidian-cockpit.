@@ -186,7 +186,8 @@ function pedidoImutavel(pedido, now) {
   return { aba, id, revision, periodo, mode, mudancas: changes, before, source }
 }
 
-export async function gravarRegistro(token, sheetId, pedido, { now = Date.now(), operationId = globalThis.crypto?.randomUUID?.() } = {}) {
+export async function gravarRegistro(token, sheetId, pedido, opcoes = {}) {
+  const { now = Date.now(), operationId = globalThis.crypto?.randomUUID?.() } = opcoes
   validarAcesso(token, sheetId)
   const intent = pedidoImutavel(pedido, now)
   if (typeof operationId !== 'string' || !ID_VALIDO.test(operationId)) throw configuracao()
