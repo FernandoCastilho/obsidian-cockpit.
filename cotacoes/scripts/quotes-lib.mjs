@@ -4,6 +4,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { mergeSnapshots } from './intraday-lib.mjs'
+import { RAW_PAIRS, rawQuoteError, cnhCross, cnhQuoteError } from '../src/quoteSafety.js'
 
 export const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 const SNAP = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
@@ -26,7 +27,7 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
       const res = await fetchFn(url, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const j = await res.json()
-      if (!j?.USDBRL?.bid) throw new Error('resposta sem cotação')
+      if (!j || typeof j !== 'object' || Array.isArray(j)) throw new Error('resposta sem cotação')
       quotes = j
     } catch (e) {
       lastError = e.message
@@ -36,22 +37,55 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
   if (!quotes) return { ok: false, error: lastError }
 
   await mkdir(dir, { recursive: true })
-  await writeFile(join(dir, 'quotes.json'), JSON.stringify({ generatedAt: now, source: 'AwesomeAPI', quotes }))
+  const previous = await readJson(join(dir, 'quotes.json'))
+  const accepted = {}
+  const rejected = {}
+  const incoming = quotes
+  quotes = {}
+  for (const pair of RAW_PAIRS) {
+    const old = previous?.quotes?.[pair]
+    const oldValid = old && !rawQuoteError(old, pair, now)
+    const raw = incoming[pair]
+    const reason = rawQuoteError(raw, pair, now) || (oldValid && Number(raw.timestamp) < Number(old.timestamp) ? pair + ': horário anterior à última referência válida' : '')
+    if (reason) {
+      rejected[pair] = reason
+      if (oldValid) quotes[pair] = { ...old, stale: true, error: reason }
+    } else {
+      // Somente um registro aceito libera novamente a atualização deste par.
+      const clean = { ...raw }
+      delete clean.stale
+      delete clean.error
+      quotes[pair] = clean
+      accepted[pair] = clean
+    }
+  }
+  // O cruzamento tem seu próprio último valor válido: nunca mistura uma ponta nova com outra rejeitada.
+  let cnh = accepted.USDBRL && accepted.USDCNH ? cnhCross(accepted.USDBRL, accepted.USDCNH, now) : null
+  if (!cnh) {
+    rejected.CNH = rejected.USDBRL || rejected.USDCNH || 'CNH: cruzamento inválido'
+    let previousCnh = previous?.cnh
+    if (cnhQuoteError(previousCnh, now)) {
+      const oldLegRetained = previous?.quotes?.USDBRL?.stale || previous?.quotes?.USDCNH?.stale
+      previousCnh = oldLegRetained ? null : cnhCross(previous?.quotes?.USDBRL, previous?.quotes?.USDCNH, now)
+    }
+    if (previousCnh) cnh = { ...previousCnh, stale: true, error: rejected.CNH }
+  } else if (previous?.cnh && cnh.timestamp < previous.cnh.timestamp && !cnhQuoteError(previous.cnh, now)) {
+    rejected.CNH = 'CNH: horário anterior à última referência válida'
+    cnh = { ...previous.cnh, stale: true, error: rejected.CNH }
+  }
+  await writeFile(join(dir, 'quotes.json'), JSON.stringify({ generatedAt: now, source: 'AwesomeAPI', quotes, cnh, rejected }))
 
-  // Pontos do intraday: só entram cotações novas (fora do pregão a fonte repete a última, e não duplicamos).
+  // Só observações novas e aceitas entram no intraday. Retenção não vira um novo ponto.
   const prev = await readJson(join(dir, 'intraday.json'))
   const snaps = {}
   for (const [code, pair] of Object.entries(SNAP)) {
-    const q = quotes[pair]
+    const q = accepted[pair]
     if (q) snaps[code] = [Number(q.timestamp) * 1000, Number(q.bid)]
   }
-  // Yuan offshore: USD/BRL ÷ USD/CNH
-  if (quotes.USDBRL && quotes.USDCNH) {
-    snaps.CNH = [Math.min(Number(quotes.USDBRL.timestamp), Number(quotes.USDCNH.timestamp)) * 1000, Number(quotes.USDBRL.bid) / Number(quotes.USDCNH.ask)]
-  }
+  if (cnh && !cnh.stale) snaps.CNH = [cnh.timestamp, cnh.bid]
   const series = mergeSnapshots(prev?.series, snaps, 5 * 864e5, now)
   await writeFile(join(dir, 'intraday.json'), JSON.stringify({ generatedAt: now, source: 'AwesomeAPI (coleta central a cada 5 min)', resolution: '5 min', series }))
-  return { ok: true, pairs: Object.keys(quotes).length, points: Object.values(series).reduce((n, s) => n + s.points.length, 0) }
+  return { ok: true, pairs: Object.keys(accepted).length, rejected, points: Object.values(series).reduce((n, s) => n + s.points.length, 0) }
 }
 
 // ---- Histórico diário (360 dias) por moeda: lido por todos os usuários; a chave da API fica só aqui ----

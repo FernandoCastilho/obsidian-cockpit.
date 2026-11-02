@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
+import { rawQuoteError, cnhCross, cnhQuoteError } from './quoteSafety.js'
 
 export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
@@ -28,7 +29,7 @@ export function friendlyError(msg) {
 // A chave da AwesomeAPI fica só no robô do GitHub (coleta central); o navegador não a usa, e a consulta direta (botão Atualizar) usa a cota anônima.
 
 // Uma única consulta traz as quatro moedas; o yuan (CNH) sai do cruzamento USD/BRL ÷ USD/CNH.
-const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
+const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'USDCNH' }
 const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 
 // Se a fonte devolveu 429 (cota), não insiste por 60 s: as reservas atendem enquanto isso.
@@ -46,12 +47,18 @@ async function getJson(url, label, signal) {
     }
     throw err
   }
-  return res.json()
+  try {
+    const data = await res.json()
+    return data && typeof data === 'object' && !Array.isArray(data) ? data : {}
+  } catch (e) {
+    // HTTP 200 com JSON malformado é uma resposta inválida, não uma autorização para trocar o spot pelo BCE.
+    if (e.name === 'SyntaxError') return {}
+    throw e
+  }
 }
 
 export const toQuote = (q, source) => {
-  if (!q || ['bid', 'ask', 'high', 'low', 'timestamp'].some((key) => !(Number(q[key]) > 0)) || q.pctChange == null || q.pctChange === '' || !Number.isFinite(Number(q.pctChange))) return null
-  if (['bid', 'ask', 'high', 'low', 'timestamp'].some((key) => !Number.isFinite(Number(q[key])))) return null
+  if (rawQuoteError(q, PAIRS[source])) return null
   return ({
   source,
   bid: Number(q.bid),
@@ -62,29 +69,8 @@ export const toQuote = (q, source) => {
   // Apenas o campo absoluto fornecido pela fonte: ausência nunca vira zero.
   delta: ['string', 'number'].includes(typeof q.varBid) && String(q.varBid).trim() !== '' && Number.isFinite(Number(q.varBid)) ? Number(q.varBid) : null,
   timestamp: Number(q.timestamp) * 1000,
+  ...(q.stale ? { stale: true, error: friendlyError(q.error || 'cotação retida; aguardando um novo valor válido') } : {}),
   })
-}
-
-// Yuan offshore em reais calculado pelo cruzamento USD/BRL ÷ USD/CNH.
-async function fetchCnhCross(brl, preloaded, signal) {
-  const cnh = preloaded ?? (await getJson(`${BASE}/USD-CNH`, 'USD-CNH', signal)).USDCNH
-  if (!toQuote(brl, 'USD') || !toQuote(cnh, 'CNH')) throw new Error('USD-CNH: resposta sem cotação válida')
-  const n = Number
-  // Variação absoluta do cruzamento: fechamento anterior de cada ponta (bid − varBid) e mesma razão; sem a das duas pontas, fica ausente.
-  const legs = [brl.varBid, cnh.varBid].every((v) => v !== '' && v != null && Number.isFinite(n(v)))
-  const previous = legs ? (n(brl.bid) - n(brl.varBid)) / (n(cnh.ask) - n(cnh.varBid)) : NaN
-  const delta = Number.isFinite(previous) && previous > 0 ? n(brl.bid) / n(cnh.ask) - previous : null
-  return {
-    source: 'CNH',
-    cross: true,
-    delta,
-    bid: n(brl.bid) / n(cnh.ask),
-    ask: n(brl.ask) / n(cnh.bid),
-    high: n(brl.high) / n(cnh.low),
-    low: n(brl.low) / n(cnh.high),
-    pct: n(brl.pctChange) - n(cnh.pctChange),
-    timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,
-  }
 }
 
 // Reserva quando a fonte principal falha (ex.: limite de requisições): referência diária do BCE, sem compra/venda separadas.
@@ -99,29 +85,51 @@ async function fetchEcb(code, signal) {
   const j = await res.json()
   const rate = Number(j?.rates?.BRL)
   if (!(rate > 0) || !j.date) throw new Error(`BCE ${from}: resposta sem cotação`)
-  const quote = { source: from, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp: Date.parse(`${j.date}T15:00:00Z`) }
+  const timestamp = Date.parse(`${j.date}T15:00:00Z`)
+  const invalid = rawQuoteError({ bid: rate, ask: rate, high: rate, low: rate, pctChange: 0, timestamp: timestamp / 1000 }, code === 'CNH' ? 'CNHBRL' : PAIRS[code])
+  if (invalid) throw new Error(`BCE ${from}: ${invalid}`)
+  const quote = { source: from, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp }
   ecbCache.set(code, { at: Date.now(), quote })
   return quote
 }
 
-async function complete(code, batch, batchError, signal) {
+async function complete(code, batch, batchError, signal, { cnh, rejected = {} } = {}) {
   const errors = batchError ? [batchError] : []
   let quote = null
-  if (code === 'CNH') {
-    if (batch?.USDBRL) {
-      try {
-        quote = await fetchCnhCross(batch.USDBRL, batch.USDCNH, signal)
-      } catch (e) {
-        if (e.name === 'AbortError') throw e
-        errors.push(e.message)
+  if (batch) {
+    if (code === 'CNH') {
+      const sourceError = rejected.USDBRL || rejected.USDCNH || rawQuoteError(batch.USDBRL, 'USDBRL') || rawQuoteError(batch.USDCNH, 'USDCNH')
+      const retainedLeg = batch.USDBRL?.stale || batch.USDCNH?.stale
+      if (cnh) {
+        const invalid = cnhQuoteError(cnh)
+        if (invalid) errors.push(invalid)
+        else {
+          quote = { ...cnh }
+          if (quote.stale || retainedLeg || sourceError) {
+            quote.stale = true
+            quote.error = friendlyError(sourceError || quote.error || 'CNH: uma cotação de origem foi retida; aguardando um novo valor válido')
+          }
+        }
+      } else if (!retainedLeg && !sourceError) {
+        // Compatibilidade com arquivos anteriores ao CNH separado: só usa duas pontas válidas.
+        quote = cnhCross(batch.USDBRL, batch.USDCNH)
+        if (!quote) errors.push(rawQuoteError(batch.USDBRL, 'USDBRL') || rawQuoteError(batch.USDCNH, 'USDCNH') || 'CNH: resposta sem cotação válida')
+      } else {
+        errors.push(sourceError || 'CNH: uma cotação de origem foi retida; aguardando um novo valor válido')
+      }
+    } else {
+      const pair = PAIRS[code]
+      const raw = batch[pair]
+      const invalid = rawQuoteError(raw, pair)
+      quote = invalid ? null : toQuote(raw, code)
+      if (!quote) errors.push(rejected[pair] || invalid)
+      else if (quote.stale || rejected[pair]) {
+        quote.stale = true
+        quote.error = friendlyError(rejected[pair] || quote.error || 'cotação retida; aguardando um novo valor válido')
       }
     }
   } else {
-    const raw = batch?.[PAIRS[code]]
-    quote = raw ? toQuote(raw, code) : null
-    if (!quote && batch) errors.push(`${PAIRS[code]}: resposta sem cotação válida`)
-  }
-  if (!quote) {
+    // A reserva cobre falha de acesso à fonte. Uma resposta inválida deve preservar o último spot.
     try {
       quote = await fetchEcb(code, signal)
     } catch (e) {
@@ -168,6 +176,7 @@ let directRequestSeq = 0
 export async function fetchQuotes(signal, { direct = false, base } = {}) {
   let batch = null
   let batchError = null
+  let centralSnapshot = null
   let via = 'direto'
   let collectedAt = Date.now()
   if (!direct) {
@@ -175,6 +184,7 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
       const c = await fetchCentral(signal, base)
       if (Number.isFinite(c.generatedAt) && c.generatedAt <= Date.now() + 60000 && Date.now() - c.generatedAt <= centralMaxAge()) {
         batch = c.quotes
+        centralSnapshot = c
         via = 'central'
         collectedAt = c.generatedAt
       } else batchError = 'coleta central desatualizada'
@@ -204,7 +214,7 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
     collectedAt = lastDirectSnapshot.collectedAt
     via = 'direto'
   }
-  const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal)))
+  const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal, centralSnapshot ?? {})))
   return { results: Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), via: batch ? via : 'reserva', collectedAt }
 }
 
@@ -261,10 +271,20 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
       for (const [code, r] of Object.entries(results)) {
         const old = prev.current[code]
         if (r.quote) {
-          fresh += 1
           // nunca troca uma cotação mais nova (ex.: do botão) por outra mais velha (ex.: da coleta central)
           const keep = old && !old.fallback && !r.quote.fallback && old.timestamp > r.quote.timestamp
-          next[code] = keep ? { ...old, stale: false, error: undefined } : r.quote
+          next[code] = keep ? old : r.quote
+          if (r.quote.stale) {
+            const message = r.quote.error || r.error || 'cotação retida; aguardando um novo valor válido'
+            next[code] = { ...next[code], stale: true, error: message }
+            errs[code] = message
+          } else if (keep) {
+            // Uma resposta anterior não comprova recuperação da observação local retida.
+            if (old.stale) errs[code] = old.error
+          } else {
+            fresh += 1
+            next[code] = { ...next[code], stale: false, error: undefined }
+          }
           if (old && next[code].bid !== old.bid) dir[code] = next[code].bid > old.bid ? 'up' : 'down'
         } else {
           // mantém a última cotação válida enquanto a moeda falha
@@ -281,7 +301,7 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
         setVia(v)
       }
       // todas falharam (ex.: limite da API): não afirmar que está atualizado
-      setError(fresh ? null : Object.values(errs)[0] ?? 'sem resposta da fonte')
+      setError(fresh ? null : Object.values(errs)[0] ?? (Object.keys(next).length ? null : 'sem resposta da fonte'))
       return fresh > 0
     } catch (e) {
       if (e.name !== 'AbortError' && !request.signal.aborted && ctrl.current === request) setError(friendlyError(e.message))

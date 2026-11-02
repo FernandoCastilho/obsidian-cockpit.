@@ -194,10 +194,11 @@ async function quotesWithCentral() {
   let src = await readFile(new URL('../src/useQuotes.js', import.meta.url), 'utf8')
   src = src.replace("from 'react'", `from '${pathToFileURL(require.resolve('react'))}'`)
     .replace("from './visiblePolling.js'", `from '${new URL('../src/visiblePolling.js', import.meta.url)}'`)
+    .replace("from './quoteSafety.js'", `from '${new URL('../src/quoteSafety.js', import.meta.url)}'`)
     .replace('import.meta.env?.VITE_DATA_BASE', "'https://central.example'")
   return import(`data:text/javascript;base64,${Buffer.from(`${src}\n// test ${++version}`).toString('base64')}`)
 }
-const batch = (time, bid = 5) => Object.fromEntries(['USDBRL', 'EURBRL', 'JPYBRL', 'USDCNH'].map((code) => [code, { bid: String(bid), ask: String(bid + .01), high: String(bid + .1), low: String(bid - .1), pctChange: '1', timestamp: String(time / 1000) }]))
+const batch = (time, usd = 5) => Object.fromEntries(Object.entries({ USDBRL: usd, EURBRL: 6.1, JPYBRL: 0.035, USDCNH: 7.1 }).map(([code, bid]) => [code, { bid: String(bid), ask: String(bid + (code === 'JPYBRL' ? .0001 : .01)), high: String(bid + (code === 'JPYBRL' ? .001 : .1)), low: String(bid - (code === 'JPYBRL' ? .001 : .1)), pctChange: '1', timestamp: String(time / 1000) }]))
 
 test('quotes: anonymous response two hours older cannot replace the central price or its source timestamp', async t => {
   const clock = browserClock(t), q = await quotesWithCentral()

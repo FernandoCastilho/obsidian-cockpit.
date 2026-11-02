@@ -73,7 +73,7 @@ test('erros técnicos viram texto em português', () => {
 test('cotações: uma única consulta para as quatro moedas (poupa a cota da API)', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js')
   const now = Math.floor(Date.now() / 1000)
-  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b + 0.1), low: String(Math.max(0.001, b - 0.1)), pctChange: '0.5', timestamp: String(now) })
+  const q = (b) => ({ bid: String(b), ask: String(b + (b < 0.1 ? 0.0001 : 0.01)), high: String(b + (b < 0.1 ? 0.001 : 0.1)), low: String(b - (b < 0.1 ? 0.001 : 0.1)), pctChange: '0.5', timestamp: String(now) })
   const calls = []
   const real = globalThis.fetch
   globalThis.fetch = async (url) => {
@@ -95,7 +95,7 @@ test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () =>
   const real = globalThis.fetch
   globalThis.fetch = async (url) => {
     calls.push(String(url))
-    if (String(url).includes('frankfurter')) return { ok: true, status: 200, json: async () => ({ date: '2026-10-09', rates: { BRL: 5.0 } }) }
+    if (String(url).includes('frankfurter')) return { ok: true, status: 200, json: async () => ({ date: '2026-10-09', rates: { BRL: String(url).includes('base=JPY') ? 0.035 : String(url).includes('base=CNY') ? 0.8 : 5.0 } }) }
     return { ok: false, status: 429 }
   }
   const { results: r } = await fetchQuotes(undefined, { direct: true })
@@ -110,7 +110,7 @@ test('cotações: 429 usa a reserva do BCE e não insiste por 60 s', async () =>
 
 test('cotações: lê a coleta central sem consultar a API; arquivo velho cai para a consulta direta', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js')
-  const q = (b) => ({ bid: String(b), ask: String(b + 0.01), high: String(b), low: String(b), pctChange: '0', timestamp: String(Math.floor(Date.now() / 1000)) })
+  const q = (b) => ({ bid: String(b), ask: String(b + (b < 0.1 ? 0.0001 : 0.01)), high: String(b + (b < 0.1 ? 0.001 : 0.1)), low: String(b - (b < 0.1 ? 0.001 : 0.1)), pctChange: '0', timestamp: String(Math.floor(Date.now() / 1000)) })
   const quotes = { USDBRL: q(5.3), EURBRL: q(6.1), JPYBRL: q(0.035), USDCNH: q(7.1) }
   const calls = []
   const real = globalThis.fetch
@@ -267,7 +267,7 @@ test('feriados: próximo dia útil comum às praças e lista de próximos feriad
 test('cotações: CNH ganha variação absoluta pelos fechamentos anteriores das duas pontas; sem varBid de uma ponta fica ausente', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js?cnh-delta')
   const now = Math.floor(Date.now() / 1000)
-  const q = (b, v) => ({ bid: String(b), ask: String(b), high: String(b + 0.1), low: String(b - 0.1), pctChange: '0.5', timestamp: String(now), ...(v === undefined ? {} : { varBid: String(v) }) })
+  const q = (b, v) => ({ bid: String(b), ask: String(b), high: String(b + (b < 0.1 ? 0.001 : 0.1)), low: String(b - (b < 0.1 ? 0.001 : 0.1)), pctChange: '0.5', timestamp: String(now), ...(v === undefined ? {} : { varBid: String(v) }) })
   const real = globalThis.fetch
   const run = async (cnhVar) => {
     globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ USDBRL: q(5.3304, -0.021), EURBRL: q(6.1, 0), JPYBRL: q(0.035, 0), USDCNH: q(6.66367, cnhVar) }) })
