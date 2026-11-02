@@ -11,6 +11,7 @@ function Linha({ f, acoes, ocupado }) {
   const salvando = useRef(false)
   const cancelando = useRef(false)
   const alvo = useRef(null)
+  const botaoFechar = useRef(null)
   const bloqueado = ocupado || Boolean(f._conflito)
   const semValor = f.padrao === null && f.mes === null
 
@@ -69,13 +70,13 @@ function Linha({ f, acoes, ocupado }) {
             className="edita" disabled={bloqueado} autoFocus inputMode="decimal"
             aria-label={'Valor do mês de ' + f.desc} aria-invalid={invalido || undefined} value={texto}
             onChange={(e) => { cancelando.current = false; e.currentTarget.setCustomValidity(''); setInvalido(false); setTexto(e.target.value) }}
-            onBlur={(e) => { void salvar(e.currentTarget) }}
+            onBlur={(e) => { if (e.relatedTarget !== botaoFechar.current) void salvar(e.currentTarget) }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur() }
               if (e.key === 'Escape' && !salvando.current && !ocupado) { e.preventDefault(); fechar() }
             }} placeholder="0,00"
           />
-          <button className="icone edicao-fechar" disabled={ocupado} aria-label={'Fechar edição do valor de ' + f.desc}
+          <button ref={botaoFechar} className="icone edicao-fechar" disabled={ocupado} aria-label={'Fechar edição do valor de ' + f.desc}
             onPointerDown={(e) => { if (!ocupado) { cancelando.current = true; e.preventDefault() } }} onClick={fechar}><Icone nome="fechar" /></button>
         </span>
       ) : (

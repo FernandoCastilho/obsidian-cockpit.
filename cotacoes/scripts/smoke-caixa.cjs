@@ -201,6 +201,12 @@ async function main() {
     await draft.page.getByRole('button', { name: 'Fechar edição do valor de Energia teste', exact: true }).click()
     await input.waitFor({ state: 'hidden' })
     assert.equal(draft.service.posts.length, 1, 'Fechar um rascunho não salva o valor')
+    await fixed(draft.page).locator('.valor-btn').click()
+    await input.fill('777,00')
+    await input.press('Tab')
+    await draft.page.keyboard.press('Enter')
+    await input.waitFor({ state: 'hidden' })
+    assert.equal(draft.service.posts.length, 1, 'Fechar pelo teclado não salva o valor')
     await draft.context.close()
 
     const race = await session(makeService())
