@@ -112,8 +112,10 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
       >
         ?
       </button>
-      {show && pinned && mobile && <span className="pop-backdrop" onClick={() => setPinned(false)} aria-hidden="true" />}
-      {show && (floating ? createPortal(pop, document.body) : pop)}
+      {/* no celular o balão vira uma folha fixa na base da tela: vai para o corpo da página, senão a coluna fixa (sticky) das
+          linhas de baixo de uma tabela fica por cima dele */}
+      {show && pinned && mobile && createPortal(<span className="pop-backdrop" onClick={() => setPinned(false)} aria-hidden="true" />, document.body)}
+      {show && (floating || mobile ? createPortal(pop, document.body) : pop)}
     </span>
   )
 }

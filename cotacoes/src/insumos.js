@@ -1,11 +1,13 @@
 // Conteúdo de apoio por assunto da aba Setores: o que mexe no preço e o que perguntar na visita.
 // `commodity`: ids do arquivo commodities.json (Pink Sheet/EIA); `daily`: id em insumos-precos.json (preço diário aproximado).
 export const SETORES = [
-  { id: 'industria', label: 'Indústria' },
-  { id: 'comercio', label: 'Comércio e consumo' },
-  { id: 'servicos', label: 'Serviços' },
-  { id: 'telecom', label: 'Internet e telecom' },
+  { id: 'industria', grupo: 'Produção e consumo', label: 'Indústria' },
+  { id: 'comercio', grupo: 'Produção e consumo', label: 'Comércio e consumo' },
+  { id: 'servicos', grupo: 'Serviços', label: 'Serviços' },
+  { id: 'telecom', grupo: 'Serviços', label: 'Internet e telecom' }, // IBGE: informação e comunicação é serviço
 ]
+// Ícone do rótulo de cada grupo nas abas: destaca o título do grupo para não se misturar com as abas.
+export const GRUPO_ICONE = { 'Produção e consumo': '🏭', Serviços: '💼', Metais: '⛏️', Energia: '🛢️' }
 export const INSUMOS = [
   { id: 'cobre', grupo: 'Metais', label: 'Cobre', commodity: ['copper'], daily: 'cobre',
     move: ['Demanda da China (construção, rede elétrica, veículos elétricos) e estoques nas bolsas (LME, COMEX).', 'Oferta de minas no Chile e no Peru; greves e queda de teor do minério.', 'Tarifas dos EUA sobre metais e o dólar: dólar forte pressiona a cotação em US$.', 'No Brasil, o custo em R$ sobe com o dólar mesmo que o preço em US$ fique parado.'],

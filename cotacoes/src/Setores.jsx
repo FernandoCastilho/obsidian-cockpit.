@@ -4,7 +4,7 @@ import NoticiasPorDia from './NoticiasPorDia.jsx'
 import Estado from './Estado.jsx'
 import { useDataFile } from './useDataFile.js'
 import { normalizeTemas } from './reforma.js'
-import { INSUMOS, SETORES, parseSetor } from './insumos.js'
+import { GRUPO_ICONE, INSUMOS, SETORES, parseSetor } from './insumos.js'
 import { dataTimestamp } from './dataTimestamp.js'
 
 const num = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
@@ -42,9 +42,9 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const usdLabel = q?.fallback ? 'dólar de referência (dia anterior)' : q?.stale ? 'última cotação do dólar disponível' : 'dólar de hoje'
   const itens = insumo ? (comm.data?.commodities ?? []).filter((c) => insumo.commodity.includes(c.id) && Number.isFinite(c.value)) : []
   const serie = insumo?.daily ? diario.data?.series?.[insumo.daily] : null
-  // Dois botões no topo (Setores | Insumos); embaixo, só as abas do grupo escolhido. Insumos separados em Metais e Energia.
+  // Dois botões no topo (Setores | Insumos); embaixo, só as abas do grupo escolhido. Setores em Produção e consumo e Serviços; insumos em Metais e Energia, cada grupo com ícone.
   const secao = insumo ? 'insumos' : 'setores'
-  const tabs = secao === 'insumos' ? INSUMOS.map((t) => ({ id: t.id, label: t.label, grupo: t.grupo })) : SETORES.map((t) => ({ id: t.id, label: t.label }))
+  const tabs = (secao === 'insumos' ? INSUMOS : SETORES).map((t) => ({ id: t.id, label: t.label, grupo: t.grupo, icone: GRUPO_ICONE[t.grupo] }))
   return (
     <div className="setores">
       <nav className="learn-nav cen-nav setores-secao" aria-label="Setores ou insumos">
