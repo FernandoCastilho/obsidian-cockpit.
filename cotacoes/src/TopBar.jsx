@@ -33,7 +33,7 @@ function Clocks() {
 
 // Barra superior do terminal (computador): marca, seções, relógios e estado dos dados.
 // Atalho: Alt+1 a Alt+9 (e Alt+0 para a 10ª) trocam de seção (as teclas F1 a F12 ficam com o navegador).
-export default function TopBar({ tab, onTab, feed, feedAt }) {
+export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.altKey && !e.ctrlKey && !e.metaKey && /^[0-9]$/.test(e.key)) {
@@ -59,9 +59,9 @@ export default function TopBar({ tab, onTab, feed, feedAt }) {
         ))}
       </nav>
       <Clocks />
-      <div className={`topbar-feed ${feed}`} role="status" title="Estado da última coleta de câmbio">
+      <div className={`topbar-feed ${feed}`} role="status" title={feedTitle || 'Estado das referências de câmbio'}>
         <span aria-hidden="true" />
-        {STATE_TEXT[feed]}
+        {feedLabel || STATE_TEXT[feed]}
         {feedAt && feed !== 'loading' && <b>{feedAt}</b>}
       </div>
       <AvisosButton className="topbar-info" />

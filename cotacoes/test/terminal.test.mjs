@@ -124,7 +124,7 @@ test('Brent inválido ou de outra série não entra', () => {
   assert.equal(tapeItems(quotes, [], { ...oil, unit: 'USD/m3' }).some((i) => i.key === 'BRENT'), false)
 })
 
-test('estado das fontes: atrasado só acima do limite; fim de semana não atrasa coleta de dia útil', () => {
+test('estado das fontes: prazo de atraso considera a pausa semanal real', () => {
   const now = Date.parse('2026-10-27T12:00:00Z')
   const H = 3600e3
   const rows = dataStatus([
@@ -134,7 +134,9 @@ test('estado das fontes: atrasado só acima do limite; fim de semana não atrasa
     { key: 'd', label: 'D', at: undefined, maxAge: 6 * H, weekdays: true },
   ], now, false)
   assert.deepEqual(rows.map((r) => r.state), ['ok', 'old', 'old', 'missing'])
-  const weekend = dataStatus([{ key: 'b', label: 'B', at: now - 40 * H, maxAge: 6 * H, weekdays: true }, { key: 'q', label: 'Q', at: now - 40 * H, maxAge: 6 * H, weekdays: false }], now, true)
+  const sunday = Date.parse('2026-11-01T12:00:00-03:00')
+  const friday = Date.parse('2026-10-30T23:00:00-03:00')
+  const weekend = dataStatus([{ key: 'b', label: 'B', at: friday, maxAge: 6 * H, weekdays: true }, { key: 'q', label: 'Q', at: friday, maxAge: 6 * H, weekdays: false }], sunday, true)
   assert.deepEqual(weekend.map((r) => r.state), ['ok', 'old'])
 })
 

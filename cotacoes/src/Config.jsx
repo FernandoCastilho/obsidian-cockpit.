@@ -7,16 +7,15 @@ import { useMacro } from './useMacro.js'
 import { useCurves } from './useCurves.js'
 import { useNews } from './useNews.js'
 import { useDataFile } from './useDataFile.js'
-import { isWeekendBR } from './market.js'
 import { dataTimestamp } from './dataTimestamp.js'
-import { SHORTCUTS, ageText, dataStatus } from './terminal.js'
+import { SHORTCUTS, dataStatus } from './terminal.js'
 import { ATRASO_H, FONTES, NAVEGADOR, REGRAS, RESUMO } from './governanca.js'
 
 const H = 3600e3
-const STATE = { ok: ['Atualizado', 'up'], old: ['Atrasado', 'down'], missing: ['Indisponível', 'flat'] }
+const TONE = { ok: 'up', old: 'down', retained: 'down', partial: 'down', reserve: 'flat', missing: 'flat', loading: 'flat' }
 
 // Configurações: atalhos, estado de cada fonte de dados, aparência, instalação e histórico de mudanças.
-export default function Config({ quotesAt, quotesVia, fx, setFx }) {
+export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, setFx }) {
   const macro = useMacro()
   const curves = useCurves()
   const news = useNews()
@@ -40,6 +39,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
   const calendar = useDataFile('calendar.json')
   const ipcaGroups = useDataFile('ipca-groups.json')
   const freightJp = useDataFile('freight-jp.json')
+  const resources = { macro, curves, news, 'reforma-tributaria': reforma, temas, 'insumos-precos': insumosPrecos, indices, policy, oil, indexadores, commodities, 'commodities-brl': commoditiesBrl, fuels, freight, bndes, moedas, ipca, estr, 'euro-curve': euroCurve, divida, calendar, 'ipca-groups': ipcaGroups, 'freight-jp': freightJp }
   const rows = dataStatus(
     [
       { key: 'quotes', label: `Câmbio${quotesVia ? ` · ${quotesVia === 'central' ? 'coleta central' : quotesVia === 'direto' ? 'consulta direta' : 'fonte reserva'}` : ''}`, at: quotesAt ? new Date(quotesAt).getTime() : null, maxAge: centralMaxAge(), weekdays: false },
@@ -66,16 +66,16 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
       { key: 'divida', label: 'Dívida bruta do governo geral (Banco Central)', at: divida.data?.generatedAt, maxAge: ATRASO_H.divida * H, weekdays: true },
       { key: 'ipca-groups', label: 'IPCA por grupos (IBGE)', at: ipcaGroups.data?.generatedAt, maxAge: ATRASO_H['ipca-groups'] * H, weekdays: true },
       { key: 'calendar', label: 'Calendário econômico', at: calendar.data?.generatedAt, maxAge: ATRASO_H.calendar * H, weekdays: true },
-    ],
+    ].map(entry => ({ ...entry, resource: resources[entry.key], ...(entry.key === 'quotes' ? { health: quotesHealth } : {}) })),
     Date.now(),
-    isWeekendBR(),
   )
   // Uma linha por fonte: o estado e a coleta vêm das chaves que ela cobre (vale o pior estado e a coleta mais antiga).
-  const RANK = { missing: 2, old: 1, ok: 0 }
+  const RANK = { missing: 6, retained: 5, partial: 4, old: 3, reserve: 2, loading: 1, ok: 0 }
   const fontes = FONTES.map((f) => {
     const mine = rows.filter((r) => f.chaves.includes(r.key))
     const worst = mine.reduce((w, r) => (!w || RANK[r.state] > RANK[w.state] || (RANK[r.state] === RANK[w.state] && (r.at ?? 0) < (w.at ?? 0)) ? r : w), null)
-    return { ...f, state: worst?.state ?? 'missing', at: worst?.at ?? null, ageMs: worst?.ageMs ?? null }
+    const checked = mine.map(r => r.checkedAt).filter(Boolean)
+    return { ...f, ...worst, state: worst?.state ?? 'missing', statusLabel: worst?.statusLabel ?? 'Indisponível', checkedAt: checked.length === mine.length ? Math.min(...checked) : null, parts: mine }
   })
   return (
     <div className="config-desk">
@@ -84,13 +84,20 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
         <ul className="config-list config-resumo">{RESUMO.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="config-sub">Fonte por fonte</h3>
         <div className="config-scroll" role="region" aria-label="Estado, origem e frequência de cada fonte" tabIndex={0}><table className="config-table config-gov">
-          <thead><tr><th scope="col">Fonte</th><th scope="col">Estado</th><th scope="col">Última coleta</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
+          <thead><tr><th scope="col">Fonte</th><th scope="col">Estado</th><th scope="col">Horários</th><th scope="col">Origem</th><th scope="col">Coleta</th><th scope="col">Quando o dado muda</th><th scope="col">Atrasado após</th></tr></thead>
           <tbody>
             {fontes.map((f) => (
               <tr key={f.id}>
                 <th scope="row">{f.nome}</th>
-                <td data-label="Estado"><span className={`chip ${STATE[f.state][1]}`}>{STATE[f.state][0]}</span></td>
-                <td data-label="Última coleta">{f.at ? `${dataTimestamp(f.at)} · ${ageText(f.ageMs)}` : '—'}</td>
+                <td data-label="Estado"><span className={`chip ${TONE[f.state]}`} title={f.detail}>{f.statusLabel}</span></td>
+                <td data-label="Horários">
+                  <div>Conferido no painel: {f.checkedAt ? dataTimestamp(f.checkedAt) : 'ainda não conferido'}</div>
+                  {f.id === 'cambio' && quotesHealth?.observedAt && <div>Referência mais antiga: {dataTimestamp(quotesHealth.observedAt)}</div>}
+                  <details className="config-times"><summary>Ver datas e estado</summary>
+                    {f.parts.map(part => <div key={part.key}><b>{part.label}</b><p>{part.detail}</p><p>{part.key === 'quotes' && quotesVia !== 'central' ? 'Resposta recebida' : 'Arquivo gerado'}: {part.generatedAt ? dataTimestamp(part.generatedAt) : 'data não disponível'}<br />Última leitura bem-sucedida no painel: {part.lastSuccessAt ? dataTimestamp(part.lastSuccessAt) : 'data não disponível'}</p></div>)}
+                    {f.id === 'cambio' ? <ul>{['USD', 'EUR', 'JPY', 'CNH'].map(code => <li key={code}>{code}/BRL: {quotes?.[code]?.timestamp ? dataTimestamp(quotes[code].timestamp) : 'referência indisponível'}</li>)}</ul> : <p>A referência e o período de cada dado aparecem no indicador correspondente. Uma taxa vigente pode permanecer igual entre divulgações.</p>}
+                  </details>
+                </td>
                 <td data-label="Origem">{f.origem}</td>
                 <td data-label="Coleta">{f.coleta}</td>
                 <td data-label="Quando o dado muda">{f.muda}</td>
@@ -99,7 +106,7 @@ export default function Config({ quotesAt, quotesVia, fx, setFx }) {
             ))}
           </tbody>
         </table></div>
-        <p className="config-note">As coletas rodam em dias úteis; no fim de semana o app mostra o último dado publicado. "Atrasado" indica que a fonte está sem atualização acima do esperado, não que o número esteja errado. Horários em Brasília. Coleta é a consulta do app às fontes; o dado só muda quando o órgão de origem publica.</p>
+        <p className="config-note">Conferido no painel é a última tentativa de ler os dados neste navegador. Arquivo gerado é o horário da coleta publicada; não é o horário de cada observação. “Sem alerta” indica arquivo dentro do prazo e sem falha informada, sem certificar o número. No fim de semana, a pausa das coletas de dias úteis preserva os atrasos e as falhas anteriores. Horários em Brasília.</p>
         <h3 className="config-sub">No seu navegador</h3>
         <ul className="config-list">{NAVEGADOR.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="config-sub">Regras</h3>
