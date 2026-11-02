@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { buildData, colunaDe, mesesDisponiveis, tipoParaSub } from './model.js'
-import { carregar, gravar, ErroSessao } from './sheets.js'
+import { buildData, mesesDisponiveis, tipoParaSub } from './model.js'
+import { carregar, gravarRegistro, ErroSessao, ErroConflito, ErroGravacaoIncerta } from './sheets.js'
 import { entrar, esquecerToken, lerToken, sair } from './auth.js'
 import { tabsDemo } from './demo.js'
 import { CLIENT_ID, SHEET_ID } from './config.js'
@@ -15,7 +15,7 @@ import Classificar from './Classificar.jsx'
 const ABAS = [{ id: 'hoje', nome: 'Hoje' }, { id: 'lanc', nome: 'Lançamentos' }, { id: 'fixas', nome: 'Contas fixas' }]
 
 export default function App() {
-  const [tabs, setTabs] = useState(null)
+  const tabs = useRef(null)
   const [data, setData] = useState(null)
   const [demo, setDemo] = useState(false)
   const [erro, setErro] = useState('')
@@ -26,25 +26,31 @@ export default function App() {
   const [filtro, setFiltro] = useState('todos')
   const [aberto, setAberto] = useState(null)
   const token = useRef(null)
+  const operacaoEmCurso = useRef(false)
 
   const aplicar = useCallback((t) => {
     const d = buildData(t)
     const meses = mesesDisponiveis(d.lancamentos)
-    setTabs(t)
+    tabs.current = t
     setData(d)
     setMes((m) => (meses.length && !meses.includes(m) && m === mesAtual() ? meses[0] : m))
   }, [])
 
-  const voltar = (msg = '') => { esquecerToken(); token.current = null; setTabs(null); setData(null); setDemo(false); setAberto(null); setErro(msg) }
+  const voltar = (msg = '') => { esquecerToken(); token.current = null; tabs.current = null; setData(null); setDemo(false); setAberto(null); setErro(msg) }
 
   // Roda uma ação que fala com o Google; sessão vencida volta para a tela de entrada.
   const executar = useCallback(async (fn) => {
+    if (operacaoEmCurso.current) return
+    operacaoEmCurso.current = true
     setOcupado(true)
     setErro('')
     try { return await fn() } catch (e) {
       if (e instanceof ErroSessao) voltar(e.message)
-      else setErro(e.message || 'Algo deu errado.')
-    } finally { setOcupado(false) }
+      else {
+        if (e instanceof ErroGravacaoIncerta) tabs.current = null
+        setErro(e.message || 'Algo deu errado.')
+      }
+    } finally { operacaoEmCurso.current = false; setOcupado(false) }
   }, [])
 
   const carregarTudo = useCallback(() => executar(async () => { aplicar(await carregar(token.current, SHEET_ID)) }), [executar, aplicar])
@@ -54,7 +60,15 @@ export default function App() {
   const clicarEntrar = () => executar(async () => { token.current = await entrar(CLIENT_ID); aplicar(await carregar(token.current, SHEET_ID)) })
   const verDemo = () => { setDemo(true); aplicar(tabsDemo()) }
 
-  const escrever = (grupos) => (demo ? Promise.resolve() : gravar(token.current, SHEET_ID, grupos))
+  const escrever = async (pedido) => {
+    if (demo) return
+    if (!tabs.current) throw new ErroConflito('Atualize os dados antes de fazer outra alteração.')
+    const sessao = token.current
+    const resultado = await gravarRegistro(sessao, SHEET_ID, { ...pedido, esperado: tabs.current?.[pedido.aba] })
+    // O snapshot só avança depois de uma confirmação coerente do Google.
+    // Se a pessoa saiu durante a solicitação, não restaura os dados na tela.
+    if (token.current === sessao && tabs.current) aplicar({ ...tabs.current, [pedido.aba]: resultado.snapshot })
+  }
   const trocar = (lista, id, mudanca) => lista.map((x) => (x.id === id ? { ...x, ...mudanca } : x))
 
   const acoes = {
@@ -62,22 +76,17 @@ export default function App() {
       const sub = data.subcategorias.find((s) => s.id === subId)
       const cat = data.categorias.find((c) => c.id === sub.categoria)
       const tipo = tipoParaSub(subId, cat)
-      const cab = tabs.Lancamentos
-      await escrever([
-        { range: `Lancamentos!${colunaDe(cab, 'subcategoria_id')}${l.row}`, values: [[subId]] },
-        { range: `Lancamentos!${colunaDe(cab, 'tipo')}${l.row}`, values: [[tipo]] },
-        { range: `Lancamentos!${colunaDe(cab, 'revisado')}${l.row}`, values: [['Sim']] },
-      ])
-      setData((d) => ({ ...d, lancamentos: trocar(d.lancamentos, l.id, { sub: subId, subNome: sub.nome, categoria: cat.id, categoriaNome: cat.nome, semCategoria: false, tipo, revisado: true }) }))
+      await escrever({ aba: 'Lancamentos', id: l.id, mudancas: { subcategoria_id: subId, tipo, revisado: 'Sim' } })
+      if (demo) setData((d) => ({ ...d, lancamentos: trocar(d.lancamentos, l.id, { sub: subId, subNome: sub.nome, categoria: cat.id, categoriaNome: cat.nome, semCategoria: false, tipo, revisado: true }) }))
       setAberto(null)
     }),
     marcarPago: (f, pago) => executar(async () => {
-      await escrever([{ range: `ContasFixas!${colunaDe(tabs.ContasFixas, 'pago')}${f.row}`, values: [[pago ? 'Sim' : 'Não']] }])
-      setData((d) => ({ ...d, fixas: trocar(d.fixas, f.id, { pago }) }))
+      await escrever({ aba: 'ContasFixas', id: f.id, mudancas: { pago: pago ? 'Sim' : 'Não' } })
+      if (demo) setData((d) => ({ ...d, fixas: trocar(d.fixas, f.id, { pago }) }))
     }),
     valorMes: (f, valor) => executar(async () => {
-      await escrever([{ range: `ContasFixas!${colunaDe(tabs.ContasFixas, 'valor_mes')}${f.row}`, values: [[valor]] }])
-      setData((d) => ({ ...d, fixas: trocar(d.fixas, f.id, { mes: valor }) }))
+      await escrever({ aba: 'ContasFixas', id: f.id, mudancas: { valor_mes: valor } })
+      if (demo) setData((d) => ({ ...d, fixas: trocar(d.fixas, f.id, { mes: valor }) }))
     }),
   }
 
