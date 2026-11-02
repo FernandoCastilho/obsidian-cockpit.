@@ -191,7 +191,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       p.on('pageerror', (e) => errors.push(e.message))
       await p.goto(base + '/#config')
       const botao = p.getByRole('button', { name: 'Laser pointer: riscar a tela' }); await botao.waitFor()
-      const box = await botao.boundingBox(); assert.ok(box.width >= 44 && box.height >= 44, 'área de toque de 44 px')
+      // O portal muda o botão para o encaixe do cabeçalho no primeiro frame; aguarda visibilidade e estabilidade antes de medir.
+      await botao.click({ trial: true })
+      const box = await botao.boundingBox(); assert.ok(box && box.width >= 44 && box.height >= 44, 'área de toque estável de 44 px')
       assert.equal(await botao.getAttribute('aria-pressed'), 'false'); assert.equal(await p.locator('.laser-canvas').count(), 0)
       const pixels = () => p.evaluate(() => { const c = document.querySelector('.laser-canvas'); if (!c) return -1; const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 40) n++; return n })
       await botao.click(); await p.locator('.laser-canvas').waitFor()

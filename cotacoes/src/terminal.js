@@ -3,6 +3,7 @@
 import { liveCross } from './parity.js'
 import { brentReturns } from './oilReference.js'
 import { nf } from './format.js'
+import { sourceHealth } from './dataHealth.js'
 
 // Ordem do terminal (diferente da barra inferior do celular). Os ids são os mesmos de Nav.jsx.
 export const DESK_TABS = [
@@ -193,15 +194,12 @@ export function feedState({ error, aged, hasQuotes }) {
   return aged ? 'delayed' : 'ok'
 }
 
-// Estado de cada fonte na tela de configurações. `at` em ms ou texto de data; `maxAge` em ms; fim de semana não conta como atraso
-// quando a coleta é de dias úteis (`weekdays`).
-export function dataStatus(entries, now = Date.now(), weekend = false) {
-  return entries.map((e) => {
-    const at = typeof e.at === 'number' ? e.at : Date.parse(e.at)
-    if (!Number.isFinite(at)) return { key: e.key, label: e.label, at: null, ageMs: null, state: 'missing' }
-    const ageMs = Math.max(0, now - at)
-    const late = ageMs > e.maxAge && !(weekend && e.weekdays)
-    return { key: e.key, label: e.label, at, ageMs, state: late ? 'old' : 'ok' }
+// Estado da coleta; metadados de retenção prevalecem sobre a data de geração.
+export function dataStatus(entries, now = Date.now()) {
+  return entries.map(e => {
+    const health = e.health ?? sourceHealth(e.resource ?? { data: { generatedAt: e.at } }, e.maxAge, e.weekdays, now)
+    const { label: statusLabel, ...details } = health
+    return { key: e.key, label: e.label, ...details, statusLabel, at: health.generatedAt, ageMs: health.generatedAt ? Math.max(0, now - health.generatedAt) : null }
   })
 }
 

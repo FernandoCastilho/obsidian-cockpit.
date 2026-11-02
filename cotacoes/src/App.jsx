@@ -1,7 +1,7 @@
 import { dataTimestamp } from './dataTimestamp.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
-import { quoteAgeState } from './quoteFreshness.js'
+import { quoteHealth } from './dataHealth.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
 const Calculadora = lazy(() => import('./Calculadora.jsx'))
@@ -33,7 +33,6 @@ import Nav, { TABS } from './Nav.jsx'
 import Resumo from './Resumo.jsx'
 import TopBar from './TopBar.jsx'
 import { Tape } from './TerminalDesk.jsx'
-import { feedState } from './terminal.js'
 import { rateTiles } from './snapshot.js'
 import Clock from './Clock.jsx'
 const News = lazy(() => import('./News.jsx'))
@@ -127,8 +126,8 @@ function Sheet({ onClose, children }) {
 }
 
 export default function App() {
-  const { quotes, error, updatedAt, via, refresh, refreshing, limits } = useQuotes(POLL_MS)
-  const quoteAgeWarning = quotes && CURRENCIES.some(c => !!quoteAgeState(quotes[c.code]))
+  const { quotes, error, updatedAt, checkedAt, lastSuccessAt, via, refresh, refreshing, limits } = useQuotes(POLL_MS)
+  const health = quoteHealth(quotes, { error, checkedAt, lastSuccessAt, collectedAt: updatedAt })
   const macro = useMacro()
   const curves = useCurves()
   const hol = useHolidays()
@@ -204,7 +203,7 @@ export default function App() {
     setSub('inflacao')
     try { window.history.replaceState(null, '', '#cenarios/inflacao') } catch { /* sem histórico */ }
   }, [tab, sub])
-  // Troca de aba ou de assunto (Cenários, Setores, Calculadoras, Aprender): esmaecimento curto do conteúdo novo.
+  // Troca de tela preservada da atualização publicada em paralelo.
   const viewKey = ['cenarios', 'setores', 'calculadora', 'aprender'].includes(tab) ? `${tab}/${tab !== 'cenarios' ? sub.split('/')[0] : cenView}` : tab
   const mainRef = useRef(null)
   const viewAnim = useRef(null)
@@ -214,16 +213,16 @@ export default function App() {
   const quoteRefresh = { run: refresh, busy: refreshing, disabled: refreshing || limits.wait > 0 || limits.left <= 0, title: limits.left <= 0 ? 'Limite diário de atualizações manuais atingido neste navegador' : `Consulta a cotação agora, direto na fonte. Limite: 1 por minuto e ${REFRESH_DAILY_MAX} por dia (restam ${limits.left}).${wait}` }
   const rates = rateTiles(macro.data, curves.data)
   const oil = useDataFile('oil.json')
-  const feed = feedState({ error, aged: quoteAgeWarning, hasQuotes: !!quotes })
-  const feedAt = updatedAt ? new Date(updatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) : null
+  const feed = health.feed
+  const feedAt = health.observedAt ? new Date(health.observedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) : null
   const quoteStatus = (
     <p className="status src">
-          <span className={`dot ${error ? 'err' : quoteAgeWarning ? 'delayed' : quotes ? 'ok' : ''}`} aria-label={quoteAgeWarning ? 'Há referência antiga, reserva ou indisponível; confira os horários no rodapé' : undefined} />
+          <span className={`dot ${feed}`} aria-label={health.detail} />
           {error
             ? `Falha ao atualizar as cotações de câmbio (${error}). Tentando novamente…`
-            : updatedAt
-              ? `Câmbio — atualizado em ${dataTimestamp(updatedAt)}`
-              : 'Carregando…'}
+            : `Câmbio — ${health.label}`}
+          {health.observedAt && <> · Referência mais antiga: {dataTimestamp(health.observedAt)}</>}
+          {health.checkedAt && <> · Conferido no painel: {dataTimestamp(health.checkedAt)}</>}
             <button
               type="button"
               className="refresh-mini"
@@ -250,7 +249,7 @@ export default function App() {
     <Recado />
     <Laser />
     <header className="term-head">
-      <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} />
+      <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} feedLabel={health.label} feedTitle={health.observedAt ? health.label + ' · Referência mais antiga: ' + dataTimestamp(health.observedAt) : health.detail} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
     </header>
     <div className="nav-top"><Nav tab={tab} onTab={(id) => goto(id)} /></div>
@@ -321,7 +320,7 @@ export default function App() {
 
       {tab === 'aprender' && <Aprender view={sub} goto={goto} />}
 
-      {tab === 'config' && <Config quotesAt={updatedAt} quotesVia={via} fx={fx} setFx={setFx} />}
+      {tab === 'config' && <Config quotesAt={updatedAt} quotesVia={via} quotes={quotes} quotesHealth={health} fx={fx} setFx={setFx} />}
 
       {open && (
         <Sheet onClose={() => setOpen(null)}>

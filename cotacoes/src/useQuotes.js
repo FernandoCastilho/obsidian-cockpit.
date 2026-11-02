@@ -36,8 +36,9 @@ const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 let blockedUntil = 0
 let blockedMsg = ''
 
-async function getJson(url, label, signal) {
+async function getJson(url, label, signal, meta) {
   if (Date.now() < blockedUntil) throw new Error(blockedMsg)
+  if (meta) meta.checkedAt = Date.now()
   const res = await fetch(url, { signal })
   if (!res.ok) {
     const err = new Error(`${label}: HTTP ${res.status}`)
@@ -76,10 +77,11 @@ export const toQuote = (q, source) => {
 // Reserva quando a fonte principal falha (ex.: limite de requisições): referência diária do BCE, sem compra/venda separadas.
 // Guardada por 30 min: o BCE só atualiza uma vez por dia.
 const ecbCache = new Map()
-async function fetchEcb(code, signal) {
+async function fetchEcb(code, signal, meta) {
   const hit = ecbCache.get(code)
   if (hit && Date.now() - hit.at < 30 * 60000) return hit.quote
   const from = code === 'CNH' ? 'CNY' : code
+  if (meta) meta.checkedAt = Date.now()
   const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=${from}&symbols=BRL`, { signal })
   if (!res.ok) throw new Error(`BCE ${from}: HTTP ${res.status}`)
   const j = await res.json()
@@ -89,11 +91,12 @@ async function fetchEcb(code, signal) {
   const invalid = rawQuoteError({ bid: rate, ask: rate, high: rate, low: rate, pctChange: 0, timestamp: timestamp / 1000 }, code === 'CNH' ? 'CNHBRL' : PAIRS[code])
   if (invalid) throw new Error(`BCE ${from}: ${invalid}`)
   const quote = { source: from, fallback: true, bid: rate, ask: rate, high: NaN, low: NaN, pct: 0, timestamp }
+  if (meta) meta.successfulAt = Date.now()
   ecbCache.set(code, { at: Date.now(), quote })
   return quote
 }
 
-async function complete(code, batch, batchError, signal, { cnh, rejected = {} } = {}) {
+async function complete(code, batch, batchError, signal, { cnh, rejected = {} } = {}, meta) {
   const errors = batchError ? [batchError] : []
   let quote = null
   if (batch) {
@@ -131,7 +134,7 @@ async function complete(code, batch, batchError, signal, { cnh, rejected = {} } 
   } else {
     // A reserva cobre falha de acesso à fonte. Uma resposta inválida deve preservar o último spot.
     try {
-      quote = await fetchEcb(code, signal)
+      quote = await fetchEcb(code, signal, meta)
     } catch (e) {
       if (e.name === 'AbortError') throw e
       errors.push(e.message)
@@ -158,8 +161,9 @@ export function centralMaxAge(now = Date.now()) {
   return (minute >= 570 && minute <= 1080 ? 45 : 75) * 60000
 }
 
-export async function fetchCentral(signal, base = DATA_BASE) {
+export async function fetchCentral(signal, base = DATA_BASE, meta) {
   if (!base) throw new Error('coleta central não configurada')
+  if (meta) meta.checkedAt = Date.now()
   const res = await fetch(`${base}/quotes.json?t=${Math.floor(Date.now() / 60000)}`, { signal })
   if (!res.ok) throw new Error(`coleta central: HTTP ${res.status}`)
   const j = await res.json()
@@ -174,6 +178,7 @@ let directRequestSeq = 0
 // direct=true (botão "Atualizar agora"): consulta a API na hora. Automático: lê a coleta central e só consulta
 // a API direto, no máximo a cada 5 min, se a coleta central estiver ausente ou velha.
 export async function fetchQuotes(signal, { direct = false, base } = {}) {
+  const meta = {}
   let batch = null
   let batchError = null
   let centralSnapshot = null
@@ -181,9 +186,10 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
   let collectedAt = Date.now()
   if (!direct) {
     try {
-      const c = await fetchCentral(signal, base)
+      const c = await fetchCentral(signal, base, meta)
       if (Number.isFinite(c.generatedAt) && c.generatedAt <= Date.now() + 60000 && Date.now() - c.generatedAt <= centralMaxAge()) {
         batch = c.quotes
+        meta.successfulAt = Date.now()
         centralSnapshot = c
         via = 'central'
         collectedAt = c.generatedAt
@@ -197,8 +203,9 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
     lastDirectAt = Date.now()
     const requestId = ++directRequestSeq
     try {
-      batch = await getJson(`${BASE}/${ALL}`, 'cotações', signal)
+      batch = await getJson(`${BASE}/${ALL}`, 'cotações', signal, meta)
       batchError = null
+      meta.successfulAt = Date.now()
       collectedAt = Date.now()
       if (!lastDirectSnapshot || requestId > lastDirectSnapshot.requestId) lastDirectSnapshot = { batch, collectedAt, requestId }
     } catch (e) {
@@ -214,8 +221,8 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
     collectedAt = lastDirectSnapshot.collectedAt
     via = 'direto'
   }
-  const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal, centralSnapshot ?? {})))
-  return { results: Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), via: batch ? via : 'reserva', collectedAt }
+  const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal, centralSnapshot ?? {}, meta)))
+  return { results: Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), via: batch ? via : 'reserva', collectedAt, checkedAt: meta.checkedAt ?? null, successfulAt: meta.successfulAt ?? null }
 }
 
 // Limite do botão "Atualizar agora", por navegador: 1 por minuto e 30 por dia (protege a cota da API de todos).
@@ -249,6 +256,8 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
   const [error, setError] = useState(null)
   const [errors, setErrors] = useState({})
   const [updatedAt, setUpdatedAt] = useState(null)
+  const [checkedAt, setCheckedAt] = useState(null)
+  const [lastSuccessAt, setLastSuccessAt] = useState(null)
   const [via, setVia] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
   const [limits, setLimits] = useState(() => refreshLimits())
@@ -262,8 +271,9 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
     const request = new AbortController()
     ctrl.current = request
     try {
-      const { results, via: v, collectedAt } = await fetchQuotes(request.signal, { direct })
+      const { results, via: v, collectedAt, checkedAt: checked, successfulAt } = await fetchQuotes(request.signal, { direct })
       if (request.signal.aborted || ctrl.current !== request) return
+      if (checked) setCheckedAt(checked)
       const next = {}
       const errs = {}
       const dir = {}
@@ -297,6 +307,7 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
       setQuotes(next)
       setErrors(errs)
       if (fresh) {
+        if (successfulAt) setLastSuccessAt(successfulAt)
         setUpdatedAt(new Date(collectedAt))
         setVia(v)
       }
@@ -360,5 +371,5 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
     }
   }, [load])
 
-  return { quotes, direction, error, errors, updatedAt, via, reload: () => load(false), refresh, refreshing, limits }
+  return { quotes, direction, error, errors, updatedAt, checkedAt, lastSuccessAt, via, reload: () => load(false), refresh, refreshing, limits }
 }

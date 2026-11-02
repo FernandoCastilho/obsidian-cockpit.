@@ -22,3 +22,14 @@ A coleta e o navegador compartilham `src/quoteSafety.js`. Antes de aceitar um pr
 Uma atualização rejeitada mantém apenas a última referência que também passe nas verificações, com horário original e aviso. Sem referência anterior válida, o par fica indisponível. Outras moedas continuam atualizando. O cruzamento CNH é preservado separadamente: uma ponta rejeitada não pode ser misturada com uma ponta nova. Valores retidos não acrescentam pontos ao intraday. Fontes, fórmula do CNH, defasagem entre as pontas e histórico diário não são alterados por esta proteção.
 
 Execute `node --test test/quote-safety.test.mjs` para reproduzir os cenários de 5,40 → 54, falhas repetidas, primeira coleta, recuperação, rejeição da ponta USD/CNH, migração de arquivo antigo e campos inválidos. Os testes usam dados sintéticos e não consultam cotações reais.
+
+
+## Estado da coleta e horário das referências
+
+`dataHealth.js` separa a tentativa de leitura no navegador (`checkedAt`), a última leitura com dados válidos (`lastSuccessAt`), a geração do arquivo e o horário original das cotações. O cabeçalho e Configurações usam a mesma avaliação do câmbio. Ler um arquivo novo não torna recente uma cotação antiga. Retenção e falhas parciais prevalecem sobre a geração recente do arquivo. Os detalhes de Configurações mostram as datas; uma consulta direta não é rotulada como arquivo gerado.
+
+Nas coletas de dias úteis, o relógio de atraso exclui sábado e domingo de Brasília, mantendo o atraso já existente e retomando a contagem na segunda. Os limites e os agendamentos não mudam. Não são presumidos feriados ou calendários de publicação específicos de cada país. A idade factual das cotações continua usando o limite existente de dez minutos, inclusive no fim de semana, sem declarar mercado aberto ou fechado.
+
+Para indicadores periódicos ou taxas em vigor (por exemplo, Selic e IPCA), o estado da coleta considera os metadados do arquivo e suas falhas, sem inferir atraso apenas porque a última observação é antiga. “Sem alerta” significa ausência de falha informada e arquivo dentro do prazo; a referência permanece indicada no painel correspondente.
+
+Regressão: `node --test test/data-health.test.mjs test/terminal.test.mjs`; testes de leitura em `test/health-refresh.test.mjs`. O smoke `smoke-data-health.cjs` confere os estados e as datas no build, com dados sintéticos.

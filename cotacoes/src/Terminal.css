@@ -516,3 +516,9 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .noticias-agenda { margin: 12px 0 4px; color: var(--mut); font-size: .8rem; }
 .linklike { padding: 0; background: none; border: 0; color: var(--amber); font: inherit; text-decoration: underline; cursor: pointer; }
 .executive-rates .executive-rates__table thead .executive-rates__indicator span { text-transform: none; letter-spacing: 0; } /* unidade (% a.a.) sem caixa alta */
+
+/* Datas da coleta: detalhes locais, com alvo de toque e quebra de texto. */
+.config-times { margin-top: 4px; overflow-wrap: anywhere; }
+.config-times summary { min-height: 44px; padding: 10px 0; cursor: pointer; color: var(--fg); }
+.config-times summary:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.config-times p { margin: 4px 0 8px; }

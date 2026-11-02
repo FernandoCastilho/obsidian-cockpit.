@@ -7,7 +7,7 @@ const resources = new Map()
 const TTL = 10 * 60000
 function resource(file) {
   if (!resources.has(file)) {
-    resources.set(file, { state: { status: 'loading' }, at: 0, pending: null, listeners: new Set() })
+    resources.set(file, { state: { status: 'loading', checkedAt: null, lastSuccessAt: null }, at: 0, pending: null, listeners: new Set() })
     // botão "atualizar" do painel: relê este arquivo na hora, ignorando o intervalo e o cache
     onRefresh((files) => files.includes(file) ? loadDataFile(file, Date.now(), true).then((s) => { if (s.status === 'error' || s.stale) throw new Error(s.error || 'falha') }) : undefined)
   }
@@ -19,6 +19,7 @@ export function loadDataFile(file, now = Date.now(), force = false) {
   if (!force && r.at && now - r.at < TTL) return Promise.resolve(r.state)
   const ctrl = new AbortController()
   const timeout = setTimeout(() => ctrl.abort(), 20000)
+  const checkedAt = Date.now()
   r.pending = (async () => {
     try {
       const response = await fetch(`./${file}?t=${force ? now : Math.floor(now / TTL)}`, { signal: ctrl.signal, ...(force ? { cache: 'no-store' } : {}) })
@@ -26,11 +27,11 @@ export function loadDataFile(file, now = Date.now(), force = false) {
       const data = await response.json()
       if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Arquivo de dados inválido')
       if (r.state.data?.generatedAt && data.generatedAt < r.state.data.generatedAt) throw new Error('Resposta anterior à última coleta disponível')
-      r.state = { status: 'ok', data }
+      r.state = { status: 'ok', data, checkedAt, lastSuccessAt: Date.now() }
       r.at = Date.now()
     } catch (error) {
       const message = error.name === 'AbortError' ? 'A fonte demorou a responder. Tentando novamente.' : error.message
-      r.state = r.state.data ? { ...r.state, stale: true, error: message } : { status: 'error', error: message }
+      r.state = r.state.data ? { ...r.state, stale: true, error: message, checkedAt } : { status: 'error', error: message, checkedAt, lastSuccessAt: null }
     } finally {
       clearTimeout(timeout)
       r.pending = null

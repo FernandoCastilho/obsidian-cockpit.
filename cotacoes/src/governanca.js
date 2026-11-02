@@ -11,7 +11,7 @@ export const CRONS = {
   quotes: ['20 12 * * 1-5', '20 15 * * 1-5', '50 17 * * 1-5', '7 3-12 * * 1-5', '7 21-23 * * 1-5', '7 0-2 * * 2-6'],
 }
 
-// Idade máxima, em horas, antes de o app marcar a fonte como "Atrasado" (no fim de semana, fontes de dias úteis não atrasam).
+// Idade máxima, em horas, antes de o app marcar a fonte como "Atrasado" (a pausa semanal não apaga atrasos anteriores).
 export const ATRASO_H = { macro: 6, curves: 6, news: 6, 'reforma-tributaria': 6, temas: 6, 'insumos-precos': 24, indices: 24, policy: 36, estr: 6, 'euro-curve': 6, indexadores: 6, bndes: 6, moedas: 6, oil: 72, commodities: 72, 'commodities-brl': 72, fuels: 72, freight: 72, 'freight-jp': 72, ipca: 72, 'ipca-groups': 72, divida: 72, calendar: 12 }
 
 const HORA = 'De hora em hora nos dias úteis (0h17 às 23h17)'
@@ -56,10 +56,10 @@ export const NAVEGADOR = [
 ]
 
 export const REGRAS = [
-  'Origem, API e frequência de cada referência ficam na Base de dados, nesta tela. Os painéis mostram só a data e a hora da última atualização, além de ressalvas curtas que mudam a leitura do número.',
-  'Se uma fonte falha, o app mantém o último dado publicado e marca "Atrasado" quando passa do prazo; o número não é inventado nem estimado.',
+  'Origem, API e frequência de cada referência ficam na Base de dados, nesta tela. Os horários separam a conferência no painel da geração do arquivo e da referência do dado, além de ressalvas curtas que mudam a leitura do número.',
+  'Se uma fonte falha, o app mantém o último dado válido e informa retenção ou atualização parcial. Uma nova leitura ou geração de arquivo não muda a data original do dado.',
   'Uma validação automática confere a coerência dos dados a cada publicação e abre um alerta quando encontra problema.',
-  'Fim de semana e feriados: não há coleta de dias úteis, e o app mostra o último dado de sexta ou do último dia útil.',
+  'No fim de semana, a pausa das coletas de dias úteis não apaga atrasos e falhas anteriores. A idade da cotação continua visível; os horários não afirmam se o mercado está aberto ou fechado.',
   'O agendamento do GitHub é feito no melhor esforço: horários podem atrasar ou ser pulados. Por isso o pregão usa uma coleta contínua de 5 em 5 minutos, em vez de uma execução por horário.',
   'Aplicativo educacional: informação ilustrativa, que não representa compromisso nem informações atualizadas on-line.',
 ]
