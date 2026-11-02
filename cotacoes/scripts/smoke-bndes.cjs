@@ -13,7 +13,8 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
     for (const width of [390, 820, 1280]) {
       const series = {}
       for (const [prazo, add] of [[36, 0], [60, 0.5], [84, 1]]) for (const liberacao of [30, 90]) series[`TFB_${prazo}_${liberacao}`] = { prazo, liberacao, points: daily(Date.UTC(2024, 0, 1), 1000, 10 + add + (liberacao === 90 ? 0.2 : 0), 0.02) }
-      const months = Array.from({ length: 60 }, (_, i) => [new Date(Date.UTC(2021, i, 1)).toISOString().slice(0, 10), Math.round((6 + i * 0.05) * 100) / 100])
+      // O histórico mensal precisa alcançar a janela de 3 meses da comparação com a TFB.
+      const months = Array.from({ length: 60 }, (_, i) => [new Date(Date.UTC(2021, i + 10, 1)).toISOString().slice(0, 10), Math.round((6 + i * 0.05) * 100) / 100])
       const file = { schemaVersion: 1, generatedAt: Date.now(), series, tlp: { code: 777, unit: 'a.a.', points: months }, stale: {}, errors: [] }
       const t0 = Date.UTC(2025, 5, 2)
       const moedas = { schemaVersion: 1, generatedAt: Date.now(), stale: {}, errors: [], series: { C01: { points: daily(t0, 520, 12, 0.01, 6) }, C02: { points: daily(t0, 520, 12.5, 0.01, 6) }, 604: { points: daily(t0, 520, 5, 0.001, 4) }, 143: { points: daily(t0, 520, 4, 0.002, 6) }, TR1: { points: [['2026-09-01', 3.64], ['2026-10-01', 3.6], ['2099-01-01', 9]] } } }
@@ -116,7 +117,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       if (outputDir) { await p.evaluate(() => window.scrollTo(0, 0)); await p.screenshot({ path: `${outputDir}/tlp-${width}.png` }) }
       assert.equal(await pressed('Período da série', '3 meses'), true, 'um único filtro de período: continua em 3 meses')
       await p.getByRole('group', { name: 'Período da série' }).getByRole('button', { name: 'Tudo', exact: true }).click()
-      assert.match(await p.locator('.bn-range').innerText(), /No período: 01\/01\/2021 6,00% a\.a\. → 01\/12\/2025 8,95% a\.a\./)
+      assert.match(await p.locator('.bn-range').innerText(), /No período: 01\/11\/2021 6,00% a\.a\. → 01\/10\/2026 8,95% a\.a\./)
       // TFC: 24 séries (C19 e C21 não existem), variação em p.p., ausente marcada
       await fam.getByRole('button', { name: 'TFC', exact: true }).click()
       assert.equal(await tbl().count(), 24)
