@@ -1,122 +1,236 @@
-// Acesso à planilha pela API do Google Sheets. Só grava células pontuais; nunca apaga linhas.
+// Ações do Caixa só acrescentam eventos ao diário reservado. Nunca escolhem
+// nem atualizam o endereço de uma linha nas abas que alimentam o aplicativo.
+import { JOURNAL_HEADERS, JOURNAL_TITLE, TABLES, periodFor, prepareOperation, recordKey, replayJournal } from './journal.js'
+
 const BASE = 'https://sheets.googleapis.com/v4/spreadsheets'
+const RANGES = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Lancamentos!A:S', 'ContasFixas!A:M', 'ContasFixas!P6']
+const NOMES = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Lancamentos', 'ContasFixas', 'metaFixas']
+const RENDER = 'valueRenderOption=UNFORMATTED_VALUE&dateTimeRenderOption=SERIAL_NUMBER'
+const ID_VALIDO = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+export const PENDING_PREFIX = 'caixa:pending:'
 
 export class ErroSessao extends Error {}
 export class ErroConflito extends Error {}
 export class ErroGravacaoIncerta extends Error {}
+export class ErroConfiguracao extends Error {}
+
+const conflito = () => new ErroConflito('Os dados deste lançamento mudaram. Atualize os dados e revise antes de salvar.')
+const configuracao = () => new ErroConfiguracao('O diário do Caixa não está íntegro ou disponível. A gravação foi bloqueada; atualize os dados.')
+const incerta = (operationId, cause) => Object.assign(new ErroGravacaoIncerta('Não foi possível confirmar a gravação. Atualize os dados para recuperar a confirmação, sem repetir o envio.', { cause }), { operationId })
+const own = (o, key) => Object.hasOwn(o, key)
+
+function validarAcesso(token, sheetId) {
+  if (typeof token !== 'string' || !token.trim()) throw new ErroSessao('Sua sessão expirou. Entre de novo.')
+  if (typeof sheetId !== 'string' || !/^[A-Za-z0-9_-]+$/.test(sheetId)) throw configuracao()
+}
 
 async function chamar(token, url, opcoes = {}) {
-  const r = await fetch(url, { ...opcoes, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } })
-  if (r.status === 401) throw new ErroSessao('Sua sessão expirou. Entre de novo.')
-  if (!r.ok) {
-    const erro = new Error(r.status === 403 ? 'Sem permissão nesta planilha. Peça acesso de edição no Drive.' : `Falha ao falar com o Google (${r.status}).`)
-    erro.status = r.status
+  const resposta = await fetch(url, { ...opcoes, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } })
+  if (resposta.status === 401) throw new ErroSessao('Sua sessão expirou. Entre de novo.')
+  if (!resposta.ok) {
+    const erro = new Error(resposta.status === 403 ? 'Sem permissão nesta planilha. Peça acesso de edição no Drive.' : `Falha ao falar com o Google (${resposta.status}).`)
+    erro.status = resposta.status
     throw erro
   }
-  return r.json()
+  return resposta.json()
 }
 
-const RANGES = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Lancamentos!A1:S8000', 'ContasFixas!A1:M200', 'ContasFixas!P6']
-const NOMES = ['Pessoas', 'Contas', 'Categorias', 'Subcategorias', 'Lancamentos', 'ContasFixas', 'metaFixas']
-const OPCAO_LEITURA = 'valueRenderOption=UNFORMATTED_VALUE&dateTimeRenderOption=FORMATTED_STRING'
-
-export async function carregar(token, sheetId) {
-  const q = RANGES.map((r) => `ranges=${encodeURIComponent(r)}`).join('&')
-  const j = await chamar(token, `${BASE}/${sheetId}/values:batchGet?${q}&${OPCAO_LEITURA}`)
-  const tabs = Object.fromEntries(j.valueRanges.map((v, i) => [NOMES[i], v.values ?? []]))
-  tabs.metaFixas = tabs.metaFixas?.[0]?.[0] ?? 0
-  return tabs
+export function pendingOperationId(sheetId) {
+  try {
+    const id = globalThis.sessionStorage?.getItem(`${PENDING_PREFIX}${sheetId}`)
+    return typeof id === 'string' && id ? id : null
+  } catch { return null }
 }
 
-const ABAS_GRAVAVEIS = {
-  Lancamentos: { id: 'lancamento_id', range: 'Lancamentos!A:S', campos: ['subcategoria_id', 'tipo', 'revisado'] },
-  ContasFixas: { id: 'conta_fixa_id', range: 'ContasFixas!A:M', campos: ['pago', 'valor_mes'] },
-}
-const normalizar = (v) => String(v ?? '').normalize('NFD').replace(/\p{M}/gu, '').trim().toLowerCase()
-const conflito = () => new ErroConflito('A planilha mudou ou o lançamento não pôde ser identificado com segurança. Atualize os dados e tente novamente.')
-const celula = (v) => v == null ? '' : v
-const linha = (r) => {
-  if (!Array.isArray(r)) throw conflito()
-  const out = Array.from(r, celula)
-  while (out.length && out.at(-1) === '') out.pop()
-  return out
-}
-const igual = (a, b) => a.length === b.length && a.every((v, i) => v === b[i])
-const letra = (indice) => {
-  let n = indice + 1, s = ''
-  while (n > 0) { s = String.fromCharCode(65 + ((n - 1) % 26)) + s; n = Math.floor((n - 1) / 26) }
-  return s
+// Escolha explícita da pessoa: não apaga eventos, não repete a gravação e não
+// afirma que uma solicitação pendente tenha sido cancelada no servidor.
+export function esquecerPendencia(sheetId, expectedId) {
+  try {
+    const atual = pendingOperationId(sheetId)
+    if (!atual || (expectedId !== undefined && expectedId !== atual)) return false
+    globalThis.sessionStorage.removeItem(`${PENDING_PREFIX}${sheetId}`)
+    return pendingOperationId(sheetId) === null
+  } catch { return false }
 }
 
-function localizar(values, chave, id, campos) {
-  if (!Array.isArray(values) || !values.length) throw conflito()
-  const cab = linha(values[0])
-  if (!cab.length || cab.some((v) => typeof v !== 'string' || !normalizar(v))) throw conflito()
-  const nomes = cab.map(normalizar)
-  if (new Set(nomes).size !== nomes.length || !nomes.includes(chave) || campos.some((c) => !nomes.includes(c))) throw conflito()
-  const colId = nomes.indexOf(chave)
-  const encontrados = []
-  for (let i = 1; i < values.length; i++) {
-    if (!Array.isArray(values[i])) throw conflito()
-    const valorId = values[i][colId]
-    if (String(valorId ?? '').trim() === id) {
-      if (String(valorId) !== id) throw conflito()
-      encontrados.push(i)
+function guardarPendencia(sheetId, operationId) {
+  const anterior = pendingOperationId(sheetId)
+  if (anterior && anterior !== operationId) throw incerta(anterior)
+  try {
+    if (!globalThis.sessionStorage) throw new Error('Confirmação local indisponível.')
+    globalThis.sessionStorage.setItem(`${PENDING_PREFIX}${sheetId}`, operationId)
+    if (pendingOperationId(sheetId) !== operationId) throw new Error('Confirmação local indisponível.')
+  } catch (e) {
+    throw new ErroConfiguracao('Não foi possível preparar a confirmação. Nenhuma gravação foi enviada. Reabra o Caixa antes de tentar salvar.', { cause: e })
+  }
+}
+
+function erroNucleo(e) {
+  if (['RECORD_CONFLICT', 'REVISION_CONFLICT', 'PERIOD_CONFLICT'].includes(e?.code)) return Object.assign(conflito(), { code: e.code, cause: e })
+  if (e?.code === 'INVALID_OPERATION') return Object.assign(new ErroConflito(e.message || 'Operação inválida. Atualize os dados.'), { code: e.code, cause: e })
+  return Object.assign(configuracao(), { code: e?.code, cause: e })
+}
+
+async function descobrirDiario(token, sheetId) {
+  const campos = 'sheets(properties(sheetId,title,gridProperties(rowCount,columnCount)))'
+  const j = await chamar(token, `${BASE}/${sheetId}?fields=${encodeURIComponent(campos)}`)
+  if (!Array.isArray(j?.sheets)) throw configuracao()
+  const encontrados = j.sheets.filter((s) => s?.properties?.title === JOURNAL_TITLE)
+  if (encontrados.length > 1) throw configuracao()
+  if (!encontrados.length) return null
+  const p = encontrados[0].properties
+  if (!Number.isInteger(p.sheetId) || p.sheetId < 0 || !Number.isInteger(p.gridProperties?.rowCount) || p.gridProperties.rowCount < 1 || !Number.isInteger(p.gridProperties?.columnCount) || p.gridProperties.columnCount < JOURNAL_HEADERS.length) throw configuracao()
+  return p.sheetId
+}
+
+async function lerEstado(token, sheetId, journalSheetId, now) {
+  const ranges = journalSheetId === null ? RANGES : [...RANGES, `${JOURNAL_TITLE}!A:AX`]
+  const query = ranges.map((range) => `ranges=${encodeURIComponent(range)}`).join('&')
+  const j = await chamar(token, `${BASE}/${sheetId}/values:batchGet?${query}&${RENDER}`)
+  if (!Array.isArray(j?.valueRanges) || j.valueRanges.length !== ranges.length) throw configuracao()
+  const rawTabs = Object.fromEntries(NOMES.map((nome, i) => {
+    const values = j.valueRanges[i]?.values ?? []
+    if (!Array.isArray(values)) throw configuracao()
+    return [nome, values]
+  }))
+  rawTabs.metaFixas = rawTabs.metaFixas?.[0]?.[0] ?? 0
+  const journal = journalSheetId === null ? [JOURNAL_HEADERS] : (j.valueRanges.at(-1)?.values ?? [])
+  return replayJournal(rawTabs, journal, now)
+}
+
+function comMetadados(state, journalSheetId, sheetId) {
+  const pending = pendingOperationId(sheetId)
+  const outcome = pending ? state.operations[pending] : null
+  const pendingStatus = pending ? (outcome ? (outcome.accepted && !outcome.conflict ? 'accepted' : 'conflict') : 'pending') : null
+  if (pending && pendingStatus !== 'pending') esquecerPendencia(sheetId, pending)
+  return {
+    ...state.tabs,
+    _caixa: {
+      configured: journalSheetId !== null,
+      journalSheetId,
+      state,
+      records: state.records,
+      operations: state.operations,
+      conflicts: state.conflicts,
+      periods: state.periods,
+      pendingOperationId: pending,
+      pendingStatus,
+      configurationMessage: journalSheetId === null ? 'O diário não está disponível. Esta consulta mostra somente a base da planilha; as gravações estão bloqueadas.' : null,
+    },
+  }
+}
+
+// A recuperação de fórmulas pendentes só repete leitura. Jamais repete append.
+export async function carregar(token, sheetId, { now = Date.now() } = {}) {
+  validarAcesso(token, sheetId)
+  const journalSheetId = await descobrirDiario(token, sheetId)
+  for (let tentativa = 0; tentativa < 3; tentativa++) {
+    try {
+      const state = await lerEstado(token, sheetId, journalSheetId, now)
+      return comMetadados(state, journalSheetId, sheetId)
+    } catch (e) {
+      if (e?.code === 'JOURNAL_PENDING' && tentativa < 2) {
+        await new Promise((resolve) => setTimeout(resolve, tentativa === 0 ? 150 : 400))
+        continue
+      }
+      if (e?.code) throw erroNucleo(e)
+      throw e
     }
   }
+  throw configuracao()
+}
+
+export const recuperarPendencia = (token, sheetId, opcoes) => carregar(token, sheetId, opcoes)
+
+function canonica(values, width) {
+  if (!Array.isArray(values)) throw conflito()
+  const cells = Array.from(values, (v) => v == null ? '' : v)
+  if (cells.slice(width).some((v) => v !== '') || cells.some((v) => !['string', 'boolean', 'number'].includes(typeof v) || (typeof v === 'number' && !Number.isFinite(v)))) throw conflito()
+  return Array.from({ length: width }, (_, i) => cells[i] ?? '')
+}
+
+const iguais = (a, b) => Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((v, i) => v === b[i])
+
+function registroEsperado(esperado, aba, id) {
+  const spec = own(TABLES, aba) ? TABLES[aba] : null
+  if (!spec || !Array.isArray(esperado) || !iguais(canonica(esperado[0], spec.headers.length), spec.headers)) throw conflito()
+  const indexId = spec.headers.indexOf(spec.idField)
+  const rows = esperado.slice(1).map((v) => canonica(v, spec.headers.length))
+  const encontrados = rows.filter((v) => v[indexId] === id)
   if (encontrados.length !== 1) throw conflito()
-  const posicao = encontrados[0]
-  return { cab, nomes, posicao, registro: linha(values[posicao]) }
+  return encontrados[0]
 }
 
-function validarMudancas(mudancas, permitidos) {
-  if (!mudancas || typeof mudancas !== 'object' || Array.isArray(mudancas)) throw new Error('Alteração inválida.')
-  const entries = Object.entries(mudancas)
-  if (!entries.length || entries.some(([c]) => !permitidos.includes(c))) throw new Error('Campo não permitido para gravação.')
-  for (const [campo, valor] of entries) {
-    if (campo === 'valor_mes') {
-      if (typeof valor !== 'number' || !Number.isFinite(valor) || valor < 0) throw new Error('Informe um valor válido.')
-    } else if (campo === 'pago' || campo === 'revisado') {
-      if (!['Sim', 'Não'].includes(valor)) throw new Error('Situação inválida para gravação.')
-    } else if (campo === 'tipo') {
-      if (!['receita', 'despesa', 'transferencia', 'pagto_fatura', 'investimento', 'reembolso'].includes(valor)) throw new Error('Tipo de lançamento inválido.')
-    } else if (typeof valor !== 'string' || !valor.trim() || valor !== valor.trim() || /^[=+@-]/.test(valor)) throw new Error('Subcategoria inválida.')
-  }
-  return entries
+function tipar(values) {
+  if (!Array.isArray(values) || values.length !== JOURNAL_HEADERS.length) throw configuracao()
+  return values.map((valor, i) => {
+    if (i === 11) {
+      if (typeof valor !== 'string' || !valor.startsWith('=')) throw configuracao()
+      return { userEnteredValue: { formulaValue: valor } }
+    }
+    if (valor == null || typeof valor === 'string') return { userEnteredValue: { stringValue: valor ?? '' } }
+    if (typeof valor === 'boolean') return { userEnteredValue: { boolValue: valor } }
+    if (typeof valor === 'number' && Number.isFinite(valor)) return { userEnteredValue: { numberValue: valor } }
+    throw configuracao()
+  })
 }
 
-// Mitigação, não transação: esta API não dispõe aqui de uma condição atômica por ID/versão.
-// Uma edição externa DEPOIS da conferência ainda pode ocorrer antes da escrita.
-// Por isso não há repetição automática nem tentativa de desfazer uma resposta incerta.
-export async function gravarRegistro(token, sheetId, { aba, id, esperado, mudancas } = {}) {
-  const spec = Object.hasOwn(ABAS_GRAVAVEIS, aba) ? ABAS_GRAVAVEIS[aba] : null
-  if (!spec) throw new Error('Aba não permitida para gravação.')
-  if (typeof id !== 'string' || !id.trim() || id !== id.trim() || ['undefined', 'null'].includes(id)) throw new Error('Identificador inválido. Atualize os dados.')
-  const entries = validarMudancas(mudancas, spec.campos)
-  const antes = localizar(esperado, spec.id, id, entries.map(([c]) => c))
-  // Lê todas as linhas nas colunas da tabela, inclusive IDs além da janela inicial do app.
-  // A meta de ContasFixas (P6) fica fora da tabela A:M e não deve virar parte do registro.
-  const q = `ranges=${encodeURIComponent(spec.range)}`
-  let j
-  try {
-    j = await chamar(token, `${BASE}/${sheetId}/values:batchGet?${q}&${OPCAO_LEITURA}`)
-  } catch (e) {
-    if (e instanceof ErroSessao || e.status === 403) throw e
+function pedidoImutavel(pedido, now) {
+  const { aba, id, revision, periodo, esperado, mudancas, mode = 'edit', fonteEsperada } = pedido ?? {}
+  if (!own(TABLES, aba) || typeof id !== 'string' || !id.trim() || id !== id.trim() || typeof revision !== 'string' || typeof periodo !== 'string' || !['edit', 'keep_app', 'use_source'].includes(mode)) throw conflito()
+  if (periodo !== periodFor(aba, now)) throw new ErroConflito('O período do lançamento mudou. Atualize os dados antes de salvar.')
+  const before = registroEsperado(esperado, aba, id)
+  const source = mode === 'edit' ? null : canonica(fonteEsperada, TABLES[aba].headers.length)
+  if (!mudancas || typeof mudancas !== 'object' || Array.isArray(mudancas)) throw conflito()
+  const changes = Object.fromEntries(Object.entries(mudancas))
+  return { aba, id, revision, periodo, mode, mudancas: changes, before, source }
+}
+
+export async function gravarRegistro(token, sheetId, pedido, { now = Date.now(), operationId = globalThis.crypto?.randomUUID?.() } = {}) {
+  validarAcesso(token, sheetId)
+  const intent = pedidoImutavel(pedido, now)
+  if (typeof operationId !== 'string' || !ID_VALIDO.test(operationId)) throw configuracao()
+  let tabs
+  try { tabs = await carregar(token, sheetId, { now }) } catch (e) {
+    if (e instanceof ErroSessao || e instanceof ErroConfiguracao || e.status === 403) throw e
     throw new Error('Não foi possível conferir os dados. Nenhuma gravação foi enviada. Atualize os dados e tente novamente.', { cause: e })
   }
-  if (!Array.isArray(j?.valueRanges) || j.valueRanges.length !== 1) throw conflito()
-  const atuais = j.valueRanges[0]?.values ?? []
-  const agora = localizar(atuais, spec.id, id, entries.map(([c]) => c))
-  if (!igual(antes.cab, agora.cab) || antes.posicao !== agora.posicao || !igual(antes.registro, agora.registro)) throw conflito()
-  const data = entries.map(([campo, valor]) => ({ range: `${aba}!${letra(agora.nomes.indexOf(campo))}${agora.posicao + 1}`, values: [[valor]] }))
+  const meta = tabs._caixa
+  if (!meta.configured) throw configuracao()
+  if (meta.pendingStatus === 'pending') throw incerta(meta.pendingOperationId)
+  const key = recordKey(intent.aba, intent.id, intent.periodo)
+  const current = meta.records[key]
+  if (!current || !iguais(intent.before, current.row) || (intent.mode !== 'edit' && !iguais(intent.source, current.sourceRow))) throw conflito()
+  let prepared
   try {
-    const resposta = await chamar(token, `${BASE}/${sheetId}/values:batchUpdate`, { method: 'POST', body: JSON.stringify({ valueInputOption: 'USER_ENTERED', data }) })
-    if (resposta.totalUpdatedCells !== entries.length || !Array.isArray(resposta.responses) || resposta.responses.length !== entries.length || resposta.responses.some((r) => r.updatedCells !== 1)) throw new Error('Resposta de gravação incompleta.')
+    prepared = prepareOperation(meta.state, {
+      aba: intent.aba, id: intent.id, revision: intent.revision, periodo: intent.periodo, mudancas: intent.mudancas, mode: intent.mode,
+    }, operationId, now)
+  } catch (e) { throw erroNucleo(e) }
+  const values = tipar(prepared.values)
+  guardarPendencia(sheetId, operationId)
+  try {
+    const r = await chamar(token, `${BASE}/${sheetId}:batchUpdate`, {
+      method: 'POST',
+      body: JSON.stringify({ requests: [{ appendCells: { sheetId: meta.journalSheetId, rows: [{ values }], fields: 'userEnteredValue' } }] }),
+    })
+    if (r?.spreadsheetId !== sheetId || !Array.isArray(r.replies) || r.replies.length !== 1) throw new Error('Confirmação de recebimento incompleta.')
   } catch (e) {
-    if (e instanceof ErroSessao || [400, 403, 404].includes(e.status)) throw e
-    throw new ErroGravacaoIncerta('Não foi possível confirmar a gravação. Atualize os dados antes de fazer outra alteração; ela pode ter sido salva.', { cause: e })
+    if (e instanceof ErroSessao || [400, 403, 404].includes(e.status)) {
+      esquecerPendencia(sheetId, operationId)
+      throw e
+    }
+    throw incerta(operationId, e)
   }
-  const snapshot = atuais.map((r) => r.slice())
-  for (const [campo, valor] of entries) snapshot[agora.posicao][agora.nomes.indexOf(campo)] = valor
-  return { snapshot }
+  let confirmed
+  try { confirmed = await carregar(token, sheetId, { now }) } catch (e) {
+    // Mesmo 401 na releitura não prova falha da escrita já enviada.
+    if (e instanceof ErroSessao) throw Object.assign(e, { operationId, confirmationPending: true })
+    throw incerta(operationId, e)
+  }
+  const result = confirmed._caixa.operations[operationId]
+  if (!result) throw incerta(operationId)
+  esquecerPendencia(sheetId, operationId)
+  if (!result.accepted || result.conflict) throw Object.assign(new ErroConflito('A alteração entrou em conflito com outra mudança. Atualize os dados e revise o lançamento.'), { operationId, tabs: confirmed })
+  return { tabs: confirmed, operationId }
 }
