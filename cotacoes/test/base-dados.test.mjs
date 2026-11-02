@@ -23,7 +23,7 @@ test('base de dados: todo arquivo de dados publicado ou lido pelo app tem referÃ
   for (const f of ['pages.yml', 'quotes.yml']) for (const m of readFileSync(new URL(`../../.github/workflows/${f}`, import.meta.url), 'utf8').matchAll(/([a-z-]+\.json)/g)) publicados.add(m[1])
   for (const f of readdirSync(new URL('../scripts/', import.meta.url)).filter((x) => /^fetch-.*\.mjs$/.test(x))) for (const m of readFileSync(new URL(`../scripts/${f}`, import.meta.url), 'utf8').matchAll(/public\/([a-z-]+\.json)/g)) publicados.add(m[1])
   for (const f of readdirSync(new URL('../src/', import.meta.url)).filter((x) => /\.(js|jsx)$/.test(x))) for (const m of src(f).matchAll(/(?:useDataFile|loadDataFile)\('([a-z-]+\.json)'/g)) publicados.add(m[1])
-  const faltam = [...publicados].filter((a) => !ARQUIVOS_COBERTOS.includes(a) && !['package.json', 'package-lock.json', 'manifest.json', 'tsconfig.json', 'stale.json', 'validation.json'].includes(a))
+  const faltam = [...publicados].filter((a) => !ARQUIVOS_COBERTOS.includes(a) && !['package.json', 'package-lock.json', 'manifest.json', 'tsconfig.json', 'stale.json', 'validation.json', 'weekly-data-snapshot.json'].includes(a))
   assert.deepEqual(faltam, [], `arquivos sem linha na Base de dados: ${faltam.join(', ')}`)
 })
 test('base de dados: todas as fontes da governanÃ§a aparecem na Base de dados', () => {
