@@ -37,14 +37,19 @@ test('equivalente anual', () => {
 
 test('indexRows monta TR, TBF e TLP e marca a série ausente', () => {
   const data = buildIndexadores({ TR: tr, TBF: null, TLP: tlp }, [], NOW)
+  assert.equal(data.series.TLP.name, 'TLP — parcela prefixada')
+  data.series.TLP.name = 'Taxa de Longo Prazo' // arquivos anteriores também recebem a identificação completa na tela
   const rows = indexRows(data)
   assert.deepEqual(rows.map((r) => r.key), ['TR', 'TBF', 'TLP'])
   assert.equal(rows[0].text, '0,0000% a.m.')
   assert.equal(rows[1].missing, true)
   assert.equal(rows[2].text, '8,12% a.a.')
+  assert.equal(rows[2].name, 'TLP — parcela prefixada')
+  assert.match(rows[2].definition, /Acrescida do IPCA\. Não inclui os spreads do BNDES e do banco\./)
   assert.match(rows[2].period, /01\/10\/2026 a 31\/10\/2026/)
   assert.ok(Math.abs(rows[2].delta - -0.18) < 1e-9)
   assert.equal(indexRows(null).every((r) => r.missing), true)
+  assert.equal(indexRows(null)[2].name, 'TLP — parcela prefixada')
 })
 
 test('janela de datas do SGS (séries diárias não aceitam /ultimos)', () => {

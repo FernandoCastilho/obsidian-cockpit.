@@ -1,6 +1,7 @@
 // Explicações curtas (frase simples, exemplo concreto, uso na mesa). Textos fixos, sem dados ao vivo.
 // a = o que é, em palavras do dia a dia; b = exemplo com números redondos; c = como isso ajuda na decisão.
 // Tipo de taxa nas linhas da tabela "Juros de referência" (vai dentro do "?" de cada linha).
+import { TLP_LABEL, TLP_DEFINITION } from './tlp.js'
 export const TIPOS_TAXA = {
   'Mercado overnight': 'Taxa observada no mercado overnight: empréstimos de 1 dia entre instituições financeiras, em que o dinheiro sai hoje e volta no dia útil seguinte (no Brasil, entre bancos; nos EUA, com garantia de títulos do Tesouro). É calculada a partir das operações efetivamente feitas no dia, então mostra o custo real do dinheiro de curtíssimo prazo e anda colada na taxa do banco central.',
   'Política monetária': 'Taxa definida pelo banco central em reunião do seu comitê. Não é negociada no mercado: muda por degraus, só nas decisões, e serve de alvo para as taxas de mercado de 1 dia.',
@@ -154,11 +155,11 @@ export const GLOSSARY = {
     d: 'Taxa mensal calculada todo dia útil, com período de 30 dias a partir da data. Anualizar: (1 + TBF)^12 − 1. A TR de cada data é a TBF descontada de um redutor, e a TBF acompanha de perto os juros do CDB prefixado de 30 dias.',
   },
   tlp: {
-    t: 'TLP (Taxa de Longo Prazo)',
-    a: 'A taxa de referência dos financiamentos do BNDES, que substituiu a TJLP. Acompanha as taxas de mercado dos títulos públicos de longo prazo (IPCA mais um prêmio). Vale o mês inteiro e vem em % ao ano.',
-    b: 'Um financiamento "TLP + 2%" paga a TLP do mês mais 2 pontos percentuais.',
-    c: 'Quando os juros de mercado sobem, a TLP sobe e o crédito do BNDES encarece junto.',
-    d: 'Divulgada uma vez por mês e válida no mês inteiro. No BNDES, o custo final soma a TLP, o spread básico e o spread de risco do cliente; a TFB (taxa fixa) é a alternativa prefixada. Veja o spread da TFB contra o DI na aba BNDES.',
+    t: TLP_LABEL,
+    a: TLP_DEFINITION,
+    b: 'Ao avaliar uma operação com TLP, considere a parcela prefixada, a correção pelo IPCA e os spreads contratados.',
+    c: 'Use este valor para consultar a parcela fixa. Considere também o IPCA e os spreads ao avaliar o custo do financiamento.',
+    d: 'Divulgada uma vez por mês, com vigência mensal para novas contratações. A parcela prefixada é fixada na contratação; o IPCA varia ao longo do contrato. A TFB é outro custo financeiro e fica na aba BNDES.',
   },
   curvaEuro: {
     t: 'Curva de juros da área do euro',

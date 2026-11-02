@@ -14,7 +14,7 @@ test('CSV: cabeçalho, BOM, ISO, ponto decimal, uma linha por observação, sér
   assert.equal(tfb[0], '﻿serie,nome,data,valor,unidade')
   assert.equal(tfb[1], 'TFB_60_90,TFB 60 meses · liberação em 90 dias,2026-10-23,14.04,% a.a.')
   assert.equal(tfb.length, 3 + 1 + 1, 'cabeçalho + 3 observações + linha final vazia')
-  assert.match(f['tlp.csv'], /TLP,TLP \(moeda 777 do BNDES\),2026-09-01,8\.3,% a\.a\./)
+  assert.equal(f['tlp.csv'].split('\r\n')[1], 'TLP,TLP — parcela prefixada (moeda 777 do BNDES). Acrescida do IPCA. Não inclui os spreads do BNDES e do banco.,2026-09-01,8.3,% a.a.')
   assert.match(f['tfc.csv'], /C01,TFC_60\.90,2026-10-29,14\.7154,% a\.a\./)
   assert.match(f['moedas.csv'], /604,US\$,2026-10-29,5\.3744,R\$/)
   assert.equal(buildCsvs({})['tfb.csv'], toCsv([]))

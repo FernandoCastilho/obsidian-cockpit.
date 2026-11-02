@@ -2,13 +2,14 @@
 // sem dois números para a mesma taxa). A TFB tem coleta própria em bndes-lib.mjs. Sem dependências.
 import { brDate, toBr } from './macro-lib.mjs'
 import { parseMoeda } from './moedas-lib.mjs'
+import { TLP_LABEL } from '../src/tlp.js'
 
 // TR e TBF: séries diárias em % a.m., cada ponto vale para o período que começa em `data` e termina em `dataFim`.
 // TLP: série mensal em % a.a., um ponto por mês de vigência.
 export const INDEXADORES = {
   TR: { source: 'SGS', code: 226, name: 'Taxa Referencial', unit: 'a.m.', keep: 30, days: 45 },
   TBF: { source: 'SGS', code: 253, name: 'Taxa Básica Financeira', unit: 'a.m.', keep: 30, days: 45 },
-  TLP: { source: 'BNDES', code: 777, name: 'Taxa de Longo Prazo', unit: 'a.a.', keep: 18, days: 600 },
+  TLP: { source: 'BNDES', code: 777, name: TLP_LABEL, unit: 'a.a.', keep: 18, days: 600 },
 }
 
 // Séries diárias do SGS exigem janela de datas (o atalho /ultimos/N devolve HTTP 400 para elas).

@@ -10,6 +10,7 @@ test('famílias e seleção padrão: TFB 60 meses, liberação em 90 dias', () =
   assert.deepEqual(FAMILIES.map((f) => f.id), ['tfb', 'tlp', 'tfc', 'moedas'])
   assert.equal(DEFAULT_SELECTION.tfb, 'TFB_60_90')
   assert.ok(FAMILIES.every((f) => f.definition && f.source))
+  assert.equal(FAMILIES.find((f) => f.id === 'tlp').title, 'TLP — parcela prefixada')
 })
 
 test('familyRows: mesmas colunas em todas as famílias; TLP ignora o mês seguinte já publicado', () => {
@@ -18,7 +19,9 @@ test('familyRows: mesmas colunas em todas as famílias; TLP ignora o mês seguin
   assert.equal(tfb.find((r) => r.id === 'TFB_36_30').missing, true)
   const tlp = familyRows('tlp', bndes, moedas, NOW)
   assert.equal(tlp.length, 1); assert.equal(tlp[0].text, '8,12% a.a.'); assert.equal(tlp[0].date, '2026-10-01'); assert.equal(tlp[0].nextRelease, '2026-10-30')
+  assert.equal(tlp[0].id, 'TLP'); assert.equal(tlp[0].name, 'TLP — parcela prefixada')
   assert.equal(familyRows('tlp', null, null, NOW)[0].missing, true)
+  assert.equal(familyRows('tlp', null, null, NOW)[0].name, 'TLP — parcela prefixada')
   assert.equal(familyRows('tfc', bndes, moedas, NOW).length, 24)
   assert.equal(familyRows('moedas', bndes, moedas, NOW)[0].text, 'R$ 5,3400')
 })
@@ -27,6 +30,7 @@ test('seriesFor: nome, unidade, tipo de cobertura e pontos até hoje', () => {
   const a = seriesFor('tfb', 'TFB_60_90', bndes, moedas, NOW)
   assert.equal(a.name, 'TFB · 36 a 60 meses · liberação em 90 dias'); assert.equal(a.kind, 'day'); assert.equal(a.list.length, 2)
   const t = seriesFor('tlp', 'TLP', bndes, moedas, NOW)
+  assert.equal(t.name, 'TLP — parcela prefixada · % a.a.'); assert.equal(t.code, 'tlp-bndes')
   assert.equal(t.kind, 'month'); assert.equal(t.list.length, 2, 'o ponto de novembro ainda não vale')
   const c = seriesFor('tfc', 'C01', bndes, moedas, NOW)
   assert.equal(c.name, 'TFC_60.90 (C01)'); assert.equal(c.unit, '% a.a.'); assert.equal(c.kind, 'sparse')

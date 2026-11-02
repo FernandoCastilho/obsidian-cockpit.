@@ -1,16 +1,20 @@
 // Aba BNDES: uma área de trabalho com abas por família (TFB, TLP, TFC, Moedas), período único para todas as séries e observações recolhidas.
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
+const { mkdir } = require('node:fs/promises')
 const wk = (iso) => { const d = new Date(`${iso}T12:00:00Z`).getUTCDay(); return d !== 0 && d !== 6 }
 const iso = (start, i) => new Date(start + i * 864e5).toISOString().slice(0, 10)
 const todayIso = new Date().toISOString().slice(0, 10)
 const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i) => iso(start, i)).filter(wk).filter((d) => d <= todayIso).map((d, i) => [d, Math.round((base + i * step) * 10 ** dec) / 10 ** dec])
 ;(async () => {
   const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
+  const outputDir = process.env.BNDES_QA_OUTPUT || process.env.TABLE_QA_OUTPUT || process.env.WORKSPACE_QA_OUTPUT
+  if (outputDir) await mkdir(outputDir, { recursive: true })
   try {
-    for (const width of [390, 1280]) {
+    for (const width of [390, 820, 1280]) {
       const series = {}
       for (const [prazo, add] of [[36, 0], [60, 0.5], [84, 1]]) for (const liberacao of [30, 90]) series[`TFB_${prazo}_${liberacao}`] = { prazo, liberacao, points: daily(Date.UTC(2024, 0, 1), 1000, 10 + add + (liberacao === 90 ? 0.2 : 0), 0.02) }
-      const months = Array.from({ length: 60 }, (_, i) => [new Date(Date.UTC(2021, i, 1)).toISOString().slice(0, 10), Math.round((6 + i * 0.05) * 100) / 100])
+      // O histórico mensal precisa alcançar a janela de 3 meses da comparação com a TFB.
+      const months = Array.from({ length: 60 }, (_, i) => [new Date(Date.UTC(2021, i + 10, 1)).toISOString().slice(0, 10), Math.round((6 + i * 0.05) * 100) / 100])
       const file = { schemaVersion: 1, generatedAt: Date.now(), series, tlp: { code: 777, unit: 'a.a.', points: months }, stale: {}, errors: [] }
       const t0 = Date.UTC(2025, 5, 2)
       const moedas = { schemaVersion: 1, generatedAt: Date.now(), stale: {}, errors: [], series: { C01: { points: daily(t0, 520, 12, 0.01, 6) }, C02: { points: daily(t0, 520, 12.5, 0.01, 6) }, 604: { points: daily(t0, 520, 5, 0.001, 4) }, 143: { points: daily(t0, 520, 4, 0.002, 6) }, TR1: { points: [['2026-09-01', 3.64], ['2026-10-01', 3.6], ['2099-01-01', 9]] } } }
@@ -72,8 +76,14 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await p.locator('.bn-cmp input:not(:disabled)').first().check()
       assert.equal(await p.locator('.bn-cmp input:not(:disabled)').first().isChecked(), true, 'uma série marcada continua marcada')
       assert.match(await barra.locator('small').innerText(), /Marque ao menos duas/)
-      await p.getByRole('group', { name: /Comparar no gráfico: TFB/ }).getByRole('button', { name: 'TLP', exact: true }).click()
+      await p.getByRole('group', { name: /Comparar no gráfico: TFB/ }).getByRole('button', { name: 'TLP — parcela prefixada', exact: true }).click()
       assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Comparação · 2 séries · TFB \+ TLP/i)
+      assert.equal(await p.locator('.ml .ml-name', { hasText: 'TLP — parcela prefixada' }).getAttribute('title'), 'TLP — parcela prefixada')
+      assert.match(await p.locator('.ml-svg').getAttribute('aria-label'), /TLP — parcela prefixada/)
+      assert.equal(await p.locator('.bn-tlp-note').innerText(), 'TLP — parcela prefixada: Acrescida do IPCA. Não inclui os spreads do BNDES e do banco.')
+      assert.equal(await p.locator('.bn-tlp-note').isVisible(), true, 'nota visível também na comparação a partir da TFB')
+      await noOverflow()
+      if (outputDir) { await p.locator('.bn-sub').nth(1).scrollIntoViewIfNeeded(); await p.screenshot({ path: `${outputDir}/tlp-${width}-comparacao.png` }) }
       await barra.getByRole('button', { name: 'Limpar' }).click()
       // atalho embaixo do gráfico: TFB e TFC de mesmo prazo (60 meses · 90 dias) num clique; segundo clique desfaz
       const prazo = p.getByRole('group', { name: 'Comparar TFB e TFC de mesmo prazo' })
@@ -97,11 +107,18 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       // TLP: uma linha, próxima divulgação, histórico mensal sob o mesmo período
       await fam.getByRole('button', { name: 'TLP', exact: true }).click()
       assert.equal(await tbl().count(), 1)
+      assert.match(await p.locator('.bn-sub').first().innerText(), /TLP — parcela prefixada/i)
+      assert.match(await p.locator('.bn-sub').nth(1).innerText(), /Histórico · TLP — parcela prefixada/i)
+      assert.match(await p.locator('.bn-scroll').first().locator('tbody').innerText(), /TLP — parcela prefixada/)
       assert.match(await p.locator('.bn-scroll').first().locator('tbody').innerText(), /TLP[\s\S]*8,95% a\.a\.[\s\S]*▲ \+0,05 p\.p\.[\s\S]*▲ \+0,60 p\.p\./, 'Mês e Ano: colunas no computador, linha extra no celular')
       assert.match(await p.locator('.bn-def').first().innerText(), /Próxima divulgação da TLP: \d{2}\/\d{2}\/\d{4}\./)
+      assert.equal(await p.locator('.bn-tlp-note').innerText(), 'Acrescida do IPCA. Não inclui os spreads do BNDES e do banco.')
+      assert.equal(await p.locator('.bn-tlp-note').isVisible(), true, 'explicação sem abrir Definição')
+      await noOverflow()
+      if (outputDir) { await p.evaluate(() => window.scrollTo(0, 0)); await p.screenshot({ path: `${outputDir}/tlp-${width}.png` }) }
       assert.equal(await pressed('Período da série', '3 meses'), true, 'um único filtro de período: continua em 3 meses')
       await p.getByRole('group', { name: 'Período da série' }).getByRole('button', { name: 'Tudo', exact: true }).click()
-      assert.match(await p.locator('.bn-range').innerText(), /No período: 01\/01\/2021 6,00% a\.a\. → 01\/12\/2025 8,95% a\.a\./)
+      assert.match(await p.locator('.bn-range').innerText(), /No período: 01\/11\/2021 6,00% a\.a\. → 01\/10\/2026 8,95% a\.a\./)
       // TFC: 24 séries (C19 e C21 não existem), variação em p.p., ausente marcada
       await fam.getByRole('button', { name: 'TFC', exact: true }).click()
       assert.equal(await tbl().count(), 24)
@@ -169,6 +186,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.equal(await csv.getAttribute('open'), null, 'CSV recolhido por padrão')
       await csv.locator('summary').click()
       assert.deepEqual(await csv.locator('a[download]').evaluateAll((as) => as.map((a) => a.getAttribute('href'))), ['./csv/tfb.csv', './csv/tlp.csv', './csv/tfc.csv', './csv/moedas.csv'])
+      assert.equal(await csv.locator('a[href="./csv/tlp.csv"]').innerText(), 'TLP — parcela prefixada')
       assert.match(await csv.locator('code').first().innerText(), /\/csv\/tfb\.csv$/)
       await csv.locator('summary').click()
       await noOverflow()
@@ -181,10 +199,13 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       await p.goto(base + '/#cenarios/indexadores'); await p.locator('.idx-table').waitFor()
       assert.equal(await p.locator('.idx-table').count(), 1)
       assert.doesNotMatch(await p.locator('.idx-table').innerText(), /TFB/)
+      assert.match(await p.locator('.idx-table').innerText(), /TLP — parcela prefixada/)
+      assert.match(await p.locator('.idx-defs').innerText(), /Acrescida do IPCA\. Não inclui os spreads do BNDES e do banco\./)
+      if (outputDir) { await p.evaluate(() => window.scrollTo(0, 0)); await p.screenshot({ path: `${outputDir}/tlp-${width}-indexadores.png` }) }
       await p.getByRole('button', { name: 'Histórico na aba BNDES' }).click(); await p.waitForURL('**/#bndes/tlp/TLP')
       if (width >= 900) { assert.match(await p.locator('.topbar-brand').innerText(), /^Painel\s*Especialista$/, 'marca da barra superior'); for (const w of [1000, 1100, 1299]) { await p.setViewportSize({ width: w, height: 800 }); const sp = await p.locator('.topbar-brand span').boundingBox(); assert.ok(sp && sp.width > 40, `"Especialista" visível (não só no texto) a ${w}px`); assert.equal(await p.evaluate(() => { const t = document.querySelector('.topbar-tabs'); return t.scrollWidth > t.clientWidth + 1 }), false, `abas sem corte a ${w}px`) } await p.setViewportSize({ width, height: 900 }); await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes') }
       assert.deepEqual(errors, [])
     }
-    console.log('PASS aba BNDES: famílias com período único, tabelas, observações recolhidas e menu (390 e 1280)')
+    console.log('PASS aba BNDES: famílias com período único, TLP prefixada, tabelas, observações recolhidas e menu (390, 820 e 1280)')
   } finally { await b.close() }
 })().catch((e) => { console.error(e); process.exit(1) })

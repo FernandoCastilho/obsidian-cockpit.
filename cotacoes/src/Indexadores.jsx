@@ -25,7 +25,7 @@ export default function Indexadores({ onBndes }) {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.key}>
-                  <th scope="row"><b>{r.key}</b><Explain id={r.key.toLowerCase()} /><small>{r.name}</small>{r.key === 'TLP' && onBndes && <small><button type="button" className="idx-link" onClick={onBndes}>Histórico na aba BNDES</button></small>}</th>
+                  <th scope="row"><b>{r.key === 'TLP' ? r.name : r.key}</b><Explain id={r.key.toLowerCase()} />{r.key !== 'TLP' && <small>{r.name}</small>}{r.key === 'TLP' && onBndes && <small><button type="button" className="idx-link" onClick={onBndes}>Histórico na aba BNDES</button></small>}</th>
                   <td className="num">{r.missing ? (loading ? 'carregando' : 'indisponível') : r.text}</td>
                   <td className="num">{r.annualText ?? '—'}</td>
                   <td>{r.missing ? '—' : r.period}</td>
@@ -42,7 +42,7 @@ export default function Indexadores({ onBndes }) {
           <div key={r.family}><dt>{r.family}</dt><dd>{r.definition}</dd></div>
         ))}
       </dl>
-      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. A TLP vem em % ao ano. A coluna Divulgação traz a regra de publicação (Res. CMN 4.624/2018 para TR e TBF; 4.600/2017 para a TLP) e as datas calculadas com o calendário de feriados do Brasil. A Taxa Fixa do BNDES (TFB) fica na aba BNDES.</p></Aviso>
+      <Aviso title="Indexadores · TR, TBF e TLP"><p className="idx-note">TR e TBF vêm em % ao mês; o equivalente anual é a composição de 12 meses iguais. A parcela prefixada da TLP vem em % ao ano. A coluna Divulgação traz a regra de publicação (Res. CMN 4.624/2018 para TR e TBF; 4.600/2017 para a TLP) e as datas calculadas com o calendário de feriados do Brasil. A Taxa Fixa do BNDES (TFB) fica na aba BNDES.</p></Aviso>
     </Panel>
   )
 }
