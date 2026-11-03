@@ -73,6 +73,8 @@ const EX_NC = { principal: 5_000_000, cdi: 0.14, spread: 0.03, diasUteis: 126 }
 const EX_FIDC = { senior: 7_000_000, subordinada: 3_000_000, perdas: [2_000_000, 4_000_000] }
 const EX_CRI = { principal: 1_000_000, ipca: 0.045, real: 0.07, ir: 0.15 }
 const EX_CRA = { principal: 1_000_000, cdi: 0.14, spread: 0.005, ir: 0.15 }
+const EX_FACIL = { receita: 320_000_000, limite: 500_000_000, valor: 50_000_000, cdi: 0.14, spreadMercado: 0.03, spreadBanco: 0.05 }
+const EX_DRAWBACK = { usd: 200_000, cambio: 5.4, carga: 0.25 }
 const EX_INFL = { mensal: 0.004, meses: 12, selic: 0.145 }
 const EX_SACA = { usd: 520, antes: 5, depois: 5.5 }
 const EX_ICBR = { indiceUsd: 1, altaDolar: 0.1, quedaUsd: -0.05 }
@@ -547,6 +549,86 @@ export const CONCEITOS = [
     },
   },
   {
+    id: 'facil',
+    topico: 'Operações de crédito',
+    nome: 'Regime FÁCIL (CVM)',
+    frase: 'É o regime da CVM que simplifica, para companhias de menor porte, o registro e as ofertas de ações e títulos de dívida no mercado de capitais.',
+    crianca: [
+      'Abrir capital ou emitir uma debênture sempre foi caro e trabalhoso para empresas médias: documentos extensos, prospecto, formulário de referência e custos com assessores. O FÁCIL (criado pelas Resoluções CVM 231 e 232, de 2025) reduz essa papelada para quem é companhia de menor porte.',
+      'A régua é a receita: sociedade anônima com receita bruta anual consolidada abaixo de R$ 500 milhões. Ela usa um formulário único e mais curto no lugar do formulário de referência, do prospecto e da lâmina, e tem modalidades de oferta mais simples. Assim, pode captar com investidores (ações, debêntures, notas comerciais) em vez de depender só do banco.',
+    ],
+    analogia: 'É uma porta lateral, mais estreita, para entrar no mesmo prédio do mercado de capitais: menos burocracia na entrada, mas as regras do prédio continuam valendo.',
+    lacunas: [
+      'Não é subsídio nem garantia: o investidor continua assumindo o risco de crédito ou de negócio da empresa, e com menos informação padronizada que numa companhia grande.',
+      'Passar de R$ 500 milhões de receita não tira a empresa do regime na hora: há um prazo de transição (um ano após a notificação) para evitar entra-e-sai por oscilação de receita.',
+      'Limites de valor por oferta, público que pode investir em cada modalidade e datas de vigência estão nas Resoluções CVM 231 e 232 e em ajustes posteriores; as fontes divergem em detalhes, então confira o texto vigente na CVM.',
+      'Facilitar a emissão não barateia o dinheiro por si só: o custo final continua sendo o CDI (ou IPCA) mais o spread que os investidores exigirem pelo risco da empresa.',
+    ],
+    preciso: {
+      texto: 'Regime de facilitação de acesso a capital para a companhia de menor porte (CMP), instituído pelas Resoluções CVM 231 e 232/2025: registro simplificado, formulário FÁCIL no lugar de formulário de referência, prospecto e lâmina, e modalidades próprias de oferta pública. Enquadramento pela receita, e custo da captação pela taxa composta:',
+      formula: 'CMP: receita bruta anual consolidada < R$ 500 milhões   ·   custo = (1 + CDI) × (1 + spread) − 1',
+    },
+    exemplo: (() => {
+      const e = EX_FACIL
+      const mercado = taxaCdiMaisSpread(e.cdi, e.spreadMercado), banco = taxaCdiMaisSpread(e.cdi, e.spreadBanco)
+      const economia = e.valor * (banco - mercado)
+      return {
+        titulo: `Indústria com receita de ${money(e.receita, 'R$')} quer captar ${money(e.valor, 'R$')} (hipotético)`,
+        passos: [
+          `Receita de ${money(e.receita, 'R$')} < ${money(e.limite, 'R$')}: enquadra como companhia de menor porte e pode usar o FÁCIL.`,
+          `Debênture pelo FÁCIL a CDI + ${pct(e.spreadMercado, 0)}: ${nf(1 + e.cdi, 2)} × ${nf(1 + e.spreadMercado, 2)} − 1 = ${pct(mercado)} ao ano. Empréstimo bancário a CDI + ${pct(e.spreadBanco, 0)}: ${pct(banco)} ao ano.`,
+          `Diferença no ano: ${nf(e.valor, 0)} × (${pct(banco)} − ${pct(mercado)}) = R$ ${nf(economia, 0)}.`,
+        ],
+        resultado: `Se o mercado aceitar CDI + ${pct(e.spreadMercado, 0)}, a empresa economiza cerca de R$ ${nf(economia, 0)} por ano frente ao banco, antes dos custos da emissão.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz emissões pelo FÁCIL. O CDI, base do custo de uma debênture ou nota comercial, está em Juros.', tab: 'juros' },
+    teste: {
+      pergunta: 'Uma S.A. faturou R$ 480 milhões e quer emitir debêntures. Pode usar o FÁCIL? E se no ano seguinte faturar R$ 550 milhões?',
+      resposta: 'Pode, porque está abaixo de R$ 500 milhões. Se passar do limite, não sai na hora: tem o prazo de transição (um ano após a notificação) antes de perder a condição de companhia de menor porte.',
+    },
+  },
+  {
+    id: 'drawback',
+    topico: 'Comércio exterior',
+    nome: 'Drawback',
+    frase: 'É o regime aduaneiro que suspende ou isenta os tributos sobre insumos comprados para fabricar produtos que serão exportados.',
+    crianca: [
+      'Uma fábrica importa aço e componentes para montar máquinas que vai vender no exterior. Sem drawback, ela pagaria imposto de importação, IPI, PIS e Cofins sobre esses insumos e só depois tentaria recuperar. Com o drawback suspensão, esses tributos ficam suspensos, desde que ela exporte o produto dentro do prazo do ato concessório.',
+      'Há também o drawback isenção (reposição de estoque): quem já exportou usando insumos tributados pode comprar a mesma quantidade de novo, sem tributos. O regime é concedido pela Secex no Siscomex e vale também para insumos comprados no Brasil (drawback integrado).',
+    ],
+    analogia: 'É uma conta de passagem: o insumo entra sem pagar pedágio porque vai sair do país dentro do produto; se não sair, o pedágio é cobrado com juros e multa.',
+    lacunas: [
+      'Não é isenção incondicional: se a exportação não acontecer no prazo, os tributos suspensos são devidos com acréscimos legais.',
+      'O ganho principal é de caixa: a empresa deixa de adiantar tributos que só recuperaria depois, o que reduz o capital de giro preso e a necessidade de funding.',
+      'Prazos: na suspensão, o ato concessório vale em regra 1 ano, prorrogável uma vez por igual período (bens de longo ciclo de fabricação podem ter prazo maior). Regras e prazos mudam por portaria da Secex; confira a vigente.',
+      'Com a reforma tributária, a LC 214/2025 prevê a suspensão de IBS e CBS no drawback suspensão; a aplicação às outras modalidades segue regras próprias da transição.',
+      'O ICMS segue regras dos estados (convênios do Confaz) e pode não acompanhar a suspensão federal.',
+    ],
+    preciso: {
+      texto: 'Regime aduaneiro especial (Decreto-Lei 37/1966) nas modalidades suspensão, isenção e restituição, com ato concessório da Secex no Siscomex e comprovação pela exportação. O alívio de caixa na suspensão é o tributo que deixa de ser pago na entrada do insumo:',
+      formula: 'insumo em R$ = valor em US$ × câmbio   ·   tributo suspenso = insumo em R$ × carga tributária',
+    },
+    exemplo: (() => {
+      const e = EX_DRAWBACK
+      const reais = e.usd * e.cambio, suspenso = reais * e.carga
+      return {
+        titulo: `Fabricante importa ${money(e.usd, 'US$')} em insumos para exportar (carga hipotética de ${pct(e.carga, 0)})`,
+        passos: [
+          `Insumo em reais: ${nf(e.usd, 0)} × ${nf(e.cambio, 2)} = R$ ${nf(reais, 0)}.`,
+          `Sem drawback, a empresa adianta tributos de cerca de ${pct(e.carga, 0)}: R$ ${nf(suspenso, 0)} na importação.`,
+          `Com drawback suspensão, esses R$ ${nf(suspenso, 0)} ficam suspensos; viram devidos só se a exportação não for comprovada no prazo.`,
+        ],
+        resultado: `R$ ${nf(suspenso, 0)} a menos de caixa preso em tributos, desde que a exportação aconteça no prazo do ato concessório.`,
+      }
+    })(),
+    noApp: { texto: 'O câmbio está no Mercado; preços internacionais de insumos (metais, petróleo, grãos) estão em Cenários › Commodities.', tab: 'cenarios', view: 'commodities' },
+    teste: {
+      pergunta: 'Uma empresa usou drawback suspensão, mas a venda ao exterior foi cancelada e ela vendeu o produto no Brasil. O que acontece com os tributos dos insumos?',
+      resposta: 'Ficam devidos: sem exportação comprovada, a empresa paga os tributos suspensos com os acréscimos legais (juros e, conforme o caso, multa).',
+    },
+  },
+  {
     id: 'inflacao',
     topico: 'Inflação',
     nome: 'Inflação (IPCA)',
@@ -704,7 +786,7 @@ export const CONCEITOS = [
   },
 ]
 
-export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação', 'Commodities']
+export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Comércio exterior', 'Inflação', 'Commodities']
 
 // Busca por palavras (todas precisam aparecer), sem diferenciar acento nem maiúscula, no conteúdo inteiro do conceito.
 const plain = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -749,6 +831,11 @@ export const LIGACOES = [
   ['cri', 'cra', 'Mesma estrutura de securitização: o CRI tem lastro imobiliário, o CRA tem lastro do agronegócio.'],
   ['cra', 'fidc', 'Os dois podem ter séries sênior e subordinada, e nos dois a subordinada absorve as primeiras perdas.'],
   ['cra', 'commodities-e-cambio', 'Quem está no lastro do CRA vende commodities cotadas em dólar: preço internacional e câmbio decidem se a safra paga a conta.'],
+  ['facil', 'debenture', 'O FÁCIL simplifica a emissão de debêntures para companhias de menor porte: o título é o mesmo, o caminho é mais curto.'],
+  ['facil', 'nota-comercial', 'A nota comercial é uma das captações que a companhia de menor porte pode fazer pelo FÁCIL, para capital de giro e ponte.'],
+  ['facil', 'custo-de-funding', 'Ao abrir o mercado de capitais para empresas médias, o FÁCIL dá uma alternativa ao banco: o custo é CDI mais o spread que os investidores pedirem.'],
+  ['drawback', 'commodities-e-cambio', 'Os insumos do drawback costumam ser cotados em dólar: o câmbio define quanto vale, em reais, o insumo e o tributo suspenso.'],
+  ['drawback', 'custo-de-funding', 'O drawback libera caixa ao não adiantar tributos sobre insumos, o que reduz o capital de giro a financiar e o custo de funding da exportação.'],
   ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: tomar dinheiro por pouco tempo (nota comercial) ou antecipar o que a empresa tem a receber (FIDC).'],
 ]
 
@@ -767,13 +854,15 @@ export const CONEXAO = {
     { id: 'fidc', texto: 'é o fundo que compra recebíveis; a subordinação protege quem tem a cota sênior.' },
     { id: 'cri', texto: 'transforma recebíveis imobiliários em título para o investidor, com patrimônio separado e, para pessoa física, isenção de IR.' },
     { id: 'cra', texto: 'é o CRI do agronegócio: lastro em safra, insumos e contratos do agro, com risco ligado a clima, commodities e câmbio.' },
+    { id: 'facil', texto: 'é a porta simplificada da CVM para companhias de menor porte (receita abaixo de R$ 500 milhões) captarem com investidores.' },
+    { id: 'drawback', texto: 'suspende ou isenta os tributos dos insumos de quem exporta, liberando caixa do exportador.' },
     { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
     { id: 'commodities-e-cambio', texto: 'é a regra de conversão: o preço mundial em dólar vira preço em reais pelo câmbio.' },
     { id: 'ic-br', texto: 'resume em reais a cesta de commodities do Brasil, mostrando se o conjunto ficou mais caro ou mais barato.' },
     { id: 'combustiveis', texto: 'é o caminho do derivado em dólar até a bomba, onde entram câmbio, impostos, etanol e margens, e de onde parte da inflação.' },
   ],
   // O caminho que une tudo, de ponta a ponta.
-  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
+  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA (com o FÁCIL abrindo esse caminho às empresas menores) → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. No comércio exterior, o drawback alivia o caixa do exportador. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
 }
 
 // Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.
