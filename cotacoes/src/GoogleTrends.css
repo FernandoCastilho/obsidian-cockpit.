@@ -1,0 +1,20 @@
+.google-trends { padding: 16px; line-height: 1.5; min-width: 0; }
+.google-trends h3 { margin: 0 0 8px; font-size: 1.1rem; }
+.google-trends h4 { margin: 24px 0 8px; }
+.google-trends p { margin: 8px 0; }
+.google-trends a { color: var(--amber); overflow-wrap: anywhere; }
+.trends-status, .google-trends small { color: var(--mut); font-size: .8rem; }
+.trends-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; margin: 16px 0; }
+.trends-highlights article, .trends-theme { border: 1px solid var(--line, #7775); border-radius: 10px; padding: 16px; }
+.trends-groups { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.trends-groups button, .trends-theme select { min-height: 44px; color: inherit; background: transparent; border: 1px solid var(--line, #7775); border-radius: 8px; padding: 8px 12px; font: inherit; }
+.trends-groups button { cursor: pointer; }
+.trends-groups button[aria-pressed=true] { border-color: var(--amber); color: var(--amber); }
+.trends-theme h4 { margin-top: 0; }
+.trends-theme aside { border-left: 3px solid var(--amber); padding: 8px 14px; margin-top: 20px; }
+.trends-chart-link { display: inline-flex; align-items: center; min-height: 44px; }
+.google-trends summary { cursor: pointer; min-height: 44px; padding-top: 16px; }
+.trends-snapshot { margin: 20px 0; }
+.trends-snapshot svg { display: block; width: 100%; height: auto; margin-top: 12px; }
+.trends-values { max-height: 260px; overflow: auto; }
+.trends-values table { width: 100%; text-align: left; }

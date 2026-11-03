@@ -1,4 +1,5 @@
 node_modules
+public/trends.json
 dist
 public/news.json
 public/macro.json

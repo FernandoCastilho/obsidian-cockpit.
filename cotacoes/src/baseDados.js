@@ -10,6 +10,9 @@ const PINK = 'https://www.worldbank.org/en/research/commodity-markets'
 const AWESOME = 'https://economia.awesomeapi.com.br/json'
 
 export const BASE_DADOS = [
+  { grupo: 'Interesse de busca', itens: [
+    { nome: 'Google Trends: Em alta no Brasil', orgao: 'Google Trends', api: 'https://trends.google.com/trending/rss?geo=BR', pagina: 'https://trends.google.com/trending?geo=BR', arquivo: 'trends.json', serie: 'RSS Em alta; termos históricos são snapshots estáticos separados no app', freq: '08h e 15h de Brasília; horários sujeitos à fila do GitHub Actions' },
+  ] },
   { grupo: 'Câmbio', itens: [
     { nome: 'Cotações atuais: dólar, euro, iene e yuan (CNH)', orgao: 'AwesomeAPI', api: `${AWESOME}/last/USD-BRL,EUR-BRL,JPY-BRL,USD-CNH`, pagina: 'https://docs.awesomeapi.com.br/api-de-moedas', arquivo: 'quotes.json', serie: 'USD-BRL, EUR-BRL, JPY-BRL, USD-CNH', freq: 'A cada 5 min no pregão; 1 vez por hora fora dele (dias úteis)' },
     { nome: 'Yuan em reais (CNY/BRL)', orgao: 'AwesomeAPI (cálculo próprio)', api: `${AWESOME}/last/USD-BRL,USD-CNH`, pagina: 'https://docs.awesomeapi.com.br/api-de-moedas', arquivo: 'quotes.json', serie: 'USD/BRL ÷ USD/CNH', freq: 'Junto das cotações atuais. É um cruzamento, não uma cotação direta' },

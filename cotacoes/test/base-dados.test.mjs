@@ -33,7 +33,8 @@ test('base de dados: todas as fontes da governança aparecem na Base de dados', 
   assert.ok(ATRIBUICOES.some((a) => /BLS/.test(a.fonte)) && ATRIBUICOES.every((a) => a.texto.length > 30))
 })
 test('painéis não mostram origem do dado: fonte, API e links ficam só em Configurações › Base de dados', () => {
-  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx'])
+  // Google Trends: fonte/região/período e abertura do gráfico fazem parte do pedido autorizado.
+  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'GoogleTrends.jsx'])
   for (const f of readdirSync(new URL('../src/', import.meta.url)).filter((x) => x.endsWith('.jsx') && !permitidos.has(x))) {
     const t = src(f)
     assert.doesNotMatch(t, /Fontes?: /, `${f}: texto "Fonte:" em painel`)

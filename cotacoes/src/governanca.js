@@ -7,7 +7,8 @@ import { DATA_POLL_MS } from './visiblePolling.js'
 
 // Horários dos agendamentos (UTC, como nos workflows) e o que significam em Brasília.
 export const CRONS = {
-  pages: ['17 3-23 * * 1-5', '17 0-2 * * 2-6', '30 11 * * 1,2'],
+  // Trends: consultas diárias às 08h e 15h BRT; outras bases preservadas nessa execução.
+  pages: ['17 3-23 * * 1-5', '17 0-2 * * 2-6', '30 11 * * 1,2', '0 11,18 * * *'],
   focus: ['0,30 12-15 * * 1,2', '0 16 * * 1,2'],
   'quotes-watch': ['*/15 12-21 * * 1-5'],
   quotes: ['20 12 * * 1-5', '20 15 * * 1-5', '50 17 * * 1-5', '7 3-12 * * 1-5', '7 21-23 * * 1-5', '7 0-2 * * 2-6'],
