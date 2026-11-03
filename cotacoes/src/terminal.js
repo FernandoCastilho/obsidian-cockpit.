@@ -81,13 +81,13 @@ function fxItems(quotes) {
   return out
 }
 
-// Paridade para a Finimpe: a paridade EUR/USD do momento, com 1 centavo a mais ou a menos conforme a moeda do pagamento
+// Paridade para a Finimp: a paridade EUR/USD do momento, com 1 centavo a mais ou a menos conforme a moeda do pagamento
 // e a do financiamento. Arredonda a 4 casas para não carregar resíduo de ponto flutuante (1,1172 + 0,01 = 1,1272).
-export const FINIMPE_MARGEM = 0.01
-export function finimpeParidade(par) {
+export const FINIMP_MARGEM = 0.01
+export function finimpParidade(par) {
   if (!Number.isFinite(par)) return null
   const r = (v) => Math.round(v * 1e4) / 1e4
-  return { base: r(par), eurUsd: r(par + FINIMPE_MARGEM), usdEur: r(par - FINIMPE_MARGEM) }
+  return { base: r(par), eurUsd: r(par + FINIMP_MARGEM), usdEur: r(par - FINIMP_MARGEM) }
 }
 
 function parityItem(quotes) {

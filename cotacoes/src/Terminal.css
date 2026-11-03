@@ -523,7 +523,7 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .config-times summary:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 .config-times p { margin: 4px 0 8px; }
 
-/* EUR/USD: "?" da Paridade para a Finimpe no canto do quadro, fora do botão do quadro */
+/* EUR/USD: "?" da Paridade para a Finimp no canto do quadro, fora do botão do quadro */
 .kpi-cell { position: relative; display: grid; min-width: 0; }
 .kpi-cell > .kpi { height: 100%; }
 .kpi-help { position: absolute; top: 0; right: 0; z-index: 2; }

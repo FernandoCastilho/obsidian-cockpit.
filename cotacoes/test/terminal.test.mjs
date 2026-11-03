@@ -249,9 +249,9 @@ test('Ibovespa: último fechamento, variação sobre o anterior e minigráfico d
   assert.equal(ibovSpark({ series: { ibov: { points: Array.from({ length: 40 }, (_, i) => [i, 100 + i]) } } }).length, 30)
   assert.deepEqual(toIndexPoints([[1, 127400.6], [2, 0], [3, NaN], [NaN, 5]]), [[1, 127401]])
 })
-test('Paridade para a Finimpe: paridade ± 0,01, sem resíduo de ponto flutuante', async () => {
-  const { finimpeParidade } = await import('../src/terminal.js')
-  assert.deepEqual(finimpeParidade(1.1172), { base: 1.1172, eurUsd: 1.1272, usdEur: 1.1072 })
-  assert.equal(finimpeParidade(1.08999).eurUsd, 1.1)
-  assert.equal(finimpeParidade(null), null)
+test('Paridade para a Finimp: paridade ± 0,01, sem resíduo de ponto flutuante', async () => {
+  const { finimpParidade } = await import('../src/terminal.js')
+  assert.deepEqual(finimpParidade(1.1172), { base: 1.1172, eurUsd: 1.1272, usdEur: 1.1072 })
+  assert.equal(finimpParidade(1.08999).eurUsd, 1.1)
+  assert.equal(finimpParidade(null), null)
 })
