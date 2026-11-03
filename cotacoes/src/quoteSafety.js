@@ -1,6 +1,6 @@
 // Verificações de integridade compartilhadas pela coleta e pelo navegador.
 // Faixas amplas já usadas na auditoria; não são previsão nem garantia de preço de mercado.
-const RANGE = { USDBRL: [2, 12], EURBRL: [2, 14], JPYBRL: [0.01, 0.1], CNHBRL: [0.3, 2.5] }
+const RANGE = { USDBRL: [2, 12], EURBRL: [2, 14], JPYBRL: [0.01, 0.1], CNHBRL: [0.3, 2.5], EURUSD: [0.7, 1.8] }
 export const RAW_PAIRS = ['USDBRL', 'EURBRL', 'JPYBRL', 'USDCNH']
 const numeric = v => (typeof v === 'number' || (typeof v === 'string' && v.trim() !== '')) && Number.isFinite(Number(v))
 const positive = v => numeric(v) && Number(v) > 0

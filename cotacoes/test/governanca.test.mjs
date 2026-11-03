@@ -7,7 +7,7 @@ const yml = (f) => readFileSync(new URL(`../../.github/workflows/${f}`, import.m
 const config = readFileSync(new URL('../src/Config.jsx', import.meta.url), 'utf8')
 
 test('os horários descritos na governança existem nos workflows (e vice-versa)', () => {
-  for (const [file, key] of [['pages.yml', 'pages'], ['quotes.yml', 'quotes'], ['focus.yml', 'focus']]) {
+  for (const [file, key] of [['pages.yml', 'pages'], ['quotes.yml', 'quotes'], ['focus.yml', 'focus'], ['quotes-watch.yml', 'quotes-watch']]) {
     const found = [...yml(file).matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
     assert.deepEqual([...found].sort(), [...CRONS[key]].sort(), `${file}: agendamentos mudaram; atualize CRONS e os textos de src/governanca.js`)
   }

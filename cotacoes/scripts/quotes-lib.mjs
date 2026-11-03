@@ -73,6 +73,22 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
     rejected.CNH = 'CNH: horário anterior à última referência válida'
     cnh = { ...previous.cnh, stale: true, error: rejected.CNH }
   }
+  // EUR/USD direto (paridade de mercado, usada na Paridade para a Finimp). Consulta separada: se falhar, não derruba
+  // as moedas em reais; vale a mesma regra de retenção (último valor válido, marcado como retido).
+  let eurusd = null
+  try {
+    const res = await fetchFn(`https://economia.awesomeapi.com.br/json/last/EUR-USD${key ? `?token=${encodeURIComponent(key)}` : ''}`, { headers: { 'user-agent': 'Mozilla/5.0 (cotacoes-coleta)' }, signal: AbortSignal.timeout(25000) })
+    const raw = res.ok ? (await res.json())?.EURUSD : null
+    const old = previous?.quotes?.EURUSD
+    const oldValid = old && !rawQuoteError(old, 'EURUSD', now)
+    const reason = !res.ok ? `EURUSD: HTTP ${res.status}` : rawQuoteError(raw, 'EURUSD', now) || (oldValid && Number(raw.timestamp) < Number(old.timestamp) ? 'EURUSD: horário anterior à última referência válida' : '')
+    if (!reason) { eurusd = { ...raw }; delete eurusd.stale; delete eurusd.error }
+    else if (oldValid) eurusd = { ...old, stale: true, error: reason }
+  } catch (e) {
+    const old = previous?.quotes?.EURUSD
+    if (old && !rawQuoteError(old, 'EURUSD', now)) eurusd = { ...old, stale: true, error: 'EURUSD: ' + e.message }
+  }
+  if (eurusd) quotes.EURUSD = eurusd
   await writeFile(join(dir, 'quotes.json'), JSON.stringify({ generatedAt: now, source: 'AwesomeAPI', quotes, cnh, rejected }))
 
   // Só observações novas e aceitas entram no intraday. Retenção não vira um novo ponto.

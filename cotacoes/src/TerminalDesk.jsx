@@ -5,8 +5,10 @@ import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { SPARK_NOTE, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
+import { FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
 import Help from './Help.jsx'
+import MoneyInput from './MoneyInput.jsx'
+import { parseMoneyInput } from './moneyInput.js'
 import Flag from './Flag.jsx'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
@@ -103,7 +105,7 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
         return (
           <div key={i.key} className="kpi-cell">
             {card}
-            <span className="kpi-help"><FinimpHelp fin={fin} at={i.at} comparable={i.comparable} /></span>
+            <span className="kpi-help"><FinimpHelp fin={fin} at={i.at} comparable={i.comparable} direct={i.direct} /></span>
           </div>
         )
       })}
@@ -114,17 +116,35 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
 }
 
 const n4 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
-// Paridade para a Finimp, com a paridade EUR/USD do momento (atualiza junto com as cotações).
+const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const hm = (t) => (Number.isFinite(t) && t > 0 ? new Date(t).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '') : '—')
-function FinimpHelp({ fin, at, comparable }) {
+const SIMBOLO = { EUR: '€', USD: 'US$' }
+// Paridade para a Finimp: as duas paridades, o horário da cotação e uma calculadora (valor do pagamento → valor a financiar).
+function FinimpHelp({ fin, at, comparable, direct }) {
+  const [modo, setModo] = useState('eur-usd')
+  const [texto, setTexto] = useState('')
+  const lido = parseMoneyInput(texto)
+  const conta = lido.ok ? finimpConverte(lido.value, modo, fin) : null
+  const quando = direct ? at?.PAR : Math.min(at?.EUR ?? Infinity, at?.USD ?? Infinity)
+  const m = FINIMP_MODOS[modo]
   return (
     <Help label="Paridade para a Finimp" align="right" wide fixed>
       <b className="ex-t">Paridade para a Finimp</b>
-      <span className="ex">Paridade EUR/USD agora: <b className="fin-num">{n4(fin.base)}</b></span>
-      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <span className="fin-num">{n4(fin.base)} + 0,01 = <b>{n4(fin.eurUsd)}</b></span></span>
-      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <span className="fin-num">{n4(fin.base)} − 0,01 = <b>{n4(fin.usdEur)}</b></span></span>
-      <span className="ex fin-fonte">Paridade calculada por EUR/BRL ÷ USD/BRL (compra, AwesomeAPI). Cotações: EUR/BRL {hm(at?.EUR)} e USD/BRL {hm(at?.USD)} (Brasília).</span>
-      {!comparable && <span className="ex fin-alerta" role="note">⚠ As duas cotações são de horários diferentes (por exemplo, antes da abertura do dólar); a paridade pode estar distorcida. Use depois da abertura ou confirme na mesa.</span>}
+      <span className="ex">Paridade EUR/USD: <b className="fin-num">{n4(fin.base)}</b> <span className="fin-hora">· cotação de {hm(quando)}</span></span>
+      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <b className="fin-num">{n4(fin.eurUsd)}</b></span>
+      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <b className="fin-num">{n4(fin.usdEur)}</b></span>
+      {!comparable && <span className="ex fin-alerta" role="note">⚠ Cotações de horários diferentes; confirme na mesa.</span>}
+      <span className="fin-calc" role="group" aria-label="Calcular o valor a financiar">
+        <span className="fin-modos" role="radiogroup" aria-label="Combinação de pagamento e financiamento">
+          {Object.entries(FINIMP_MODOS).map(([id, o]) => (
+            <button key={id} type="button" role="radio" aria-checked={modo === id} className={modo === id ? 'on' : ''} onClick={() => setModo(id)}>{o.label}</button>
+          ))}
+        </span>
+        <label className="fin-campo">Valor do pagamento ({m.paga})
+          <MoneyInput prefix={SIMBOLO[m.paga]} value={texto} onChange={setTexto} placeholder="100.000,00" aria-invalid={!!texto && !lido.ok} />
+        </label>
+        <span className="fin-result" aria-live="polite">{conta ? <>Valor a financiar: <b className="fin-num">{SIMBOLO[conta.moeda]} {n2(conta.valor)}</b></> : texto && !lido.ok ? 'Use o formato 100.000,00 ou 100000.' : 'Digite o valor para ver o valor a financiar.'}</span>
+      </span>
     </Help>
   )
 }

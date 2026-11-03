@@ -29,7 +29,7 @@ export function friendlyError(msg) {
 // A chave da AwesomeAPI fica só no robô do GitHub (coleta central); o navegador não a usa, e a consulta direta (botão Atualizar) usa a cota anônima.
 
 // Uma única consulta traz as quatro moedas; o yuan (CNH) sai do cruzamento USD/BRL ÷ USD/CNH.
-const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'USDCNH' }
+const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL', CNH: 'USDCNH', EURUSD: 'EURUSD' }
 const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 
 // Se a fonte devolveu 429 (cota), não insiste por 60 s: as reservas atendem enquanto isso.
@@ -222,7 +222,9 @@ export async function fetchQuotes(signal, { direct = false, base } = {}) {
     via = 'direto'
   }
   const results = await Promise.all(CURRENCIES.map((c) => complete(c.code, batch, batchError, signal, centralSnapshot ?? {}, meta)))
-  return { results: Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), via: batch ? via : 'reserva', collectedAt, checkedAt: meta.checkedAt ?? null, successfulAt: meta.successfulAt ?? null }
+  // EUR/USD direto vem só da coleta central (a consulta direta do navegador mantém as 4 moedas); sem ele, a paridade é cruzada.
+  const par = batch?.EURUSD && !rawQuoteError(batch.EURUSD, 'EURUSD') ? toQuote(batch.EURUSD, 'EURUSD') : null
+  return { results: { ...Object.fromEntries(CURRENCIES.map((c, i) => [c.code, results[i]])), ...(par ? { EURUSD: { quote: par } } : {}) }, via: batch ? via : 'reserva', collectedAt, checkedAt: meta.checkedAt ?? null, successfulAt: meta.successfulAt ?? null }
 }
 
 // Limite do botão "Atualizar agora", por navegador: 1 por minuto e 30 por dia (protege a cota da API de todos).

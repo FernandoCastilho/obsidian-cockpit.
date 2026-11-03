@@ -90,10 +90,34 @@ export function finimpParidade(par) {
   return { base: r(par), eurUsd: r(par + FINIMP_MARGEM), usdEur: r(par - FINIMP_MARGEM) }
 }
 
+// Paridade EUR/USD: a cotação direta de mercado (EUR-USD da AwesomeAPI, pela coleta central) quando existe, não retida e
+// não mais velha que 30 min em relação ao EUR/BRL; senão, o cruzamento EUR/BRL ÷ USD/BRL.
+export function directParity(quotes, maxGap = 30 * 60000) {
+  const d = quotes?.EURUSD
+  if (!d || d.stale || !(d.bid > 0) || !Number.isFinite(d.timestamp)) return null
+  if (quotes?.EUR?.timestamp && Number(quotes.EUR.timestamp) - d.timestamp > maxGap) return null
+  return d
+}
+// Calculadora da Finimp: valor do pagamento na moeda de pagamento → valor a financiar na outra moeda.
+// 'eur-usd' (paga em EUR, financia em USD): EUR × (paridade + 0,01). 'usd-eur' (paga em USD, financia em EUR): USD ÷ (paridade − 0,01).
+export const FINIMP_MODOS = {
+  'eur-usd': { label: 'Pagamento em EUR, financiamento em USD', paga: 'EUR', financia: 'USD' },
+  'usd-eur': { label: 'Pagamento em USD, financiamento em EUR', paga: 'USD', financia: 'EUR' },
+}
+export function finimpConverte(valor, modo, fin) {
+  if (!fin || !(valor > 0) || !FINIMP_MODOS[modo]) return null
+  const taxa = modo === 'eur-usd' ? fin.eurUsd : fin.usdEur
+  if (!(taxa > 0)) return null
+  const v = modo === 'eur-usd' ? valor * taxa : valor / taxa
+  return { taxa, valor: Math.round(v * 100) / 100, moeda: FINIMP_MODOS[modo].financia }
+}
+
 function parityItem(quotes) {
+  const d = directParity(quotes)
+  if (d) return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: d.bid, direct: true, comparable: true, at: { PAR: d.timestamp }, value: nf(d.bid, 4), change: Number.isFinite(d.pct) ? d.pct : null, unit: 'pct', reason: null }
   const p = liveCross(quotes?.EUR, quotes?.USD)
   if (!p || quotes.EUR.fallback || quotes.USD.fallback) return null
-  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: p.main, comparable: p.comparable !== false, at: { EUR: Number(quotes.EUR.timestamp), USD: Number(quotes.USD.timestamp) }, value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
+  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: p.main, direct: false, comparable: p.comparable !== false, at: { EUR: Number(quotes.EUR.timestamp), USD: Number(quotes.USD.timestamp) }, value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
 }
 
 function rateItems(rates) {
