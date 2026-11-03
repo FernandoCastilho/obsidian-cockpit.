@@ -93,7 +93,7 @@ export function finimpParidade(par) {
 function parityItem(quotes) {
   const p = liveCross(quotes?.EUR, quotes?.USD)
   if (!p || quotes.EUR.fallback || quotes.USD.fallback) return null
-  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: p.main, value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
+  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: p.main, comparable: p.comparable !== false, at: { EUR: Number(quotes.EUR.timestamp), USD: Number(quotes.USD.timestamp) }, value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
 }
 
 function rateItems(rates) {
