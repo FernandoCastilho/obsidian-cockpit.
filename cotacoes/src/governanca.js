@@ -9,6 +9,7 @@ import { DATA_POLL_MS } from './visiblePolling.js'
 export const CRONS = {
   pages: ['17 3-23 * * 1-5', '17 0-2 * * 2-6', '30 11 * * 1,2'],
   focus: ['0,30 12-15 * * 1,2', '0 16 * * 1,2'],
+  'quotes-watch': ['*/15 12-21 * * 1-5'],
   quotes: ['20 12 * * 1-5', '20 15 * * 1-5', '50 17 * * 1-5', '7 3-12 * * 1-5', '7 21-23 * * 1-5', '7 0-2 * * 2-6'],
 }
 
@@ -19,7 +20,7 @@ const HORA = 'De hora em hora nos dias úteis (0h17 às 23h17)'
 
 // Uma linha por fonte (`chaves` = linhas de "Estado dos dados" que ela cobre): nome, origem, como é coletada, quando o dado de fato muda e quando é marcado como atrasado.
 export const FONTES = [
-  { id: 'cambio', chaves: ['quotes'], nome: 'Câmbio (USD, EUR, JPY, CNH)', origem: 'AwesomeAPI e BCB', coleta: 'A cada 5 min no pregão (9h30 às 18h, seg–sex); 1 vez por hora de 0h07 às 9h07 e de 18h07 às 23h07, seg–sex; sem coleta no fim de semana', muda: 'Continuamente no pregão', atraso: 'Acima do esperado para o horário (cerca de 1 h fora do pregão)' },
+  { id: 'cambio', chaves: ['quotes'], nome: 'Câmbio (USD, EUR, JPY, CNH e EUR/USD)', origem: 'AwesomeAPI e BCB', coleta: 'A cada 5 min no pregão (9h30 às 18h, seg–sex), com vigia que redispara a coleta se ela passar de 15 min parada; 1 vez por hora de 0h07 às 9h07 e de 18h07 às 23h07, seg–sex; sem coleta no fim de semana', muda: 'Continuamente no pregão', atraso: 'Acima do esperado para o horário (cerca de 1 h fora do pregão)' },
   { id: 'macro', chaves: ['macro'], nome: 'CDI, Selic, PTAX, SOFR e Focus', origem: 'Banco Central, NY Fed', coleta: HORA, muda: 'CDI, PTAX e SOFR a cada dia útil; Selic a cada reunião do Copom (cerca de 6 semanas); Focus toda segunda às 8h30; se ainda não saiu, nova tentativa de 30 em 30 min até 13h (10 tentativas); o mesmo na terça, para quando segunda é feriado', atraso: `${ATRASO_H.macro} h` },
   { id: 'curves', chaves: ['curves'], nome: 'Curvas DI x pré, cupom cambial e Treasuries', origem: 'B3, Tesouro dos EUA', coleta: HORA, muda: 'Uma vez por dia útil, com o ajuste do dia', atraso: `${ATRASO_H.curves} h` },
   { id: 'news', chaves: ['news'], nome: 'Notícias', origem: 'Fontes públicas de notícias', coleta: HORA, muda: 'Ao longo do dia', atraso: `${ATRASO_H.news} h` },

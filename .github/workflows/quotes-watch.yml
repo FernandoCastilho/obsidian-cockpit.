@@ -1,0 +1,41 @@
+name: Vigia das cotações (pregão, de 15 em 15 min)
+
+# Se a coleta central de cotações parar no pregão (o GitHub às vezes pula o agendamento), dispara quotes.yml de novo.
+on:
+  schedule:
+    - cron: '*/15 12-21 * * 1-5' # 9h a 18h45 de Brasília; o script só age das 9h30 às 18h
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  vigia:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cotacoes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: estado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gen=$(gh api "repos/$GITHUB_REPOSITORY/contents/quotes.json?ref=data" -H "Accept: application/vnd.github.raw" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).generatedAt??"")}catch{console.log("")}})')
+          running=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow quotes.yml --limit 10 --json status --jq '[.[] | select(.status=="in_progress" or .status=="queued" or .status=="waiting" or .status=="pending")] | length > 0')
+          echo "generated=$gen" >> "$GITHUB_OUTPUT"
+          echo "running=$running" >> "$GITHUB_OUTPUT"
+      - id: decide
+        env:
+          GENERATED_AT: ${{ steps.estado.outputs.generated }}
+          RUNNING: ${{ steps.estado.outputs.running }}
+        run: node scripts/quotes-watch.mjs
+      - name: Disparar a coleta de cotações
+        if: steps.decide.outputs.run == 'true'
+        run: gh workflow run quotes.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
+        env:
+          GH_TOKEN: ${{ github.token }}

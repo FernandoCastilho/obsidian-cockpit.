@@ -8,7 +8,9 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   const [hover, setHover] = useState(false)
   const ref = useRef(null)
   const id = useId()
-  const show = pinned || hover
+  // foco dentro do balão (ex.: campo da calculadora da Finimp) o mantém aberto, mesmo se o mouse sair dele
+  const [focusIn, setFocusIn] = useState(false)
+  const show = pinned || hover || focusIn
   const popRef = useRef(null)
   const mobile = typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 560px)').matches
   const [shift, setShift] = useState(0)
@@ -24,7 +26,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   useEffect(() => {
     if (!show) return
     window.dispatchEvent(new CustomEvent('help-open', { detail: id }))
-    const other = (e) => { if (e.detail !== id) { clearTimeout(leaveTimer.current); setHover(false); setPinned(false) } }
+    const other = (e) => { if (e.detail !== id) { clearTimeout(leaveTimer.current); setHover(false); setPinned(false); setFocusIn(false) } }
     window.addEventListener('help-open', other)
     return () => window.removeEventListener('help-open', other)
   }, [show, id])
@@ -68,7 +70,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   }, [show, floating])
   useEffect(() => {
     if (!floating || !show) return
-    const close = () => { setHover(false); setPinned(false) }
+    const close = () => { setHover(false); setPinned(false); setFocusIn(false) }
     window.addEventListener('scroll', close, true)
     window.addEventListener('resize', close)
     return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close) }
@@ -77,7 +79,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   useEffect(() => {
     if (!pinned) return
     const onDown = (e) => !ref.current?.contains(e.target) && !popRef.current?.contains(e.target) && setPinned(false)
-    const onKey = (e) => e.key === 'Escape' && setPinned(false)
+    const onKey = (e) => { if (e.key === 'Escape') { setPinned(false); setFocusIn(false) } }
     document.addEventListener('pointerdown', onDown)
     document.addEventListener('keydown', onKey)
     return () => {
@@ -88,9 +90,10 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
 
   const pop = (
         <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={floating ? { position: 'fixed', zIndex: 70, top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto', maxWidth: 'none', ...(pos?.width ? { width: pos.width } : {}) } : shift ? { transform: `translateX(${shift}px)` } : undefined}
-          onPointerEnter={floating ? enter : undefined} onPointerLeave={floating ? leave : undefined}>
+          onPointerEnter={floating ? enter : undefined} onPointerLeave={floating ? leave : undefined}
+          onFocus={() => setFocusIn(true)} onBlur={(e) => { if (!popRef.current?.contains(e.relatedTarget)) setFocusIn(false) }}>
           {children}
-          {(pinned || fixed) && mobile && <button type="button" className="pop-close" onClick={() => { setPinned(false); setHover(false) }}>Fechar</button>}
+          {(pinned || fixed) && mobile && <button type="button" className="pop-close" onClick={() => { setPinned(false); setHover(false); setFocusIn(false) }}>Fechar</button>}
         </span>
   )
 

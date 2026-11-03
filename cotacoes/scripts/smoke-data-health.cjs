@@ -21,7 +21,7 @@ const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:
   try{
    await p.goto(base+'/#config');const notice=p.getByRole('button',{name:'Entendi',exact:true});if(await notice.count())await notice.click()
    const feed=p.locator('.topbar-feed');await feed.filter({hasText:'Dado antigo'}).waitFor({state:'attached'});assert.match(await feed.textContent(),/10:00/);assert.doesNotMatch(await feed.textContent(),/14:00/)
-   const rows=p.locator('.config-gov tbody tr'),fx=rows.filter({hasText:'Câmbio (USD, EUR, JPY, CNH)'});await fx.waitFor();assert.equal(await fx.count(),1)
+   const rows=p.locator('.config-gov tbody tr'),fx=rows.filter({hasText:'Câmbio (USD, EUR, JPY, CNH e EUR/USD)'});await fx.waitFor();assert.equal(await fx.count(),1)
    for(const text of [/Dado antigo/i,/Conferido no painel/,/Referência mais antiga/,/10:00/,/14:00/])assert.match(await fx.innerText(),text)
    const summary=fx.locator('summary');await summary.scrollIntoViewIfNeeded();const bounds=await summary.boundingBox();assert.ok(bounds&&bounds.height>=44);await summary.click()
    for(const text of [/Arquivo gerado/,/Última leitura bem-sucedida/,/USD\/BRL:/])assert.match(await fx.innerText(),text)

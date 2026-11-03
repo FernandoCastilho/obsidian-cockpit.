@@ -529,9 +529,20 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .kpi-help { position: absolute; top: 0; right: 0; z-index: 2; }
 .kpi-help .help button:not(.pop-close) { color: var(--mut); }
 .fin-linha { display: block; }
-.fin-fonte { color: var(--mut); font-size: .72rem; }
+.fin-hora { color: var(--mut); font-size: .72rem; }
+.fin-calc { display: grid; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.fin-modos { display: grid; gap: 4px; }
+.fin-modos button { min-height: 44px; padding: 6px 10px; text-align: left; background: transparent; color: var(--mut); border: 1px solid var(--line); border-radius: 6px; font: inherit; cursor: pointer; }
+.fin-modos button.on { color: var(--fg); border-color: var(--amber); box-shadow: inset 3px 0 0 var(--amber); }
+.fin-campo { display: grid; gap: 4px; color: var(--mut); font-size: .74rem; }
+.fin-campo input { width: 100%; min-height: 44px; box-sizing: border-box; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; font: 600 .95rem var(--mono); padding-right: 10px; }
+.fin-campo input[aria-invalid="true"] { border-color: var(--warn); }
+.fin-result { font-size: .82rem; }
 .fin-alerta { color: var(--warn); font-weight: 600; }
 .fin-num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 /* cabeçalho com abas: quando abas + "Atualizado em" não cabem, o carimbo desce para a linha de baixo (nada fica por cima das abas) */
 .desk-panel > header:has(.desk-tabs) { flex-wrap: wrap; }
 .desk-panel > header .desk-tabs { flex: 1 1 auto; }
+.fin-campo .money-wrap { position: relative; display: block; }
+.fin-campo .money-wrap > i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-style: normal; font-family: var(--mono, monospace); font-size: 12px; color: var(--mut); pointer-events: none; }
+.fin-campo .money-wrap > input { padding-left: 42px; }

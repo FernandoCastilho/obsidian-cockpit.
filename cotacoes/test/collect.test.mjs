@@ -137,3 +137,20 @@ test('histórico: janela do ano anterior é pedida por datas, preservada e repet
   await collectHistory({ dir: dir2, fetchFn: g, now: now + 25 * 3600e3 })
   assert.ok(n - first > 8, 'após 24 h tenta a anterior de novo')
 })
+
+test('coleta: EUR/USD direto em consulta separada; falha dele não derruba as moedas em reais e retém o último válido', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'q-'))
+  const t0 = 1_800_000_000_000
+  const both = (ts, par) => async (url) => (url.includes('/EUR-USD')
+    ? (par ? { ok: true, status: 200, json: async () => ({ EURUSD: q(par, ts) }) } : { ok: false, status: 404 })
+    : { ok: true, status: 200, json: async () => ({ USDBRL: q(5.3, ts), EURBRL: q(6.1, ts), JPYBRL: q(0.035, ts), USDCNH: q(7.1, ts) }) })
+  await collect({ dir, fetchFn: both(t0 / 1000, 1.1183), now: t0, tries: 1 })
+  let f = JSON.parse(await readFile(join(dir, 'quotes.json'), 'utf8'))
+  assert.equal(f.quotes.EURUSD.bid, '1.1183'); assert.equal(f.quotes.USDBRL.bid, '5.3'); assert.deepEqual(f.rejected, {})
+  await collect({ dir, fetchFn: both((t0 + 300000) / 1000, null), now: t0 + 300000, tries: 1 })
+  f = JSON.parse(await readFile(join(dir, 'quotes.json'), 'utf8'))
+  assert.equal(f.quotes.EURUSD.stale, true); assert.equal(f.quotes.EURUSD.bid, '1.1183'); assert.equal(f.quotes.USDBRL.timestamp, String((t0 + 300000) / 1000))
+  await collect({ dir, fetchFn: both((t0 + 600000) / 1000, 9), now: t0 + 600000, tries: 1 }) // fora da faixa de segurança
+  f = JSON.parse(await readFile(join(dir, 'quotes.json'), 'utf8'))
+  assert.equal(f.quotes.EURUSD.bid, '1.1183'); assert.equal(f.quotes.EURUSD.stale, true)
+})
