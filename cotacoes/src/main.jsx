@@ -5,6 +5,7 @@ import App from './App.jsx'
 import './styles.css'
 import './Terminal.css'
 import './Abas.css'
+import { iniciarContagem } from './acessos.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,3 +20,6 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => hadController && window.dispatchEvent(new Event('app-update')))
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}))
 }
+
+// Contagem anônima de acessos (Umami): só no site publicado.
+iniciarContagem()
