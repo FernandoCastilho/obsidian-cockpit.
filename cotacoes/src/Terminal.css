@@ -550,10 +550,10 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 /* Acessos ao app (Acessos.jsx) */
 .online-badge { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; background: transparent; border: 1px solid var(--line); border-radius: 99px; color: var(--fg); font: 600 .72rem/1 var(--mono); cursor: pointer; white-space: nowrap; }
 .online-badge:hover, .online-badge:focus-visible { border-color: var(--up); }
+@media (max-width: 999px) { .online-badge { min-height: 44px; } }
 .online-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 25%, transparent); }
 @media (prefers-reduced-motion: no-preference) { .online-dot { animation: online-pulso 2.4s ease-in-out 3; } }
 @keyframes online-pulso { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--up) 0%, transparent); } }
-@media (max-width: 999px) { .online-badge { min-height: 44px; } }
 .acessos-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
 .acessos-kpis > div { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); background: var(--card); }
 .acessos-kpis small { color: var(--mut); font-size: .72rem; }
@@ -565,9 +565,11 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .acessos-nota { font-size: .75rem; margin: 8px 0 0; }
 @media (max-width: 560px) { .acessos-kpis { grid-template-columns: 1fr; } .acessos-dia small { display: none; } .acessos-dia:nth-child(5n) small { display: block; } }
 
-.kpi-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.kpi-head .kpi-title { margin-bottom: 6px; }
-.online-inline { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0; background: none; border: 0; color: var(--mut); font: .7rem/1 var(--mono); cursor: pointer; white-space: nowrap; }
-.online-inline:hover, .online-inline:focus-visible { color: var(--fg); }
-.online-inline .online-dot { width: 6px; height: 6px; box-shadow: none; }
-@media (max-width: 560px) { .online-inline { min-height: 44px; } }
+
+/* Insight do Aprender no Mercado (InsightAprender.jsx) */
+.insight-aprender { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; margin: 8px 0 0; padding: 8px 12px; border-left: 2px solid var(--amber); background: color-mix(in srgb, var(--amber) 5%, transparent); color: var(--fg); font-size: .82rem; line-height: 1.45; }
+.insight-aprender b { color: var(--amber); font-weight: 600; }
+.insight-aprender i { font-style: normal; color: var(--mut); }
+.insight-aprender > span:nth-child(2) { flex: 1 1 260px; }
+.insight-aprender .linklike { min-height: 32px; white-space: nowrap; }
+@media (max-width: 560px) { .insight-aprender .linklike { min-height: 44px; } }
