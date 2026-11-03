@@ -151,7 +151,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.deepEqual(errors, [])
       await p.close()
     }
-    // Resumo › Notícias: aba "Reforma tributária" ao lado de "Manchetes", com a semana por dia, filtro de dia e busca
+    // Resumo › Notícias: Manchetes e Reforma tributária como linha do tempo da semana, quebrada por dia
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
@@ -168,6 +168,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await painel.getByRole('tab', { name: 'Manchetes' }).getAttribute('aria-selected'), 'true', 'abre em Manchetes')
       // Manchetes: bandeira das moedas de que cada matéria fala (busca + título)
       const flags = painel.locator('.market-news li .news-flags'); await flags.first().waitFor()
+      assert.match(await painel.locator('.market-news .reforma-day').first().innerText(), /Hoje/i, 'manchetes quebradas por dia')
       assert.equal(await flags.count(), 3, 'uma linha de bandeiras por matéria que cita moeda; a de soja não tem')
       assert.equal(await painel.locator('.market-news li', { hasText: 'Dólar sobe' }).locator('.news-flags').getAttribute('aria-label'), 'Moedas citadas: dólar')
       assert.equal(await painel.locator('.market-news li', { hasText: 'iene dispara' }).locator('.news-flags .flag').count(), 2, 'iene e real (Ibovespa), as duas citadas no título')
@@ -177,11 +178,12 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const lista = painel.locator('.reforma'); await lista.locator('li').first().waitFor()
       assert.equal(await lista.locator('li').count(), 5, 'todas as matérias da semana')
       assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
-      assert.match(await painel.innerText(), /5 matérias · últimos 7 dias/); assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
-      await lista.getByLabel('Buscar nas matérias').fill('cashback'); assert.equal(await lista.locator('li').count(), 1)
-      await lista.getByLabel('Buscar nas matérias').fill('xyz'); assert.match(await lista.innerText(), /Nenhuma matéria para esse filtro/)
-      await lista.getByLabel('Buscar nas matérias').fill('')
-      await lista.locator('.reforma-days button').nth(1).click(); assert.ok(await lista.locator('li').count() < 5 && await lista.locator('li').count() >= 1, 'filtra por dia')
+      // linha do tempo enxuta: só a semana, de hoje para trás, quebrada por dia; sem filtro de dia, busca nem legenda
+      assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
+      assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
+      assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
+      assert.doesNotMatch(await lista.innerText(), /últimos 7 dias/)
+      assert.match(await lista.locator('.reforma-day').first().innerText(), /Hoje/i)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()
       assert.deepEqual(errors, [])

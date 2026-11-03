@@ -23,3 +23,10 @@ test('temas de moedas: título precisa citar a moeda e trazer contexto de câmbi
   assert.equal(relevanteTema(t('moeda-cnh'), 'China anuncia novo plano de saúde'), false)
   for (const id of ['moeda-usd', 'moeda-eur', 'moeda-jpy', 'moeda-cnh']) assert.ok(temasFile({}, 1).temas[id], id)
 })
+
+test('Moedas: junta as matérias das quatro moedas, sem repetir link, mais recente primeiro', async () => {
+  const { juntarMoedas } = await import('../src/reforma.js')
+  const it = (link, t) => ({ title: link, link, source: 'X', t })
+  const r = juntarMoedas({ 'moeda-usd': { items: [it('a', 3), it('b', 1)] }, 'moeda-eur': { items: [it('b', 1), it('c', 2)] }, 'moeda-jpy': { items: [] } })
+  assert.deepEqual(r.map((x) => [x.link, x.codes.join('+')]), [['a', 'USD'], ['c', 'EUR'], ['b', 'USD+EUR']])
+})
