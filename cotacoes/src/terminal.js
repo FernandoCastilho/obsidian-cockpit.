@@ -16,7 +16,7 @@ export const DESK_TABS = [
   { id: 'calculadora', label: 'Calculadoras' },
   { id: 'feriados', label: 'Feriados' },
   { id: 'aprender', label: 'Aprender' },
-  { id: 'config', label: 'Config' },
+  { id: 'config', label: 'Config', oculto: true }, // fora da barra; abre por #config e pelo comando CONFIG
 ]
 
 const norm = (s) =>

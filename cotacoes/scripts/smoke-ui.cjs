@@ -28,11 +28,14 @@ const assert = require('node:assert/strict')
  })
  await page.goto(`${base}/#resumo`)
  await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).waitFor()
- for(const label of ['Juros','Calculadoras','Feriados','Cenários','Notícias','Configurações','Mercado hoje']){
+ for(const label of ['Juros','Calculadoras','Feriados','Cenários','Notícias','Mercado hoje']){
   await page.getByRole('navigation',{name:/Navegação principal|Seções/}).getByRole('button',{name:{'Configurações':/^Config(urações)?$/,'Mercado hoje':/^Mercado( hoje)?$/}[label]??label,exact:true}).click()
   await page.waitForTimeout(200)
   assert.equal(await page.getByRole('heading',{name:'Não foi possível exibir esta tela'}).count(),0,label)
  }
+ assert.equal(await page.getByRole('navigation',{name:/Navegação principal|Seções/}).getByRole('button',{name:/^Config(urações)?$/}).count(),0,'Config oculta no menu')
+ await page.goto(`${base}/#config`);await page.waitForTimeout(300);assert.equal(await page.getByRole('heading',{name:'Não foi possível exibir esta tela'}).count(),0,'#config abre')
+ await page.goto(`${base}/#resumo`);await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).waitFor()
  await page.getByRole('button',{name:'Dólar americano: abrir gráfico',exact:true}).click()
  const dialog=page.getByRole('dialog',{name:'detalhes da moeda'})
  await dialog.waitFor({state:'visible'})

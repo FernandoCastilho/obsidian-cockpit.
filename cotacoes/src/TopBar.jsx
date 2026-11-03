@@ -39,7 +39,7 @@ export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle 
     const onKey = (e) => {
       if (e.altKey && !e.ctrlKey && !e.metaKey && /^[0-9]$/.test(e.key)) {
         e.preventDefault()
-        onTab(DESK_TABS[(Number(e.key) + 9) % 10]?.id ?? DESK_TABS[0].id)
+        { const vis = DESK_TABS.filter((t) => !t.oculto); onTab(vis[(Number(e.key) + 9) % 10]?.id ?? vis[0].id) }
       }
     }
     document.addEventListener('keydown', onKey)
@@ -52,7 +52,7 @@ export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle 
         Painel<span>Especialista</span>
       </div>
       <nav className="topbar-tabs" aria-label="Navegação principal">
-        {DESK_TABS.map((t, i) => (
+        {DESK_TABS.filter((t) => !t.oculto).map((t, i) => (
           <button key={t.id} type="button" className={t.id === tab ? 'on' : ''} aria-current={t.id === tab ? 'page' : undefined} onClick={() => onTab(t.id)} title={`Alt+${(i + 1) % 10}`}>
             <i aria-hidden="true">{i + 1}</i>
             {t.label}
@@ -60,7 +60,7 @@ export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle 
         ))}
       </nav>
       <Clocks />
-      <OnlineBadge onOpen={() => onTab('config')} />
+      <OnlineBadge />
       <div className={`topbar-feed ${feed}`} role="status" title={feedTitle || 'Estado das referências de câmbio'}>
         <span aria-hidden="true" />
         {feedLabel || STATE_TEXT[feed]}

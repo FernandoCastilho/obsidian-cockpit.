@@ -15,3 +15,10 @@ test('menu do celular e da barra do computador seguem a mesma ordem', () => {
   const ids = [...src.matchAll(/^\s{2}\{ id: '(\w+)', label:/gm)].map((m) => m[1])
   assert.deepEqual(ids, DESK_TABS.map((t) => t.id))
 })
+
+test('Configurações fica fora do menu (oculta), mas a rota continua', async () => {
+  const { DESK_TABS } = await import('../src/terminal.js')
+  assert.equal(DESK_TABS.find((t) => t.id === 'config').oculto, true)
+  assert.match(src, /id: 'config', label: 'Configurações', oculto: true/)
+  assert.match(src, /TABS\.filter\(\(t\) => !t\.oculto\)/)
+})

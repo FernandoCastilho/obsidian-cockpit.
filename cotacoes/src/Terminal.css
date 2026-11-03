@@ -551,6 +551,14 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .online-badge { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; background: transparent; border: 1px solid var(--line); border-radius: 99px; color: var(--fg); font: 600 .72rem/1 var(--mono); cursor: pointer; white-space: nowrap; }
 .online-badge:hover, .online-badge:focus-visible { border-color: var(--up); }
 @media (max-width: 999px) { .online-badge { min-height: 44px; } }
+.online-wrap { position: relative; display: inline-flex; align-items: center; }
+.online-pop { position: absolute; top: calc(100% + 6px); right: 0; z-index: 70; width: min(280px, calc(100vw - 24px)); display: grid; gap: 6px; padding: 10px; background: #0d1117; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.45); color: var(--fg); text-align: left; }
+.online-pop > div { display: grid; gap: 1px; padding: 6px 8px; border: 1px solid var(--line); background: var(--card); }
+.online-pop small { color: var(--mut); font-size: .7rem; }
+.online-pop b { display: inline-flex; align-items: center; gap: 8px; font: 700 1.2rem/1.1 var(--mono); }
+.online-pop p { margin: 2px 0 0; font-size: .7rem; color: var(--mut); }
+@media (max-width: 999px) { .online-pop { right: auto; left: 0; } }
+@media (prefers-reduced-motion: no-preference) { .online-pop { animation: pop-in .16s cubic-bezier(.2,.8,.2,1) both; } }
 .online-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 25%, transparent); }
 @media (prefers-reduced-motion: no-preference) { .online-dot { animation: online-pulso 2.4s ease-in-out 3; } }
 @keyframes online-pulso { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--up) 0%, transparent); } }

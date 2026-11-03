@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDataFile } from './useDataFile.js'
 import { SITE_HOST } from './acessos.js'
 import { Panel } from './TerminalDesk.jsx'
@@ -47,13 +47,33 @@ export function useOnline() {
   return { online: null, data }
 }
 
-export function OnlineBadge({ onOpen }) {
+// Selo "● N online" ao lado do relógio; ao clicar, abre um balão com online agora, hoje e últimos 7 dias.
+export function OnlineBadge() {
   const { online, at, aoVivo, data } = useOnline()
+  const [aberto, setAberto] = useState(false)
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!aberto) return undefined
+    const fora = (e) => { if (!ref.current?.contains(e.target)) setAberto(false) }
+    const esc = (e) => { if (e.key === 'Escape') setAberto(false) }
+    document.addEventListener('pointerdown', fora); document.addEventListener('keydown', esc)
+    return () => { document.removeEventListener('pointerdown', fora); document.removeEventListener('keydown', esc) }
+  }, [aberto])
   if (!Number.isFinite(online)) return null
   return (
-    <button type="button" className="online-badge" onClick={onOpen} title={`${aoVivo ? 'Ao vivo' : 'Última leitura'}: pessoas com o app aberto (${hm(at)}).${data?.hoje ? ` Hoje: ${n(data.hoje.visitantes)} visitantes.` : ''} Clique para ver os acessos.`} aria-label={`${online} online agora; ver acessos ao app`}>
-      <span className="online-dot" aria-hidden="true" />{n(online)} online
-    </button>
+    <span className="online-wrap" ref={ref}>
+      <button type="button" className="online-badge" aria-expanded={aberto} aria-controls="online-pop" onClick={() => setAberto((v) => !v)} aria-label={`${online} online agora; ver acessos ao app`}>
+        <span className="online-dot" aria-hidden="true" />{n(online)} online
+      </button>
+      {aberto && (
+        <div id="online-pop" className="online-pop" role="dialog" aria-label="Acessos ao app">
+          <div><small>Online agora</small><b><span className="online-dot" aria-hidden="true" />{n(online)}</b><small>{aoVivo ? `ao vivo · ${hm(at)}` : `na leitura das ${hm(at)}`}</small></div>
+          <div><small>Hoje</small><b>{n(data?.hoje?.visitantes)}</b><small>visitantes · {n(data?.hoje?.views)} visualizações</small></div>
+          <div><small>Últimos 7 dias</small><b>{n(data?.semana?.visitantes)}</b><small>visitantes · {n(data?.semana?.views)} visualizações</small></div>
+          <p>Contagem anônima, sem cookies. <a href={UMAMI_SHARE_URL} target="_blank" rel="noreferrer">Detalhes no Umami ↗</a></p>
+        </div>
+      )}
+    </span>
   )
 }
 
