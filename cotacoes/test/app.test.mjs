@@ -312,3 +312,12 @@ test('manchetes: a mesma matéria com links diferentes (mesmo título e veículo
   const feed = buildFeed(news)
   assert.equal(feed.length, 2); assert.deepEqual(feed[0].codes, ['USD', 'MKT'])
 })
+test('feriados: Campinas (Dia do Evangélico desde 2026, padroeira) e região (lista do TJ-SP, Paulínia móvel)', () => {
+  const cps = holidayMap('CPS', 2026), rmc = holidayMap('RMC', 2026)
+  assert.equal(cps.get('2026-08-12'), 'Dia do Evangélico')
+  assert.match(cps.get('2026-12-08'), /Conceição/)
+  assert.equal(holidayMap('CPS', 2025).has('2025-08-12'), false)
+  for (const d of ['2026-01-20', '2026-02-02', '2026-02-28', '2026-04-02', '2026-05-19', '2026-05-28', '2026-06-12', '2026-06-13', '2026-07-26', '2026-09-12', '2026-09-15', '2026-12-04']) assert.ok(rmc.has(d), d)
+  assert.match(rmc.get('2026-06-12'), /Paulínia/) // Páscoa 05/04/2026 + 68
+  assert.equal(rmc.size, 12)
+})
