@@ -10,6 +10,7 @@ import { useDataFile } from './useDataFile.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { SHORTCUTS, dataStatus } from './terminal.js'
 import { ATRASO_H, FONTES, NAVEGADOR, REGRAS, RESUMO } from './governanca.js'
+import { AcessosPanel } from './Acessos.jsx'
 
 const H = 3600e3
 const TONE = { ok: 'up', old: 'down', retained: 'down', partial: 'down', reserve: 'flat', missing: 'flat', loading: 'flat' }
@@ -79,6 +80,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   })
   return (
     <div className="config-desk">
+      <AcessosPanel />
       <Panel title="Governança dos dados" note="estado, origem e frequência de cada fonte" className="config-wide" refresh={['macro.json', 'curves.json', 'news.json', 'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
         <h3 className="config-sub">Em resumo</h3>
         <ul className="config-list config-resumo">{RESUMO.map((t) => <li key={t}>{t}</li>)}</ul>

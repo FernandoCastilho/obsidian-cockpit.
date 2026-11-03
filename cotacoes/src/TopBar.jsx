@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ZONES } from './Clock.jsx'
+import { OnlineBadge } from './Acessos.jsx'
 import { DESK_TABS } from './terminal.js'
 import { AvisosButton } from './Avisos.jsx'
 
@@ -59,6 +60,7 @@ export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle 
         ))}
       </nav>
       <Clocks />
+      <OnlineBadge onOpen={() => onTab('config')} />
       <div className={`topbar-feed ${feed}`} role="status" title={feedTitle || 'Estado das referências de câmbio'}>
         <span aria-hidden="true" />
         {feedLabel || STATE_TEXT[feed]}

@@ -22,6 +22,7 @@ import AvisoInicial from './AvisoInicial.jsx'
 import ConceitoDiario from './ConceitoDiario.jsx'
 import Recado from './Recado.jsx'
 import AlertaVariacao from './AlertaVariacao.jsx'
+import { OnlineBadge } from './Acessos.jsx'
 import Laser from './Laser.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
@@ -260,7 +261,7 @@ export default function App() {
     {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
-        <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
+        <OnlineBadge onOpen={() => goto('config')} /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
       </div>
     )}
     <main className="app" ref={mainRef}>

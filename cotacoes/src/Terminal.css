@@ -546,3 +546,21 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .fin-campo .money-wrap { position: relative; display: block; }
 .fin-campo .money-wrap > i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-style: normal; font-family: var(--mono, monospace); font-size: 12px; color: var(--mut); pointer-events: none; }
 .fin-campo .money-wrap > input { padding-left: 42px; }
+
+/* Acessos ao app (Acessos.jsx) */
+.online-badge { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 10px; background: transparent; border: 1px solid var(--line); border-radius: 99px; color: var(--fg); font: 600 .72rem/1 var(--mono); cursor: pointer; white-space: nowrap; }
+.online-badge:hover, .online-badge:focus-visible { border-color: var(--up); }
+.online-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 25%, transparent); }
+@media (prefers-reduced-motion: no-preference) { .online-dot { animation: online-pulso 2.4s ease-in-out 3; } }
+@keyframes online-pulso { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--up) 0%, transparent); } }
+@media (max-width: 999px) { .online-badge { min-height: 44px; } }
+.acessos-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.acessos-kpis > div { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); background: var(--card); }
+.acessos-kpis small { color: var(--mut); font-size: .72rem; }
+.acessos-kpis b { display: inline-flex; align-items: center; gap: 8px; font: 700 1.6rem/1.1 var(--mono); }
+.acessos-dias { display: flex; align-items: flex-end; gap: 3px; height: 110px; padding: 6px 0 0; border-bottom: 1px solid var(--line); }
+.acessos-dia { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 3px; min-width: 0; }
+.acessos-dia i { width: 100%; background: var(--amber); opacity: .85; border-radius: 2px 2px 0 0; }
+.acessos-dia small { font-size: .6rem; color: var(--mut); }
+.acessos-nota { font-size: .75rem; margin: 8px 0 0; }
+@media (max-width: 560px) { .acessos-kpis { grid-template-columns: 1fr; } .acessos-dia small { display: none; } .acessos-dia:nth-child(5n) small { display: block; } }
