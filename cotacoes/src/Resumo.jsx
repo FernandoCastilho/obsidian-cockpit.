@@ -387,7 +387,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
 function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
-  const [newsTab, setNewsTab] = useState('manchetes')
+  const [newsTab, setNewsTab] = useState('moedas') // o quadro de Notícias abre sempre em Moedas
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
