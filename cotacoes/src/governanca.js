@@ -63,5 +63,6 @@ export const REGRAS = [
   'Uma validação automática confere a coerência dos dados a cada publicação e abre um alerta quando encontra problema.',
   'No fim de semana, a pausa das coletas de dias úteis não apaga atrasos e falhas anteriores. A idade da cotação continua visível; os horários não afirmam se o mercado está aberto ou fechado.',
   'O agendamento do GitHub é feito no melhor esforço: horários podem atrasar ou ser pulados. Por isso o pregão usa uma coleta contínua de 5 em 5 minutos, em vez de uma execução por horário.',
+  'O site publicado conta acessos de forma anônima (Umami, sem cookies e sem dado pessoal), só para saber quantas pessoas usam o app por dia e quantas estão online.',
   'Aplicativo educacional: informação ilustrativa, que não representa compromisso nem informações atualizadas on-line.',
 ]
