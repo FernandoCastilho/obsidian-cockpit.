@@ -7,7 +7,7 @@ const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -115,12 +115,12 @@ test('cada conceito pertence a um tópico existente e os tópicos agrupam sem pe
   const g = porTopico(CONCEITOS)
   assert.deepEqual(g.map((x) => x.topico), TOPICOS)
   assert.equal(g.reduce((n, x) => n + x.itens.length, 0), CONCEITOS.length)
-  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc'])
+  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra'])
   assert.deepEqual(porTopico([CONCEITOS[0]]).map((x) => x.topico), ['Juros e câmbio'], 'tópico vazio não aparece')
 })
 test('busca: todas as palavras, sem acento nem maiúscula, no conteúdo inteiro', () => {
   const ids = (t) => buscarConceitos(t).map((c) => c.id)
-  assert.deepEqual(ids('fidc'), ['fidc'])
+  assert.deepEqual(ids('fidc'), ['fidc', 'cra']) // o CRA cita as séries subordinadas como num FIDC
   assert.ok(ids('DEBENTURE').includes('debenture'), 'sem acento')
   assert.ok(ids('debênture').includes('debenture'), 'com acento')
   assert.ok(ids('break funding').includes('liquidacao-antecipada'))
@@ -178,4 +178,16 @@ test('erro para o usuário: sem texto técnico (JSON inválido, HTTP, rede)', ()
   assert.equal(mensagemErro(''), 'Sem resposta da fonte'); assert.equal(mensagemErro(null), 'Sem resposta da fonte')
   assert.equal(mensagemErro('algo estranho'), 'Fonte indisponível')
   for (const t of ['Unexpected token', 'HTTP 404', 'Failed to fetch', 'x']) assert.doesNotMatch(mensagemErro(t), /Unexpected|doctype|JSON|HTTP|fetch/i)
+})
+
+test('CRI e CRA: taxa composta, equivalente tributado e texto com os mesmos números', async () => {
+  const { equivalenteTributado } = await import('../src/educacao.js')
+  assert.ok(Math.abs(taxaCdiMaisSpread(0.045, 0.07) - 0.11815) < 1e-9)
+  assert.ok(Math.abs(equivalenteTributado(0.11815, 0.15) - 0.139) < 1e-4)
+  const cri = byId('cri'), cra = byId('cra')
+  assert.match(cri.exemplo.resultado, /11,8\d%.*13,90%/)
+  assert.match(cra.exemplo.passos.join(' '), /14,57%/)
+  assert.match(cra.exemplo.resultado, /122% do CDI/)
+  for (const c of [cri, cra]) assert.ok(conexoesDe(c.id).length >= 3, c.id)
+  assert.ok(conexoesDe('cri').some((x) => x.id === 'cra'))
 })

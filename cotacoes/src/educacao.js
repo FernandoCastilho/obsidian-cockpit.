@@ -51,6 +51,8 @@ export const indiceSubordinacao = ({ senior, subordinada }) => subordinada / (se
 export const perdaNasCotas = ({ senior, subordinada, perda }) => ({ subordinada: Math.min(subordinada, perda), senior: Math.min(senior, Math.max(0, perda - subordinada)) })
 
 // Inflação acumulada: produto dos fatores mensais, não a soma. Taxas mensais em fração.
+// Taxa isenta de IR equivalente a quanto num título tributado (ex.: CRI/CRA isentos para pessoa física × CDB com IR de 15%).
+export const equivalenteTributado = (taxaIsenta, ir) => taxaIsenta / (1 - ir)
 export const inflacaoAcumulada = (mensais) => mensais.reduce((f, m) => f * (1 + m), 1) - 1
 // Juro real (equação de Fisher): (1 + nominal) ÷ (1 + inflação) − 1.
 export const juroReal = (nominal, inflacao) => (1 + nominal) / (1 + inflacao) - 1
@@ -69,6 +71,8 @@ const EX_LIQ = { principal: 1_000_000, taxa: 0.15, anosTotal: 2, anosDecorridos:
 const EX_DEB = { principal: 1_000_000, cdi: 0.14, spread: 0.02 }
 const EX_NC = { principal: 5_000_000, cdi: 0.14, spread: 0.03, diasUteis: 126 }
 const EX_FIDC = { senior: 7_000_000, subordinada: 3_000_000, perdas: [2_000_000, 4_000_000] }
+const EX_CRI = { principal: 1_000_000, ipca: 0.045, real: 0.07, ir: 0.15 }
+const EX_CRA = { principal: 1_000_000, cdi: 0.14, spread: 0.005, ir: 0.15 }
 const EX_INFL = { mensal: 0.004, meses: 12, selic: 0.145 }
 const EX_SACA = { usd: 520, antes: 5, depois: 5.5 }
 const EX_ICBR = { indiceUsd: 1, altaDolar: 0.1, quedaUsd: -0.05 }
@@ -461,6 +465,88 @@ export const CONCEITOS = [
     },
   },
   {
+    id: 'cri',
+    topico: 'Operações de crédito',
+    nome: 'CRI (Certificado de Recebíveis Imobiliários)',
+    frase: 'É um título que transforma valores a receber do setor imobiliário (aluguéis, parcelas de imóveis, dívidas de incorporadoras) em investimento vendido a investidores.',
+    crianca: [
+      'Uma incorporadora vai receber as parcelas dos apartamentos que vendeu ao longo de vários anos, mas quer o dinheiro agora para a próxima obra. Uma securitizadora compra esses recebíveis, empacota e emite o CRI; quem compra o CRI passa a receber, aos poucos, o que os compradores dos apartamentos pagam.',
+      'Os recebíveis (o lastro) ficam num patrimônio separado, só para pagar os investidores daquele CRI: se a securitizadora quebrar, o lastro não se mistura com as dívidas dela. A remuneração costuma ser IPCA + uma taxa, CDI + spread ou prefixada, e um agente fiduciário fiscaliza em nome dos investidores.',
+    ],
+    analogia: 'É como comprar o direito de receber os aluguéis de um prédio: você não é dono do prédio, mas recebe o que os inquilinos pagam, e quem organiza a cobrança guarda esse dinheiro num cofre separado do dele.',
+    lacunas: [
+      'O risco é de quem paga o lastro (a incorporadora, a empresa ou os mutuários) e das garantias, não da securitizadora. Não há FGC: se o devedor não pagar e as garantias não cobrirem, o investidor perde.',
+      'CRI “corporativo” depende de uma só empresa (risco concentrado); CRI “pulverizado” depende de muitos compradores de imóveis (risco diluído, mas com inadimplência e pré-pagamentos).',
+      'Para pessoa física, os rendimentos são isentos de IR pela regra vigente; por isso a taxa parece menor que a de um CDB. Já houve propostas de mudar essa isenção, e empresas pagam IR: confira a regra em vigor.',
+      'Desde 2024, regras do Conselho Monetário Nacional limitam o lastro: dívida de empresa sem ligação real com o setor imobiliário não serve mais de lastro de CRI.',
+      'A liquidez antes do vencimento é baixa e o preço oscila com a taxa de mercado: um CRI IPCA + 7% vale menos se o mercado passar a exigir IPCA + 8% para o mesmo risco.',
+    ],
+    preciso: {
+      texto: 'Título de crédito emitido por companhia securitizadora (Lei 14.430/2022), lastreado em direitos creditórios imobiliários, com regime fiduciário e patrimônio separado. Remuneração usual: IPCA mais uma taxa real. Para comparar com um título tributado, divide-se a taxa isenta por (1 − IR):',
+      formula: 'taxa = (1 + IPCA) × (1 + taxa real) − 1   ·   equivalente tributado = taxa isenta ÷ (1 − IR)',
+    },
+    exemplo: (() => {
+      const e = EX_CRI
+      const taxa = taxaCdiMaisSpread(e.ipca, e.real)
+      const eq = equivalenteTributado(taxa, e.ir)
+      return {
+        titulo: `Pessoa física aplica ${money(e.principal, 'R$')} num CRI IPCA + ${pct(e.real, 0)}`,
+        passos: [
+          `Com IPCA de ${pct(e.ipca, 1)} no ano: taxa = ${nf(1 + e.ipca, 3)} × ${nf(1 + e.real, 2)} − 1 = ${pct(taxa)} ao ano, isenta de IR.`,
+          `Rendimento em 1 ano = ${nf(e.principal, 0)} × ${pct(taxa)} = R$ ${nf(e.principal * taxa, 0)}, sem desconto de imposto.`,
+          `Um CDB com IR de ${pct(e.ir, 0)} precisaria pagar ${pct(taxa)} ÷ ${nf(1 - e.ir, 2)} = ${pct(eq)} ao ano para entregar o mesmo líquido.`,
+        ],
+        resultado: `${pct(taxa)} isentos equivalem a ${pct(eq)} num título tributado a ${pct(e.ir, 0)}, antes do risco de crédito do lastro.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz emissões nem preços de CRI. O IPCA, que corrige a maioria deles, está em Cenários › Inflação.', tab: 'cenarios', view: 'inflacao' },
+    teste: {
+      pergunta: 'Para pessoa física, um CRI isento paga 11,8% ao ano e um CDB com IR de 15% paga 13,5%. Qual rende mais, líquido de imposto?',
+      resposta: 'O CRI. O CDB entrega 13,5% × 0,85 = 11,5% líquidos, abaixo dos 11,8% do CRI; a comparação ainda precisa pesar o risco de crédito, maior no CRI e sem FGC.',
+    },
+  },
+  {
+    id: 'cra',
+    topico: 'Operações de crédito',
+    nome: 'CRA (Certificado de Recebíveis do Agronegócio)',
+    frase: 'É o irmão do CRI para o agronegócio: transforma valores a receber de produtores, cooperativas, tradings e indústrias do agro em investimento vendido a investidores.',
+    crianca: [
+      'Uma trading financia insumos para produtores e vai receber na colheita, daqui a meses. Para ter o dinheiro antes, ela cede esses recebíveis a uma securitizadora, que emite o CRA; quem compra o CRA recebe quando os produtores pagarem.',
+      'A estrutura é a do CRI: lastro em patrimônio separado, agente fiduciário e remuneração em CDI + spread, IPCA + taxa ou prefixada. O lastro é do agro: CPR (Cédula de Produto Rural), CDCA, duplicatas de venda de insumos, contratos de fornecimento.',
+    ],
+    analogia: 'É comprar hoje uma parte da conta que a safra vai pagar amanhã: se a colheita e os preços vierem bons, a conta se paga; se não vierem, entram as garantias.',
+    lacunas: [
+      'O risco é do agro que está no lastro: clima, quebra de safra, preço das commodities e câmbio afetam a capacidade de pagar. Não há FGC.',
+      'Muitas receitas do agro são em dólar (soja, milho, café cotados lá fora): câmbio e preço internacional pesam no risco, mesmo com o CRA pago em reais.',
+      'Isenção de IR para pessoa física pela regra vigente, como no CRI, e a mesma ressalva: a regra pode mudar e empresas pagam IR.',
+      'Desde 2024 o lastro precisa ter ligação real com o agronegócio; dívida de empresa de fora do setor não serve mais.',
+      'Pode haver séries sênior e subordinada, como num FIDC: a subordinada absorve as primeiras perdas.',
+    ],
+    preciso: {
+      texto: 'Título de crédito emitido por companhia securitizadora (Leis 11.076/2004 e 14.430/2022), lastreado em direitos creditórios do agronegócio, com regime fiduciário e patrimônio separado. Na remuneração pós-fixada, o spread compõe com o CDI; a comparação com título tributado segue a do CRI:',
+      formula: 'taxa = (1 + CDI) × (1 + spread) − 1   ·   equivalente tributado = taxa isenta ÷ (1 − IR)',
+    },
+    exemplo: (() => {
+      const e = EX_CRA
+      const taxa = taxaCdiMaisSpread(e.cdi, e.spread)
+      const eq = equivalenteTributado(taxa, e.ir)
+      return {
+        titulo: `Pessoa física aplica ${money(e.principal, 'R$')} num CRA CDI + ${pct(e.spread, 1)}`,
+        passos: [
+          `CDI de ${pct(e.cdi, 0)}: taxa = ${nf(1 + e.cdi, 2)} × ${nf(1 + e.spread, 3)} − 1 = ${pct(taxa)} ao ano, isenta de IR.`,
+          `Equivalente num título tributado a ${pct(e.ir, 0)}: ${pct(taxa)} ÷ ${nf(1 - e.ir, 2)} = ${pct(eq)} ao ano.`,
+          `Em percentual do CDI: ${pct(eq)} ÷ ${pct(e.cdi, 0)} = ${nf((eq / e.cdi) * 100, 0)}% do CDI.`,
+        ],
+        resultado: `O CRA CDI + ${pct(e.spread, 1)} isento equivale a um CDB de cerca de ${nf((eq / e.cdi) * 100, 0)}% do CDI tributado a ${pct(e.ir, 0)}, antes do risco do agro.`,
+      }
+    })(),
+    noApp: { texto: 'O app não traz emissões de CRA. Soja, milho e o IC-Br agropecuário, que mexem com quem está no lastro, estão em Cenários › Commodities.', tab: 'cenarios', view: 'commodities' },
+    teste: {
+      pergunta: 'A safra de quem está no lastro de um CRA quebra e a dívida não é paga. Quem absorve a perda?',
+      resposta: 'Primeiro as garantias (penhor da safra, alienação fiduciária, aval) e, se houver, a série subordinada; o que passar disso atinge os investidores. A securitizadora não cobre a perda e não há FGC.',
+    },
+  },
+  {
     id: 'inflacao',
     topico: 'Inflação',
     nome: 'Inflação (IPCA)',
@@ -656,6 +742,13 @@ export const LIGACOES = [
   ['commodities-e-cambio', 'diferencial-de-juros', 'Um diferencial de juros alto tende a atrair dólares e valorizar o real, o que barateia em reais as commodities cotadas em dólar.'],
   ['ic-br', 'inflacao', 'Commodities agrícolas e de energia pressionam o IPCA com defasagem, por alimentos, combustíveis e insumos: o IC-Br antecipa parte dessa pressão.'],
   ['combustiveis', 'inflacao', 'Gasolina pesa diretamente no IPCA, e o diesel entra de forma indireta pelo frete de praticamente tudo.'],
+  ['cri', 'fidc', 'CRI e FIDC transformam recebíveis em investimento: o CRI pela securitizadora, com patrimônio separado; o FIDC por um fundo com cotas sênior e subordinada.'],
+  ['cri', 'debenture', 'Mesma lógica de título com termo escrito e agente fiduciário; no CRI corporativo, o lastro costuma ser uma debênture da própria empresa do setor imobiliário.'],
+  ['cri', 'inflacao', 'A maioria dos CRIs paga IPCA mais uma taxa: o investidor recebe a inflação de volta e a taxa real por cima.'],
+  ['cri', 'custo-de-funding', 'Como o investidor pessoa física é isento, aceita taxa menor: o CRI tende a baratear o funding do setor imobiliário.'],
+  ['cri', 'cra', 'Mesma estrutura de securitização: o CRI tem lastro imobiliário, o CRA tem lastro do agronegócio.'],
+  ['cra', 'fidc', 'Os dois podem ter séries sênior e subordinada, e nos dois a subordinada absorve as primeiras perdas.'],
+  ['cra', 'commodities-e-cambio', 'Quem está no lastro do CRA vende commodities cotadas em dólar: preço internacional e câmbio decidem se a safra paga a conta.'],
   ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: tomar dinheiro por pouco tempo (nota comercial) ou antecipar o que a empresa tem a receber (FIDC).'],
 ]
 
@@ -672,13 +765,15 @@ export const CONEXAO = {
     { id: 'debenture', texto: 'é a dívida longa e formal da empresa com investidores: CDI ou IPCA mais um spread.' },
     { id: 'nota-comercial', texto: 'é a dívida curta e enxuta da empresa, comum para capital de giro e ponte.' },
     { id: 'fidc', texto: 'é o fundo que compra recebíveis; a subordinação protege quem tem a cota sênior.' },
+    { id: 'cri', texto: 'transforma recebíveis imobiliários em título para o investidor, com patrimônio separado e, para pessoa física, isenção de IR.' },
+    { id: 'cra', texto: 'é o CRI do agronegócio: lastro em safra, insumos e contratos do agro, com risco ligado a clima, commodities e câmbio.' },
     { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
     { id: 'commodities-e-cambio', texto: 'é a regra de conversão: o preço mundial em dólar vira preço em reais pelo câmbio.' },
     { id: 'ic-br', texto: 'resume em reais a cesta de commodities do Brasil, mostrando se o conjunto ficou mais caro ou mais barato.' },
     { id: 'combustiveis', texto: 'é o caminho do derivado em dólar até a bomba, onde entram câmbio, impostos, etanol e margens, e de onde parte da inflação.' },
   ],
   // O caminho que une tudo, de ponta a ponta.
-  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures e notas comerciais → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
+  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
 }
 
 // Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.
