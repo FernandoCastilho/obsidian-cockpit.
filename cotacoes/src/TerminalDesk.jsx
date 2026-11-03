@@ -85,6 +85,7 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
   if (!items.length) return status ?? null
   return (
     <section className="kpi-block" aria-labelledby="kpi-title">
+      <InsightAprender goto={goto} />
       <h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
@@ -112,7 +113,6 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
       })}
     </div>
       {status}
-      <InsightAprender goto={goto} />
     </section>
   )
 }

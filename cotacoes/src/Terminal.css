@@ -567,7 +567,7 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 
 
 /* Insight do Aprender no Mercado (InsightAprender.jsx) */
-.insight-aprender { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; margin: 8px 0 0; padding: 8px 12px; border-left: 2px solid var(--amber); background: color-mix(in srgb, var(--amber) 5%, transparent); color: var(--fg); font-size: .82rem; line-height: 1.45; }
+.insight-aprender { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; margin: 0 0 12px; padding: 8px 12px; border-left: 2px solid var(--amber); background: color-mix(in srgb, var(--amber) 5%, transparent); color: var(--fg); font-size: .82rem; line-height: 1.45; }
 .insight-aprender b { color: var(--amber); font-weight: 600; }
 .insight-aprender i { font-style: normal; color: var(--mut); }
 .insight-aprender > span:nth-child(2) { flex: 1 1 260px; }
