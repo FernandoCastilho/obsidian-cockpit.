@@ -10,7 +10,7 @@ import Help from './Help.jsx'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
 import Flag from './Flag.jsx'
-import { OnlineInline } from './Acessos.jsx'
+import InsightAprender from './InsightAprender.jsx'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 
@@ -79,14 +79,13 @@ function useDaySeries() {
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
 // Clique abre o gráfico da moeda ou a aba de juros.
 export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRate, goto, status }) {
-  const onAcessos = goto ? () => goto('config') : null
   const series = useDaySeries()
   const items = kpiItems(quotes, rates, ipca, ibov)
   const sparks = { ...kpiSparks({ macro, ipca }), IBOV: ibovSpark(ibov) }
   if (!items.length) return status ?? null
   return (
     <section className="kpi-block" aria-labelledby="kpi-title">
-      <div className="kpi-head"><h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>{onAcessos && <OnlineInline onOpen={onAcessos} />}</div>
+      <h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code] ?? sparks[i.key]
@@ -113,6 +112,7 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
       })}
     </div>
       {status}
+      <InsightAprender goto={goto} />
     </section>
   )
 }

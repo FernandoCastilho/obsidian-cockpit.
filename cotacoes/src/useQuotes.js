@@ -329,6 +329,7 @@ export function useQuotes(intervalMs = DATA_POLL_MS) {
     const lim = refreshLimits()
     if (lim.wait > 0 || lim.left <= 0) return setLimits(lim)
     writeLog([...readLog(), Date.now()])
+    try { window.dispatchEvent(new Event('quotes-refresh')) } catch { /* fora do navegador */ } // troca o insight do Aprender
     setRefreshing(true)
     const ok = await load(true)
     setRefreshing(false)
