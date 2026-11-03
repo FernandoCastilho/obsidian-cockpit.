@@ -40,3 +40,14 @@ export function normalizeTemas(data) {
   }
   return out
 }
+
+// Notícias › Moedas: junta as matérias de dólar, euro, iene e yuan (temas moeda-*) numa linha do tempo, com as moedas de cada uma.
+export const MOEDAS_TEMAS = [['USD', 'moeda-usd'], ['EUR', 'moeda-eur'], ['JPY', 'moeda-jpy'], ['CNH', 'moeda-cnh']]
+export function juntarMoedas(temas) {
+  const porLink = new Map()
+  for (const [code, id] of MOEDAS_TEMAS) for (const it of temas?.[id]?.items ?? []) {
+    const cur = porLink.get(it.link)
+    if (cur) { if (!cur.codes.includes(code)) cur.codes.push(code) } else porLink.set(it.link, { ...it, codes: [code] })
+  }
+  return [...porLink.values()].sort((a, b) => b.t - a.t)
+}

@@ -16,6 +16,7 @@ import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
+import NoticiasPorDia from './NoticiasPorDia.jsx'
 import ReformaTributaria, { MoedasNoticias, TemaNoticias } from './ReformaTributaria.jsx'
 import { moedasDaManchete, nomeDaMoeda } from './moedasNoTexto.js'
 import { CURRENCIES, seriesName } from './useQuotes.js'
@@ -424,7 +425,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'moedas' ? <MoedasNoticias quotes={quotes} /> : newsTab === 'reforma' ? <ReformaTributaria /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" /> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -497,14 +498,15 @@ function MoedasCitadas({ item }) {
   if (!codes.length) return null
   return <span className="news-flags" role="img" aria-label={`Moedas citadas: ${codes.map(nomeDaMoeda).join(', ')}`} title={`Moedas citadas: ${codes.map(nomeDaMoeda).join(', ')}`}>{codes.map(c => <Flag key={c} code={c} width={18} height={12} />)}</span>
 }
+// Manchetes: a semana de hoje para trás, com a quebra por dia na própria lista e a bandeira das moedas citadas.
 function MarketNews({ bare = false }) {
   const news = useNews()
-  const headlines = buildFeed(news.data?.news, 'ALL', 8)
+  const desde = Date.now() - 7 * 864e5
+  const headlines = buildFeed(news.data?.news, 'ALL', 200).filter((n) => Number.isFinite(Number(n.t)) && Number(n.t) >= desde).map((n) => ({ ...n, t: Number(n.t) }))
   return <aside className="market-news" aria-labelledby="market-news-title"><h2 id="market-news-title" className={bare ? 'sr-only' : undefined}>Notícia</h2>
     {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Últimos títulos preservados.' : ''}</p>}
     {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes; títulos anteriores preservados.</p>}
-    {!headlines.length && <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias disponíveis.'}</p>}
-    <ul>{headlines.map(n => <li key={n.link}><MoedasCitadas item={n} /><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a><small>{n.source || 'Fonte não informada'} · {n.t && Number.isFinite(new Date(n.t).getTime()) ? new Date(n.t).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'}) + ' (Brasília)' : 'Data de publicação não informada'}</small></li>)}</ul>
+    {!headlines.length ? <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias na semana.'}</p> : <NoticiasPorDia data={{ items: headlines, windowDays: 7 }} simples ariaLabel="Manchetes da semana" prefixo={(n) => <MoedasCitadas item={n} />} />}
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
