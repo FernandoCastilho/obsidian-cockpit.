@@ -15,8 +15,24 @@ export async function collectFocus({fetchImpl=fetch,now=Date.now()}={}) {
 export function preserveFocus(out,previous,{checkedAt,error,skipped=false}={}) {
  out.focus=previous?.focus ?? null
  out.focusCheckedAt=skipped ? previous?.focusCheckedAt ?? null : checkedAt
- out.focusSchedule={cadence:'segunda 09:30 America/Sao_Paulo',skipped,error:error || null}
+ out.focusSchedule={cadence:'segunda 08:30 America/Sao_Paulo (repete terça 08:30)',skipped,error:error || null}
  if(previous?.stale?.focus)out.stale={...out.stale,focus:previous.stale.focus}
  if(error && out.focus)out.stale={...out.stale,focus:previous?.stale?.focus ?? previous?.focusCheckedAt ?? previous?.generatedAt ?? null}
  return out
+}
+// Repescagem: o Focus sai segunda às 8h25 (terça, se segunda for feriado), mas a API do BC às vezes publica depois.
+// Nas coletas de hora em hora, a partir das 8h de Brasília, busca de novo enquanto o boletim publicado for anterior à
+// sexta-feira da semana passada (a data de coleta do boletim da semana). Fora disso, as coletas de hora em hora não tocam no Focus.
+export function expectedFocusDate(now = Date.now()) {
+ const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' }).formatToParts(new Date(now)).map((x) => [x.type, x.value]))
+ const day = new Date(`${p.year}-${p.month}-${p.day}T12:00:00Z`), dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday)
+ day.setUTCDate(day.getUTCDate() - ((dow + 6) % 7) - 3) // segunda desta semana − 3 dias = sexta anterior
+ return day.toISOString().slice(0, 10)
+}
+export function focusCatchUp(previousDate, now = Date.now()) {
+ const hour = Number(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', hour: '2-digit', hourCycle: 'h23' }).format(new Date(now)))
+ const expected = expectedFocusDate(now), today = new Date(now)
+ const dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', weekday: 'short' }).format(today))
+ const startedThisWeek = dow > 1 || (dow === 1 && hour >= 8) // segunda a partir das 8h, ou terça em diante
+ return startedThisWeek && (!previousDate || previousDate < expected)
 }

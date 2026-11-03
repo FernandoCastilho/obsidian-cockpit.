@@ -15,12 +15,12 @@ test('B3 respects Brazil civil date and deduplicates only completed same-hour ch
  assert.equal(b3CollectionDecision('2026-10-26T16:17:00Z','2026-10-26T15:17:00Z').run,true)
  assert.equal(b3CollectionDecision('2026-10-26T16:17:00Z').run,true)
 })
-test('one weekly cron at Monday09:30 Brazil; hourly crons and coin workflow not duplicated',async()=>{
- assert.equal(FOCUS_CRON,'30 12 * * 1');const p=saoPauloParts('2026-11-02T12:30:00Z');assert.equal(p.weekday,'Mon');assert.equal(p.hour,'09');assert.equal(p.minute,'30')
+test('weekly Focus cron at 08:30 Brazil on Monday and Tuesday (Monday holiday); hourly crons and coin workflow not duplicated',async()=>{
+ assert.equal(FOCUS_CRON,'30 11 * * 1,2');const p=saoPauloParts('2026-11-02T11:30:00Z');assert.equal(p.weekday,'Mon');assert.equal(p.hour,'08');assert.equal(p.minute,'30');assert.equal(saoPauloParts('2026-11-03T11:30:00Z').weekday,'Tue')
  const y=await readFile(new URL('../../.github/workflows/pages.yml',import.meta.url),'utf8')
  const crons=[...y.matchAll(/- cron: '([^']+)'/g)].map(m=>m[1]);assert.equal(crons.length,3);assert.equal(new Set(crons).size,3)
- assert.match(y,/if: github.event.schedule == '30 12 \* \* 1'/)
- assert.equal((y.match(/if: github.event.schedule != '30 12 \* \* 1'/g)||[]).length,25)
+ assert.match(y,/if: github.event.schedule == '30 11 \* \* 1,2'/)
+ assert.equal((y.match(/if: github.event.schedule != '30 11 \* \* 1,2'/g)||[]).length,25)
 })
 test('Focus failure/skip preserves actual publication date, values and quote timestamps',()=>{
  const prev={generatedAt:1,focusCheckedAt:2,focus:{date:'2026-10-23',rows:[{values:{2026:10}}]},stale:{focus:1}}
@@ -48,4 +48,14 @@ test('hourly triggers cover exactly each Brazil weekday hour once and weekly can
   if((hour>=3&&weekday>=1&&weekday<=5)||(hour<=2&&weekday>=2&&weekday<=6)){const p=saoPauloParts(utc);assert.ok(!['Sat','Sun'].includes(p.weekday));hours.push(p.date+'T'+p.hour)}
  }
  assert.equal(hours.length,120);assert.equal(new Set(hours).size,120)
+})
+test('Focus catch-up: hourly runs retry from Monday 08h until the week bulletin (previous Friday) appears',async()=>{
+ const {expectedFocusDate,focusCatchUp}=await import('../scripts/focus-collector.mjs')
+ assert.equal(expectedFocusDate('2026-11-03T11:47:00Z'),'2026-10-30') // terça após feriado de segunda
+ assert.equal(expectedFocusDate('2026-11-02T12:00:00Z'),'2026-10-30')
+ assert.equal(expectedFocusDate('2026-11-08T12:00:00Z'),'2026-10-30') // domingo ainda é a mesma semana
+ assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-03T12:17:00Z')),true) // terça 09h17, boletim de 30/10 ausente
+ assert.equal(focusCatchUp('2026-10-30',Date.parse('2026-11-03T12:17:00Z')),false) // já publicado
+ assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-02T10:17:00Z')),false) // segunda 07h17: antes da divulgação
+ assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-02T11:17:00Z')),true) // segunda 08h17
 })
