@@ -76,6 +76,24 @@ const barueri = fixed([[3, 26, 'Aniversário de Barueri'], [6, 24, 'São João B
 const cascavel = fixed([[11, 14, 'Aniversário de Cascavel']])
 const londrina = (y) => sortMap([[addDays(easter(y), 68), 'Sagrado Coração de Jesus (padroeiro)'], [iso(y, 12, 10), 'Aniversário de Londrina']])
 const maringa = fixed([[5, 10, 'Aniversário de Maringá']])
+// Campinas: Dia do Evangélico (12/08, Lei municipal 16.785/2025, a partir de 2026) e Nossa Senhora da Conceição (08/12, padroeira).
+const campinas = (y) => sortMap([...(y >= 2026 ? [[iso(y, 8, 12), 'Dia do Evangélico']] : []), [iso(y, 12, 8), 'Nossa Senhora da Conceição (padroeira)']])
+// Região de Campinas: feriados municipais da lista do TJ-SP (CSM, sessão de 24/11/2025). Corpus Christi, Finados e 20/11 já são
+// nacionais e 09/07 é estadual. Paulínia: Sagrado Coração de Jesus é móvel (Páscoa + 68 dias).
+const regiaoCampinas = (y) => sortMap([
+  [iso(y, 1, 20), 'São Sebastião, padroeiro (Valinhos)'],
+  [iso(y, 2, 2), 'Nossa Senhora da Candelária, padroeira (Indaiatuba)'],
+  [iso(y, 2, 28), 'Aniversário de Paulínia'],
+  [iso(y, 4, 2), 'Aniversário de Vinhedo'],
+  [iso(y, 5, 19), 'Aniversário de Hortolândia'],
+  [iso(y, 5, 28), 'Aniversário de Valinhos'],
+  [addDays(easter(y), 68), 'Sagrado Coração de Jesus, padroeiro (Paulínia)'],
+  [iso(y, 6, 13), 'Santo Antônio, padroeiro (Americana)'],
+  [iso(y, 7, 26), 'Aniversário de Sumaré; Sant\'Ana, padroeira (Vinhedo)'],
+  [iso(y, 9, 12), 'Aniversário de Jaguariúna'],
+  [iso(y, 9, 15), 'Feriado municipal (Nova Odessa)'],
+  [iso(y, 12, 4), 'Santa Bárbara, padroeira (Santa Bárbara d\'Oeste)'],
+])
 
 // Federal Reserve: domingo vira segunda; sábado não é compensado (os bancos abrem na sexta).
 function newYork(y) {
@@ -172,6 +190,8 @@ export const CALENDARS = [
   { id: 'CVL', label: 'Cascavel', short: 'Cascavel', rule: cascavel, hidden: true },
   { id: 'LDA', label: 'Londrina', short: 'Londrina', rule: londrina, hidden: true },
   { id: 'MGA', label: 'Maringá', short: 'Maringá', rule: maringa, hidden: true },
+  { id: 'CPS', label: 'Campinas', short: 'Campinas', rule: campinas, hidden: true },
+  { id: 'RMC', label: 'Região de Campinas', short: 'Região de Campinas', rule: regiaoCampinas, hidden: true },
   { id: 'UK', label: 'Londres', short: 'Londres', rule: london },
   { id: 'JP', label: 'Tóquio', short: 'Tóquio', rule: japan },
   { id: 'CN', label: 'China (continental)', short: 'China', rule: null },

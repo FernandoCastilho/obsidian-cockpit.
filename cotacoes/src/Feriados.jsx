@@ -11,6 +11,8 @@ const LIST = [
   { id: 'SPC', where: 'São Paulo (capital)' },
   { id: 'PRE', where: 'Estado do Paraná' },
   { id: 'CWB', where: 'Curitiba' },
+  { id: 'CPS', where: 'Campinas' },
+  { id: 'RMC', where: 'Região de Campinas' },
   { id: 'SOR', where: 'Sorocaba' },
   { id: 'BAR', where: 'Barueri (Alphaville)' },
   { id: 'MG', where: 'Belo Horizonte' },
