@@ -81,10 +81,19 @@ function fxItems(quotes) {
   return out
 }
 
+// Paridade para a Finimpe: a paridade EUR/USD do momento, com 1 centavo a mais ou a menos conforme a moeda do pagamento
+// e a do financiamento. Arredonda a 4 casas para não carregar resíduo de ponto flutuante (1,1172 + 0,01 = 1,1272).
+export const FINIMPE_MARGEM = 0.01
+export function finimpeParidade(par) {
+  if (!Number.isFinite(par)) return null
+  const r = (v) => Math.round(v * 1e4) / 1e4
+  return { base: r(par), eurUsd: r(par + FINIMPE_MARGEM), usdEur: r(par - FINIMPE_MARGEM) }
+}
+
 function parityItem(quotes) {
   const p = liveCross(quotes?.EUR, quotes?.USD)
   if (!p || quotes.EUR.fallback || quotes.USD.fallback) return null
-  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
+  return { key: 'EURUSD', code: 'PAR', label: 'EUR/USD', raw: p.main, value: nf(p.main, 4), change: p.comparable === false ? null : p.pct, unit: 'pct', reason: p.comparable === false ? 'cotações de horários distintos' : null }
 }
 
 function rateItems(rates) {

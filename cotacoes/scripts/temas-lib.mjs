@@ -1,4 +1,5 @@
-// Notícias por setor (indústria, comércio, serviços) e por insumo (cobre, alumínio, aço, minério de ferro, petróleo e diesel).
+// Notícias por setor (indústria, comércio, serviços) e por insumo (cobre, alumínio, aço, minério de ferro, petróleo e diesel),
+// e as eleições nos EUA (aba de Notícias do Mercado).
 // Mesma coleta da reforma tributária: buscas no Google Notícias, só títulos que tratam do tema, histórico de 7 dias.
 import { mergeItems, WINDOW_DAYS } from './reforma-lib.mjs'
 export { WINDOW_DAYS }
@@ -43,6 +44,11 @@ export const TEMAS = [
     queries: ['petróleo Brent preço OPEP', 'diesel preço Petrobras ANP', 'gasolina diesel reajuste combustíveis', 'petróleo estoques EIA produção'],
     termos: re('petr[óo]leo|\\bBrent\\b|diesel|gasolina|combust[íi]ve|Petrobras|\\bANP\\b|\\bOPEP\\b|\\bOPEC\\b'),
     contexto: re('pre[çc]o|barril|reajuste|estoque|produ[çc][ãa]o|OPEP|OPEC|demanda|oferta|refinaria|pol[íi]tica de pre|cota[çc][ãa]o|alta|queda|importa|exporta') },
+  // Resumo › Notícias: eleições nos EUA e o efeito no mercado (dólar, Treasuries, bolsas). Exige termo de eleição e contexto americano.
+  { id: 'eleicoes-eua', grupo: 'mercado', label: 'Eleições nos EUA',
+    queries: ['eleições americanas mercado financeiro dólar', 'eleições Estados Unidos midterms resultado Congresso', 'midterms Trump Câmara Senado mercado', 'eleições EUA impacto Ibovespa juros Treasuries'],
+    termos: re('elei[çc]|midterms?|eleitor|urnas|vota[çc][ãa]o|apura[çc][ãa]o|pesquisa eleitoral'),
+    contexto: re('EUA|Estados Unidos|americana?s?|Trump|midterms?|republican|democrat|Congresso|Senado|C[âa]mara|Casa Branca|Wall Street|Treasur') },
 ]
 export const TEMA_IDS = TEMAS.map((t) => t.id)
 export const relevanteTema = (tema, title) => tema.termos.test(title) && (!tema.contexto || tema.contexto.test(title))
