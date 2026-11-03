@@ -12,11 +12,13 @@ const valido = (d) => d && Number.isFinite(d.generatedAt) && Date.now() - d.gene
 
 // "Online" ao vivo: o navegador lê o Umami a cada 1 min (link de compartilhamento). Se a rede bloquear ou o Umami recusar,
 // fica com a leitura de hora em hora do acessos.json. Só no site publicado e com a aba visível.
-const API = 'https://cloud.umami.is/api', SHARE = '9glfHXZ6e2nYNmNj'
+const SHARE = '9glfHXZ6e2nYNmNj'
+let API = null // prefixo da API descoberto pela coleta (acessos.json → api)
 let share = null
 async function lerAoVivo() {
+  if (!API) throw new Error('API do Umami ainda não descoberta')
   share = share ?? await fetch(`${API}/share/${SHARE}`, { signal: AbortSignal.timeout(8000) }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status))))
-  const r = await fetch(`${API}/websites/${share.websiteId}/active`, { headers: { 'x-umami-share-token': share.token }, signal: AbortSignal.timeout(8000) })
+  const r = await fetch(`${API}/websites/${share.websiteId}/active`, { headers: { 'x-umami-share-token': share.token, 'x-umami-share-context': '1' }, signal: AbortSignal.timeout(8000) })
   if (!r.ok) { share = null; throw new Error(r.status) }
   const j = await r.json()
   const v = Array.isArray(j) ? j[0]?.x ?? j[0]?.visitors : j?.visitors ?? j?.x ?? j?.active
@@ -38,6 +40,7 @@ function iniciarVivo() {
 export function useOnline() {
   const { data } = useDataFile('acessos.json')
   const [v, setV] = useState(vivo)
+  if (data?.api && /^https:\/\/[a-z.]*umami\.is\//.test(data.api)) API = data.api
   useEffect(() => { ouvintes.add(setV); iniciarVivo(); return () => ouvintes.delete(setV) }, [])
   if (Number.isFinite(v.online) && Date.now() - v.at < 3 * 60000) return { online: v.online, at: v.at, aoVivo: true, data }
   if (valido(data) && Number.isFinite(data.online)) return { online: data.online, at: data.generatedAt, aoVivo: false, data }
