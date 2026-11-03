@@ -1,9 +1,9 @@
-name: Deploy cotacoes e caixa (GitHub Pages)
+name: Deploy do Painel Especialista (GitHub Pages)
 
 on:
   push:
     branches: [main, claude/obsidian-plugin-analysis-bagjz3]
-    paths: ['cotacoes/**', 'caixa/**', '.github/workflows/pages.yml']
+    paths: ['cotacoes/**', '.github/workflows/pages.yml']
   schedule:
     # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.
     - cron: '17 3-23 * * 1-5' # segunda a sexta, 0h a 20h de Brasília
@@ -40,9 +40,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            cotacoes/package-lock.json
-            caixa/package-lock.json
+          cache-dependency-path: cotacoes/package-lock.json
       - run: npm ci
       - name: Testes (parsers e lógica)
         run: npm test
@@ -180,15 +178,6 @@ jobs:
         run: npm run build
         env:
           VITE_DATA_BASE: https://raw.githubusercontent.com/${{ github.repository }}/data
-      - name: App Caixa (testes, build e junção em /caixa)
-        run: |
-          cd ../caixa
-          npm ci
-          npm test
-          npm run build
-          cd ../cotacoes
-          mkdir -p dist/caixa
-          cp -R ../caixa/dist/. dist/caixa/
       - name: Conferir todas as bases preservadas no pacote semanal
         if: github.event.schedule == '30 11 * * 1,2'
         run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-data-snapshot.json"
