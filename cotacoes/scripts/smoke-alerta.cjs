@@ -3,7 +3,7 @@
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
 ;(async () => {
   const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
-  const now = Date.now(), t0 = now - 2 * 3600e3
+  const now = Date.parse('2026-11-03T18:00:00Z'), t0 = now - 2 * 3600e3 // relógio fixo: 15h de Brasília, base às 13h (depois da abertura)
   const raw = (bid, ts) => ({ bid: String(bid), ask: String(bid * 1.0003), high: String(bid * 1.01), low: String(bid * 0.99), pctChange: '0.2', varBid: '0.01', timestamp: String(Math.floor(ts / 1000)) })
   const quotes = { generatedAt: now - 60000, source: 'AwesomeAPI', rejected: {}, quotes: { USDBRL: raw(5.5000, now - 60000), EURBRL: raw(6.1500, now - 60000), JPYBRL: raw(0.0347, now - 60000), USDCNH: raw(6.67, now - 60000) } }
   const pts = (v0, v1) => [[t0, v0], [t0 + 300000, (v0 + v1) / 2], [now - 60000, v1]]
@@ -11,12 +11,13 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
   try {
     for (const width of [390, 1280]) {
       const ctx = await b.newContext({ viewport: { width, height: 800 }, serviceWorkers: 'block' })
-      await ctx.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => false }); try { localStorage.setItem('aprender-conceito-dia', new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date())) } catch { /* sem armazenamento */ } })
+      await ctx.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => false }); try { localStorage.setItem('aprender-conceito-dia', '2026-11-03') } catch { /* sem armazenamento */ } })
       await ctx.route('**/*', (r) => { const u = r.request().url(); return u.startsWith(base) ? r.continue() : r.abort() })
       await ctx.route('**/recado.json*', (r) => r.fulfill({ json: { ativo: false } }))
       await ctx.route('**/quotes.json*', (r) => r.fulfill({ json: quotes }))
       await ctx.route('**/intraday.json*', (r) => r.fulfill({ json: intraday }))
       const p = await ctx.newPage(), errors = []
+      await p.clock.install({ time: now })
       p.on('pageerror', (e) => errors.push(e.message))
       await p.goto(base + '/#resumo')
       const aviso = p.locator('dialog.aviso-inicial:not(.recado)'); await aviso.waitFor(); await aviso.getByRole('button', { name: 'Entendi' }).click()

@@ -564,3 +564,10 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .acessos-dia small { font-size: .6rem; color: var(--mut); }
 .acessos-nota { font-size: .75rem; margin: 8px 0 0; }
 @media (max-width: 560px) { .acessos-kpis { grid-template-columns: 1fr; } .acessos-dia small { display: none; } .acessos-dia:nth-child(5n) small { display: block; } }
+
+.kpi-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.kpi-head .kpi-title { margin-bottom: 6px; }
+.online-inline { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0; background: none; border: 0; color: var(--mut); font: .7rem/1 var(--mono); cursor: pointer; white-space: nowrap; }
+.online-inline:hover, .online-inline:focus-visible { color: var(--fg); }
+.online-inline .online-dot { width: 6px; height: 6px; box-shadow: none; }
+@media (max-width: 560px) { .online-inline { min-height: 44px; } }
