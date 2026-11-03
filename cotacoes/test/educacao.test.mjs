@@ -7,7 +7,7 @@ const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis', 'regime-facil'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -19,7 +19,7 @@ test('cada conceito traz frase, explicação simples, lacunas, versão precisa, 
     assert.ok(c.lacunas.length >= 2, c.id)
     assert.ok(c.preciso.texto.length > 40 && c.preciso.formula.length > 5, c.id)
     assert.ok(c.exemplo.passos.length >= 2 && c.exemplo.resultado.length > 10, c.id)
-    assert.ok(c.noApp.texto.length > 10 && ['juros', 'cenarios'].includes(c.noApp.tab), c.id)
+    assert.ok(c.noApp.texto.length > 10 && ['juros', 'cenarios', 'aprender'].includes(c.noApp.tab), c.id)
     assert.ok(c.teste.pergunta.endsWith('?') && c.teste.resposta.length > 20, c.id)
   }
   assert.equal(CONEXAO.itens.length, CONCEITOS.length)

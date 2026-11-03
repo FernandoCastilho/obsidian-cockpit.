@@ -616,6 +616,46 @@ export const CONCEITOS = [
       resposta: 'Em geral, não. Há política de preços, impostos, etanol, margens e defasagem no meio: a alta chega à bomba atrasada e menor do que 10%.',
     },
   },
+  {
+    id: 'regime-facil',
+    topico: 'Funding e risco',
+    nome: 'Regime FÁCIL',
+    frase: 'É um caminho com regras simplificadas para companhias de menor porte buscarem dinheiro no mercado de capitais.',
+    crianca: [
+      'Uma empresa pode financiar seu crescimento com investidores: vendendo ações (participação no negócio) ou emitindo dívida, como debêntures e notas comerciais. O FÁCIL busca tornar esse acesso menos complexo.',
+      'O nome significa Facilitação do Acesso a Capital e de Incentivos a Listagens. É uma regra da CVM para o mercado de capitais, não um regime de impostos nem uma linha de empréstimo.',
+      'Simplificar não elimina a preparação: continuam existindo documentos, auditoria e obrigações de informação. A empresa precisa encontrar investidores dispostos a aceitar o risco e as condições da oferta.',
+    ],
+    analogia: 'É como uma porta de entrada com documentação proporcional ao tamanho da empresa: facilita a passagem, mas não paga a viagem nem garante que haverá compradores.',
+    lacunas: [
+      'Menor porte: sociedade anônima com receita bruta anual consolidada inferior a R$ 500 milhões no último exercício. Exatamente R$ 500 milhões já não atende a esse critério.',
+      'Para a classificação CMP, também há exigências de receita operacional em demonstração auditada e listagem; emissores já registrados precisam da anuência prevista na norma. Só o faturamento não basta.',
+      'As dispensas dependem da modalidade e das condições aplicáveis. Não há isenção geral de obrigações, garantia de captação ou promessa de juros menores.',
+      'Para o investidor, permanecem riscos de perda, crédito e dificuldade de vender o papel. Ações podem diluir os sócios; dívida exige pagamento nas condições contratadas.',
+    ],
+    preciso: {
+      texto: 'Instituído pela Resolução CVM 232/2025, alterada pela 236/2025, vigente desde 16/03/2026. O enquadramento e a classificação CMP permitem dispensas condicionais; cada emissor e oferta devem cumprir os requisitos próprios. Na Oferta Direta, a distribuição ocorre em mercado organizado sem coordenador de oferta.',
+      formula: 'Critério de porte: receita bruta anual consolidada < R$ 500 milhões; porte sozinho não aprova a oferta.',
+    },
+    exemplo: {
+      titulo: 'Duas empresas hipotéticas, receitas de R$ 200 milhões e R$ 500 milhões',
+      passos: [
+        'A primeira é uma S.A. com receita bruta anual consolidada de R$ 200 milhões: atende ao critério de porte, mas ainda precisa verificar os demais requisitos antes de usar as dispensas.',
+        'A segunda tem receita de exatamente R$ 500 milhões: não atende ao critério, pois a norma exige valor inferior, e não igual ao limite.',
+        'Se a primeira buscar R$ 20 milhões por dívida, terá de avaliar remuneração, prazo, custos e demanda. Se escolher ações, terá de avaliar a participação dos novos sócios.',
+      ],
+      resultado: 'Estar abaixo do limite permite avaliar o caminho; não significa dinheiro aprovado nem uma captação concluída.',
+    },
+    noApp: { texto: 'Compare com o conceito de debênture para distinguir a regra de acesso do título usado na captação.', tab: 'aprender', view: 'debenture' },
+    teste: {
+      pergunta: 'Uma S.A. fatura R$ 200 milhões. O FÁCIL garante que ela conseguirá captar e pagará menos juros?',
+      resposta: 'Não. Ela atende apenas ao critério de porte. Ainda precisa cumprir os demais requisitos e encontrar investidores. Custos, risco e condições da oferta determinam se a captação faz sentido.',
+    },
+    fontes: [
+      { titulo: 'CVM — Resolução 232 consolidada (alterada pela 236/2025)', url: 'https://conteudo.cvm.gov.br/legislacao/resolucoes/anexos/200/resol232consolid.htm' },
+      { titulo: 'B3 — início das operações e modalidades do Regime Fácil', url: 'https://www.b3.com.br/pt_br/noticias/regime-facil-8AA8D0CC9D71B1D8019D7B57B74703B6.htm' },
+    ],
+  },
 ]
 
 export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Inflação', 'Commodities']
@@ -634,6 +674,8 @@ export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: li
 // outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
 // LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
 export const LIGACOES = [
+  ['regime-facil', 'debenture', 'O FÁCIL trata do acesso ao mercado; a debênture é um dos instrumentos de dívida que a companhia pode usar.'],
+  ['regime-facil', 'custo-de-funding', 'Simplificar exigências pode reduzir custos regulatórios; o custo total da captação ainda depende do risco, da oferta e dos investidores.'],
   ['diferencial-de-juros', 'cupom-cambial', 'O cupom cambial é o diferencial de juros depois de passar pelo dólar futuro: a parte do juro em reais que sobra em dólar.'],
   ['diferencial-de-juros', 'sofr', 'A SOFR é o juro em dólar contra o qual se mede o diferencial: quanto maior o juro em reais sobre ela, maior o diferencial.'],
   ['diferencial-de-juros', 'inflacao', 'Diferencial nominal não é real: descontando a inflação de cada país, o ganho verdadeiro entre as moedas pode ser outro.'],
@@ -662,6 +704,7 @@ export const LIGACOES = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    { id: 'regime-facil', texto: 'É uma via regulatória simplificada de acesso ao mercado de capitais para companhias de menor porte; não garante a captação.' },
     { id: 'diferencial-de-juros', texto: 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.' },
     { id: 'cupom-cambial', texto: 'é a ponte entre o juro em reais e o juro em dólar.' },
     { id: 'sofr', texto: 'é o benchmark do dólar: o preço “sem risco” do dinheiro em dólar.' },
