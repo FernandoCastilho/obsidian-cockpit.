@@ -1,7 +1,7 @@
 name: Cotações CI
 on:
   pull_request:
-    paths: ['cotacoes/**', 'caixa/**', '.github/workflows/cotacoes-ci.yml']
+    paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -16,9 +16,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            cotacoes/package-lock.json
-            caixa/package-lock.json
+          cache-dependency-path: cotacoes/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm test
@@ -27,13 +25,6 @@ jobs:
       - run: npm run build
       - name: Conferir preservação no build real
         run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-package-test.json"
-      - name: App Caixa (testes e build, como no deploy)
-        working-directory: caixa
-        run: |
-          npm ci
-          ../cotacoes/node_modules/.bin/eslint src --config ../cotacoes/eslint.config.js
-          npm test
-          npm run build
   smoke:
     runs-on: ubuntu-latest
     needs: test-build
@@ -54,12 +45,6 @@ jobs:
       - run: npm ci
       - name: Build com os dados na própria origem
         run: VITE_DATA_BASE=http://127.0.0.1:8768 npm run build
-      - name: Build Caixa para os testes de navegador
-        working-directory: caixa
-        run: |
-          npm ci
-          npm run build -- --sourcemap
-          cp -R dist ../cotacoes/dist/caixa
       - name: Instalar Playwright e Chromium
         run: |
           npm install --no-save playwright@1.63.0
@@ -70,9 +55,9 @@ jobs:
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
       - name: Smokes de navegador (abas, mercado, calendário e controles de 44 px)
         run: |
-          for s in smoke-caixa smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-calculadora smoke-bndes smoke-recado smoke-conceito-diario smoke-motion; do
+          for s in smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-calculadora smoke-bndes smoke-recado smoke-conceito-diario smoke-motion; do
             echo "::group::$s"
-            CONCEITO_QA_OUTPUT="$RUNNER_TEMP/qa-c" CAIXA_QA_OUTPUT="$RUNNER_TEMP/qa-caixa" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
+            CONCEITO_QA_OUTPUT="$RUNNER_TEMP/qa-c" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
             echo "::endgroup::"
           done
       - name: Capturas de tela dos smokes
@@ -85,7 +70,6 @@ jobs:
             ${{ runner.temp }}/qa-t
             ${{ runner.temp }}/qa-w
             ${{ runner.temp }}/qa-f
-            ${{ runner.temp }}/qa-caixa
             ${{ runner.temp }}/qa-c
           if-no-files-found: ignore
           retention-days: 7

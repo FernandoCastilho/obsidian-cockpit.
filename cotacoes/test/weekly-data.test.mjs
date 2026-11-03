@@ -130,12 +130,12 @@ test('weekly inventory covers all collector outputs skipped by the special Pages
   for (const name of ['tfb', 'tlp', 'tfc', 'moedas']) assert.ok(RETAIN_FILES.includes('csv/' + name + '.csv'))
 })
 
-test('weekly guard is blocking and checks the final package after Caixa and before Pages upload', async () => {
+test('weekly guard is blocking and checks the final package after the build and before Pages upload', async () => {
   const workflow = await readFile(new URL('../../.github/workflows/pages.yml', import.meta.url), 'utf8')
   assert.match(workflow, /refresh-scenarios\.mjs "\$RUNNER_TEMP\/weekly-data-snapshot\.json"/)
   const start = workflow.indexOf('      - name: Conferir todas as bases preservadas no pacote semanal')
   const upload = workflow.indexOf('      - uses: actions/upload-pages-artifact')
-  assert.ok(start > workflow.indexOf('cp -R ../caixa/dist/. dist/caixa/'))
+  assert.ok(start > workflow.indexOf('      - name: Build'))
   assert.ok(start < upload)
   const guard = workflow.slice(start, upload)
   assert.match(guard, /if: github.event.schedule == '30 11 \* \* 1,2'/)
