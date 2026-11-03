@@ -152,7 +152,7 @@ function FinimpHelp({ fin, at, comparable, direct }) {
 }
 
 // `tabs` ([{ id, label, note, refresh }], com `tab` e `onTab`): vários assuntos no mesmo quadro, lado a lado no cabeçalho.
-export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, children }) {
+export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, semAtualizar = false, children }) {
   const active = tabs?.find((t) => t.id === tab) ?? tabs?.[0]
   return (
     <section className={`desk-panel ${className}`}>
@@ -167,13 +167,13 @@ export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, 
               ])}
             </div>
             {(active.note ?? note) && <small>{active.note ?? note}</small>}
-            {(active.refresh ?? refresh) && <RefreshButton files={active.refresh ?? refresh} label={active.label} />}
+            {(active.refresh ?? refresh) && <RefreshButton files={active.refresh ?? refresh} label={active.label} somenteData={semAtualizar} />}
           </>
         ) : (
           <>
             <h2>{title}</h2>
             {note && <small>{note}</small>}
-            {refresh && <RefreshButton files={refresh} label={title} />}
+            {refresh && <RefreshButton files={refresh} label={title} somenteData={semAtualizar} />}
           </>
         )}
       </header>
