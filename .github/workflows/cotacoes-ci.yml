@@ -70,9 +70,9 @@ jobs:
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
       - name: Smokes de navegador (abas, mercado, calendário e controles de 44 px)
         run: |
-          for s in smoke-caixa smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-calculadora smoke-bndes smoke-recado smoke-motion; do
+          for s in smoke-caixa smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-calculadora smoke-bndes smoke-recado smoke-conceito-diario smoke-motion; do
             echo "::group::$s"
-            CAIXA_QA_OUTPUT="$RUNNER_TEMP/qa-caixa" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
+            CONCEITO_QA_OUTPUT="$RUNNER_TEMP/qa-c" CAIXA_QA_OUTPUT="$RUNNER_TEMP/qa-caixa" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
             echo "::endgroup::"
           done
       - name: Capturas de tela dos smokes
@@ -86,5 +86,6 @@ jobs:
             ${{ runner.temp }}/qa-w
             ${{ runner.temp }}/qa-f
             ${{ runner.temp }}/qa-caixa
+            ${{ runner.temp }}/qa-c
           if-no-files-found: ignore
           retention-days: 7

@@ -70,10 +70,11 @@ export default function Aprender({ view = '', goto }) {
   const grupos = useMemo(() => porTopico(achados), [achados])
   // no celular a explicação fica abaixo da lista: leva a tela até ela ao escolher um conceito
   useEffect(() => {
+    if (chosen) detail.current?.focus({ preventScroll: true })
     if (chosen && detail.current && window.matchMedia?.('(max-width: 999px)').matches) {
       detail.current.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
     }
-  }, [chosen?.id])
+  }, [chosen])
   return (
     <div className="learn">
       <Aviso title="Aprender · exemplos didáticos"><p>Os exemplos usam números redondos para facilitar a conta; não são cotações de mercado.</p></Aviso>
@@ -101,7 +102,7 @@ export default function Aprender({ view = '', goto }) {
             </section>
           ))}
         </nav>
-        <section className="learn-detail" ref={detail} aria-live="polite" aria-label="Explicação do conceito">
+        <section className="learn-detail" ref={detail} tabIndex={-1} aria-live="polite" aria-label="Explicação do conceito">
           {chosen ? <Concept key={chosen.id} c={chosen} goto={goto} /> : (
             <Panel title={CONEXAO.titulo} note="escolha um conceito ao lado">
               <div className="learn-body">
