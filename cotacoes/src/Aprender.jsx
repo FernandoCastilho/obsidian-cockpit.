@@ -43,6 +43,13 @@ function Concept({ c, goto }) {
             </details>
           </details>
 
+          {c.fontes?.length > 0 && (
+            <details>
+              <summary>Fontes</summary>
+              <ul>{c.fontes.map((f) => <li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer">{f.titulo}</a></li>)}</ul>
+            </details>
+          )}
+
           <details open>
             <summary>Conecta com</summary>
             <ul className="learn-conecta">
