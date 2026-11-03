@@ -573,3 +573,12 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .insight-aprender > span:nth-child(2) { flex: 1 1 260px; }
 .insight-aprender .linklike { min-height: 32px; white-space: nowrap; }
 @media (max-width: 560px) { .insight-aprender .linklike { min-height: 44px; } }
+
+/* Notícias › Moedas (MoedasNoticias) */
+.moedas-escolha { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 10px 10px 4px; }
+.moedas-escolha button { display: grid; gap: 2px; justify-items: start; min-height: 44px; padding: 6px 8px; background: transparent; border: 1px solid var(--line); border-radius: 4px; color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+.moedas-escolha button.on { border-color: var(--amber); box-shadow: inset 0 -2px 0 var(--amber); }
+.moedas-escolha .moeda-nome { display: inline-flex; align-items: center; gap: 5px; color: var(--mut); font: 700 .64rem/1 system-ui, sans-serif; letter-spacing: .08em; }
+.moedas-escolha b { font: 700 .95rem/1.1 var(--mono); font-variant-numeric: tabular-nums; }
+.moedas-escolha small { font: .66rem var(--mono); } .moedas-escolha small.up { color: var(--up); } .moedas-escolha small.down { color: var(--down); } .moedas-escolha small.flat { color: var(--mut); }
+@media (max-width: 560px) { .moedas-escolha { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
