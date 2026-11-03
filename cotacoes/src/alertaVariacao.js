@@ -27,3 +27,12 @@ export function textoAlerta(a) {
   const h = (t) => new Date(t).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' })
   return `${a.nome} em ${a.dir} de ${pct}% desde a primeira cotação do dia (${v(a.base)} às ${h(a.baseAt)} → ${v(a.atual)} às ${h(a.at)}).`
 }
+
+// Base do alerta: a primeira cotação a partir da abertura (9h de Brasília). A coleta de madrugada (de hora em hora) não conta como
+// início do dia; se ainda não houver ponto depois das 9h, usa o primeiro ponto do dia.
+const horaBr = (t) => Number(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', hour: '2-digit', hourCycle: 'h23' }).format(new Date(t)))
+export function baseDoDia(points) {
+  const ok = (points ?? []).filter((p) => Number.isFinite(p?.t) && p.bid > 0).sort((a, b) => a.t - b.t)
+  const p = ok.find((x) => horaBr(x.t) >= 9) ?? null
+  return p ? { t: p.t, v: p.bid } : null
+}

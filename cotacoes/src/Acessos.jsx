@@ -91,3 +91,14 @@ export function AcessosPanel() {
     </Panel>
   )
 }
+
+// Linha discreta no Mercado, à direita do título "Mapa de variação": "● 3 online agora · 16 visitantes hoje".
+export function OnlineInline({ onOpen }) {
+  const { online, aoVivo, at, data } = useOnline()
+  if (!Number.isFinite(online)) return null
+  return (
+    <button type="button" className="online-inline" onClick={onOpen} title={`${aoVivo ? 'Ao vivo' : 'Última leitura'}: ${hm(at)}. Clique para ver os acessos.`}>
+      <span className="online-dot" aria-hidden="true" />{n(online)} online agora{Number.isFinite(data?.hoje?.visitantes) ? ` · ${n(data.hoje.visitantes)} visitantes hoje` : ''}
+    </button>
+  )
+}

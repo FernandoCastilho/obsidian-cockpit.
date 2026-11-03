@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useIntraday, fromInput } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
-import { LIMITE_PCT, alertasDoDia, textoAlerta } from './alertaVariacao.js'
+import { LIMITE_PCT, alertasDoDia, baseDoDia, textoAlerta } from './alertaVariacao.js'
 
 // Faixa no topo com os alertas de variação do dia (dólar e euro, acima de 0,30% da primeira cotação do dia) e, se a pessoa
 // autorizar, notificação do sistema. Cada alerta aparece e notifica uma vez; "Ok" o dispensa no dia.
 const KEY = 'alerta-variacao'
 const ler = () => { try { return JSON.parse(localStorage.getItem(KEY) ?? '{}') } catch { return {} } }
 const gravar = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)) } catch { /* sem armazenamento */ } }
-const firstOf = (s) => (s.status === 'ok' && s.data?.points?.length ? { t: s.data.points[0].t, v: s.data.points[0].bid } : null)
+const firstOf = (s) => (s.status === 'ok' ? baseDoDia(s.data?.points) : null) // primeira cotação a partir das 9h (abertura)
 
 async function notificar(a) {
   try {
