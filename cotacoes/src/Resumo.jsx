@@ -425,7 +425,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : <MarketNews bare />}</Panel>
         </div>
         </div>
 

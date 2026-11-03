@@ -166,6 +166,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.goto(base + '/#resumo')
       const painel = p.locator('.desk-panel', { has: p.getByRole('tab', { name: 'Reforma tributária' }) }); await painel.waitFor()
       assert.equal(await painel.getByRole('tab', { name: 'Moedas' }).getAttribute('aria-selected'), 'true', 'abre em Moedas')
+      assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Notícias se atualizam sozinhas: sem botão de atualizar')
       await painel.getByRole('tab', { name: 'Manchetes' }).click()
       // Manchetes: bandeira das moedas de que cada matéria fala (busca + título)
       const flags = painel.locator('.market-news li .news-flags'); await flags.first().waitFor()
@@ -181,6 +182,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
       // linha do tempo enxuta: só a semana, de hoje para trás, quebrada por dia; sem filtro de dia, busca nem legenda
       assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
+      assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Reforma: só a data, sem botão de atualizar')
       assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
       assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
       assert.doesNotMatch(await lista.innerText(), /últimos 7 dias/)

@@ -9,7 +9,8 @@ const hm = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', min
 // Botão "atualizar" de um painel. Dois modos:
 //  - files: relê os arquivos de dados do painel (a coleta é horária: traz o que houver de novo publicado);
 //  - custom: { run, busy, disabled, title } para o câmbio, que consulta a API direto (com limite por navegador).
-export default function RefreshButton({ files = [], label, custom }) {
+// `somenteData`: mostra só "Atualizado em", sem o botão (painéis que se atualizam sozinhos, como as Notícias do Mercado).
+export default function RefreshButton({ files = [], label, custom, somenteData = false }) {
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const timer = useRef(null)
@@ -35,12 +36,12 @@ export default function RefreshButton({ files = [], label, custom }) {
     <span className="refresh-wrap">
       {stamp && <small className="refresh-stamp"><span className="refresh-stamp__lbl">Atualizado em </span>{stampText(stamp)}</small>}
       {msg && <small className="refresh-msg" aria-hidden="true">{msg.replace(/^Consultado às /, '').replace(' · coleta das ', ' · coleta ')}</small>}
-      <button type="button" className="refresh-btn" onClick={run} disabled={working || custom?.disabled} aria-label={`Atualizar ${label}`} title={title}>
+      {!somenteData && <button type="button" className="refresh-btn" onClick={run} disabled={working || custom?.disabled} aria-label={`Atualizar ${label}`} title={title}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={working ? 'spin' : ''} aria-hidden="true">
           <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
           <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
         </svg>
-      </button>
+      </button>}
       <span className="sr-only" role="status">{msg}</span>
     </span>
   )
