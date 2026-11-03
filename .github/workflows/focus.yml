@@ -1,0 +1,33 @@
+name: Vigia do Focus (segunda, de 30 em 30 min)
+
+# O Focus sai segunda às 8h25 (terça, se segunda for feriado), mas a API do Banco Central às vezes atualiza depois.
+# Tentativa 1: coleta semanal das 08:30 (pages.yml). Este vigia faz as tentativas 2 a 10, de 30 em 30 min (09:00 a 13:00 de
+# Brasília): se o boletim da semana ainda não estiver no painel, dispara a atualização completa; quando atualizar, para.
+on:
+  schedule:
+    - cron: '0,30 12-15 * * 1,2' # 09:00 a 12:30 de Brasília
+    - cron: '0 16 * * 1,2' # 13:00 de Brasília (tentativa 10)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  vigia:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cotacoes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: decide
+        run: node scripts/focus-watch.mjs
+      - name: Disparar a atualização (Focus ainda não publicado)
+        if: steps.decide.outputs.run == 'true'
+        run: gh workflow run pages.yml --ref "$GITHUB_REF_NAME"
+        env:
+          GH_TOKEN: ${{ github.token }}

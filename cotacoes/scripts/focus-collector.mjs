@@ -20,19 +20,24 @@ export function preserveFocus(out,previous,{checkedAt,error,skipped=false}={}) {
  if(error && out.focus)out.stale={...out.stale,focus:previous?.stale?.focus ?? previous?.focusCheckedAt ?? previous?.generatedAt ?? null}
  return out
 }
-// Repescagem: o Focus sai segunda às 8h25 (terça, se segunda for feriado), mas a API do BC às vezes publica depois.
-// Nas coletas de hora em hora, a partir das 8h de Brasília, busca de novo enquanto o boletim publicado for anterior à
-// sexta-feira da semana passada (a data de coleta do boletim da semana). Fora disso, as coletas de hora em hora não tocam no Focus.
+// Data de coleta do boletim desta semana: a sexta-feira anterior à segunda (o Focus sai segunda às 8h25; terça, se segunda for feriado).
 export function expectedFocusDate(now = Date.now()) {
  const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' }).formatToParts(new Date(now)).map((x) => [x.type, x.value]))
  const day = new Date(`${p.year}-${p.month}-${p.day}T12:00:00Z`), dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday)
  day.setUTCDate(day.getUTCDate() - ((dow + 6) % 7) - 3) // segunda desta semana − 3 dias = sexta anterior
  return day.toISOString().slice(0, 10)
 }
-export function focusCatchUp(previousDate, now = Date.now()) {
- const hour = Number(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', hour: '2-digit', hourCycle: 'h23' }).format(new Date(now)))
- const expected = expectedFocusDate(now), today = new Date(now)
- const dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', weekday: 'short' }).format(today))
- const startedThisWeek = dow > 1 || (dow === 1 && hour >= 8) // segunda a partir das 8h, ou terça em diante
- return startedThisWeek && (!previousDate || previousDate < expected)
+
+// Vigia do Focus (focus.yml): segunda (e terça, para segunda feriado), de 30 em 30 min. A tentativa 1 é a coleta semanal
+// das 08:30 (pages.yml); o vigia faz as tentativas 2 a 10 (09:00 a 13:00) e só dispara a atualização se o boletim da semana
+// ainda não estiver publicado no painel.
+export const FOCUS_TENTATIVAS = 10
+export function focusWatchDecision(publishedDate, now = Date.now()) {
+ const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', weekday: 'short' }).formatToParts(new Date(now)).map((x) => [x.type, x.value]))
+ const attempt = Math.floor((Number(p.hour) * 60 + Number(p.minute) - (8 * 60 + 30)) / 30) + 1
+ const expected = expectedFocusDate(now)
+ if (!['Mon', 'Tue'].includes(p.weekday)) return { run: false, attempt, expected, reason: 'fora de segunda e terça' }
+ if (publishedDate && publishedDate >= expected) return { run: false, attempt, expected, reason: `boletim da semana já publicado (coleta até ${publishedDate})` }
+ if (attempt < 2 || attempt > FOCUS_TENTATIVAS) return { run: false, attempt, expected, reason: `fora da janela (tentativas 2 a ${FOCUS_TENTATIVAS}, 09:00 a 13:00)` }
+ return { run: true, attempt, expected, reason: `tentativa ${attempt} de ${FOCUS_TENTATIVAS}: publicado até ${publishedDate ?? '—'}, esperado ${expected}` }
 }
