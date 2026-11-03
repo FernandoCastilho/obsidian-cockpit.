@@ -21,6 +21,7 @@ import HolidayNotice from './HolidayNotice.jsx'
 import AvisoInicial from './AvisoInicial.jsx'
 import ConceitoDiario from './ConceitoDiario.jsx'
 import Recado from './Recado.jsx'
+import AlertaVariacao from './AlertaVariacao.jsx'
 import Laser from './Laser.jsx'
 const Feriados = lazy(() => import('./Feriados.jsx'))
 import { useHolidays } from './useHolidays.js'
@@ -271,6 +272,7 @@ export default function App() {
           <button type="button" onClick={() => window.location.reload()}>Recarregar</button>
         </div>
       )}
+      <AlertaVariacao quotes={quotes} />
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
           {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{tab === 'setores' ? 'Setores e Insumos' : TABS.find((t) => t.id === tab).label}</h1>}
