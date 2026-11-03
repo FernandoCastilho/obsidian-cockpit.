@@ -42,3 +42,9 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(cacheFirst(req))
   }
 })
+
+// Alerta de variação: tocar na notificação abre (ou traz para a frente) o painel.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => (list[0] ? list[0].focus() : self.clients.openWindow('./'))))
+})
