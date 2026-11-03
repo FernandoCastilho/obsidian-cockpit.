@@ -5,7 +5,7 @@ import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { SPARK_NOTE, finimpeParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
+import { SPARK_NOTE, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
 import Help from './Help.jsx'
 import Flag from './Flag.jsx'
 
@@ -97,13 +97,13 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
             {points?.length > 1 && <span className="kpi-spark" {...(note ? { role: 'img', 'aria-label': note, title: note } : {})}><Sparkline points={points} tone={note ? sparkTone(points) : i.tone} height={30} /></span>}
           </button>
         )
-        const fin = i.key === 'EURUSD' ? finimpeParidade(i.raw) : null
+        const fin = i.key === 'EURUSD' ? finimpParidade(i.raw) : null
         if (!fin) return card
         // "?" fica fora do botão do quadro (botão dentro de botão não é válido), no canto superior direito
         return (
           <div key={i.key} className="kpi-cell">
             {card}
-            <span className="kpi-help"><FinimpeHelp fin={fin} /></span>
+            <span className="kpi-help"><FinimpHelp fin={fin} /></span>
           </div>
         )
       })}
@@ -114,11 +114,11 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
 }
 
 const n4 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
-// Paridade para a Finimpe, com a paridade EUR/USD do momento (atualiza junto com as cotações).
-function FinimpeHelp({ fin }) {
+// Paridade para a Finimp, com a paridade EUR/USD do momento (atualiza junto com as cotações).
+function FinimpHelp({ fin }) {
   return (
-    <Help label="Paridade para a Finimpe" align="right" wide fixed>
-      <b className="ex-t">Paridade para a Finimpe</b>
+    <Help label="Paridade para a Finimp" align="right" wide fixed>
+      <b className="ex-t">Paridade para a Finimp</b>
       <span className="ex">Paridade EUR/USD agora: <b className="fin-num">{n4(fin.base)}</b></span>
       <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <span className="fin-num">{n4(fin.base)} + 0,01 = <b>{n4(fin.eurUsd)}</b></span></span>
       <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <span className="fin-num">{n4(fin.base)} − 0,01 = <b>{n4(fin.usdEur)}</b></span></span>
