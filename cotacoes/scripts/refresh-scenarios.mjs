@@ -26,7 +26,7 @@ export async function refreshScenarios({ load = loadPublishedFile, collect = col
       ...previous,
       focus: await collect({ now }),
       focusCheckedAt: now,
-      focusSchedule: { cadence: 'segunda 09:30 America/Sao_Paulo', skipped: false, error: null },
+      focusSchedule: { cadence: 'segunda 08:30 America/Sao_Paulo (repete terça 08:30)', skipped: false, error: null },
       stale: { ...previous.stale },
     }
     delete macro.stale.focus

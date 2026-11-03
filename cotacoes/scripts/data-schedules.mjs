@@ -12,4 +12,4 @@ export function b3CollectionDecision(now,previousCheckedAt) {
  if(previousCheckedAt){const prev=saoPauloParts(previousCheckedAt);if(prev.date===p.date&&prev.hour===p.hour)return {run:false,reason:'consulta desta hora já concluída',...p}}
  return {run:true,reason:'consulta horária; referência diária de ajuste',...p}
 }
-export const FOCUS_CRON='30 12 * * 1' // 09:30 America/Sao_Paulo (UTC-3); GitHub best effort.
+export const FOCUS_CRON='30 11 * * 1,2' // 08:30 America/Sao_Paulo (UTC-3), segunda e terça (segunda feriado → Focus na terça); GitHub best effort.

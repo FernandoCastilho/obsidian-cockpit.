@@ -1,4 +1,4 @@
-import { preserveFocus } from './focus-collector.mjs'
+import { focusCatchUp, preserveFocus } from './focus-collector.mjs'
 // Coleta CDI, Selic, PTAX e Boletim Focus (Banco Central) e grava public/macro.json. Rodado a cada hora pelo GitHub Actions.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { fillFromPrevious, loadPrevious } from './prev-lib.mjs'
@@ -56,8 +56,13 @@ const out = { generatedAt: Date.now(), cdi: [], selic: [], sofr: [], sofrAvg: []
   console.log('SOFR médias:', out.sofrAvg.length, 'pontos')
 }
 
-// Focus scheduled refresh is weekly; manual/push retains the existing explicit refresh.
-if (process.env.GITHUB_EVENT_NAME !== 'schedule') {
+// Focus: coleta semanal (segunda/terça 08:30) e manual/push; nas coletas de hora em hora, só a repescagem
+// (boletim da semana ainda não apareceu na API do BC).
+const previous = await loadPrevious('macro.json')
+const scheduled = process.env.GITHUB_EVENT_NAME === 'schedule'
+const catchUp = scheduled && focusCatchUp(previous?.focus?.date, now.getTime())
+if (!scheduled || catchUp) {
+  if (catchUp) console.log('Focus: repescagem (publicado até', previous?.focus?.date, ')')
   const since = new Date(now.getTime() - 21 * 864e5).toISOString().slice(0, 10)
   const names = { Selic: 'Selic', IPCA: 'IPCA', 'PIB Total': 'PIB', Câmbio: 'Câmbio' }
   const rowsOut = []
@@ -105,9 +110,10 @@ out.ptaxHist = {}
 
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
 // Fonte que falhou: mantém o último dado publicado (e avisa na tela) em vez de apagar o bloco ou travar o deploy.
-const previous=await loadPrevious('macro.json')
+const focusFresh = catchUp && out.focus && (!previous?.focus?.date || out.focus.date > previous.focus.date)
 fillFromPrevious(out, previous, ['cdi', 'selic', 'sofr', 'sofrAvg', 'focus', 'ptax', 'ptaxHist'])
-if(process.env.GITHUB_EVENT_NAME==='schedule') { delete out.stale.focus; preserveFocus(out,previous,{skipped:true}) }
+if (focusFresh) { delete out.stale.focus; out.focusCheckedAt = Date.now(); out.focusSchedule = { cadence: 'segunda 08:30 America/Sao_Paulo (repete terça 08:30)', skipped: false, error: null } }
+else if (scheduled) { delete out.stale.focus; preserveFocus(out, previous, { skipped: true }) }
 if (Object.keys(out.stale).length) console.log('Reaproveitado do último publicado:', Object.keys(out.stale).join(', '))
 const ok = out.cdi.length && out.selic.length
 if (!ok && process.env.MACRO_STRICT === 'true') {

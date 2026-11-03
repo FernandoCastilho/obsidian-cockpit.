@@ -24,7 +24,7 @@ test('weekly package preserves every JSON and CSV byte, changing only the Focus 
   const macro = JSON.parse(retained['macro.json'])
   assert.deepEqual(macro.focus, nextFocus)
   assert.equal(macro.focusCheckedAt, 20)
-  assert.deepEqual(macro.focusSchedule, { cadence: 'segunda 09:30 America/Sao_Paulo', skipped: false, error: null })
+  assert.deepEqual(macro.focusSchedule, { cadence: 'segunda 08:30 America/Sao_Paulo (repete terça 08:30)', skipped: false, error: null })
   assert.equal(macro.stale.focus, undefined)
   const withoutFocus = value => {
     const copy = structuredClone(value)
@@ -138,7 +138,7 @@ test('weekly guard is blocking and checks the final package after Caixa and befo
   assert.ok(start > workflow.indexOf('cp -R ../caixa/dist/. dist/caixa/'))
   assert.ok(start < upload)
   const guard = workflow.slice(start, upload)
-  assert.match(guard, /if: github.event.schedule == '30 12 \* \* 1'/)
+  assert.match(guard, /if: github.event.schedule == '30 11 \* \* 1,2'/)
   assert.match(guard, /weekly-data\.mjs dist "\$RUNNER_TEMP\/weekly-data-snapshot\.json"/)
   assert.doesNotMatch(guard, /continue-on-error/)
 })
