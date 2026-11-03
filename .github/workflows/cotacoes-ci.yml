@@ -60,12 +60,17 @@ jobs:
             CONCEITO_QA_OUTPUT="$RUNNER_TEMP/qa-c" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs
             echo "::endgroup::"
           done
+      - name: Google Trends (grupos, períodos e gráfico em celular e desktop)
+        run: node scripts/smoke-trends.cjs
+        env:
+          TRENDS_QA_OUTPUT: ${{ runner.temp }}/qa-trends
       - name: Capturas de tela dos smokes
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: smoke-capturas
           path: |
+            ${{ runner.temp }}/qa-trends
             ${{ runner.temp }}/qa-ux
             ${{ runner.temp }}/qa-t
             ${{ runner.temp }}/qa-w

@@ -36,7 +36,11 @@ test('coleta automática só de segunda a sexta (horário de Brasília) e app re
   for (const f of ['pages.yml', 'quotes.yml']) {
     const crons = [...rf(new URL(`../../.github/workflows/${f}`, import.meta.url), 'utf8').matchAll(/- cron: '([^']+)'/g)].map((m) => m[1])
     assert.ok(crons.length >= 1)
-    for (const c of crons) assert.notEqual(c.split(' ')[4], '*', `${f}: o agendamento "${c}" roda no fim de semana`)
+    for (const c of crons) {
+      // Trends tem agenda própria diária; os demais coletores são pulados nessa execução.
+      if (f === 'pages.yml' && c === '0 11,18 * * *') continue
+      assert.notEqual(c.split(' ')[4], '*', `${f}: o agendamento "${c}" roda no fim de semana`)
+    }
   }
   // sexta 21h (Brasília) = sábado 00h UTC: ainda sexta; sábado e domingo ao meio-dia: fim de semana
   assert.equal(isWeekendBR(Date.parse('2026-10-10T15:00:00Z')), true) // sábado
