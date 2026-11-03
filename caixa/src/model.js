@@ -22,7 +22,7 @@ export const toIsoDate = (v) => {
   return m ? `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}` : null
 }
 
-// Linhas da aba -> objetos com chaves sem acento. `_row` é o número da linha na planilha (para gravar).
+// Linhas da aba -> objetos com chaves sem acento. `_row` é apenas referência de leitura; gravações usam ID e revisão.
 export const rowsToObjects = (values = []) => {
   const [head = [], ...rows] = values
   const keys = head.map(strip)

@@ -1,5 +1,5 @@
 // Só o casco do app fica em cache. Dados financeiros nunca passam pelo cache.
-const CASCA = 'caixa-v1'
+const CASCA = 'caixa-v2-journal'
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CASCA).then((c) => c.addAll(['./', 'favicon.svg', 'manifest.webmanifest'])))
   self.skipWaiting()

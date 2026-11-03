@@ -1,0 +1,26 @@
+.folha.recon-dialog { display: none; border: 0; color: var(--tinta); margin: 0 auto; inset: auto 0 0; max-height: 90dvh; padding-top: 16px; }
+.folha.recon-dialog[open] { display: flex; }
+.recon-dialog::backdrop { background: rgb(0 0 0 / .45); }
+.recon-dialog h2 { margin: 0 0 4px; font-size: 21px; outline: none; }
+.recon-fechar { min-width: 44px; min-height: 44px; flex-shrink: 0; }
+.recon-corpo { min-height: 0; overflow-y: auto; overflow-wrap: anywhere; padding: 0 1px; }
+.recon-corpo p { margin: 0 0 14px; }
+.recon-nome { display: grid; gap: 3px; }
+.recon-nome small, #recon-explica { color: var(--suave); font-size: 14px; }
+.recon-compara { margin: 0; }
+.recon-compara > div { padding: 14px 0; border-top: 1px solid var(--linha); }
+.recon-compara dt { font-weight: 600; margin-bottom: 8px; }
+.recon-compara dd { margin: 6px 0 0; display: grid; gap: 3px; }
+.recon-compara dd span { color: var(--suave); font-size: 13px; }
+.recon-compara dd b { font-weight: 500; }
+.recon-acoes { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--linha); }
+.recon-acoes .secundario { margin: 0; padding: 12px; min-height: 44px; border: 1px solid var(--linha); border-radius: 12px; color: var(--tinta); text-align: center; white-space: normal; }
+.recon-acoes a, .recon-acoes p { text-align: center; margin: 0; }
+.recon-registros { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 6px; }
+.recon-registros button { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--linha); border-radius: 10px; }
+.recon-registros button[aria-pressed=true] { background: var(--acento-fundo); border-color: var(--acento); }
+.recon-registros small { display: block; color: var(--suave); }
+.aviso.recon-aviso { align-items: flex-start; }
+.recon-aviso .aviso-acao { min-height: 44px; flex-shrink: 0; }
+.salvo { color: var(--acento); font-size: 14px; padding: 8px 0; }
+@media (min-width: 640px) { .recon-compara > div { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; } .recon-compara dt { grid-column: 1 / -1; } }

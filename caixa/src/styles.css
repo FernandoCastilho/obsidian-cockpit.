@@ -183,3 +183,10 @@ small.atraso { color: var(--ambar); }
 @media (min-width: 900px) {
   .app { max-width: 720px; }
 }
+
+.edicao-valor { display: flex; flex: none; align-items: center; gap: 4px; }
+.edicao-valor .edita { height: 44px; }
+.edicao-fechar, .fixa .check, .topo .icone { min-width: 44px; min-height: 44px; }
+.toast button { min-height: 44px; min-width: 44px; }
+
+.folha .fechar { min-width: 44px; min-height: 44px; }
