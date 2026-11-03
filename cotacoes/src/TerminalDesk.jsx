@@ -103,7 +103,7 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
         return (
           <div key={i.key} className="kpi-cell">
             {card}
-            <span className="kpi-help"><FinimpHelp fin={fin} /></span>
+            <span className="kpi-help"><FinimpHelp fin={fin} at={i.at} comparable={i.comparable} /></span>
           </div>
         )
       })}
@@ -115,13 +115,16 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
 
 const n4 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
 // Paridade para a Finimp, com a paridade EUR/USD do momento (atualiza junto com as cotações).
-function FinimpHelp({ fin }) {
+const hm = (t) => (Number.isFinite(t) && t > 0 ? new Date(t).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '') : '—')
+function FinimpHelp({ fin, at, comparable }) {
   return (
     <Help label="Paridade para a Finimp" align="right" wide fixed>
       <b className="ex-t">Paridade para a Finimp</b>
       <span className="ex">Paridade EUR/USD agora: <b className="fin-num">{n4(fin.base)}</b></span>
       <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <span className="fin-num">{n4(fin.base)} + 0,01 = <b>{n4(fin.eurUsd)}</b></span></span>
       <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <span className="fin-num">{n4(fin.base)} − 0,01 = <b>{n4(fin.usdEur)}</b></span></span>
+      <span className="ex fin-fonte">Paridade calculada por EUR/BRL ÷ USD/BRL (compra, AwesomeAPI). Cotações: EUR/BRL {hm(at?.EUR)} e USD/BRL {hm(at?.USD)} (Brasília).</span>
+      {!comparable && <span className="ex fin-alerta" role="note">⚠ As duas cotações são de horários diferentes (por exemplo, antes da abertura do dólar); a paridade pode estar distorcida. Use depois da abertura ou confirme na mesa.</span>}
     </Help>
   )
 }

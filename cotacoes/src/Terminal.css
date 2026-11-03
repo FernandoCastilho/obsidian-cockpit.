@@ -529,6 +529,8 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 .kpi-help { position: absolute; top: 0; right: 0; z-index: 2; }
 .kpi-help .help button:not(.pop-close) { color: var(--mut); }
 .fin-linha { display: block; }
+.fin-fonte { color: var(--mut); font-size: .72rem; }
+.fin-alerta { color: var(--warn); font-weight: 600; }
 .fin-num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 /* cabeçalho com abas: quando abas + "Atualizado em" não cabem, o carimbo desce para a linha de baixo (nada fica por cima das abas) */
 .desk-panel > header:has(.desk-tabs) { flex-wrap: wrap; }
