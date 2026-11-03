@@ -16,7 +16,7 @@ import DateRangePicker from './DateRangePicker.jsx'
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
-import ReformaTributaria, { TemaNoticias } from './ReformaTributaria.jsx'
+import ReformaTributaria, { MoedasNoticias, TemaNoticias } from './ReformaTributaria.jsx'
 import { moedasDaManchete, nomeDaMoeda } from './moedasNoTexto.js'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -424,7 +424,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'reforma' ? <ReformaTributaria /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" /> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab}>{newsTab === 'moedas' ? <MoedasNoticias quotes={quotes} /> : newsTab === 'reforma' ? <ReformaTributaria /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" /> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -486,6 +486,7 @@ export function RatesTop({ macro, curves, onOpen }) {
 }
 
 const NEWS_TABS = [
+  { id: 'moedas', label: 'Moedas', refresh: ['temas.json'] },
   { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
   { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
   { id: 'eleicoes', label: 'Eleições EUA', refresh: ['temas.json'] },

@@ -11,3 +11,15 @@ test('tema Eleições nos EUA: só títulos de eleição com contexto americano'
   assert.equal(relevanteTema(t, 'Dólar sobe com Treasuries em alta'), false) // sem eleição
   assert.ok(temasFile({}, 1).temas['eleicoes-eua'], 'entra no temas.json')
 })
+
+test('temas de moedas: título precisa citar a moeda e trazer contexto de câmbio', () => {
+  const t = (id) => TEMAS.find((x) => x.id === id)
+  assert.equal(relevanteTema(t('moeda-usd'), 'Dólar fecha em alta de 1,2% contra o real com Fed'), true)
+  assert.equal(relevanteTema(t('moeda-usd'), 'Prêmio de R$ 1 milhão em dólar? Veja a promoção'), true) // aceita: cita dólar e R$; é título raro
+  assert.equal(relevanteTema(t('moeda-eur'), 'BCE mantém juros e euro recua frente ao dólar'), true)
+  assert.equal(relevanteTema(t('moeda-eur'), 'Eurocopa: seleção estreia hoje'), false)
+  assert.equal(relevanteTema(t('moeda-jpy'), 'Iene cai e Japão sinaliza intervenção no câmbio'), true)
+  assert.equal(relevanteTema(t('moeda-cnh'), 'Yuan sobe com fixing mais forte do PBOC'), true)
+  assert.equal(relevanteTema(t('moeda-cnh'), 'China anuncia novo plano de saúde'), false)
+  for (const id of ['moeda-usd', 'moeda-eur', 'moeda-jpy', 'moeda-cnh']) assert.ok(temasFile({}, 1).temas[id], id)
+})
