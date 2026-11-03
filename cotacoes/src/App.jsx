@@ -261,7 +261,7 @@ export default function App() {
     {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
-        <OnlineBadge onOpen={() => goto('config')} /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
+        <OnlineBadge /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
       </div>
     )}
     <main className="app" ref={mainRef}>
