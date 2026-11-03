@@ -49,13 +49,18 @@ test('hourly triggers cover exactly each Brazil weekday hour once and weekly can
  }
  assert.equal(hours.length,120);assert.equal(new Set(hours).size,120)
 })
-test('Focus catch-up: hourly runs retry from Monday 08h until the week bulletin (previous Friday) appears',async()=>{
- const {expectedFocusDate,focusCatchUp}=await import('../scripts/focus-collector.mjs')
- assert.equal(expectedFocusDate('2026-11-03T11:47:00Z'),'2026-10-30') // terça após feriado de segunda
- assert.equal(expectedFocusDate('2026-11-02T12:00:00Z'),'2026-10-30')
+test('Focus watch: tries 2 to 10 every 30 min (09:00–13:00 Brasília) on Monday/Tuesday until the week bulletin is published',async()=>{
+ const {expectedFocusDate,focusWatchDecision,FOCUS_TENTATIVAS}=await import('../scripts/focus-collector.mjs')
+ assert.equal(FOCUS_TENTATIVAS,10)
+ assert.equal(expectedFocusDate('2026-11-03T11:47:00Z'),'2026-10-30')
  assert.equal(expectedFocusDate('2026-11-08T12:00:00Z'),'2026-10-30') // domingo ainda é a mesma semana
- assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-03T12:17:00Z')),true) // terça 09h17, boletim de 30/10 ausente
- assert.equal(focusCatchUp('2026-10-30',Date.parse('2026-11-03T12:17:00Z')),false) // já publicado
- assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-02T10:17:00Z')),false) // segunda 07h17: antes da divulgação
- assert.equal(focusCatchUp('2026-10-23',Date.parse('2026-11-02T11:17:00Z')),true) // segunda 08h17
+ const at=(iso,pub)=>focusWatchDecision(pub,Date.parse(iso))
+ assert.deepEqual([at('2026-11-09T12:00:00Z','2026-10-30').run,at('2026-11-09T12:00:00Z','2026-10-30').attempt],[true,2]) // segunda 09:00, boletim de 06/11 ausente
+ assert.equal(at('2026-11-09T16:00:00Z','2026-10-30').attempt,10) // 13:00
+ assert.equal(at('2026-11-09T16:00:00Z','2026-10-30').run,true)
+ assert.equal(at('2026-11-09T16:30:00Z','2026-10-30').run,false) // 13:30: passou da 10ª tentativa
+ assert.equal(at('2026-11-09T12:10:00Z','2026-10-30').attempt,2) // cron atrasado 10 min continua na mesma tentativa
+ assert.equal(at('2026-11-09T12:00:00Z','2026-11-06').run,false) // já publicado
+ assert.equal(at('2026-11-03T12:30:00Z','2026-10-23').run,true) // terça após segunda feriado
+ assert.equal(at('2026-11-11T12:00:00Z','2026-10-30').run,false) // quarta: fora
 })
