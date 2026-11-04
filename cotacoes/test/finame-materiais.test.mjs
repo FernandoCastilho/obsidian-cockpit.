@@ -133,6 +133,9 @@ test('cenário 4 · TLP com saldo corrigido pelo IPCA (SAC): parcelas, correçã
 // Cenário 5: o caso da conferência independente em TLP (R$ 500 mil, 60/12 trimestral, TLP 7,72 + IPCA 5,2166, SAC).
 test('cenário 5 · TLP, SAC, carência trimestral: números da conferência independente', () => {
   const r = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tlp', custoFinanceiro: 7.72, ipca: 5.2166, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3, iof: SEM_IOF })
+  // fórmula fechada: P1 = F(1+c)^13 × (1/48 + i) e Pn = F(1+c)^60/48 × (1+i); os valores em R$ são os da conferência independente de 04/11/2026
+  const i5 = mensal(taxaFinal(7.72, 1.25, 3)), c5 = mensal(5.2166)
+  perto(r.primeiraParcela, 500_000 * (1 + c5) ** 13 * (1 / 48 + i5), 1e-6, 'P1 fechada'); perto(r.ultimaParcela, ((500_000 * (1 + c5) ** 60) / 48) * (1 + i5), 1e-6, 'Pn fechada')
   perto(r.primeiraParcela, 16_153.83, 0.01, 'P1'); perto(r.ultimaParcela, 13_563.16, 0.01, 'Pn')
   assert.ok(r.correcao > 80_000 && r.correcao < 90_000, 'correção pelo IPCA em 5 anos'); perto(r.total, 500_000 + r.correcao + r.juros, 1e-6, 'total')
   // IOF na TLP: sobre o principal entregue, não sobre a amortização corrigida; com 12 de carência toda parcela passa de 365 dias,
@@ -171,6 +174,13 @@ test('cenário 7 · TFC MPME, SAC, carência trimestral: taxa capitalizada e par
   perto(r.juros, r.jurosCarencia + (i * F * (n + 1)) / 2, 1e-6, 'juros totais'); assert.equal(r.iof, 0); assert.equal(r.correcao, 0); perto(r.total, F + r.juros, 1e-6, 'total')
   const tfb = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfb', custoFinanceiro: 16.5216, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 })
   assert.ok(r.juros < tfb.juros, 'na data, a TFC sai mais barata que a TFB')
+  // spread da instituição: juros com a taxa completa menos juros com custo + BNDES (mesmo cronograma); BNDES idem; a soma fecha
+  const semAgente = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfc', custoFinanceiro: 14.1743, taxaBndes: 1.25, taxaAgente: 0, sistema: 'sac', periodicidade: 3 })
+  const soCusto = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfc', custoFinanceiro: 14.1743, taxaBndes: 0, taxaAgente: 0, sistema: 'sac', periodicidade: 3 })
+  perto(r.atribuicao.agente, r.juros - semAgente.juros, 1e-6, 'spread em R$'); perto(r.atribuicao.bndes, semAgente.juros - soCusto.juros, 1e-6, 'BNDES em R$'); perto(r.atribuicao.custoFinanceiro, soCusto.juros, 1e-6, 'custo em R$')
+  perto(r.atribuicao.custoFinanceiro + r.atribuicao.bndes + r.atribuicao.agente, r.juros, 1e-6, 'atribuição fecha nos juros')
+  perto(r.spreadAgentePp, r.taxa - semAgente.taxa, 1e-9, 'spread em p.p.'); perto(r.spreadAgentePp, (1.141743 * 1.0125 * 0.03) * 100, 1e-6, 'capitalizado: (1+custo)(1+BNDES) × agente')
+  assert.equal(semAgente.atribuicao.agente, 0); assert.equal(semAgente.spreadAgentePp, 0)
 })
 
 test('invariantes em 108 combinações: saldo zera, amortizações devolvem o principal (corrigido), total fecha, SAC decresce, Price constante quando nominal', () => {
@@ -184,6 +194,7 @@ test('invariantes em 108 combinações: saldo zera, amortizações devolvem o pr
     assert.equal(r.parcelas.length, 48); assert.equal(r.parcelasAmortizacao, 48 - carencia)
     perto(r.parcelas.reduce((a, p) => a + p.amortizacao, 0), r.financiado + r.correcao, 1e-4, 'amortizações = principal corrigido')
     perto(r.total, r.financiado + r.correcao + r.juros + r.iof, 1e-6, 'total')
+    perto(r.atribuicao.custoFinanceiro + r.atribuicao.bndes + r.atribuicao.agente, r.juros, 1e-6, 'atribuição dos juros fecha'); assert.ok(r.atribuicao.agente > 0 && r.atribuicao.bndes > 0)
     assert.ok(r.parcelas.filter((p) => p.carencia).every((p) => p.amortizacao === 0), 'sem amortização na carência')
     const pagas = r.parcelas.filter((p) => p.carencia && p.parcela > 0).map((p) => p.mes)
     assert.deepEqual(pagas, Array.from({ length: carencia }, (_, k) => k + 1).filter((m) => m % periodicidade === 0 || m === carencia), 'juros pagos na periodicidade')

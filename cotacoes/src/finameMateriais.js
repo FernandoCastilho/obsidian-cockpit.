@@ -15,26 +15,26 @@ export const REGRAS = {
   taxaBndes: { 'mpme-nne': 0.95, mpme: 1.25, grande: 1.25 }, // % a.a. (página do produto, lida em 04/11/2026); 1,25% desde 22/01/2026 segundo a Abimaq
   selicSuspensa: 'Circular SUP/ADIG nº 09/2026, de 22/01/2026 (altera a Circular SUP/ADIG nº 13/2022)',
   reembolsoMeses: 12, // notas fiscais emitidas até 12 meses antes do protocolo
-  itens: 'bens industrializados novos, de fabricação nacional e credenciados no BNDES (cerca de 2.500 itens por NCM), usados na atividade do cliente',
+  itens: 'bens industrializados novos, de fabricação nacional e credenciados no BNDES (lista por NCM na página do produto), usados na atividade do cliente',
   foraDoProduto: 'alimentos, bebidas, combustíveis, lubrificantes e máquinas ou equipamentos credenciáveis no CFI (esses vão para o Finame tradicional)',
-  nacionalizacao: 'conteúdo importado de até 40% ou cumprimento do Processo Produtivo Básico (PPB), conforme o credenciamento',
+  nacionalizacao: 'conteúdo importado de até 40% ou cumprimento do Processo Produtivo Básico (PPB), verificado pelo CST ou CSOSN da nota (códigos iniciados em 0, 4 e 5)',
   // IOF: alíquota zero. O Finame Materiais é operação "efetuada com recursos da Agência Especial de Financiamento Industrial - FINAME"
   // (Decreto 6.306/2007, art. 8º, IX, vigente no texto consolidado lido em 04/11/2026), e o adicional de 0,38% do art. 8º, § 5º, só
   // alcança os incisos que ele lista (I, IV, V, VI, X, XI, XIV, XVI, XVIII, XIX, XXI e XXVI), não o IX. A alíquota zero geral das
   // operações do BNDES (art. 8º, XXX) foi revogada pelo Decreto 8.511/2015 sem afetar o inciso IX. É assim que o mercado contrata
   // (condições do produto divulgadas pela Abimaq em 16/01/2026: sem incidência de IOF). Se o agente cobrar (funding diverso),
   // vale o IOF de crédito PJ: 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025).
-  iof: 'Sem IOF: a operação é feita com recursos da FINAME e tem alíquota zero (Decreto 6.306/2007, art. 8º, IX, vigente), sem o adicional de 0,38% do § 5º, que só alcança os incisos que ele lista. É assim que o mercado contrata (condições divulgadas pela Abimaq em 16/01/2026: sem incidência de IOF); a revogação da alíquota zero geral do BNDES (art. 8º, XXX, pelo Decreto 8.511/2015) não afeta o inciso IX. Só se o agente cobrar, por funding diverso, vale o IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025; optante do Simples Nacional até R$ 30 mil: 0,00274% ao dia)',
+  iof: 'Sem IOF: a operação é feita com recursos da FINAME e tem alíquota zero (Decreto 6.306/2007, art. 8º, IX, vigente), sem o adicional de 0,38% do § 5º, que só alcança os incisos que ele lista. É assim que o mercado contrata (informativo da Abimaq de janeiro de 2026 sobre as condições do produto: sem incidência de IOF); a revogação da alíquota zero geral do BNDES (art. 8º, XXX, pelo Decreto 8.511/2015) não afeta o inciso IX. Risco residual: o § 4º do art. 8º cobra o imposto se houver desvio de finalidade ou descumprimento de condição. Só se o agente cobrar, por funding diverso, vale o IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025, com eficácia restabelecida pelo STF em julho de 2025; optante do Simples Nacional até R$ 30 mil: 0,00274% ao dia)',
 }
 // Base legal e fontes de cada regra (o que foi confirmado e como). "indexada": trecho da página oficial lido pelo buscador; a página em si não abriu nesta rede.
 export const FONTES = [
   { regra: 'Custo financeiro: TFB, TFBD, TLP, Taxa LCD, Taxa Fixa Composta ou Taxa Fixa Composta MPME; taxa do BNDES de 0,95% a.a. (MPME N/NE) ou 1,25% a.a. (MPME nas demais regiões e grandes); taxa do agente negociada; Selic suspensa (Circular SUP/ADIG nº 09/2026, de 22/01/2026)', fonte: 'Página do produto BNDES Finame Materiais Industrializados, lida em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
   { regra: 'Prazo total de até 7 anos, com até 2 anos de carência (1 ano com TFB, Taxa Fixa Composta ou Taxa Fixa Composta MPME); participação de até 100% dos itens financiáveis; limite de R$ 150 milhões por cliente a cada 12 meses da homologação; notas emitidas até 12 meses antes do protocolo; garantia livre, FGI admitido', fonte: 'Página do produto, lida em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
   { regra: 'Teto de R$ 20 milhões por operação; itens, exclusões e nacionalização (conteúdo importado até 40% ou PPB)', fonte: 'Itens e nacionalização na página do produto; o teto por operação vem de Observatório da Indústria RS, Fomento Paraná e e-book CNI 2025 (secundárias; não consta na página oficial lida em 04/11/2026)', url: 'https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/' },
-  { regra: 'TFC (Taxa Fixa Composta): prefixada, combinação de duas taxas fixas; séries TFC_60.90, TFC_120.90, TFC_MPME_60.90 e TFC_MPME_120.90 (códigos C01 a C04) por faixa de prazo (até 60 ou 61 a 120 meses) e porte, com liberação em 90 dias; TFB por faixa de prazo e liberação em 30 ou 90 dias', fonte: 'Guia de custos financeiros e Moedas Contratuais do BNDES, lidos em 04/11/2026; séries coletadas pelo painel (aba BNDES)', url: 'https://www.bndes.gov.br/moedas' },
+  { regra: 'TFC (Taxa Fixa Composta): prefixada, combinação de duas taxas fixas; séries TFC_60.90, TFC_120.90, TFC_MPME_60.90 e TFC_MPME_120.90 (códigos C01 a C04); a faixa de prazo (até 60 ou 61 a 120 meses) e a liberação em 90 dias vêm da denominação das séries; TFB por faixa de prazo e liberação em 30 ou 90 dias', fonte: 'Guia de custos financeiros (definição da TFC) e Moedas Contratuais do BNDES (nomes, códigos e valores), lidos em 04/11/2026; séries coletadas pelo painel (aba BNDES); a página própria da TFC não pôde ser lida', url: 'https://www.bndes.gov.br/moedas' },
   { regra: 'Composição da taxa final: fator do custo financeiro × fator da taxa do BNDES × fator da taxa do agente − 1 (exemplo oficial: 1,07 × 1,015 × 1,03 − 1 = 11,86% a.a.)', fonte: 'Guia "Taxa de juros" do BNDES, lido em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros' },
   { regra: 'TLP: parcela prefixada (taxa real) mais IPCA', fonte: 'Lei 13.483/2017 e Resolução CMN 4.600/2017; guia de custos financeiros do BNDES', url: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13483.htm' },
-  { regra: 'IOF: alíquota zero na operação com recursos da FINAME (art. 8º, IX), sem o adicional de 0,38% (§ 5º não lista o inciso IX); se cobrado por funding diverso, crédito PJ 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias', fonte: 'Decreto 6.306/2007, texto consolidado na Câmara dos Deputados, lido em 04/11/2026: art. 8º, IX vigente, XXX revogado pelo Decreto 8.511/2015, § 5º; art. 7º, I, b e § 1º; Decreto 12.499/2025; condições do Finame Materiais divulgadas pela Abimaq em 16/01/2026 (sem incidência de IOF)', url: 'https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html' },
+  { regra: 'IOF: alíquota zero na operação com recursos da FINAME (art. 8º, IX), sem o adicional de 0,38% (§ 5º não lista o inciso IX); se cobrado por funding diverso, crédito PJ 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias', fonte: 'Decreto 6.306/2007, texto consolidado na Câmara dos Deputados, lido em 04/11/2026: art. 8º, IX vigente, XXX revogado pelo Decreto 8.511/2015, §§ 4º e 5º; art. 7º, I, b e § 1º; Decreto 12.499/2025 (STF, ADI 7827 e ADC 96, jul/2025); informativo da Abimaq de janeiro de 2026 sobre o Finame Materiais ("sem incidência de IOF"; página não lida diretamente)', url: 'https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html' },
 ]
 export const PORTES = [
   { id: 'mpme-nne', label: 'MPME no Norte ou Nordeste', taxa: REGRAS.taxaBndes['mpme-nne'], mpme: true },
@@ -42,8 +42,8 @@ export const PORTES = [
   { id: 'grande', label: 'Grande empresa', taxa: REGRAS.taxaBndes.grande, mpme: false },
 ]
 export const CUSTOS = [
-  { id: 'tfc', label: 'TFC (prefixada)', hint: 'Taxa Fixa Composta: prefixada, combinação de duas taxas fixas do BNDES, com série própria para MPME, por faixa de prazo (até 60 ou 61 a 120 meses) e liberação em 90 dias. Carência de até 12 meses.' },
-  { id: 'tfb', label: 'TFB (prefixada)', hint: 'Taxa Fixa do BNDES, cotada na contratação, por faixa de prazo e prazo de liberação (30 ou 90 dias). Carência de até 12 meses.' },
+  { id: 'tfc', label: 'TFC (prefixada)', hint: 'Taxa Fixa Composta: prefixada, combinação de duas taxas fixas do BNDES, com série própria para MPME. A faixa de prazo (até 60 ou 61 a 120 meses) e a liberação em 90 dias seguem a denominação das séries nas Moedas Contratuais (TFC_60.90, TFC_120.90); confirme com o agente. Carência de até 12 meses.' },
+  { id: 'tfb', label: 'TFB (prefixada)', hint: 'Taxa Fixa do BNDES: prefixada, por faixa de prazo do financiamento e prazo até a liberação dos recursos (30 ou 90 dias). Carência de até 12 meses.' },
   { id: 'tlp', label: 'TLP + IPCA', hint: 'TLP é a parcela prefixada em termos reais (Lei 13.483/2017); o saldo é corrigido pelo IPCA. A conta usa o IPCA esperado (Focus) como projeção.' },
 ]
 export const PERIODICIDADES = [
@@ -52,7 +52,7 @@ export const PERIODICIDADES = [
   { id: 6, label: 'Semestral' },
 ]
 export const SISTEMAS = [
-  { id: 'sac', label: 'SAC', hint: 'amortização constante, parcelas decrescentes (padrão do Finame)' },
+  { id: 'sac', label: 'SAC', hint: 'amortização constante, parcelas decrescentes' },
   { id: 'price', label: 'Price', hint: 'parcelas iguais' },
 ]
 // Composição das três parcelas da taxa: capitalizada ((1+a)(1+b)(1+c)−1, como o BNDES apura juros, dia a dia) ou somada (a+b+c, como as
@@ -92,7 +92,7 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
     if (Number.isInteger(prazo) && prazo >= 1 && carencia >= prazo) erros.push('A carência precisa ser menor que o prazo total.')
   }
   const financiado = valor > 0 && participacao > 0 ? (valor * participacao) / 100 : 0
-  if (financiado > REGRAS.tetoOperacao) avisos.push(`Valor financiado acima do teto por operação (R$ 20 milhões); a operação precisa ser dividida ou ajustada.`)
+  if (financiado > REGRAS.tetoOperacao) avisos.push(`Valor financiado acima de R$ 20 milhões por operação: teto citado em materiais do BNDES e da CNI (2020 a 2025) que não consta na página oficial do produto em 04/11/2026; confirme com o agente.`)
   if (financiado > REGRAS.tetoCliente12m) avisos.push(`Valor acima do limite por cliente em 12 meses (R$ 150 milhões).`)
   return { erros, avisos, financiado }
 }
@@ -167,15 +167,21 @@ export function simular({ valor, participacao = 100, prazo, carencia = 0, custo,
   const ipcaAnual = custo === 'tlp' ? ipca : 0
   const parcelas = cronograma({ financiado, prazo, carencia, taxaAnual: taxa, sistema, periodicidade, ipcaAnual })
   const jurosCarencia = parcelas.filter((p) => p.carencia).reduce((a, p) => a + p.juros, 0)
-  const juros = parcelas.reduce((a, p) => a + p.juros, 0)
   const correcao = parcelas.reduce((a, p) => a + p.correcao, 0)
   const amort = parcelas.filter((p) => !p.carencia)
   const iofCalc = iofCronograma(financiado, parcelas, iof)
+  // Quanto dos juros remunera cada parte: custo financeiro (só o custo), BNDES (custo + BNDES menos só o custo) e spread do agente
+  // (taxa completa menos custo + BNDES), sempre com o mesmo cronograma; a soma fecha nos juros totais.
+  const jurosDe = (t) => cronograma({ financiado, prazo, carencia, taxaAnual: t, sistema, periodicidade, ipcaAnual }).reduce((a, p) => a + p.juros, 0)
+  const jSoCusto = jurosDe(taxaFinal(custoFinanceiro, 0, 0, composicao)), jSemAgente = jurosDe(taxaFinal(custoFinanceiro, taxaBndes, 0, composicao))
+  const juros = parcelas.reduce((a, p) => a + p.juros, 0)
+  const atribuicao = { custoFinanceiro: jSoCusto, bndes: jSemAgente - jSoCusto, agente: juros - jSemAgente }
+  const spreadAgentePp = taxa - taxaFinal(custoFinanceiro, taxaBndes, 0, composicao) // quanto o spread do agente acrescenta à taxa final, em pontos
   // Fluxo parcela a parcela: saldo inicial (antes da correção do mês), IOF diário da parcela e total pago no vencimento.
   const fluxo = parcelas.map((p, k) => ({ ...p, saldoInicial: k ? parcelas[k - 1].saldo : financiado, iof: iofCalc.porParcela[k], pago: p.parcela + iofCalc.porParcela[k] }))
   return {
     ok: true, financiado, taxa, taxaMensal: monthlyRate(taxa, 'aa') * 100, taxaNominal: custo === 'tlp' ? tlpNominal(taxa, ipca) : taxa, composicao, parcelas: fluxo,
-    jurosCarencia, juros, correcao, iof: iofCalc.total, iofFixo: iofCalc.fixo, iofDiario: iofCalc.diario,
+    jurosCarencia, juros, correcao, atribuicao, spreadAgentePp, iof: iofCalc.total, iofFixo: iofCalc.fixo, iofDiario: iofCalc.diario,
     primeiraParcela: amort[0]?.parcela ?? 0, ultimaParcela: amort.at(-1)?.parcela ?? 0, parcelasAmortizacao: amort.length,
     total: financiado + correcao + juros + iofCalc.total, recursosProprios: valor - financiado, avisos: check.avisos,
   }
