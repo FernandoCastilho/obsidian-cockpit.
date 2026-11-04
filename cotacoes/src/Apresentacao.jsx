@@ -225,7 +225,7 @@ function Item({ s }) {
         <div className="apr-item-num">
           {dado.indisponivel ? <p className="apr-vazio">{dado.indisponivel}</p> : dado.semSerie ? <p className="apr-vazio">{dado.semSerie}</p> : (
             <>
-              <p className="apr-valor">{dado.valorTexto}{dado.unidade && <small> {dado.unidade.replace('US$/', '/')}</small>}</p>
+              <p className="apr-valor">{dado.valorTexto}{dado.unidadeCurta && <small>{dado.unidadeCurta}</small>}</p>
               <p className="apr-quando">{dado.quando}{dado.stale ? ' · sem atualização na última coleta' : ''}</p>
               <ul className="apr-vars">
                 {Number.isFinite(dado.dia) && <li className={tom(dado.dia)}><span aria-hidden="true">{MARK[tom(dado.dia)]}</span> {sinal(dado.dia, 2)} <small>hoje</small></li>}
