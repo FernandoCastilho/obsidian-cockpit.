@@ -1,0 +1,19 @@
+name: Sonda BNDES (temporária)
+on:
+  workflow_dispatch:
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Séries TFC/TFB no serviço de taxas
+        run: |
+          for k in TFC_TR_MPME_60 TFC_TR_MPME_120 TFC_TR_GRANDE_60 TFC_TR_GRANDE_120 TFC_TR_60.90 TFC_TR_120.90 TFC_60 TFC_120 TFC_MPME_60 TFC_MPME_120 TFC_GRANDE_60 TFC_GRANDE_120 TFC_TR_MPME_60.90 TFC_TR_GRANDE_60.90 TFC_TR_MPME_120.90 TFC_TR_GRANDE_120.90 TFBTR_60 TFBTR_120 TFB_60_30; do
+            echo "=== $k"; curl -sS -m 40 -A 'Mozilla/5.0' -e 'https://www.bndes.gov.br/' -o /tmp/s.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/apoioFinanceiro/rest/taxas/$k.txt" || true; head -c 300 /tmp/s.txt | head -5; echo; tail -n 3 /tmp/s.txt
+          done
+      - name: Páginas do produto e dos custos (texto)
+        run: |
+          pip -q install html2text >/dev/null 2>&1 || true
+          for u in "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxas-moedas" "https://www.bndes.gov.br/moedas"; do
+            echo; echo "################ $u"; curl -sSL -m 60 -A 'Mozilla/5.0' -o /tmp/p.html -w 'HTTP %{http_code} bytes %{size_download}\n' "$u" || true
+            python3 -c "import html2text,sys;h=html2text.HTML2Text();h.ignore_links=True;h.ignore_images=True;h.body_width=0;t=h.handle(open('/tmp/p.html',encoding='utf-8',errors='ignore').read());print(t[:12000])" 2>/dev/null || sed 's/<[^>]*>/ /g' /tmp/p.html | tr -s ' \n' | head -c 12000
+          done
