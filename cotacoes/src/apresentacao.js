@@ -1,0 +1,279 @@
+// Apresentação para o cliente: catálogo de setores e itens de mercado, leitura dos dados que o painel já coleta e o roteiro dos slides.
+// Só formata o que já existe nos arquivos do painel; não consulta fontes novas nem inventa números: sem dado, o slide diz que falta.
+import { INSUMOS } from './insumos.js'
+import { nf } from './format.js'
+import { upcoming } from './agenda.js'
+
+const DIA = 864e5
+
+// Itens de mercado que podem entrar na apresentação. `tipo`: moeda (cotação do painel), commodity (Pink Sheet mensal, com preço diário
+// quando há), petroleo (Brent diário da EIA), frete (índice mensal BLS), noticia (só matérias, sem série de preço) ou planejado (coleta ainda não existe).
+export const ITENS = {
+  usd: { id: 'usd', label: 'Dólar', tipo: 'moeda', code: 'USD', tema: 'moeda-usd', move: ['Juros nos EUA (Fed) e diferencial para a Selic: juro alto lá fora tira dólares de emergentes.', 'Fluxo comercial e financeiro: exportações de commodities, investimento estrangeiro e saída de capital.', 'Risco fiscal e político no Brasil; eleições e ruído em Brasília pesam no prêmio de risco.', 'Aversão a risco global: crises e guerras fortalecem o dólar contra todas as moedas.'] },
+  eur: { id: 'eur', label: 'Euro', tipo: 'moeda', code: 'EUR', tema: 'moeda-eur', move: ['Juros do BCE contra os do Fed: a paridade EUR/USD define boa parte do EUR/BRL.', 'Atividade na Europa (PMI, Alemanha) e preço da energia no continente.', 'O euro em reais carrega o movimento do dólar: dólar forte no Brasil puxa o euro junto.'] },
+  cnh: { id: 'cnh', label: 'Yuan', tipo: 'moeda', code: 'CNH', tema: 'moeda-cnh', move: ['Política do Banco do Povo da China: fixing diário e intervenções seguram a moeda numa faixa.', 'Tarifas e relação comercial com os EUA; demanda chinesa por minério, soja e petróleo.', 'Yuan mais fraco barateia o produto chinês importado em dólar; mais forte encarece.'] },
+  jpy: { id: 'jpy', label: 'Iene', tipo: 'moeda', code: 'JPY', tema: 'moeda-jpy', move: ['Juros do Banco do Japão: ainda baixos, financiam o carry trade; alta do juro valoriza o iene.', 'Aversão a risco: o iene é porto seguro e sobe em crises.'] },
+  minerio: { id: 'minerio', label: 'Minério de ferro', tipo: 'commodity', commodity: 'iron-ore', tema: 'minerio', insumo: 'minerio', unidade: 't' },
+  petroleo: { id: 'petroleo', label: 'Petróleo (Brent)', tipo: 'petroleo', tema: 'petroleo', insumo: 'petroleo', unidade: 'barril' },
+  cobre: { id: 'cobre', label: 'Cobre', tipo: 'commodity', commodity: 'copper', diario: 'cobre', tema: 'cobre', insumo: 'cobre', unidade: 't' },
+  aluminio: { id: 'aluminio', label: 'Alumínio', tipo: 'commodity', commodity: 'aluminum', tema: 'aluminio', insumo: 'aluminio', unidade: 't' },
+  aco: { id: 'aco', label: 'Aço', tipo: 'noticia', tema: 'aco', insumo: 'aco', semSerie: 'O aço não tem série de preço pública diária neste painel: a leitura é pelas matérias da semana e pelo custo do minério de ferro.' },
+  soja: { id: 'soja', label: 'Soja', tipo: 'commodity', commodity: 'soybeans', unidade: 't', move: ['Safra e clima no Brasil, na Argentina e nos EUA.', 'Compras da China e política de biocombustíveis (óleo de soja).', 'Dólar: a soja é cotada em US$; real fraco melhora a receita do produtor em reais.'] },
+  milho: { id: 'milho', label: 'Milho', tipo: 'commodity', commodity: 'corn', unidade: 't', move: ['Safra e clima (EUA, Brasil, Argentina) e estoques finais do USDA.', 'Demanda por ração (proteína animal) e por etanol de milho.', 'Dólar e frete interno; a segunda safra brasileira pesa no preço local.'] },
+  ouro: { id: 'ouro', label: 'Ouro', tipo: 'commodity', commodity: 'gold', unidade: 'oz', move: ['Juros reais nos EUA e dólar: juro baixo e dólar fraco favorecem o ouro.', 'Compras de bancos centrais e busca por proteção em crises.'] },
+  frete: { id: 'frete', label: 'Frete marítimo', tipo: 'frete', move: ['Oferta de navios e contêineres contra a demanda do comércio global.', 'Rotas: Mar Vermelho, Canal do Panamá e congestionamento em portos.', 'Preço do combustível marítimo (bunker), ligado ao petróleo.'] },
+  // Coletas ainda não existentes: aparecem na montagem como "em breve" e não entram no roteiro.
+  trigo: { id: 'trigo', label: 'Trigo', tipo: 'planejado' },
+  acucar: { id: 'acucar', label: 'Açúcar', tipo: 'planejado' },
+  carne: { id: 'carne', label: 'Carne bovina', tipo: 'planejado' },
+  algodao: { id: 'algodao', label: 'Algodão', tipo: 'planejado' },
+  carvao: { id: 'carvao', label: 'Carvão', tipo: 'planejado' },
+  cacau: { id: 'cacau', label: 'Cacau', tipo: 'planejado' },
+  cafe: { id: 'cafe', label: 'Café', tipo: 'planejado' },
+  fertilizantes: { id: 'fertilizantes', label: 'Fertilizantes', tipo: 'planejado' },
+  energia: { id: 'energia', label: 'Energia elétrica', tipo: 'planejado' },
+  incc: { id: 'incc', label: 'INCC', tipo: 'planejado' },
+}
+export const ITEM_IDS = Object.keys(ITENS)
+
+// Setores: a cadeia (o que entra, o que a empresa faz, para quem vende), os itens que entram por padrão e as perguntas para a conversa.
+// A lista nasce da carteira atendida (saúde, farmoquímico, alimentos, confecção, móveis, metalmecânica, construção, telecom, varejo)
+// e cobre o restante do mercado brasileiro (agro, sucroenergético, siderurgia, automotivo, logística).
+export const SETORES_APRESENTACAO = [
+  { id: 'metalmecanica', grupo: 'Indústria', label: 'Metalmecânica e equipamentos', itens: ['aco', 'cobre', 'aluminio', 'usd', 'eur', 'minerio'],
+    cadeia: { entradas: ['Aço e inox', 'Cobre e alumínio', 'Componentes importados (Europa, China)'], processo: 'Usinagem, montagem e integração', saidas: ['Indústria e agro', 'Exportação (ACC/ACE)', 'Projetos com BNDES/Finame'] },
+    perguntas: ['Qual fatia do custo é metal e como o contrato de venda repassa a variação?', 'Há importação de componentes? Em qual moeda e com qual prazo de pagamento?', 'Exporta? Quais moedas e quais prazos de recebimento?'] },
+  { id: 'siderurgia', grupo: 'Indústria', label: 'Siderurgia e mineração', itens: ['minerio', 'carvao', 'aco', 'usd', 'cnh', 'petroleo'],
+    cadeia: { entradas: ['Minério de ferro', 'Carvão metalúrgico (importado)', 'Energia e sucata'], processo: 'Redução, aciaria e laminação', saidas: ['Construção civil', 'Automotivo e máquinas', 'Exportação'] },
+    perguntas: ['Contratos de venda indexados a que referência (minério 62% Fe, aço plano)?', 'Qual a exposição ao aço importado da China e às medidas antidumping?', 'Carvão e minério: compra em dólar? Há hedge?'] },
+  { id: 'automotivo', grupo: 'Indústria', label: 'Automotivo e autopeças', itens: ['aco', 'aluminio', 'cobre', 'usd', 'eur'],
+    cadeia: { entradas: ['Aço e alumínio', 'Cobre e eletrônica', 'Componentes importados'], processo: 'Estampagem, usinagem e montagem', saidas: ['Montadoras', 'Mercado de reposição', 'Exportação'] },
+    perguntas: ['Reajuste com as montadoras segue qual índice e com que defasagem?', 'Qual o conteúdo importado por peça e em qual moeda?', 'Há financiamento de máquinas (Finame) previsto?'] },
+  { id: 'saude', grupo: 'Indústria', label: 'Saúde: dispositivos e próteses', itens: ['usd', 'eur', 'cnh', 'aco', 'frete'],
+    cadeia: { entradas: ['Polímeros e resinas', 'Aço inox e titânio', 'Componentes importados (China, Europa)'], processo: 'Fabricação, importação e distribuição', saidas: ['Hospitais e clínicas', 'SUS e convênios', 'Distribuidores'] },
+    perguntas: ['Quanto do custo é importado e em qual moeda (dólar, euro)?', 'Prazo médio de recebimento do SUS e dos convênios? Como financia esse ciclo?', 'Importação com Finimp ou pagamento à vista? Há trava de câmbio?'] },
+  { id: 'farmoquimico', grupo: 'Indústria', label: 'Farmoquímico e laboratorial', itens: ['usd', 'cnh', 'eur', 'petroleo', 'frete'],
+    cadeia: { entradas: ['Insumos ativos e reagentes (China, Índia)', 'Solventes e energia', 'Embalagens'], processo: 'Fracionamento, síntese e distribuição', saidas: ['Farmácias magistrais', 'Indústrias e laboratórios', 'Hospitais'] },
+    perguntas: ['Qual a fatia dos insumos importados e de quais países?', 'Compra em dólar com prazo? Finimp, 4131 ou pagamento à vista?', 'Como o preço de venda acompanha o câmbio: tabela mensal ou repasse imediato?'] },
+  { id: 'alimentos', grupo: 'Indústria', label: 'Alimentos e bebidas', itens: ['milho', 'soja', 'trigo', 'cacau', 'carne', 'usd'],
+    cadeia: { entradas: ['Grãos e farinhas', 'Proteína animal', 'Açúcar, cacau e embalagens'], processo: 'Processamento e distribuição', saidas: ['Varejo e atacado', 'Food service', 'Exportação'] },
+    perguntas: ['Quais matérias-primas pesam mais no custo e como são compradas (safra, contrato, spot)?', 'Há exposição ao dólar nos insumos ou nas vendas?', 'Como o preço de venda ao varejo acompanha o custo? Com que defasagem?'] },
+  { id: 'confeccao', grupo: 'Indústria', label: 'Confecção e têxtil', itens: ['usd', 'cnh', 'algodao', 'petroleo'],
+    cadeia: { entradas: ['Algodão', 'Fibras sintéticas (poliamida, elastano)', 'Tecidos e aviamentos importados'], processo: 'Fiação, tecelagem e confecção', saidas: ['Varejo próprio', 'Atacado e marcas', 'Exportação'] },
+    perguntas: ['Qual a fatia de tecido e aviamento importado? Em qual moeda?', 'A concorrência do importado pressiona o preço? Como responde?', 'Coleções: quanto tempo entre compra do insumo e venda?'] },
+  { id: 'moveis', grupo: 'Indústria', label: 'Móveis', itens: ['usd', 'petroleo', 'aco'],
+    cadeia: { entradas: ['Madeira e MDF', 'Couro, tecidos e espumas', 'Ferragens e componentes'], processo: 'Fabricação e acabamento', saidas: ['Varejo e lojas próprias', 'Exportação', 'Construção e hotelaria'] },
+    perguntas: ['Insumos em dólar (couro, espuma, ferragens)? Qual fatia?', 'Exporta? Para onde e em qual moeda?', 'Ciclo de produção e prazo de entrega: como financia o estoque?'] },
+  { id: 'construcao', grupo: 'Indústria', label: 'Construção pesada e infraestrutura', itens: ['aco', 'cobre', 'petroleo', 'incc', 'usd'],
+    cadeia: { entradas: ['Aço e cimento', 'Diesel e asfalto', 'Equipamentos importados'], processo: 'Obras, saneamento e incorporação', saidas: ['Setor público e concessões', 'Incorporação', 'Indústria'] },
+    perguntas: ['Os contratos têm reajuste por índice (INCC, aço, diesel)? Com que periodicidade?', 'Importa equipamentos? Em qual moeda?', 'Carteira de obras e prazo de recebimento do poder público?'] },
+  { id: 'telecom', grupo: 'Serviços e comércio', label: 'Telecom e data center', itens: ['usd', 'cnh', 'cobre', 'energia'],
+    cadeia: { entradas: ['Equipamentos e fibra importados', 'Energia elétrica', 'Capital para expansão (CAPEX)'], processo: 'Rede, data center e serviços', saidas: ['Empresas e provedores', 'Nuvem e IA', 'Governo'] },
+    perguntas: ['Qual fatia do CAPEX é importada e em qual moeda?', 'Energia: contrato no mercado livre? Qual o peso no custo?', 'Como o juro afeta o plano de expansão e o alongamento da dívida?'] },
+  { id: 'varejo', grupo: 'Serviços e comércio', label: 'Varejo e distribuição', itens: ['usd', 'cnh', 'frete'],
+    cadeia: { entradas: ['Produtos importados (China)', 'Estoque financiado', 'Frete marítimo e interno'], processo: 'Importação, distribuição e venda', saidas: ['Consumidor final', 'E-commerce e marketplaces', 'Franquias e revendas'] },
+    perguntas: ['Qual fatia das compras é importada e com qual prazo de pagamento?', 'Frete marítimo: contrato fechado ou spot? Qual peso no custo?', 'Como a Selic afeta o crédito ao cliente e a inadimplência?'] },
+  { id: 'logistica', grupo: 'Serviços e comércio', label: 'Logística e transporte', itens: ['petroleo', 'frete', 'usd'],
+    cadeia: { entradas: ['Diesel', 'Pneus, peças e veículos (Finame)', 'Mão de obra'], processo: 'Transporte e armazenagem', saidas: ['Indústria e agro', 'Varejo e e-commerce', 'Comércio exterior'] },
+    perguntas: ['Os contratos de frete têm cláusula de reajuste pelo diesel?', 'Renovação de frota: Finame, leasing ou recursos próprios?', 'Há operação com cargas importadas ou exportadas? Em qual moeda?'] },
+  { id: 'agro-graos', grupo: 'Agro', label: 'Agro: grãos', itens: ['soja', 'milho', 'trigo', 'usd', 'fertilizantes', 'petroleo'],
+    cadeia: { entradas: ['Fertilizantes (importados)', 'Sementes e defensivos', 'Diesel e máquinas'], processo: 'Produção e comercialização da safra', saidas: ['Exportação (China)', 'Esmagamento e ração', 'Cooperativas e tradings'] },
+    perguntas: ['Quanto da safra já está vendido e a que preço (em dólar ou em reais)?', 'Insumos comprados em dólar? Com qual prazo (barter, CPR)?', 'Custo de armazenagem e frete até o porto?'] },
+  { id: 'agro-proteina', grupo: 'Agro', label: 'Agro: proteína animal', itens: ['carne', 'milho', 'soja', 'usd', 'cnh'],
+    cadeia: { entradas: ['Milho e farelo de soja (ração)', 'Genética e sanidade', 'Energia e embalagens'], processo: 'Criação, abate e processamento', saidas: ['Exportação (China, EUA)', 'Varejo', 'Food service'] },
+    perguntas: ['Qual a fatia da ração no custo e como compra o milho e a soja?', 'Exporta? Quais mercados e em qual moeda?', 'Habilitações sanitárias e dependência de um mercado comprador?'] },
+  { id: 'sucroenergetico', grupo: 'Agro', label: 'Sucroenergético', itens: ['acucar', 'petroleo', 'usd'],
+    cadeia: { entradas: ['Cana-de-açúcar', 'Diesel e fertilizantes', 'Capital de safra'], processo: 'Moagem: açúcar e etanol', saidas: ['Exportação de açúcar', 'Etanol (preço da gasolina)', 'Energia da biomassa'] },
+    perguntas: ['Qual o mix açúcar/etanol previsto e o que o define?', 'Açúcar fixado em dólar? Qual volume e qual prazo?', 'Como a política de preços da Petrobras afeta a receita do etanol?'] },
+]
+export const SETOR_IDS = SETORES_APRESENTACAO.map((s) => s.id)
+export const GRUPOS_SETORES = [...new Set(SETORES_APRESENTACAO.map((s) => s.grupo))]
+
+// Itens que entram em todo setor (podem ser desmarcados).
+export const TRANSVERSAIS = ['usd']
+
+export const PERIODOS = [
+  { dias: 90, label: '3 meses' },
+  { dias: 180, label: '6 meses' },
+  { dias: 360, label: '1 ano' },
+]
+
+export const setorPorId = (id) => SETORES_APRESENTACAO.find((s) => s.id === id) ?? null
+
+// Itens marcados por padrão para um setor: os transversais e os do setor, sem os planejados (que não têm dado) e sem repetição.
+export function itensPadrao(setorId) {
+  const s = setorPorId(setorId)
+  const ids = [...TRANSVERSAIS, ...(s?.itens ?? [])]
+  return ids.filter((id, i) => ITENS[id] && ITENS[id].tipo !== 'planejado' && ids.indexOf(id) === i)
+}
+
+// Itens a mostrar na montagem para o setor: os padrão primeiro, depois os demais disponíveis, por fim os planejados do setor (desligados).
+export function itensDaMontagem(setorId) {
+  const padrao = itensPadrao(setorId)
+  const s = setorPorId(setorId)
+  const planejados = (s?.itens ?? []).filter((id) => ITENS[id]?.tipo === 'planejado')
+  const outros = ITEM_IDS.filter((id) => ITENS[id].tipo !== 'planejado' && !padrao.includes(id))
+  return [...padrao.map((id) => ({ ...ITENS[id], padrao: true })), ...outros.map((id) => ({ ...ITENS[id], padrao: false })), ...planejados.map((id) => ({ ...ITENS[id], padrao: false }))]
+}
+
+// Variação entre o primeiro ponto dentro da janela (`dias` até `agora`) e o último. `folga`: quantos dias o primeiro ponto pode ficar
+// depois do início da janela e ainda valer (séries mensais precisam de mais folga que as diárias). Sem cobertura, null: não se chama de
+// "6 meses" uma série de duas semanas.
+export function variacaoPeriodo(pontos, dias, agora = Date.now(), folga = 10) {
+  const validos = (pontos ?? []).filter((p) => Number.isFinite(p?.t) && p.v > 0).sort((a, b) => a.t - b.t)
+  if (validos.length < 2) return null
+  const inicio = agora - dias * DIA
+  const base = validos.find((p) => p.t >= inicio)
+  const ultimo = validos.at(-1)
+  if (!base || base === ultimo || base.t - inicio > folga * DIA) return null
+  return { pct: ((ultimo.v - base.v) / base.v) * 100, de: base, ate: ultimo, dias }
+}
+
+// Variação que arredonda para zero nas casas exibidas fica sem sinal (mesma regra da faixa do terminal).
+export const sinal = (pct, casas = 1) => { if (!Number.isFinite(pct)) return '—'; const zero = Math.round(Math.abs(pct) * 10 ** casas) === 0; return `${zero ? '' : pct > 0 ? '+' : '−'}${nf(Math.abs(pct), casas)}%` }
+export const tom = (pct) => (!Number.isFinite(pct) ? 'flat' : Math.round(pct * 10) === 0 ? 'flat' : pct > 0 ? 'up' : 'down')
+const mesAno = (period) => { const [y, m] = String(period ?? '').split('-'); return m && y ? `${['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'][Number(m) - 1]}/${y}` : '' }
+const dm = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })
+const dmhm = (t) => new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }).replace(',', '')
+const tMes = (period) => Date.parse(`${period}-15T12:00:00Z`)
+
+// Pontos (t, v) de cada fonte, no mesmo formato.
+const ptsMoeda = (hist, code) => (hist?.series?.[code]?.points ?? []).map((p) => ({ t: Number(p.t), v: Number(p.bid) }))
+const ptsMensal = (history) => (history ?? []).map((p) => ({ t: tMes(p.period), v: Number(p.value), period: p.period }))
+const ptsDiario = (serie) => (serie?.points ?? []).map(([t, v]) => ({ t: Number(t), v: Number(v) }))
+const ptsOil = (oil) => (oil?.points ?? []).map((p) => ({ t: Date.parse(`${p.date}T12:00:00Z`), v: Number(p.value) }))
+
+// Variação do dólar no mesmo período: converte a variação de uma commodity em US$ para reais.
+export function emReais(pctUsd, pctDolar) {
+  if (!Number.isFinite(pctUsd) || !Number.isFinite(pctDolar)) return null
+  return ((1 + pctUsd / 100) * (1 + pctDolar / 100) - 1) * 100
+}
+
+// Dado de um item para o slide: valor atual, quando, variação do dia e do período, pontos para o minigráfico e a frase pronta.
+// dados: { quotes, hist (history.json), commodities (lista), diario (insumos-precos.json), oil, frete, temas, agora }.
+export function dadoItem(item, dados, periodo) {
+  const agora = dados.agora ?? Date.now()
+  const dolar = variacaoPeriodo(ptsMoeda(dados.hist, 'USD'), periodo.dias, agora)
+  if (item.tipo === 'moeda') {
+    const q = dados.quotes?.[item.code]
+    const pontos = ptsMoeda(dados.hist, item.code)
+    if (!(q?.bid > 0)) return { indisponivel: 'Cotação indisponível no momento.' }
+    const per = variacaoPeriodo(pontos, periodo.dias, agora)
+    const casas = item.code === 'JPY' ? 4 : 2
+    return { valor: q.bid, valorTexto: `R$ ${nf(q.bid, casas)}`, quando: `cotação de ${dmhm(q.timestamp)}`, dia: !q.fallback && Number.isFinite(q.pct) ? q.pct : null, periodo: per, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), stale: !!q.stale,
+      frase: `${item.label} a R$ ${nf(q.bid, casas)}: ${per ? `${sinal(per.pct)} em ${periodo.label}` : `sem histórico de ${periodo.label} disponível`}.` }
+  }
+  if (item.tipo === 'commodity') {
+    const c = (dados.commodities ?? []).find((x) => x.id === item.commodity && Number.isFinite(x.value))
+    if (!c) return { indisponivel: 'Preço indisponível no momento.' }
+    const mensal = ptsMensal(c.history)
+    const serie = item.diario ? dados.diario?.series?.[item.diario] : null
+    const diario = ptsDiario(serie)
+    const per = variacaoPeriodo(mensal, periodo.dias, agora, 35)
+    const reais = per && dolar ? emReais(per.pct, dolar.pct) : null
+    const unid = `US$/${item.unidade}`
+    const frase = `${item.label} a US$ ${nf(c.value, 1)}/${item.unidade} (média de ${mesAno(c.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.` +
+      (reais != null ? ` Em reais, ${sinal(reais)}: o dólar ${dolar.pct >= 0 ? 'subiu' : 'caiu'} ${nf(Math.abs(dolar.pct), 1)}% no período.` : '')
+    return { valor: c.value, valorTexto: `US$ ${nf(c.value, 1)}`, unidade: unid, quando: `média de ${mesAno(c.period)} · ${c.benchmark}`, dia: null, mes: Number.isFinite(c.variationPct) ? c.variationPct : null, periodo: per, emReais: reais, dolar, pontos: diario.length > 1 ? diario.filter((p) => p.t >= agora - periodo.dias * DIA) : mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: diario.length > 1 ? `preço diário aproximado (${serie.name ?? 'contrato futuro'})` : 'média mensal', stale: !!c.stale, frase }
+  }
+  if (item.tipo === 'petroleo') {
+    const o = dados.oil
+    const pontos = ptsOil(o)
+    if (!(o?.value > 0) || o.benchmark !== 'Brent') return { indisponivel: 'Brent indisponível no momento.' }
+    const per = variacaoPeriodo(pontos, periodo.dias, agora)
+    const ult = pontos.at(-1), ant = pontos.at(-2)
+    const dia = ult && ant ? ((ult.v - ant.v) / ant.v) * 100 : null
+    const reais = per && dolar ? emReais(per.pct, dolar.pct) : null
+    return { valor: o.value, valorTexto: `US$ ${nf(o.value, 2)}`, unidade: 'US$/barril', quando: `Brent spot de ${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}`, dia, periodo: per, emReais: reais, dolar, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'Brent spot diário', stale: !!o.stale,
+      frase: `Brent a US$ ${nf(o.value, 2)}/barril (${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.${reais != null ? ` Em reais, ${sinal(reais)}.` : ''} O diesel na bomba segue o Brent e o dólar com defasagem, pela política de preços da Petrobras.` }
+  }
+  if (item.tipo === 'frete') {
+    const f = dados.frete
+    const mensal = ptsMensal(f?.points)
+    const ult = mensal.at(-1)
+    if (!ult) return { indisponivel: 'Índice de frete indisponível no momento.' }
+    const per = variacaoPeriodo(mensal, periodo.dias, agora, 35)
+    return { valor: ult.v, valorTexto: nf(ult.v, 1), unidade: 'pontos', quando: `índice mensal de ${mesAno(ult.period)} (transporte de carga, EUA)`, dia: null, periodo: per, pontos: mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'índice mensal', stale: !!f.stale,
+      frase: `Frete marítimo (índice de preços do transporte de carga, EUA) em ${nf(ult.v, 1)} pontos (${mesAno(ult.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}` : `sem histórico de ${periodo.label}`}. Não é cotação de rota brasileira nem US$/contêiner.` }
+  }
+  if (item.tipo === 'noticia') return { semSerie: item.semSerie, frase: item.semSerie }
+  return { indisponivel: 'Coleta ainda não existe para este item.' }
+}
+
+// Manchetes da semana do tema do item (as mais recentes), sem alterar o título.
+export function manchetes(temas, temaId, n = 3) {
+  return (temas?.[temaId]?.items ?? []).slice(0, n).map((i) => ({ t: i.t, title: i.title, source: i.source, link: i.link }))
+}
+
+// Cenário em uma linha: Selic, CDI, IPCA 12 meses, dólar e o que o Focus espera para o ano.
+export function linhasCenario(dados) {
+  const m = dados.macro
+  const out = []
+  const last = (a) => (Array.isArray(a) && a.length ? a[a.length - 1] : null)
+  const selic = last(m?.selic), cdi = last(m?.cdi)
+  if (selic) out.push({ key: 'selic', label: 'Selic', valor: `${nf(selic[1], 2)}%`, nota: 'meta a.a.' })
+  if (cdi) out.push({ key: 'cdi', label: 'CDI', valor: `${nf(cdi[1], 2)}%`, nota: `a.a. · ${dm(cdi[0])}` })
+  const ipca = (dados.ipca?.points ?? []).at(-1)
+  if (ipca && Number.isFinite(ipca.y12)) out.push({ key: 'ipca', label: 'IPCA 12 meses', valor: `${nf(ipca.y12, 2)}%`, nota: mesAno(ipca.period) })
+  const usd = dados.quotes?.USD
+  if (usd?.bid > 0) out.push({ key: 'usd', label: 'Dólar', valor: `R$ ${nf(usd.bid, 2)}`, nota: Number.isFinite(usd.pct) && !usd.fallback ? `${sinal(usd.pct, 2)} hoje` : dmhm(usd.timestamp) })
+  const ano = String(new Date(dados.agora ?? Date.now()).getFullYear())
+  for (const ind of ['Selic', 'IPCA']) {
+    const row = m?.focus?.rows?.find((r) => r.indicator === ind)
+    const v = row?.values?.[ano]?.median
+    if (Number.isFinite(v)) out.push({ key: `focus-${ind}`, label: `Focus ${ano}: ${ind}`, valor: `${nf(v, 2)}%`, nota: `mediana · Focus de ${m.focus.date ? dm(Date.parse(`${m.focus.date}T12:00:00Z`)) : ''}` })
+  }
+  return out
+}
+
+// Resumo final: os três itens com maior movimento no período, em uma frase cada.
+export function resumoFinal(slidesItens, periodo) {
+  return slidesItens
+    .filter((s) => Number.isFinite(s.dado?.periodo?.pct))
+    .sort((a, b) => Math.abs(b.dado.periodo.pct) - Math.abs(a.dado.periodo.pct))
+    .slice(0, 3)
+    .map((s) => `${s.item.label}: ${sinal(s.dado.periodo.pct)} em ${periodo.label}${s.dado.emReais != null ? ` (em reais, ${sinal(s.dado.emReais)})` : ''}.`)
+}
+
+// Roteiro: capa, cenário, cadeia do setor, um slide por item, agenda, perguntas e encerramento.
+// cfg: { nome, site, capa, setorId, itens: [ids], periodo: { dias, label } }.
+export function montarRoteiro(cfg, dados) {
+  const setor = setorPorId(cfg.setorId)
+  if (!setor) throw new Error('Setor desconhecido')
+  const periodo = PERIODOS.find((p) => p.dias === cfg.periodo?.dias) ?? PERIODOS[1]
+  const agora = dados.agora ?? Date.now()
+  const itens = (cfg.itens ?? []).map((id) => ITENS[id]).filter((i) => i && i.tipo !== 'planejado')
+  const slidesItens = itens.map((item) => {
+    const insumo = item.insumo ? INSUMOS.find((i) => i.id === item.insumo) : null
+    return { kind: 'item', item, dado: dadoItem(item, dados, periodo), move: insumo?.move ?? item.move ?? [], manchetes: item.tema ? manchetes(dados.temas, item.tema) : [], periodo }
+  })
+  const perguntas = [...setor.perguntas, ...itens.flatMap((i) => (i.insumo ? INSUMOS.find((x) => x.id === i.insumo)?.visita ?? [] : []))].filter((p, i, a) => a.indexOf(p) === i).slice(0, 8)
+  const nome = cfg.capa?.titulo || cfg.nome || ''
+  return [
+    { kind: 'capa', nome, setor, capa: cfg.capa ?? null, agora, periodo },
+    { kind: 'cenario', linhas: linhasCenario({ ...dados, agora }), agora },
+    { kind: 'cadeia', setor, transversais: ['Dólar', 'Selic', 'Inflação'] },
+    ...slidesItens,
+    { kind: 'agenda', eventos: upcoming(new Date(agora), 30).slice(0, 6) },
+    { kind: 'perguntas', perguntas },
+    { kind: 'fim', nome, pontos: resumoFinal(slidesItens, periodo), periodo, agora },
+  ]
+}
+
+// Capa: o que o site da empresa informa (título, descrição, logotipo), lido por um serviço público de metadados.
+// Se a leitura falha, a capa usa só o nome digitado. Nada é guardado.
+export const DOMINIO = (url) => { try { return new URL(/^https?:\/\//i.test(url) ? url : `https://${url}`).hostname.replace(/^www\./, '') } catch { return '' } }
+export function normalizarCapa(json, url) {
+  const d = json?.status === 'success' ? json.data : null
+  if (!d) return null
+  const titulo = String(d.publisher || d.title || '').trim()
+  return { titulo: titulo || DOMINIO(url), descricao: String(d.description ?? '').trim(), logo: d.logo?.url ?? null, imagem: d.image?.url ?? null, dominio: DOMINIO(url) }
+}
+export async function buscarCapa(url, signal) {
+  const alvo = /^https?:\/\//i.test(url) ? url : `https://${url}`
+  const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(alvo)}&palette=false&audio=false&video=false`, { signal })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const capa = normalizarCapa(await res.json(), alvo)
+  if (!capa) throw new Error('sem dados do site')
+  return capa
+}
