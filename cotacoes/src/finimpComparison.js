@@ -16,7 +16,8 @@ export function compareFinimp({ principal, days, competitor, itau }) {
   const rawDifference = b.cost - a.cost
   const tolerance = Number.EPSILON * Math.max(1, a.cost, b.cost) * 8
   // Remove apenas ruído binário de igualdade, sem arredondar custos/centavos.
-  return { ok: true, competitor: a, itau: b, difference: Math.abs(rawDifference) <= tolerance ? 0 : rawDifference }
+  const difference = Math.abs(rawDifference) <= tolerance ? 0 : rawDifference
+  return { ok: true, competitor: a, itau: b, difference, deltaPp: difference === 0 ? 0 : b.periodPercent - a.periodPercent }
 }
 
 // Resolve apenas taxa anual simples >= 0, mantendo flat e TAC informados.

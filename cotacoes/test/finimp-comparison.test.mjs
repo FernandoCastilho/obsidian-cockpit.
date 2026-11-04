@@ -2,10 +2,10 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { finimpCost, compareFinimp, solveFinimpRate } from '../src/finimpComparison.js'
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) <= 1e-9 * Math.max(1, Math.abs(expected)), `${actual} ≠ ${expected}`)
-// Twelve hand-calculated synthetic scenarios, not bank quotes or image data.
-const days = [30, 60, 90, 120, 180, 360]
-const expectedA = [1500, 2000, 2500, 3000, 4000, 7000]
-const expectedB = [3500 / 3, 5500 / 3, 2500, 9500 / 3, 4500, 8500]
+// Twenty-four hand-calculated synthetic scenarios, not bank quotes or image data.
+const days = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
+const expectedA = [1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000]
+const expectedB = [3500 / 3, 5500 / 3, 2500, 9500 / 3, 11500 / 3, 4500, 15500 / 3, 17500 / 3, 6500, 21500 / 3, 23500 / 3, 8500]
 for (let i = 0; i < days.length; i++) {
   for (const [name, annualRate, flatRate, expected] of [['concorrente', 6, 1, expectedA[i]], ['Itaú', 8, 0.5, expectedB[i]]]) {
     test(`FINIMP ${name}, ${days[i]} dias: juros simples e flat único`, () => {
@@ -59,4 +59,15 @@ test('não arredonda valores intermediários', () => {
   near(r.cost, 123456.78 * 0.061234567 * 181 / 360 + 123456.78 * 0.001234567 + 12.34)
   const solved = solveFinimpRate({ principal: 123456.78, days: 181, flatRate: 0.1234567, tac: 12.34, targetCost: r.cost })
   near(solved.annualRate, 6.1234567)
+})
+
+test('delta em pontos percentuais usa custos não arredondados, inclusive subcentavos', () => {
+  const r = compareFinimp({principal:100000,days:180,competitor:{annualRate:6,flatRate:1},itau:{annualRate:8,flatRate:0.5}})
+  near(r.deltaPp,0.5)
+  for(const sign of [-1,1]) {
+    const tiny=compareFinimp({principal:100000,days:180,competitor:{annualRate:6,flatRate:1},itau:{annualRate:6+sign*0.0000001,flatRate:1}})
+    assert.equal(Math.sign(tiny.difference),sign)
+    assert.ok(Math.abs(tiny.difference)<0.005)
+    near(tiny.deltaPp,sign*0.00000005)
+  }
 })
