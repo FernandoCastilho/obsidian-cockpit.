@@ -16,6 +16,7 @@ export const DESK_TABS = [
   { id: 'calculadora', label: 'Calculadoras' },
   { id: 'feriados', label: 'Feriados' },
   { id: 'aprender', label: 'Aprender' },
+  { id: 'apresentar', label: 'Apresentar', oculto: true }, // protótipo: #apresentar e comando APRESENTAR
   { id: 'config', label: 'Config', oculto: true }, // fora da barra; abre por #config e pelo comando CONFIG
 ]
 
@@ -39,7 +40,7 @@ const TAB = {
   SETORES: ['setores'], COBRE: ['setores', 'cobre'], ALUMINIO: ['setores', 'aluminio'], ACO: ['setores', 'aco'], TELECOM: ['setores', 'telecom'], INDUSTRIA: ['setores', 'industria'], VAREJO: ['setores', 'comercio'],
   CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'], GIRO: ['calculadora', 'giro'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
-  FERIADOS: ['feriados'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
+  FERIADOS: ['feriados'], APRESENTAR: ['apresentar'], APRESENTACAO: ['apresentar'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
   APRENDER: ['aprender'], EDU: ['aprender'], EDUCACAO: ['aprender'], ESTUDAR: ['aprender'], CUPOM: ['aprender', 'cupom-cambial'], CUPOMCAMBIAL: ['aprender', 'cupom-cambial'], EURIBOR: ['aprender', 'euribor'], FUNDING: ['aprender', 'custo-de-funding'], CUSTODEFUNDING: ['aprender', 'custo-de-funding'], CDS: ['aprender', 'cds'],
 }
 

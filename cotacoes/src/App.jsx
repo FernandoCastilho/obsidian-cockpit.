@@ -31,6 +31,7 @@ const Aprender = lazy(() => import('./Aprender.jsx'))
 const Indexadores = lazy(() => import('./Indexadores.jsx'))
 const Bndes = lazy(() => import('./Bndes.jsx'))
 const Setores = lazy(() => import('./Setores.jsx'))
+const Apresentacao = lazy(() => import('./Apresentacao.jsx'))
 import { useDataFile } from './useDataFile.js'
 import Nav, { TABS } from './Nav.jsx'
 import Resumo from './Resumo.jsx'
@@ -325,6 +326,8 @@ export default function App() {
       )}
 
       {tab === 'aprender' && <Aprender view={sub} goto={goto} />}
+
+      {tab === 'apresentar' && <Apresentacao quotes={quotes} macro={macro} />}
 
       {tab === 'config' && <Config quotesAt={updatedAt} quotesVia={via} quotes={quotes} quotesHealth={health} fx={fx} setFx={setFx} />}
 
