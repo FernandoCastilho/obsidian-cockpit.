@@ -52,6 +52,7 @@ function Concept({ c, goto }) {
             </ul>
           </details>
 
+          {c.fontes?.length > 0 && <details><summary>Fontes</summary><ul>{c.fontes.map(f=><li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer">{f.nome}</a></li>)}</ul></details>}
           <p className="learn-app">
             <span className="learn-tag">No app</span>{c.noApp.texto}{' '}
             <button type="button" className="learn-go" onClick={() => goto(c.noApp.tab, c.noApp.view)}>Abrir ›</button>

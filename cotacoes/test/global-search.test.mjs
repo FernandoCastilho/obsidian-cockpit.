@@ -5,6 +5,7 @@ import { normalizeSearch, makeSearchDoc, plainContent, searchDocuments, highligh
 import { buildSearchIndex, extractSearchText } from '../scripts/build-search-index.mjs'
 test('global search finds full concept bodies across unloaded routes, accents and case',()=>{
  const docs=CONCEITOS.map(c=>makeSearchDoc({id:c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'}))
+ assert.equal(searchDocuments(docs,'FEE ESTRUTURACAO')[0].route,'aprender/fee-de-estruturacao')
  const results=searchDocuments(docs,'INADIMPLENCIA')
  for(const title of ['FIDC','CRI','Custo de funding'])assert.ok(results.some(d=>d.title.includes(title)),title)
  assert.deepEqual(searchDocuments(docs,'inadimplência').map(d=>d.id),results.map(d=>d.id))
