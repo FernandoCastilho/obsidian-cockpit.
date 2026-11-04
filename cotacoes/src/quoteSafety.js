@@ -19,24 +19,39 @@ export function rawQuoteError(q, pair, now = Date.now()) {
 
 export function cnhQuoteError(q, now = Date.now()) {
   if (!q || q.source !== 'CNH' || q.cross !== true) return 'CNH: cruzamento ausente'
-  if (['bid', 'ask', 'high', 'low', 'timestamp'].some(k => !positive(q[k])) || !Number.isFinite(q.pct) || (q.delta !== null && !Number.isFinite(q.delta))) return 'CNH: cruzamento inválido'
+  if (['bid', 'ask', 'high', 'low', 'timestamp'].some(k => !positive(q[k])) || (q.pct !== null && !Number.isFinite(q.pct)) || (q.delta !== null && !Number.isFinite(q.delta))) return 'CNH: cruzamento inválido'
   if (q.timestamp > now + 60000 || !withinRange(q, 'CNHBRL') || q.high < q.low || q.bid > q.ask * 1.001) return 'CNH: cruzamento fora da faixa de segurança'
   return ''
 }
 
-// Preserva a metodologia atual: nenhuma alteração na fórmula ou na defasagem das pontas.
+export function withCnhVariation(quote) {
+  // Arquivos antigos não guardavam a base anterior e usavam dois cálculos diferentes.
+  if (positive(quote.previousBid)) {
+    const delta = quote.bid - quote.previousBid
+    const pct = delta / quote.previousBid * 100
+    if (Number.isFinite(delta) && Number.isFinite(pct)) return { ...quote, delta, pct }
+  }
+  return { ...quote, previousBid: null, delta: null, pct: null }
+}
+
 export function cnhCross(brl, cnh, now = Date.now()) {
   if (rawQuoteError(brl, 'USDBRL', now) || rawQuoteError(cnh, 'USDCNH', now)) return null
   const n = Number
-  const legs = [brl.varBid, cnh.varBid].every(v => v !== '' && v != null && Number.isFinite(n(v)))
-  const previous = legs ? (n(brl.bid) - n(brl.varBid)) / (n(cnh.ask) - n(cnh.varBid)) : NaN
-  const delta = Number.isFinite(previous) && previous > 0 ? n(brl.bid) / n(cnh.ask) - previous : null
-  const quote = {
-    source: 'CNH', cross: true, delta,
-    bid: n(brl.bid) / n(cnh.ask), ask: n(brl.ask) / n(cnh.bid),
-    high: n(brl.high) / n(cnh.low), low: n(brl.low) / n(cnh.high),
-    pct: n(brl.pctChange) - n(cnh.pctChange),
-    timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,
+  const bid = n(brl.bid) / n(cnh.ask)
+  let previousBid = null
+  if (numeric(brl.varBid) && numeric(cnh.varBid)) {
+    const previousBrlBid = n(brl.bid) - n(brl.varBid)
+    const previousCnhBid = n(cnh.bid) - n(cnh.varBid)
+    if (positive(previousBrlBid) && positive(previousCnhBid)) {
+      // varBid só informa a compra. Estima a venda anterior com a mesma razão venda/compra atual.
+      previousBid = bid * ((previousBrlBid / n(brl.bid)) / (previousCnhBid / n(cnh.bid)))
+    }
   }
+  const quote = withCnhVariation({
+    source: 'CNH', cross: true, previousBid,
+    bid, ask: n(brl.ask) / n(cnh.bid),
+    high: n(brl.high) / n(cnh.low), low: n(brl.low) / n(cnh.high),
+    timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,
+  })
   return cnhQuoteError(quote, now) ? null : quote
 }

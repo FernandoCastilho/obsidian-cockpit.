@@ -4,7 +4,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { mergeSnapshots } from './intraday-lib.mjs'
-import { RAW_PAIRS, rawQuoteError, cnhCross, cnhQuoteError } from '../src/quoteSafety.js'
+import { RAW_PAIRS, rawQuoteError, cnhCross, cnhQuoteError, withCnhVariation } from '../src/quoteSafety.js'
 
 export const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 const SNAP = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
@@ -68,10 +68,10 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
       const oldLegRetained = previous?.quotes?.USDBRL?.stale || previous?.quotes?.USDCNH?.stale
       previousCnh = oldLegRetained ? null : cnhCross(previous?.quotes?.USDBRL, previous?.quotes?.USDCNH, now)
     }
-    if (previousCnh) cnh = { ...previousCnh, stale: true, error: rejected.CNH }
+    if (previousCnh) cnh = { ...withCnhVariation(previousCnh), stale: true, error: rejected.CNH }
   } else if (previous?.cnh && cnh.timestamp < previous.cnh.timestamp && !cnhQuoteError(previous.cnh, now)) {
     rejected.CNH = 'CNH: horário anterior à última referência válida'
-    cnh = { ...previous.cnh, stale: true, error: rejected.CNH }
+    cnh = { ...withCnhVariation(previous.cnh), stale: true, error: rejected.CNH }
   }
   // EUR/USD direto (paridade de mercado, usada na Paridade para a Finimp). Consulta separada: se falhar, não derruba
   // as moedas em reais; vale a mesma regra de retenção (último valor válido, marcado como retido).

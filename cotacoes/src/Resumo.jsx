@@ -113,7 +113,7 @@ function ParityTile({ quotes, spark, onOpen, color }) {
   const pts = a.status === 'ok' && b.status === 'ok' ? (dia ? mergeTicks : mergeDaily)(a.data.points, b.data.points, true) : []
   const change = periodChange(pts)
   const p = liveCross(quotes?.[base], quotes?.[quote])
-  const hasDay = !!p && p.comparable !== false && !quotes[base].fallback && !quotes[quote].fallback
+  const hasDay = !!p && Number.isFinite(p.pct) && p.comparable !== false && !quotes[base].fallback && !quotes[quote].fallback
   const trend = toneOf(hasDay ? p.pct : change)
   const eurUsd = base === 'EUR' && quote === 'USD'
   const [big, setBig] = useState(false)
@@ -432,7 +432,8 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
 
         <Aviso title="Câmbio · datas e metodologia">
           <p id="market-help">Toque na linha para selecionar e abrir o gráfico. Filtros alteram apenas os gráficos. Cotação e Δ dia: última referência da fonte; mês/ano: observações diárias de dias encerrados, não a cotação intradiária.</p>
-          <p>—: dado ou cobertura compatível indisponível. CNH offshore: USD/BRL ÷ USD/CNH; Δ dia (R$) do cruzamento: razão atual menos a razão dos fechamentos anteriores das duas pontas. Não há PTAX oficial do yuan: a coluna mostra referência cruzada (PTAX do dólar ÷ USD/CNH no horário do boletim), só com cotações das duas pontas a até 15 min dele. CNY não é CNH.</p>
+          <p>O traço indica dado indisponível. A cotação do CNH usa a compra de USD/BRL dividida pela venda de USD/CNH. As duas variações usam a mesma cotação anterior estimada, mantendo a diferença proporcional atual entre compra e venda do USD/CNH. Sem dados para estimar a base anterior, as duas variações ficam indisponíveis.</p>
+          <p>Não há PTAX oficial do yuan. A coluna mostra uma referência cruzada (PTAX do dólar ÷ USD/CNH no horário do boletim), só com cotações das duas pontas a até 15 min dele. CNY e CNH são referências distintas.</p>
           <ul>{CURRENCIES.map(c => { const q = quotes?.[c.code], p = ptaxes[c.code], r = returns[c.code]; return <li key={c.code}>
             <b>{q?.source || c.code}/BRL:</b> <span className={quoteAgeState(q) ? 'status stale' : ''}>{!q ? quotes ? 'Cotação indisponível' : 'Carregando cotação' : (q.stale ? 'Atualização pendente · ' : q.fallback ? 'Referência diária de reserva · ' : quoteAgeState(q) ? quoteAgeState(q) + ' · ' : '') + dataTimestamp(q.timestamp)}</span>
             {' · '}{q ? q.cross ? 'CNH offshore por cruzamento' : q.fallback ? 'referência diária' : '' : 'Aguardando cotação válida'}
