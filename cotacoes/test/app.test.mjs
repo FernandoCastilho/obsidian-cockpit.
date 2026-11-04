@@ -4,7 +4,7 @@ import assert from 'node:assert/strict'
 import { upcoming, zonedToUtc } from '../src/agenda.js'
 import { rangeStats } from '../src/stats.js'
 import { liveParity, mergeDaily, mergeTicks } from '../src/parity.js'
-import { buildMessage, buildSummary } from '../src/whatsapp.js'
+import { buildHtml, buildMessage, buildPlain, buildSummary } from '../src/whatsapp.js'
 import { friendlyError } from '../src/useQuotes.js'
 
 test('fuso: 14h de Nova York em 28/10/2026 (horário de verão) = 18h UTC; Brasília 18h30 = 21h30 UTC', () => {
@@ -62,6 +62,11 @@ test('mensagem do WhatsApp e resumo do dia', () => {
   assert.match(text, /1a 13,80% \(−5 bps\)/)
   assert.match(text, /SOFR 3,87%/)
   assert.equal(buildSummary({ quotes: null, macro: null, curves: null }), '')
+  const cnh = { CNH: q(0.8, null) }
+  for (const shared of [buildMessage(cnh), buildPlain(cnh), buildHtml(cnh), buildSummary({ quotes: cnh })]) {
+    assert.match(shared, /R\$ 0,8000.*—/)
+    assert.doesNotMatch(shared, /0,00%/)
+  }
 })
 
 test('erros técnicos viram texto em português', () => {
@@ -264,19 +269,31 @@ test('feriados: próximo dia útil comum às praças e lista de próximos feriad
   assert.equal(hAdd('2026-12-31', 1), '2027-01-01')
 })
 
-test('cotações: CNH ganha variação absoluta pelos fechamentos anteriores das duas pontas; sem varBid de uma ponta fica ausente', async () => {
+test('cotações diretas: CNH tem a mesma base estimada para as duas variações', async () => {
   const { fetchQuotes } = await import('../src/useQuotes.js?cnh-delta')
   const now = Math.floor(Date.now() / 1000)
-  const q = (b, v) => ({ bid: String(b), ask: String(b), high: String(b + (b < 0.1 ? 0.001 : 0.1)), low: String(b - (b < 0.1 ? 0.001 : 0.1)), pctChange: '0.5', timestamp: String(now), ...(v === undefined ? {} : { varBid: String(v) }) })
+  const q = (bid, ask, varBid, pctChange) => ({
+    bid, ask, varBid, pctChange,
+    high: bid + 0.1, low: bid - 0.1, timestamp: now,
+  })
   const real = globalThis.fetch
   const run = async (cnhVar) => {
-    globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ USDBRL: q(5.3304, -0.021), EURBRL: q(6.1, 0), JPYBRL: q(0.035, 0), USDCNH: q(6.66367, cnhVar) }) })
+    globalThis.fetch = async () => ({
+      ok: true, status: 200,
+      json: async () => ({ USDBRL: q(5.1, 5.12, '0.10', '2'), USDCNH: q(6.86, 6.93, cnhVar, '-2') }),
+    })
     try { return (await fetchQuotes(undefined, { direct: true })).results.CNH.quote } finally { globalThis.fetch = real }
   }
-  const withLegs = await run(-0.00151)
-  assert.ok(Math.abs(withLegs.delta - (5.3304 / 6.66367 - (5.3304 + 0.021) / (6.66367 + 0.00151))) < 1e-12)
-  assert.ok(withLegs.delta < 0)
-  assert.equal((await run(undefined)).delta, null)
+  const quote = await run('-0.14')
+  const previousBid = 5 / (7 * (6.93 / 6.86))
+  assert.equal(quote.bid, 5.1 / 6.93)
+  assert.ok(Math.abs(quote.previousBid - previousBid) < 1e-12)
+  assert.ok(Math.abs(quote.delta - (quote.bid - previousBid)) < 1e-12)
+  assert.equal(quote.pct.toFixed(2), '4.08')
+  const withoutBase = await run(undefined)
+  assert.equal(withoutBase.bid, quote.bid)
+  assert.equal(withoutBase.delta, null)
+  assert.equal(withoutBase.pct, null)
 })
 
 import { policyRows as _policyRows } from '../src/policyRates.js'

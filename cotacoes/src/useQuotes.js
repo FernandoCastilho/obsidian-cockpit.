@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
-import { rawQuoteError, cnhCross, cnhQuoteError } from './quoteSafety.js'
+import { rawQuoteError, cnhCross, cnhQuoteError, withCnhVariation } from './quoteSafety.js'
 
 export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
@@ -107,7 +107,12 @@ async function complete(code, batch, batchError, signal, { cnh, rejected = {} } 
         const invalid = cnhQuoteError(cnh)
         if (invalid) errors.push(invalid)
         else {
-          quote = { ...cnh }
+          quote = withCnhVariation(cnh)
+          if (!Object.hasOwn(cnh, 'previousBid') && !cnh.stale && !retainedLeg && !sourceError) {
+            // Recalcula o legado apenas quando as duas pontas correspondem à cotação publicada.
+            const updated = cnhCross(batch.USDBRL, batch.USDCNH)
+            if (updated?.timestamp === cnh.timestamp && updated.bid === cnh.bid && updated.ask === cnh.ask) quote = updated
+          }
           if (quote.stale || retainedLeg || sourceError) {
             quote.stale = true
             quote.error = friendlyError(sourceError || quote.error || 'CNH: uma cotação de origem foi retida; aguardando um novo valor válido')

@@ -15,7 +15,8 @@ const stampOf = (when) =>
 function rows(quotes) {
   const list = CURRENCIES.filter((c) => quotes?.[c.code]).map((c) => {
     const q = quotes[c.code]
-    return { key: c.code, country: [...c.flag].map((ch) => String.fromCharCode(ch.codePointAt(0) - 0x1f1e6 + 65)).join(''), icon: c.flag, code: q.source ?? c.code, price: `R$ ${num(q.bid)}`, trend: `${arrow(q.pct)} ${pct(q.pct)}` }
+    const trend = !q.fallback && Number.isFinite(q.pct) ? `${arrow(q.pct)} ${pct(q.pct)}` : '—'
+    return { key: c.code, country: [...c.flag].map((ch) => String.fromCharCode(ch.codePointAt(0) - 0x1f1e6 + 65)).join(''), icon: c.flag, code: q.source ?? c.code, price: `R$ ${num(q.bid)}`, trend }
   })
   const par = liveParity(quotes?.USD, quotes?.EUR)
   if (par) {

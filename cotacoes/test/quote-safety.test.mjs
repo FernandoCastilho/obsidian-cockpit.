@@ -20,6 +20,7 @@ function batch(at, changes = {}) {
   return Object.fromEntries(Object.entries(BASE).map(([pair, prices]) => [pair, {
     ...prices,
     pctChange: '0',
+    varBid: '0',
     timestamp: String(at / 1000),
     ...changes[pair],
   }]))
@@ -80,7 +81,7 @@ function assertCnh(quote, at) {
 
 function assertRetainedCnh(actual, previous) {
   assertCnh(actual, previous.timestamp)
-  for (const field of ['source', 'cross', 'bid', 'ask', 'high', 'low', 'pct', 'delta', 'timestamp']) {
+  for (const field of ['source', 'cross', 'bid', 'ask', 'high', 'low', 'previousBid', 'pct', 'delta', 'timestamp']) {
     assert.deepEqual(actual[field], previous[field], `retained CNH.${field} changed`)
   }
   assertWarning(actual)
@@ -221,7 +222,35 @@ test('safety: missing USD does not stop a valid EUR update', async (t) => {
   assertWarning(snapshot.quotes.USDBRL)
 })
 
+test('CNH sem base válida mantém o preço e entra no intraday sem variações', async t => {
+  const dir = await directory(t)
+  await collectBatch(dir, START, batch(START, { USDCNH: { varBid: undefined } }))
+  const { snapshot, intraday } = await files(dir)
+  assert.equal(snapshot.cnh.bid, 5.4 / 6.651)
+  assert.equal(snapshot.cnh.delta, null)
+  assert.equal(snapshot.cnh.pct, null)
+  assertFresh(snapshot.cnh)
+  assert.deepEqual(intraday.series.CNH.points, [[START, snapshot.cnh.bid]])
+})
+
 import { rawQuoteError, cnhCross } from '../src/quoteSafety.js'
+
+test('CNH distingue variação zero de uma base anterior inválida', () => {
+  const { USDBRL: brl, USDCNH: cnh } = batch(START)
+  const flat = cnhCross(brl, cnh, START)
+  assert.equal(flat.delta, 0)
+  assert.equal(flat.pct, 0)
+  for (const invalid of ['', ' ', true, 'Infinity', null, cnh.bid]) {
+    const q = cnhCross(brl, { ...cnh, varBid: invalid }, START)
+    assert.equal(q.bid, flat.bid)
+    assert.equal(q.delta, null)
+    assert.equal(q.pct, null)
+  }
+  const negative = cnhCross({ ...brl, varBid: '6' }, { ...cnh, varBid: '7' }, START)
+  assert.equal(negative.bid, flat.bid)
+  assert.equal(negative.delta, null)
+  assert.equal(negative.pct, null)
+})
 test('safety: rejects invalid required fields, inconsistent prices and future dates', () => {
   const q = batch(START).USDBRL
   for (const field of ['bid', 'ask', 'high', 'low', 'timestamp', 'pctChange']) {

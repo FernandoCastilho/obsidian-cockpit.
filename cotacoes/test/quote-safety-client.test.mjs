@@ -164,6 +164,33 @@ test('client safety: plausible central CNH with an invalid raw leg is retained w
   assert.ok(results.CNH.quote.error)
 })
 
+test('CNH legado só usa a nova variação quando as pontas correspondem à cotação', async t => {
+  const clock = browserClock(t), q = await client()
+  const rows = batch(clock.now, {
+    USDBRL: { bid: '5.1', ask: '5.12', low: '5', high: '5.2', varBid: '0.10', pctChange: '2' },
+    USDCNH: { bid: '6.86', ask: '6.93', low: '6.8', high: '7', varBid: '-0.14', pctChange: '-2' },
+  })
+  const central = snapshot(clock.now, rows)
+  const { cnh } = central
+  delete cnh.previousBid
+  cnh.pct = 4
+  cnh.delta = null
+  globalThis.fetch = async () => json(central)
+
+  const fresh = (await q.fetchQuotes()).results.CNH.quote
+  assert.equal(fresh.bid, cnh.bid)
+  assert.equal(fresh.pct.toFixed(2), '4.08')
+  assert.equal(fresh.delta, fresh.bid - fresh.previousBid)
+
+  central.quotes = batch(clock.now, { USDBRL: invalidUsd })
+  const retained = (await q.fetchQuotes()).results.CNH.quote
+  assert.equal(retained.bid, cnh.bid)
+  assert.equal(retained.timestamp, cnh.timestamp)
+  assert.equal(retained.stale, true)
+  assert.equal(retained.delta, null)
+  assert.equal(retained.pct, null)
+})
+
 test('client safety: an older valid central response cannot clear a newer local rejection warning', async t => {
   const clock = browserClock(t), q = await client(), sourceAt = clock.now
   let central = snapshot(sourceAt, batch(sourceAt))
