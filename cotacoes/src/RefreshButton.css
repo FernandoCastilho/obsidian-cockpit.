@@ -15,3 +15,5 @@
 .chart > header .refresh-wrap, .macro > h2 + .refresh-wrap { flex: none; }
 .history-head .refresh-wrap { flex: none; }
 .executive-rates__heading { display: flex; align-items: center; justify-content: space-between; }
+
+.refresh-btn[aria-disabled="true"] { opacity:.5; cursor:wait; }

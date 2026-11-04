@@ -165,6 +165,9 @@ test('liveCross sinaliza horários distintos e aceita cotações sem horário', 
   assert.equal(liveCross(a, { bid: 5, pct: 0.1, timestamp: 2e6 + 29 * 60e3 }).comparable, true)
   assert.equal(liveCross(a, { bid: 5, pct: 0.1, timestamp: 2e6 + 31 * 60e3 }).comparable, false)
   assert.equal(liveCross({ bid: 6, pct: 0 }, { bid: 5, pct: 0 }).comparable, true)
+  assert.deepEqual(liveCross({ bid: 0.8, pct: null }, { bid: 5, pct: 0.1 }), {
+    main: 0.8 / 5, pct: null, comparable: true,
+  })
 })
 
 test('variação que arredonda para zero fica neutra, sem seta de alta ou baixa', () => {

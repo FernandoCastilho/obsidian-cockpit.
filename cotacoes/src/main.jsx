@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import ErrorBoundary from './ErrorBoundary.jsx'
 import App from './App.jsx'
+import DynamicNotifications from './DynamicNotifications.jsx'
 import './styles.css'
 import './Terminal.css'
 import './Abas.css'
@@ -9,7 +10,7 @@ import { iniciarContagem } from './acessos.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ErrorBoundary><App /></ErrorBoundary>
+    <ErrorBoundary><DynamicNotifications><App /></DynamicNotifications></ErrorBoundary>
   </StrictMode>,
 )
 

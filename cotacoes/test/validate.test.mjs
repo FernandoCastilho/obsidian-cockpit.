@@ -40,3 +40,11 @@ test('intraday: salto de 9% após pausa longa passa; o mesmo salto em 5 min é a
   assert.deepEqual(validateIntraday(mk(3 * 36e5), now), [])
   assert.ok(validateIntraday(mk(0), now).some((i) => /salto/.test(i.message)))
 })
+
+test('CNH rejeitado ou retido não é reportado como cruzamento novo distorcido',()=>{
+ const f=good();f.quotes.USDCNH.timestamp=String(now/1000-7200)
+ f.rejected={CNH:'pontas incompatíveis'};f.cnh=null
+ assert.ok(!validateQuotes(f,now).some(i=>/pontas do CNH/.test(i.message)))
+ f.cnh={stale:true};assert.ok(!validateQuotes(f,now).some(i=>/pontas do CNH/.test(i.message)))
+ f.cnh.stale=false;assert.ok(validateQuotes(f,now).some(i=>/pontas do CNH/.test(i.message)))
+})

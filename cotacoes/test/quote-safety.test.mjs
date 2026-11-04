@@ -20,6 +20,7 @@ function batch(at, changes = {}) {
   return Object.fromEntries(Object.entries(BASE).map(([pair, prices]) => [pair, {
     ...prices,
     pctChange: '0',
+    varBid: '0',
     timestamp: String(at / 1000),
     ...changes[pair],
   }]))
@@ -80,7 +81,7 @@ function assertCnh(quote, at) {
 
 function assertRetainedCnh(actual, previous) {
   assertCnh(actual, previous.timestamp)
-  for (const field of ['source', 'cross', 'bid', 'ask', 'high', 'low', 'pct', 'delta', 'timestamp']) {
+  for (const field of ['source', 'cross', 'bid', 'ask', 'high', 'low', 'previousBid', 'pct', 'delta', 'timestamp']) {
     assert.deepEqual(actual[field], previous[field], `retained CNH.${field} changed`)
   }
   assertWarning(actual)
@@ -221,7 +222,35 @@ test('safety: missing USD does not stop a valid EUR update', async (t) => {
   assertWarning(snapshot.quotes.USDBRL)
 })
 
+test('CNH sem base válida mantém o preço e entra no intraday sem variações', async t => {
+  const dir = await directory(t)
+  await collectBatch(dir, START, batch(START, { USDCNH: { varBid: undefined } }))
+  const { snapshot, intraday } = await files(dir)
+  assert.equal(snapshot.cnh.bid, 5.4 / 6.651)
+  assert.equal(snapshot.cnh.delta, null)
+  assert.equal(snapshot.cnh.pct, null)
+  assertFresh(snapshot.cnh)
+  assert.deepEqual(intraday.series.CNH.points, [[START, snapshot.cnh.bid]])
+})
+
 import { rawQuoteError, cnhCross } from '../src/quoteSafety.js'
+
+test('CNH distingue variação zero de uma base anterior inválida', () => {
+  const { USDBRL: brl, USDCNH: cnh } = batch(START)
+  const flat = cnhCross(brl, cnh, START)
+  assert.equal(flat.delta, 0)
+  assert.equal(flat.pct, 0)
+  for (const invalid of ['', ' ', true, 'Infinity', null, cnh.bid]) {
+    const q = cnhCross(brl, { ...cnh, varBid: invalid }, START)
+    assert.equal(q.bid, flat.bid)
+    assert.equal(q.delta, null)
+    assert.equal(q.pct, null)
+  }
+  const negative = cnhCross({ ...brl, varBid: '6' }, { ...cnh, varBid: '7' }, START)
+  assert.equal(negative.bid, flat.bid)
+  assert.equal(negative.delta, null)
+  assert.equal(negative.pct, null)
+})
 test('safety: rejects invalid required fields, inconsistent prices and future dates', () => {
   const q = batch(START).USDBRL
   for (const field of ['bid', 'ask', 'high', 'low', 'timestamp', 'pctChange']) {
@@ -232,4 +261,28 @@ test('safety: rejects invalid required fields, inconsistent prices and future da
   for (const change of [{ bid: '6' }, { ask: '5' }, { low: '6' }, { high: '5' }, { timestamp: String(START / 1000 + 61) }]) assert.ok(rawQuoteError({ ...q, ...change }, 'USDBRL', START))
   assert.equal(rawQuoteError(batch(START).USDCNH, 'USDCNH', START), '')
   assert.ok(cnhCross(q, batch(START).USDCNH, START), 'raw USD/CNH is not mistaken for CNH/BRL')
+})
+
+test('CNH: defasagem acima de uma hora retém cruzamento e não cria ponto',async t=>{
+ const dir=await directory(t)
+ await collectBatch(dir,START,batch(START));const before=await files(dir)
+ const now=START+2*3600000
+ await collectBatch(dir,now,batch(now,{USDCNH:{timestamp:String(START/1000)}}))
+ const after=await files(dir)
+ assertRetainedCnh(after.snapshot.cnh,before.snapshot.cnh)
+ assert.match(after.snapshot.rejected.CNH,/120 min/)
+ assert.deepEqual(after.intraday.series.CNH.points,before.intraday.series.CNH.points)
+ assert.equal(after.snapshot.quotes.USDBRL.timestamp,String(now/1000))
+ await collectBatch(dir,now+STEP,batch(now+STEP));const recovered=await files(dir)
+ assertFresh(recovered.snapshot.cnh);assert.equal(recovered.snapshot.cnh.timestamp,now+STEP)
+})
+test('CNH: sem histórico não fabrica cruzamento defasado; limite de uma hora é inclusivo',async t=>{
+ const dir=await directory(t),now=START+2*3600000
+ await collectBatch(dir,now,batch(now,{USDCNH:{timestamp:String(START/1000)}}))
+ assert.equal((await files(dir)).snapshot.cnh,null)
+ const {cnhCross}=await import('../src/quoteSafety.js')
+ const q=batch(now,{USDCNH:{timestamp:String((now-3600000)/1000)}})
+ assert.ok(cnhCross(q.USDBRL,q.USDCNH,now))
+ q.USDCNH.timestamp=String((now-3600001)/1000)
+ assert.equal(cnhCross(q.USDBRL,q.USDCNH,now),null)
 })
