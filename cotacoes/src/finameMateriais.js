@@ -21,16 +21,16 @@ export const REGRAS = {
   // IOF: a alíquota zero que valia para operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015;
   // a operação indireta paga o IOF de crédito de pessoa jurídica (Decreto 12.499/2025: 0,38% adicional + 0,0082% ao dia, até 365 dias).
   // Hipóteses de alíquota zero que restam (ex.: art. 8º, XV, recursos de fundos ou programas governamentais) dependem do funding e são controversas.
-  iof: 'IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025). A alíquota zero das operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015; só hipóteses específicas (ex.: recursos de fundos ou programas governamentais, art. 8º, XV) seguem com zero, e o agente confirma',
+  iof: 'IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025, com eficácia restabelecida pelo STF na ADI 7827, em julho de 2025). Optante do Simples Nacional em operação de até R$ 30 mil paga 0,38% mais 0,00274% ao dia: ajuste a alíquota diária. A alíquota zero das operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015; só hipóteses específicas (ex.: recursos de fundos ou programas governamentais, art. 8º, XV) seguem com zero, e o agente confirma',
 }
 // Base legal e fontes de cada regra (o que foi confirmado e como). "indexada": trecho da página oficial lido pelo buscador; a página em si não abriu nesta rede.
 export const FONTES = [
   { regra: 'Prazo de até 84 meses; carência de até 24 (12 com TFB ou taxa fixa composta); participação até 100%; teto de R$ 150 milhões por cliente em 12 meses', fonte: 'Página do produto BNDES Finame Materiais Industrializados (indexada em 04/11/2026)', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
-  { regra: 'Teto de R$ 20 milhões por operação; notas de até 12 meses antes do protocolo; itens, exclusões e nacionalização', fonte: 'Observatório da Indústria RS, Fomento Paraná, Banestes e e-book CNI 2025 (secundárias)', url: 'https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/' },
-  { regra: 'Taxa do BNDES de 0,95% a.a. (MPME N/NE) ou 1,25% a.a. (demais), composta com o custo financeiro e a taxa do agente, negociada', fonte: 'Página do produto (indexada) e comunicado Abimaq sobre a mudança de 1,15% para 1,25% em 22/01/2026', url: 'https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/' },
+  { regra: 'Teto de R$ 20 milhões por operação; notas de até 12 meses antes do protocolo; itens, exclusões e nacionalização', fonte: 'Observatório da Indústria RS, Fomento Paraná, Banestes e e-book CNI 2025 (secundárias; o teto por operação aguarda conferência na página oficial)', url: 'https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/' },
+  { regra: 'Taxa do BNDES de 0,95% a.a. (MPME N/NE) ou 1,25% a.a. (demais), composta com o custo financeiro e a taxa do agente, negociada', fonte: 'Página do produto (indexada) e apresentação do BNDES de 12/03/2026 (0,95% ou 1,25%); a data da mudança de 1,15% para 1,25%, 22/01/2026, vem de comunicado Abimaq e aguarda conferência primária', url: 'https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/' },
   { regra: 'Selic suspensa como custo financeiro, por tempo indeterminado', fonte: 'Aviso nas páginas de produto do BNDES: Circular SUP/ADIG nº 09/2026, de 22/01/2026, que altera a Circular SUP/ADIG nº 13/2022', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros' },
   { regra: 'TLP: parcela prefixada (taxa real) mais IPCA; TFB: taxa prefixada do BNDES por faixa de prazo e prazo de liberação', fonte: 'Lei 13.483/2017 e Resolução CMN 4.600/2017 (TLP); guia de custos financeiros do BNDES (TFB)', url: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13483.htm' },
-  { regra: 'IOF de crédito PJ (0,38% + 0,0082% ao dia); revogação da alíquota zero do BNDES', fonte: 'Decreto 6.306/2007, art. 8º (inciso XXX revogado pelo Decreto 8.511/2015); Decreto 12.499/2025', url: 'https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm' },
+  { regra: 'IOF de crédito PJ (0,38% + 0,0082% ao dia, sobre o principal de cada parcela, até 365 dias); Simples Nacional 0,00274% ao dia até R$ 30 mil; revogação da alíquota zero do BNDES', fonte: 'Decreto 6.306/2007, art. 7º, I, b e § 1º, e art. 8º (inciso XXX revogado pelo Decreto 8.511/2015; Aviso SUP/AOI 28/2015 do BNDES); Decreto 12.499/2025; STF, ADI 7827 (cautelar de 16/07/2025)', url: 'https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm' },
 ]
 export const PORTES = [
   { id: 'mpme-nne', label: 'MPME no Norte ou Nordeste', taxa: REGRAS.taxaBndes['mpme-nne'] },
@@ -88,39 +88,44 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
 // SAC ou Price mensal com juros junto do principal. taxaAnual em % a.a. é a taxa de juros; ipcaAnual (% a.a., só na TLP) é a correção
 // monetária capitalizada ao saldo todo mês, como no contrato do BNDES: a amortização é calculada sobre o saldo corrigido
 // (SAC = saldo corrigido ÷ parcelas vincendas; Price = prestação recalculada sobre o saldo corrigido). Com ipcaAnual 0, é o SAC/Price nominal.
-// Devolve parcelas [{ mes, correcao, juros, amortizacao, parcela, saldo, carencia }].
+// Devolve parcelas [{ mes, correcao, juros, amortizacao, principal, parcela, saldo, carencia }]; `principal` é a parte da
+// amortização que corresponde ao valor entregue (amortização sem a correção acumulada): a soma dos principais é o financiado, e é
+// sobre ele que incide o IOF diário (Decreto 6.306/2007, art. 7º, I, b: "valor do principal de cada uma das parcelas").
 export function cronograma({ financiado, prazo, carencia, taxaAnual, sistema, periodicidade = 1, ipcaAnual = 0 }) {
   const i = monthlyRate(taxaAnual, 'aa'), c = monthlyRate(ipcaAnual, 'aa')
   const parcelas = []
   let saldo = financiado
+  let fator = 1 // correção acumulada desde a liberação
   let acumulado = 0
   for (let m = 1; m <= carencia; m++) {
     const correcao = saldo * c
-    saldo += correcao
+    saldo += correcao; fator *= 1 + c
     acumulado = (saldo + acumulado) * i + acumulado // juros do mês sobre o saldo corrigido + juros ainda não pagos (capitalização dentro do período)
     const paga = m % periodicidade === 0 || m === carencia
-    parcelas.push({ mes: m, correcao, juros: paga ? acumulado : 0, amortizacao: 0, parcela: paga ? acumulado : 0, saldo, carencia: true })
+    parcelas.push({ mes: m, correcao, juros: paga ? acumulado : 0, amortizacao: 0, principal: 0, parcela: paga ? acumulado : 0, saldo, carencia: true })
     if (paga) acumulado = 0
   }
   const n = prazo - carencia
   for (let k = 1; k <= n; k++) {
     const correcao = saldo * c
-    saldo += correcao
+    saldo += correcao; fator *= 1 + c
     const juros = saldo * i
     const restantes = n - k + 1
     const pmt = i === 0 ? saldo / restantes : (saldo * i) / (1 - (1 + i) ** -restantes)
     const amortizacao = sistema === 'price' ? pmt - juros : saldo / restantes
     saldo = Math.max(0, saldo - amortizacao)
-    parcelas.push({ mes: carencia + k, correcao, juros, amortizacao, parcela: juros + amortizacao, saldo, carencia: false })
+    parcelas.push({ mes: carencia + k, correcao, juros, amortizacao, principal: amortizacao / fator, parcela: juros + amortizacao, saldo, carencia: false })
   }
   return parcelas
 }
 
-// IOF de crédito PJ sobre o cronograma: adicional único sobre o financiado + alíquota diária sobre o principal de cada parcela pelos dias
-// até o vencimento (meses de 365/12 dias, contando a carência), limitados a 365 dias. iof = { fixed, daily } em %.
+// IOF de crédito PJ sobre o cronograma: adicional único sobre o financiado + alíquota diária sobre o principal de cada parcela (sem a
+// correção pelo IPCA) pelos dias até o vencimento (meses de 365/12 dias, contando a carência), limitados a 365 dias (Decreto 6.306/2007,
+// art. 7º, § 1º). Por construção, nunca passa de financiado × (fixed + maxDays × daily). iof = { fixed, daily, maxDays? } em % e dias.
 export function iofCronograma(financiado, parcelas, iof = IOF_PJ) {
+  const maxDias = iof.maxDays ?? IOF_PJ.maxDays
   const fixo = (financiado * (iof.fixed ?? 0)) / 100
-  const base = parcelas.reduce((a, p) => a + p.amortizacao * Math.min(Math.round((p.mes * 365) / 12), IOF_PJ.maxDays), 0)
+  const base = parcelas.reduce((a, p) => a + (p.principal ?? p.amortizacao) * Math.min(Math.round((p.mes * 365) / 12), maxDias), 0)
   const diario = (base * (iof.daily ?? 0)) / 100
   return { fixo, diario, total: fixo + diario }
 }
@@ -131,7 +136,11 @@ export function simular({ valor, participacao = 100, prazo, carencia = 0, custo,
   const check = conferir({ valor, participacao, prazo, carencia, custo })
   const iofOk = iof && [iof.fixed, iof.daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
   const ipcaOk = custo !== 'tlp' || (Number.isFinite(ipca) && ipca >= -50 && ipca <= 100)
-  if (check.erros.length || !iofOk || !ipcaOk || ![custoFinanceiro, taxaBndes, taxaAgente].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)) return { ok: false, ...check }
+  const taxasOk = [custoFinanceiro, taxaBndes, taxaAgente].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
+  if (!taxasOk) check.erros.push('Informe o custo financeiro, a taxa do BNDES e a taxa do agente em % a.a.')
+  if (!ipcaOk) check.erros.push('Informe o IPCA esperado em % a.a.')
+  if (!iofOk) check.erros.push('Informe as alíquotas do IOF em % (0 e 0 se o agente confirmar alíquota zero).')
+  if (check.erros.length) return { ok: false, ...check }
   const financiado = check.financiado
   const taxa = taxaFinal(custoFinanceiro, taxaBndes, taxaAgente, composicao)
   const ipcaAnual = custo === 'tlp' ? ipca : 0
