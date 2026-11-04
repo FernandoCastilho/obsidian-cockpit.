@@ -3,3 +3,14 @@
 .fm.up { color:var(--accent); } .fm.down { color:var(--warn); } .fm.same { color:var(--mut); }
 .vs-focus.vs-up { background:color-mix(in srgb, var(--accent) 8%, transparent); }
 .vs-focus.vs-down { background:color-mix(in srgb, var(--warn) 8%, transparent); }
+/* Histórico do Focus abaixo da tabela: um gráfico por indicador, duas colunas no computador */
+.focus-hist h3 { margin:0 0 4px; }
+.focus-hist > .muted { margin:0 0 12px; color:var(--mut); font-size:.85rem; }
+.focus-hist-grade { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 24px; }
+.focus-hist-item { min-width:0; }
+.focus-hist-item h4 { margin:0 0 4px; font-size:.95rem; }
+.focus-hist .ml-legend { list-style:none; margin:6px 0 8px; padding:0; display:flex; flex-wrap:wrap; gap:8px 20px; font-size:.85rem; }
+.focus-hist .ml-legend li { display:flex; align-items:center; gap:8px; }
+.focus-hist .ml-legend i { width:10px; height:10px; border-radius:2px; }
+.focus-hist .chart-access-text { min-height:1em; font-size:.8rem; color:var(--mut); }
+@media (max-width:759px) { .focus-hist-grade { grid-template-columns:1fr; } }

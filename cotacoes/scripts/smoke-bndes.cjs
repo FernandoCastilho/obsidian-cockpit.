@@ -194,7 +194,8 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.equal(await p.locator('details.bn-src', { hasText: 'Definição' }).getAttribute('open'), null)
       await noOverflow()
       // indexadores TR, TBF e TLP moram só em Cenários › Indexadores (não repetem em Juros); a TLP aponta para o histórico na aba BNDES
-      await p.goto(base + '/#juros'); await p.locator('.desk-panel').first().waitFor({ state: 'attached' }); await p.waitForLoadState('networkidle')
+      // sem 'networkidle': as consultas periódicas de cotações mantêm a rede ocupada e estouravam o tempo no CI
+      await p.goto(base + '/#juros'); await p.locator('.desk-panel').first().waitFor({ state: 'attached' }); await p.locator('.executive-rates__table').first().waitFor()
       assert.equal(await p.locator('.idx-table').count(), 0, 'Juros não traz mais os indexadores')
       await p.goto(base + '/#cenarios/indexadores'); await p.locator('.idx-table').waitFor()
       assert.equal(await p.locator('.idx-table').count(), 1)
