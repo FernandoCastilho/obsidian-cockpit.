@@ -4,6 +4,7 @@ import { onRefresh } from './refreshBus.js'
 import { Aviso } from './Avisos.jsx'
 import { useEffect, useState } from 'react'
 import { FOCUS_MARK, INDICATORS, INSTITUTIONS, compareToFocus, scenarioValue } from './scenarios.js'
+import FocusHistorico from './FocusHistorico.jsx'
 
 const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value ?? '') ? value.split('-').reverse().join('/') : 'data não informada'
 const format = (value) => value === null ? '—' : value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -27,7 +28,7 @@ export default function Projecoes({ macro }) {
     <section className="scenarios" aria-labelledby="scenarios-heading">
       <div className="history-head">
         <h2 id="scenarios-heading">Cenário econômico</h2>
-        <RefreshButton files={['cenarios.json', 'macro.json']} label="Cenário econômico" />
+        <RefreshButton files={['cenarios.json', 'macro.json', 'focus-history.json']} label="Cenário econômico" />
         <label className="scenario-year">Ano <select value={year} onChange={(event) => setYear(event.target.value)} aria-label="Ano das projeções">
           <option value="2026">2026</option><option value="2027">2027</option>
         </select></label>
@@ -62,6 +63,7 @@ export default function Projecoes({ macro }) {
         </Aviso>
           {failed && <p role="status">Não foi possível carregar as projeções dos bancos.</p>}
       </article>
+      <article className="chart"><FocusHistorico /></article>
     </section>
   )
 }

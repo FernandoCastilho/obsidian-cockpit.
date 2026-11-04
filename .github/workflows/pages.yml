@@ -48,6 +48,12 @@ jobs:
         if: github.event.schedule == '30 11 * * 1,2'
         run: node scripts/refresh-scenarios.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"
         timeout-minutes: 5
+      - name: Histórico do Focus (52 semanas; de hora em hora só preserva o publicado)
+        run: node scripts/fetch-focus-history.mjs
+        continue-on-error: true
+        timeout-minutes: 3
+        env:
+          FOCUS_WEEKLY: ${{ github.event.schedule == '30 11 * * 1,2' }}
       - name: Coletar notícias
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-news.mjs

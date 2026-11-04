@@ -295,8 +295,19 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.route('**/cenarios.json*', (r) => r.fulfill({ json: { institutions: [
         { name: 'Itaú BBA', date: '2026-10-20', years: { 2026: { pib: 2.8, ipca: 4.2, selic: 14.25, usd: 5.4 } } },
         { name: 'Bradesco', date: '2026-10-20', years: { 2026: { pib: 2.5, ipca: 4.5 } } }] } }))
+      const semana = (i) => new Date(Date.now() - i * 7 * 864e5).toISOString().slice(0, 10)
+      const serieFocus = (base, passo) => Array.from({ length: 52 }, (_, i) => ({ d: semana(51 - i), v: +(base + i * passo).toFixed(2) }))
+      const focusHist = { schemaVersion: 1, generatedAt: new Date().toISOString(), semanas: 52, anos: ['2026', '2027'], stale: false, error: null, series: { Selic: { 2026: serieFocus(11, 0.03), 2027: serieFocus(9.5, 0.02) }, IPCA: { 2026: serieFocus(3.8, 0.015), 2027: serieFocus(3.5, 0.01) }, PIB: { 2026: serieFocus(2.1, -0.01), 2027: serieFocus(1.8, 0) }, Câmbio: { 2026: serieFocus(5.6, -0.006), 2027: serieFocus(5.7, -0.004) } } }
+      await p.route('**/focus-history.json*', (r) => r.fulfill({ json: focusHist }))
       await p.goto(base + '/#cenarios/projecoes')
       const sc = p.locator('.scenario-table'); await sc.waitFor()
+      // histórico do Focus abaixo da tabela: 4 gráficos (PIB, IPCA, Selic, USD), 2 linhas cada (2026 e 2027), legenda com os anos
+      const foc = p.locator('.focus-hist'); await foc.locator('.ml-svg').first().waitFor()
+      assert.equal(await foc.locator('.focus-hist-item').count(), 4)
+      assert.equal(await foc.locator('.ml-line').count(), 8)
+      assert.match(await foc.locator('.ml-legend').first().innerText(), /2026[\s\S]*2027/)
+      const tabelaBox = await sc.boundingBox(), focBox = await foc.boundingBox()
+      assert.ok(focBox.y > tabelaBox.y, 'histórico abaixo da tabela')
       const rowOf = (name) => sc.locator('tbody tr', { hasText: name }).first()
       await rowOf('PIB').locator('.fm').first().waitFor()
       assert.equal(await rowOf('PIB').getByRole('img', { name: 'acima do Focus' }).count(), 1, 'Itaú acima no PIB')
