@@ -22,6 +22,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   const news = useNews()
   const reforma = useDataFile('reforma-tributaria.json')
   const temas = useDataFile('temas.json')
+  const heavy = useDataFile('heavy-vehicles.json')
   const insumosPrecos = useDataFile('insumos-precos.json')
   const indices = useDataFile('indices.json')
   const policy = useDataFile('policy-rates.json')
@@ -40,7 +41,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   const calendar = useDataFile('calendar.json')
   const ipcaGroups = useDataFile('ipca-groups.json')
   const freightJp = useDataFile('freight-jp.json')
-  const resources = { macro, curves, news, 'reforma-tributaria': reforma, temas, 'insumos-precos': insumosPrecos, indices, policy, oil, indexadores, commodities, 'commodities-brl': commoditiesBrl, fuels, freight, bndes, moedas, ipca, estr, 'euro-curve': euroCurve, divida, calendar, 'ipca-groups': ipcaGroups, 'freight-jp': freightJp }
+  const resources = { 'heavy-vehicles':heavy, macro, curves, news, 'reforma-tributaria': reforma, temas, 'insumos-precos': insumosPrecos, indices, policy, oil, indexadores, commodities, 'commodities-brl': commoditiesBrl, fuels, freight, bndes, moedas, ipca, estr, 'euro-curve': euroCurve, divida, calendar, 'ipca-groups': ipcaGroups, 'freight-jp': freightJp }
   const rows = dataStatus(
     [
       { key: 'quotes', label: `Câmbio${quotesVia ? ` · ${quotesVia === 'central' ? 'coleta central' : quotesVia === 'direto' ? 'consulta direta' : 'fonte reserva'}` : ''}`, at: quotesAt ? new Date(quotesAt).getTime() : null, maxAge: centralMaxAge(), weekdays: false },
@@ -48,6 +49,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
       { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: ATRASO_H.curves * H, weekdays: true },
       { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: ATRASO_H.news * H, weekdays: true },
       { key: 'reforma-tributaria', label: 'Reforma tributária (matérias da semana)', at: reforma.data?.generatedAt, maxAge: ATRASO_H['reforma-tributaria'] * H, weekdays: true },
+      { key:'heavy-vehicles',label:'Veículos pesados (ANFAVEA, publicação mensal)',at:heavy.data?.generatedAt,maxAge:ATRASO_H['heavy-vehicles'] * H,weekdays:true },
       { key: 'temas', label: 'Setores e insumos (matérias da semana)', at: temas.data?.generatedAt, maxAge: ATRASO_H.temas * H, weekdays: true },
       { key: 'insumos-precos', label: 'Cobre: preço diário aproximado (COMEX)', at: insumosPrecos.data?.generatedAt, maxAge: ATRASO_H['insumos-precos'] * H, weekdays: true },
       { key: 'indices', label: 'Ibovespa (fechamento diário)', at: indices.data?.generatedAt, maxAge: ATRASO_H.indices * H, weekdays: true },

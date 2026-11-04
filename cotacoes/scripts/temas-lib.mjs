@@ -12,6 +12,11 @@ export const TEMAS = [
     queries: ['indústria brasileira produção industrial', 'indústria PMI Brasil CNI Anfavea', 'indústria custos juros dólar exportação', 'siderurgia petroquímica montadoras produção Brasil'],
     termos: re('ind[úu]stria|industrial|f[áa]brica|montadora|siderurg|petroqu[íi]m|Anfavea|\\bCNI\\b|Abimaq|Abiquim|Fiesp|manufatur'),
     contexto: re('produ[çc][ãa]o|PMI|custo|demanda|vendas|exporta|importa|juros|d[óo]lar|tarifa|emprego|investimento|queda|alta|cresc|capacidade|estoque') },
+  { id: 'veiculos-pesados', grupo:'setor',label:'Veículos pesados',
+    queries:['ANFAVEA caminhões ônibus produção emplacamento exportação','veículos pesados caminhões mercado financiamento Brasil','caminhões ônibus vendas Brasil renovação frota'],
+    termos:re('caminh[õo]es|caminh[ãa]o|[ôo]nibus|ve[íi]culos? pesad'),
+    contexto:re('emplac|licenciam|produ[çc][ãa]o|exporta|vendas|financia|mercado|frota|montadora|Anfavea|Fenabrave'),
+    excluir:re('acidente|colis[ãa]o|atropel|assalto|roubo|morre|morto') },
   { id: 'comercio', grupo: 'setor', label: 'Comércio e consumo',
     queries: ['varejo vendas comércio Brasil', 'consumo das famílias confiança do consumidor', 'vendas no varejo IBGE CNC', 'supermercados e-commerce vendas Black Friday'],
     termos: re('varejo|com[ée]rcio|consumo|consumidor|lojista|supermercad|e-commerce|Abras|\\bCNC\\b|Black Friday'),
@@ -101,7 +106,7 @@ export const TEMAS = [
     contexto: re('EUA|Estados Unidos|americana?s?|Trump|midterms?|republican|democrat|Congresso|Senado|C[âa]mara|Casa Branca|Wall Street|Treasur') },
 ]
 export const TEMA_IDS = TEMAS.map((t) => t.id)
-export const relevanteTema = (tema, title) => tema.termos.test(title) && (!tema.contexto || tema.contexto.test(title))
+export const relevanteTema = (tema, title) => (!tema.excluir || !tema.excluir.test(title)) && tema.termos.test(title) && (!tema.contexto || tema.contexto.test(title))
 
 export function temasFile(porTema, now, { stale = false, errors = [] } = {}) {
   return { schemaVersion: 1, generatedAt: now, windowDays: WINDOW_DAYS, stale, errors, temas: Object.fromEntries(TEMAS.map((t) => [t.id, { label: t.label, grupo: t.grupo, items: porTema[t.id] ?? [] }])) }

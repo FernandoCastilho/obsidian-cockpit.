@@ -2,6 +2,7 @@
 // `commodity`: ids do arquivo commodities.json (Pink Sheet/EIA); `daily`: id em insumos-precos.json (preço diário aproximado).
 export const SETORES = [
   { id: 'industria', grupo: 'Produção e consumo', label: 'Indústria' },
+  { id: 'veiculos-pesados', grupo: 'Produção e consumo', label: 'Veículos pesados' },
   { id: 'comercio', grupo: 'Produção e consumo', label: 'Comércio e consumo' },
   { id: 'servicos', grupo: 'Serviços', label: 'Serviços' },
   { id: 'telecom', grupo: 'Serviços', label: 'Internet e telecom' }, // IBGE: informação e comunicação é serviço
