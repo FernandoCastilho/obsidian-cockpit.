@@ -136,7 +136,7 @@ export default function FinameMateriais({ onBack }) {
             <div className="seg" role="group" aria-labelledby="fm-sis-l">
               {SISTEMAS.map((s) => <button key={s.id} type="button" aria-pressed={sistema === s.id} onClick={() => setSistema(s.id)}>{s.label}</button>)}
             </div>
-            <p className="cx-hint">{sis.hint}; parcelas mensais após a carência.</p>
+            <p className="cx-hint">{sistema === 'price' && custo === 'tlp' ? 'parcelas iguais em termos reais: crescem com o IPCA' : sis.hint}; parcelas mensais após a carência.</p>
           </div>
           <div className="cx-field">
             <span className="cx-label" id="fm-per-l">Juros na carência</span>
