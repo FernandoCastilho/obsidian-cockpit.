@@ -10,9 +10,8 @@ export function SearchHighlight({ text, query }) {
 const stamp = t => t ? new Date(t).toLocaleString('pt-BR', {timeZone:'America/Sao_Paulo'}) : 'referência não informada'
 export default function GlobalSearch({ onNavigate }) {
   const [open,setOpen]=useState(false), [query,setQuery]=useState(''), [docs,setDocs]=useState([]), [sources,setSources]=useState([]), [pending,setPending]=useState(false), [attempt,setAttempt]=useState(0), [limit,setLimit]=useState(60), [staticError,setStaticError]=useState(false)
-  const dialog=useRef(null), input=useRef(null), trigger=useRef(null), previousFocus=useRef(null)
+  const dialog=useRef(null), input=useRef(null), previousFocus=useRef(null)
   const deferred=useDeferredValue(query)
-  const show=()=>{if(document.querySelector('dialog:modal, [role="dialog"][aria-modal="true"]:not(dialog)'))return;previousFocus.current=document.activeElement;setOpen(true)}
   const close=()=>setOpen(false)
   useEffect(()=>{
     const key=e=>{if(isSearchShortcut(e) && (!document.querySelector('dialog:modal, [role="dialog"][aria-modal="true"]:not(dialog)') || dialog.current?.open)){e.preventDefault();if(dialog.current?.open)input.current?.focus();else{previousFocus.current=document.activeElement;setOpen(true)}}}
@@ -20,10 +19,10 @@ export default function GlobalSearch({ onNavigate }) {
     return()=>document.removeEventListener('keydown',key)
   },[])
   useEffect(()=>{
-    const el=dialog.current, triggerElement=trigger.current
+    const el=dialog.current
     if(!open){if(el.open)el.close();return}
     el.showModal();input.current?.focus();const overflow=document.body.style.overflow;document.body.style.overflow='hidden'
-    return()=>{if(el.open)el.close();document.body.style.overflow=overflow;const back=previousFocus.current?.isConnected ? previousFocus.current : triggerElement;back?.focus({preventScroll:true})}
+    return()=>{if(el.open)el.close();document.body.style.overflow=overflow;const back=previousFocus.current?.isConnected ? previousFocus.current : null;back?.focus({preventScroll:true})}
   },[open])
   useEffect(()=>{
     if(!open)return
@@ -51,7 +50,7 @@ export default function GlobalSearch({ onNavigate }) {
   const failed=sources.filter(s=>!s.ok), stale=sources.filter(s=>s.stale), limited=sources.filter(s=>s.limited)
   const choose=d=>{setOpen(false);onNavigate(d,query)}
   return <>
-    <button ref={trigger} type="button" className="global-search-trigger" aria-label="Buscar em todo o painel" aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" onClick={show} title="Buscar em todo o painel · Ctrl+Shift+F"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span>Buscar</span></button>
+
     {createPortal(<dialog ref={dialog} className="global-search-dialog" aria-labelledby="global-search-heading" onKeyDown={e=>{if(e.key==='Escape' && !e.isComposing){e.preventDefault();e.stopPropagation();close()}}} onCancel={e=>{e.preventDefault();close()}} onClose={()=>{if(!dialog.current?.open)setOpen(false)}} onClick={e=>{if(e.target===dialog.current && (e.clientX<e.currentTarget.getBoundingClientRect().left || e.clientX>e.currentTarget.getBoundingClientRect().right || e.clientY<e.currentTarget.getBoundingClientRect().top || e.clientY>e.currentTarget.getBoundingClientRect().bottom))close()}}>
       <div className="global-search-head"><h2 id="global-search-heading">Buscar no painel</h2><button type="button" className="btn" onClick={close} aria-label="Fechar busca">Fechar</button></div>
       <label className="global-search-field">Palavra ou expressão<input ref={input} type="search" value={query} onChange={e=>{setQuery(e.target.value);setLimit(60)}} autoComplete="off" spellCheck={false} placeholder="Ex.: inadimplência, FIDC, inflação" aria-describedby="global-search-scope" /></label>

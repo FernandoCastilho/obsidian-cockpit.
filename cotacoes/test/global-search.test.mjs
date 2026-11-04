@@ -52,3 +52,14 @@ test('credit, BNDES and Focus results retain exact portfolio, series and forecas
  const f=indexSearchData('focus-history.json',{generatedAt:1,series:{Selic:{2027:[{d:'2026-11-01',v:10}]}}},'cenarios/projecoes','Focus').docs[0]
  assert.equal(f.context.year,'2027');assert.ok(searchDocuments([f],'Selic 2027').length)
 })
+
+test('Configurações e metadados ficam fora de todas as camadas da busca',async()=>{
+ const index=await buildSearchIndex()
+ assert.ok(index.documents.every(d=>!d.route.startsWith('config')))
+ assert.ok(Object.values(index.glossaryRoutes).every(r=>!r.startsWith('config')))
+ assert.ok(SEARCH_SOURCES.every(([,route])=>!route.startsWith('config')))
+ const privateDoc=makeSearchDoc({id:'config-probe',title:'Termo exclusivo privado',body:'metadado secreto de fonte',route:'config/base-dados'})
+ assert.deepEqual(searchDocuments([privateDoc],'exclusivo'),[])
+ assert.deepEqual(indexSearchData('acessos.json',{title:'Termo exclusivo privado'},'config','Acessos').docs,[])
+ assert.equal(plainContent({title:'público',sources:[{title:'metadado secreto de fonte'}],route:'config/base-dados'}),'público')
+})

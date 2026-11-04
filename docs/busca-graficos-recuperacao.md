@@ -64,3 +64,6 @@ O run 41813184848 pertence à PR #282, não a esta entrega: test-build passou e 
 - Regressões dos fluxos anteriores de Brent, BNDES, IPCA, fiscal e frete.
 - Lint sem erros; avisos existentes de dependências de hooks. Detector mecânico de UI não apresentou achados.
 - Capturas em `qa-universal/` no checkout e nos artefatos de QA. CI e deploy desta entrega são conferidos pela PR #284; não confundir com o CI da versão-base.
+
+
+Atualização de acesso: a busca abre somente por Ctrl+Shift+F. O botão flutuante foi removido a pedido do usuário; dispositivos sem teclado físico não dispõem de acionador. Configurações, Base de dados, Novidades e Acessos foram retirados do catálogo, da coleta para pesquisa e dos resultados, com filtro adicional por rota. O conteúdo dessas áreas permanece acessível pela navegação normal.

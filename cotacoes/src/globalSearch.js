@@ -2,7 +2,7 @@ import { GROUPS } from './moedas.js'
 import { creditStats } from './inadimplencia.js'
 // Pesquisa local: não lê campos, armazenamento pessoal ou páginas de terceiros.
 export const normalizeSearch = text => String(text ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR')
-export const SEARCH_SECTIONS = { resumo:'Mercado hoje', juros:'Juros', cenarios:'Cenários', noticias:'Notícias', bndes:'BNDES', setores:'Setores', calculadora:'Calculadoras', feriados:'Feriados', aprender:'Aprender', config:'Configurações' }
+export const SEARCH_SECTIONS = { resumo:'Mercado hoje', juros:'Juros', cenarios:'Cenários', noticias:'Notícias', bndes:'BNDES', setores:'Setores', calculadora:'Calculadoras', feriados:'Feriados', aprender:'Aprender' }
 export const SEARCH_SOURCES = [
   ['quotes.json','resumo','Cotações de câmbio'], ['history.json','resumo','Histórico de câmbio'], ['intraday.json','resumo','Câmbio intradiário'],
   ['macro.json','juros','Juros e projeções'], ['curves.json','juros','Curvas de juros'], ['curves-history.json','juros','Histórico das curvas'],
@@ -16,9 +16,9 @@ export const SEARCH_SOURCES = [
   ['ipca.json','cenarios/inflacao','IPCA'], ['ipca-groups.json','cenarios/inflacao','IPCA por grupos'], ['divida.json','cenarios/fiscal','Dívida bruta'],
   ['indexadores.json','cenarios/indexadores','Indexadores'], ['bndes.json','bndes','Taxas do BNDES'], ['moedas.json','bndes/moedas','Moedas contratuais'],
   ['policy-rates.json','juros','Taxas dos bancos centrais'], ['estr.json','juros','Taxa €STR'], ['euro-curve.json','juros','Curva de juros do euro'],
-  ['feriados.json','feriados','Feriados'], ['acessos.json','config','Acessos agregados ao app'], ['recado.json','resumo','Recado publicado'], ['insumos-precos.json','setores/cobre','Preços de insumos'], ['indices.json','resumo','Índices de mercado'],
+  ['feriados.json','feriados','Feriados'], ['recado.json','resumo','Recado publicado'], ['insumos-precos.json','setores/cobre','Preços de insumos'], ['indices.json','resumo','Índices de mercado'],
 ]
-const OMIT = /^(?:link|url|sourceUrl|sourceURL|api|pagina|error|stack|trace|token|password|secret|id|key|code|schemaVersion|schema|generatedAt|updatedAt|checkedAt|lastSuccessAt|t)$/i
+const OMIT = /^(?:source|sources|fonte|fontes|route|rota|link|url|sourceUrl|sourceURL|api|pagina|error|stack|trace|token|password|secret|id|key|code|schemaVersion|schema|generatedAt|updatedAt|checkedAt|lastSuccessAt|t)$/i
 export function plainContent(value, key = '') {
   if (key==='t' && typeof value==='number' && Number.isFinite(value) && value>0) return new Date(value).toISOString()
   if (/token|password|secret|session|email/i.test(key) || OMIT.test(key) || value == null || typeof value === 'boolean') return ''
@@ -33,6 +33,7 @@ export function makeSearchDoc({ id, title, body, route, ...rest }) {
 }
 // Named records retain their own context, route and snapshot. No HTML is interpreted.
 export function indexSearchData(file, data, route, label) {
+  if (!SEARCH_SECTIONS[route.split('/')[0]]) return {docs:[],limited:false}
   if (!data || Array.isArray(data) || typeof data !== 'object') throw new Error('Formato indisponível')
   const docs = [], stamp = data.generatedAt || data.updatedAt || null
   if(file==='focus-history.json' && data.series) {
@@ -79,7 +80,7 @@ export function searchDocuments(docs, query) {
   const q = normalizeSearch(query).trim(), tokens = [...new Set(q.split(/\s+/).filter(Boolean))]
   if (q.length < 2) return []
   const seen=new Set()
-  return docs.filter(d=>{const key=d.route+'|'+d.titleNormalized+'|'+d.body;if(seen.has(key))return false;seen.add(key);return tokens.every(t=>d.normalized.includes(t))}).map(d=>({...d, score:(d.titleNormalized === q ? 100 : d.titleNormalized.includes(q) ? 30 : 0) + tokens.filter(t=>d.titleNormalized.includes(t)).length * 5 + (d.kind==='Conceito' ? 2 : 0)})).sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title,'pt-BR'))
+  return docs.filter(d=>{if(!SEARCH_SECTIONS[d.route?.split('/')[0]])return false;const key=d.route+'|'+d.titleNormalized+'|'+d.body;if(seen.has(key))return false;seen.add(key);return tokens.every(t=>d.normalized.includes(t))}).map(d=>({...d, score:(d.titleNormalized === q ? 100 : d.titleNormalized.includes(q) ? 30 : 0) + tokens.filter(t=>d.titleNormalized.includes(t)).length * 5 + (d.kind==='Conceito' ? 2 : 0)})).sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title,'pt-BR'))
 }
 export function highlightParts(text, query) {
   const tokens = [...new Set(normalizeSearch(query).trim().split(/\s+/).filter(Boolean))]
