@@ -71,12 +71,12 @@ jobs:
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
       - uses: actions/setup-python@v5
-        if: env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
+        if: github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
         continue-on-error: true
         with:
           python-version: '3.12'
       - name: Preparar leitura dos comunicados oficiais em PDF
-        if: env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
+        if: github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
         continue-on-error: true
         run: python -m pip install -r scripts/requirements-policy.txt
       - name: Coletar juros de política monetária (Fed, BCE, BoE e BoJ)
@@ -179,6 +179,9 @@ jobs:
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-calendar.mjs
         timeout-minutes: 3
+      - name: Coletar veículos pesados (Carta mensal da ANFAVEA)
+        if: github.event.schedule != '30 11 * * 1,2'
+        run: node scripts/fetch-heavy-vehicles.mjs
       - name: Coletar inadimplência PF e PJ (Banco Central)
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-inadimplencia.mjs

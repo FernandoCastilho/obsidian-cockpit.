@@ -1,3 +1,4 @@
+import HeavyVehicles from './HeavyVehicles.jsx'
 import { useMemo } from 'react'
 import { Panel } from './TerminalDesk.jsx'
 import NoticiasPorDia from './NoticiasPorDia.jsx'
@@ -52,7 +53,8 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
           <button key={k} type="button" className={secao === k ? 'on' : ''} aria-current={secao === k ? 'true' : undefined} onClick={() => secao !== k && onView(first)}>{label}</button>
         ))}
       </nav>
-      <Panel title={secao === 'insumos' ? 'Insumos e matérias-primas' : 'Setores da economia'} tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={secao === 'insumos' ? ['temas.json', 'commodities.json', 'insumos-precos.json'] : ['temas.json']}>
+      <Panel title={secao === 'insumos' ? 'Insumos e matérias-primas' : 'Setores da economia'} tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={id==='veiculos-pesados' ? ['temas.json','heavy-vehicles.json'] : secao === 'insumos' ? ['temas.json', 'commodities.json', 'insumos-precos.json'] : ['temas.json']}>
+        {id==='veiculos-pesados' && <><HeavyVehicles/><div className="setor-cols"><section aria-label="O que move o setor"><h3>O que move o setor</h3><ul><li>Frete, utilização da frota, safra, infraestrutura e atividade econômica.</li><li>Juros, prazo de financiamento, diesel, manutenção e câmbio dos componentes.</li><li>Renovação da frota, encomendas de ônibus e regras de emissões.</li></ul></section><section aria-label="Ficha da visita"><h3>Ficha da visita</h3><ul><li>A compra amplia a frota ou substitui veículos? Qual a utilização e a receita por veículo?</li><li>Qual a necessidade de entrada, carência, prazo e capital de giro até o veículo gerar caixa?</li><li>Como diesel, manutenção, seguro e reajustes do frete afetam a margem?</li></ul></section></div></>}
         {insumo && (
           <div className="setor-insumo">
             {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} usdLabel={usdLabel} diario={serie} />) : comm.status === 'loading' ? <Estado>Carregando o preço…</Estado> : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
