@@ -20,6 +20,12 @@ export const COMMODITIES = [
   { id: 'coffee', label: 'Café arábica', unit: 'US¢/libra-peso', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Arábica • indicador da ICO', decimals: 2 },
   { id: 'urea', label: 'Ureia', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Fertilizante nitrogenado • spot' },
   { id: 'dap', label: 'DAP (fosfato)', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Fosfato diamônico • spot' },
+  // Itens da apresentação ao cliente (alimentos, confecção, proteína animal, siderurgia).
+  { id: 'wheat', label: 'Trigo', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'US HRW • FOB Golfo EUA' },
+  { id: 'beef', label: 'Carne bovina', unit: 'USD/kg', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Carne desossada • importação EUA (Austrália/NZ)', decimals: 2 },
+  { id: 'cotton', label: 'Algodão', unit: 'US¢/libra-peso', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Cotlook A Index', decimals: 2 },
+  { id: 'coal', label: 'Carvão', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'Térmico • Austrália • FOB Newcastle' },
+  { id: 'cocoa', label: 'Cacau', unit: 'USD/kg', nature: 'média mensal', sourceName: 'Banco Mundial • Pink Sheet', sourceUrl: PINK_PAGE_URL, benchmark: 'ICCO • média diária', decimals: 2 },
 ]
 const meta = id => COMMODITIES.find(c => c.id === id)
 // Séries diárias da EIA: página, título esperado (barreira contra mudança de série/unidade).
@@ -109,6 +115,7 @@ export function parsePinkRows(rows, sourceUrl, now = new Date()) {
     ['iron-ore', 'Iron ore, cfr spot', ['($/dmtu)', '($/dmt)'], 1, true], ['soybeans', 'Soybeans', ['($/mt)'], 1, true], ['corn', 'Maize', ['($/mt)'], 1, true], ['gold', 'Gold', ['($/troy oz)'], 1, true],
     ['copper', 'Copper', ['($/mt)'], 1, false], ['aluminum', 'Aluminum', ['($/mt)'], 1, false], ['sugar', 'Sugar, world', ['($/kg)'], CENTS_PER_LB, false], ['coffee', 'Coffee, Arabica', ['($/kg)'], CENTS_PER_LB, false],
     ['urea', 'Urea', ['($/mt)'], 1, false], ['dap', 'DAP', ['($/mt)'], 1, false],
+    ['wheat', 'Wheat, US HRW', ['($/mt)'], 1, false], ['beef', 'Beef', ['($/kg)'], 1, false], ['cotton', 'Cotton, A Index', ['($/kg)'], CENTS_PER_LB, false], ['coal', 'Coal, Australian', ['($/mt)'], 1, false], ['cocoa', 'Cocoa', ['($/kg)'], 1, false],
   ]
   const dated = rows.filter(r => /^\d{4}M(?:0[1-9]|1[0-2])$/.test(r.A ?? '')).sort((a,b) => a.A.localeCompare(b.A))
   if (!dated.length || new Set(dated.map(r => r.A)).size !== dated.length) throw new Error('Banco Mundial: competências ausentes/duplicadas')

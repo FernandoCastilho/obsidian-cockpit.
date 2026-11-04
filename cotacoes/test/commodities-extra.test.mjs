@@ -24,15 +24,16 @@ test('EIA diária rejeita série ou unidade trocada e URL de outra série', () =
 })
 const pink = () => [
   { A: 'World Bank Commodity Price Data (The Pink Sheet)' }, { A: 'monthly prices in nominal US dollars, 1960 to present' }, { A: 'Updated on October 02, 2026' },
-  { B: 'Iron ore, cfr spot', C: 'Soybeans', D: 'Maize', E: 'Gold', F: 'Sugar, world', G: 'Coffee, Arabica', H: 'Copper', I: 'Urea ', J: 'DAP', K: 'Aluminum' },
-  { B: '($/dmtu)', C: '($/mt)', D: '($/mt)', E: '($/troy oz)', F: '($/kg)', G: '($/kg)', H: '($/mt)', I: '($/mt)', J: '($/mt)', K: '($/mt)' },
-  { A: '2026M08', B: '96.3', C: '482', D: '224', E: '4411', F: '0.40', G: '9.00', H: '9800', I: '420', J: '700', K: '2500' },
-  { A: '2026M09', B: '97.7', C: '524', D: '239.6', E: '4319', F: '0.42', G: '9.50', H: '10100', I: '430', J: '710', K: '2550' },
+  { B: 'Iron ore, cfr spot', C: 'Soybeans', D: 'Maize', E: 'Gold', F: 'Sugar, world', G: 'Coffee, Arabica', H: 'Copper', I: 'Urea ', J: 'DAP', K: 'Aluminum', L: 'Wheat, US HRW', M: 'Beef', N: 'Cotton, A Index', O: 'Coal, Australian', P: 'Cocoa' },
+  { B: '($/dmtu)', C: '($/mt)', D: '($/mt)', E: '($/troy oz)', F: '($/kg)', G: '($/kg)', H: '($/mt)', I: '($/mt)', J: '($/mt)', K: '($/mt)', L: '($/mt)', M: '($/kg)', N: '($/kg)', O: '($/mt)', P: '($/kg)' },
+  { A: '2026M08', B: '96.3', C: '482', D: '224', E: '4411', F: '0.40', G: '9.00', H: '9800', I: '420', J: '700', K: '2500', L: '230', M: '6.1', N: '1.60', O: '110', P: '5.8' },
+  { A: '2026M09', B: '97.7', C: '524', D: '239.6', E: '4319', F: '0.42', G: '9.50', H: '10100', I: '430', J: '710', K: '2550', L: '235', M: '6.3', N: '1.65', O: '115', P: '6.0' },
 ]
 const url = 'https://thedocs.worldbank.org/en/doc/example/related/CMO-Historical-Data-Monthly.xlsx'
 test('Pink Sheet: açúcar e café saem em US¢/libra-peso; cobre e fertilizantes em USD/tonelada', () => {
   const r = Object.fromEntries(parsePinkRows(pink(), url, now).map(c => [c.id, c]))
-  assert.deepEqual(Object.keys(r).sort(), ['aluminum', 'coffee', 'copper', 'corn', 'dap', 'gold', 'iron-ore', 'soybeans', 'sugar', 'urea'])
+  assert.deepEqual(Object.keys(r).sort(), ['aluminum', 'beef', 'coal', 'cocoa', 'coffee', 'copper', 'corn', 'cotton', 'dap', 'gold', 'iron-ore', 'soybeans', 'sugar', 'urea', 'wheat'])
+  assert.equal(r.wheat.value, 235); assert.equal(r.beef.value, 6.3); assert.equal(r.beef.unit, 'USD/kg'); assert.ok(Math.abs(r.cotton.value - 1.65 * CENTS_PER_LB) < 1e-9); assert.equal(r.coal.value, 115); assert.equal(r.cocoa.value, 6)
   assert.ok(Math.abs(r.sugar.value - 0.42 * CENTS_PER_LB) < 1e-9); assert.equal(r.sugar.unit, 'US¢/libra-peso'); assert.ok(r.sugar.value > 15 && r.sugar.value < 25)
   assert.ok(Math.abs(r.coffee.previousValue - 9 * CENTS_PER_LB) < 1e-9)
   assert.equal(r.copper.value, 10100); assert.equal(r.aluminum.value, 2550); assert.equal(r.urea.value, 430)

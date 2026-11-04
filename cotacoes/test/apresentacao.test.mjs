@@ -23,10 +23,11 @@ test('catálogo: todo setor tem cadeia, perguntas e itens conhecidos; os padrão
   for (const id of ITEM_IDS) if (ITENS[id].insumo) assert.ok(INSUMOS.some((i) => i.id === ITENS[id].insumo), `${id}: insumo ${ITENS[id].insumo}`)
   assert.deepEqual(TRANSVERSAIS, ['usd'])
   // montagem: padrão primeiro, depois os demais, planejados do setor por último e desligados
-  const lista = itensDaMontagem('alimentos')
-  assert.ok(lista.slice(0, itensPadrao('alimentos').length).every((i) => i.padrao))
+  const lista = itensDaMontagem('telecom')
+  assert.ok(lista.slice(0, itensPadrao('telecom').length).every((i) => i.padrao))
   assert.ok(lista.filter((i) => i.tipo === 'planejado').every((i) => !i.padrao))
-  assert.ok(lista.some((i) => i.id === 'trigo' && i.tipo === 'planejado'))
+  assert.ok(lista.some((i) => i.id === 'energia' && i.tipo === 'planejado'))
+  assert.ok(itensPadrao('alimentos').includes('trigo') && itensPadrao('agro-graos').includes('fertilizantes'))
   assert.deepEqual(parseCommand('apresentar'), { kind: 'tab', id: 'apresentar', sub: '' })
 })
 
@@ -79,7 +80,9 @@ test('dado do item: moeda com cotação e período, commodity em dólar e em rea
   assert.match(frete.frase, /Não é cotação de rota brasileira/)
   assert.equal(dadoItem(ITENS.aco, dados, seis).semSerie, ITENS.aco.semSerie)
   assert.equal(dadoItem(ITENS.soja, dados, seis).indisponivel, 'Preço indisponível no momento.')
-  assert.equal(dadoItem(ITENS.trigo, dados, seis).indisponivel, 'Coleta ainda não existe para este item.')
+  assert.equal(dadoItem(ITENS.energia, dados, seis).indisponivel, 'Coleta ainda não existe para este item.')
+  const acucar = dadoItem(ITENS.acucar, { ...dados, commodities: [{ id: 'sugar', value: 18.5, decimals: 2, period: '2026-09', benchmark: 'bruto', history: [] }] }, seis)
+  assert.equal(acucar.valorTexto, 'US¢ 18,50'); assert.equal(acucar.unidadeCurta, '/lb'); assert.match(acucar.frase, /^Açúcar a US¢ 18,50\/lb \(média de set\/2026\): sem histórico de 6 meses\.$/)
 })
 
 test('cenário, roteiro e resumo final', () => {
@@ -87,7 +90,7 @@ test('cenário, roteiro e resumo final', () => {
   assert.deepEqual(linhas.map((l) => l.key), ['selic', 'cdi', 'ipca', 'usd', 'focus-Selic', 'focus-IPCA'])
   assert.equal(linhas[0].valor, '14,25%')
   assert.equal(linhas[3].nota, '+0,30% hoje')
-  const r = montarRoteiro({ nome: 'Metalúrgica Exemplo', setorId: 'metalmecanica', itens: ['usd', 'minerio', 'aco', 'trigo'], periodo: seis }, dados)
+  const r = montarRoteiro({ nome: 'Metalúrgica Exemplo', setorId: 'metalmecanica', itens: ['usd', 'minerio', 'aco', 'energia'], periodo: seis }, dados)
   assert.deepEqual(r.map((s) => s.kind), ['capa', 'cenario', 'cadeia', 'item', 'item', 'item', 'agenda', 'perguntas', 'fim'])
   assert.equal(r[0].nome, 'Metalúrgica Exemplo')
   assert.equal(r[3].manchetes.length, 2)

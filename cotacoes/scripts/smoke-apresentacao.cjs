@@ -38,8 +38,8 @@ const out = process.env.SMOKE_OUT || '/tmp'
       const marcados = await p.locator('.apr-itens button[aria-pressed="true"]').allInnerTexts()
       assert.deepEqual(marcados.map((t) => t.split(' ·')[0]), ['Dólar', 'Aço', 'Cobre', 'Alumínio', 'Euro', 'Minério de ferro'])
       // planejados ficam desligados
-      await p.getByRole('button', { name: 'Siderurgia e mineração' }).click()
-      assert.ok(await p.locator('.apr-itens button', { hasText: 'Carvão' }).isDisabled())
+      await p.getByRole('button', { name: 'Telecom e data center' }).click()
+      assert.ok(await p.locator('.apr-itens button', { hasText: 'Energia elétrica' }).isDisabled())
       await p.getByRole('button', { name: 'Metalmecânica e equipamentos' }).click()
       // tira o euro, deixa 5 itens
       await p.locator('.apr-itens button', { hasText: 'Euro' }).click()

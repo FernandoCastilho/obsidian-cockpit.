@@ -22,15 +22,15 @@ export const ITENS = {
   milho: { id: 'milho', label: 'Milho', tipo: 'commodity', commodity: 'corn', unidade: 't', move: ['Safra e clima (EUA, Brasil, Argentina) e estoques finais do USDA.', 'Demanda por ração (proteína animal) e por etanol de milho.', 'Dólar e frete interno; a segunda safra brasileira pesa no preço local.'] },
   ouro: { id: 'ouro', label: 'Ouro', tipo: 'commodity', commodity: 'gold', unidade: 'oz', move: ['Juros reais nos EUA e dólar: juro baixo e dólar fraco favorecem o ouro.', 'Compras de bancos centrais e busca por proteção em crises.'] },
   frete: { id: 'frete', label: 'Frete marítimo', tipo: 'frete', move: ['Oferta de navios e contêineres contra a demanda do comércio global.', 'Rotas: Mar Vermelho, Canal do Panamá e congestionamento em portos.', 'Preço do combustível marítimo (bunker), ligado ao petróleo.'] },
+  trigo: { id: 'trigo', label: 'Trigo', tipo: 'commodity', commodity: 'wheat', tema: 'trigo', unidade: 't', move: ['Safra e clima nos EUA, na Rússia e na Argentina; o Brasil importa boa parte do que consome.', 'Dólar e frete: o trigo importado chega em US$; o nacional acompanha a paridade de importação.', 'Estoques mundiais e política de exportação da Rússia.'] },
+  acucar: { id: 'acucar', label: 'Açúcar', tipo: 'commodity', commodity: 'sugar', tema: 'acucar', unidade: 'lb', moeda: 'US¢', move: ['Mix açúcar/etanol das usinas: etanol mais rentável tira açúcar da oferta.', 'Safra no Centro-Sul, na Índia e na Tailândia; clima e monções.', 'Dólar: o açúcar é cotado em US¢/libra em Nova York; real fraco favorece a exportação.'] },
+  carne: { id: 'carne', label: 'Carne bovina', tipo: 'commodity', commodity: 'beef', tema: 'carne', unidade: 'kg', move: ['Exportação para a China e habilitações sanitárias; tarifas dos EUA.', 'Ciclo pecuário: oferta de boi gordo e preço da arroba.', 'Custo da ração (milho e farelo de soja) e dólar na receita de exportação.'] },
+  algodao: { id: 'algodao', label: 'Algodão', tipo: 'commodity', commodity: 'cotton', tema: 'algodao', unidade: 'lb', moeda: 'US¢', move: ['Safra no Brasil (Mato Grosso) e nos EUA; o Brasil virou o maior exportador.', 'Demanda têxtil na China e no Sudeste Asiático; concorrência das fibras sintéticas (petróleo).', 'Dólar: cotação em Nova York em US¢/libra.'] },
+  carvao: { id: 'carvao', label: 'Carvão', tipo: 'commodity', commodity: 'coal', tema: 'carvao', unidade: 't', move: ['Demanda de energia na China e na Índia; o Brasil importa o carvão metalúrgico da siderurgia.', 'Oferta da Austrália e da Indonésia; clima, portos e logística.', 'Preço do gás natural e política climática: carvão compete com gás na geração.'] },
+  cacau: { id: 'cacau', label: 'Cacau', tipo: 'commodity', commodity: 'cocoa', tema: 'cacau', unidade: 'kg', move: ['Safra na Costa do Marfim e em Gana (mais da metade da oferta mundial); clima e doenças das lavouras.', 'Estoques nas bolsas de Nova York e Londres; demanda da indústria de chocolate.', 'Dólar: o cacau é cotado em US$; a indústria brasileira importa parte da amêndoa.'] },
+  cafe: { id: 'cafe', label: 'Café', tipo: 'commodity', commodity: 'coffee', tema: 'cafe', unidade: 'lb', moeda: 'US¢', move: ['Safra brasileira (bienalidade, geada e seca) e do Vietnã (robusta).', 'Estoques certificados em Nova York e tarifas de importação nos EUA.', 'Dólar: cotação em US¢/libra; real fraco incentiva a exportação e sustenta o preço interno.'] },
+  fertilizantes: { id: 'fertilizantes', label: 'Fertilizantes (ureia)', tipo: 'commodity', commodity: 'urea', tema: 'fertilizantes', unidade: 't', move: ['Preço do gás natural (matéria-prima da ureia) e oferta da Rússia, da China e do Oriente Médio.', 'O Brasil importa mais de 80% do que usa: dólar e frete pesam direto no custo da safra.', 'Calendário de compra: o produtor compra antes do plantio; atraso de câmbio e logística muda o custo.'] },
   // Coletas ainda não existentes: aparecem na montagem como "em breve" e não entram no roteiro.
-  trigo: { id: 'trigo', label: 'Trigo', tipo: 'planejado' },
-  acucar: { id: 'acucar', label: 'Açúcar', tipo: 'planejado' },
-  carne: { id: 'carne', label: 'Carne bovina', tipo: 'planejado' },
-  algodao: { id: 'algodao', label: 'Algodão', tipo: 'planejado' },
-  carvao: { id: 'carvao', label: 'Carvão', tipo: 'planejado' },
-  cacau: { id: 'cacau', label: 'Cacau', tipo: 'planejado' },
-  cafe: { id: 'cafe', label: 'Café', tipo: 'planejado' },
-  fertilizantes: { id: 'fertilizantes', label: 'Fertilizantes', tipo: 'planejado' },
   energia: { id: 'energia', label: 'Energia elétrica', tipo: 'planejado' },
   incc: { id: 'incc', label: 'INCC', tipo: 'planejado' },
 }
@@ -38,12 +38,12 @@ export const ITEM_IDS = Object.keys(ITENS)
 
 // Setores: a cadeia (o que entra, o que a empresa faz, para quem vende), os itens que entram por padrão e as perguntas para a conversa.
 // A lista nasce da carteira atendida (saúde, farmoquímico, alimentos, confecção, móveis, metalmecânica, construção, telecom, varejo)
-// e cobre o restante do mercado brasileiro (agro, sucroenergético, siderurgia, automotivo, logística).
+// e cobre o restante do mercado brasileiro (agro, sucroenergético, siderurgia, automotivo, logística). A ordem dos itens é a dos slides.
 export const SETORES_APRESENTACAO = [
   { id: 'metalmecanica', grupo: 'Indústria', label: 'Metalmecânica e equipamentos', itens: ['aco', 'cobre', 'aluminio', 'usd', 'eur', 'minerio'],
     cadeia: { entradas: ['Aço e inox', 'Cobre e alumínio', 'Componentes importados (Europa, China)'], processo: 'Usinagem, montagem e integração', saidas: ['Indústria e agro', 'Exportação (ACC/ACE)', 'Projetos com BNDES/Finame'] },
     perguntas: ['Qual fatia do custo é metal e como o contrato de venda repassa a variação?', 'Há importação de componentes? Em qual moeda e com qual prazo de pagamento?', 'Exporta? Quais moedas e quais prazos de recebimento?'] },
-  { id: 'siderurgia', grupo: 'Indústria', label: 'Siderurgia e mineração', itens: ['minerio', 'carvao', 'aco', 'usd', 'cnh', 'petroleo'],
+  { id: 'siderurgia', grupo: 'Indústria', label: 'Siderurgia e mineração', itens: ['minerio', 'carvao', 'aco', 'usd', 'cnh'],
     cadeia: { entradas: ['Minério de ferro', 'Carvão metalúrgico (importado)', 'Energia e sucata'], processo: 'Redução, aciaria e laminação', saidas: ['Construção civil', 'Automotivo e máquinas', 'Exportação'] },
     perguntas: ['Contratos de venda indexados a que referência (minério 62% Fe, aço plano)?', 'Qual a exposição ao aço importado da China e às medidas antidumping?', 'Carvão e minério: compra em dólar? Há hedge?'] },
   { id: 'automotivo', grupo: 'Indústria', label: 'Automotivo e autopeças', itens: ['aco', 'aluminio', 'cobre', 'usd', 'eur'],
@@ -55,7 +55,7 @@ export const SETORES_APRESENTACAO = [
   { id: 'farmoquimico', grupo: 'Indústria', label: 'Farmoquímico e laboratorial', itens: ['usd', 'cnh', 'eur', 'petroleo', 'frete'],
     cadeia: { entradas: ['Insumos ativos e reagentes (China, Índia)', 'Solventes e energia', 'Embalagens'], processo: 'Fracionamento, síntese e distribuição', saidas: ['Farmácias magistrais', 'Indústrias e laboratórios', 'Hospitais'] },
     perguntas: ['Qual a fatia dos insumos importados e de quais países?', 'Compra em dólar com prazo? Finimp, 4131 ou pagamento à vista?', 'Como o preço de venda acompanha o câmbio: tabela mensal ou repasse imediato?'] },
-  { id: 'alimentos', grupo: 'Indústria', label: 'Alimentos e bebidas', itens: ['milho', 'soja', 'trigo', 'cacau', 'carne', 'usd'],
+  { id: 'alimentos', grupo: 'Indústria', label: 'Alimentos e bebidas', itens: ['trigo', 'milho', 'soja', 'acucar', 'cacau', 'carne', 'usd'],
     cadeia: { entradas: ['Grãos e farinhas', 'Proteína animal', 'Açúcar, cacau e embalagens'], processo: 'Processamento e distribuição', saidas: ['Varejo e atacado', 'Food service', 'Exportação'] },
     perguntas: ['Quais matérias-primas pesam mais no custo e como são compradas (safra, contrato, spot)?', 'Há exposição ao dólar nos insumos ou nas vendas?', 'Como o preço de venda ao varejo acompanha o custo? Com que defasagem?'] },
   { id: 'confeccao', grupo: 'Indústria', label: 'Confecção e têxtil', itens: ['usd', 'cnh', 'algodao', 'petroleo'],
@@ -73,16 +73,16 @@ export const SETORES_APRESENTACAO = [
   { id: 'varejo', grupo: 'Serviços e comércio', label: 'Varejo e distribuição', itens: ['usd', 'cnh', 'frete'],
     cadeia: { entradas: ['Produtos importados (China)', 'Estoque financiado', 'Frete marítimo e interno'], processo: 'Importação, distribuição e venda', saidas: ['Consumidor final', 'E-commerce e marketplaces', 'Franquias e revendas'] },
     perguntas: ['Qual fatia das compras é importada e com qual prazo de pagamento?', 'Frete marítimo: contrato fechado ou spot? Qual peso no custo?', 'Como a Selic afeta o crédito ao cliente e a inadimplência?'] },
-  { id: 'logistica', grupo: 'Serviços e comércio', label: 'Logística e transporte', itens: ['petroleo', 'frete', 'usd'],
+  { id: 'logistica', grupo: 'Serviços e comércio', label: 'Logística e transporte', itens: ['petroleo', 'frete', 'usd', 'soja', 'milho'],
     cadeia: { entradas: ['Diesel', 'Pneus, peças e veículos (Finame)', 'Mão de obra'], processo: 'Transporte e armazenagem', saidas: ['Indústria e agro', 'Varejo e e-commerce', 'Comércio exterior'] },
     perguntas: ['Os contratos de frete têm cláusula de reajuste pelo diesel?', 'Renovação de frota: Finame, leasing ou recursos próprios?', 'Há operação com cargas importadas ou exportadas? Em qual moeda?'] },
-  { id: 'agro-graos', grupo: 'Agro', label: 'Agro: grãos', itens: ['soja', 'milho', 'trigo', 'usd', 'fertilizantes', 'petroleo'],
+  { id: 'agro-graos', grupo: 'Agro', label: 'Agro: grãos', itens: ['soja', 'milho', 'trigo', 'algodao', 'fertilizantes', 'usd', 'petroleo'],
     cadeia: { entradas: ['Fertilizantes (importados)', 'Sementes e defensivos', 'Diesel e máquinas'], processo: 'Produção e comercialização da safra', saidas: ['Exportação (China)', 'Esmagamento e ração', 'Cooperativas e tradings'] },
     perguntas: ['Quanto da safra já está vendido e a que preço (em dólar ou em reais)?', 'Insumos comprados em dólar? Com qual prazo (barter, CPR)?', 'Custo de armazenagem e frete até o porto?'] },
   { id: 'agro-proteina', grupo: 'Agro', label: 'Agro: proteína animal', itens: ['carne', 'milho', 'soja', 'usd', 'cnh'],
     cadeia: { entradas: ['Milho e farelo de soja (ração)', 'Genética e sanidade', 'Energia e embalagens'], processo: 'Criação, abate e processamento', saidas: ['Exportação (China, EUA)', 'Varejo', 'Food service'] },
     perguntas: ['Qual a fatia da ração no custo e como compra o milho e a soja?', 'Exporta? Quais mercados e em qual moeda?', 'Habilitações sanitárias e dependência de um mercado comprador?'] },
-  { id: 'sucroenergetico', grupo: 'Agro', label: 'Sucroenergético', itens: ['acucar', 'petroleo', 'usd'],
+  { id: 'sucroenergetico', grupo: 'Agro', label: 'Sucroenergético', itens: ['acucar', 'petroleo', 'fertilizantes', 'usd'],
     cadeia: { entradas: ['Cana-de-açúcar', 'Diesel e fertilizantes', 'Capital de safra'], processo: 'Moagem: açúcar e etanol', saidas: ['Exportação de açúcar', 'Etanol (preço da gasolina)', 'Energia da biomassa'] },
     perguntas: ['Qual o mix açúcar/etanol previsto e o que o define?', 'Açúcar fixado em dólar? Qual volume e qual prazo?', 'Como a política de preços da Petrobras afeta a receita do etanol?'] },
 ]
@@ -171,10 +171,10 @@ export function dadoItem(item, dados, periodo) {
     const diario = ptsDiario(serie)
     const per = variacaoPeriodo(mensal, periodo.dias, agora, 35)
     const reais = per && dolar ? emReais(per.pct, dolar.pct) : null
-    const unid = `US$/${item.unidade}`
-    const frase = `${item.label} a US$ ${nf(c.value, 1)}/${item.unidade} (média de ${mesAno(c.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.` +
+    const moeda = item.moeda ?? 'US$', d = c.decimals ?? 1
+    const frase = `${item.label} a ${moeda} ${nf(c.value, d)}/${item.unidade} (média de ${mesAno(c.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.` +
       (reais != null ? ` Em reais, ${sinal(reais)}: o dólar ${dolar.pct >= 0 ? 'subiu' : 'caiu'} ${nf(Math.abs(dolar.pct), 1)}% no período.` : '')
-    return { valor: c.value, valorTexto: `US$ ${nf(c.value, 1)}`, unidade: unid, quando: `média de ${mesAno(c.period)} · ${c.benchmark}`, dia: null, mes: Number.isFinite(c.variationPct) ? c.variationPct : null, periodo: per, emReais: reais, dolar, pontos: diario.length > 1 ? diario.filter((p) => p.t >= agora - periodo.dias * DIA) : mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: diario.length > 1 ? `preço diário aproximado (${serie.name ?? 'contrato futuro'})` : 'média mensal', stale: !!c.stale, frase }
+    return { valor: c.value, valorTexto: `${moeda} ${nf(c.value, d)}`, unidade: `${moeda}/${item.unidade}`, unidadeCurta: `/${item.unidade}`, quando: `média de ${mesAno(c.period)} · ${c.benchmark}`, dia: null, mes: Number.isFinite(c.variationPct) ? c.variationPct : null, periodo: per, emReais: reais, dolar, pontos: diario.length > 1 ? diario.filter((p) => p.t >= agora - periodo.dias * DIA) : mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: diario.length > 1 ? `preço diário aproximado (${serie.name ?? 'contrato futuro'})` : 'média mensal', stale: !!c.stale, frase }
   }
   if (item.tipo === 'petroleo') {
     const o = dados.oil
@@ -184,7 +184,7 @@ export function dadoItem(item, dados, periodo) {
     const ult = pontos.at(-1), ant = pontos.at(-2)
     const dia = ult && ant ? ((ult.v - ant.v) / ant.v) * 100 : null
     const reais = per && dolar ? emReais(per.pct, dolar.pct) : null
-    return { valor: o.value, valorTexto: `US$ ${nf(o.value, 2)}`, unidade: 'US$/barril', quando: `Brent spot de ${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}`, dia, periodo: per, emReais: reais, dolar, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'Brent spot diário', stale: !!o.stale,
+    return { valor: o.value, valorTexto: `US$ ${nf(o.value, 2)}`, unidade: 'US$/barril', unidadeCurta: '/barril', quando: `Brent spot de ${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}`, dia, periodo: per, emReais: reais, dolar, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'Brent spot diário', stale: !!o.stale,
       frase: `Brent a US$ ${nf(o.value, 2)}/barril (${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.${reais != null ? ` Em reais, ${sinal(reais)}.` : ''} O diesel na bomba segue o Brent e o dólar com defasagem, pela política de preços da Petrobras.` }
   }
   if (item.tipo === 'frete') {
@@ -193,7 +193,7 @@ export function dadoItem(item, dados, periodo) {
     const ult = mensal.at(-1)
     if (!ult) return { indisponivel: 'Índice de frete indisponível no momento.' }
     const per = variacaoPeriodo(mensal, periodo.dias, agora, 35)
-    return { valor: ult.v, valorTexto: nf(ult.v, 1), unidade: 'pontos', quando: `índice mensal de ${mesAno(ult.period)} (transporte de carga, EUA)`, dia: null, periodo: per, pontos: mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'índice mensal', stale: !!f.stale,
+    return { valor: ult.v, valorTexto: nf(ult.v, 1), unidade: 'pontos', unidadeCurta: ' pontos', quando: `índice mensal de ${mesAno(ult.period)} (transporte de carga, EUA)`, dia: null, periodo: per, pontos: mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'índice mensal', stale: !!f.stale,
       frase: `Frete marítimo (índice de preços do transporte de carga, EUA) em ${nf(ult.v, 1)} pontos (${mesAno(ult.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}` : `sem histórico de ${periodo.label}`}. Não é cotação de rota brasileira nem US$/contêiner.` }
   }
   if (item.tipo === 'noticia') return { semSerie: item.semSerie, frase: item.semSerie }
