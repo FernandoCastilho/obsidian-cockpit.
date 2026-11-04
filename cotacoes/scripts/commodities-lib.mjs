@@ -109,20 +109,20 @@ export function parsePinkRows(rows, sourceUrl, now = new Date()) {
   const headerIndex = rows.findIndex(r => Object.values(r).includes('Soybeans'))
   const header = rows[headerIndex], units = rows[headerIndex + 1]
   if (!header || !units) throw new Error('Banco Mundial: cabeçalho ausente')
-  // [id, coluna, unidades aceitas, fator, obrigatória]. As quatro primeiras são obrigatórias; nas demais, se a coluna ou a unidade mudar,
+  // [id, coluna (texto exato ou expressão regular: a carne vem como "Beef **", com asteriscos de nota), unidades aceitas, fator, obrigatória]. As quatro primeiras são obrigatórias; nas demais, se a coluna ou a unidade mudar,
   // a série fica de fora (o coletor preserva o último valor válido) em vez de derrubar a leitura inteira.
   const definitions = [
     ['iron-ore', 'Iron ore, cfr spot', ['($/dmtu)', '($/dmt)'], 1, true], ['soybeans', 'Soybeans', ['($/mt)'], 1, true], ['corn', 'Maize', ['($/mt)'], 1, true], ['gold', 'Gold', ['($/troy oz)'], 1, true],
     ['copper', 'Copper', ['($/mt)'], 1, false], ['aluminum', 'Aluminum', ['($/mt)'], 1, false], ['sugar', 'Sugar, world', ['($/kg)'], CENTS_PER_LB, false], ['coffee', 'Coffee, Arabica', ['($/kg)'], CENTS_PER_LB, false],
     ['urea', 'Urea', ['($/mt)'], 1, false], ['dap', 'DAP', ['($/mt)'], 1, false],
-    ['wheat', 'Wheat, US HRW', ['($/mt)'], 1, false], ['beef', 'Beef', ['($/kg)'], 1, false], ['cotton', 'Cotton, A Index', ['($/kg)'], CENTS_PER_LB, false], ['coal', 'Coal, Australian', ['($/mt)'], 1, false], ['cocoa', 'Cocoa', ['($/kg)'], 1, false],
+    ['wheat', 'Wheat, US HRW', ['($/mt)'], 1, false], ['beef', /^Beef(?:\s*\*+)?$/, ['($/kg)'], 1, false], ['cotton', 'Cotton, A Index', ['($/kg)'], CENTS_PER_LB, false], ['coal', 'Coal, Australian', ['($/mt)'], 1, false], ['cocoa', 'Cocoa', ['($/kg)'], 1, false],
   ]
   const dated = rows.filter(r => /^\d{4}M(?:0[1-9]|1[0-2])$/.test(r.A ?? '')).sort((a,b) => a.A.localeCompare(b.A))
   if (!dated.length || new Set(dated.map(r => r.A)).size !== dated.length) throw new Error('Banco Mundial: competências ausentes/duplicadas')
   const result = []
   for (const [id, name, allowedUnits, factor, required] of definitions) {
     try {
-      const column = Object.keys(header).find(k => header[k].trim() === name)
+      const column = Object.keys(header).find(k => (typeof name === 'string' ? header[k].trim() === name : name.test(header[k].trim())))
       if (!column || !allowedUnits.includes(units[column]?.trim())) throw new Error(`Banco Mundial: série/unidade inesperada: ${name}`)
       const point = row => {
         const raw = row?.[column]?.trim()
