@@ -7,7 +7,7 @@ import { useDataFile } from './useDataFile.js'
 import { useCentralDaily } from './useHistory.js'
 import { normalizeTemas } from './reforma.js'
 import { fadeIn } from './motion.js'
-import { GRUPOS_SETORES, PERIODOS, SETORES_APRESENTACAO, buscarCapa, itensDaMontagem, itensPadrao, montarRoteiro, setorPorId, sinal, tom } from './apresentacao.js'
+import { DOMINIO, GRUPOS_SETORES, PERIODOS, SETORES_APRESENTACAO, buscarCapa, candidatosSite, faviconUrl, itensDaMontagem, itensPadrao, montarRoteiro, setorPorId, sinal, tom } from './apresentacao.js'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 const dataHora = (t) => new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }).replace(',', ' ·')
@@ -21,6 +21,7 @@ export default function Apresentacao({ quotes, macro }) {
   const [nome, setNome] = useState('')
   const [capa, setCapa] = useState(null) // { titulo, descricao, logo, imagem, dominio }
   const [capaEstado, setCapaEstado] = useState('') // '', 'lendo', 'ok', 'erro'
+  const [capaErro, setCapaErro] = useState(null) // { tentativas, motivo }
   const [setorId, setSetorId] = useState(SETORES_APRESENTACAO[0].id)
   const [itens, setItens] = useState(() => itensPadrao(SETORES_APRESENTACAO[0].id))
   const [periodo, setPeriodo] = useState(PERIODOS[1])
@@ -40,7 +41,14 @@ export default function Apresentacao({ quotes, macro }) {
   const lerSite = async () => {
     if (!site.trim()) return
     setCapaEstado('lendo')
-    try { setCapa(await buscarCapa(site.trim())); setCapaEstado('ok') } catch { setCapa(null); setCapaEstado('erro') }
+    try { setCapa(await buscarCapa(site.trim())); setCapaEstado('ok'); setCapaErro(null) }
+    catch (e) {
+      // Sem metadados: a capa ainda leva o domínio e o ícone do site (se existir), com o nome digitado.
+      const tentativas = e.tentativas ?? candidatosSite(site.trim()).map(DOMINIO)
+      const dominio = tentativas[0] ?? ''
+      setCapa(dominio ? { titulo: '', descricao: '', logo: faviconUrl(dominio), imagem: null, dominio, semMetadados: true } : null)
+      setCapaErro({ tentativas, motivo: e.message }); setCapaEstado('erro')
+    }
   }
   const dados = { quotes, hist: hist.data, commodities: comm.data?.commodities ?? [], diario: diario.data, oil: oil.data, frete: frete.data?.series, temas, macro: macro?.data, ipca: ipca.data?.series, agora: Date.now() }
   const pronto = (capa?.titulo || nome.trim()) && itens.length > 0
@@ -59,8 +67,8 @@ export default function Apresentacao({ quotes, macro }) {
               <button type="button" className="apr-btn" onClick={lerSite} disabled={!site.trim() || capaEstado === 'lendo'}>{capaEstado === 'lendo' ? 'Lendo…' : 'Ler site'}</button>
             </div>
             {capaEstado === 'ok' && capa && <Estado>Capa com os dados do site: <b>{capa.titulo}</b>{capa.descricao ? ` · ${capa.descricao.slice(0, 90)}${capa.descricao.length > 90 ? '…' : ''}` : ''}</Estado>}
-            {capaEstado === 'erro' && <Estado tipo="aviso">Não consegui ler o site; a capa usa o nome digitado abaixo.</Estado>}
-            <label className="apr-nome">Nome da empresa {capa?.titulo ? <small className="muted">(opcional: o site já informou)</small> : <small className="muted">(usado na capa quando não há site)</small>}
+            {capaEstado === 'erro' && <Estado tipo="aviso" erro={capaErro?.motivo}>Não consegui ler {capaErro?.tentativas?.length > 1 ? `${capaErro.tentativas.join(' nem ')}` : capaErro?.tentativas?.[0] || 'o site'}. {!/\./.test(site.trim()) ? 'Digite o endereço completo (ex.: empresa.com.br). ' : ''}A capa usa o nome digitado abaixo{capa?.dominio ? ` e o ícone de ${capa.dominio}, se existir` : ''}.</Estado>}
+            <label className="apr-nome">Nome da empresa {capa?.titulo ? <small className="muted">(opcional: o site já informou)</small> : <small className="muted">(usado na capa quando o site não é lido)</small>}
               <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex.: Metalúrgica Exemplo" />
             </label>
           </section>
@@ -176,7 +184,7 @@ function Capa({ s }) {
         {s.capa?.descricao && <p className="apr-capa-desc">{s.capa.descricao}</p>}
         <p className="apr-capa-setor">{s.setor.label}{s.capa?.dominio ? ` · ${s.capa.dominio}` : ''}</p>
       </div>
-      {s.capa?.logo && <img className="apr-capa-logo" src={s.capa.logo} alt={`Logotipo de ${s.nome}`} />}
+      {s.capa?.logo && <img className="apr-capa-logo" src={s.capa.logo} alt={`Logotipo de ${s.nome}`} onError={(e) => { e.currentTarget.hidden = true }} />}
       <Rodape>Dados de {dataHora(s.agora)} · comparações de {s.periodo.label} · fontes públicas, conferir antes de decidir</Rodape>
     </div>
   )

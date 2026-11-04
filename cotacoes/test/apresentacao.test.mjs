@@ -1,7 +1,7 @@
 // Apresentar: catálogo de setores e itens, variações por período, frases e roteiro dos slides.
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { ITENS, ITEM_IDS, PERIODOS, SETORES_APRESENTACAO, TRANSVERSAIS, dadoItem, emReais, itensDaMontagem, itensPadrao, linhasCenario, montarRoteiro, normalizarCapa, resumoFinal, sinal, variacaoPeriodo } from '../src/apresentacao.js'
+import { ITENS, ITEM_IDS, PERIODOS, SETORES_APRESENTACAO, TRANSVERSAIS, candidatosSite, dadoItem, emReais, faviconUrl, itensDaMontagem, itensPadrao, linhasCenario, montarRoteiro, normalizarCapa, resumoFinal, sinal, variacaoPeriodo } from '../src/apresentacao.js'
 import { INSUMOS } from '../src/insumos.js'
 import { parseCommand } from '../src/terminal.js'
 
@@ -102,6 +102,12 @@ test('cenário, roteiro e resumo final', () => {
   const capa = normalizarCapa({ status: 'success', data: { title: 'Exemplo S.A. | Home', publisher: 'Exemplo S.A.', description: ' Peças ', logo: { url: 'https://e/l.png' } } }, 'exemplo.com.br')
   assert.deepEqual(capa, { titulo: 'Exemplo S.A.', descricao: 'Peças', logo: 'https://e/l.png', imagem: null, dominio: 'exemplo.com.br' })
   assert.equal(normalizarCapa({ status: 'fail' }, 'x'), null)
+  // sem logotipo nos metadados, a capa usa o ícone do site; só o nome vira .com.br e .com; endereço completo fica como está
+  assert.equal(normalizarCapa({ status: 'success', data: { title: 'T' } }, 'https://www.exemplo.com.br/').logo, faviconUrl('exemplo.com.br'))
+  assert.deepEqual(candidatosSite(' tubokraft '), ['https://tubokraft.com.br', 'https://tubokraft.com'])
+  assert.deepEqual(candidatosSite('www.tubokraft.com.br/'), ['https://www.tubokraft.com.br'])
+  assert.deepEqual(candidatosSite('http://exemplo.ind.br'), ['http://exemplo.ind.br'])
+  assert.deepEqual(candidatosSite(''), [])
   assert.equal(montarRoteiro({ nome: 'X', capa, setorId: 'metalmecanica', itens: ['usd'], periodo: seis }, dados)[0].nome, 'Exemplo S.A.')
   assert.throws(() => montarRoteiro({ nome: 'X', setorId: 'nada', itens: [], periodo: seis }, dados), /Setor desconhecido/)
   assert.deepEqual(resumoFinal([], seis), [])

@@ -261,19 +261,41 @@ export function montarRoteiro(cfg, dados) {
 }
 
 // Capa: o que o site da empresa informa (título, descrição, logotipo), lido por um serviço público de metadados.
-// Se a leitura falha, a capa usa só o nome digitado. Nada é guardado.
+// Se a leitura falha, a capa usa o nome digitado e o ícone do site (favicon), quando existe. Nada é guardado.
 export const DOMINIO = (url) => { try { return new URL(/^https?:\/\//i.test(url) ? url : `https://${url}`).hostname.replace(/^www\./, '') } catch { return '' } }
+// Endereços a tentar, em ordem: o digitado e, se veio só o nome ("tubokraft"), as terminações .com.br e .com.
+export function candidatosSite(texto) {
+  const t = String(texto ?? '').trim().replace(/\s+/g, '').replace(/\/+$/, '')
+  if (!t) return []
+  const semEsquema = t.replace(/^https?:\/\//i, '')
+  if (!/\./.test(semEsquema)) return [`https://${semEsquema}.com.br`, `https://${semEsquema}.com`]
+  return [/^https?:\/\//i.test(t) ? t : `https://${t}`]
+}
+// Ícone do site, servido como imagem (não depende do serviço de metadados); a página esconde a imagem se o ícone não existir.
+export const faviconUrl = (dominio) => (dominio ? `https://icons.duckduckgo.com/ip3/${dominio}.ico` : null)
 export function normalizarCapa(json, url) {
   const d = json?.status === 'success' ? json.data : null
   if (!d) return null
   const titulo = String(d.publisher || d.title || '').trim()
-  return { titulo: titulo || DOMINIO(url), descricao: String(d.description ?? '').trim(), logo: d.logo?.url ?? null, imagem: d.image?.url ?? null, dominio: DOMINIO(url) }
+  return { titulo: titulo || DOMINIO(url), descricao: String(d.description ?? '').trim(), logo: d.logo?.url ?? faviconUrl(DOMINIO(url)), imagem: d.image?.url ?? null, dominio: DOMINIO(url) }
 }
-export async function buscarCapa(url, signal) {
-  const alvo = /^https?:\/\//i.test(url) ? url : `https://${url}`
+async function lerMetadados(alvo, signal) {
   const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(alvo)}&palette=false&audio=false&video=false`, { signal })
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  const capa = normalizarCapa(await res.json(), alvo)
-  if (!capa) throw new Error('sem dados do site')
+  const json = await res.json().catch(() => null)
+  if (!res.ok) throw new Error(json?.message ? `${json.code ?? res.status}: ${json.message}` : `HTTP ${res.status}`)
+  const capa = normalizarCapa(json, alvo)
+  if (!capa) throw new Error(json?.message ?? 'sem dados do site')
   return capa
+}
+// Tenta cada endereço candidato; devolve a primeira capa lida. Falhando todos, o erro lista o que foi tentado e por quê.
+export async function buscarCapa(texto, signal) {
+  const tentativas = candidatosSite(texto)
+  if (!tentativas.length) throw new Error('informe o endereço do site')
+  const motivos = []
+  for (const alvo of tentativas) {
+    try { return await lerMetadados(alvo, signal) } catch (e) { if (e.name === 'AbortError') throw e; motivos.push(`${DOMINIO(alvo)}: ${e.message}`) }
+  }
+  const erro = new Error(motivos.join(' · '))
+  erro.tentativas = tentativas.map(DOMINIO)
+  throw erro
 }
