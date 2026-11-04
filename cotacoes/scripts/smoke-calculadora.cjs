@@ -81,6 +81,8 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByLabel('Carência (meses)').fill('18')
       await fm.getByText(/Carência de 0 a 12 meses com TFB/).waitFor()
       await fm.getByRole('button', { name: 'TLP + IPCA' }).click()
+      // o IPCA esperado vem do Focus quando o macro.json o traz; no smoke, informa o valor para não depender do arquivo servido
+      await fm.getByLabel('IPCA esperado (% a.a.)').fill('4,5')
       await fm.locator('.fm-grade').waitFor()
       assert.match(await fm.locator('.fm-kpi', { hasText: 'Parcelas' }).innerText(), /42x mensais/)
       await fm.getByLabel('Prazo total (meses)').fill('90')
