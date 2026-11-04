@@ -1,7 +1,7 @@
 // Apresentar: catálogo de setores e itens, variações por período, frases e roteiro dos slides.
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { ITENS, ITEM_IDS, PERIODOS, SETORES_APRESENTACAO, TRANSVERSAIS, candidatosSite, dadoItem, emReais, faviconUrl, itensDaMontagem, itensPadrao, linhasCenario, montarRoteiro, normalizarCapa, resumoFinal, sinal, variacaoPeriodo } from '../src/apresentacao.js'
+import { GRUPOS_SETORES, ITENS, ITEM_IDS, PERIODOS, SETORES_APRESENTACAO, TRANSVERSAIS, TRANSVERSAIS_TEXTO, candidatosSite, graficosCenario, leituraEvento, miniaturas, dadoItem, emReais, faviconUrl, itensDaMontagem, itensPadrao, linhasCenario, montarRoteiro, normalizarCapa, resumoFinal, sinal, variacaoPeriodo } from '../src/apresentacao.js'
 import { INSUMOS } from '../src/insumos.js'
 import { parseCommand } from '../src/terminal.js'
 
@@ -10,7 +10,10 @@ const agora = Date.parse('2026-11-04T18:00:00Z')
 const diaria = (n, de, ate) => Array.from({ length: n }, (_, i) => ({ t: agora - (n - 1 - i) * DIA, v: de + ((ate - de) * i) / (n - 1) }))
 
 test('catálogo: todo setor tem cadeia, perguntas e itens conhecidos; os padrão nunca incluem planejados', () => {
-  assert.ok(SETORES_APRESENTACAO.length >= 15)
+  assert.ok(SETORES_APRESENTACAO.length >= 22)
+  assert.deepEqual(GRUPOS_SETORES, ['Indústria', 'Serviços', 'Comércio', 'Agro'])
+  assert.ok(SETORES_APRESENTACAO.filter((s) => s.grupo === 'Comércio').length >= 8, 'comércio por subsetor')
+  assert.ok(TRANSVERSAIS_TEXTO.every((t) => /[Ii]mporta/.test(t.texto) && /[Ee]xporta/.test(t.texto)), 'cada transversal fala de importação e de exportação')
   for (const s of SETORES_APRESENTACAO) {
     assert.ok(s.cadeia.entradas.length >= 2 && s.cadeia.saidas.length >= 2 && s.cadeia.processo, s.id)
     assert.ok(s.perguntas.length >= 2, s.id)
@@ -91,13 +94,27 @@ test('cenário, roteiro e resumo final', () => {
   assert.equal(linhas[0].valor, '14,25%')
   assert.equal(linhas[3].nota, '+0,30% hoje')
   const r = montarRoteiro({ nome: 'Metalúrgica Exemplo', setorId: 'metalmecanica', itens: ['usd', 'minerio', 'aco', 'energia'], periodo: seis }, dados)
-  assert.deepEqual(r.map((s) => s.kind), ['capa', 'cenario', 'cadeia', 'item', 'item', 'item', 'agenda', 'perguntas', 'fim'])
-  assert.equal(r[0].nome, 'Metalúrgica Exemplo')
-  assert.equal(r[3].manchetes.length, 2)
-  assert.equal(r[3].move.length, 4)
-  assert.ok(r[4].move.length >= 3) // ficha do insumo (insumos.js)
-  assert.ok(r[7].perguntas.length >= 3 && r[7].perguntas.length <= 8)
+  assert.deepEqual(r.map((s) => s.kind), ['perguntas', 'capa', 'cenario', 'cadeia', 'item', 'item', 'item', 'agenda', 'fim'])
+  assert.ok(r[0].perguntas.length >= 3 && r[0].perguntas.length <= 8) // antes da capa, para quem apresenta
+  assert.equal(r[1].nome, 'Metalúrgica Exemplo')
+  assert.ok(r[2].linhas.every((l) => l.leitura), 'cada linha do cenário tem leitura')
+  assert.equal(r[3].transversais, TRANSVERSAIS_TEXTO)
+  assert.equal(r[4].manchetes.length, 2)
+  assert.equal(r[4].move.length, 4)
+  assert.ok(r[4].dado.grafico.pontos.length >= 170 && r[4].dado.grafico.historico.length === 400 && r[4].dado.grafico.prefixo === 'R$ ')
+  assert.ok(r[5].move.length >= 3) // ficha do insumo (insumos.js)
+  assert.ok(r[5].dado.grafico.mensal && r[5].dado.grafico.pontos.length === 12, 'commodity: gráfico mensal de 12 meses')
+  assert.ok(r[7].eventos.every((e) => e.leitura))
   assert.ok(r[8].pontos.length === 2 && r[8].pontos[0].startsWith('Minério de ferro:'), JSON.stringify(r[8].pontos))
+  assert.deepEqual(r[8].minis.map((m) => m.key), ['usd', 'minerio', 'selic', 'ipca'])
+  assert.equal(leituraEvento({ kind: 'FOMC', label: 'FOMC: decisão de juros do Fed' }).startsWith('Juro maior lá fora'), true)
+  assert.match(leituraEvento({ kind: 'Copom', label: 'Copom: decisão da Selic' }), /^Juro mais alto encarece/)
+  // cenário: emprego (12 meses) e inadimplência (13 pontos) a partir dos arquivos do painel
+  const g = graficosCenario({ indicadores: [{ id: 'caged', points: Array.from({ length: 15 }, (_, i) => ({ period: `2025-${String(i + 1).padStart(2, '0')}`.replace('2025-13', '2026-01').replace('2025-14', '2026-02').replace('2025-15', '2026-03'), value: i % 3 === 0 ? -1000 : 5000 })) }], inadimplencia: [{ key: 'pf-total', points: Array.from({ length: 20 }, (_, i) => ({ period: 'x', t: agora - (20 - i) * 30 * DIA, v: 5 + i / 10 })) }] })
+  assert.equal(g.emprego.pontos.length, 12); assert.equal(g.emprego.ultimo.v, 5000); assert.equal(g.inadimplencia.PF.length, 13); assert.equal(g.inadimplencia.PJ.length, 0)
+  const minis = miniaturas([], { ...dados, indicadores: [{ id: 'caged', points: [{ period: '2026-09', value: 1000 }] }] }, seis)
+  assert.deepEqual(minis.map((m) => m.key), ['selic', 'ipca', 'emprego'])
+  assert.equal(minis[2].valor, '+1.000 vagas')
   // capa do site vence o nome digitado; sem setor conhecido, erro
   const capa = normalizarCapa({ status: 'success', data: { title: 'Exemplo S.A. | Home', publisher: 'Exemplo S.A.', description: ' Peças ', logo: { url: 'https://e/l.png' } } }, 'exemplo.com.br')
   assert.deepEqual(capa, { titulo: 'Exemplo S.A.', descricao: 'Peças', logo: 'https://e/l.png', imagem: null, dominio: 'exemplo.com.br' })

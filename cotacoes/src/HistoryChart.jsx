@@ -113,7 +113,8 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
     const ih = H - M.t - M.b
     const x = (t) => M.l + (t1 === t0 ? iw / 2 : ((t - t0) / (t1 - t0)) * iw)
     const y = (v) => M.t + (1 - (v - lo) / (hi - lo)) * ih
-    const dec = nice ? decNice : Math.min(5, Math.max(2, Math.ceil(-Math.log10((hi - lo) / 4)) + 1))
+    // valores na casa dos milhares (commodities em US$/t) ficam sem centavos no eixo, para caber na margem
+    const dec = nice ? decNice : Math.min(5, Math.max(Math.abs(hi) >= 1000 ? 0 : 2, Math.ceil(-Math.log10((hi - lo) / 4)) + 1))
     const yTicks = nice ? Array.from({ length: Math.round((hi - lo) / stepNice) + 1 }, (_, i) => lo + i * stepNice) : Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
     const nx = width < 420 ? 3 : 5
     const xTicks = t0 === t1 ? [t0] : Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))

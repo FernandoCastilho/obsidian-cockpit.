@@ -4,15 +4,40 @@ import { Panel } from './TerminalDesk.jsx'
 import Estado from './Estado.jsx'
 import Sparkline from './Sparkline.jsx'
 import { useDataFile } from './useDataFile.js'
-import { useCentralDaily } from './useHistory.js'
+import { parseEcbSeries, useCentralDaily } from './useHistory.js'
 import { normalizeTemas } from './reforma.js'
-import { fadeIn } from './motion.js'
-import { DOMINIO, GRUPOS_SETORES, PERIODOS, SETORES_APRESENTACAO, buscarCapa, candidatosSite, faviconUrl, itensDaMontagem, itensPadrao, montarRoteiro, setorPorId, sinal, tom } from './apresentacao.js'
+import { cascade, fadeIn } from './motion.js'
+import { Plot, useWidth } from './HistoryChart.jsx'
+import MultiLinhas from './MultiLinhas.jsx'
+import { nf } from './format.js'
+import { DOMINIO, GRUPOS_SETORES, ITENS, PERIODOS, SETORES_APRESENTACAO, buscarCapa, candidatosSite, faviconUrl, itensDaMontagem, itensPadrao, montarRoteiro, setorPorId, sinal, tom } from './apresentacao.js'
 
 const MARK = { up: '▲', down: '▼', flat: '■' }
 const dataHora = (t) => new Date(t).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }).replace(',', ' ·')
 const dia = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })
 const hora = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
+
+// Ano anterior das moedas: a cotação central cobre 360 dias; para comparar um trecho com o mesmo trecho do ano anterior,
+// busca 2 anos de referências diárias do BCE (Frankfurter), uma vez por moeda. Só no navegador, nada é guardado.
+const ECB_CODE = { USD: 'USD', EUR: 'EUR', JPY: 'JPY', CNH: 'CNY' }
+function useEcbLongo(codes) {
+  const [series, setSeries] = useState({})
+  const chave = codes.join(',')
+  useEffect(() => {
+    const ctrl = new AbortController()
+    const fim = new Date(), ini = new Date(); ini.setFullYear(ini.getFullYear() - 2)
+    const iso = (d) => d.toISOString().slice(0, 10)
+    for (const code of chave ? chave.split(',') : []) {
+      if (!ECB_CODE[code]) continue
+      fetch(`https://api.frankfurter.dev/v1/${iso(ini)}..${iso(fim)}?base=${ECB_CODE[code]}&symbols=BRL`, { signal: ctrl.signal })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => { const pts = j ? parseEcbSeries(j) : []; if (pts.length) setSeries((cur) => ({ ...cur, [code]: pts })) })
+        .catch(() => {})
+    }
+    return () => ctrl.abort()
+  }, [chave])
+  return series
+}
 
 // Apresentar: monta uma apresentação para o cliente a partir do setor e dos itens de mercado escolhidos, com os dados que o painel já tem.
 // Nada é guardado: fechar a apresentação descarta a montagem.
@@ -33,6 +58,9 @@ export default function Apresentacao({ quotes, macro }) {
   const oil = useDataFile('oil.json')
   const ipca = useDataFile('ipca.json')
   const frete = useDataFile('freight.json')
+  const indicadores = useDataFile('indicator-history.json')
+  const ecb = useEcbLongo(itens.map((id) => ITENS[id]?.code).filter(Boolean))
+  const inadimplencia = useDataFile('inadimplencia.json')
   const temas = useMemo(() => { try { return temasFile.data ? normalizeTemas(temasFile.data) : {} } catch { return {} } }, [temasFile.data])
   const setor = setorPorId(setorId)
   const lista = itensDaMontagem(setorId)
@@ -50,7 +78,7 @@ export default function Apresentacao({ quotes, macro }) {
       setCapaErro({ tentativas, motivo: e.message }); setCapaEstado('erro')
     }
   }
-  const dados = { quotes, hist: hist.data, commodities: comm.data?.commodities ?? [], diario: diario.data, oil: oil.data, frete: frete.data?.series, temas, macro: macro?.data, ipca: ipca.data?.series, agora: Date.now() }
+  const dados = { quotes, hist: hist.data, commodities: comm.data?.commodities ?? [], diario: diario.data, oil: oil.data, frete: frete.data?.series, temas, macro: macro?.data, ipca: ipca.data?.series, indicadores: indicadores.data?.series, inadimplencia: inadimplencia.data?.series, ecb, agora: Date.now() }
   const pronto = (capa?.titulo || nome.trim()) && itens.length > 0
   // O roteiro é montado na hora de apresentar, com os dados daquele momento; fechar descarta.
   const apresentar = () => setAberta(montarRoteiro({ nome: nome.trim(), site, capa, setorId, itens, periodo }, dados))
@@ -129,15 +157,23 @@ function Player({ roteiro, onClose }) {
     return () => { document.body.style.overflow = previous; if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}) }
   }, [])
   useLayoutEffect(() => { anim.current = fadeIn(slideRef.current, anim.current) }, [i])
-  const onKey = (e) => {
-    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); ir((c) => c + 1) }
-    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); ir((c) => c - 1) }
-    else if (e.key === 'Home') ir(0)
-    else if (e.key === 'End') ir(n - 1)
-    else if (e.key === 'Escape') { e.preventDefault(); onClose() }
-  }
+  // Teclado na janela inteira: o foco pode ter ficado num gráfico que saiu com o slide. Na apresentação, as setas sempre
+  // trocam de slide (mesmo com um gráfico em foco, depois de arrastar); Escape sempre sai.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); onClose(); return }
+      if (e.target.closest?.('input, select, textarea')) return
+      if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); ir((c) => c + 1) }
+      else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); ir((c) => c - 1) }
+      else if (e.key === 'Home') ir(0)
+      else if (e.key === 'End') ir(n - 1)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [n, onClose]) // eslint-disable-line react-hooks/exhaustive-deps
   const touch = useRef(null)
-  const onPointerDown = (e) => { touch.current = { x: e.clientX, y: e.clientY } }
+  // Deslizar troca de slide, exceto quando o gesto começa num gráfico: ali, arrastar seleciona um trecho.
+  const onPointerDown = (e) => { touch.current = e.target.closest?.('.plot, .ml, .apr-barras, .apr-barra') ? null : { x: e.clientX, y: e.clientY } }
   const onPointerUp = (e) => {
     const t = touch.current; touch.current = null
     if (!t) return
@@ -147,7 +183,7 @@ function Player({ roteiro, onClose }) {
   const telaCheia = () => { const el = ref.current; if (!el) return; if (document.fullscreenElement) document.exitFullscreen?.(); else el.requestFullscreen?.().catch(() => {}) }
   const s = roteiro[i]
   return (
-    <div className="apr-player" role="dialog" aria-modal="true" aria-label="Apresentação" tabIndex={-1} ref={ref} onKeyDown={onKey} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+    <div className="apr-player" role="dialog" aria-modal="true" aria-label="Apresentação" tabIndex={-1} ref={ref} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
       <div className={`apr-slide apr-s-${s.kind}`} ref={slideRef} key={i} aria-live="polite" aria-atomic="true">
         <Slide s={s} />
       </div>
@@ -164,42 +200,101 @@ function Player({ roteiro, onClose }) {
 }
 
 function Slide({ s }) {
+  if (s.kind === 'perguntas') return <Perguntas s={s} />
   if (s.kind === 'capa') return <Capa s={s} />
   if (s.kind === 'cenario') return <Cenario s={s} />
   if (s.kind === 'cadeia') return <Cadeia s={s} />
   if (s.kind === 'item') return <Item s={s} />
   if (s.kind === 'agenda') return <Agenda s={s} />
-  if (s.kind === 'perguntas') return <Perguntas s={s} />
   return <Fim s={s} />
 }
 
 const Rodape = ({ children }) => <footer className="apr-rodape">{children}</footer>
+// Entrada discreta por bloco: cada bloco esmaece e sobe, um depois do outro (90 ms), tudo abaixo de 1 s; some com "reduzir movimento".
+const anim = (i, cls = '') => ({ className: `apr-anim ${cls}`.trim(), style: cascade(i, 90, 720) })
+
+// Gráfico de um item: clique e arraste um trecho para ver a variação e o mesmo trecho do ano anterior (mesmo gráfico do painel).
+function Grafico({ g, cor = '#1e40af', rotulo }) {
+  const [ref, width] = useWidth()
+  const fmt = (v) => `${g.prefixo}${nf(v, g.casas)}${g.sufixo}`
+  return (
+    <div className="apr-grafico" ref={ref}>
+      <Plot points={g.pontos} history={g.historico} width={width} color={cor} code={`apr-${rotulo}`} intraday={false} fmt={fmt} vfmt={fmt} labels label={rotulo} nice={false} light scales={false} compare step={false} />
+      <small className="apr-grafico-dica">Clique e arraste um trecho para ver a variação e o mesmo trecho do ano anterior.</small>
+    </div>
+  )
+}
+
+// Barras mensais (saldo do CAGED): positivas para cima, negativas para baixo, com o rótulo do mês.
+function Barras({ pontos, rotulo }) {
+  const W = 560, H = 150, M = { t: 10, b: 24, l: 8, r: 8 }
+  const max = Math.max(...pontos.map((p) => Math.abs(p.v)), 1)
+  const iw = W - M.l - M.r, ih = H - M.t - M.b, zero = M.t + ih / 2, bw = iw / pontos.length
+  return (
+    <svg className="apr-barras" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={rotulo} preserveAspectRatio="none">
+      <line x1={M.l} x2={W - M.r} y1={zero} y2={zero} stroke="var(--line)" />
+      {pontos.map((p, i) => {
+        const h = (Math.abs(p.v) / max) * (ih / 2)
+        return <g key={p.period}>
+          <rect className={`bar-grow-y${p.v < 0 ? ' neg' : ''}`} style={cascade(i, 40, 440)} x={M.l + i * bw + bw * 0.18} y={p.v >= 0 ? zero - h : zero} width={bw * 0.64} height={h} rx="2" fill={p.v >= 0 ? 'var(--up)' : 'var(--down)'} />
+          <text x={M.l + i * bw + bw / 2} y={H - 7} textAnchor="middle" fontSize="11" fill="var(--mut)">{p.rotulo}</text>
+        </g>
+      })}
+    </svg>
+  )
+}
+
+function Perguntas({ s }) {
+  return (
+    <>
+      <p {...anim(0, 'apr-kicker apr-kicker-escuro')}>Antes de começar · para quem apresenta</p>
+      <h2 {...anim(1)}>Para a conversa com {s.nome}</h2>
+      <p {...anim(2, 'apr-sub')}>{s.setor.label}: o que vale perguntar e ouvir antes de mostrar o cenário. Este slide é seu; avance quando estiver pronto.</p>
+      <ol {...anim(3, 'apr-perguntas')}>{s.perguntas.map((p) => <li key={p}>{p}</li>)}</ol>
+      <Rodape>Perguntas de partida; o cliente diz o que pesa de verdade.</Rodape>
+    </>
+  )
+}
 
 function Capa({ s }) {
   return (
     <div className="apr-capa-grade">
       <div className="apr-capa-texto">
-        <p className="apr-kicker">Cenário de mercado para</p>
-        <h1>{s.nome}</h1>
-        {s.capa?.descricao && <p className="apr-capa-desc">{s.capa.descricao}</p>}
-        <p className="apr-capa-setor">{s.setor.label}{s.capa?.dominio ? ` · ${s.capa.dominio}` : ''}</p>
+        <p {...anim(0, 'apr-kicker')}>Cenário de mercado para</p>
+        <h1 {...anim(1)}>{s.nome}</h1>
+        {s.capa?.descricao && <p {...anim(2, 'apr-capa-desc')}>{s.capa.descricao}</p>}
+        <p {...anim(3, 'apr-capa-setor')}>{s.setor.label}{s.capa?.dominio ? ` · ${s.capa.dominio}` : ''}</p>
       </div>
-      {s.capa?.logo && <img className="apr-capa-logo" src={s.capa.logo} alt={`Logotipo de ${s.nome}`} onError={(e) => { e.currentTarget.hidden = true }} />}
+      {s.capa?.logo && <img className="apr-capa-logo apr-anim" style={cascade(2, 90, 720)} src={s.capa.logo} alt={`Logotipo de ${s.nome}`} onError={(e) => { e.currentTarget.hidden = true }} />}
       <Rodape>Dados de {dataHora(s.agora)} · comparações de {s.periodo.label} · fontes públicas, conferir antes de decidir</Rodape>
     </div>
   )
 }
 
+const pp = (v) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${nf(Math.abs(v), 2)} p.p.`
 function Cenario({ s }) {
+  const { emprego, inadimplencia } = s.graficos ?? {}
+  const [refInad, wInad] = useWidth()
+  const inadSeries = inadimplencia ? ['PF', 'PJ'].map((k, i) => ({ key: k, name: k === 'PF' ? 'Pessoa física' : 'Pessoa jurídica', color: ['#ff8200', '#1e40af'][i], points: inadimplencia[k] })).filter((x) => x.points.length > 1) : []
   return (
     <>
-      <h2>O cenário em uma linha</h2>
+      <h2 {...anim(0)}>O cenário em uma linha</h2>
       {s.linhas.length ? (
         <ul className="apr-cenario">
-          {s.linhas.map((l) => <li key={l.key}><span className="apr-cen-label">{l.label}</span><b className="apr-cen-valor">{l.valor}</b><small>{l.nota}</small></li>)}
+          {s.linhas.map((l, i) => <li key={l.key} {...anim(i + 1)}><span className="apr-cen-label">{l.label}</span><b className="apr-cen-valor">{l.valor}</b><small>{l.nota}</small>{l.leitura && <span className="apr-cen-leitura">{l.leitura}</span>}</li>)}
         </ul>
       ) : <p className="apr-vazio">Indicadores indisponíveis no momento.</p>}
-      <Rodape>Juros, inflação, câmbio e mediana do Focus · dados de {dataHora(s.agora)}</Rodape>
+      <div className="apr-cen-graficos">
+        <section {...anim(s.linhas.length + 1)} aria-label="Emprego formal nos últimos 12 meses">
+          <h3>Emprego formal <small>saldo mensal do CAGED · 12 meses</small></h3>
+          {emprego ? <><p className="apr-cen-mini"><b className={tom(emprego.ultimo.v)}>{emprego.ultimo.v >= 0 ? '+' : '−'}{nf(Math.abs(emprego.ultimo.v), 0)}</b> vagas em {emprego.ultimo.rotulo} · {nf(emprego.acumulado, 0)} no acumulado</p><Barras pontos={emprego.pontos} rotulo="Saldo mensal de vagas formais (CAGED), últimos 12 meses" /><p className="apr-cen-leitura">{s.linhas.length ? 'Saldo de vagas formais: demanda do consumidor e pressão salarial.' : ''}</p></> : <p className="apr-vazio">Série do CAGED indisponível.</p>}
+        </section>
+        <section {...anim(s.linhas.length + 2)} aria-label="Inadimplência nos últimos 12 meses" ref={refInad}>
+          <h3>Inadimplência <small>acima de 90 dias · carteira total · 12 meses</small></h3>
+          {inadSeries.length ? <><p className="apr-cen-mini">{['PF', 'PJ'].filter((k) => inadimplencia.ultimo[k]).map((k) => <span key={k}><b>{k}</b> {nf(inadimplencia.ultimo[k].v, 2)}%{inadimplencia[k].length > 1 ? ` (${pp(inadimplencia.ultimo[k].v - inadimplencia[k][0].v)} em 12 meses)` : ''}</span>)}</p><MultiLinhas series={inadSeries} width={wInad} fmt={(v) => `${nf(v, 2)}%`} ariaLabel="Inadimplência PF e PJ, percentual do saldo com atraso acima de 90 dias, últimos 12 meses" /><p className="apr-cen-leitura">Risco de crédito ao cliente e apetite dos bancos para emprestar.</p></> : <p className="apr-vazio">Série de inadimplência indisponível.</p>}
+        </section>
+      </div>
+      <Rodape>Juros, inflação, câmbio, Focus, CAGED e inadimplência · dados de {dataHora(s.agora)}</Rodape>
     </>
   )
 }
@@ -208,15 +303,18 @@ function Cadeia({ s }) {
   const c = s.setor.cadeia
   return (
     <>
-      <h2>A cadeia de {s.setor.label.toLowerCase()}</h2>
+      <h2 {...anim(0)}>A cadeia de {s.setor.label.toLowerCase()}</h2>
       <div className="apr-cadeia">
-        <div className="apr-cad-col"><span className="apr-cad-titulo">O que entra</span>{c.entradas.map((e) => <span key={e} className="apr-cad-chip">{e}</span>)}</div>
-        <span className="apr-cad-seta" aria-hidden="true">→</span>
-        <div className="apr-cad-col apr-cad-meio"><span className="apr-cad-titulo">A empresa</span><span className="apr-cad-chip apr-cad-chip-forte">{c.processo}</span></div>
-        <span className="apr-cad-seta" aria-hidden="true">→</span>
-        <div className="apr-cad-col"><span className="apr-cad-titulo">Para quem vende</span>{c.saidas.map((e) => <span key={e} className="apr-cad-chip">{e}</span>)}</div>
+        <div {...anim(1, 'apr-cad-col')}><span className="apr-cad-titulo">O que entra</span>{c.entradas.map((e) => <span key={e} className="apr-cad-chip">{e}</span>)}</div>
+        <span className="apr-cad-seta apr-anim" style={cascade(2, 90, 720)} aria-hidden="true">→</span>
+        <div {...anim(2, 'apr-cad-col apr-cad-meio')}><span className="apr-cad-titulo">A empresa</span><span className="apr-cad-chip apr-cad-chip-forte">{c.processo}</span></div>
+        <span className="apr-cad-seta apr-anim" style={cascade(3, 90, 720)} aria-hidden="true">→</span>
+        <div {...anim(3, 'apr-cad-col')}><span className="apr-cad-titulo">Para quem vende</span>{c.saidas.map((e) => <span key={e} className="apr-cad-chip">{e}</span>)}</div>
       </div>
-      <p className="apr-cad-trans"><b>Atravessam toda a cadeia:</b> {s.transversais.join(' · ')}</p>
+      <div {...anim(4, 'apr-cad-trans')}>
+        <b>Atravessam toda a cadeia</b>
+        <ul>{s.transversais.map((t) => <li key={t.id}><b>{t.label}.</b> {t.texto}</li>)}</ul>
+      </div>
       <Rodape>Cadeia típica do setor; a conversa com o cliente ajusta o que pesa mais.</Rodape>
     </>
   )
@@ -224,13 +322,12 @@ function Cadeia({ s }) {
 
 function Item({ s }) {
   const { item, dado, move, manchetes, periodo } = s
-  const pontos = (dado.pontos ?? []).map((p) => ({ t: p.t, bid: p.v }))
   const per = dado.periodo
   return (
     <>
-      <h2>{item.label}</h2>
+      <h2 {...anim(0)}>{item.label}</h2>
       <div className="apr-item">
-        <div className="apr-item-num">
+        <div {...anim(1, 'apr-item-num')}>
           {dado.indisponivel ? <p className="apr-vazio">{dado.indisponivel}</p> : dado.semSerie ? <p className="apr-vazio">{dado.semSerie}</p> : (
             <>
               <p className="apr-valor">{dado.valorTexto}{dado.unidadeCurta && <small>{dado.unidadeCurta}</small>}</p>
@@ -238,17 +335,18 @@ function Item({ s }) {
               <ul className="apr-vars">
                 {Number.isFinite(dado.dia) && <li className={tom(dado.dia)}><span aria-hidden="true">{MARK[tom(dado.dia)]}</span> {sinal(dado.dia, 2)} <small>hoje</small></li>}
                 {Number.isFinite(dado.mes) && <li className={tom(dado.mes)}><span aria-hidden="true">{MARK[tom(dado.mes)]}</span> {sinal(dado.mes)} <small>mês anterior</small></li>}
-                <li className={per ? tom(per.pct) : 'flat'}><span aria-hidden="true">{MARK[per ? tom(per.pct) : 'flat']}</span> {per ? sinal(per.pct) : '—'} <small>{periodo.label}{dado.emReais != null ? '' : ''}</small></li>
+                <li className={per ? tom(per.pct) : 'flat'}><span aria-hidden="true">{MARK[per ? tom(per.pct) : 'flat']}</span> {per ? sinal(per.pct) : '—'} <small>{periodo.label}</small></li>
                 {dado.emReais != null && <li className={tom(dado.emReais)}><span aria-hidden="true">{MARK[tom(dado.emReais)]}</span> {sinal(dado.emReais)} <small>{periodo.label} em reais</small></li>}
               </ul>
-              {pontos.length > 1 && <div className="apr-spark"><Sparkline points={pontos} tone={per ? tom(per.pct) : 'flat'} height={60} /><small>{dado.pontosNota ?? 'cotação diária'} · {periodo.label}</small></div>}
             </>
           )}
           <p className="apr-frase">{dado.frase}</p>
+          {dado.grafico && <Grafico g={dado.grafico} rotulo={item.label} />}
+          {dado.grafico && <small className="apr-grafico-nota">{dado.grafico.mensal ? 'média mensal' : dado.pontosNota ?? 'cotação diária'}{dado.grafico.mensal && periodo.dias < 365 ? ' · gráfico de 12 meses; a variação acima é do período escolhido' : ''}{dado.grafico.bce ? ' · ano anterior pela referência diária do BCE' : ''}</small>}
         </div>
         <div className="apr-item-texto">
-          {move.length > 0 && <section><h3>O que mexe no preço</h3><ul>{move.slice(0, 4).map((m) => <li key={m}>{m}</li>)}</ul></section>}
-          <section><h3>Na imprensa esta semana</h3>
+          {move.length > 0 && <section {...anim(2)}><h3>O que mexe no preço</h3><ul>{move.slice(0, 4).map((m) => <li key={m}>{m}</li>)}</ul></section>}
+          <section {...anim(3)}><h3>Na imprensa esta semana</h3>
             {manchetes.length ? <ul className="apr-manchetes">{manchetes.map((m) => <li key={m.link}><time dateTime={new Date(m.t).toISOString()}>{dia(m.t)} {hora(m.t)}</time> {m.title} <small>{m.source}</small></li>)}</ul> : <p className="apr-vazio">Sem matérias coletadas para este item nos últimos dias.</p>}
           </section>
         </div>
@@ -261,10 +359,10 @@ function Item({ s }) {
 function Agenda({ s }) {
   return (
     <>
-      <h2>O que pode mexer nas próximas semanas</h2>
+      <h2 {...anim(0)}>O que pode mexer nas próximas semanas</h2>
       {s.eventos.length ? (
         <ul className="apr-agenda">
-          {s.eventos.map((e) => <li key={e.kind + e.t}><time dateTime={new Date(e.t).toISOString()}>{dia(e.t)} <b>{hora(e.t)}</b></time><span className="apr-tag">{e.kind}</span><span>{e.label}</span></li>)}
+          {s.eventos.map((e, i) => <li key={e.kind + e.t} {...anim(i + 1)}><time dateTime={new Date(e.t).toISOString()}>{dia(e.t)} <b>{hora(e.t)}</b></time><span className="apr-tag">{e.kind}</span><span className="apr-agenda-texto">{e.label}{e.leitura && <small>{e.leitura}</small>}</span></li>)}
         </ul>
       ) : <p className="apr-vazio">Sem eventos na agenda dos próximos 30 dias.</p>}
       <Rodape>Horário de Brasília · datas conferidas nas fontes oficiais; "previsto" ainda depende de confirmação</Rodape>
@@ -272,24 +370,24 @@ function Agenda({ s }) {
   )
 }
 
-function Perguntas({ s }) {
-  return (
-    <>
-      <h2>Para a conversa</h2>
-      <ol className="apr-perguntas">{s.perguntas.map((p) => <li key={p}>{p}</li>)}</ol>
-      <Rodape>Perguntas de partida; o cliente diz o que pesa de verdade.</Rodape>
-    </>
-  )
-}
-
 function Fim({ s }) {
   return (
     <div className="apr-capa-grade">
-      <div className="apr-capa-texto">
-        <p className="apr-kicker">Em resumo</p>
-        {s.pontos.length ? <ul className="apr-fim-pontos">{s.pontos.map((p) => <li key={p}>{p}</li>)}</ul> : <p className="apr-capa-desc">Os dados de período não estavam disponíveis para resumir.</p>}
-        <p className="apr-capa-setor">Próximo passo: medir o que o cenário muda no caixa de {s.nome}.</p>
-      </div>
+      <p {...anim(0, 'apr-kicker')}>Em resumo</p>
+      {s.pontos.length ? <ul {...anim(1, 'apr-fim-pontos')}>{s.pontos.map((p) => <li key={p}>{p}</li>)}</ul> : <p {...anim(1, 'apr-capa-desc')}>Os dados de período não estavam disponíveis para resumir.</p>}
+      {s.minis?.length > 0 && (
+        <div className="apr-fim-grade" role="list" aria-label="Minigráficos do que foi apresentado">
+          {s.minis.map((m, i) => (
+            <div key={m.key} role="listitem" {...anim(i + 2, 'apr-mini')}>
+              <span className="apr-mini-label">{m.label}</span>
+              <b className="apr-mini-valor">{m.valor}</b>
+              <small className={`apr-mini-var ${m.tom}`}>{m.variacao}</small>
+              {m.pontos.length > 1 && <Sparkline points={m.pontos} tone={m.tom} height={36} />}
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="apr-capa-setor apr-anim" style={cascade((s.minis?.length ?? 0) + 2, 90, 720)}>Próximo passo: medir o que o cenário muda no caixa de {s.nome}.</p>
       <Rodape>Conteúdo informativo, com fontes públicas; não é recomendação. Dados de {dataHora(s.agora)}.</Rodape>
     </div>
   )

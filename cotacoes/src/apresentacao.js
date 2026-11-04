@@ -3,6 +3,7 @@
 import { INSUMOS } from './insumos.js'
 import { nf } from './format.js'
 import { upcoming } from './agenda.js'
+import { explicarEvento } from './calendarImpact.js'
 
 const DIA = 864e5
 
@@ -38,7 +39,7 @@ export const ITEM_IDS = Object.keys(ITENS)
 
 // Setores: a cadeia (o que entra, o que a empresa faz, para quem vende), os itens que entram por padrão e as perguntas para a conversa.
 // A lista nasce da carteira atendida (saúde, farmoquímico, alimentos, confecção, móveis, metalmecânica, construção, telecom, varejo)
-// e cobre o restante do mercado brasileiro (agro, sucroenergético, siderurgia, automotivo, logística). A ordem dos itens é a dos slides.
+// e cobre o restante do mercado brasileiro (agro, sucroenergético, siderurgia, automotivo, logística, comércio por subsetor). A ordem dos itens é a dos slides.
 export const SETORES_APRESENTACAO = [
   { id: 'metalmecanica', grupo: 'Indústria', label: 'Metalmecânica e equipamentos', itens: ['aco', 'cobre', 'aluminio', 'usd', 'eur', 'minerio'],
     cadeia: { entradas: ['Aço e inox', 'Cobre e alumínio', 'Componentes importados (Europa, China)'], processo: 'Usinagem, montagem e integração', saidas: ['Indústria e agro', 'Exportação (ACC/ACE)', 'Projetos com BNDES/Finame'] },
@@ -67,15 +68,37 @@ export const SETORES_APRESENTACAO = [
   { id: 'construcao', grupo: 'Indústria', label: 'Construção pesada e infraestrutura', itens: ['aco', 'cobre', 'petroleo', 'incc', 'usd'],
     cadeia: { entradas: ['Aço e cimento', 'Diesel e asfalto', 'Equipamentos importados'], processo: 'Obras, saneamento e incorporação', saidas: ['Setor público e concessões', 'Incorporação', 'Indústria'] },
     perguntas: ['Os contratos têm reajuste por índice (INCC, aço, diesel)? Com que periodicidade?', 'Importa equipamentos? Em qual moeda?', 'Carteira de obras e prazo de recebimento do poder público?'] },
-  { id: 'telecom', grupo: 'Serviços e comércio', label: 'Telecom e data center', itens: ['usd', 'cnh', 'cobre', 'energia'],
+  { id: 'telecom', grupo: 'Serviços', label: 'Telecom e data center', itens: ['usd', 'cnh', 'cobre', 'energia'],
     cadeia: { entradas: ['Equipamentos e fibra importados', 'Energia elétrica', 'Capital para expansão (CAPEX)'], processo: 'Rede, data center e serviços', saidas: ['Empresas e provedores', 'Nuvem e IA', 'Governo'] },
     perguntas: ['Qual fatia do CAPEX é importada e em qual moeda?', 'Energia: contrato no mercado livre? Qual o peso no custo?', 'Como o juro afeta o plano de expansão e o alongamento da dívida?'] },
-  { id: 'varejo', grupo: 'Serviços e comércio', label: 'Varejo e distribuição', itens: ['usd', 'cnh', 'frete'],
-    cadeia: { entradas: ['Produtos importados (China)', 'Estoque financiado', 'Frete marítimo e interno'], processo: 'Importação, distribuição e venda', saidas: ['Consumidor final', 'E-commerce e marketplaces', 'Franquias e revendas'] },
-    perguntas: ['Qual fatia das compras é importada e com qual prazo de pagamento?', 'Frete marítimo: contrato fechado ou spot? Qual peso no custo?', 'Como a Selic afeta o crédito ao cliente e a inadimplência?'] },
-  { id: 'logistica', grupo: 'Serviços e comércio', label: 'Logística e transporte', itens: ['petroleo', 'frete', 'usd', 'soja', 'milho'],
+  { id: 'logistica', grupo: 'Serviços', label: 'Logística e transporte', itens: ['petroleo', 'frete', 'usd', 'soja', 'milho'],
     cadeia: { entradas: ['Diesel', 'Pneus, peças e veículos (Finame)', 'Mão de obra'], processo: 'Transporte e armazenagem', saidas: ['Indústria e agro', 'Varejo e e-commerce', 'Comércio exterior'] },
     perguntas: ['Os contratos de frete têm cláusula de reajuste pelo diesel?', 'Renovação de frota: Finame, leasing ou recursos próprios?', 'Há operação com cargas importadas ou exportadas? Em qual moeda?'] },
+  // Comércio, por subsetor: o que pesa muda muito entre um supermercado e uma concessionária.
+  { id: 'comercio-supermercados', grupo: 'Comércio', label: 'Supermercados e alimentos', itens: ['trigo', 'milho', 'carne', 'acucar', 'cafe', 'usd'],
+    cadeia: { entradas: ['Alimentos in natura e industrializados', 'Carnes, grãos e laticínios', 'Importados (azeite, vinho, bacalhau)'], processo: 'Compra, logística e venda no ponto de venda', saidas: ['Consumidor final', 'Food service e pequeno varejo', 'E-commerce e entrega'] },
+    perguntas: ['Quais categorias pesam mais na margem e como o fornecedor repassa a commodity (carne, trigo, café)?', 'Prazo médio de pagamento aos fornecedores e giro de estoque?', 'Inflação de alimentos: o cliente troca de marca ou reduz volume?'] },
+  { id: 'comercio-moda', grupo: 'Comércio', label: 'Moda, calçados e esportes', itens: ['usd', 'cnh', 'algodao', 'petroleo'],
+    cadeia: { entradas: ['Confecção e calçado nacionais', 'Importados (China, Vietnã)', 'Coleções com compra antecipada'], processo: 'Compra por coleção, lojas e e-commerce', saidas: ['Consumidor final', 'Franquias', 'Marketplaces'] },
+    perguntas: ['Qual fatia da compra é importada e em qual moeda? Com que antecedência?', 'Crédito ao cliente (cartão próprio, parcelado): inadimplência e custo?', 'Estoque de coleção: quanto fica para liquidação?'] },
+  { id: 'comercio-farmacias', grupo: 'Comércio', label: 'Farmácias e drogarias', itens: ['usd', 'cnh'],
+    cadeia: { entradas: ['Medicamentos (reajuste CMED anual)', 'Insumos importados da indústria (China, Índia)', 'Higiene e beleza'], processo: 'Rede de lojas e distribuição', saidas: ['Consumidor final', 'Convênios e PBM', 'Entrega e e-commerce'] },
+    perguntas: ['Como o reajuste anual da CMED e o câmbio dos insumos chegam ao preço de compra?', 'Mix de genéricos, marca e não medicamentos na margem?', 'Prazo com a indústria e distribuidores; crédito ao cliente?'] },
+  { id: 'comercio-matcon', grupo: 'Comércio', label: 'Materiais de construção', itens: ['aco', 'cobre', 'petroleo', 'incc', 'usd'],
+    cadeia: { entradas: ['Aço, cimento e cobre', 'Tintas, PVC e resinas (petróleo)', 'Acabamentos importados'], processo: 'Lojas, atacado e entrega em obra', saidas: ['Consumidor final e reformas', 'Construtoras', 'Pequenos empreiteiros'] },
+    perguntas: ['Quais categorias seguem commodity (aço, cobre, PVC) e com que defasagem o preço de compra muda?', 'Vendas a prazo para construtoras: prazo e inadimplência?', 'Juros: como afeta a reforma financiada e o crédito imobiliário dos clientes?'] },
+  { id: 'comercio-eletro', grupo: 'Comércio', label: 'Eletro, móveis e e-commerce', itens: ['usd', 'cnh', 'frete', 'aluminio', 'cobre'],
+    cadeia: { entradas: ['Eletroeletrônicos importados ou com componente importado', 'Móveis nacionais', 'Frete marítimo e logística'], processo: 'Lojas, marketplace e crediário', saidas: ['Consumidor final', 'Marketplaces', 'Entrega própria'] },
+    perguntas: ['Qual fatia do sortimento depende do dólar e do yuan? Quem carrega o câmbio: o fornecedor ou a loja?', 'Crediário e cartão: custo do funding e inadimplência?', 'Frete marítimo e prazo de importação: quanto estoque fica em trânsito?'] },
+  { id: 'comercio-veiculos', grupo: 'Comércio', label: 'Veículos, peças e concessionárias', itens: ['aco', 'aluminio', 'usd', 'eur', 'petroleo'],
+    cadeia: { entradas: ['Veículos das montadoras (estoque financiado: floor plan)', 'Peças nacionais e importadas', 'Combustível e serviços'], processo: 'Venda, financiamento e pós-venda', saidas: ['Consumidor final', 'Frotas e empresas', 'Seminovos'] },
+    perguntas: ['Estoque financiado pela montadora: prazo, custo e giro?', 'Peças importadas: qual fatia e em qual moeda?', 'Juros do financiamento ao cliente: quanto da venda depende de crédito?'] },
+  { id: 'comercio-combustiveis', grupo: 'Comércio', label: 'Postos e combustíveis', itens: ['petroleo', 'usd', 'acucar'],
+    cadeia: { entradas: ['Gasolina e diesel (Petrobras e importadores)', 'Etanol (usinas)', 'Loja de conveniência'], processo: 'Revenda e serviços', saidas: ['Consumidor final', 'Frotas e agro', 'Transportadoras'] },
+    perguntas: ['Margem por litro e repasse dos reajustes da distribuidora: com que defasagem?', 'Mix gasolina/etanol/diesel e o peso do etanol (ligado ao açúcar)?', 'Prazo da distribuidora e crédito a frotas?'] },
+  { id: 'comercio-atacado', grupo: 'Comércio', label: 'Atacado e distribuição', itens: ['usd', 'cnh', 'frete', 'trigo', 'milho'],
+    cadeia: { entradas: ['Produtos importados (China) e da indústria nacional', 'Estoque financiado', 'Frete marítimo e interno'], processo: 'Importação, distribuição e venda', saidas: ['Varejo e e-commerce', 'Pequeno comércio', 'Franquias e revendas'] },
+    perguntas: ['Qual fatia das compras é importada e com qual prazo de pagamento?', 'Frete marítimo: contrato fechado ou spot? Qual peso no custo?', 'Como a Selic afeta o crédito ao cliente e a inadimplência?'] },
   { id: 'agro-graos', grupo: 'Agro', label: 'Agro: grãos', itens: ['soja', 'milho', 'trigo', 'algodao', 'fertilizantes', 'usd', 'petroleo'],
     cadeia: { entradas: ['Fertilizantes (importados)', 'Sementes e defensivos', 'Diesel e máquinas'], processo: 'Produção e comercialização da safra', saidas: ['Exportação (China)', 'Esmagamento e ração', 'Cooperativas e tradings'] },
     perguntas: ['Quanto da safra já está vendido e a que preço (em dólar ou em reais)?', 'Insumos comprados em dólar? Com qual prazo (barter, CPR)?', 'Custo de armazenagem e frete até o porto?'] },
@@ -91,6 +114,25 @@ export const GRUPOS_SETORES = [...new Set(SETORES_APRESENTACAO.map((s) => s.grup
 
 // Itens que entram em todo setor (podem ser desmarcados).
 export const TRANSVERSAIS = ['usd']
+
+// O que atravessa toda a cadeia (slide da cadeia): como cada variável chega à importação e à exportação, sem excesso.
+export const TRANSVERSAIS_TEXTO = [
+  { id: 'dolar', label: 'Dólar', texto: 'Importação: encarece insumo, máquina e dívida em moeda estrangeira; Finimp e NDF travam o custo. Exportação: a receita em reais sobe com o dólar, mas o custo interno não cai; ACC/ACE antecipam e protegem a receita.' },
+  { id: 'selic', label: 'Selic', texto: 'Custo do giro (CDI + spread) e do estoque financiado; juro alto freia o crédito ao cliente e torna o caixa aplicado mais rentável. Juro alto tende a atrair fluxo e valorizar o real: barateia a importação e aperta a margem de quem exporta.' },
+  { id: 'inflacao', label: 'Inflação', texto: 'Reajuste de insumos, salários e tarifas e a Selic futura. Quem importa sofre câmbio e inflação ao mesmo tempo; quem exporta vê o custo em reais subir contra a receita em dólar. O repasse ao preço depende da concorrência.' },
+]
+
+// Leitura de uma linha para cada indicador do cenário.
+export const LEITURA_CENARIO = {
+  selic: 'Custo do giro e do estoque financiado; referência para aplicar o caixa.',
+  cdi: 'Base do custo de capital de giro (CDI + spread) e das aplicações.',
+  ipca: 'Pressão de reajuste em insumos e salários; guia a Selic futura.',
+  usd: 'Custo do importado e receita do exportador; move estoque e contratos em moeda.',
+  'focus-Selic': 'Onde o mercado vê a Selic no fim do ano: antecipa o custo do crédito.',
+  'focus-IPCA': 'Inflação esperada para o ano: baliza reajustes e negociações de preço.',
+  emprego: 'Saldo de vagas formais (CAGED): demanda do consumidor e pressão salarial.',
+  inadimplencia: 'Inadimplência acima de 90 dias: risco de crédito ao cliente e apetite dos bancos.',
+}
 
 export const PERIODOS = [
   { dias: 90, label: '3 meses' },
@@ -143,6 +185,13 @@ const ptsMensal = (history) => (history ?? []).map((p) => ({ t: tMes(p.period), 
 const ptsDiario = (serie) => (serie?.points ?? []).map(([t, v]) => ({ t: Number(t), v: Number(v) }))
 const ptsOil = (oil) => (oil?.points ?? []).map((p) => ({ t: Date.parse(`${p.date}T12:00:00Z`), v: Number(p.value) }))
 
+// Dados do gráfico de um item: o trecho mostrado e a série inteira (para arrastar um trecho e comparar com o mesmo trecho
+// do ano anterior), com o formato do valor. Sem pelo menos 2 pontos no trecho, não há gráfico.
+function grafico(janela, serie, { prefixo = '', sufixo = '', casas = 2, mensal = false } = {}) {
+  if (!(janela?.length > 1)) return null
+  return { pontos: janela.map((p) => ({ t: p.t, bid: p.v })), historico: serie.map((p) => ({ t: p.t, bid: p.v })), prefixo, sufixo, casas, mensal }
+}
+
 // Variação do dólar no mesmo período: converte a variação de uma commodity em US$ para reais.
 export function emReais(pctUsd, pctDolar) {
   if (!Number.isFinite(pctUsd) || !Number.isFinite(pctDolar)) return null
@@ -160,7 +209,12 @@ export function dadoItem(item, dados, periodo) {
     if (!(q?.bid > 0)) return { indisponivel: 'Cotação indisponível no momento.' }
     const per = variacaoPeriodo(pontos, periodo.dias, agora)
     const casas = item.code === 'JPY' ? 4 : 2
-    return { valor: q.bid, valorTexto: `R$ ${nf(q.bid, casas)}`, quando: `cotação de ${dmhm(q.timestamp)}`, dia: !q.fallback && Number.isFinite(q.pct) ? q.pct : null, periodo: per, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), stale: !!q.stale,
+    const janela = pontos.filter((p) => p.t >= agora - periodo.dias * DIA)
+    // histórico para o ano anterior: a cotação central (360 dias) completada, para trás, pela referência diária do BCE
+    const bce = (dados.ecb?.[item.code] ?? []).map((p) => ({ t: p.t, v: p.bid })).filter((p) => !pontos.length || p.t < pontos[0].t)
+    const g = grafico(janela, [...bce, ...pontos], { prefixo: 'R$ ', casas })
+    return { valor: q.bid, valorTexto: `R$ ${nf(q.bid, casas)}`, quando: `cotação de ${dmhm(q.timestamp)}`, dia: !q.fallback && Number.isFinite(q.pct) ? q.pct : null, periodo: per, pontos: janela, stale: !!q.stale,
+      grafico: g && bce.length ? { ...g, bce: true } : g,
       frase: `${item.label} a R$ ${nf(q.bid, casas)}: ${per ? `${sinal(per.pct)} em ${periodo.label}` : `sem histórico de ${periodo.label} disponível`}.` }
   }
   if (item.tipo === 'commodity') {
@@ -174,7 +228,9 @@ export function dadoItem(item, dados, periodo) {
     const moeda = item.moeda ?? 'US$', d = c.decimals ?? 1
     const frase = `${item.label} a ${moeda} ${nf(c.value, d)}/${item.unidade} (média de ${mesAno(c.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.` +
       (reais != null ? ` Em reais, ${sinal(reais)}: o dólar ${dolar.pct >= 0 ? 'subiu' : 'caiu'} ${nf(Math.abs(dolar.pct), 1)}% no período.` : '')
-    return { valor: c.value, valorTexto: `${moeda} ${nf(c.value, d)}`, unidade: `${moeda}/${item.unidade}`, unidadeCurta: `/${item.unidade}`, quando: `média de ${mesAno(c.period)} · ${c.benchmark}`, dia: null, mes: Number.isFinite(c.variationPct) ? c.variationPct : null, periodo: per, emReais: reais, dolar, pontos: diario.length > 1 ? diario.filter((p) => p.t >= agora - periodo.dias * DIA) : mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: diario.length > 1 ? `preço diário aproximado (${serie.name ?? 'contrato futuro'})` : 'média mensal', stale: !!c.stale, frase }
+    // Gráfico mensal com pelo menos 12 meses (um trecho de 6 pontos não dá para arrastar e comparar com o ano anterior); 400 dias cobrem a defasagem da publicação.
+    const janela = mensal.filter((p) => p.t >= agora - Math.max(periodo.dias, 400) * DIA)
+    return { valor: c.value, valorTexto: `${moeda} ${nf(c.value, d)}`, unidade: `${moeda}/${item.unidade}`, unidadeCurta: `/${item.unidade}`, grafico: grafico(janela, mensal, { prefixo: `${moeda} `, casas: d, sufixo: `/${item.unidade}`, mensal: true }), quando: `média de ${mesAno(c.period)} · ${c.benchmark}`, dia: null, mes: Number.isFinite(c.variationPct) ? c.variationPct : null, periodo: per, emReais: reais, dolar, pontos: diario.length > 1 ? diario.filter((p) => p.t >= agora - periodo.dias * DIA) : mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: diario.length > 1 ? `preço diário aproximado (${serie.name ?? 'contrato futuro'})` : 'média mensal', stale: !!c.stale, frase }
   }
   if (item.tipo === 'petroleo') {
     const o = dados.oil
@@ -184,7 +240,7 @@ export function dadoItem(item, dados, periodo) {
     const ult = pontos.at(-1), ant = pontos.at(-2)
     const dia = ult && ant ? ((ult.v - ant.v) / ant.v) * 100 : null
     const reais = per && dolar ? emReais(per.pct, dolar.pct) : null
-    return { valor: o.value, valorTexto: `US$ ${nf(o.value, 2)}`, unidade: 'US$/barril', unidadeCurta: '/barril', quando: `Brent spot de ${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}`, dia, periodo: per, emReais: reais, dolar, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'Brent spot diário', stale: !!o.stale,
+    return { valor: o.value, valorTexto: `US$ ${nf(o.value, 2)}`, unidade: 'US$/barril', unidadeCurta: '/barril', grafico: grafico(pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontos, { prefixo: 'US$ ', casas: 2, sufixo: '/barril' }), quando: `Brent spot de ${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}`, dia, periodo: per, emReais: reais, dolar, pontos: pontos.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'Brent spot diário', stale: !!o.stale,
       frase: `Brent a US$ ${nf(o.value, 2)}/barril (${dm(Date.parse(`${o.observationDate}T12:00:00Z`))}): ${per ? `${sinal(per.pct)} em ${periodo.label}, em dólar` : `sem histórico de ${periodo.label}`}.${reais != null ? ` Em reais, ${sinal(reais)}.` : ''} O diesel na bomba segue o Brent e o dólar com defasagem, pela política de preços da Petrobras.` }
   }
   if (item.tipo === 'frete') {
@@ -193,7 +249,7 @@ export function dadoItem(item, dados, periodo) {
     const ult = mensal.at(-1)
     if (!ult) return { indisponivel: 'Índice de frete indisponível no momento.' }
     const per = variacaoPeriodo(mensal, periodo.dias, agora, 35)
-    return { valor: ult.v, valorTexto: nf(ult.v, 1), unidade: 'pontos', unidadeCurta: ' pontos', quando: `índice mensal de ${mesAno(ult.period)} (transporte de carga, EUA)`, dia: null, periodo: per, pontos: mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'índice mensal', stale: !!f.stale,
+    return { valor: ult.v, valorTexto: nf(ult.v, 1), unidade: 'pontos', unidadeCurta: ' pontos', grafico: grafico(mensal.filter((p) => p.t >= agora - Math.max(periodo.dias, 400) * DIA), mensal, { casas: 1, sufixo: ' pontos', mensal: true }), quando: `índice mensal de ${mesAno(ult.period)} (transporte de carga, EUA)`, dia: null, periodo: per, pontos: mensal.filter((p) => p.t >= agora - periodo.dias * DIA), pontosNota: 'índice mensal', stale: !!f.stale,
       frase: `Frete marítimo (índice de preços do transporte de carga, EUA) em ${nf(ult.v, 1)} pontos (${mesAno(ult.period)}): ${per ? `${sinal(per.pct)} em ${periodo.label}` : `sem histórico de ${periodo.label}`}. Não é cotação de rota brasileira nem US$/contêiner.` }
   }
   if (item.tipo === 'noticia') return { semSerie: item.semSerie, frase: item.semSerie }
@@ -223,6 +279,43 @@ export function linhasCenario(dados) {
     const v = row?.values?.[ano]?.median
     if (Number.isFinite(v)) out.push({ key: `focus-${ind}`, label: `Focus ${ano}: ${ind}`, valor: `${nf(v, 2)}%`, nota: `mediana · Focus de ${m.focus.date ? dm(Date.parse(`${m.focus.date}T12:00:00Z`)) : ''}` })
   }
+  return out.map((l) => ({ ...l, leitura: LEITURA_CENARIO[l.key] ?? null }))
+}
+
+const mesCurto = (period) => mesAno(period).replace('/20', '/')
+// Cenário: emprego (saldo do CAGED, 12 meses) e inadimplência PF e PJ (carteira total, 13 meses), para os gráficos abaixo das linhas.
+export function graficosCenario(dados) {
+  const caged = (dados.indicadores ?? []).find((s) => s.id === 'caged')
+  const emprego = (caged?.points ?? []).map((p) => ({ period: p.period, t: tMes(p.period), v: Number(p.value), rotulo: mesCurto(p.period) })).filter((p) => Number.isFinite(p.v) && Number.isFinite(p.t)).slice(-12)
+  const serie = (key) => ((dados.inadimplencia ?? []).find((s) => s.key === key)?.points ?? []).map((p) => ({ t: Number(p.t), v: Number(p.v), period: p.period })).filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v)).slice(-13)
+  const pf = serie('pf-total'), pj = serie('pj-total')
+  return {
+    emprego: emprego.length ? { pontos: emprego, ultimo: emprego.at(-1), acumulado: emprego.reduce((a, p) => a + p.v, 0) } : null,
+    inadimplencia: pf.length || pj.length ? { PF: pf, PJ: pj, ultimo: { PF: pf.at(-1) ?? null, PJ: pj.at(-1) ?? null } } : null,
+  }
+}
+
+// Encerramento: miniaturas de tudo o que foi falado (itens, Selic, IPCA, emprego, inadimplência), cada uma com valor,
+// variação e minigráfico, para embasar o resumo.
+export function miniaturas(slidesItens, dados, periodo) {
+  const out = []
+  for (const s of slidesItens) {
+    const d = s.dado
+    if (!d || d.indisponivel || d.semSerie) continue
+    out.push({ key: s.item.id, label: s.item.label, valor: `${d.valorTexto}${d.unidadeCurta ?? ''}`, variacao: d.periodo ? `${sinal(d.periodo.pct)} em ${periodo.label}` : d.quando, tom: d.periodo ? tom(d.periodo.pct) : 'flat', pontos: (d.pontos ?? []).map((p) => ({ t: p.t, bid: p.v })) })
+  }
+  const agora = dados.agora ?? Date.now()
+  const umAno = agora - 370 * DIA
+  const selic = (dados.macro?.selic ?? []).filter((p) => Array.isArray(p) && p[0] >= umAno).map((p) => ({ t: p[0], bid: p[1] }))
+  if (selic.length) out.push({ key: 'selic', label: 'Selic', valor: `${nf(selic.at(-1).bid, 2)}% a.a.`, variacao: selic.length > 1 ? `${sinal(selic.at(-1).bid - selic[0].bid, 2).replace('%', ' p.p.')} em 12 meses` : 'meta', tom: tom(selic.at(-1).bid - selic[0].bid), pontos: selic })
+  const ipca = (dados.ipca?.points ?? []).filter((p) => Number.isFinite(p.y12)).slice(-13).map((p) => ({ t: tMes(p.period), bid: p.y12 }))
+  if (ipca.length) out.push({ key: 'ipca', label: 'IPCA 12 meses', valor: `${nf(ipca.at(-1).bid, 2)}%`, variacao: ipca.length > 1 ? `${sinal(ipca.at(-1).bid - ipca[0].bid, 2).replace('%', ' p.p.')} em 12 meses` : '', tom: tom(ipca.at(-1).bid - ipca[0].bid), pontos: ipca })
+  const g = graficosCenario(dados)
+  if (g.emprego) out.push({ key: 'emprego', label: 'Emprego formal (CAGED)', valor: `${g.emprego.ultimo.v >= 0 ? '+' : '−'}${nf(Math.abs(g.emprego.ultimo.v), 0)} vagas`, variacao: `${mesAno(g.emprego.ultimo.period)} · ${nf(g.emprego.acumulado, 0)} em 12 meses`, tom: tom(g.emprego.ultimo.v), pontos: g.emprego.pontos.map((p) => ({ t: p.t, bid: p.v })) })
+  for (const k of ['PF', 'PJ']) {
+    const pts = g.inadimplencia?.[k] ?? []
+    if (pts.length) out.push({ key: `inad-${k}`, label: `Inadimplência ${k}`, valor: `${nf(pts.at(-1).v, 2)}%`, variacao: pts.length > 1 ? `${sinal(pts.at(-1).v - pts[0].v, 2).replace('%', ' p.p.')} em 12 meses` : '', tom: tom(pts.at(-1).v - pts[0].v), pontos: pts.map((p) => ({ t: p.t, bid: p.v })) })
+  }
   return out
 }
 
@@ -235,7 +328,15 @@ export function resumoFinal(slidesItens, periodo) {
     .map((s) => `${s.item.label}: ${sinal(s.dado.periodo.pct)} em ${periodo.label}${s.dado.emReais != null ? ` (em reais, ${sinal(s.dado.emReais)})` : ''}.`)
 }
 
-// Roteiro: capa, cenário, cadeia do setor, um slide por item, agenda, perguntas e encerramento.
+// Leitura curta de um evento da agenda: o efeito na economia (evento doméstico) ou o canal até o Brasil (evento externo).
+const PAIS_EVENTO = { FOMC: 'US', Payroll: 'US' }
+export function leituraEvento(e) {
+  const pais = PAIS_EVENTO[e.kind] ?? 'BR'
+  const x = explicarEvento({ title: e.label, country: pais, impact: 'high' })
+  return pais === 'BR' ? x.economia : x.brasil
+}
+
+// Roteiro: perguntas (para o apresentador), capa, cenário, cadeia do setor, um slide por item, agenda e encerramento.
 // cfg: { nome, site, capa, setorId, itens: [ids], periodo: { dias, label } }.
 export function montarRoteiro(cfg, dados) {
   const setor = setorPorId(cfg.setorId)
@@ -249,14 +350,15 @@ export function montarRoteiro(cfg, dados) {
   })
   const perguntas = [...setor.perguntas, ...itens.flatMap((i) => (i.insumo ? INSUMOS.find((x) => x.id === i.insumo)?.visita ?? [] : []))].filter((p, i, a) => a.indexOf(p) === i).slice(0, 8)
   const nome = cfg.capa?.titulo || cfg.nome || ''
+  // Ordem: as perguntas vêm antes da capa, para o apresentador ler o que precisa conversar antes de começar.
   return [
+    { kind: 'perguntas', perguntas, nome, setor },
     { kind: 'capa', nome, setor, capa: cfg.capa ?? null, agora, periodo },
-    { kind: 'cenario', linhas: linhasCenario({ ...dados, agora }), agora },
-    { kind: 'cadeia', setor, transversais: ['Dólar', 'Selic', 'Inflação'] },
+    { kind: 'cenario', linhas: linhasCenario({ ...dados, agora }), graficos: graficosCenario(dados), agora },
+    { kind: 'cadeia', setor, transversais: TRANSVERSAIS_TEXTO },
     ...slidesItens,
-    { kind: 'agenda', eventos: upcoming(new Date(agora), 30).slice(0, 6) },
-    { kind: 'perguntas', perguntas },
-    { kind: 'fim', nome, pontos: resumoFinal(slidesItens, periodo), periodo, agora },
+    { kind: 'agenda', eventos: upcoming(new Date(agora), 30).slice(0, 6).map((e) => ({ ...e, leitura: leituraEvento(e) })) },
+    { kind: 'fim', nome, pontos: resumoFinal(slidesItens, periodo), minis: miniaturas(slidesItens, dados, periodo), periodo, agora },
   ]
 }
 
