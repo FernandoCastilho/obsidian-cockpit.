@@ -11,6 +11,7 @@ const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
    return r.fulfill({json:{generatedAt:Date.now()}});
  }return r.continue()});
  await p.goto(base+'/#cenarios/inadimplencia');await p.locator('.credit-card').first().waitFor();
+ await p.evaluate(()=>{const modal=document.createElement('div');modal.id='qa-protected-modal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');document.body.append(modal)});await p.keyboard.press('Control+Shift+F');assert.equal(await p.locator('.global-search-dialog[open]').count(),0,'não abre sobre outro diálogo');await p.locator('#qa-protected-modal').evaluate(el=>el.remove());
  const trigger=p.getByRole('button',{name:'Buscar em todo o painel'});assert.ok((await trigger.boundingBox()).height>=44);
  if(width===1280)await p.keyboard.press('Control+Shift+F');else await trigger.click();
  const dialog=p.getByRole('dialog',{name:'Buscar no painel'}), input=dialog.getByRole('searchbox');await dialog.waitFor();await input.fill('INADIMPLENCIA');

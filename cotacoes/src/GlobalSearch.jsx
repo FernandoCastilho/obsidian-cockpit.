@@ -12,10 +12,10 @@ export default function GlobalSearch({ onNavigate }) {
   const [open,setOpen]=useState(false), [query,setQuery]=useState(''), [docs,setDocs]=useState([]), [sources,setSources]=useState([]), [pending,setPending]=useState(false), [attempt,setAttempt]=useState(0), [limit,setLimit]=useState(60), [staticError,setStaticError]=useState(false)
   const dialog=useRef(null), input=useRef(null), trigger=useRef(null), previousFocus=useRef(null)
   const deferred=useDeferredValue(query)
-  const show=()=>{if(document.querySelector('dialog[open]'))return;previousFocus.current=document.activeElement;setOpen(true)}
+  const show=()=>{if(document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]'))return;previousFocus.current=document.activeElement;setOpen(true)}
   const close=()=>setOpen(false)
   useEffect(()=>{
-    const key=e=>{if(isSearchShortcut(e) && (!document.querySelector('dialog[open]') || dialog.current?.open)){e.preventDefault();if(dialog.current?.open)input.current?.focus();else{previousFocus.current=document.activeElement;setOpen(true)}}}
+    const key=e=>{if(isSearchShortcut(e) && (!document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]') || dialog.current?.open)){e.preventDefault();if(dialog.current?.open)input.current?.focus();else{previousFocus.current=document.activeElement;setOpen(true)}}}
     document.addEventListener('keydown',key)
     return()=>document.removeEventListener('keydown',key)
   },[])
