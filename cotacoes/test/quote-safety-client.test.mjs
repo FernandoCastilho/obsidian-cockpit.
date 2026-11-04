@@ -253,3 +253,11 @@ test('client safety: an absurd BCE reference is rejected while valid fallback cu
   assert.equal(results.JPY.quote.bid, 0.035)
   assert.equal(results.CNH.quote.bid, 0.8)
 })
+
+test('CNH: cliente recusa pontas defasadas e legado incompatível, sem trocar por CNY',async t=>{
+ const clock=browserClock(t),q=await client(),rows=batch(clock.now,{USDCNH:{timestamp:String((clock.now-2*3600000)/1000)}})
+ const urls=[];globalThis.fetch=async url=>{urls.push(String(url));return json(rows)}
+ const {results}=await q.fetchQuotes(undefined,{direct:true})
+ assert.ok(!results.CNH.quote);assert.match(results.CNH.error,/120 min/)
+ assert.ok(results.USD.quote);assert.equal(urls.length,1)
+})

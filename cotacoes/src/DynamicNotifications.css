@@ -1,0 +1,14 @@
+.dynamic-notices { position: fixed; z-index: 1200; top: calc(72px + env(safe-area-inset-top)); left: 50%; width: min(396px, calc(100% - 24px)); transform: translateX(-50%); pointer-events: none; }
+.dynamic-notice { pointer-events: auto; display: grid; grid-template-columns: minmax(0, 1fr) 44px; padding: 6px; border-radius: 24px; background: var(--fg, #e6edf3); color: var(--bg, #0d1117); box-shadow: 0 8px 24px rgb(0 0 0 / .25); overflow-wrap: anywhere; animation: notice-reveal .32s cubic-bezier(.16, 1, .3, 1); }
+.dynamic-notice button { border: 0; background: transparent; color: inherit; cursor: pointer; font: inherit; min-height: 44px; }
+.dynamic-notice-content { display: flex; align-items: center; gap: 12px; text-align: left; padding: 6px 12px; min-width: 0; }
+.dynamic-notice-content svg { flex-shrink: 0; }
+.dynamic-notice-content strong { display: block; font-size: .9rem; }
+.dynamic-notice-hint { display: block; margin-top: 2px; font-size: .75rem; text-decoration: underline; text-underline-offset: 3px; }
+.dynamic-notice-close { align-self: start; display: grid; place-items: center; }
+.dynamic-notice button:hover { background: rgb(127 127 127 / .15); border-radius: 18px; }
+.dynamic-notice button:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; border-radius: 18px; }
+.dynamic-notice p { grid-column: 1 / -1; margin: 8px 12px 12px; font-size: .85rem; line-height: 1.5; }
+.dynamic-notice[data-error] strong { text-decoration: underline; text-underline-offset: 3px; }
+@keyframes notice-reveal { from { clip-path: inset(0 28% 0 28% round 24px); transform: translateY(-8px); } to { clip-path: inset(0 round 24px); transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .dynamic-notice { animation: none; } }

@@ -3,6 +3,7 @@
 import { MOEDAS_CATALOG } from './moedas-lib.mjs'
 import { BNDES_SERIES } from './bndes-lib.mjs'
 import { isJump } from '../src/jumps.js'
+import { CNH_MAX_LEG_GAP_MS } from '../src/quoteSafety.js'
 const PAIRS = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
 const CODES = ['USD', 'EUR', 'JPY', 'CNH']
 const pos = (v) => Number.isFinite(Number(v)) && Number(v) > 0
@@ -40,7 +41,7 @@ export function validateQuotes(file, now = Date.now()) {
     const cnh = num(q.USDBRL.bid) / num(q.USDCNH.ask)
     if (cnh < RANGE.CNH[0] || cnh > RANGE.CNH[1]) add('quotes', `CNH/BRL cruzado fora do plausível (${cnh.toFixed(4)})`)
     const gap = Math.abs(num(q.USDBRL.timestamp) - num(q.USDCNH.timestamp))
-    if (gap > 3600) add('quotes', `pontas do CNH com ${Math.round(gap / 60)} min de diferença (cruzamento distorcido)`)
+    if (gap * 1000 > CNH_MAX_LEG_GAP_MS && !(file.rejected?.CNH && (!file.cnh || file.cnh.stale))) add('quotes', `pontas do CNH com ${Math.round(gap / 60)} min de diferença (cruzamento distorcido)`)
   }
   for (const [code, key] of Object.entries(PAIRS)) {
     const r = q[key]; const [lo, hi] = RANGE[code]

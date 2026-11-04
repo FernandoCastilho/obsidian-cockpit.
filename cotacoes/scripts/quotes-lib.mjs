@@ -4,7 +4,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { mergeSnapshots } from './intraday-lib.mjs'
-import { RAW_PAIRS, rawQuoteError, cnhCross, cnhQuoteError, withCnhVariation } from '../src/quoteSafety.js'
+import { RAW_PAIRS, rawQuoteError, cnhCross, cnhQuoteError, cnhTimingError, withCnhVariation } from '../src/quoteSafety.js'
 
 export const ALL = 'USD-BRL,EUR-BRL,JPY-BRL,USD-CNH'
 const SNAP = { USD: 'USDBRL', EUR: 'EURBRL', JPY: 'JPYBRL' }
@@ -62,9 +62,9 @@ export async function collect({ dir, key, fetchFn = fetch, now = Date.now(), tri
   // O cruzamento tem seu próprio último valor válido: nunca mistura uma ponta nova com outra rejeitada.
   let cnh = accepted.USDBRL && accepted.USDCNH ? cnhCross(accepted.USDBRL, accepted.USDCNH, now) : null
   if (!cnh) {
-    rejected.CNH = rejected.USDBRL || rejected.USDCNH || 'CNH: cruzamento inválido'
+    rejected.CNH = rejected.USDBRL || rejected.USDCNH || cnhTimingError(accepted.USDBRL, accepted.USDCNH) || 'CNH: cruzamento inválido'
     let previousCnh = previous?.cnh
-    if (cnhQuoteError(previousCnh, now)) {
+    if (cnhQuoteError(previousCnh, now) || (!previousCnh?.legTimestamps && cnhTimingError(previous?.quotes?.USDBRL,previous?.quotes?.USDCNH))) {
       const oldLegRetained = previous?.quotes?.USDBRL?.stale || previous?.quotes?.USDCNH?.stale
       previousCnh = oldLegRetained ? null : cnhCross(previous?.quotes?.USDBRL, previous?.quotes?.USDCNH, now)
     }

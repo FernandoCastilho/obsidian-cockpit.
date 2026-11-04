@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { DATA_POLL_MS, startVisiblePolling } from './visiblePolling.js'
-import { rawQuoteError, cnhCross, cnhQuoteError, withCnhVariation } from './quoteSafety.js'
+import { rawQuoteError, cnhCross, cnhQuoteError, withCnhVariation, cnhTimingError } from './quoteSafety.js'
 
 export const CURRENCIES = [
   { code: 'USD', name: 'Dólar americano', flag: '🇺🇸', sources: ['USD'] },
@@ -101,10 +101,10 @@ async function complete(code, batch, batchError, signal, { cnh, rejected = {} } 
   let quote = null
   if (batch) {
     if (code === 'CNH') {
-      const sourceError = rejected.USDBRL || rejected.USDCNH || rawQuoteError(batch.USDBRL, 'USDBRL') || rawQuoteError(batch.USDCNH, 'USDCNH')
+      const sourceError = rejected.USDBRL || rejected.USDCNH || rawQuoteError(batch.USDBRL, 'USDBRL') || rawQuoteError(batch.USDCNH, 'USDCNH') || cnhTimingError(batch.USDBRL,batch.USDCNH)
       const retainedLeg = batch.USDBRL?.stale || batch.USDCNH?.stale
       if (cnh) {
-        const invalid = cnhQuoteError(cnh)
+        const invalid = cnhQuoteError(cnh) || (!cnh.legTimestamps && cnhTimingError(batch.USDBRL,batch.USDCNH))
         if (invalid) errors.push(invalid)
         else {
           quote = withCnhVariation(cnh)

@@ -17,9 +17,16 @@ export function rawQuoteError(q, pair, now = Date.now()) {
   return ''
 }
 
+export const CNH_MAX_LEG_GAP_MS = 3600000
+export function cnhTimingError(brl, cnh) {
+  const gap = Math.abs(Number(brl?.timestamp) - Number(cnh?.timestamp)) * 1000
+  return Number.isFinite(gap) && gap > CNH_MAX_LEG_GAP_MS ? `CNH: pontas com ${Math.round(gap/60000)} min de diferença; aguardando referências compatíveis` : ''
+}
+
 export function cnhQuoteError(q, now = Date.now()) {
   if (!q || q.source !== 'CNH' || q.cross !== true) return 'CNH: cruzamento ausente'
   if (['bid', 'ask', 'high', 'low', 'timestamp'].some(k => !positive(q[k])) || (q.pct !== null && !Number.isFinite(q.pct)) || (q.delta !== null && !Number.isFinite(q.delta))) return 'CNH: cruzamento inválido'
+  if (q.legTimestamps && (Object.values(q.legTimestamps).some(t=>!positive(t)) || Math.abs(q.legTimestamps.USDBRL-q.legTimestamps.USDCNH)>CNH_MAX_LEG_GAP_MS || q.timestamp!==Math.min(q.legTimestamps.USDBRL,q.legTimestamps.USDCNH))) return 'CNH: horários de origem incompatíveis'
   if (q.timestamp > now + 60000 || !withinRange(q, 'CNHBRL') || q.high < q.low || q.bid > q.ask * 1.001) return 'CNH: cruzamento fora da faixa de segurança'
   return ''
 }
@@ -35,7 +42,7 @@ export function withCnhVariation(quote) {
 }
 
 export function cnhCross(brl, cnh, now = Date.now()) {
-  if (rawQuoteError(brl, 'USDBRL', now) || rawQuoteError(cnh, 'USDCNH', now)) return null
+  if (rawQuoteError(brl, 'USDBRL', now) || rawQuoteError(cnh, 'USDCNH', now) || cnhTimingError(brl,cnh)) return null
   const n = Number
   const bid = n(brl.bid) / n(cnh.ask)
   let previousBid = null
@@ -49,6 +56,7 @@ export function cnhCross(brl, cnh, now = Date.now()) {
   }
   const quote = withCnhVariation({
     source: 'CNH', cross: true, previousBid,
+    legTimestamps: {USDBRL:n(brl.timestamp)*1000,USDCNH:n(cnh.timestamp)*1000},
     bid, ask: n(brl.ask) / n(cnh.bid),
     high: n(brl.high) / n(cnh.low), low: n(brl.low) / n(cnh.high),
     timestamp: Math.min(n(brl.timestamp), n(cnh.timestamp)) * 1000,

@@ -262,3 +262,27 @@ test('safety: rejects invalid required fields, inconsistent prices and future da
   assert.equal(rawQuoteError(batch(START).USDCNH, 'USDCNH', START), '')
   assert.ok(cnhCross(q, batch(START).USDCNH, START), 'raw USD/CNH is not mistaken for CNH/BRL')
 })
+
+test('CNH: defasagem acima de uma hora retém cruzamento e não cria ponto',async t=>{
+ const dir=await directory(t)
+ await collectBatch(dir,START,batch(START));const before=await files(dir)
+ const now=START+2*3600000
+ await collectBatch(dir,now,batch(now,{USDCNH:{timestamp:String(START/1000)}}))
+ const after=await files(dir)
+ assertRetainedCnh(after.snapshot.cnh,before.snapshot.cnh)
+ assert.match(after.snapshot.rejected.CNH,/120 min/)
+ assert.deepEqual(after.intraday.series.CNH.points,before.intraday.series.CNH.points)
+ assert.equal(after.snapshot.quotes.USDBRL.timestamp,String(now/1000))
+ await collectBatch(dir,now+STEP,batch(now+STEP));const recovered=await files(dir)
+ assertFresh(recovered.snapshot.cnh);assert.equal(recovered.snapshot.cnh.timestamp,now+STEP)
+})
+test('CNH: sem histórico não fabrica cruzamento defasado; limite de uma hora é inclusivo',async t=>{
+ const dir=await directory(t),now=START+2*3600000
+ await collectBatch(dir,now,batch(now,{USDCNH:{timestamp:String(START/1000)}}))
+ assert.equal((await files(dir)).snapshot.cnh,null)
+ const {cnhCross}=await import('../src/quoteSafety.js')
+ const q=batch(now,{USDCNH:{timestamp:String((now-3600000)/1000)}})
+ assert.ok(cnhCross(q.USDBRL,q.USDCNH,now))
+ q.USDCNH.timestamp=String((now-3600001)/1000)
+ assert.equal(cnhCross(q.USDBRL,q.USDCNH,now),null)
+})

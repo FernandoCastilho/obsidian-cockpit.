@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { collectedAt, useCollectedAt } from './useDataFile.js'
 import { requestRefresh } from './refreshBus.js'
 import './RefreshButton.css'
+import { useDynamicNotifications } from './DynamicNotifications.jsx'
 
 const stampText = (t) => new Date(t).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 const hm = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
@@ -10,25 +11,27 @@ const hm = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', min
 //  - files: relê os arquivos de dados do painel (a coleta é horária: traz o que houver de novo publicado);
 //  - custom: { run, busy, disabled, title } para o câmbio, que consulta a API direto (com limite por navegador).
 // `somenteData`: mostra só "Atualizado em", sem o botão (painéis que se atualizam sozinhos, como as Notícias do Mercado).
-export default function RefreshButton({ files = [], label, custom, somenteData = false }) {
+export default function RefreshButton({ files = [], label = 'painel', custom, somenteData = false }) {
+  const notify = useDynamicNotifications()
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const timer = useRef(null)
   const stamp = useCollectedAt(custom ? [] : files)
   useEffect(() => () => clearTimeout(timer.current), [])
-  const say = (m) => { setMsg(m); clearTimeout(timer.current); timer.current = setTimeout(() => setMsg(''), 9000) }
+  const say = (m, error = false) => { notify({ title: error ? `Falha ao atualizar ${label}` : `${label}: consulta concluída`, message: m, error }); setMsg(m); clearTimeout(timer.current); timer.current = setTimeout(() => setMsg(''), 9000) }
   const run = async () => {
+    if (busy || custom?.busy || custom?.disabled) return
     if (custom) {
       setBusy(true)
-      try { const ok = await custom.run(); say(ok === false ? 'Não foi possível atualizar agora' : `Atualizado às ${hm(Date.now())}`) } finally { setBusy(false) }
+      try { const ok = await custom.run(); say(ok === false ? 'Não foi possível atualizar agora' : `Consultado às ${hm(Date.now())}`, ok === false) } catch { say('Não foi possível atualizar agora. Tente novamente.', true) } finally { setBusy(false) }
       return
     }
     setBusy(true)
     try {
       const { failed } = await requestRefresh(files)
       const at = collectedAt(files)
-      say(failed ? 'Não foi possível atualizar agora' : at ? `Consultado às ${hm(Date.now())} · coleta das ${hm(at)}` : `Consultado às ${hm(Date.now())}`)
-    } finally { setBusy(false) }
+      say(failed ? 'Não foi possível atualizar agora' : at ? `Consultado às ${hm(Date.now())} · coleta das ${hm(at)}` : `Consultado às ${hm(Date.now())}`, Boolean(failed))
+    } catch { say('Não foi possível atualizar agora. Tente novamente.', true) } finally { setBusy(false) }
   }
   const working = busy || custom?.busy
   const title = custom?.title ?? 'Atualizar este painel. O botão traz o último dado publicado.'
@@ -36,13 +39,12 @@ export default function RefreshButton({ files = [], label, custom, somenteData =
     <span className="refresh-wrap">
       {stamp && <small className="refresh-stamp"><span className="refresh-stamp__lbl">Atualizado em </span>{stampText(stamp)}</small>}
       {msg && <small className="refresh-msg" aria-hidden="true">{msg.replace(/^Consultado às /, '').replace(' · coleta das ', ' · coleta ')}</small>}
-      {!somenteData && <button type="button" className="refresh-btn" onClick={run} disabled={working || custom?.disabled} aria-label={`Atualizar ${label}`} title={title}>
+      {!somenteData && <button type="button" className="refresh-btn" onClick={run} disabled={custom?.disabled} aria-disabled={working || undefined} aria-label={`Atualizar ${label}`} title={title}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={working ? 'spin' : ''} aria-hidden="true">
           <path d="M20 11a8 8 0 00-14.5-4.6M4 4v4h4" />
           <path d="M4 13a8 8 0 0014.5 4.6M20 20v-4h-4" />
         </svg>
       </button>}
-      <span className="sr-only" role="status">{msg}</span>
     </span>
   )
 }
