@@ -79,7 +79,7 @@ export default function FinameMateriais({ onBack }) {
     bndes: taxaBndes !== null && taxaBndes <= 100 ? null : 'Informe a taxa do BNDES em % a.a.',
     agente: taxaAgente !== null && taxaAgente <= 100 ? null : 'Informe a taxa do agente em % a.a.',
     ipca: custo === 'tlp' && !Number.isFinite(ipca) ? 'Informe o IPCA esperado em % a.a.' : null,
-    iof: iofFixo !== null && iofFixo <= 100 && iofDiario !== null && iofDiario <= 100 ? null : 'Informe as alíquotas do IOF em %: 0 e 0 sem incidência (padrão), ou 0,38 e 0,0082 se o agente cobrar.',
+    iof: iofFixo !== null && iofFixo <= 100 && iofDiario !== null && iofDiario <= 100 ? null : 'Informe as alíquotas do IOF em %: 0 e 0 na alíquota zero (padrão), ou 0,38 e 0,0082 se o agente cobrar.',
   }
   const pronto = !Object.values(erros).some(Boolean) && Number.isFinite(custoFinanceiro)
   const r = pronto ? simular({ valor: money.value, participacao, prazo, carencia, custo, custoFinanceiro, ipca: custo === 'tlp' ? ipca : 0, taxaBndes, taxaAgente, sistema, periodicidade, composicao, iof: { fixed: iofFixo, daily: iofDiario } }) : null
@@ -164,7 +164,7 @@ export default function FinameMateriais({ onBack }) {
             <p className="cx-hint">{COMPOSICOES.find((c) => c.id === composicao).hint}.</p>
           </div>
           <details className="cx-iof">
-            <summary>IOF (padrão: sem incidência)</summary>
+            <summary>IOF (padrão: alíquota zero)</summary>
             <div className="cx-iof-fields">
               <div className="cx-field">
                 <label htmlFor="fm-iof-fixo">Adicional, uma vez (%)</label>
@@ -194,7 +194,7 @@ export default function FinameMateriais({ onBack }) {
               <div className="fm-kpi"><span>Juros na carência</span><b>{brl(res.jurosCarencia)}</b><small>{carencia} {carencia === 1 ? 'mês' : 'meses'} · {PERIODICIDADES.find((p) => p.id === periodicidade).label.toLowerCase()}</small></div>
               <div className="fm-kpi"><span>Parcelas</span><b>{brl(res.primeiraParcela)}</b><small>{res.parcelasAmortizacao}x mensais{sistema === 'sac' ? ` · última ${brl(res.ultimaParcela)}` : custo === 'tlp' ? ` · última ${brl(res.ultimaParcela)} (crescem com o IPCA)` : ' · iguais'}</small></div>
               <div className="fm-kpi"><span>Juros totais</span><b>{brl(res.juros)}</b><small>{pct((res.juros / res.financiado) * 100, 1)} do financiado{custo === 'tlp' ? ` · correção pelo IPCA ${brl(res.correcao)} (projeção)` : ''}</small></div>
-              <div className="fm-kpi"><span>IOF</span><b>{brl(res.iof)}</b><small>{res.iof > 0 ? `${brl(res.iofFixo)} adicional + ${brl(res.iofDiario)} diário` : 'sem incidência (prática de mercado); edite se o agente cobrar'}</small></div>
+              <div className="fm-kpi"><span>IOF</span><b>{brl(res.iof)}</b><small>{res.iof > 0 ? `${brl(res.iofFixo)} adicional + ${brl(res.iofDiario)} diário` : 'alíquota zero: recursos da FINAME (art. 8º, IX)'}</small></div>
               <div className="fm-kpi"><span>Pagamento final</span><b>{brl(res.total)}</b><small>financiado + juros{custo === 'tlp' ? ' + correção IPCA' : ''}{res.iof > 0 ? ' + IOF' : ''}</small></div>
             </div>
             {spread != null && <p className="cx-hint cx-pad">Equivale a <b>CDI + {pct(spread, 2)} a.a.</b> (spread capitalizado sobre o CDI de hoje, {pct(cdi, 2)}): compare com o capital de giro.{custo === 'tlp' ? ' Na TLP, o custo real muda com o IPCA efetivo; a projeção usa o IPCA esperado.' : ''}</p>}
@@ -206,7 +206,7 @@ export default function FinameMateriais({ onBack }) {
       {res && (
         <article className="desk-panel cx-panel fm-fluxo-panel">
           <header><h3>Fluxo parcela a parcela</h3></header>
-          <p className="cx-hint cx-pad">Vencimentos no mesmo dia de cada mês a partir da liberação, considerada hoje ({data(hoje)}); o agente define as datas reais. IOF adicional cobrado na liberação e IOF diário em cada parcela{custo === 'tlp' ? '; correção pelo IPCA projetada, aplicada ao saldo antes dos juros' : ''}.</p>
+          <p className="cx-hint cx-pad">Vencimentos no mesmo dia de cada mês a partir da liberação, considerada hoje ({data(hoje)}); o agente define as datas reais. IOF adicional na liberação e IOF diário em cada parcela, quando houver{custo === 'tlp' ? '; correção pelo IPCA projetada, aplicada ao saldo antes dos juros' : ''}.</p>
           <div className="cx-wrap fm-fluxo" role="region" aria-label="Fluxo parcela a parcela" tabIndex={0}>
             <table className="cx-matrix fm-tabela">
               <thead><tr><th scope="col">Nº</th><th scope="col">Vencimento</th><th scope="col">Saldo inicial</th>{custo === 'tlp' && <th scope="col">Correção IPCA</th>}<th scope="col">Juros</th><th scope="col">Amortização</th><th scope="col">Parcela</th><th scope="col">IOF</th><th scope="col">Total pago</th><th scope="col">Saldo final</th></tr></thead>

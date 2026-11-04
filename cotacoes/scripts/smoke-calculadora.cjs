@@ -93,7 +93,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.match(await fm.locator('.fm-kpi', { hasText: 'Parcelas' }).innerText(), /48x mensais/)
       // IOF: sem incidência por padrão (prática de mercado); PJ quando o agente cobra
       const iofKpi = fm.locator('.fm-kpi', { has: p.locator('span', { hasText: /^IOF$/ }) })
-      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+sem incidência/)
+      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+alíquota zero: recursos da FINAME/)
       const taxaCap = await kpi('Taxa final')
       await fm.getByRole('button', { name: 'Somada' }).click()
       assert.notEqual(await kpi('Taxa final'), taxaCap, 'composição somada muda a taxa')
@@ -105,7 +105,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByLabel('Diária (% ao dia)').fill('x'); assert.match(await fm.locator('#fm-iof-err').innerText(), /alíquotas do IOF/)
       await fm.getByLabel('Adicional, uma vez (%)').fill('0'); await fm.getByLabel('Diária (% ao dia)').fill('0')
       await fm.locator('.fm-grade').waitFor()
-      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+sem incidência/)
+      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+alíquota zero: recursos da FINAME/)
       await fm.locator('.fm-regras summary').click(); assert.match(await fm.locator('.fm-regras').innerText(), /Base legal e onde cada regra foi conferida/); await fm.locator('.fm-regras summary').click()
       // regra: carência acima de 12 com TFB é erro; com TLP, até 24
       await fm.getByLabel('Carência (meses)').fill('18')
