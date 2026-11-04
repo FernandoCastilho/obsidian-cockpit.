@@ -3,6 +3,7 @@
 // Ao criar ou trocar uma fonte, atualize esta lista (o teste confere que todo arquivo coletado tem linha aqui).
 // Campos: nome (o que é), orgao (quem publica), api (endereço consultado pelo coletor; {x} = parte variável),
 // pagina (página pública para conferir), arquivo (arquivo publicado que o app lê), serie (código/identificador), freq (como é coletado).
+import { CREDIT_SERIES } from './inadimplencia.js'
 import { TLP_LABEL } from './tlp.js'
 const SGS = (c) => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${c}/dados?formato=json`
 const EIA = 'https://www.eia.gov/dnav/pet/hist/'
@@ -10,6 +11,7 @@ const PINK = 'https://www.worldbank.org/en/research/commodity-markets'
 const AWESOME = 'https://economia.awesomeapi.com.br/json'
 
 export const BASE_DADOS = [
+  { grupo: 'Inadimplência', itens: CREDIT_SERIES.map(s => ({ nome: `Inadimplência ${s.person} · ${s.type}`, orgao: 'Banco Central do Brasil', api: SGS(s.code), pagina: `https://www3.bcb.gov.br/sgspub/consultarmetadados/consultarMetadadosSeries.do?method=consultarMetadadosSeriesInternet&hdOidSerie=${s.code}`, arquivo: 'inadimplencia.json', serie: `SGS ${s.code} · percentual do saldo com atraso superior a 90 dias`, freq: 'Mensal; consulta central a cada 6 horas em dias úteis. Comparabilidade em 2025: https://www.bcb.gov.br/content/ri/relatorioinflacao/202509/rpm202509b6p.pdf' })) },
   { grupo: 'Câmbio', itens: [
     { nome: 'Cotações atuais: dólar, euro, iene e yuan (CNH)', orgao: 'AwesomeAPI', api: `${AWESOME}/last/USD-BRL,EUR-BRL,JPY-BRL,USD-CNH`, pagina: 'https://docs.awesomeapi.com.br/api-de-moedas', arquivo: 'quotes.json', serie: 'USD-BRL, EUR-BRL, JPY-BRL, USD-CNH', freq: 'A cada 5 min no pregão; 1 vez por hora fora dele (dias úteis)' },
     { nome: 'Yuan em reais (CNY/BRL)', orgao: 'AwesomeAPI (cálculo próprio)', api: `${AWESOME}/last/USD-BRL,USD-CNH`, pagina: 'https://docs.awesomeapi.com.br/api-de-moedas', arquivo: 'quotes.json', serie: 'USD/BRL ÷ USD/CNH', freq: 'Junto das cotações atuais. É um cruzamento, não uma cotação direta' },

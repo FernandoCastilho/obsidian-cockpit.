@@ -6,6 +6,7 @@ import { quoteHealth } from './dataHealth.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
 const Calculadora = lazy(() => import('./Calculadora.jsx'))
+const Inadimplencia = lazy(() => import('./Inadimplencia.jsx'))
 const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
 import ChartFilters from './ChartFilters.jsx'
@@ -54,6 +55,7 @@ const COLORS = { USD: '#ffb000', EUR: '#4cc3ff', JPY: '#199e70', CNH: '#a371f7',
 const CEN_VIEWS = [
   { id: 'projecoes', label: 'Projeções' },
   { id: 'calendario', label: 'Calendário econômico' },
+  { id: 'inadimplencia', label: 'Inadimplência' },
   { id: 'atividade', label: 'Atividade e emprego' },
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
@@ -306,7 +308,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'inflacao' || cenView === 'fiscal' ? <Outros macro={macro} part={cenView} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'inflacao' || cenView === 'fiscal' ? <Outros macro={macro} part={cenView} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : cenView === 'inadimplencia' ? <Inadimplencia /> : <MarketContext part={cenView} />}
         </>
       )}
 
