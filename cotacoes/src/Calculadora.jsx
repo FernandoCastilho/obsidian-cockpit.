@@ -3,6 +3,7 @@ import './Calculadora.css'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
 import { IOF_PJ, SYSTEMS, compareSystems, parseDecimal } from './emprestimo.js'
+import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -19,7 +20,10 @@ function GiroIcon() {
   )
 }
 
-const CALCS = [{ id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon }]
+const CALCS = [
+  { id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon },
+  { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxa final, carência, SAC ou Price e cronograma, com TFB ou TLP do painel', Icon: FinameIcon },
+]
 
 function CapitalDeGiro({ onBack }) {
   const [valueText, setValueText] = useState('100.000,00')
@@ -152,6 +156,7 @@ function CapitalDeGiro({ onBack }) {
 // Aba Calculadoras: lista de calculadoras (ícones) e a calculadora aberta, com endereço próprio (#calculadora/giro).
 export default function Calculadora({ view, onView }) {
   if (view === 'giro') return <CapitalDeGiro onBack={() => onView('')} />
+  if (view === 'finame-materiais') return <FinameMateriais onBack={() => onView('')} />
   return (
     <section className="cx" aria-labelledby="calc-title">
       <h2 id="calc-title" className="cx-title">Calculadoras</h2>
