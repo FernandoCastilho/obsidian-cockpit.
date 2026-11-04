@@ -156,11 +156,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      const agora = Date.now(), h = 36e5
-      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * h })
+      const agora = Date.now(), min = 60e3 // `atras` em minutos: perto da meia-noite, horas atrás caem em ontem
+      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * min })
       const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
-        mat('Imposto seletivo entra em debate na Câmara', 30, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55, 'Valor Econômico')] }
+        mat('Imposto seletivo entra em debate na Câmara', 30 * 60, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55 * 60, 'Valor Econômico')] }
       await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
       // matéria de 1 minuto atrás (não 1 hora): perto da meia-noite, 1 hora atrás cai em ontem e a quebra por dia deixa de dizer "Hoje"
       const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
