@@ -63,9 +63,10 @@ export function Plot({ points, scales = true, ...props }) {
 }
 
 // `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
-function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, rate = nice, labels, light, dateLabel, history, step = false, compare = !intraday }) {
+function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, rate = nice, labels, light, dateLabel, history, step = false, compare = !intraday, compareReason = 'esta visão intradiária não contém histórico comparável.' }) {
   const [hover, setHover] = useState(null)
   const [sel, setSel] = useState(null)
+  const [dragging, setDragging] = useState(false)
   const drag = useRef(null)
   const sig = `${base.length}:${base[0]?.t}:${base[base.length - 1]?.t}`
   useEffect(() => { setSel(null) }, [sig])
@@ -74,12 +75,12 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
   const prior = useMemo(() => (range && compare ? priorYear(history ?? base, range.t0, range.t1, step) : null), [range, compare, history, base, step])
   // com um trecho selecionado, o gráfico se estende para trás até o mesmo trecho do ano anterior
   const points = useMemo(() => {
-    if (!prior || prior.t0 >= base[0].t) return base
+    if (dragging || !prior || prior.t0 >= base[0].t) return base
     const src = history ?? base
     const from = prior.t0 - Math.max(2 * 864e5, (base[base.length - 1].t - prior.t0) * 0.03)
     const ext = src.filter((p) => p.t >= from && p.t <= base[base.length - 1].t)
     return ext.length > 1 ? ext : base
-  }, [prior, base, history])
+  }, [prior, base, history, dragging])
   const [announcement, setAnnouncement] = useState('')
   const plotId = useId()
   const g = useMemo(() => {
@@ -148,12 +149,16 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
     setSel({ a: d.point, b: points[best] })
   }
   const onDown = (e) => {
+    if (e.button !== 0 || points.length < 2) return
     const { px, best } = pointAt(e)
     setHover(best)
-    drag.current = { px, point: points[best], moved: false, had: sel != null }
+    setDragging(true)
+    drag.current = { px, point: points[best], moved: false, had: sel != null, before: sel }
     try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* sem captura: o arrasto segue dentro do gráfico */ }
   }
+  const onCancel = () => { setDragging(false); if (drag.current) setSel(drag.current.before); drag.current = null }
   const onUp = () => {
+    setDragging(false)
     // toque simples, sem arrastar, desfaz a seleção anterior
     if (drag.current && !drag.current.moved && drag.current.had) setSel(null)
     drag.current = null
@@ -206,7 +211,8 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
         onPointerMove={onMove}
         onPointerDown={onDown}
         onPointerUp={onUp}
-        onPointerCancel={onUp}
+        onPointerCancel={onCancel}
+        style={{ touchAction: 'pan-y' }}
       >
         <defs>
           <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
@@ -268,6 +274,8 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
           {compare && (prior
             ? <span><b>Ano anterior</b> {when(prior.t0)} → {when(prior.t1)}: <em className={tone(prior.delta)}>{fmtPct(prior.pct)}{rate && ' rel.'} · {abs(prior.delta)}</em> {Number.isFinite(range.pct) && Number.isFinite(prior.pct) && <> · diferença <em>{rate ? signed(range.delta - prior.delta, 2) : signed(range.pct - prior.pct, 2)} p.p.</em></>}</span>
             : <span className="muted"><b>Ano anterior</b> indisponível: o histórico não cobre esse trecho.</span>)}
+          {!compare && <span className="muted"><b>Ano anterior</b> indisponível: {compareReason}</span>}
+          {prior && !step && <span className="muted">Datas diárias sem publicação usam a última observação disponível em até 7 dias; meses ausentes não são preenchidos.</span>}
           <button type="button" className="sel-clear" onClick={() => setSel(null)}>Limpar seleção</button>
         </div>
       )}

@@ -1,12 +1,9 @@
+import { previousYear, seriesFrequency, compareWindow } from './chartComparison.js'
 // Seleção de um trecho do gráfico: variação do trecho e do mesmo trecho um ano antes.
 const DAY = 864e5
 export const YEAR_TOLERANCE = 7 * DAY
 
-export function yearBefore(t) {
-  const d = new Date(t)
-  d.setFullYear(d.getFullYear() - 1)
-  return d.getTime()
-}
+export const yearBefore = previousYear
 
 // Último ponto em ou antes de t. `hold` (séries em degraus, como a meta Selic) aceita qualquer distância;
 // nas demais, ponto a mais de 7 dias de t não vale como valor naquela data.
@@ -33,6 +30,10 @@ export function rangeStats(points, i, j) {
 // `segment` traz os pontos do trecho anterior para sobrepor ao gráfico.
 export function priorYear(history, t0, t1, hold = false) {
   if (!Array.isArray(history) || history.length < 2) return null
+  if (!hold && seriesFrequency(history) === 'month') {
+    const r = compareWindow(history, t0, t1, { frequency: 'month', prior: true })
+    return r ? { ...r, segment: r.segment.map(p => ({ ...p, bid: p.bid })) } : null
+  }
   const p0 = yearBefore(t0), p1 = yearBefore(t1)
   const v0 = valueAt(history, p0, hold), v1 = valueAt(history, p1, hold)
   if (v0 == null || v1 == null) return null

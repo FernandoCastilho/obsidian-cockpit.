@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
 import RefreshButton from './RefreshButton.jsx'
@@ -170,7 +171,7 @@ function endLabels(norm, y) {
 }
 
 // Linhas sobrepostas em variação % desde o início do período (escalas diferentes ficam comparáveis).
-function MultiPlot({ series, width, intraday }) {
+function MultiPlot({ series, width, intraday, history = series }) {
   const H = 240
   const M = { t: 12, r: 64, b: 28, l: 52 }
   const [hover, setHover] = useState(null)
@@ -204,7 +205,7 @@ function MultiPlot({ series, width, intraday }) {
     if (next != null) { e.preventDefault(); setHover(times[next]) }
   }
   return (
-    <><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} onKeyDown={onKey} onFocus={() => setHover(t0)} aria-label="Variação percentual das moedas selecionadas no período; use setas, Home e End para consultar amostras" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
+    <><ChartComparison margin={M} series={series.map(s=>({key:s.code,name:s.code,points:s.points}))} history={history.map(s=>({key:s.code,points:s.points}))} unavailable={intraday ? 'A visão intradiária não contém histórico anual comparável.' : ''}><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} onKeyDown={onKey} onFocus={() => setHover(t0)} aria-label="Variação percentual das moedas selecionadas no período; use setas, Home e End para consultar amostras" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
       {yTicks.map((v) => (
         <g key={v}>
           <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke="var(--line)" />
@@ -253,7 +254,7 @@ function MultiPlot({ series, width, intraday }) {
           })()}
         </g>
       )}
-    </svg><p className="chart-access-text" role="status" aria-live="polite">{hover != null && `${fmtX(hover)} · ${norm.map(s => s.code + ': ' + pct(at(s,hover).v)).join(' · ')}`}</p></>
+    </svg></ChartComparison><p className="chart-access-text" role="status" aria-live="polite">{hover != null && `${fmtX(hover)} · ${norm.map(s => s.code + ': ' + pct(at(s,hover).v)).join(' · ')}`}</p></>
   )
 }
 
@@ -310,7 +311,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
           one ? (
             <Plot points={r0.points} history={dia ? undefined : centralFull(central.data, r0.code, r0.source)} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
           ) : (
-            <MultiPlot series={comparable} width={wv} intraday={dia} />
+            <MultiPlot series={comparable} history={comparable.map(s=>({...s,points:dia ? s.points : centralFull(central.data,s.code,s.source)}))} width={wv} intraday={dia} />
           )
         ) : (
           <div className="placeholder" style={{ height: 120 }}>
@@ -386,8 +387,9 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget }) {
   const [newsTab, setNewsTab] = useState('moedas') // o quadro de Notícias abre sempre em Moedas
+  useEffect(()=>{const desired=searchTarget?.context?.newsTab;if(NEWS_TABS.some(t=>t.id===desired))setNewsTab(desired)},[searchTarget])
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -510,7 +512,7 @@ function MarketNews({ bare = false }) {
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
-export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
+export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh, searchTarget }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
   useDataFile('oil.json')
@@ -521,7 +523,7 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
     <div className="terminal-desk">
       <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} ibov={indices.data} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
+      <div className="resumo desk-markets"><MoedasPanel searchTarget={searchTarget} quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
     </div>
   )
 }

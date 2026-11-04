@@ -59,6 +59,7 @@ export default function CupomLeitura({ curves }) {
           </label>
           {changes.length ? (
             <>
+              <p className="chart-comparison-note">Barras por prazo: comparação anual por arraste não se aplica. O histórico por data está na visão de evolução.</p>
               <div className="cl-bars" role="group" aria-label="Variação do cupom por prazo, em bps">
                 {changes.filter((c) => KEY.has(c.du)).map((c, i) => (
                   <div className="cl-bar" key={`${from}-${c.du}`}>

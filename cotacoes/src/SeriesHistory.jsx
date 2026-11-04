@@ -40,7 +40,7 @@ export default function SeriesHistory({ item, points, onClose }) {
           </ChartFilters>
           <p className="muted">Cobertura: {label(list[0].period)} a {label(list.at(-1).period)} · {list.length} observações {daily ? (/semanal/.test(item.nature) ? 'semanais' : 'diárias') : 'mensais'}. Períodos sem dado não são preenchidos.</p>
           {plot.length > 1 && !bad
-            ? <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code={`commodity-${item.id}`} intraday={false} fmt={fmt} vfmt={(v) => nf(v)} dateLabel={daily ? undefined : (t) => contextDate(new Date(t).toISOString().slice(0, 7))} label={item.label} labels /></div>
+            ? <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code={`commodity-${item.id}`} intraday={false} fmt={fmt} vfmt={(v) => nf(v)} dateLabel={daily ? undefined : (t) => contextDate(new Date(t).toISOString().slice(0, 7))} label={item.label} rate={/%/.test(item.unit)} labels /></div>
             : <p role="status">{bad ? 'Ajuste o período.' : 'Poucas observações no período; escolha um intervalo maior.'}</p>}
           <div className="oil-history-table" tabIndex={0} role="region" aria-label="Tabela de observações do período">
             <table><caption>{item.label} · observações do período (mais recentes primeiro, até 400)</caption><thead><tr><th scope="col">{daily ? 'Data' : 'Competência'}</th><th scope="col">{item.unit}</th></tr></thead>

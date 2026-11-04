@@ -1,0 +1,11 @@
+.chart-comparison { min-width:0; }
+.chart-comparison .comparison-readout { display:block; padding:12px; margin:10px 0; border:1px solid var(--line); font: .82rem/1.6 system-ui,sans-serif; color:var(--fg); background:var(--card); overflow-wrap:anywhere; }
+.comparison-row { display:flex; gap:8px 20px; flex-wrap:wrap; margin:8px 0; }
+.comparison-row b { min-width:100%; }
+.comparison-readout button { font:inherit; background:var(--surface-2); color:var(--fg); border:1px solid var(--line); padding:8px 12px; cursor:pointer; }
+.chart-comparison-compact { display:contents; }
+.chart-comparison-compact .comparison-readout { font-size:.72rem; white-space:normal; max-width:100%; }
+.chart-comparison svg:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+.chart-comparison svg,[data-comparison-plot] { user-select:none; -webkit-user-select:none; }
+.chart-comparison-note { color:var(--mut); font-size:.78rem; line-height:1.5; }

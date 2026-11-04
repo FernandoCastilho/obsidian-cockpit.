@@ -1,3 +1,4 @@
+import GlobalSearch, { SearchDestination } from './GlobalSearch.jsx'
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { dataTimestamp } from './dataTimestamp.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
@@ -6,6 +7,7 @@ import { quoteHealth } from './dataHealth.js'
 const MarketContext = lazy(() => import('./MarketContext.jsx'))
 const Outros = lazy(() => import('./Outros.jsx'))
 const Calculadora = lazy(() => import('./Calculadora.jsx'))
+const RecuperacaoJudicial = lazy(() => import('./RecuperacaoJudicial.jsx'))
 const Inadimplencia = lazy(() => import('./Inadimplencia.jsx'))
 const Calendario = lazy(() => import('./Calendario.jsx'))
 import Expandable from './Expandable.jsx'
@@ -56,6 +58,7 @@ const CEN_VIEWS = [
   { id: 'projecoes', label: 'Projeções' },
   { id: 'calendario', label: 'Calendário econômico' },
   { id: 'inadimplencia', label: 'Inadimplência' },
+  { id: 'recuperacao', label: 'Recuperação judicial' },
   { id: 'atividade', label: 'Atividade e emprego' },
   { id: 'commodities', label: 'Commodities' },
   { id: 'frete', label: 'Frete marítimo' },
@@ -176,6 +179,7 @@ export default function App() {
     const h = i < 0 ? raw : raw.slice(0, i), sub = i < 0 ? '' : raw.slice(i + 1) // o BNDES guarda série e período depois da primeira barra
     return { tab: TABS.some((t) => t.id === h) ? h : 'resumo', sub }
   }
+  const [searchSelection, setSearchSelection] = useState(null)
   const [tab, setTab] = useState(() => readHash().tab)
   const [sub, setSub] = useState(() => readHash().sub)
   useEffect(() => {
@@ -256,6 +260,7 @@ export default function App() {
     <ConceitoDiario ready={avisoFechado} goto={goto} />
     <Recado />
     <Laser />
+    <GlobalSearch onNavigate={(doc, query) => { const [id,...rest]=doc.route.split('/'); goto(id,rest.join('/')); setSearchSelection({doc,query}) }} />
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} feedLabel={health.label} feedTitle={health.observedAt ? health.label + ' · Referência mais antiga: ' + dataTimestamp(health.observedAt) : health.detail} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
@@ -277,6 +282,7 @@ export default function App() {
         </div>
       )}
       <AlertaVariacao quotes={quotes} />
+      <SearchDestination selection={searchSelection?.doc.route === `${tab}${sub ? '/' + sub : ''}` ? searchSelection : null} onClose={() => setSearchSelection(null)} />
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
           {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{tab === 'setores' ? 'Setores e Insumos' : TABS.find((t) => t.id === tab).label}</h1>}
@@ -287,7 +293,7 @@ export default function App() {
       {tab === 'resumo' && (
         <>
           <HolidayNotice hol={hol} />
-          <Resumo quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} status={quoteStatus} quoteRefresh={quoteRefresh} />
+          <Resumo searchTarget={searchSelection?.doc} quotes={quotes} macro={macro} curves={curves} ptax={macro.data?.ptax} onOpen={(code, selection) => { if (selection) { setPreset(selection.intraday ? 'day' : ({ week: '7', month: '30', year: 'custom' })[selection.id] || selection.id); if (selection.range) setRange(selection.range); else if (!selection.intraday) setRange(rangeFor(selection.days)); else setDay(selection.day ? fromInput(selection.day) : fromInput(marketDate(Date.now()))); setNotice('') } setOpen(code) }} goto={goto} colors={COLORS} status={quoteStatus} quoteRefresh={quoteRefresh} />
 
         </>
       )}
@@ -308,7 +314,7 @@ export default function App() {
               <button key={v.id} type="button" className={cenView === v.id ? 'on' : ''} aria-current={cenView === v.id ? 'true' : undefined} onClick={() => goto('cenarios', v.id)}>{v.label}</button>
             ))}
           </nav>
-          {cenView === 'projecoes' ? <Projecoes macro={macro} /> : cenView === 'inflacao' || cenView === 'fiscal' ? <Outros macro={macro} part={cenView} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : cenView === 'inadimplencia' ? <Inadimplencia /> : <MarketContext part={cenView} />}
+          {cenView === 'projecoes' ? <Projecoes macro={macro} searchTarget={searchSelection?.doc} /> : cenView === 'inflacao' || cenView === 'fiscal' ? <Outros macro={macro} part={cenView} /> : cenView === 'indexadores' ? <Indexadores onBndes={() => goto('bndes', 'tlp/TLP')} /> : cenView === 'calendario' ? <Calendario /> : cenView === 'inadimplencia' ? <Inadimplencia searchTarget={searchSelection?.doc} /> : cenView === 'recuperacao' ? <RecuperacaoJudicial onSources={() => goto('config')} /> : <MarketContext part={cenView} />}
         </>
       )}
 
