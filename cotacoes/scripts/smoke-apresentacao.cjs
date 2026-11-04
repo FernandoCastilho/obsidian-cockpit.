@@ -17,11 +17,18 @@ const out = process.env.SMOKE_OUT || '/tmp'
       const ctx = await b.newContext({ viewport: { width, height: width > 700 ? 800 : 844 }, serviceWorkers: 'block' })
       const p = await ctx.newPage(), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      await ctx.route('**/*', (r) => { const u = r.request().url(); return u.startsWith(base) || /api\.microlink\.io/.test(u) ? r.continue() : r.abort() })
+      await ctx.route('**/*', (r) => { const u = r.request().url(); return u.startsWith(base) || /api\.microlink\.io|api\.frankfurter\.dev/.test(u) ? r.continue() : r.abort() })
+      // referência do BCE para o ano anterior das moedas: 2 anos de dias úteis
+      const ecbRates = {}; for (let i = 730; i >= 0; i--) { const d = new Date(agora - i * DIA); if (d.getUTCDay() % 6) ecbRates[d.toISOString().slice(0, 10)] = { BRL: +(4.9 + (730 - i) * 0.0004).toFixed(4) } }
+      await p.route('**/api.frankfurter.dev/**', (r) => r.fulfill({ json: { base: 'USD', rates: ecbRates } }))
       await p.route('**/quotes.json*', (r) => r.fulfill({ json: quotes }))
       await p.route('**/history.json*', (r) => r.fulfill({ json: history }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
+      const mes = (i) => { const d = new Date(agora); d.setUTCMonth(d.getUTCMonth() - i); return d.toISOString().slice(0, 7) }
+      await p.route('**/indicator-history.json*', (r) => r.fulfill({ json: { series: [{ id: 'caged', unit: 'postos de trabalho', points: Array.from({ length: 14 }, (_, i) => ({ period: mes(13 - i), value: i % 4 === 0 ? -12000 : 90000 + i * 1000 })) }] } }))
+      await p.route('**/inadimplencia.json*', (r) => r.fulfill({ json: { generatedAt: agora, series: ['pf-total', 'pj-total', 'pf-livres'].map((key) => ({ key, person: key.slice(0, 2).toUpperCase(), type: key.split('-')[1], points: Array.from({ length: 24 }, (_, i) => ({ period: mes(23 - i), t: agora - (23 - i) * 30 * DIA, v: +(key.startsWith('pf') ? 5 + i * 0.05 : 3 + i * 0.02).toFixed(2) })) })) } }))
+      await p.route('**/macro.json*', (r) => r.fulfill({ json: { generatedAt: agora, selic: Array.from({ length: 8 }, (_, i) => [agora - (8 - i) * 45 * DIA, 15 - i * 0.25]), cdi: [[agora - DIA, 14.15]], sofr: [], sofrAvg: [], focus: { date: new Date(agora - 4 * DIA).toISOString().slice(0, 10), rows: [{ label: 'Selic', indicator: 'Selic', values: { [new Date(agora).getUTCFullYear()]: { median: 12.5 } } }, { label: 'IPCA', indicator: 'IPCA', values: { [new Date(agora).getUTCFullYear()]: { median: 4.5 } } }] }, ptax: {}, ptaxHist: {}, errors: [], stale: {} } }))
       await p.route('**/api.microlink.io/**', (r) => /tubokraft/.test(r.request().url()) ? r.fulfill({ status: 403, json: { status: 'fail', code: 'EFAILED', message: 'site não respondeu' } }) : r.fulfill({ json: { status: 'success', data: { title: 'Metalúrgica Exemplo | Home', publisher: 'Metalúrgica Exemplo', description: 'Peças usinadas para a indústria.', logo: null, image: null } } }))
       await p.goto(base + '/#apresentar')
       const form = p.locator('.apr-form'); await form.waitFor()
@@ -54,18 +61,33 @@ const out = process.env.SMOKE_OUT || '/tmp'
       await p.locator('.apr-itens button', { hasText: 'Euro' }).click()
       await btn.click()
       const dlg = p.getByRole('dialog', { name: 'Apresentação' }); await dlg.waitFor()
-      // capa com o nome do site e o setor; 5 itens + capa, cenário, cadeia, agenda, perguntas e fim = 11 slides
+      // 1º slide: perguntas para quem apresenta; depois a capa com o nome do site e o setor; 5 itens + perguntas, capa, cenário, cadeia, agenda e fim = 11 slides
+      assert.equal(await dlg.locator('.apr-contador').innerText(), '1 / 11')
+      assert.match(await dlg.locator('h2').innerText(), /^Para a conversa com Metalúrgica Exemplo/)
+      assert.ok(await dlg.locator('.apr-perguntas li').count() >= 3)
+      await p.waitForTimeout(900)
+      await p.screenshot({ path: `${out}/apresentacao-perguntas-${width}.png` })
+      await p.keyboard.press('ArrowRight')
+      await dlg.locator('h1').waitFor()
       assert.equal(await dlg.locator('h1').innerText(), 'Metalúrgica Exemplo')
       assert.match(await dlg.locator('.apr-capa-desc').innerText(), /Peças usinadas/)
-      assert.equal(await dlg.locator('.apr-contador').innerText(), '1 / 11')
-      await p.waitForTimeout(350) // fim da entrada suave antes da captura
+      await p.waitForTimeout(900) // fim das entradas por bloco antes da captura
       await p.screenshot({ path: `${out}/apresentacao-capa-${width}.png` })
       await p.keyboard.press('ArrowRight')
       await dlg.locator('.apr-cenario').waitFor()
       assert.ok(await dlg.locator('.apr-cenario li').count() >= 1)
+      // leitura de uma linha em cada quadro; emprego em barras e inadimplência PF e PJ em linhas, abaixo
+      assert.ok(await dlg.locator('.apr-cenario .apr-cen-leitura').count() >= 1)
+      await dlg.locator('.apr-barras rect').first().waitFor()
+      assert.equal(await dlg.locator('.apr-barras rect').count(), 12)
+      assert.equal(await dlg.locator('.apr-cen-graficos .ml-line').count(), 2)
+      await p.waitForTimeout(900)
+      await p.screenshot({ path: `${out}/apresentacao-cenario-${width}.png` })
       await p.keyboard.press('ArrowRight')
       await dlg.locator('.apr-cadeia').waitFor()
       assert.equal(await dlg.locator('.apr-cad-chip-forte').innerText(), 'Usinagem, montagem e integração')
+      assert.equal(await dlg.locator('.apr-cad-trans li').count(), 3)
+      assert.match(await dlg.locator('.apr-cad-trans').innerText(), /Dólar\.[\s\S]*Importação[\s\S]*Exportação/)
       await p.waitForTimeout(350)
       await p.screenshot({ path: `${out}/apresentacao-cadeia-${width}.png` })
       await p.keyboard.press('ArrowRight') // dólar
@@ -73,7 +95,13 @@ const out = process.env.SMOKE_OUT || '/tmp'
       assert.equal(await dlg.locator('h2').innerText(), 'Dólar')
       assert.match(await dlg.locator('.apr-valor').innerText(), /^R\$ \d+,\d{2}$/)
       assert.match(await dlg.locator('.apr-frase').innerText(), /^Dólar a R\$ \d+,\d{2}: [+−]?\d+,\d% em 6 meses\.$/)
-      assert.ok(await dlg.locator('.apr-spark svg path').count() >= 1, 'minigráfico do período')
+      // gráfico do painel: arrastar um trecho mostra a variação e o mesmo trecho do ano anterior
+      const plot = dlg.locator('.apr-grafico .plot svg'); await plot.waitFor()
+      const pb = await plot.boundingBox()
+      await p.mouse.move(pb.x + pb.width * 0.3, pb.y + pb.height / 2); await p.mouse.down(); await p.mouse.move(pb.x + pb.width * 0.7, pb.y + pb.height / 2, { steps: 8 }); await p.mouse.up()
+      await p.waitForTimeout(300)
+      assert.match(await dlg.locator('.apr-grafico').innerText(), /Ano anterior[\s\S]*→/, 'o mesmo trecho do ano anterior, pela referência do BCE')
+      assert.match(await dlg.locator('.apr-grafico-nota').innerText(), /ano anterior pela referência diária do BCE/)
       assert.match(await dlg.locator('.apr-manchetes').innerText(), /Dólar sobe com decisão do Fed/)
       await p.waitForTimeout(350)
       await p.screenshot({ path: `${out}/apresentacao-dolar-${width}.png` })
@@ -88,11 +116,16 @@ const out = process.env.SMOKE_OUT || '/tmp'
       await p.keyboard.press('End')
       assert.equal(await dlg.locator('.apr-contador').innerText(), '11 / 11')
       assert.ok(await dlg.locator('.apr-fim-pontos li').count() >= 1, 'resumo final com os maiores movimentos')
-      await p.keyboard.press('ArrowLeft')
-      await dlg.locator('.apr-perguntas').waitFor()
-      // botões da barra: anterior leva à agenda
+      // miniaturas de tudo o que foi falado: itens com série, Selic, emprego e inadimplência, cada uma com minigráfico
+      const minis = await dlg.locator('.apr-mini').allInnerTexts()
+      assert.ok(minis.some((t) => /^Dólar/.test(t)) && minis.some((t) => /^Selic/.test(t)) && minis.some((t) => /Emprego formal/.test(t)) && minis.some((t) => /Inadimplência PF/.test(t)), minis.join(' | '))
+      assert.ok(await dlg.locator('.apr-mini .spark').count() >= 4)
+      await p.waitForTimeout(900)
+      await p.screenshot({ path: `${out}/apresentacao-fim-${width}.png` })
+      // botões da barra: anterior leva à agenda, com a leitura curta de cada evento
       await dlg.getByRole('button', { name: 'Slide anterior' }).click()
       await dlg.locator('.apr-agenda, .apr-vazio').first().waitFor()
+      if (await dlg.locator('.apr-agenda li').count()) assert.ok(await dlg.locator('.apr-agenda-texto small').count() >= 1)
       await p.keyboard.press('Escape')
       await dlg.waitFor({ state: 'detached' })
       await form.waitFor()
