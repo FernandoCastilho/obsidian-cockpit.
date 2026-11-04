@@ -80,10 +80,13 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.match(await kpiBox('Taxa final').innerText(), /14,17% TFC \+ 1,25% BNDES \+ 3,00% spread da instituição/)
       assert.match(await kpiBox('Spread da instituição').innerText(), /3,00% a\.a\.\s+R\$\s*[\d.]+,\d{2} dos juros \(\d+,\d%\) · \+3,4\d p\.p\./)
       // explicações no "?" ao lado do rótulo: abrem e fecham
-      await fm.getByRole('button', { name: 'Ajuda: Custo financeiro' }).click()
-      assert.match(await p.getByRole('tooltip').innerText(), /Taxa Fixa Composta/); await p.keyboard.press('Escape')
+      const costHelp = fm.getByRole('button', { name: 'Ajuda: Custo financeiro' })
+      await costHelp.click()
+      // O mouse pode manter outra ajuda em hover; confira a explicação vinculada ao botão acionado.
+      const costTip = await costHelp.getAttribute('aria-describedby'); assert.ok(costTip)
+      assert.match(await p.locator(`[id="${costTip}"]`).innerText(), /Taxa Fixa Composta/); await p.keyboard.press('Escape')
       assert.equal(await fm.locator('.fm-rotulo .help').count() >= 18, true, 'um "?" por rótulo e por KPI')
-      await fm.getByRole('button', { name: 'Ajuda: Spread da instituição', exact: true }).click(); assert.match(await p.getByRole('tooltip').innerText(), /juros com a taxa completa menos/); await p.keyboard.press('Escape')
+      const spreadHelp = fm.getByRole('button', { name: 'Ajuda: Spread da instituição', exact: true }); await spreadHelp.click(); const spreadTip = await spreadHelp.getAttribute('aria-describedby'); assert.ok(spreadTip); assert.match(await p.locator(`[id="${spreadTip}"]`).innerText(), /juros com a taxa completa menos/); await p.keyboard.press('Escape')
       await fm.getByRole('button', { name: 'Grande empresa' }).click()
       assert.match(await fm.locator('.fm-custo-valor').innerText(), /TFC_60\.90 \(C01\), grande empresa, faixa até 60 meses: 14,4173%/)
       await fm.getByLabel('Prazo total (meses)', { exact: true }).fill('72')
