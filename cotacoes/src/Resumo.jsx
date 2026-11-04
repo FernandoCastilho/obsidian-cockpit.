@@ -1,3 +1,4 @@
+import HeavyVehicles from './HeavyVehicles.jsx'
 import ChartComparison from './ChartComparison.jsx'
 import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
@@ -427,7 +428,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget 
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><TemaNoticias id="veiculos-pesados" simples /></> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -494,6 +495,7 @@ const NEWS_TABS = [
   { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
   { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
   { id: 'eleicoes', label: 'Eleições EUA', refresh: ['temas.json'] },
+  { id: 'veiculos-pesados', label: 'Veículos pesados', refresh: ['temas.json','heavy-vehicles.json'] },
 ]
 // Bandeira das moedas de que a manchete provavelmente fala (as da busca e as citadas no título).
 function MoedasCitadas({ item }) {

@@ -8,7 +8,7 @@ export const SEARCH_SOURCES = [
   ['macro.json','juros','Juros e projeções'], ['curves.json','juros','Curvas de juros'], ['curves-history.json','juros','Histórico das curvas'],
   ['news.json','noticias','Manchetes'], ['temas.json','resumo','Notícias por tema'], ['reforma-tributaria.json','resumo','Reforma tributária'],
   ['focus-history.json','cenarios/projecoes','Histórico semanal do Focus'], ['cenarios.json','cenarios/projecoes','Projeções por instituição'], ['projecoes.json','cenarios/projecoes','Projeções'],
-  ['recuperacao.json','cenarios/recuperacao','Recuperação judicial: cobertura e lacunas'], ['calendar.json','cenarios/calendario','Calendário econômico'], ['inadimplencia.json','cenarios/inadimplencia','Inadimplência PF e PJ'],
+  ['heavy-vehicles.json','setores/veiculos-pesados','Veículos pesados — ANFAVEA'], ['recuperacao.json','cenarios/recuperacao','Recuperação judicial: cobertura e lacunas'], ['calendar.json','cenarios/calendario','Calendário econômico'], ['inadimplencia.json','cenarios/inadimplencia','Inadimplência PF e PJ'],
   ['market-indicators.json','cenarios/atividade','Atividade e emprego'], ['indicator-history.json','cenarios/atividade','Histórico de atividade'],
   ['commodities.json','cenarios/commodities','Commodities'], ['commodities-brl.json','cenarios/commodities','Commodities em reais'],
   ['oil.json','cenarios/commodities','Petróleo Brent'], ['fuels.json','cenarios/commodities','Combustíveis'],
@@ -59,7 +59,7 @@ export function indexSearchData(file, data, route, label) {
     const domainTitle = file==='macro.json' && path.length===1 ? ({selic:'Meta Selic',cdi:'CDI',sofr:'SOFR',sofrAvg:'Médias da SOFR',ptax:'PTAX'})[path[0]] : file==='bndes.json' && seriesId ? `TFB ${seriesId} · prazo ${node.prazo} meses · liberação em ${node.liberacao} dias` : file==='bndes.json' && path.join('/')==='tlp' ? 'TLP - parcela prefixada' : currencyMeta?.name || (file==='policy-rates.json' && seriesId ? ({FED:'Federal Reserve (Fed)',ECB:'Banco Central Europeu (BCE)',BOE:'Banco da Inglaterra (BoE)',BOJ:'Banco do Japão (BoJ)'})[seriesId] || seriesId : null)
     const title = node.title || node.nome || node.label || node.name || node.subject || domainTitle || (currency && path.at(-1)===currency ? ({USD:'Dólar americano',EUR:'Euro',JPY:'Iene japonês',CNH:'Yuan offshore',CNY:'Yuan',EURUSD:'Paridade EUR/USD'}[currency]) : null)
     let target = route
-    if (file === 'temas.json') { const tema = path.find(p => /^(industria|comercio|servicos|telecom|cobre|aluminio|aco|minerio|petroleo)$/.test(p)); if (tema) target = 'setores/' + tema }
+    if (file === 'temas.json') { const tema = path.find(p => /^(industria|comercio|servicos|telecom|veiculos-pesados|cobre|aluminio|aco|minerio|petroleo)$/.test(p)); if (tema) target = 'setores/' + tema }
     if (file === 'macro.json' && path.includes('focus')) target = 'cenarios/projecoes'
     if (file === 'moedas.json' && seriesId) target = `bndes/${/^C\d/.test(seriesId) ? 'tfc' : 'moedas'}/${encodeURIComponent(seriesId)}`
     if (file === 'bndes.json' && seriesId) target = `bndes/tfb/${encodeURIComponent(seriesId)}`
