@@ -387,8 +387,9 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
 }
 
 // Quadros das moedas com minigráfico e seletor de período (o seletor vale só para o câmbio).
-function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh }) {
+function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget }) {
   const [newsTab, setNewsTab] = useState('moedas') // o quadro de Notícias abre sempre em Moedas
+  useEffect(()=>{const desired=searchTarget?.context?.newsTab;if(NEWS_TABS.some(t=>t.id===desired))setNewsTab(desired)},[searchTarget])
   const daily = useCentralDaily()
   const returns = Object.fromEntries(CURRENCIES.map(c => [c.code, quotes?.[c.code]?.source && quotes[c.code].source !== c.code ? { month: null, year: null } : accumulatedReturns(daily.data, c.code)]))
   const ptaxes = Object.fromEntries(CURRENCIES.map(c => [c.code, compatiblePtax(c.code, quotes?.[c.code], ptax?.[c.code])]))
@@ -511,7 +512,7 @@ function MarketNews({ bare = false }) {
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.
-export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh }) {
+export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, goto, status, quoteRefresh, searchTarget }) {
   const rates = rateTiles(macro?.data, curves?.data)
   const [rateOpen, setRateOpen] = useState(null)
   useDataFile('oil.json')
@@ -522,7 +523,7 @@ export default function Resumo({ quotes, ptax, onOpen, colors, macro, curves, go
     <div className="terminal-desk">
       <KpiRow quotes={quotes} rates={rates} ipca={ipcaSeries} ibov={indices.data} macro={macro?.data} colors={colors} onOpen={onOpen} onRate={setRateOpen} goto={goto} status={status} />
       {rateOpen && <Suspense fallback={null}><RateModal kind={rateOpen} macro={macro} curves={curves} onClose={() => setRateOpen(null)} /></Suspense>}
-      <div className="resumo desk-markets"><MoedasPanel quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
+      <div className="resumo desk-markets"><MoedasPanel searchTarget={searchTarget} quotes={quotes} ptax={ptax} onOpen={onOpen} colors={colors} quoteRefresh={quoteRefresh} /></div>
     </div>
   )
 }

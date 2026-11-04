@@ -6,8 +6,8 @@ import { resolve } from 'node:path'
 export const SEARCH_PAGES = {
   'Resumo.jsx':['resumo','Mercado hoje'], 'Macro.jsx':['juros','Juros e indicadores'], 'RatesSnapshot.jsx':['juros','Juros de referência'],
   'Curves.jsx':['juros','Curvas de juros'], 'CdiFuturo.jsx':['juros','CDI futuro'], 'CupomLeitura.jsx':['juros','Cupom cambial'], 'Sofr.jsx':['juros','SOFR'],
-  'Projecoes.jsx':['cenarios/projecoes','Projeções'], 'Calendario.jsx':['cenarios/calendario','Calendário econômico'],
-  'Inadimplencia.jsx':['cenarios/inadimplencia','Inadimplência PF e PJ'], 'MarketContext.jsx':['cenarios/commodities','Commodities e atividade'],
+  'FocusHistorico.jsx':['cenarios/projecoes','Histórico semanal do Focus'], 'Projecoes.jsx':['cenarios/projecoes','Projeções'], 'Calendario.jsx':['cenarios/calendario','Calendário econômico'],
+  'RecuperacaoJudicial.jsx':['cenarios/recuperacao','Recuperação judicial'], 'Inadimplencia.jsx':['cenarios/inadimplencia','Inadimplência PF e PJ'], 'MarketContext.jsx':['cenarios/commodities','Commodities e atividade'],
   'Outros.jsx':['cenarios/inflacao','Inflação e fiscal'], 'Indexadores.jsx':['cenarios/indexadores','Indexadores'],
   'InflacaoPesos.jsx':['cenarios/inflacao','Inflação: o que pesa'], 'Bndes.jsx':['bndes','BNDES'], 'Setores.jsx':['setores','Setores e insumos'],
   'Calculadora.jsx':['calculadora/giro','Capital de Giro'], 'Feriados.jsx':['feriados','Feriados'], 'News.jsx':['noticias','Notícias'],

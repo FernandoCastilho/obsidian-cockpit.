@@ -42,3 +42,12 @@ test('static index extracts visible text and literals, never classes, code, URLs
  assert.ok(result.text.includes('Texto visível'));assert.ok(result.text.includes('Indicador de crédito'));assert.ok(!result.text.includes('hidden private'));assert.ok(!result.text.includes('private.test'));assert.deepEqual(result.explain,['credito'])
  const index=await buildSearchIndex();assert.ok(index.documents.length>=30);assert.ok(index.documents.some(d=>d.route==='cenarios/inadimplencia'));assert.ok(!index.documents.some(d=>d.route==='apresentar'))
 })
+
+test('credit, BNDES and Focus results retain exact portfolio, series and forecast-year context',()=>{
+ const c=indexSearchData('inadimplencia.json',{generatedAt:1,series:[{key:'pf-livres',person:'PF',type:'livres',points:[{period:'2026-09',t:Date.UTC(2026,8,1),v:8.09}]}]},'cenarios/inadimplencia','Crédito').docs[0]
+ assert.equal(c.context.creditType,'livres');assert.match(c.body,/8,09%/)
+ const b=indexSearchData('moedas.json',{generatedAt:1,series:{C01:{points:[['2026-09-01',12]]}}},'bndes','BNDES').docs[0]
+ assert.equal(b.route,'bndes/tfc/C01')
+ const f=indexSearchData('focus-history.json',{generatedAt:1,series:{Selic:{2027:[{d:'2026-11-01',v:10}]}}},'cenarios/projecoes','Focus').docs[0]
+ assert.equal(f.context.year,'2027');assert.ok(searchDocuments([f],'Selic 2027').length)
+})

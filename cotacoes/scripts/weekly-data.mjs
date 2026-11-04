@@ -12,7 +12,7 @@ export const RETAIN_JSON_FILES = [
   'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json',
   'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json',
   'commodities-brl.json', 'fuels.json', 'freight-jp.json', 'ipca.json', 'divida.json',
-  'ipca-groups.json', 'calendar.json', 'acessos.json', 'inadimplencia.json',
+  'ipca-groups.json', 'calendar.json', 'acessos.json', 'inadimplencia.json', 'recuperacao.json',
 ]
 export const RETAIN_FILES = [...RETAIN_JSON_FILES, ...CSV_FILES.map(file => 'csv/' + file)]
 const aborted = (file, detail) => new Error('Publicação semanal abortada: não foi possível preservar ' + file + ' (' + detail + ')')

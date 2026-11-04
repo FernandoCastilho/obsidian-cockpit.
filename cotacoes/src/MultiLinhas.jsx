@@ -1,3 +1,4 @@
+import { compareWindow } from './chartComparison.js'
 import ChartComparison from './ChartComparison.jsx'
 import { useMemo, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
@@ -9,8 +10,17 @@ const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', mon
 
 // Várias séries no mesmo gráfico. series: [{ key, name, color, points: [{ t, v }] }] (v já no modo escolhido).
 // A legenda mostra o valor de cada série na data sob o cursor; com até 8 séries também há um balão no gráfico.
-export default function MultiLinhas({ series, width, fmt, ariaLabel, history = series, frequency = 'auto', rate = true, compareUnavailable = '', comparisonSeries = series, comparisonHistory = history }) {
+export default function MultiLinhas({ series: baseSeries, width, fmt, ariaLabel, history = baseSeries, frequency = 'auto', rate = true, compareUnavailable = '', comparisonSeries = baseSeries, comparisonHistory = history }) {
   const [hover, setHover] = useState(null)
+  const [selection, setSelection] = useState(null)
+  const baseTimes=baseSeries.flatMap(s=>s.points.map(p=>p.t))
+  const baseStart=Math.min(...baseTimes), baseEnd=Math.max(...baseTimes)
+  const priors=selection ? comparisonHistory.map(s=>compareWindow(s.points,...selection,{frequency,prior:true})).filter(Boolean) : []
+  // Só estende o eixo ao soltar o ponteiro; a geometria fica estável durante o arraste.
+  const from=selection ? Math.min(baseStart,...selection,...priors.map(p=>p.t0)) : baseStart
+  const series=from<baseStart ? baseSeries.map(s=>({...s,points:(history.find(h=>h.key===s.key)?.points || s.points).filter(p=>p.t>=from && p.t<=baseEnd)})) : baseSeries
+  const comparisonView=from<baseStart ? comparisonSeries.map(s=>({...s,points:(comparisonHistory.find(h=>h.key===s.key)?.points || s.points).filter(p=>p.t>=from && p.t<=baseEnd)})) : comparisonSeries
+  const resetKey=baseSeries.map(s=>`${s.key}:${s.points.length}:${s.points[0]?.t}:${s.points.at(-1)?.t}:${s.points[0]?.v}:${s.points.at(-1)?.v}`).join('|')
   const all = useMemo(() => series.flatMap((s) => s.points), [series])
   const dom = useMemo(() => {
     const ts = all.map((p) => p.t), vs = all.map((p) => p.v)
@@ -38,7 +48,7 @@ export default function MultiLinhas({ series, width, fmt, ariaLabel, history = s
   const hx = hoverAt != null ? x(hoverAt) : 0
   const bx = hx + 12 + bw > width - 4 ? hx - 12 - bw : hx + 12
   return (
-    <ChartComparison series={comparisonSeries} history={comparisonHistory} frequency={frequency} rate={rate} unavailable={compareUnavailable}><div className="ml">
+    <ChartComparison resetKey={resetKey} onRangeChange={setSelection} series={comparisonView} history={comparisonHistory} frequency={frequency} rate={rate} unavailable={compareUnavailable}><div className="ml">
       <svg className="hist-svg ml-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} aria-label={ariaLabel} onKeyDown={onKey} onFocus={() => setHover(t0)} onBlur={() => setHover(null)}
         onMouseMove={onMove} onMouseLeave={() => setHover(null)} onTouchMove={(e) => onMove(e.touches[0] && { currentTarget: e.currentTarget, clientX: e.touches[0].clientX })}>
         {ticks.map((v) => (

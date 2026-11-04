@@ -7,8 +7,8 @@ export const SEARCH_SOURCES = [
   ['quotes.json','resumo','Cotações de câmbio'], ['history.json','resumo','Histórico de câmbio'], ['intraday.json','resumo','Câmbio intradiário'],
   ['macro.json','juros','Juros e projeções'], ['curves.json','juros','Curvas de juros'], ['curves-history.json','juros','Histórico das curvas'],
   ['news.json','noticias','Manchetes'], ['temas.json','resumo','Notícias por tema'], ['reforma-tributaria.json','resumo','Reforma tributária'],
-  ['cenarios.json','cenarios/projecoes','Projeções por instituição'], ['projecoes.json','cenarios/projecoes','Projeções'],
-  ['calendar.json','cenarios/calendario','Calendário econômico'], ['inadimplencia.json','cenarios/inadimplencia','Inadimplência PF e PJ'],
+  ['focus-history.json','cenarios/projecoes','Histórico semanal do Focus'], ['cenarios.json','cenarios/projecoes','Projeções por instituição'], ['projecoes.json','cenarios/projecoes','Projeções'],
+  ['recuperacao.json','cenarios/recuperacao','Recuperação judicial: cobertura e lacunas'], ['calendar.json','cenarios/calendario','Calendário econômico'], ['inadimplencia.json','cenarios/inadimplencia','Inadimplência PF e PJ'],
   ['market-indicators.json','cenarios/atividade','Atividade e emprego'], ['indicator-history.json','cenarios/atividade','Histórico de atividade'],
   ['commodities.json','cenarios/commodities','Commodities'], ['commodities-brl.json','cenarios/commodities','Commodities em reais'],
   ['oil.json','cenarios/commodities','Petróleo Brent'], ['fuels.json','cenarios/commodities','Combustíveis'],
@@ -35,12 +35,16 @@ export function makeSearchDoc({ id, title, body, route, ...rest }) {
 export function indexSearchData(file, data, route, label) {
   if (!data || Array.isArray(data) || typeof data !== 'object') throw new Error('Formato indisponível')
   const docs = [], stamp = data.generatedAt || data.updatedAt || null
-  if(file==='inadimplencia.json' && Array.isArray(data.series)) {
+  if(file==='focus-history.json' && data.series) {
+    for(const [indicator,byYear] of Object.entries(data.series))for(const [year,points] of Object.entries(byYear))docs.push(makeSearchDoc({id:`${file}:${indicator}:${year}`,title:`Focus · ${indicator} · referência ${year}`,context:{year},body:`Histórico semanal da mediana do Focus para ${indicator}, ano de referência ${year}. `+plainContent(points.slice().reverse()),route,file,stamp,kind:'Dado publicado'}))
+    return {docs,limited:false}
+  }
+  if(file==='inadimplencia.json'  && Array.isArray(data.series)) {
     for(const s of data.series) {
       const stats=creditStats(s.points), person=s.person==='PF'?'Pessoa física':'Pessoa jurídica', portfolio={total:'Total',livres:'Recursos livres',direcionados:'Recursos direcionados'}[s.type] || s.type
       const fmt=v=>v==null?'indisponível':v.toLocaleString('pt-BR',{maximumFractionDigits:2})
       const body=`Inadimplência de ${person.toLowerCase()} na carteira ${portfolio}: ${fmt(stats.last?.v)}% em ${stats.last?.period || 'referência indisponível'}. Variação no mês: ${fmt(stats.month)} p.p.; em 12 meses: ${fmt(stats.year)} p.p. Histórico mensal: ${(s.points || []).slice().reverse().map(p=>`${p.period}: ${fmt(p.v)}%`).join(' · ')}`
-      docs.push(makeSearchDoc({id:file+':'+s.key,title:`Inadimplência · ${person} · ${portfolio}`,body,route,file,stamp,kind:'Dado publicado'}))
+      docs.push(makeSearchDoc({id:file+':'+s.key,title:`Inadimplência · ${person} · ${portfolio}`,body,route,file,stamp,kind:'Dado publicado',context:{creditType:s.type}}))
     }
     return {docs,limited:false}
   }
@@ -61,7 +65,8 @@ export function indexSearchData(file, data, route, label) {
     if (file==='bndes.json' && path.join('/')==='tlp')target='bndes/tlp/TLP'
     if (typeof title === 'string' && title.trim()) {
       const body = plainContent(node)
-      if (body) docs.push(makeSearchDoc({ id:file+':'+path.join('/'), title:title.slice(0,200), body, route:target, file, stamp, kind:'Dado publicado' }))
+      if (body) docs.push(makeSearchDoc({ id:file+':'+path.join('/'), title:title.slice(0,200), body, route:target, file, stamp, kind:'Dado publicado', context:file==='reforma-tributaria.json'?{newsTab:'reforma'}:file==='temas.json' && target==='resumo'?{newsTab:path.includes('eleicoes-eua')?'eleicoes':'moedas'}:undefined }))
+      if(Array.isArray(node.points))return
     }
     const entries = Array.isArray(node) ? node.map((v,i)=>[String(i),v]) : Object.entries(node)
     for (const [k,v] of entries) if (!OMIT.test(k) && v && typeof v === 'object') walk(v,[...path,k], typeof title === 'string' ? title : inherited)
@@ -73,7 +78,8 @@ export function indexSearchData(file, data, route, label) {
 export function searchDocuments(docs, query) {
   const q = normalizeSearch(query).trim(), tokens = [...new Set(q.split(/\s+/).filter(Boolean))]
   if (q.length < 2) return []
-  return docs.filter(d=>tokens.every(t=>d.normalized.includes(t))).map(d=>({...d, score:(d.titleNormalized === q ? 100 : d.titleNormalized.includes(q) ? 30 : 0) + tokens.filter(t=>d.titleNormalized.includes(t)).length * 5 + (d.kind==='Conceito' ? 2 : 0)})).sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title,'pt-BR'))
+  const seen=new Set()
+  return docs.filter(d=>{const key=d.route+'|'+d.titleNormalized+'|'+d.body;if(seen.has(key))return false;seen.add(key);return tokens.every(t=>d.normalized.includes(t))}).map(d=>({...d, score:(d.titleNormalized === q ? 100 : d.titleNormalized.includes(q) ? 30 : 0) + tokens.filter(t=>d.titleNormalized.includes(t)).length * 5 + (d.kind==='Conceito' ? 2 : 0)})).sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title,'pt-BR'))
 }
 export function highlightParts(text, query) {
   const tokens = [...new Set(normalizeSearch(query).trim().split(/\s+/).filter(Boolean))]

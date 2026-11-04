@@ -1,0 +1,22 @@
+.recovery-panel { font: .9rem/1.6 system-ui,sans-serif; min-width:0; }
+.recovery-intro,.recovery-panel .muted,.recovery-review { color:var(--mut); }
+.recovery-coverage { border:1px solid var(--accent); padding:16px; margin:20px 0; }
+.recovery-coverage p { margin:8px 0 0; max-width:75ch; }
+.recovery-week { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin:20px 0 8px; }
+.recovery-week label { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.recovery-week input { color:var(--fg); background:var(--card); border:1px solid var(--line); min-height:44px; padding:6px; box-sizing:border-box; font:inherit; }
+.recovery-panel button { min-height:44px; }
+.recovery-stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin:24px 0 32px; }
+.recovery-stages article { border-bottom:1px solid var(--line); padding-bottom:16px; }
+.recovery-stages h3 { font-size:.95rem; margin:0 0 8px; }
+.recovery-stages strong { font-size:1.8rem; }
+.recovery-stages small { color:var(--mut); }
+.recovery-table { overflow:auto; margin:16px 0; }
+.recovery-table table { border-collapse:collapse; width:100%; font-size:.82rem; }
+.recovery-table caption { text-align:left; color:var(--mut); padding:8px 0; }
+.recovery-table th,.recovery-table td { text-align:left; padding:12px 8px; border-bottom:1px solid var(--line); }
+.recovery-empty { padding:16px 0; border-block:1px solid var(--line); margin:24px 0; }
+.recovery-panel > p { max-width:75ch; }
+.recovery-panel details { margin:24px 0; }
+.recovery-review { font-size:.78rem; }
+@media(max-width:700px){.recovery-stages{grid-template-columns:1fr;gap:16px}.recovery-week{align-items:stretch}.recovery-week label{order:-1;width:100%}}

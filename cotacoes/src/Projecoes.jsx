@@ -9,8 +9,9 @@ import FocusHistorico from './FocusHistorico.jsx'
 const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value ?? '') ? value.split('-').reverse().join('/') : 'data não informada'
 const format = (value) => value === null ? '—' : value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
-export default function Projecoes({ macro }) {
+export default function Projecoes({ macro, searchTarget }) {
   const [year, setYear] = useState('2026')
+  useEffect(()=>{const target=searchTarget?.context?.year;if(['2026','2027'].includes(target))setYear(target)},[searchTarget])
   const [banks, setBanks] = useState(null)
   const [failed, setFailed] = useState(false)
   useEffect(() => {

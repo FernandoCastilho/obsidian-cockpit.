@@ -7,20 +7,21 @@ const date = t => new Date(t).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
 const number = v => Number.isFinite(v) ? v.toLocaleString('pt-BR', { maximumFractionDigits: 3 }) : '—'
 const signed = v => v == null ? 'indisponível' : (v > 0 ? '+' : '') + number(v)
 // Complementa SVGs existentes sem substituir tooltips, legendas, barras ou filtros.
-export default function ChartComparison({ children, series = [], history = series, frequency = 'auto', rate = false, compound = false, margin = { l: 56, r: 18, t: 12, b: 28 }, categorical = false, compact = false, html = false, unavailable = '' }) {
-  const box = useRef(null), gesture = useRef(null), cursor = useRef(0), anchor = useRef(null)
+export default function ChartComparison({ children, series = [], history = series, frequency = 'auto', rate = false, compound = false, margin = { l: 56, r: 18, t: 12, b: 28 }, categorical = false, compact = false, html = false, unavailable = '', onRangeChange, resetKey }) {
+  const box = useRef(null), gesture = useRef(null), cursor = useRef(0), cursorTime = useRef(null), anchor = useRef(null)
   const rangeRef = useRef(null)
   const [svg, setSvg] = useState(null), [range, setRange] = useState(null)
   rangeRef.current = range
   const id = useId()
   const timeKey = [...new Set(series.flatMap(s => s.points.map(p => p.t)))].filter(Number.isFinite).sort((a, b) => a - b).join(',')
   const times = useMemo(() => timeKey ? timeKey.split(',').map(Number) : [], [timeKey])
-  const signature = series.map(s => `${s.key}:${s.points.length}:${s.points[0]?.t}:${s.points.at(-1)?.t}`).join('|')
-  useEffect(() => { setRange(null); anchor.current = null; gesture.current = null }, [signature])
+  const signature = resetKey ?? series.map(s => `${s.key}:${s.points.length}:${s.points[0]?.t}:${s.points.at(-1)?.t}`).join('|')
+  useEffect(() => { setRange(null); onRangeChange?.(null); anchor.current = null; gesture.current = null }, [signature,onRangeChange])
   useEffect(() => {
     const el = box.current?.querySelector(html ? '[data-comparison-plot]' : 'svg')
     if (!el || !times.length) return
     setSvg(el)
+    if(cursorTime.current != null)cursor.current=Math.max(0,times.indexOf(cursorTime.current))
     const locate = e => {
       const rect = el.getBoundingClientRect(), w = el.viewBox?.baseVal?.width || el.clientWidth
       const px = (e.clientX - rect.left) / rect.width * w
@@ -31,32 +32,32 @@ export default function ChartComparison({ children, series = [], history = serie
     let suppress = false
     const down = e => {
       if (e.button !== 0 || times.length < 2) return
-      const i = locate(e); cursor.current = i; anchor.current = times[i]
+      const i = locate(e); cursor.current = i; cursorTime.current=times[i]; anchor.current = times[i]
       gesture.current = { x: e.clientX, y: e.clientY, t: times[i], previous: rangeRef.current, moved: false }
       try { el.setPointerCapture(e.pointerId) } catch { /* saída do gráfico encerra o gesto */ }
     }
     const move = e => {
-      cursor.current = locate(e)
+      cursor.current = locate(e); cursorTime.current=times[cursor.current]
       const g = gesture.current
       if (!g || Math.abs(e.clientX - g.x) < 6 || Math.abs(e.clientX - g.x) < Math.abs(e.clientY - g.y)) return
       g.moved = true
       setRange([g.t, times[cursor.current]])
     }
-    const up = () => { if (gesture.current?.moved) suppress = true; gesture.current = null }
+    const up = () => { if (gesture.current?.moved) {suppress=true;onRangeChange?.(rangeRef.current)} else if(gesture.current && rangeRef.current){setRange(null);onRangeChange?.(null)} gesture.current = null }
     const cancel = () => { if (gesture.current) setRange(gesture.current.previous); gesture.current = null }
     const click = e => { if (suppress) { e.preventDefault(); e.stopPropagation(); suppress = false } }
     const key = e => {
-      if (e.key === 'Escape' && rangeRef.current) { e.preventDefault(); e.stopPropagation(); setRange(null); anchor.current = null; return }
+      if (e.key === 'Escape' && rangeRef.current) { e.preventDefault(); e.stopPropagation(); setRange(null); onRangeChange?.(null); anchor.current = null; return }
       const next = nextChartIndex(e.key, cursor.current, times.length)
       if (next == null) return
       if (e.shiftKey) {
         e.preventDefault(); e.stopPropagation()
         anchor.current ??= times[cursor.current]
-        setRange([anchor.current, times[next]])
+        setRange([anchor.current, times[next]]);onRangeChange?.([anchor.current,times[next]])
       } else anchor.current = null
-      cursor.current = next
+      cursor.current = next; cursorTime.current=times[next]
     }
-    const focus = () => { cursor.current = 0; anchor.current = null }
+    const focus = () => { cursor.current = 0; cursorTime.current=times[0]; anchor.current = null }
     el.style.touchAction = 'pan-y'
     if(html)el.style.position='relative'
     const focusTarget = compact && el.closest('button') ? el.closest('button') : el
@@ -67,7 +68,7 @@ export default function ChartComparison({ children, series = [], history = serie
     el.addEventListener('pointerdown', down); el.addEventListener('pointermove', move); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', cancel); el.addEventListener('lostpointercapture', up)
     focusTarget.addEventListener('keydown', key, true); el.addEventListener('click', click, true); focusTarget.addEventListener('focus', focus)
     return () => { el.removeEventListener('pointerdown', down); el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', cancel); el.removeEventListener('lostpointercapture', up); focusTarget.removeEventListener('keydown', key, true); el.removeEventListener('click', click, true); focusTarget.removeEventListener('focus', focus); if(description)focusTarget.setAttribute('aria-describedby',description);else focusTarget.removeAttribute('aria-describedby') }
-  }, [times, categorical, margin.l, margin.r, id, html, compact])
+  }, [times, categorical, margin.l, margin.r, id, html, compact, onRangeChange])
   const rows = range && range[0] !== range[1] ? comparisonRows(series, history, ...range, { frequency, compound }) : []
   const w = svg?.viewBox?.baseVal.width || svg?.clientWidth, h = svg?.viewBox?.baseVal.height || svg?.clientHeight
   const x = t => categorical ? margin.l + (times.indexOf(t) + 0.5) / times.length * (w - margin.l - margin.r) : margin.l + (t - times[0]) / (times.at(-1) - times[0] || 1) * (w - margin.l - margin.r)
@@ -82,7 +83,8 @@ export default function ChartComparison({ children, series = [], history = serie
     {rows.length > 0 && <Tag className="comparison-readout" role="status" aria-live="polite">
       <strong>Selecionado: {date(Math.min(...range))} a {date(Math.max(...range))}</strong>
       {rows.map(r => <Tag key={r.key} className="comparison-row"><b>{r.name}</b><span>Trecho: {r.current && !compound ? `${number(r.current.v0)} → ${number(r.current.v1)} · ` : ''}{change(r.current,r)}</span><span>Ano anterior: {unavailable || change(r.prior,r)}{!unavailable && r.prior ? ` · ${date(r.prior.t0)} a ${date(r.prior.t1)}` : ''}</span>{r.current && r.prior && !unavailable && <span>Diferença entre {compound ? 'acumulados' : 'variações'}: {signed(compound ? r.current.accumulated - r.prior.accumulated : rate || r.unit?.startsWith('%') ? r.current.delta - r.prior.delta : r.current.pct == null || r.prior.pct == null ? null : r.current.pct - r.prior.pct)} p.p.</span>}</Tag>)}
-      {!compact && <button type="button" onClick={() => { setRange(null); anchor.current = null }}>Limpar seleção</button>}
+      {!compact && !unavailable && rows.some(r=>r.prior && r.prior.t0<times[0]) && <span>Trecho anterior fora da janela visível; a comparação usa o histórico carregado.</span>}
+      {!compact && <button type="button" onClick={() => { setRange(null); onRangeChange?.(null); anchor.current = null }}>Limpar seleção</button>}
       {compact && <span>Escape limpa a seleção.</span>}
     </Tag>}
   </Tag>

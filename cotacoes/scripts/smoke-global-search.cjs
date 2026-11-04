@@ -1,4 +1,5 @@
 const {chromium}=require('playwright'), assert=require('node:assert/strict'), fs=require('node:fs'), path=require('node:path');
+const output=process.env.SEARCH_QA_OUTPUT || path.join(__dirname,'../../qa-universal');fs.mkdirSync(output,{recursive:true});
 const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
 (async()=>{const browser=await chromium.launch(require('./smoke-launch.cjs')());try{for(const width of [390,1280]){
  const context=await browser.newContext({viewport:{width,height:950},hasTouch:true,serviceWorkers:'block'}), p=await context.newPage(), errors=[], requests=[];
@@ -16,7 +17,7 @@ const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
  await dialog.locator('.global-search-results[aria-busy="false"]').waitFor();
  const learn=dialog.getByRole('region',{name:'Resultados em Aprender'}); // sections with labels have region semantics
  for(const name of ['FIDC','CRI','Custo de funding'])assert.ok(await learn.getByRole('button').filter({hasText:name}).count()>0,name);
- await dialog.screenshot({path:path.join(__dirname,`../../search-dialog-${width}.png`)});assert.ok(await dialog.locator('mark').count()>0);assert.ok(await dialog.getByRole('region',{name:'Resultados em Notícias'}).count()>0);
+ await dialog.screenshot({path:path.join(output,`search-dialog-${width}.png`)});assert.ok(await dialog.locator('mark').count()>0);assert.ok(await dialog.getByRole('region',{name:'Resultados em Notícias'}).count()>0);
  await dialog.locator('.search-coverage summary').click();assert.match(await dialog.locator('.search-coverage').innerText(),/Calendário econômico/);
  for(let i=0;i<12;i++)await p.keyboard.press('Tab');assert.ok(await p.evaluate(()=>document.querySelector('.global-search-dialog').contains(document.activeElement)));
  await input.fill('inadimplência');await learn.getByRole('button',{name:/^FIDC/}).first().click();await p.locator('.learn-card').waitFor();assert.match(p.url(),/#aprender\/fidc$/);assert.match(await p.locator('.learn-card').innerText(),/FIDC/);assert.ok(await p.locator('.search-destination mark').count()>0);
@@ -28,7 +29,7 @@ const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
  await p.mouse.move(b.x+b.width*.25,b.y+b.height*.5);await p.mouse.down();await p.mouse.move(b.x+b.width*.8,b.y+b.height*.5,{steps:14});await p.mouse.up();
  const summary=p.locator('.credit-panel .comparison-readout');await summary.waitFor();assert.equal(await summary.locator('.comparison-row').count(),2);assert.doesNotMatch(await summary.innerText(),/Indisponível/);
  await svg.focus();await p.keyboard.press('Escape');assert.equal(await summary.count(),0);await p.keyboard.press('Shift+End');await summary.waitFor();assert.match(await summary.innerText(),/Ano anterior/);
- await p.screenshot({path:path.join(__dirname,`../../search-and-credit-${width}.png`),fullPage:true});
+ await p.screenshot({path:path.join(output,`search-and-credit-${width}.png`),fullPage:true});
  assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);
  await context.close();console.log('PASS busca global e seleção PF/PJ '+width);
 } }finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

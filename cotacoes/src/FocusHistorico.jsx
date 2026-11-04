@@ -25,13 +25,14 @@ export default function FocusHistorico() {
   const anos = file.data?.anos ?? []
   const graficos = INDICATORS.map((ind) => ({
     ind,
-    series: anos.map((ano, i) => ({ key: `${ind.focus}-${ano}`, name: ano, color: COR[i % COR.length], points: (series[ind.focus]?.[ano] ?? []).map((p) => ({ t: Date.parse(`${p.d}T12:00:00Z`), v: p.v })) })).filter((s) => s.points.length > 1),
+    series: anos.map((ano, i) => ({ key: `${ind.focus}-${ano}`, name: ano, unit: ind.id==='usd'?'R$':ind.unit, color: COR[i % COR.length], points: (series[ind.focus]?.[ano] ?? []).map((p) => ({ t: Date.parse(`${p.d}T12:00:00Z`), v: p.v })) })).filter((s) => s.points.length > 1),
   })).filter((g) => g.series.length)
   const ultima = Object.values(series).flatMap((porAno) => Object.values(porAno).flatMap((p) => p.map((x) => x.d))).sort().at(-1)
   return (
     <section className="focus-hist" aria-labelledby="focus-hist-title" ref={ref}>
       <h3 id="focus-hist-title">Histórico do Focus · {file.data?.semanas ?? 52} semanas</h3>
       <p className="muted">Mediana das expectativas a cada semana (coleta até sexta, boletim de segunda), por ano de referência{ultima ? ` · última semana: ${dmy(ultima)}` : ''}.</p>
+      <p className="muted">Cada linha mantém o mesmo ano de referência da previsão. A janela carregada pode não alcançar o trecho do ano anterior; nesse caso, a comparação fica indisponível.</p>
       {file.status === 'loading' && <Estado>Carregando o histórico do Focus…</Estado>}
       {file.status === 'error' && <Estado tipo="erro" erro={file.error}>Histórico do Focus indisponível no momento.</Estado>}
       {file.data?.stale && <Estado tipo="aviso">Última coleta do histórico falhou; mantida a versão anterior.</Estado>}
@@ -41,7 +42,7 @@ export default function FocusHistorico() {
           {graficos.map(({ ind, series: s }) => (
             <article key={ind.id} className="focus-hist-item">
               <h4>{ind.label} <small className="muted">{ind.unit}</small></h4>
-              <MultiLinhas series={s} width={Math.min(width, graficos.length > 1 && width >= 760 ? Math.floor((width - 24) / 2) : width)} fmt={ind.id === 'usd' ? fmtBrl : fmtPct} ariaLabel={`${ind.label}: mediana do Focus por semana, ${anos.join(' e ')}`} />
+              <MultiLinhas series={s} frequency="day" rate={ind.id !== 'usd'} width={Math.min(width, graficos.length > 1 && width >= 760 ? Math.floor((width - 24) / 2) : width)} fmt={ind.id === 'usd' ? fmtBrl : fmtPct} ariaLabel={`${ind.label}: mediana do Focus por semana, ${anos.join(' e ')}`} />
             </article>
           ))}
         </div>

@@ -7,9 +7,10 @@ import './Inadimplencia.css'
 const fmt = v => Number.isFinite(v) ? v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%' : '—'
 const pp = v => v == null ? 'Sem comparação' : `${v > 0 ? '+' : ''}${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} p.p.`
 const month = t => new Date(t).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric', timeZone: 'UTC' })
-export default function Inadimplencia() {
+export default function Inadimplencia({ searchTarget }) {
   const file = useDataFile('inadimplencia.json')
   const [type, setType] = useState('total'), [period, setPeriod] = useState(36)
+  useEffect(() => { const desired=searchTarget?.context?.creditType; if(['total','livres','direcionados'].includes(desired))setType(desired) },[searchTarget])
   const ref = useRef(null), [width, setWidth] = useState(600)
   useEffect(() => { const ro = new ResizeObserver(([e]) => setWidth(Math.max(260, Math.floor(e.contentRect.width)))); ro.observe(ref.current); return () => ro.disconnect() }, [])
   const selected = (file.data?.series || []).filter(s => s.type === type)
