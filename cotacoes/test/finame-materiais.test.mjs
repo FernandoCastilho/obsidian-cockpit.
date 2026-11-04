@@ -2,7 +2,7 @@
 // corrigido pelo IPCA, IOF e invariantes. Cada cenário é conferido por fórmula fechada, independente do código da calculadora.
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { COMPOSICOES, FONTES, REGRAS, conferir, cronograma, faixaTfb, iofCronograma, ipcaEsperado, simular, spreadSobreCdi, taxaFinal, tlpNominal, vencimento } from '../src/finameMateriais.js'
+import { COMPOSICOES, CUSTOS, FONTES, IOF_ZERO, PORTES, REGRAS, TFC_NOMES, codigoTfc, conferir, cronograma, faixaTfb, faixaTfc, iofCronograma, ipcaEsperado, simular, spreadSobreCdi, taxaFinal, tlpNominal, vencimento } from '../src/finameMateriais.js'
 import { IOF_PJ } from '../src/emprestimo.js'
 import { parseCommand } from '../src/terminal.js'
 
@@ -15,6 +15,8 @@ test('regras: prazo, carência (menor com TFB), participação de 1% a 100%, tet
   assert.deepEqual(conferir({ valor: 1e6, participacao: 100, prazo: 84, carencia: 24, custo: 'tlp' }).erros, [])
   assert.match(conferir({ valor: 1e6, participacao: 100, prazo: 85, carencia: 0, custo: 'tlp' }).erros[0], /acima do máximo do produto: 84/)
   assert.match(conferir({ valor: 1e6, participacao: 100, prazo: 60, carencia: 13, custo: 'tfb' }).erros[0], /12 meses com TFB/)
+  assert.match(conferir({ valor: 1e6, participacao: 100, prazo: 60, carencia: 13, custo: 'tfc' }).erros[0], /12 meses com TFC/, 'TFC também limita a carência a 1 ano')
+  assert.deepEqual(conferir({ valor: 1e6, participacao: 100, prazo: 60, carencia: 12, custo: 'tfc' }).erros, [])
   assert.deepEqual(conferir({ valor: 1e6, participacao: 100, prazo: 60, carencia: 24, custo: 'tlp' }).erros, [])
   assert.match(conferir({ valor: 1e6, participacao: 100, prazo: 12, carencia: 12, custo: 'tlp' }).erros[0], /menor que o prazo/)
   assert.match(conferir({ valor: 1e6, participacao: 120, prazo: 12, carencia: 0, custo: 'tlp' }).erros[0], /1% a 100%/)
@@ -25,6 +27,13 @@ test('regras: prazo, carência (menor com TFB), participação de 1% a 100%, tet
   assert.equal(conferir({ valor: 200e6, participacao: 100, prazo: 60, carencia: 6, custo: 'tfb' }).avisos.length, 2)
   assert.equal(conferir({ valor: 30e6, participacao: 50, prazo: 60, carencia: 6, custo: 'tfb' }).avisos.length, 0)
   assert.deepEqual([24, 36, 37, 60, 61, 84, 100].map(faixaTfb), [36, 36, 60, 60, 84, 84, 120])
+  // TFC: faixa até 60 ou 61 a 120; série por porte (MPME em qualquer região tem série própria); nomes como nas Moedas Contratuais
+  assert.deepEqual([12, 60, 61, 84].map(faixaTfc), [60, 60, 120, 120])
+  assert.deepEqual([['grande', 60], ['grande', 84], ['mpme', 60], ['mpme', 84], ['mpme-nne', 36], ['mpme-nne', 72]].map(([p, m]) => codigoTfc(p, m)), ['C01', 'C02', 'C03', 'C04', 'C03', 'C04'])
+  assert.deepEqual(TFC_NOMES, { C01: 'TFC_60.90', C02: 'TFC_120.90', C03: 'TFC_MPME_60.90', C04: 'TFC_MPME_120.90' })
+  assert.deepEqual(CUSTOS.map((c) => c.id), ['tfc', 'tfb', 'tlp'])
+  assert.deepEqual(PORTES.map((p) => [p.id, p.taxa, p.mpme]), [['mpme-nne', 0.95, true], ['mpme', 1.25, true], ['grande', 1.25, false]])
+  assert.deepEqual(IOF_ZERO, { fixed: 0, daily: 0 }); assert.match(REGRAS.iof, /^Sem IOF por padrão/)
   assert.deepEqual(parseCommand('finame'), { kind: 'tab', id: 'calculadora', sub: 'finame-materiais' })
   assert.ok(FONTES.length >= 6 && FONTES.every((f) => f.regra && f.fonte && /^https:\/\//.test(f.url)))
   assert.deepEqual(COMPOSICOES.map((x) => x.id), ['capitalizada', 'somada'])
@@ -61,8 +70,10 @@ test('cenário 1 · TFB, SAC, carência de 12 meses com juros trimestrais (fórm
 
 // Cenário 2: TFB, Price, sem carência, 24 meses, IOF de pessoa jurídica (padrão), participação de 80%.
 test('cenário 2 · TFB, Price sem carência, participação de 80% e IOF de pessoa jurídica conferido por fora', () => {
-  const r = simular({ valor: 500_000, participacao: 80, prazo: 24, carencia: 0, custo: 'tfb', custoFinanceiro: 15.906, taxaBndes: 1.25, taxaAgente: 2.5, sistema: 'price', periodicidade: 1 })
+  const r = simular({ valor: 500_000, participacao: 80, prazo: 24, carencia: 0, custo: 'tfb', custoFinanceiro: 15.906, taxaBndes: 1.25, taxaAgente: 2.5, sistema: 'price', periodicidade: 1, iof: IOF_PJ })
   assert.ok(r.ok); assert.equal(r.financiado, 400_000); assert.equal(r.recursosProprios, 100_000)
+  const padrao = simular({ valor: 500_000, participacao: 80, prazo: 24, carencia: 0, custo: 'tfb', custoFinanceiro: 15.906, taxaBndes: 1.25, taxaAgente: 2.5, sistema: 'price', periodicidade: 1 })
+  assert.equal(padrao.iof, 0, 'padrão: sem IOF (prática de mercado no Finame)'); perto(padrao.total, 400_000 + padrao.juros, 1e-6, 'total sem IOF')
   const i = mensal(taxaFinal(15.906, 1.25, 2.5)), n = 24, pmt = (400_000 * i) / (1 - (1 + i) ** -n)
   perto(r.primeiraParcela, pmt, 1e-6, 'PMT'); perto(r.ultimaParcela, pmt, 1e-6, 'PMT final')
   assert.ok(r.parcelas.every((p) => Math.abs(p.parcela - pmt) < 1e-6), 'Price: todas iguais')
@@ -125,9 +136,9 @@ test('cenário 5 · TLP, SAC, carência trimestral: números da conferência ind
   assert.ok(r.correcao > 80_000 && r.correcao < 90_000, 'correção pelo IPCA em 5 anos'); perto(r.total, 500_000 + r.correcao + r.juros, 1e-6, 'total')
   // IOF na TLP: sobre o principal entregue, não sobre a amortização corrigida; com 12 de carência toda parcela passa de 365 dias,
   // então o diário é o teto: 500.000 × 365 × 0,0082% = 14.965,00; mais 0,38% = 1.900,00 → 16.865,00 (igual ao mesmo prazo em TFB)
-  const comIof = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tlp', custoFinanceiro: 7.72, ipca: 5.2166, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 })
+  const comIof = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tlp', custoFinanceiro: 7.72, ipca: 5.2166, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3, iof: IOF_PJ })
   perto(comIof.iofFixo, 1_900, 1e-6, 'IOF fixo'); perto(comIof.iofDiario, 14_965, 1e-6, 'IOF diário no teto'); perto(comIof.iof, 16_865, 1e-6, 'IOF TLP')
-  const tfb = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfb', custoFinanceiro: 16.5216, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 })
+  const tfb = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfb', custoFinanceiro: 16.5216, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3, iof: IOF_PJ })
   perto(tfb.iof, comIof.iof, 1e-6, 'o IOF não depende do IPCA')
   perto(comIof.total, 500_000 + comIof.correcao + comIof.juros + 16_865, 1e-6, 'total com IOF')
 })
@@ -141,20 +152,33 @@ test('cenário 6 · TLP com Price: prestação cresce com o IPCA e zera o saldo;
   perto(r.parcelas.at(-1).saldo, 0, 1e-6, 'saldo')
   perto(r.parcelas.reduce((a, p) => a + p.principal, 0), 200_000, 1e-6, 'Price corrigido: os principais somam o financiado')
   // IOF sem carência: dias crescem 30, 61, 91… até 365 a partir da 12ª parcela; base = Σ principal_k × dias_k
-  const pj = simular({ valor: 200_000, participacao: 100, prazo: 24, carencia: 0, custo: 'tlp', custoFinanceiro: 7.72, ipca: 4, taxaBndes: 1.25, taxaAgente: 2, sistema: 'price', periodicidade: 1 })
+  const pj = simular({ valor: 200_000, participacao: 100, prazo: 24, carencia: 0, custo: 'tlp', custoFinanceiro: 7.72, ipca: 4, taxaBndes: 1.25, taxaAgente: 2, sistema: 'price', periodicidade: 1, iof: IOF_PJ })
   const base = pj.parcelas.reduce((a, p) => a + p.principal * Math.min(Math.round((p.mes * 365) / 12), 365), 0)
   perto(pj.iofDiario, (base * 0.0082) / 100, 1e-6, 'IOF diário sobre o principal'); assert.ok(pj.iof < 200_000 * 0.03373 + 1e-6)
   const somada = simular({ valor: 200_000, participacao: 100, prazo: 24, carencia: 0, custo: 'tlp', custoFinanceiro: 7.72, ipca: 4, taxaBndes: 1.25, taxaAgente: 2, sistema: 'price', periodicidade: 1, composicao: 'somada', iof: SEM_IOF })
   perto(somada.taxa, 10.97, 1e-9, 'somada'); assert.ok(somada.taxa < r.taxa && somada.juros < r.juros)
 })
 
-test('invariantes em 72 combinações: saldo zera, amortizações devolvem o principal (corrigido), total fecha, SAC decresce, Price constante quando nominal', () => {
+// Cenário 7: TFC (prefixada) com os valores do BNDES de 04/11/2026: TFC_MPME_60.90 = 14,1743%, BNDES 1,25%, agente 3%, R$ 500 mil, 60/12 trimestral, SAC.
+test('cenário 7 · TFC MPME, SAC, carência trimestral: taxa capitalizada e parcelas pela fórmula fechada', () => {
+  const r = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfc', custoFinanceiro: 14.1743, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 })
+  assert.ok(r.ok)
+  const F = 500_000, taxa = (1.141743 * 1.0125 * 1.03 - 1) * 100, i = mensal(taxa), n = 48
+  perto(r.taxa, taxa, 1e-9, 'taxa'); perto(r.taxa, 19.0695, 1e-4, 'taxa arredondada'); perto(r.taxaNominal, r.taxa, 1e-12, 'TFC é nominal')
+  perto(r.parcelas[2].parcela, F * ((1 + i) ** 3 - 1), 1e-6, 'juros do 1º trimestre'); perto(r.jurosCarencia, 4 * F * ((1 + i) ** 3 - 1), 1e-6, 'carência')
+  perto(r.primeiraParcela, F / n + F * i, 1e-6, 'P1'); perto(r.ultimaParcela, (F / n) * (1 + i), 1e-6, 'Pn')
+  perto(r.juros, r.jurosCarencia + (i * F * (n + 1)) / 2, 1e-6, 'juros totais'); assert.equal(r.iof, 0); assert.equal(r.correcao, 0); perto(r.total, F + r.juros, 1e-6, 'total')
+  const tfb = simular({ valor: 500_000, participacao: 100, prazo: 60, carencia: 12, custo: 'tfb', custoFinanceiro: 16.5216, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 })
+  assert.ok(r.juros < tfb.juros, 'na data, a TFC sai mais barata que a TFB')
+})
+
+test('invariantes em 108 combinações: saldo zera, amortizações devolvem o principal (corrigido), total fecha, SAC decresce, Price constante quando nominal', () => {
   let casos = 0
-  for (const custo of ['tfb', 'tlp']) for (const sistema of ['sac', 'price']) for (const periodicidade of [1, 3, 6]) for (const carencia of [0, 5, 12]) for (const composicao of ['capitalizada', 'somada']) {
-    const r = simular({ valor: 750_000, participacao: 90, prazo: 48, carencia, custo, custoFinanceiro: custo === 'tfb' ? 17.01 : 7.72, ipca: 4.52, taxaBndes: 1.25, taxaAgente: 3.5, sistema, periodicidade, composicao })
+  for (const custo of ['tfc', 'tfb', 'tlp']) for (const sistema of ['sac', 'price']) for (const periodicidade of [1, 3, 6]) for (const carencia of [0, 5, 12]) for (const composicao of ['capitalizada', 'somada']) {
+    const r = simular({ valor: 750_000, participacao: 90, prazo: 48, carencia, custo, custoFinanceiro: custo === 'tfb' ? 17.01 : custo === 'tfc' ? 14.4173 : 7.72, ipca: 4.52, taxaBndes: 1.25, taxaAgente: 3.5, sistema, periodicidade, composicao, iof: IOF_PJ })
     assert.ok(r.ok, `${custo} ${sistema} ${periodicidade} ${carencia}`)
     casos++
-    const nominal = custo === 'tfb'
+    const nominal = custo !== 'tlp'
     perto(r.parcelas.at(-1).saldo, 0, 1e-6, 'saldo final')
     assert.equal(r.parcelas.length, 48); assert.equal(r.parcelasAmortizacao, 48 - carencia)
     perto(r.parcelas.reduce((a, p) => a + p.amortizacao, 0), r.financiado + r.correcao, 1e-4, 'amortizações = principal corrigido')
@@ -173,7 +197,7 @@ test('invariantes em 72 combinações: saldo zera, amortizações devolvem o pri
     perto(r.parcelas.reduce((a, p) => a + p.iof, 0), r.iofDiario, 1e-6, 'IOF por parcela soma o diário')
     perto(r.parcelas.reduce((a, p) => a + p.principal, 0), r.financiado, 1e-4, 'os principais (sem correção) devolvem o financiado')
   }
-  assert.equal(casos, 72)
+  assert.equal(casos, 108)
   const z = simular({ valor: 100_000, participacao: 100, prazo: 12, carencia: 0, custo: 'tfb', custoFinanceiro: 15.9, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', iof: SEM_IOF })
   assert.equal(z.iof, 0); assert.equal(iofCronograma(100_000, z.parcelas, SEM_IOF).total, 0)
   const ruim = simular({ valor: 500_000, participacao: 100, prazo: 90, carencia: 30, custo: 'tlp', custoFinanceiro: 7.72, ipca: 4, taxaBndes: 1.25, taxaAgente: 3 })

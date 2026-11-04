@@ -7,37 +7,41 @@ export const REGRAS = {
   conferidoEm: '2026-11-04',
   prazoMaxMeses: 84, // até 7 anos
   carenciaMaxMeses: 24, // até 2 anos
-  carenciaMaxTfbMeses: 12, // com TFB ou taxa fixa composta, carência de até 1 ano
+  carenciaMaxTfbMeses: 12, // com TFB, Taxa Fixa Composta ou Taxa Fixa Composta MPME, carência de até 1 ano
   participacaoMinPct: 1,
   participacaoMaxPct: 100,
   tetoOperacao: 20_000_000, // por operação
   tetoCliente12m: 150_000_000, // por cliente a cada 12 meses, da homologação
-  taxaBndes: { 'mpme-nne': 0.95, demais: 1.25 }, // % a.a.; 1,25% vale desde 22/01/2026 (antes, 1,15%)
+  taxaBndes: { 'mpme-nne': 0.95, mpme: 1.25, grande: 1.25 }, // % a.a. (página do produto, lida em 04/11/2026); 1,25% desde 22/01/2026 segundo a Abimaq
   selicSuspensa: 'Circular SUP/ADIG nº 09/2026, de 22/01/2026 (altera a Circular SUP/ADIG nº 13/2022)',
   reembolsoMeses: 12, // notas fiscais emitidas até 12 meses antes do protocolo
   itens: 'bens industrializados novos, de fabricação nacional e credenciados no BNDES (cerca de 2.500 itens por NCM), usados na atividade do cliente',
   foraDoProduto: 'alimentos, bebidas, combustíveis, lubrificantes e máquinas ou equipamentos credenciáveis no CFI (esses vão para o Finame tradicional)',
   nacionalizacao: 'conteúdo importado de até 40% ou cumprimento do Processo Produtivo Básico (PPB), conforme o credenciamento',
-  // IOF: a alíquota zero que valia para operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015;
-  // a operação indireta paga o IOF de crédito de pessoa jurídica (Decreto 12.499/2025: 0,38% adicional + 0,0082% ao dia, até 365 dias).
-  // Hipóteses de alíquota zero que restam (ex.: art. 8º, XV, recursos de fundos ou programas governamentais) dependem do funding e são controversas.
-  iof: 'IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025, com eficácia restabelecida pelo STF na ADI 7827, em julho de 2025). Optante do Simples Nacional em operação de até R$ 30 mil paga 0,38% mais 0,00274% ao dia: ajuste a alíquota diária. A alíquota zero das operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015; só hipóteses específicas (ex.: recursos de fundos ou programas governamentais, art. 8º, XV) seguem com zero, e o agente confirma',
+  // IOF: na prática de mercado o Finame Materiais é contratado sem IOF (comunicado Abimaq de 16/01/2026 sobre as condições do produto;
+  // é também a prática dos agentes). A base legal é controversa: a alíquota zero geral das operações do BNDES (Decreto 6.306/2007,
+  // art. 8º, XXX) foi revogada pelo Decreto 8.511/2015; permanecem hipóteses de alíquota zero por funding/programa governamental (art. 8º,
+  // XV; recursos do FAT), aplicadas pelos agentes. Se o agente cobrar, vale o IOF de crédito PJ: 0,38% + 0,0082% ao dia (Decreto 12.499/2025).
+  iof: 'Sem IOF por padrão: o Finame Materiais é contratado sem incidência de IOF na prática de mercado (condições divulgadas pela Abimaq em 16/01/2026) e o agente confirma na proposta. Se houver cobrança, vale o IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025; optante do Simples Nacional até R$ 30 mil: 0,00274% ao dia). Base legal: a alíquota zero geral das operações do BNDES (Decreto 6.306/2007, art. 8º, XXX) foi revogada pelo Decreto 8.511/2015; permanece a alíquota zero por funding ou programa governamental (art. 8º, XV), que os agentes aplicam às operações com recursos do FAT',
 }
 // Base legal e fontes de cada regra (o que foi confirmado e como). "indexada": trecho da página oficial lido pelo buscador; a página em si não abriu nesta rede.
 export const FONTES = [
-  { regra: 'Prazo de até 84 meses; carência de até 24 (12 com TFB ou taxa fixa composta); participação até 100%; teto de R$ 150 milhões por cliente em 12 meses', fonte: 'Página do produto BNDES Finame Materiais Industrializados (indexada em 04/11/2026)', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
-  { regra: 'Teto de R$ 20 milhões por operação; notas de até 12 meses antes do protocolo; itens, exclusões e nacionalização', fonte: 'Observatório da Indústria RS, Fomento Paraná, Banestes e e-book CNI 2025 (secundárias; o teto por operação aguarda conferência na página oficial)', url: 'https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/' },
-  { regra: 'Taxa do BNDES de 0,95% a.a. (MPME N/NE) ou 1,25% a.a. (demais), composta com o custo financeiro e a taxa do agente, negociada', fonte: 'Página do produto (indexada) e apresentação do BNDES de 12/03/2026 (0,95% ou 1,25%); a data da mudança de 1,15% para 1,25%, 22/01/2026, vem de comunicado Abimaq e aguarda conferência primária', url: 'https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/' },
-  { regra: 'Selic suspensa como custo financeiro, por tempo indeterminado', fonte: 'Aviso nas páginas de produto do BNDES: Circular SUP/ADIG nº 09/2026, de 22/01/2026, que altera a Circular SUP/ADIG nº 13/2022', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros' },
-  { regra: 'TLP: parcela prefixada (taxa real) mais IPCA; TFB: taxa prefixada do BNDES por faixa de prazo e prazo de liberação', fonte: 'Lei 13.483/2017 e Resolução CMN 4.600/2017 (TLP); guia de custos financeiros do BNDES (TFB)', url: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13483.htm' },
-  { regra: 'IOF de crédito PJ (0,38% + 0,0082% ao dia, sobre o principal de cada parcela, até 365 dias); Simples Nacional 0,00274% ao dia até R$ 30 mil; revogação da alíquota zero do BNDES', fonte: 'Decreto 6.306/2007, art. 7º, I, b e § 1º, e art. 8º (inciso XXX revogado pelo Decreto 8.511/2015; Aviso SUP/AOI 28/2015 do BNDES); Decreto 12.499/2025; STF, ADI 7827 (cautelar de 16/07/2025)', url: 'https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm' },
+  { regra: 'Custo financeiro: TFB, TFBD, TLP, Taxa LCD, Taxa Fixa Composta ou Taxa Fixa Composta MPME; taxa do BNDES de 0,95% a.a. (MPME N/NE) ou 1,25% a.a. (MPME nas demais regiões e grandes); taxa do agente negociada; Selic suspensa (Circular SUP/ADIG nº 09/2026, de 22/01/2026)', fonte: 'Página do produto BNDES Finame Materiais Industrializados, lida em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
+  { regra: 'Prazo total de até 7 anos, com até 2 anos de carência (1 ano com TFB, Taxa Fixa Composta ou Taxa Fixa Composta MPME); participação de até 100% dos itens financiáveis; limite de R$ 150 milhões por cliente a cada 12 meses da homologação; notas emitidas até 12 meses antes do protocolo; garantia livre, FGI admitido', fonte: 'Página do produto, lida em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados' },
+  { regra: 'Teto de R$ 20 milhões por operação; itens, exclusões e nacionalização (conteúdo importado até 40% ou PPB)', fonte: 'Itens e nacionalização na página do produto; o teto por operação vem de Observatório da Indústria RS, Fomento Paraná e e-book CNI 2025 (secundárias; não consta na página oficial lida em 04/11/2026)', url: 'https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/' },
+  { regra: 'TFC (Taxa Fixa Composta): prefixada, combinação de duas taxas fixas; séries TFC_60.90, TFC_120.90, TFC_MPME_60.90 e TFC_MPME_120.90 (códigos C01 a C04) por faixa de prazo (até 60 ou 61 a 120 meses) e porte, com liberação em 90 dias; TFB por faixa de prazo e liberação em 30 ou 90 dias', fonte: 'Guia de custos financeiros e Moedas Contratuais do BNDES, lidos em 04/11/2026; séries coletadas pelo painel (aba BNDES)', url: 'https://www.bndes.gov.br/moedas' },
+  { regra: 'Composição da taxa final: fator do custo financeiro × fator da taxa do BNDES × fator da taxa do agente − 1 (exemplo oficial: 1,07 × 1,015 × 1,03 − 1 = 11,86% a.a.)', fonte: 'Guia "Taxa de juros" do BNDES, lido em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros' },
+  { regra: 'TLP: parcela prefixada (taxa real) mais IPCA', fonte: 'Lei 13.483/2017 e Resolução CMN 4.600/2017; guia de custos financeiros do BNDES', url: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13483.htm' },
+  { regra: 'IOF: sem incidência na prática de mercado; se cobrado, crédito PJ 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias', fonte: 'Condições do Finame Materiais divulgadas pela Abimaq em 16/01/2026 ("sem incidência de IOF"); Decreto 6.306/2007, art. 7º, I, b e § 1º, e art. 8º (inciso XXX revogado pelo Decreto 8.511/2015; inciso XV); Decreto 12.499/2025; STF, ADI 7827 (cautelar de 16/07/2025)', url: 'https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/' },
 ]
 export const PORTES = [
-  { id: 'mpme-nne', label: 'MPME no Norte ou Nordeste', taxa: REGRAS.taxaBndes['mpme-nne'] },
-  { id: 'demais', label: 'MPME nas demais regiões ou grande empresa', taxa: REGRAS.taxaBndes.demais },
+  { id: 'mpme-nne', label: 'MPME no Norte ou Nordeste', taxa: REGRAS.taxaBndes['mpme-nne'], mpme: true },
+  { id: 'mpme', label: 'MPME nas demais regiões', taxa: REGRAS.taxaBndes.mpme, mpme: true },
+  { id: 'grande', label: 'Grande empresa', taxa: REGRAS.taxaBndes.grande, mpme: false },
 ]
 export const CUSTOS = [
-  { id: 'tfb', label: 'TFB (prefixada)', hint: 'Taxa Fixa do BNDES, cotada na contratação, por faixa de prazo e prazo de liberação (30 ou 90 dias).' },
+  { id: 'tfc', label: 'TFC (prefixada)', hint: 'Taxa Fixa Composta: prefixada, combinação de duas taxas fixas do BNDES, com série própria para MPME, por faixa de prazo (até 60 ou 61 a 120 meses) e liberação em 90 dias. Carência de até 12 meses.' },
+  { id: 'tfb', label: 'TFB (prefixada)', hint: 'Taxa Fixa do BNDES, cotada na contratação, por faixa de prazo e prazo de liberação (30 ou 90 dias). Carência de até 12 meses.' },
   { id: 'tlp', label: 'TLP + IPCA', hint: 'TLP é a parcela prefixada em termos reais (Lei 13.483/2017); o saldo é corrigido pelo IPCA. A conta usa o IPCA esperado (Focus) como projeção.' },
 ]
 export const PERIODICIDADES = [
@@ -58,6 +62,12 @@ export const COMPOSICOES = [
 
 // Faixa da TFB pelo prazo total da operação (a tabela do BNDES é por faixa: até 36, 36 a 60, 60 a 84, 84 a 120 meses).
 export const faixaTfb = (prazoMeses) => (prazoMeses <= 36 ? 36 : prazoMeses <= 60 ? 60 : prazoMeses <= 84 ? 84 : 120)
+// Faixa da TFC pelo prazo total (até 60 ou 61 a 120 meses) e código da série nas Moedas Contratuais, por porte (MPME tem série própria).
+export const faixaTfc = (prazoMeses) => (prazoMeses <= 60 ? 60 : 120)
+export const TFC_CODIGOS = { grande: { 60: 'C01', 120: 'C02' }, mpme: { 60: 'C03', 120: 'C04' } }
+export const TFC_NOMES = { C01: 'TFC_60.90', C02: 'TFC_120.90', C03: 'TFC_MPME_60.90', C04: 'TFC_MPME_120.90' }
+export const codigoTfc = (porte, prazoMeses) => TFC_CODIGOS[PORTES.find((p) => p.id === porte)?.mpme ? 'mpme' : 'grande'][faixaTfc(prazoMeses)]
+export const CUSTOS_FIXOS = new Set(['tfb', 'tfc'])
 
 // Taxa final da operação indireta (todas em % a.a.).
 export const taxaFinal = (custo, bndes, agente, composicao = 'capitalizada') => (composicao === 'somada' ? custo + bndes + agente : ((1 + custo / 100) * (1 + bndes / 100) * (1 + agente / 100) - 1) * 100)
@@ -74,8 +84,9 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
   else if (prazo > REGRAS.prazoMaxMeses) erros.push(`Prazo total acima do máximo do produto: ${REGRAS.prazoMaxMeses} meses (7 anos).`)
   if (!Number.isInteger(carencia) || carencia < 0) erros.push('Informe a carência em meses (0 se não houver).')
   else {
-    const max = custo === 'tfb' ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses
-    if (carencia > max) erros.push(`Carência acima do máximo: ${max} meses${custo === 'tfb' ? ' com TFB (1 ano)' : ' (2 anos)'}.`)
+    const fixa = CUSTOS_FIXOS.has(custo)
+    const max = fixa ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses
+    if (carencia > max) erros.push(`Carência acima do máximo: ${max} meses${fixa ? ` com ${custo.toUpperCase()} (1 ano)` : ' (2 anos)'}.`)
     if (Number.isInteger(prazo) && prazo >= 1 && carencia >= prazo) erros.push('A carência precisa ser menor que o prazo total.')
   }
   const financiado = valor > 0 && participacao > 0 ? (valor * participacao) / 100 : 0
@@ -137,9 +148,10 @@ export function vencimento(liberacao, mes) {
   return new Date(d.getFullYear(), d.getMonth() + mes, Math.min(d.getDate(), alvo.getDate()))
 }
 
-// Resumo da operação. Entradas em % a.a. e R$. Na TFB, custoFinanceiro é a TFB e a taxa é nominal. Na TLP, custoFinanceiro é a
+// Resumo da operação. Entradas em % a.a. e R$. Na TFB e na TFC, custoFinanceiro é a taxa fixa e a taxa é nominal. Na TLP, custoFinanceiro é a
 // TLP (parcela prefixada, real) e `ipca` é a projeção anual: a taxa de juros composta é real e o saldo é corrigido pelo IPCA.
-export function simular({ valor, participacao = 100, prazo, carencia = 0, custo, custoFinanceiro, ipca = 0, taxaBndes, taxaAgente, sistema = 'sac', periodicidade = 1, composicao = 'capitalizada', iof = IOF_PJ }) {
+export const IOF_ZERO = { fixed: 0, daily: 0 }
+export function simular({ valor, participacao = 100, prazo, carencia = 0, custo, custoFinanceiro, ipca = 0, taxaBndes, taxaAgente, sistema = 'sac', periodicidade = 1, composicao = 'capitalizada', iof = IOF_ZERO }) {
   const check = conferir({ valor, participacao, prazo, carencia, custo })
   const iofOk = iof && [iof.fixed, iof.daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
   const ipcaOk = custo !== 'tlp' || (Number.isFinite(ipca) && ipca >= -50 && ipca <= 100)
