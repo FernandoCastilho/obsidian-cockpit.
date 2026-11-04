@@ -3,6 +3,7 @@ import './Calculadora.css'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
 import { IOF_PJ, SYSTEMS, compareSystems, parseDecimal } from './emprestimo.js'
+import FinimpComparacao, { FinimpIcon } from './FinimpComparacao.jsx'
 import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -21,6 +22,7 @@ function GiroIcon() {
 }
 
 const CALCS = [
+  { id: 'finimp', title: 'FINIMP', sub: 'Concorrente × Itaú, prazos alternativos e atingir meta de custo', Icon: FinimpIcon },
   { id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon },
   { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxa final, carência, SAC ou Price e cronograma, com TFB ou TLP do painel', Icon: FinameIcon },
 ]
@@ -155,6 +157,7 @@ function CapitalDeGiro({ onBack }) {
 
 // Aba Calculadoras: lista de calculadoras (ícones) e a calculadora aberta, com endereço próprio (#calculadora/giro).
 export default function Calculadora({ view, onView }) {
+  if (view === 'finimp') return <FinimpComparacao onBack={() => onView('')} />
   if (view === 'giro') return <CapitalDeGiro onBack={() => onView('')} />
   if (view === 'finame-materiais') return <FinameMateriais onBack={() => onView('')} />
   return (
