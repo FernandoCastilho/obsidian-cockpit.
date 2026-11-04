@@ -6,18 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Séries TFC no serviço de taxas e nas moedas contratuais
-        run: |
-          for k in TFC_60.90 TFC_120.90 TFC_MPME_60.90 TFC_MPME_120.90 TFC_TR_60.90 TFC_TR_120.90 TFC_TR_MPME_60 TFC_TR_MPME_120 TFC_TR_GRANDE_60 TFC_TR_GRANDE_120 TFC_SOB_MPME_60.90 TFC_SOB_GRANDE_60.90 TFB_60_30; do
-            echo "=== taxas/$k"; curl -sS -m 40 -A 'Mozilla/5.0' -e 'https://www.bndes.gov.br/' -o /tmp/s.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/apoioFinanceiro/rest/taxas/$k.txt" || true; head -c 160 /tmp/s.txt | head -2; echo; tail -n 2 /tmp/s.txt
-          done
-          for c in C01 C02 C03 C04 C05 C06 C12 C13 C15 C16 C17 C18 777; do
-            echo "=== Moedas/um$c.txt"; curl -sS -m 40 -A 'Mozilla/5.0' -o /tmp/m.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/Moedas/um$c.txt" || true; head -n 3 /tmp/m.txt; echo ...; tail -n 3 /tmp/m.txt
-          done
       - name: Base legal do IOF e prática de mercado
         run: |
           pip -q install html2text >/dev/null 2>&1 || true
-          for u in "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm" "https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/" "https://www.bb.com.br/site/pro-sua-empresa/financiamentos/bndes/bndes-finame/" "https://www.itau.com.br/empresas/credito-financiamento/bndes/finame/" "https://banco.bradesco/html/pessoajuridica/produtos-servicos/emprestimo-e-financiamento/bndes/bndes-finame.shtm" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxa-fixa-composta"; do
-            echo; echo "################ $u"; curl -sSL -m 60 -A 'Mozilla/5.0' -o /tmp/p.html -w 'HTTP %{http_code} bytes %{size_download}\n' "$u" || true
-            python3 cotacoes/scripts/sonda/iof.py "$u" /tmp/p.html || true
+          sudo apt-get -qq install -y poppler-utils >/dev/null 2>&1 || true
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
+          for u in "https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html" "http://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm" "https://static.portaldaindustria.com.br/media/filer_public/52/f1/52f1e555-9795-443f-909b-1d13b0a2c79d/e-book_nac_bndes__finamemateriais_14072025_vf.pdf" "https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/" "https://www.inspiramais.com.br/pdf/200323_BNDES%20Finame%20Materiais.pdf" "https://observatoriodaindustriars.org.br/solucao/bndes-finame-materiais/" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/perguntas-frequentes"; do
+            echo; echo "################ $u"; curl -sSL -m 60 -A "$UA" -H 'Accept: text/html,application/pdf,*/*' -H 'Accept-Language: pt-BR,pt;q=0.9' -o /tmp/p.html -w 'HTTP %{http_code} bytes %{size_download}\n' "$u" || true
+            [ -s /tmp/p.html ] && python3 cotacoes/scripts/sonda/iof.py "$u" /tmp/p.html || true
           done
