@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { useState } from 'react'
 import { cascade } from './motion.js'
 import { useWidth } from './HistoryChart.jsx'
@@ -44,7 +45,7 @@ export default function IpcaGrupoChart({ name, months, onClose }) {
       </p>
       <div ref={ref}>
         {width > 0 && (
-          <svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} aria-label={`Barras da variação mensal de ${name}. Use as setas para percorrer os meses.`} onKeyDown={onKey} onFocus={() => setSel((s) => s ?? last12.length - 1)} onBlur={() => setSel(null)} onMouseLeave={() => setSel(null)}>
+          <ChartComparison series={[{ key: name, name, points: last12.map(m=>({t:Date.parse(m.period+'-15T12:00:00Z'),v:m.mom})) }]} history={[{ key:name, points: months.map(m=>({t:Date.parse(m.period+'-15T12:00:00Z'),v:m.mom})) }]} frequency="month" rate compound margin={M} categorical><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} aria-label={`Barras da variação mensal de ${name}. Use as setas para percorrer os meses.`} onKeyDown={onKey} onFocus={() => setSel((s) => s ?? 0)} onBlur={() => setSel(null)} onMouseLeave={() => setSel(null)}>
             {ticks.map((v) => (
               <g key={v}>
                 <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke={v === 0 ? 'var(--mut)' : 'var(--line)'} strokeDasharray={v === 0 ? '4 3' : undefined} />
@@ -63,7 +64,7 @@ export default function IpcaGrupoChart({ name, months, onClose }) {
                 </g>
               )
             })}
-          </svg>
+          </svg></ChartComparison>
         )}
       </div>
       <p className="chart-access-text" role="status" aria-live="polite">{cur && `${mesAno(cur.period)}: ${cur.mom == null ? 'sem dado' : `${sg(cur.mom)}% no mês`}${cur.contribution != null ? `, contribuição ${sg(cur.contribution)} p.p.` : ''}`}</p>

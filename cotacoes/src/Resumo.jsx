@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
 import RefreshButton from './RefreshButton.jsx'
@@ -170,7 +171,7 @@ function endLabels(norm, y) {
 }
 
 // Linhas sobrepostas em variação % desde o início do período (escalas diferentes ficam comparáveis).
-function MultiPlot({ series, width, intraday }) {
+function MultiPlot({ series, width, intraday, history = series }) {
   const H = 240
   const M = { t: 12, r: 64, b: 28, l: 52 }
   const [hover, setHover] = useState(null)
@@ -204,7 +205,7 @@ function MultiPlot({ series, width, intraday }) {
     if (next != null) { e.preventDefault(); setHover(times[next]) }
   }
   return (
-    <><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} onKeyDown={onKey} onFocus={() => setHover(t0)} aria-label="Variação percentual das moedas selecionadas no período; use setas, Home e End para consultar amostras" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
+    <><ChartComparison margin={M} series={series.map(s=>({key:s.code,name:s.code,points:s.points}))} history={history.map(s=>({key:s.code,points:s.points}))} unavailable={intraday ? 'A visão intradiária não contém histórico anual comparável.' : ''}><svg className="hist-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} onKeyDown={onKey} onFocus={() => setHover(t0)} aria-label="Variação percentual das moedas selecionadas no período; use setas, Home e End para consultar amostras" onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={() => setHover(null)} style={{ touchAction: 'pan-y' }}>
       {yTicks.map((v) => (
         <g key={v}>
           <line x1={M.l} x2={width - M.r} y1={y(v)} y2={y(v)} stroke="var(--line)" />
@@ -253,7 +254,7 @@ function MultiPlot({ series, width, intraday }) {
           })()}
         </g>
       )}
-    </svg><p className="chart-access-text" role="status" aria-live="polite">{hover != null && `${fmtX(hover)} · ${norm.map(s => s.code + ': ' + pct(at(s,hover).v)).join(' · ')}`}</p></>
+    </svg></ChartComparison><p className="chart-access-text" role="status" aria-live="polite">{hover != null && `${fmtX(hover)} · ${norm.map(s => s.code + ': ' + pct(at(s,hover).v)).join(' · ')}`}</p></>
   )
 }
 
@@ -310,7 +311,7 @@ function ResumoChart({ colors, spark, selection: sel, onSelection: setSel, onPre
           one ? (
             <Plot points={r0.points} history={dia ? undefined : centralFull(central.data, r0.code, r0.source)} width={wv} color={r0.color} code={`rs-${r0.code}-${spark.id}`} intraday={dia} fmt={(v) => brl(v)} vfmt={(v) => v.toLocaleString('pt-BR', { minimumFractionDigits: v < 0.1 ? 5 : 4, maximumFractionDigits: v < 0.1 ? 5 : 4 })} labels label={`${r0.source ?? r0.code}/BRL`} />
           ) : (
-            <MultiPlot series={comparable} width={wv} intraday={dia} />
+            <MultiPlot series={comparable} history={comparable.map(s=>({...s,points:dia ? s.points : centralFull(central.data,s.code,s.source)}))} width={wv} intraday={dia} />
           )
         ) : (
           <div className="placeholder" style={{ height: 120 }}>

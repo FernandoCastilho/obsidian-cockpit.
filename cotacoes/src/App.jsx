@@ -1,3 +1,4 @@
+import GlobalSearch, { SearchDestination } from './GlobalSearch.jsx'
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { dataTimestamp } from './dataTimestamp.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
@@ -176,6 +177,7 @@ export default function App() {
     const h = i < 0 ? raw : raw.slice(0, i), sub = i < 0 ? '' : raw.slice(i + 1) // o BNDES guarda série e período depois da primeira barra
     return { tab: TABS.some((t) => t.id === h) ? h : 'resumo', sub }
   }
+  const [searchSelection, setSearchSelection] = useState(null)
   const [tab, setTab] = useState(() => readHash().tab)
   const [sub, setSub] = useState(() => readHash().sub)
   useEffect(() => {
@@ -256,6 +258,7 @@ export default function App() {
     <ConceitoDiario ready={avisoFechado} goto={goto} />
     <Recado />
     <Laser />
+    <GlobalSearch onNavigate={(doc, query) => { const [id,...rest]=doc.route.split('/'); goto(id,rest.join('/')); setSearchSelection({doc,query}) }} />
     <header className="term-head">
       <TopBar tab={tab} onTab={(id) => goto(id)} feed={feed} feedAt={feedAt} feedLabel={health.label} feedTitle={health.observedAt ? health.label + ' · Referência mais antiga: ' + dataTimestamp(health.observedAt) : health.detail} />
       <Tape quotes={quotes} rates={rates} oil={oil.data} />
@@ -277,6 +280,7 @@ export default function App() {
         </div>
       )}
       <AlertaVariacao quotes={quotes} />
+      <SearchDestination selection={searchSelection?.doc.route === `${tab}${sub ? '/' + sub : ''}` ? searchSelection : null} onClose={() => setSearchSelection(null)} />
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
           {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{tab === 'setores' ? 'Setores e Insumos' : TABS.find((t) => t.id === tab).label}</h1>}

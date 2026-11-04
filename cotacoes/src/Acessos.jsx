@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { useDataFile } from './useDataFile.js'
 import { SITE_HOST } from './acessos.js'
@@ -95,14 +96,14 @@ export function AcessosPanel() {
             <div><small>Últimos 7 dias</small><b>{n(d.semana?.visitantes)}</b><small>visitantes · {n(d.semana?.views)} visualizações</small></div>
           </div>
           {dias.length > 0 && (
-            <div className="acessos-dias" role="img" aria-label={`Visitantes por dia nos últimos ${dias.length} dias`}>
+            <ChartComparison html categorical margin={{l:0,r:0,t:0,b:0}} frequency="day" series={[{key:'visitors',name:'Visitantes',points:dias.map(x=>({t:Date.parse(x.d+'T12:00:00Z'),v:x.visitantes}))}]} history={[{key:'visitors',points:(d.dias || []).map(x=>({t:Date.parse(x.d+'T12:00:00Z'),v:x.visitantes}))}]}><div data-comparison-plot className="acessos-dias" role="img" aria-label={`Visitantes por dia nos últimos ${dias.length} dias`}>
               {dias.map((x) => (
                 <span key={x.d} className="acessos-dia" title={`${x.d.split('-').reverse().join('/')}: ${n(x.visitantes)} visitantes, ${n(x.views)} visualizações`}>
                   <i style={{ height: `${Math.max(3, ((x.visitantes ?? 0) / max) * 100)}%` }} />
                   <small>{x.d.slice(8)}</small>
                 </span>
               ))}
-            </div>
+            </div></ChartComparison>
           )}
           {d.stale && <p className="status stale">Última leitura falhou; mostrando os números anteriores.</p>}
           <p className="muted acessos-nota">Contagem anônima, sem cookies e sem dado pessoal. Acessos de redes que bloqueiam o contador não entram. <a href={UMAMI_SHARE_URL} target="_blank" rel="noreferrer">Ver detalhes no Umami ↗</a></p>

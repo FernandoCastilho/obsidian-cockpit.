@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { useMemo, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
 import { niceTicks, valueAt } from './multiSeries.js'
@@ -8,7 +9,7 @@ const dmy = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', mon
 
 // Várias séries no mesmo gráfico. series: [{ key, name, color, points: [{ t, v }] }] (v já no modo escolhido).
 // A legenda mostra o valor de cada série na data sob o cursor; com até 8 séries também há um balão no gráfico.
-export default function MultiLinhas({ series, width, fmt, ariaLabel }) {
+export default function MultiLinhas({ series, width, fmt, ariaLabel, history = series, frequency = 'auto', rate = true, compareUnavailable = '', comparisonSeries = series, comparisonHistory = history }) {
   const [hover, setHover] = useState(null)
   const all = useMemo(() => series.flatMap((s) => s.points), [series])
   const dom = useMemo(() => {
@@ -37,8 +38,8 @@ export default function MultiLinhas({ series, width, fmt, ariaLabel }) {
   const hx = hoverAt != null ? x(hoverAt) : 0
   const bx = hx + 12 + bw > width - 4 ? hx - 12 - bw : hx + 12
   return (
-    <div className="ml">
-      <svg className="hist-svg ml-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} aria-label={ariaLabel} onKeyDown={onKey} onFocus={() => setHover(t1)} onBlur={() => setHover(null)}
+    <ChartComparison series={comparisonSeries} history={comparisonHistory} frequency={frequency} rate={rate} unavailable={compareUnavailable}><div className="ml">
+      <svg className="hist-svg ml-svg" viewBox={`0 0 ${width} ${H}`} width="100%" role="img" tabIndex={0} aria-label={ariaLabel} onKeyDown={onKey} onFocus={() => setHover(t0)} onBlur={() => setHover(null)}
         onMouseMove={onMove} onMouseLeave={() => setHover(null)} onTouchMove={(e) => onMove(e.touches[0] && { currentTarget: e.currentTarget, clientX: e.touches[0].clientX })}>
         {ticks.map((v) => (
           <g key={v}>
@@ -72,6 +73,6 @@ export default function MultiLinhas({ series, width, fmt, ariaLabel }) {
         ) })}
       </ul>
       <p className="chart-access-text" role="status" aria-live="polite">{hoverAt != null && `${dmy(hoverAt)} · ${series.map((s) => `${s.name}: ${at(s) ? fmt(at(s).v) : '—'}`).join(' · ')}`}</p>
-    </div>
+    </div></ChartComparison>
   )
 }

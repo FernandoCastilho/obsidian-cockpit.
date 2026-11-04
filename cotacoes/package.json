@@ -8,13 +8,16 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test test/*.test.mjs",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "predev": "node scripts/build-search-index.mjs",
+    "prebuild": "node scripts/build-search-index.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@babel/parser": "^7.29.9",
     "@eslint/js": "^9.39.5",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.39.5",

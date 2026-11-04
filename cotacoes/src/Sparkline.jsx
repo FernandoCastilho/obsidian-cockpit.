@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import { useId } from 'react'
 import { periodChange } from './stats.js'
 
@@ -16,7 +17,7 @@ export default function Sparkline({ points, tone, height = 44 }) {
   const t = tone ?? (periodChange(points) >= 0 ? 'up' : 'down')
   const color = t === 'up' ? 'var(--up)' : t === 'down' ? 'var(--down)' : 'var(--mut)'
   return (
-    <svg viewBox={`0 0 ${W} ${height}`} className="spark" preserveAspectRatio="none" aria-hidden="true">
+    <ChartComparison compact margin={{l:0,r:0,t:3,b:3}} series={[{key:'preview',name:'Minigráfico',points}]}><svg viewBox={`0 0 ${W} ${height}`} className="spark" preserveAspectRatio="none" role="img" aria-label="Minigráfico: arraste para comparar um trecho; o ano anterior depende da cobertura carregada">
       <defs>
         <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={color} stopOpacity="0.18" />
@@ -25,6 +26,6 @@ export default function Sparkline({ points, tone, height = 44 }) {
       </defs>
       <path d={`${line}L${W},${height}L0,${height}Z`} fill={`url(#${gid})`} />
       <path className="line" style={{ color }} d={line} fill="none" stroke={color} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-    </svg>
+    </svg></ChartComparison>
   )
 }

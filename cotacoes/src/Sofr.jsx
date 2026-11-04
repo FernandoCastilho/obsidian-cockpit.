@@ -1,3 +1,4 @@
+import ChartComparison from './ChartComparison.jsx'
 import Flag from './Flag.jsx'
 import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
@@ -117,7 +118,7 @@ export default function SofrChart({ macro, range }) {
       <div ref={ref}>
         {g ? (
           <div className="plot" onPointerLeave={() => setHover(null)}>
-            <svg viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`SOFR de ${fmtDate(g.t0, true)} a ${fmtDate(g.t1, true)}`} onPointerMove={onMove} onPointerDown={onMove}>
+            <ChartComparison margin={M} rate frequency="day" series={SERIES.filter(s=>s.id!=='band' && on[s.id]).map(s=>({key:s.id,name:s.label,points:rows.filter(r=>r[s.id]!=null).map(r=>({t:r.t,v:r[s.id]}))}))} history={SERIES.filter(s=>s.id!=='band').map(s=>({key:s.id,points:(s.id==='raw' ? macro.sofr.map(r=>({t:r[0],v:r[1]})) : (macro.sofrAvg || []).map(r=>({t:r[0],v:r[{m30:1,m90:2,m180:3}[s.id]]}))).filter(p=>Number.isFinite(p.v))}))}><svg viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`SOFR de ${fmtDate(g.t0, true)} a ${fmtDate(g.t1, true)}`} onPointerMove={onMove} onPointerDown={onMove}>
               {g.yTicks.map((v) => (
                 <g key={v}>
                   <line x1={M.l} x2={width - M.r} y1={g.Y(v)} y2={g.Y(v)} className="gridline" />
@@ -131,7 +132,7 @@ export default function SofrChart({ macro, range }) {
               {['m180', 'm90', 'm30'].map((k) => on[k] && <path key={k} d={g.path(k)} fill="none" stroke={SERIES.find((s) => s.id === k).color} strokeWidth="1.6" strokeLinejoin="round" />)}
               <path d={g.path('raw')} fill="none" stroke={SERIES[0].color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
               {hp && <line x1={g.X(hp.t)} x2={g.X(hp.t)} y1={M.t} y2={H - M.b} className="cross" pointerEvents="none" />}
-            </svg>
+            </svg></ChartComparison>
             {hp && (
               <div className="tip" style={{ left: `${Math.min(Math.max((g.X(hp.t) / width) * 100, 20), 80)}%` }}>
                 <strong>{fmtDate(hp.t, true)}</strong>

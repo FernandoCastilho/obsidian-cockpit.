@@ -1,0 +1,44 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { CONCEITOS } from '../src/educacao.js'
+import { normalizeSearch, makeSearchDoc, plainContent, searchDocuments, highlightParts, searchSnippet, indexSearchData, isSearchShortcut, SEARCH_SOURCES } from '../src/globalSearch.js'
+import { buildSearchIndex, extractSearchText } from '../scripts/build-search-index.mjs'
+test('global search finds full concept bodies across unloaded routes, accents and case',()=>{
+ const docs=CONCEITOS.map(c=>makeSearchDoc({id:c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'}))
+ const results=searchDocuments(docs,'INADIMPLENCIA')
+ for(const title of ['FIDC','CRI','Custo de funding'])assert.ok(results.some(d=>d.title.includes(title)),title)
+ assert.deepEqual(searchDocuments(docs,'inadimplência').map(d=>d.id),results.map(d=>d.id))
+ assert.ok(results.every(d=>d.route.startsWith('aprender/')))
+ assert.equal(searchDocuments(docs,'x').length,0)
+ assert.equal(searchDocuments(docs,'expressão que não existe zxqww').length,0)
+})
+test('query terms all match and title matches rank before body matches',()=>{
+ const docs=[makeSearchDoc({id:'a',title:'FIDC',body:'risco de inadimplência',route:'aprender/fidc'}),makeSearchDoc({id:'b',title:'Risco de inadimplência',body:'FIDC',route:'resumo'})]
+ assert.equal(searchDocuments(docs,'risco inadimplencia')[0].id,'b')
+ assert.equal(searchDocuments(docs,'risco inflação').length,0)
+})
+test('highlight preserves original Unicode and treats markup as plain text',()=>{
+ const text='😀 Crédito: INADIMPLÊNCIA <script>local</script>'
+ const parts=highlightParts(text,'credito inadimplencia')
+ assert.equal(parts.map(p=>p.text).join(''),text)
+ assert.deepEqual(parts.filter(p=>p.match).map(p=>p.text),['Crédito','INADIMPLÊNCIA'])
+ assert.ok(searchSnippet('a'.repeat(500)+' inadimplência '+ 'z'.repeat(500),'inadimplencia').includes('inadimplência'))
+ assert.equal(normalizeSearch('AÇÃo'),'acao')
+})
+test('published data maps sectors, focus and headlines; ignores URLs and secrets',()=>{
+ const {docs}=indexSearchData('temas.json',{generatedAt:1,temas:{cobre:{items:[{title:'Cobre recua com estoques',description:'China',link:'https://external.test/private',shareToken:'sensitive'}]}}},'resumo','Temas')
+ const item=docs.find(d=>d.title.startsWith('Cobre'))
+ assert.equal(item.route,'setores/cobre');assert.ok(item.body.includes('China'));assert.ok(!item.body.includes('external'));assert.ok(!item.body.includes('sensitive'))
+ assert.throws(()=>indexSearchData('x',[], 'resumo','x'))
+ assert.equal(SEARCH_SOURCES.length,new Set(SEARCH_SOURCES.map(s=>s[0])).size)
+})
+test('shortcut excludes browser find, composition, modifiers and repeated input',()=>{
+ const key={key:'F',ctrlKey:true,shiftKey:true,altKey:false,metaKey:false,repeat:false,isComposing:false}
+ assert.ok(isSearchShortcut(key))
+ for(const patch of [{shiftKey:false},{ctrlKey:false},{altKey:true},{metaKey:true},{repeat:true},{isComposing:true},{defaultPrevented:true},{key:'g'}])assert.ok(!isSearchShortcut({...key,...patch}))
+})
+test('static index extracts visible text and literals, never classes, code, URLs or hidden prototype',async()=>{
+ const result=extractSearchText(`import X from './private.js'; const label = 'Indicador de crédito'; export default () => <p className="hidden private" title="Explicação completa">Texto visível<Explain id="credito"/><a href="https://private.test">Saiba mais</a></p>`)
+ assert.ok(result.text.includes('Texto visível'));assert.ok(result.text.includes('Indicador de crédito'));assert.ok(!result.text.includes('hidden private'));assert.ok(!result.text.includes('private.test'));assert.deepEqual(result.explain,['credito'])
+ const index=await buildSearchIndex();assert.ok(index.documents.length>=30);assert.ok(index.documents.some(d=>d.route==='cenarios/inadimplencia'));assert.ok(!index.documents.some(d=>d.route==='apresentar'))
+})

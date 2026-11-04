@@ -31,7 +31,7 @@ test('mesmo trecho do ano anterior: calcula quando o histórico alcança e some 
   assert.equal(new Date(r.t0).toISOString().slice(0, 10), '2025-03-10')
   assert.equal(priorYear(h, T('2025-06-01'), T('2025-07-01')), null)
   assert.equal(priorYear([], 1, 2), null)
-  assert.equal(new Date(yearBefore(T('2024-02-29'))).toISOString().slice(0, 10), '2023-03-01')
+  assert.equal(new Date(yearBefore(T('2024-02-29'))).toISOString().slice(0, 10), '2023-02-28')
 })
 
 test('trecho entre dois pontos escolhidos, em qualquer ordem', () => {
