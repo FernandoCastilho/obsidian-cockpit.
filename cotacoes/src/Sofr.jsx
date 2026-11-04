@@ -1,3 +1,4 @@
+import { nextChartIndex } from './chartNavigation.js'
 import ChartComparison from './ChartComparison.jsx'
 import Flag from './Flag.jsx'
 import RefreshButton from './RefreshButton.jsx'
@@ -94,6 +95,7 @@ export default function SofrChart({ macro, range }) {
     })
     setHover(best)
   }
+  const onKey = e => { const next=nextChartIndex(e.key,hover,rows.length); if(next!=null){e.preventDefault();setHover(next)} }
   const hp = g && hover != null ? rows[hover] : null
   const last = macro.sofr[macro.sofr.length - 1]
   const first = macro.sofr[0]
@@ -118,7 +120,7 @@ export default function SofrChart({ macro, range }) {
       <div ref={ref}>
         {g ? (
           <div className="plot" onPointerLeave={() => setHover(null)}>
-            <ChartComparison margin={M} rate frequency="day" series={SERIES.filter(s=>s.id!=='band' && on[s.id]).map(s=>({key:s.id,name:s.label,points:rows.filter(r=>r[s.id]!=null).map(r=>({t:r.t,v:r[s.id]}))}))} history={SERIES.filter(s=>s.id!=='band').map(s=>({key:s.id,points:(s.id==='raw' ? macro.sofr.map(r=>({t:r[0],v:r[1]})) : (macro.sofrAvg || []).map(r=>({t:r[0],v:r[{m30:1,m90:2,m180:3}[s.id]]}))).filter(p=>Number.isFinite(p.v))}))}><svg viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`SOFR de ${fmtDate(g.t0, true)} a ${fmtDate(g.t1, true)}`} onPointerMove={onMove} onPointerDown={onMove}>
+            <ChartComparison margin={M} rate frequency="day" series={SERIES.filter(s=>s.id!=='band' && on[s.id]).map(s=>({key:s.id,name:s.label,points:rows.filter(r=>r[s.id]!=null).map(r=>({t:r.t,v:r[s.id]}))}))} history={SERIES.filter(s=>s.id!=='band').map(s=>({key:s.id,points:(s.id==='raw' ? macro.sofr.map(r=>({t:r[0],v:r[1]})) : (macro.sofrAvg || []).map(r=>({t:r[0],v:r[{m30:1,m90:2,m180:3}[s.id]]}))).filter(p=>Number.isFinite(p.v))}))}><svg onFocus={() => setHover(0)} onKeyDown={onKey} viewBox={`0 0 ${width} ${H}`} width="100%" height={H} role="img" aria-label={`SOFR de ${fmtDate(g.t0, true)} a ${fmtDate(g.t1, true)}`} onPointerMove={onMove} onPointerDown={onMove}>
               {g.yTicks.map((v) => (
                 <g key={v}>
                   <line x1={M.l} x2={width - M.r} y1={g.Y(v)} y2={g.Y(v)} className="gridline" />
@@ -148,6 +150,7 @@ export default function SofrChart({ macro, range }) {
           <div className="placeholder" style={{ height: H }}>Sem dados no período.</div>
         )}
       </div>
+      <p className="chart-access-text" role="status" aria-live="polite">{hp && `${fmtDate(hp.t,true)}: SOFR ${pct(hp.raw)}`}</p>
       <Aviso title="SOFR · EUA"><p className="status">
         {last ? `Último: ${pct(last[1])} em ${fmtDate(last[0], true)} · ` : ''}
         {first ? `Série desde ${fmtDate(first[0], true)} · ` : ''}
