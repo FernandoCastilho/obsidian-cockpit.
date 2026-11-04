@@ -125,9 +125,16 @@ export function cronograma({ financiado, prazo, carencia, taxaAnual, sistema, pe
 export function iofCronograma(financiado, parcelas, iof = IOF_PJ) {
   const maxDias = iof.maxDays ?? IOF_PJ.maxDays
   const fixo = (financiado * (iof.fixed ?? 0)) / 100
-  const base = parcelas.reduce((a, p) => a + (p.principal ?? p.amortizacao) * Math.min(Math.round((p.mes * 365) / 12), maxDias), 0)
-  const diario = (base * (iof.daily ?? 0)) / 100
-  return { fixo, diario, total: fixo + diario }
+  const porParcela = parcelas.map((p) => ((p.principal ?? p.amortizacao) * Math.min(Math.round((p.mes * 365) / 12), maxDias) * (iof.daily ?? 0)) / 100)
+  const diario = porParcela.reduce((a, v) => a + v, 0)
+  return { fixo, diario, total: fixo + diario, porParcela }
+}
+
+// Vencimento da parcela `mes` contado da liberação: mesmo dia do mês, recuando para o último dia quando o mês é mais curto.
+export function vencimento(liberacao, mes) {
+  const d = new Date(liberacao)
+  const alvo = new Date(d.getFullYear(), d.getMonth() + mes + 1, 0) // último dia do mês-alvo
+  return new Date(d.getFullYear(), d.getMonth() + mes, Math.min(d.getDate(), alvo.getDate()))
 }
 
 // Resumo da operação. Entradas em % a.a. e R$. Na TFB, custoFinanceiro é a TFB e a taxa é nominal. Na TLP, custoFinanceiro é a
@@ -150,8 +157,10 @@ export function simular({ valor, participacao = 100, prazo, carencia = 0, custo,
   const correcao = parcelas.reduce((a, p) => a + p.correcao, 0)
   const amort = parcelas.filter((p) => !p.carencia)
   const iofCalc = iofCronograma(financiado, parcelas, iof)
+  // Fluxo parcela a parcela: saldo inicial (antes da correção do mês), IOF diário da parcela e total pago no vencimento.
+  const fluxo = parcelas.map((p, k) => ({ ...p, saldoInicial: k ? parcelas[k - 1].saldo : financiado, iof: iofCalc.porParcela[k], pago: p.parcela + iofCalc.porParcela[k] }))
   return {
-    ok: true, financiado, taxa, taxaMensal: monthlyRate(taxa, 'aa') * 100, taxaNominal: custo === 'tlp' ? tlpNominal(taxa, ipca) : taxa, composicao, parcelas,
+    ok: true, financiado, taxa, taxaMensal: monthlyRate(taxa, 'aa') * 100, taxaNominal: custo === 'tlp' ? tlpNominal(taxa, ipca) : taxa, composicao, parcelas: fluxo,
     jurosCarencia, juros, correcao, iof: iofCalc.total, iofFixo: iofCalc.fixo, iofDiario: iofCalc.diario,
     primeiraParcela: amort[0]?.parcela ?? 0, ultimaParcela: amort.at(-1)?.parcela ?? 0, parcelasAmortizacao: amort.length,
     total: financiado + correcao + juros + iofCalc.total, recursosProprios: valor - financiado, avisos: check.avisos,

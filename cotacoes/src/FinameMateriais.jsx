@@ -5,13 +5,14 @@ import { IOF_PJ, parseDecimal } from './emprestimo.js'
 import { useDataFile } from './useDataFile.js'
 import { useMacro } from './useMacro.js'
 import { keyOf, pointsOf, tlpView } from './bndes.js'
-import { COMPOSICOES, CUSTOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, faixaTfb, ipcaEsperado, simular, spreadSobreCdi, tlpNominal } from './finameMateriais.js'
+import { COMPOSICOES, CUSTOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, faixaTfb, ipcaEsperado, simular, spreadSobreCdi, tlpNominal, vencimento } from './finameMateriais.js'
 import { nf } from './format.js'
 import Estado from './Estado.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const pct = (v, d = 2) => `${nf(v, d)}%`
 const dmy = (iso) => (iso ? iso.split('-').reverse().join('/') : '—')
+const data = (d) => d.toLocaleDateString('pt-BR')
 
 // Ícone: caixa de materiais com a marca do BNDES (barras) ao lado.
 export function FinameIcon() {
@@ -42,7 +43,7 @@ export default function FinameMateriais({ onBack }) {
   const [composicao, setComposicao] = useState('capitalizada')
   const [iofFixoText, setIofFixoText] = useState(String(IOF_PJ.fixed).replace('.', ','))
   const [iofDiarioText, setIofDiarioText] = useState(String(IOF_PJ.daily).replace('.', ','))
-  const [verCronograma, setVerCronograma] = useState(false)
+  const [hoje] = useState(() => { const d = new Date(); d.setHours(12, 0, 0, 0); return d })
 
   const money = parseMoneyInput(valorText)
   const participacao = parseDecimal(partText)
@@ -92,7 +93,7 @@ export default function FinameMateriais({ onBack }) {
   const input = (key, value, onChange, extra = {}) => <input id={`fm-${key}`} inputMode="decimal" autoComplete="off" aria-invalid={!!erros[key]} aria-describedby={`fm-${key}-err`} value={value} onChange={(e) => onChange(e.target.value)} onFocus={(e) => e.target.select()} {...extra} />
 
   return (
-    <section className="cx" aria-labelledby="calc-h">
+    <section className="cx cx-finame" aria-labelledby="calc-h">
       <button type="button" className="cx-back" onClick={onBack}><span aria-hidden="true">‹</span> Calculadoras</button>
       <h2 id="calc-h" className="cx-title"><span className="cx-icon" aria-hidden="true"><FinameIcon /></span>BNDES Finame Materiais</h2>
 
@@ -188,18 +189,26 @@ export default function FinameMateriais({ onBack }) {
             </div>
             {spread != null && <p className="cx-hint cx-pad">Equivale a <b>CDI + {pct(spread, 2)} a.a.</b> (spread capitalizado sobre o CDI de hoje, {pct(cdi, 2)}): compare com o capital de giro.{custo === 'tlp' ? ' Na TLP, o custo real muda com o IPCA efetivo; a projeção usa o IPCA esperado.' : ''}</p>}
             {res.avisos.map((a) => <Estado key={a} tipo="aviso">{a}</Estado>)}
-            <details className="fm-cron" open={verCronograma} onToggle={(e) => setVerCronograma(e.currentTarget.open)}>
-              <summary>Cronograma mês a mês</summary>
-              <div className="cx-wrap" role="region" aria-label="Cronograma de pagamentos" tabIndex={0}>
-                <table className="cx-matrix fm-tabela">
-                  <thead><tr><th scope="col">Mês</th>{custo === 'tlp' && <th scope="col">Correção IPCA</th>}<th scope="col">Juros</th><th scope="col">Amortização</th><th scope="col">Parcela</th><th scope="col">Saldo</th></tr></thead>
-                  <tbody>{res.parcelas.map((p) => <tr key={p.mes} className={p.carencia ? 'fm-carencia' : undefined}><th scope="row">{p.mes}{p.carencia ? ' · carência' : ''}</th>{custo === 'tlp' && <td>{brl(p.correcao)}</td>}<td>{brl(p.juros)}</td><td>{brl(p.amortizacao)}</td><td>{brl(p.parcela)}</td><td>{brl(p.saldo)}</td></tr>)}</tbody>
-                </table>
-              </div>
-            </details>
           </>
         )}
       </article>
+
+      {res && (
+        <article className="desk-panel cx-panel fm-fluxo-panel">
+          <header><h3>Fluxo parcela a parcela</h3></header>
+          <p className="cx-hint cx-pad">Vencimentos no mesmo dia de cada mês a partir da liberação, considerada hoje ({data(hoje)}); o agente define as datas reais. IOF adicional cobrado na liberação e IOF diário em cada parcela{custo === 'tlp' ? '; correção pelo IPCA projetada, aplicada ao saldo antes dos juros' : ''}.</p>
+          <div className="cx-wrap fm-fluxo" role="region" aria-label="Fluxo parcela a parcela" tabIndex={0}>
+            <table className="cx-matrix fm-tabela">
+              <thead><tr><th scope="col">Nº</th><th scope="col">Vencimento</th><th scope="col">Saldo inicial</th>{custo === 'tlp' && <th scope="col">Correção IPCA</th>}<th scope="col">Juros</th><th scope="col">Amortização</th><th scope="col">Parcela</th><th scope="col">IOF</th><th scope="col">Total pago</th><th scope="col">Saldo final</th></tr></thead>
+              <tbody>
+                <tr className="fm-liberacao"><th scope="row">0 · liberação</th><td>{data(hoje)}</td><td>—</td>{custo === 'tlp' && <td>—</td>}<td>—</td><td>—</td><td>—</td><td>{brl(res.iofFixo)}</td><td>{brl(res.iofFixo)}</td><td>{brl(res.financiado)}</td></tr>
+                {res.parcelas.map((p) => <tr key={p.mes} className={p.carencia ? 'fm-carencia' : undefined}><th scope="row">{p.mes}{p.carencia ? ' · carência' : ''}</th><td>{data(vencimento(hoje, p.mes))}</td><td>{brl(p.saldoInicial)}</td>{custo === 'tlp' && <td>{brl(p.correcao)}</td>}<td>{brl(p.juros)}</td><td>{brl(p.amortizacao)}</td><td>{brl(p.parcela)}</td><td>{brl(p.iof)}</td><td>{brl(p.pago)}</td><td>{brl(p.saldo)}</td></tr>)}
+              </tbody>
+              <tfoot><tr><th scope="row">Total</th><td>{res.parcelas.length} meses</td><td>—</td>{custo === 'tlp' && <td>{brl(res.correcao)}</td>}<td>{brl(res.juros)}</td><td>{brl(res.financiado + res.correcao)}</td><td>{brl(res.juros + res.financiado + res.correcao)}</td><td>{brl(res.iof)}</td><td>{brl(res.total)}</td><td>—</td></tr></tfoot>
+            </table>
+          </div>
+        </article>
+      )}
 
       <details className="fm-regras">
         <summary>Regras do produto e fontes</summary>

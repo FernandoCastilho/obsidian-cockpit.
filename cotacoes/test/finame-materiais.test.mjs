@@ -2,7 +2,7 @@
 // corrigido pelo IPCA, IOF e invariantes. Cada cenário é conferido por fórmula fechada, independente do código da calculadora.
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { COMPOSICOES, FONTES, REGRAS, conferir, cronograma, faixaTfb, iofCronograma, ipcaEsperado, simular, spreadSobreCdi, taxaFinal, tlpNominal } from '../src/finameMateriais.js'
+import { COMPOSICOES, FONTES, REGRAS, conferir, cronograma, faixaTfb, iofCronograma, ipcaEsperado, simular, spreadSobreCdi, taxaFinal, tlpNominal, vencimento } from '../src/finameMateriais.js'
 import { IOF_PJ } from '../src/emprestimo.js'
 import { parseCommand } from '../src/terminal.js'
 
@@ -167,6 +167,10 @@ test('invariantes em 72 combinações: saldo zera, amortizações devolvem o pri
     if (nominal && sistema === 'price') assert.ok(am.every((p) => Math.abs(p.parcela - am[0].parcela) < 1e-6), 'Price constante')
     if (!nominal) assert.ok(r.correcao > 0 && r.taxaNominal > r.taxa)
     assert.ok(r.iof > 0 && r.iof <= (r.financiado * (IOF_PJ.fixed + IOF_PJ.maxDays * IOF_PJ.daily)) / 100 + 1e-6, 'IOF PJ dentro do teto legal (0,38% + 365 × 0,0082% = 3,373% do principal)')
+    // fluxo parcela a parcela: saldo inicial encadeia com o saldo final anterior; total pago = parcela + IOF da parcela; soma + adicional = total
+    assert.ok(r.parcelas.every((p, k) => p.saldoInicial === (k ? r.parcelas[k - 1].saldo : r.financiado) && Math.abs(p.pago - p.parcela - p.iof) < 1e-9), 'fluxo encadeado')
+    perto(r.parcelas.reduce((a, p) => a + p.pago, 0) + r.iofFixo, r.total, 1e-6, 'soma do fluxo + IOF adicional = pagamento final')
+    perto(r.parcelas.reduce((a, p) => a + p.iof, 0), r.iofDiario, 1e-6, 'IOF por parcela soma o diário')
     perto(r.parcelas.reduce((a, p) => a + p.principal, 0), r.financiado, 1e-4, 'os principais (sem correção) devolvem o financiado')
   }
   assert.equal(casos, 72)
@@ -177,5 +181,10 @@ test('invariantes em 72 combinações: saldo zera, amortizações devolvem o pri
   assert.match(simular({ valor: 500_000, participacao: 100, prazo: 12, carencia: 0, custo: 'tfb', custoFinanceiro: null, taxaBndes: 1.25, taxaAgente: 3 }).erros[0], /custo financeiro/)
   assert.match(simular({ valor: 500_000, participacao: 100, prazo: 12, carencia: 0, custo: 'tlp', custoFinanceiro: 7.72, ipca: NaN, taxaBndes: 1.25, taxaAgente: 3 }).erros[0], /IPCA/)
   assert.match(simular({ valor: 500_000, participacao: 100, prazo: 12, carencia: 0, custo: 'tfb', custoFinanceiro: 16, taxaBndes: 1.25, taxaAgente: 3, iof: { fixed: NaN, daily: 0 } }).erros[0], /IOF/)
+  // vencimentos: mesmo dia; mês mais curto recua para o último dia; vira o ano
+  const d = (y, m, dd) => new Date(y, m - 1, dd).toLocaleDateString('pt-BR')
+  assert.equal(vencimento(new Date(2026, 0, 31, 12), 1).toLocaleDateString('pt-BR'), d(2026, 2, 28))
+  assert.equal(vencimento(new Date(2026, 0, 31, 12), 2).toLocaleDateString('pt-BR'), d(2026, 3, 31))
+  assert.equal(vencimento(new Date(2026, 10, 4, 12), 14).toLocaleDateString('pt-BR'), d(2028, 1, 4))
   assert.equal(iofCronograma(1000, [{ mes: 24, amortizacao: 1000, principal: 1000 }], { fixed: 0, daily: 0.01, maxDays: 100 }).diario, 10, 'maxDays do parâmetro é respeitado: 1.000 × 100 dias × 0,01%')
 })
