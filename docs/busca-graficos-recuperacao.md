@@ -1,6 +1,6 @@
 # Busca global, seleção de gráficos e recuperação judicial
 
-Esta entrega foi preparada na branch local `codex/busca-global-comparacao`, incorporando a versão publicada `20bb3a0` (Focus e Novidades). Busca, seleção ampliada e Recuperação Judicial não foram publicadas nesta tarefa; a publicação depende de autorização específica.
+Esta entrega foi preparada na branch local `codex/busca-global-comparacao`, incorporando a versão publicada `20bb3a0` (Focus e Novidades). A publicação do conjunto foi expressamente autorizada em 04/11/2026 e é acompanhada na PR #284, com CI antes de atualizar a versão pública. As mudanças concorrentes da versão b427edc foram preservadas.
 
 ## Busca global
 
@@ -52,7 +52,7 @@ DataJud não foi ingerido ou redistribuído; as restrições exigem licença com
 
 ## Novidades e concorrência
 
-A versão publicada da PR #282 foi incorporada, incluindo Focus, inadimplência e cinco commodities. Sem duplicar suas entradas, esta entrega acrescenta Conceito do dia (02/11) e corrige posição do insight e base das 9h do alerta. Busca, nova seleção e estrutura de Recuperação Judicial não são anunciadas como publicadas.
+A versão publicada da PR #282 foi incorporada, incluindo Focus, inadimplência e cinco commodities. Sem duplicar suas entradas, esta entrega acrescenta Conceito do dia (02/11) e corrige posição do insight e base das 9h do alerta. Busca, nova seleção e estrutura de Recuperação Judicial entram nas Novidades desta release, mantendo explícita a indisponibilidade dos números semanais e do ranking de recuperação judicial.
 
 O run 41813184848 pertence à PR #282, não a esta entrega: test-build passou e o smoke parou em timeout de networkidle no ensaio BNDES. O trabalho foi atualizado e seu deploy posterior 41814857421 terminou com sucesso. As correções concorrentes foram preservadas.
 
@@ -63,4 +63,4 @@ O run 41813184848 pertence à PR #282, não a esta entrega: test-build passou e 
 - Smokes novos de busca, carteira PF/PJ, famílias de gráficos e Recuperação Judicial; toque real via Chromium DevTools no celular, mouse/teclado no desktop, foco, Escape, formulários e responsividade.
 - Regressões dos fluxos anteriores de Brent, BNDES, IPCA, fiscal e frete.
 - Lint sem erros; avisos existentes de dependências de hooks. Detector mecânico de UI não apresentou achados.
-- Capturas em `qa-universal/` no checkout e nos artefatos de QA. CI remoto desta entrega só será acionado após envio autorizado; não confundir com o CI da versão-base.
+- Capturas em `qa-universal/` no checkout e nos artefatos de QA. CI e deploy desta entrega são conferidos pela PR #284; não confundir com o CI da versão-base.
