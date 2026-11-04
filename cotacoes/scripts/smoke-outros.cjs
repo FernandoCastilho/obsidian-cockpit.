@@ -118,11 +118,12 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      const agora = Date.now(), h = 36e5
-      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * h })
+      // `atras` em minutos (não horas): perto da meia-noite, "1 hora atrás" cai em ontem e a quebra por dia deixa de dizer "Hoje"
+      const agora = Date.now(), min = 60e3
+      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * min })
       const temas = { schemaVersion: 1, generatedAt: agora, windowDays: 7, stale: false, errors: [], temas: {
         industria: { label: 'Indústria', grupo: 'setor', items: [mat('Produção industrial cai com juros altos', 2)] },
-        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30)] } } }
+        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30 * 60)] } } }
       const comm = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: new Date().toISOString(), variationPct: 2.5, variationBasis: 'mês anterior' }] }
       await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: comm }))
@@ -155,13 +156,14 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      const agora = Date.now(), h = 36e5
-      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * h })
+      const agora = Date.now(), min = 60e3 // `atras` em minutos: perto da meia-noite, horas atrás caem em ontem
+      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * min })
       const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
-        mat('Imposto seletivo entra em debate na Câmara', 30, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55, 'Valor Econômico')] }
+        mat('Imposto seletivo entra em debate na Câmara', 30 * 60, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55 * 60, 'Valor Econômico')] }
       await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
-      const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - h })
+      // matéria de 1 minuto atrás (não 1 hora): perto da meia-noite, 1 hora atrás cai em ontem e a quebra por dia deixa de dizer "Hoje"
+      const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
       await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
       await p.goto(base + '/#resumo')
       const painel = p.locator('.desk-panel', { has: p.getByRole('tab', { name: 'Reforma tributária' }) }); await painel.waitFor()

@@ -22,7 +22,7 @@ const out = process.env.SMOKE_OUT || '/tmp'
       await p.route('**/history.json*', (r) => r.fulfill({ json: history }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: commodities }))
       await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
-      await p.route('**/api.microlink.io/**', (r) => r.fulfill({ json: { status: 'success', data: { title: 'Metalúrgica Exemplo | Home', publisher: 'Metalúrgica Exemplo', description: 'Peças usinadas para a indústria.', logo: null, image: null } } }))
+      await p.route('**/api.microlink.io/**', (r) => /tubokraft/.test(r.request().url()) ? r.fulfill({ status: 403, json: { status: 'fail', code: 'EFAILED', message: 'site não respondeu' } }) : r.fulfill({ json: { status: 'success', data: { title: 'Metalúrgica Exemplo | Home', publisher: 'Metalúrgica Exemplo', description: 'Peças usinadas para a indústria.', logo: null, image: null } } }))
       await p.goto(base + '/#apresentar')
       const form = p.locator('.apr-form'); await form.waitFor()
       // a aba não aparece no menu nem na barra do computador
@@ -30,6 +30,15 @@ const out = process.env.SMOKE_OUT || '/tmp'
       // sem cliente, não apresenta
       const btn = p.getByRole('button', { name: 'Apresentar', exact: true })
       assert.ok(await btn.isDisabled())
+      // só o nome, sem domínio: tenta .com.br e .com; falhando, diz o que tentou e pede o endereço completo; o nome digitado libera a apresentação
+      await p.getByLabel('Site da empresa').fill('tubokraft')
+      await p.getByRole('button', { name: 'Ler site' }).click()
+      const aviso = p.locator('.estado-aviso'); await aviso.waitFor()
+      assert.match(await aviso.innerText(), /Não consegui ler tubokraft\.com\.br nem tubokraft\.com\. Digite o endereço completo/)
+      assert.ok(await btn.isDisabled())
+      await p.getByLabel(/Nome da empresa/).fill('Tubokraft')
+      assert.ok(!(await btn.isDisabled()))
+      await p.getByLabel(/Nome da empresa/).fill('')
       // o site informa a capa
       await p.getByLabel('Site da empresa').fill('exemplo.com.br')
       await p.getByRole('button', { name: 'Ler site' }).click()
