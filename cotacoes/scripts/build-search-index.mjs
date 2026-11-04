@@ -11,8 +11,8 @@ export const SEARCH_PAGES = {
   'Outros.jsx':['cenarios/inflacao','Inflação e fiscal'], 'Indexadores.jsx':['cenarios/indexadores','Indexadores'],
   'InflacaoPesos.jsx':['cenarios/inflacao','Inflação: o que pesa'], 'Bndes.jsx':['bndes','BNDES'], 'Setores.jsx':['setores','Setores e insumos'],
   'Calculadora.jsx':['calculadora/giro','Capital de Giro'], 'Feriados.jsx':['feriados','Feriados'], 'News.jsx':['noticias','Notícias'],
-  'ReformaTributaria.jsx':['resumo','Notícias do Mercado'], 'Aprender.jsx':['aprender','Aprender'], 'Config.jsx':['config','Configurações'],
-  'BaseDados.jsx':['config','Base de dados'], 'Acessos.jsx':['config','Acessos'], 'ConceitoDiario.jsx':['aprender','Conceito do dia'],
+  'ReformaTributaria.jsx':['resumo','Notícias do Mercado'], 'Aprender.jsx':['aprender','Aprender'],
+  'ConceitoDiario.jsx':['aprender','Conceito do dia'],
   'AlertaVariacao.jsx':['resumo','Alerta de variação'], 'IpcaGrupoChart.jsx':['cenarios/inflacao','IPCA por grupos'],
 }
 const SKIP_ATTR = new Set(['className','id','key','href','src','d','style','type','role','target','rel','name','value','fill','stroke','viewBox'])

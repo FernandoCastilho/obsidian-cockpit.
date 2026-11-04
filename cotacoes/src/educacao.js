@@ -84,6 +84,7 @@ const EX_CDS = { nocional: 10_000_000, pb: 200 }
 const money = (v, sym) => `${sym} ${nf(v, 0)}`
 const pct = (f, d = 2) => `${nf(f * 100, d)}%`
 
+export const feeEstruturacao = (base, taxaFlat) => base * taxaFlat
 export const CONCEITOS = [
   {
     id: 'diferencial-de-juros',
@@ -267,6 +268,33 @@ export const CONCEITOS = [
       pergunta: 'Se o CDS do país sobe, o que tende a acontecer com o custo de funding externo de um banco brasileiro?',
       resposta: 'Tende a subir. O mercado passa a exigir um spread maior para financiar quem está no país percebido como mais arriscado.',
     },
+  },
+  {
+    id: 'fee-de-estruturacao', topico: 'Operações de crédito', nome: 'Fee de estruturação',
+    frase: 'É a remuneração pelo trabalho de organizar uma operação financeira, conforme os serviços e as condições definidos no contrato.',
+    crianca: [
+      'Fee é uma palavra em inglês usada para comissão ou remuneração. Estruturar uma operação pode envolver desenhar prazos e garantias, analisar documentos e coordenar os participantes de uma captação.',
+      'Para a empresa, entender essa cobrança ajuda a comparar propostas pelo custo completo e pelo dinheiro que realmente entra no caixa. Uma taxa de juros menor pode vir acompanhada de custos iniciais maiores.',
+      'O valor pode ser fixo ou um percentual de uma base definida no contrato. Pagamento na assinatura, na liberação, por etapas ou condicionado ao sucesso depende do acordo; não há taxa ou momento universal.',
+    ],
+    analogia: 'É como pagar pelo projeto e pela organização de uma obra: essa remuneração é diferente do custo de usar dinheiro emprestado durante a execução.',
+    lacunas: [
+      'Não é uma taxa anual de juros. O spread é um componente da taxa de juros; o fee remunera serviços de estruturação. Não some automaticamente um percentual flat à taxa anual.',
+      'Confira a base de cálculo, os serviços incluídos, quem recebe, vencimento, tributos e regras de desistência ou insucesso no contrato. Outras comissões, como colocação, podem ser cobradas separadamente.',
+      'Uma condição documentada em determinada emissão não constitui tabela universal nem tabela atual do Itaú. A existência e a forma da cobrança precisam ser verificadas em cada proposta.',
+    ],
+    preciso: { texto: 'Quando pactuado como percentual único (flat), a comissão é a base contratual multiplicada pelo percentual. Comparar o custo financeiro exige considerar todos os fluxos, datas e demais encargos, além dos juros.', formula: 'fee = base contratual × percentual flat; líquido = valor liberado − fee − outros custos descontados' },
+    exemplo: (() => { const base=10_000_000, taxa=0.01, fee=feeEstruturacao(base,taxa); return {
+      titulo: 'Hipotético: cobrança única descontada na liberação',
+      passos: [`Suponha uma operação de ${money(base,'R$')} e um fee flat de ${pct(taxa,0)}, pactuado apenas para este exemplo. Não é cotação nem taxa recomendada.`, `Fee = ${money(base,'R$')} × ${pct(taxa,0)} = ${money(fee,'R$')}. Se descontado na liberação, entram ${money(base-fee,'R$')} no caixa, antes de outros custos.`],
+      resultado: 'A dívida e os juros seguem as condições do contrato. Receber menos no início afeta o custo efetivo; 1% flat não equivale automaticamente a 1% ao ano.',
+    } })(),
+    noApp: {texto: 'Compare os juros na aba Juros e, na proposta da operação, confira separadamente o fee e os demais custos contratados.',tab:'juros'},
+    teste: {pergunta:'Um fee de 1% flat pode ser somado diretamente a juros de 12% ao ano?',resposta:'Não. O fee é uma cobrança única neste exemplo, enquanto os juros dependem do saldo e do tempo. A comparação exige os valores e as datas dos fluxos do contrato.'},
+    fontes: [
+      {nome:'BNDES — serviços de coordenação em ofertas públicas',url:'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-servicos-coordenacao-em-ofertas-publicas/'},
+      {nome:'Autoban — prospecto definitivo de 27/07/2017, páginas 66–68 (exemplo contratual histórico)',url:'https://www.itau.com.br/content/dam/ibba/ofertas-publicas/pdfs/concessionaria-do-sistema-anhanguera-bandeirantes-sa/2017/junho/autoban-prospecto-definitivo.pdf'},
+    ],
   },
   {
     id: 'liquidacao-antecipada',
@@ -802,6 +830,8 @@ export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: li
 // outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
 // LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
 export const LIGACOES = [
+  ['fee-de-estruturacao', 'custo-de-funding', 'O custo de captar e o spread ajudam a explicar os juros; a remuneração da estruturação deve ser conferida separadamente no custo completo.'],
+  ['fee-de-estruturacao', 'debenture', 'Uma emissão pode envolver comissões de estruturação, coordenação e colocação, com condições próprias descritas nos documentos da oferta.'],
   ['diferencial-de-juros', 'cupom-cambial', 'O cupom cambial é o diferencial de juros depois de passar pelo dólar futuro: a parte do juro em reais que sobra em dólar.'],
   ['diferencial-de-juros', 'sofr', 'A SOFR é o juro em dólar contra o qual se mede o diferencial: quanto maior o juro em reais sobre ela, maior o diferencial.'],
   ['diferencial-de-juros', 'inflacao', 'Diferencial nominal não é real: descontando a inflação de cada país, o ganho verdadeiro entre as moedas pode ser outro.'],
@@ -842,6 +872,7 @@ export const LIGACOES = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    { id: 'fee-de-estruturacao', texto: 'remunera a organização da operação e precisa entrar na comparação do custo completo, conforme o contrato.' },
     { id: 'diferencial-de-juros', texto: 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.' },
     { id: 'cupom-cambial', texto: 'é a ponte entre o juro em reais e o juro em dólar.' },
     { id: 'sofr', texto: 'é o benchmark do dólar: o preço “sem risco” do dinheiro em dólar.' },

@@ -7,7 +7,7 @@ const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'inflacao', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -115,7 +115,7 @@ test('cada conceito pertence a um tópico existente e os tópicos agrupam sem pe
   const g = porTopico(CONCEITOS)
   assert.deepEqual(g.map((x) => x.topico), TOPICOS)
   assert.equal(g.reduce((n, x) => n + x.itens.length, 0), CONCEITOS.length)
-  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil'])
+  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['fee-de-estruturacao', 'liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil'])
   assert.deepEqual(porTopico([CONCEITOS[0]]).map((x) => x.topico), ['Juros e câmbio'], 'tópico vazio não aparece')
 })
 test('busca: todas as palavras, sem acento nem maiúscula, no conteúdo inteiro', () => {
@@ -198,4 +198,13 @@ test('FÁCIL e drawback: contas do exemplo e ligações', () => {
   assert.match(text(db.exemplo), /1\.080\.000/); assert.match(db.exemplo.resultado, /270\.000/)
   assert.equal(db.topico, 'Comércio exterior')
   for (const c of [facil, db]) assert.ok(conexoesDe(c.id).length >= 2, c.id)
+})
+
+test('fee flat: valor e caixa líquido do exemplo, com busca pelo conteúdo', async () => {
+ const {feeEstruturacao}=await import('../src/educacao.js')
+ assert.equal(feeEstruturacao(10_000_000,0.01),100_000)
+ assert.equal(10_000_000-feeEstruturacao(10_000_000,0.01),9_900_000)
+ assert.ok(buscarConceitos('FEE ESTRUTURACAO').some(c=>c.id==='fee-de-estruturacao'))
+ assert.ok(buscarConceitos('desistencia').some(c=>c.id==='fee-de-estruturacao'))
+ assert.equal(byId('fee-de-estruturacao').fontes.length,2)
 })

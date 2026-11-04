@@ -5,6 +5,7 @@ import { normalizeSearch, makeSearchDoc, plainContent, searchDocuments, highligh
 import { buildSearchIndex, extractSearchText } from '../scripts/build-search-index.mjs'
 test('global search finds full concept bodies across unloaded routes, accents and case',()=>{
  const docs=CONCEITOS.map(c=>makeSearchDoc({id:c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'}))
+ assert.equal(searchDocuments(docs,'FEE ESTRUTURACAO')[0].route,'aprender/fee-de-estruturacao')
  const results=searchDocuments(docs,'INADIMPLENCIA')
  for(const title of ['FIDC','CRI','Custo de funding'])assert.ok(results.some(d=>d.title.includes(title)),title)
  assert.deepEqual(searchDocuments(docs,'inadimplência').map(d=>d.id),results.map(d=>d.id))
@@ -50,4 +51,15 @@ test('credit, BNDES and Focus results retain exact portfolio, series and forecas
  assert.equal(b.route,'bndes/tfc/C01')
  const f=indexSearchData('focus-history.json',{generatedAt:1,series:{Selic:{2027:[{d:'2026-11-01',v:10}]}}},'cenarios/projecoes','Focus').docs[0]
  assert.equal(f.context.year,'2027');assert.ok(searchDocuments([f],'Selic 2027').length)
+})
+
+test('Configurações e metadados ficam fora de todas as camadas da busca',async()=>{
+ const index=await buildSearchIndex()
+ assert.ok(index.documents.every(d=>!d.route.startsWith('config')))
+ assert.ok(Object.values(index.glossaryRoutes).every(r=>!r.startsWith('config')))
+ assert.ok(SEARCH_SOURCES.every(([,route])=>!route.startsWith('config')))
+ const privateDoc=makeSearchDoc({id:'config-probe',title:'Termo exclusivo privado',body:'metadado secreto de fonte',route:'config/base-dados'})
+ assert.deepEqual(searchDocuments([privateDoc],'exclusivo'),[])
+ assert.deepEqual(indexSearchData('acessos.json',{title:'Termo exclusivo privado'},'config','Acessos').docs,[])
+ assert.equal(plainContent({title:'público',sources:[{title:'metadado secreto de fonte'}],route:'config/base-dados'}),'público')
 })
