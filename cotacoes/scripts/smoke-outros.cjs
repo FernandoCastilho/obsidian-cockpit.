@@ -118,11 +118,12 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      const agora = Date.now(), h = 36e5
-      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * h })
+      // `atras` em minutos (não horas): perto da meia-noite, "1 hora atrás" cai em ontem e a quebra por dia deixa de dizer "Hoje"
+      const agora = Date.now(), min = 60e3
+      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * min })
       const temas = { schemaVersion: 1, generatedAt: agora, windowDays: 7, stale: false, errors: [], temas: {
         industria: { label: 'Indústria', grupo: 'setor', items: [mat('Produção industrial cai com juros altos', 2)] },
-        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30)] } } }
+        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30 * 60)] } } }
       const comm = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: new Date().toISOString(), variationPct: 2.5, variationBasis: 'mês anterior' }] }
       await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: comm }))
