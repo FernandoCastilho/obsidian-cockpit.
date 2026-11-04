@@ -1,4 +1,4 @@
-name: Sonda BNDES (temporária)
+name: Sondagem BNDES (temporária)
 on:
   workflow_dispatch:
 jobs:
@@ -7,13 +7,29 @@ jobs:
     steps:
       - name: Séries TFC/TFB no serviço de taxas
         run: |
-          for k in TFC_TR_MPME_60 TFC_TR_MPME_120 TFC_TR_GRANDE_60 TFC_TR_GRANDE_120 TFC_TR_60.90 TFC_TR_120.90 TFC_60 TFC_120 TFC_MPME_60 TFC_MPME_120 TFC_GRANDE_60 TFC_GRANDE_120 TFC_TR_MPME_60.90 TFC_TR_GRANDE_60.90 TFC_TR_MPME_120.90 TFC_TR_GRANDE_120.90 TFBTR_60 TFBTR_120 TFB_60_30; do
-            echo "=== $k"; curl -sS -m 40 -A 'Mozilla/5.0' -e 'https://www.bndes.gov.br/' -o /tmp/s.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/apoioFinanceiro/rest/taxas/$k.txt" || true; head -c 300 /tmp/s.txt | head -5; echo; tail -n 3 /tmp/s.txt
+          for k in TFC_TR_MPME_60 TFC_TR_MPME_120 TFC_TR_GRANDE_60 TFC_TR_GRANDE_120 TFC_TR_60.90 TFC_TR_120.90 TFC_60 TFC_120 TFC_MPME_60 TFC_MPME_120 TFC_GRANDE_60 TFC_GRANDE_120 TFC_TR_MPME_60.90 TFC_TR_GRANDE_60.90 TFC_TR_MPME_120.90 TFC_TR_GRANDE_120.90 TFC_MPME_60.90 TFC_MPME_120.90 TFC_60.90 TFC_120.90 TFB_60_30; do
+            echo "=== $k"; curl -sS -m 40 -A 'Mozilla/5.0' -e 'https://www.bndes.gov.br/' -o /tmp/s.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/apoioFinanceiro/rest/taxas/$k.txt" || true; head -c 200 /tmp/s.txt | head -3; echo; tail -n 3 /tmp/s.txt
           done
-      - name: Páginas do produto e dos custos (texto)
+          echo "=== lista do serviço"; curl -sS -m 40 -A 'Mozilla/5.0' -o /tmp/l.txt -w 'HTTP %{http_code} bytes %{size_download}\n' "https://www.bndes.gov.br/apoioFinanceiro/rest/taxas" || true; head -c 3000 /tmp/l.txt; echo
+      - name: Páginas do BNDES (texto)
         run: |
           pip -q install html2text >/dev/null 2>&1 || true
-          for u in "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxas-moedas" "https://www.bndes.gov.br/moedas"; do
+          for u in "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxas-moedas" "https://www.bndes.gov.br/moedas" "https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/custos-financeiros/taxa-fixa-composta"; do
             echo; echo "################ $u"; curl -sSL -m 60 -A 'Mozilla/5.0' -o /tmp/p.html -w 'HTTP %{http_code} bytes %{size_download}\n' "$u" || true
-            python3 -c "import html2text,sys;h=html2text.HTML2Text();h.ignore_links=True;h.ignore_images=True;h.body_width=0;t=h.handle(open('/tmp/p.html',encoding='utf-8',errors='ignore').read());print(t[:12000])" 2>/dev/null || sed 's/<[^>]*>/ /g' /tmp/p.html | tr -s ' \n' | head -c 12000
+            python3 -c "import html2text;h=html2text.HTML2Text();h.ignore_links=True;h.ignore_images=True;h.body_width=0;t=h.handle(open('/tmp/p.html',encoding='utf-8',errors='ignore').read());print(t[:14000])" 2>/dev/null || sed 's/<[^>]*>/ /g' /tmp/p.html | tr -s ' \n' | head -c 14000
+          done
+      - name: Base legal do IOF e prática de mercado (texto)
+        run: |
+          for u in "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6306.htm" "https://informaq.abimaq.org.br/bndes-anuncia-mudancas-nas-condicoes-do-finame-materiais/" "https://www.bb.com.br/site/pro-sua-empresa/financiamentos/bndes/bndes-finame/" "https://www.itau.com.br/empresas/credito-financiamento/bndes/finame/" "https://banco.bradesco/html/pessoajuridica/produtos-servicos/emprestimo-e-financiamento/bndes/bndes-finame.shtm"; do
+            echo; echo "################ $u"; curl -sSL -m 60 -A 'Mozilla/5.0' -o /tmp/p.html -w 'HTTP %{http_code} bytes %{size_download}\n' "$u" || true
+            python3 -c "
+import html2text,re
+h=html2text.HTML2Text();h.ignore_links=True;h.ignore_images=True;h.body_width=0
+t=h.handle(open('/tmp/p.html',encoding='latin-1' if 'planalto' in '$u' else 'utf-8',errors='ignore').read())
+if 'planalto' in '$u':
+    i=t.find('Art. 8'); print(t[i:i+9000] if i>=0 else t[:3000])
+else:
+    for m in re.finditer(r'(?i)IOF', t): print('…', t[max(0,m.start()-300):m.end()+300].replace('\n',' '), '…')
+    print(t[:2500])
+" 2>/dev/null || sed 's/<[^>]*>/ /g' /tmp/p.html | tr -s ' \n' | grep -i -o '.\{200\}IOF.\{200\}' | head -20
           done
