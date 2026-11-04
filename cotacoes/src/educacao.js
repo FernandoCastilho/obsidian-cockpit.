@@ -71,6 +71,7 @@ const EX_LIQ = { principal: 1_000_000, taxa: 0.15, anosTotal: 2, anosDecorridos:
 const EX_DEB = { principal: 1_000_000, cdi: 0.14, spread: 0.02 }
 const EX_NC = { principal: 5_000_000, cdi: 0.14, spread: 0.03, diasUteis: 126 }
 const EX_FIDC = { senior: 7_000_000, subordinada: 3_000_000, perdas: [2_000_000, 4_000_000] }
+const EX_FOCUS = { selic: 0.125, ipca: 0.0452, selicAnterior: 0.1275, emprestimo: 2_000_000 }
 const EX_CRI = { principal: 1_000_000, ipca: 0.045, real: 0.07, ir: 0.15 }
 const EX_CRA = { principal: 1_000_000, cdi: 0.14, spread: 0.005, ir: 0.15 }
 const EX_FACIL = { receita: 320_000_000, limite: 500_000_000, valor: 50_000_000, cdi: 0.14, spreadMercado: 0.03, spreadBanco: 0.05 }
@@ -697,6 +698,47 @@ export const CONCEITOS = [
     },
   },
   {
+    id: 'focus',
+    topico: 'Inflação',
+    nome: 'Boletim Focus',
+    frase: 'É a pesquisa semanal do Banco Central com o que o mercado espera para Selic, inflação, PIB e câmbio: a bússola das expectativas.',
+    crianca: [
+      'Toda semana o Banco Central pergunta a mais de cem bancos, gestoras e consultorias quanto elas projetam para a Selic, o IPCA, o PIB e o dólar no fim deste ano e dos próximos. Publica na segunda-feira, às 8h25, a mediana (o valor do meio) e também o mínimo, o máximo e quantas instituições responderam.',
+      'O boletim importa porque o Banco Central mira a inflação esperada, não só a passada: se o Focus mostra o IPCA subindo acima da meta, cresce a chance de Selic mais alta por mais tempo. Para quem empresta ou capta, a mediana da Selic no fim do ano é a melhor pista pública de para onde vai o custo do dinheiro.',
+      'A coleta fecha na sexta; por isso o painel chama o boletim pela data de coleta. Em semana com feriado na segunda, a divulgação passa para a terça.',
+    ],
+    analogia: 'É a previsão do tempo do mercado: ninguém garante que vai chover, mas quando cem meteorologistas apontam chuva, você leva o guarda-chuva (e o banco precifica o guarda-chuva).',
+    lacunas: [
+      'Mediana não é consenso nem garantia: metade das casas projeta acima e metade abaixo. O intervalo entre mínimo e máximo diz quanta discordância há.',
+      'É expectativa de fim de período (dezembro de cada ano), não a média do ano: a Selic de dezembro de 2026 pode ser bem diferente da média de 2026. No câmbio, o Focus traz a média do mês de dezembro.',
+      'O Focus mede o que o mercado pensa, e o mercado erra: compare a projeção com o que a curva DI já precifica e com o que o Copom escreve no comunicado.',
+      'Revisões semanais pequenas são ruído; o que importa é a direção ao longo de várias semanas (por isso o painel mostra o histórico de 52 semanas).',
+    ],
+    preciso: {
+      texto: 'Pesquisa de expectativas de mercado do Banco Central (Sistema de Expectativas), com projeções anuais e mensais para inflação (IPCA, IGP-M), Selic, PIB, câmbio, balança comercial e contas públicas, coletadas até sexta-feira e divulgadas na segunda. O painel usa a mediana das projeções anuais (base de cálculo 0, todas as respostas) de Selic, IPCA, PIB e câmbio, pela API Olinda do Banco Central.',
+      formula: 'juro real esperado = (1 + Selic esperada) ÷ (1 + IPCA esperado) − 1   ·   mediana = valor do meio das projeções',
+    },
+    exemplo: (() => {
+      const e = EX_FOCUS
+      const real = juroReal(e.selic, e.ipca)
+      const economia = e.emprestimo * (e.selicAnterior - e.selic)
+      return {
+        titulo: `Focus projeta Selic de ${pct(e.selic)} e IPCA de ${pct(e.ipca)} para o fim do ano (hipotético)`,
+        passos: [
+          `Juro real esperado: (1 + ${pct(e.selic)}) ÷ (1 + ${pct(e.ipca)}) − 1 = ${pct(real)} ao ano: ainda alto, o que segura consumo e crédito.`,
+          `Na semana anterior a mediana era ${pct(e.selicAnterior)}: o mercado passou a esperar 0,25 ponto a menos de Selic, sinal de ciclo de corte mais rápido.`,
+          `Num empréstimo pós-fixado de ${money(e.emprestimo, 'R$')}, cada 0,25 ponto a menos de Selic por um ano são cerca de R$ ${nf(economia, 0)} a menos de juros.`,
+        ],
+        resultado: `A leitura para a conversa: o mercado espera juro real de ${pct(real)} e um ciclo de corte um pouco mais rápido; o cliente pode preferir pós-fixado a travar uma taxa prefixada alta agora.`,
+      }
+    })(),
+    noApp: { texto: 'A mediana do Focus para Selic, IPCA, PIB e dólar está em Cenários › Projeções, ao lado das projeções dos bancos, com o histórico de 52 semanas em gráfico abaixo da tabela.', tab: 'cenarios', view: 'projecoes' },
+    teste: {
+      pergunta: 'O Focus desta semana mostra a mediana do IPCA de 2026 subindo de 4,3% para 4,6%, acima da meta de 3%. O que isso sugere para a Selic e para um cliente que vai captar?',
+      resposta: 'Inflação esperada subindo afasta cortes de juros: a Selic tende a ficar alta por mais tempo. Para quem vai captar, o pós-fixado fica mais caro à frente; vale comparar com uma taxa prefixada antes que a curva DI incorpore a piora.',
+    },
+  },
+  {
     id: 'commodities-e-cambio',
     topico: 'Commodities',
     nome: 'Commodities e câmbio',
@@ -835,6 +877,9 @@ export const LIGACOES = [
   ['diferencial-de-juros', 'cupom-cambial', 'O cupom cambial é o diferencial de juros depois de passar pelo dólar futuro: a parte do juro em reais que sobra em dólar.'],
   ['diferencial-de-juros', 'sofr', 'A SOFR é o juro em dólar contra o qual se mede o diferencial: quanto maior o juro em reais sobre ela, maior o diferencial.'],
   ['diferencial-de-juros', 'inflacao', 'Diferencial nominal não é real: descontando a inflação de cada país, o ganho verdadeiro entre as moedas pode ser outro.'],
+  ['focus', 'inflacao', 'O Focus traz a inflação que o mercado espera; o Banco Central mira essa expectativa ao decidir a Selic, não só o IPCA já medido.'],
+  ['focus', 'diferencial-de-juros', 'A Selic esperada no Focus é o lado brasileiro do diferencial de juros à frente: muda o prêmio de ficar em reais.'],
+  ['focus', 'commodities-e-cambio', 'O câmbio projetado no Focus (média de dezembro) é a referência de mercado para converter preços em dólar nos cenários do cliente.'],
   ['cupom-cambial', 'sofr', 'O cupom cambial é o juro em dólar embutido no mercado brasileiro; a diferença dele para a SOFR mostra o prêmio de estar no país.'],
   ['cupom-cambial', 'custo-de-funding', 'O cupom cambial converte o custo de captar em dólar para reais (swap): é a ponte que fecha a conta do funding externo.'],
   ['sofr', 'euribor', 'São os benchmarks “sem risco” de cada moeda, dólar e euro, a base sobre a qual se soma o spread.'],
@@ -888,12 +933,13 @@ export const CONEXAO = {
     { id: 'facil', texto: 'é a porta simplificada da CVM para companhias de menor porte (receita abaixo de R$ 500 milhões) captarem com investidores.' },
     { id: 'drawback', texto: 'suspende ou isenta os tributos dos insumos de quem exporta, liberando caixa do exportador.' },
     { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
+    { id: 'focus', texto: 'é a pesquisa semanal do Banco Central com o que o mercado espera de Selic, inflação, PIB e câmbio: antecipa o custo do dinheiro.' },
     { id: 'commodities-e-cambio', texto: 'é a regra de conversão: o preço mundial em dólar vira preço em reais pelo câmbio.' },
     { id: 'ic-br', texto: 'resume em reais a cesta de commodities do Brasil, mostrando se o conjunto ficou mais caro ou mais barato.' },
     { id: 'combustiveis', texto: 'é o caminho do derivado em dólar até a bomba, onde entram câmbio, impostos, etanol e margens, e de onde parte da inflação.' },
   ],
   // O caminho que une tudo, de ponta a ponta.
-  cadeia: 'Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA (com o FÁCIL abrindo esse caminho às empresas menores) → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. No comércio exterior, o drawback alivia o caixa do exportador. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
+  cadeia: 'Expectativas (Focus) → Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA (com o FÁCIL abrindo esse caminho às empresas menores) → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. No comércio exterior, o drawback alivia o caixa do exportador. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
 }
 
 // Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.
