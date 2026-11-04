@@ -161,7 +161,8 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
         mat('Imposto seletivo entra em debate na Câmara', 30, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55, 'Valor Econômico')] }
       await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
-      const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - h })
+      // matéria de 1 minuto atrás (não 1 hora): perto da meia-noite, 1 hora atrás cai em ontem e a quebra por dia deixa de dizer "Hoje"
+      const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
       await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
       await p.goto(base + '/#resumo')
       const painel = p.locator('.desk-panel', { has: p.getByRole('tab', { name: 'Reforma tributária' }) }); await painel.waitFor()
