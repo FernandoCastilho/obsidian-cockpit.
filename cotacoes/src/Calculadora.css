@@ -53,3 +53,22 @@
   .cx-matrix thead th small { font-size:.58rem; letter-spacing:0; }
   .cx-matrix tbody th { font-size:.66rem; letter-spacing:.02em; }
 }
+
+/* BNDES Finame Materiais */
+.fm-unidade { align-self:center; color:var(--mut); font-size:.85rem; white-space:nowrap; }
+.fm-custo-valor b { color:var(--fg); }
+.fm-grade { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:10px; padding:12px; }
+.fm-kpi { display:grid; gap:2px; padding:10px 12px; border:1px solid var(--line); background:var(--surface-2); min-width:0; }
+.fm-kpi span { font-size:.72rem; color:var(--mut); letter-spacing:.04em; text-transform:uppercase; }
+.fm-kpi b { font-size:1.1rem; font-variant-numeric:tabular-nums; }
+.fm-kpi small { font-size:.72rem; color:var(--mut); line-height:1.3; }
+.fm-cron, .fm-regras { margin:0 12px 12px; }
+.fm-cron summary, .fm-regras summary { cursor:pointer; min-height:44px; display:flex; align-items:center; color:var(--mut); font-size:.85rem; }
+.fm-cron summary:hover, .fm-regras summary:hover { color:var(--amber, #ffb000); }
+.fm-tabela th, .fm-tabela td { font-size:.85rem; font-weight:400; }
+.fm-tabela tbody th { text-transform:none; letter-spacing:0; font-size:.8rem; white-space:nowrap; }
+.fm-carencia td { color:var(--mut); }
+.fm-regras { margin:0; }
+.fm-regras ul { margin:6px 0 0; padding-left:1.2em; font-size:.85rem; line-height:1.5; color:var(--mut); display:grid; gap:4px; }
+.fm-regras li b { color:var(--fg); }
+@media (max-width:639px) { .fm-grade { grid-template-columns:repeat(2, minmax(0, 1fr)); padding:8px; } }
