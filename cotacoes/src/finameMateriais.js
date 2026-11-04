@@ -22,7 +22,7 @@ export const REGRAS = {
   // (Decreto 6.306/2007, art. 8º, IX, vigente no texto consolidado lido em 04/11/2026), e o adicional de 0,38% do art. 8º, § 5º, só
   // alcança os incisos que ele lista (I, IV, V, VI, X, XI, XIV, XVI, XVIII, XIX, XXI e XXVI), não o IX. A alíquota zero geral das
   // operações do BNDES (art. 8º, XXX) foi revogada pelo Decreto 8.511/2015 sem afetar o inciso IX. É assim que o mercado contrata
-  // (condições do produto divulgadas pela Abimaq em 16/01/2026: sem incidência de IOF). Se o agente cobrar (funding diverso),
+  // (informativo da Abimaq de janeiro de 2026 sobre as condições do produto: sem incidência de IOF). Se o agente cobrar (funding diverso),
   // vale o IOF de crédito PJ: 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025).
   iof: 'Sem IOF: a operação é feita com recursos da FINAME e tem alíquota zero (Decreto 6.306/2007, art. 8º, IX, vigente), sem o adicional de 0,38% do § 5º, que só alcança os incisos que ele lista. É assim que o mercado contrata (informativo da Abimaq de janeiro de 2026 sobre as condições do produto: sem incidência de IOF); a revogação da alíquota zero geral do BNDES (art. 8º, XXX, pelo Decreto 8.511/2015) não afeta o inciso IX. Risco residual: o § 4º do art. 8º cobra o imposto se houver desvio de finalidade ou descumprimento de condição. Só se o agente cobrar, por funding diverso, vale o IOF de crédito de pessoa jurídica: 0,38% sobre o valor, uma vez, mais 0,0082% ao dia sobre o principal de cada parcela, até 365 dias (Decreto 12.499/2025, com eficácia restabelecida pelo STF em julho de 2025; optante do Simples Nacional até R$ 30 mil: 0,00274% ao dia)',
 }
@@ -92,7 +92,7 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
     if (Number.isInteger(prazo) && prazo >= 1 && carencia >= prazo) erros.push('A carência precisa ser menor que o prazo total.')
   }
   const financiado = valor > 0 && participacao > 0 ? (valor * participacao) / 100 : 0
-  if (financiado > REGRAS.tetoOperacao) avisos.push(`Valor financiado acima de R$ 20 milhões por operação: teto citado em materiais do BNDES e da CNI (2020 a 2025) que não consta na página oficial do produto em 04/11/2026; confirme com o agente.`)
+  if (financiado > REGRAS.tetoOperacao) avisos.push(`Valor financiado acima de R$ 20 milhões por operação: teto citado em materiais de divulgação de terceiros (Observatório da Indústria RS, Fomento Paraná e CNI, 2020 a 2025) que não consta na página oficial do produto em 04/11/2026; confirme com o agente.`)
   if (financiado > REGRAS.tetoCliente12m) avisos.push(`Valor acima do limite por cliente em 12 meses (R$ 150 milhões).`)
   return { erros, avisos, financiado }
 }
@@ -158,7 +158,7 @@ export function simular({ valor, participacao = 100, prazo, carencia = 0, custo,
   const iofOk = iof && [iof.fixed, iof.daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
   const ipcaOk = custo !== 'tlp' || (Number.isFinite(ipca) && ipca >= -50 && ipca <= 100)
   const taxasOk = [custoFinanceiro, taxaBndes, taxaAgente].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
-  if (!taxasOk) check.erros.push('Informe o custo financeiro, a taxa do BNDES e a taxa do agente em % a.a.')
+  if (!taxasOk) check.erros.push('Informe o custo financeiro, a taxa do BNDES e o spread da instituição em % a.a.')
   if (!ipcaOk) check.erros.push('Informe o IPCA esperado em % a.a.')
   if (!iofOk) check.erros.push('Informe as alíquotas do IOF em % (0 e 0 se o agente confirmar alíquota zero).')
   if (check.erros.length) return { ok: false, ...check }

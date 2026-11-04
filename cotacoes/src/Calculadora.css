@@ -64,6 +64,9 @@
 .fm-kpi small { font-size:.72rem; color:var(--mut); line-height:1.3; }
 .fm-regras { margin:0 12px 12px; }
 .fm-rotulo { display:inline-flex; align-items:center; gap:2px; }
+.fm-kpi > .fm-rotulo { display:flex; }
+.fm-kpi .help button { width:14px; height:14px; font-size:9px; }
+.fm-kpi .pop, .fm-rotulo .pop { text-transform:none; letter-spacing:0; font-size:.8rem; font-weight:400; line-height:1.45; text-align:left; }
 .fm-rotulo .help { margin-left:4px; }
 .fm-fluxo-panel header h3 .help { margin-left:8px; vertical-align:middle; }
 .cx-iof > .fm-iof-nota { margin:4px 0 0; }
