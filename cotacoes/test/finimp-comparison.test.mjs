@@ -1,13 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { finimpCost, compareFinimp, solveFinimpRate } from '../src/finimpComparison.js'
+import { FINIMP_TERMS, finimpCost, compareFinimp, solveFinimpRate } from '../src/finimpComparison.js'
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) <= 1e-9 * Math.max(1, Math.abs(expected)), `${actual} ≠ ${expected}`)
 // Twenty-four hand-calculated synthetic scenarios, not bank quotes or image data.
 const days = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
 const expectedA = [1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000]
 const expectedB = [3500 / 3, 5500 / 3, 2500, 9500 / 3, 11500 / 3, 4500, 15500 / 3, 17500 / 3, 6500, 21500 / 3, 23500 / 3, 8500]
 for (let i = 0; i < days.length; i++) {
-  for (const [name, annualRate, flatRate, expected] of [['concorrente', 6, 1, expectedA[i]], ['Itaú', 8, 0.5, expectedB[i]]]) {
+  for (const [name, annualRate, flatRate, expected] of [['Instituição 1', 6, 1, expectedA[i]], ['Instituição 2', 8, 0.5, expectedB[i]]]) {
     test(`FINIMP ${name}, ${days[i]} dias: juros simples e flat único`, () => {
       const r = finimpCost({ principal: 100000, annualRate, flatRate, days: days[i] })
       assert.equal(r.ok, true); near(r.cost, expected); near(r.periodPercent, expected / 1000)
@@ -15,7 +15,7 @@ for (let i = 0; i < days.length; i++) {
     })
   }
 }
-test('diferença Itaú − concorrente conserva os três sinais', () => {
+test('diferença Instituição 2 − Instituição 1 conserva os três sinais', () => {
   for (const [days, sign] of [[30, -1], [90, 0], [360, 1]]) {
     const r = compareFinimp({ principal: 100000, days, competitor: { annualRate: 6, flatRate: 1 }, itau: { annualRate: 8, flatRate: 0.5 } })
     assert.equal(r.ok, true); assert.equal(Math.sign(r.difference), sign)
@@ -70,4 +70,10 @@ test('delta em pontos percentuais usa custos não arredondados, inclusive subcen
     assert.ok(Math.abs(tiny.difference)<0.005)
     near(tiny.deltaPp,sign*0.00000005)
   }
+})
+
+test('FINIMP mantém doze prazos fixos e imutáveis, de 30 a 360 dias', () => {
+  assert.deepEqual(FINIMP_TERMS, [30,60,90,120,150,180,210,240,270,300,330,360])
+  assert.equal(Object.isFrozen(FINIMP_TERMS), true)
+  assert.throws(() => {FINIMP_TERMS[0]=31}, TypeError)
 })
