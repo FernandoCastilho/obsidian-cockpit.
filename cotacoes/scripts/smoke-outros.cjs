@@ -138,11 +138,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.deepEqual((await secao.getByRole('button').allTextContents()).map((t) => t.trim()), ['Setores', 'Insumos'])
       assert.equal(await painel.getByRole('tab', { name: 'Cobre' }).count(), 0, 'insumos não aparecem em Setores')
       assert.equal(await painel.getByRole('tab', { name: 'Indústria' }).count(), 1)
-      assert.deepEqual((await painel.locator('.desk-tabs-grupo').allTextContents()).map((t) => t.trim()), ['🏭Produção e consumo', '💼Serviços'])
+      assert.equal(await p.locator('#setores-group-select').inputValue(), 'Indústria e transformação', 'grupo selecionado na navegação encadeada')
       await secao.getByRole('button', { name: 'Insumos' }).click(); await p.waitForURL('**/#setores/cobre')
       assert.equal(await painel.getByRole('tab', { name: 'Indústria' }).count(), 0, 'setores não aparecem em Insumos')
-      assert.deepEqual((await painel.locator('.desk-tabs-grupo').allTextContents()).map((t) => t.trim()), ['⛏️Metais', '🛢️Energia'])
-      assert.equal(await secao.getByRole('button', { name: 'Insumos' }).getAttribute('aria-current'), 'true')
+      assert.equal(await p.locator('#setores-group-select').inputValue(), 'Metais'); assert.equal(await painel.getByRole('tab', { name: 'Petróleo e diesel' }).count(), 0, 'só os filhos do grupo escolhido')
+      assert.equal(await secao.getByRole('button', { name: 'Insumos' }).getAttribute('aria-pressed'), 'true')
       await painel.getByRole('tab', { name: 'Cobre' }).click()
       await painel.locator('.setor-preco').waitFor()
       assert.match(await painel.locator('.setor-preco').innerText(), /10\.000,00/)
@@ -154,16 +154,23 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.close()
     }
     // Resumo › Notícias: Manchetes e Reforma tributária como linha do tempo da semana, quebrada por dia
-    for (const width of [390, 1280]) {
+    const newsTimes = [
+      { name: 'meio-dia', iso: '2026-11-05T15:00:00Z', day: /^Hoje.*05\/11(?:\s|$)/i },
+      { name: 'antes da meia-noite', iso: '2026-11-05T02:59:50Z', day: /^Hoje.*04\/11(?:\s|$)/i },
+      { name: 'depois da meia-noite', iso: '2026-11-05T03:00:10Z', day: /^Quarta-feira.*04\/11(?:\s|$)/i },
+    ]
+    for (const width of [390, 1280]) for (const clockCase of newsTimes) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      const agora = Date.now(), min = 60e3 // `atras` em minutos: perto da meia-noite, horas atrás caem em ontem
+      // Navegador e fixture compartilham o mesmo instante; timers/RAF continuam funcionando.
+      const agora = Date.parse(clockCase.iso), min = 60e3
+      await p.clock.setFixedTime(agora)
       const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * min })
       const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
         mat('Imposto seletivo entra em debate na Câmara', 30 * 60, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55 * 60, 'Valor Econômico')] }
       await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
-      // matéria de 1 minuto atrás (não 1 hora): perto da meia-noite, 1 hora atrás cai em ontem e a quebra por dia deixa de dizer "Hoje"
+      // Um minuto antes pode ser o dia anterior em Brasília: o rótulo esperado muda no caso após meia-noite.
       const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
       await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
       await p.goto(base + '/#resumo')
@@ -173,7 +180,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await painel.getByRole('tab', { name: 'Manchetes' }).click()
       // Manchetes: bandeira das moedas de que cada matéria fala (busca + título)
       const flags = painel.locator('.market-news li .news-flags'); await flags.first().waitFor()
-      assert.match(await painel.locator('.market-news .reforma-day').first().innerText(), /Hoje/i, 'manchetes quebradas por dia')
+      assert.match(await painel.locator('.market-news .reforma-day').first().innerText(), clockCase.day, `manchetes: ${clockCase.name} de Brasília`)
       assert.equal(await flags.count(), 3, 'uma linha de bandeiras por matéria que cita moeda; a de soja não tem')
       assert.equal(await painel.locator('.market-news li', { hasText: 'Dólar sobe' }).locator('.news-flags').getAttribute('aria-label'), 'Moedas citadas: dólar')
       assert.equal(await painel.locator('.market-news li', { hasText: 'iene dispara' }).locator('.news-flags .flag').count(), 2, 'iene e real (Ibovespa), as duas citadas no título')
@@ -189,10 +196,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
       assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
       assert.doesNotMatch(await lista.innerText(), /últimos 7 dias/)
-      assert.match(await lista.locator('.reforma-day').first().innerText(), /Hoje/i)
+      assert.match(await lista.locator('.reforma-day').first().innerText(), clockCase.day, `reforma: ${clockCase.name} de Brasília`)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()
       assert.deepEqual(errors, [])
+      console.log(`${width} PASS notícias com relógio controlado: ${clockCase.name} (${clockCase.iso})`)
       await p.close()
     }
     // laser pointer (estilo Excalidraw): botão discreto liga, arrastar risca, o traço se apaga sozinho, Esc e novo clique param; funciona dentro de diálogo modal

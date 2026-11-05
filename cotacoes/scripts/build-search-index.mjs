@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 // Explicit routes prevent indexing hidden prototypes and private/transient forms.
 export const SEARCH_PAGES = {
+  'SetoresB3.jsx':['setores/b3','Classificação setorial B3: fonte e cobertura'],
   'finimpHelpContent.js':['calculadora/finimp','FINIMP: fórmulas e explicações'],
   'FinimpComparacao.jsx':['calculadora/finimp','FINIMP: comparação de propostas e atingir meta'],
   'HeavyVehicles.jsx':['setores/veiculos-pesados','Veículos pesados — ANFAVEA'],
