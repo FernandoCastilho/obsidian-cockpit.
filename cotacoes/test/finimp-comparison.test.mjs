@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { finimpCost, compareFinimp, solveFinimpRate } from '../src/finimpComparison.js'
+import { FINIMP_TERMS, finimpCost, compareFinimp, solveFinimpRate } from '../src/finimpComparison.js'
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) <= 1e-9 * Math.max(1, Math.abs(expected)), `${actual} ≠ ${expected}`)
 // Twenty-four hand-calculated synthetic scenarios, not bank quotes or image data.
 const days = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
@@ -70,4 +70,10 @@ test('delta em pontos percentuais usa custos não arredondados, inclusive subcen
     assert.ok(Math.abs(tiny.difference)<0.005)
     near(tiny.deltaPp,sign*0.00000005)
   }
+})
+
+test('FINIMP mantém doze prazos fixos e imutáveis, de 30 a 360 dias', () => {
+  assert.deepEqual(FINIMP_TERMS, [30,60,90,120,150,180,210,240,270,300,330,360])
+  assert.equal(Object.isFrozen(FINIMP_TERMS), true)
+  assert.throws(() => {FINIMP_TERMS[0]=31}, TypeError)
 })

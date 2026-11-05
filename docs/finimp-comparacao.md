@@ -9,7 +9,7 @@ Implementação genérica autorizada por Fernando. Não reproduz imagem, valores
 - Flat único sobre o principal. O contrato determina quando ele é pago; não há desconto a valor presente.
 - TAC opcional, na moeda escolhida, exclusivamente sob premissa editável de pagamento à vista e sem financiamento; não gera juros.
 - Pagamento do principal no vencimento. Sem estimar impostos, câmbio, hedge, seguros, outras tarifas ou indexadores. Não é custo final travado em reais nem CET anual.
-- Doze prazos alternativos usam as mesmas condições; não presumem uma oferta válida para todos os vencimentos.
+- Doze prazos fixos, de 30 a 360 dias em passos de 30, usam as mesmas condições; não presumem uma oferta válida para todos os vencimentos.
 
 ## Fórmulas auditáveis
 
@@ -55,3 +55,7 @@ Matriz sintética, P = 100.000, TAC = 0. Concorrente r = 6%, f = 1%; Itaú r = 8
 Teste inverso adicional: P = 100.000, flat Itaú = 0,5%, TAC Itaú = 100. Para igualar o concorrente acima, taxa requerida de 6,8% em 180 dias e 6,4% em 360 dias. Recalculando: 3.400 + 500 + 100 = 4.000; 6.400 + 500 + 100 = 7.000.
 
 Cobertura automatizada: 24 cenários diretos (12 prazos × dois bancos), três sinais da diferença, TAC, zeros, valores inválidos/overflow, metas em 180/360 dias, ausência/indeterminação de solução e precisão. Smoke de interface preenche os 24 resultados, aplica meta, altera moeda e TAC, testa erros e busca em 390/820/1280 px. Não substitui validação das condições comerciais de um contrato concreto.
+
+## Tabela de prazos fixos
+
+As linhas não são editáveis. Cabeçalho agrupa Concorrente, Itaú e Comparação; cada banco mostra juros, flat, TAC opcional, custo e percentual no período. A comparação mostra diferença monetária e delta em p.p. A tabela mantém todas as colunas e linhas em qualquer largura, com rolagem, cabeçalhos e prazo fixos durante a leitura. O seletor da meta usa os mesmos doze prazos. Nenhuma fórmula financeira foi alterada.
