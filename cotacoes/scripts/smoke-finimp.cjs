@@ -13,6 +13,10 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await p.waitForURL('**/#calculadora/finimp')
       const section = p.locator('section.fi')
       await section.waitFor()
+      assert.deepEqual(await section.locator('.fi-bank legend').allTextContents(), ['Instituição 1', 'Instituição 2'])
+      assert.deepEqual(await section.locator('thead th[scope=colgroup]').allTextContents(), ['Instituição 1', 'Instituição 2', 'Comparação'])
+      assert.equal(await section.getByRole('option', {name:'Igualar custo da Instituição 1'}).count(),1)
+      assert.doesNotMatch(await section.innerText(), /concorrente|Itaú/i)
       await p.locator('#fi-principal').fill('100000')
       await p.locator('#fi-a-rate').fill('6')
       await p.locator('#fi-a-flat').fill('1')
@@ -27,7 +31,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
         for (let col = 0; col < 2; col++) assert.ok((await rows.nth(i).locator('td strong').nth(col).innerText()).includes(expected[col]))
       }
       assert.match(await section.locator('.fi-goal').innerText(), /7% a.a./)
-      await section.getByRole('button', { name: 'Aplicar taxa ao Itaú' }).click()
+      await section.getByRole('button', { name: 'Aplicar taxa à Instituição 2' }).click()
       assert.match(await rows.nth(5).innerText(), /Custos iguais/)
       await p.locator('#fi-goal-mode').selectOption('target')
       await p.locator('#fi-target').fill('2000')
@@ -82,6 +86,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       for (const [rate, sign] of [['6,0000001', '+'], ['5,9999999', '−']]) {
         await p.locator('#fi-b-rate').fill(rate)
         assert.ok((await rows.nth(5).locator('td strong').last().innerText()).includes(`${sign} < 0,01 EUR`))
+        assert.match(await rows.nth(5).locator('.fi-difference small').innerText(), sign === '+' ? /Instituição 2 com maior custo/ : /Instituição 2 com menor custo/)
       }
       await p.locator('#fi-b-rate').fill('8')
       await p.locator('#fi-b-flat').fill('0,5')
