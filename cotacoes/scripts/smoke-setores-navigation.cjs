@@ -7,6 +7,23 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
     const chooseGroup=async(section,name)=>{const select=p.getByLabel(section==='setores'?'Grupo de atendimento':'Grupo de insumos',{exact:true});if(await select.isVisible())await select.selectOption(name);else await p.getByRole('navigation',{name:section==='setores'?'Grupos editoriais':'Grupos de insumos'}).getByRole('button',{name,exact:true}).click()}
     p.on('pageerror',error=>errors.push(error.message))
     await p.route('**/temas.json*',r=>r.fulfill({json:{generatedAt:Date.now(),windowDays:7,temas:Object.fromEntries(['industria','veiculos-pesados','comercio','servicos','telecom','cobre','aluminio','aco','minerio','petroleo'].map(id=>[id,{label:id,grupo:'setor',items:[]}]))}}))
+    // Regressão: a rota raiz é estável e não pode herdar a última seleção da sessão.
+    const history=[]
+    const selected=async name=>{const tab=p.getByRole('tab',{name,exact:true,selected:true});await tab.waitFor({timeout:4000});history.push({url:p.url(),selected:await tab.innerText(),group:await p.locator('#setores-group-select').inputValue()})}
+    await p.goto(base+'/#setores')
+    await selected('Indústria')
+    await chooseGroup('setores','Agro e alimentos')
+    await p.waitForURL('**/#setores/agricultura');await selected('Agricultura e insumos agrícolas')
+    await p.reload();await selected('Agricultura e insumos agrícolas')
+    await p.goBack();await p.waitForURL('**/#setores');await selected('Indústria')
+    await p.reload();await selected('Indústria')
+    await p.goForward();await p.waitForURL('**/#setores/agricultura');await selected('Agricultura e insumos agrícolas')
+    await chooseGroup('setores','Indústria e transformação')
+    await p.waitForURL('**/#setores/industria');await selected('Indústria')
+    await p.goBack();await p.waitForURL('**/#setores/agricultura');await selected('Agricultura e insumos agrícolas')
+    await p.goForward();await p.waitForURL('**/#setores/industria');await selected('Indústria')
+    await p.reload();await selected('Indústria')
+    fs.writeFileSync(`${out}/history-${width}.json`,JSON.stringify(history,null,2))
     await p.goto(base+'/#setores/veiculos-pesados')
     const sections=p.getByRole('navigation',{name:'Setores ou insumos'})
     await p.getByRole('region',{name:'Indicadores de veículos pesados'}).locator('article').first().waitFor()

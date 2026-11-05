@@ -4,7 +4,7 @@ Proposta editorial, não taxonomia oficial, cadastro de empresas ou cobertura co
 
 ## Navegação
 
-Setores/Insumos → organização → grupo → tema. Somente os temas do grupo escolhido aparecem no quadro. No celular o grupo é escolhido em seletor compacto; no desktop, por botões. O caminho selecionado fica visível; escolhas por seção e grupo são preservadas na sessão, incluindo recarga e navegação de retorno. Armazenam-se apenas identificadores de navegação; não há dados financeiros de clientes.
+Setores/Insumos → organização → grupo → tema. Somente os temas do grupo escolhido aparecem no quadro. No celular o grupo é escolhido em seletor compacto; no desktop, por botões. O caminho selecionado fica visível; escolhas por seção e grupo são preservadas na sessão, nas escolhas explícitas de seção/grupo. A URL prevalece: `#setores` sempre abre Indústria; deep links, Voltar/Avançar e recarga restauram o assunto daquele endereço, sem reinterpretar a rota pela memória. Armazenam-se apenas identificadores de navegação; não há dados financeiros de clientes.
 
 Os links antigos `#setores/industria`, `veiculos-pesados`, `comercio`, `servicos`, `telecom` e os cinco insumos continuam válidos. As mesmas notícias, fontes, datas, retenção e indicadores existentes foram preservados. O painel não publica automaticamente notícias de um grupo em outro por semelhança de nome.
 

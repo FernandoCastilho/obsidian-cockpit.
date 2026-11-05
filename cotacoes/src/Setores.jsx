@@ -38,7 +38,9 @@ function Preco({ item, usd, usdLabel, diario }) {
 export default function Setores({ view = '', onView = () => {}, quotes }) {
   const memory = useRef(null)
   if (!memory.current) memory.current = readSectorMemory({getItem: key => sessionStorage.getItem(key)})
-  const route = typeof view==='string'&&view ? view : typeof memory.current.active==='string' ? memory.current.active : ''
+  // A URL é a fonte de verdade: #setores sempre abre Indústria, inclusive no histórico.
+  // Memória é usada só nas escolhas explícitas de seção/grupo, nunca para reinterpretar uma rota.
+  const route = typeof view==='string' ? view : ''
   const rememberedB3 = typeof memory.current.b3==='string' && (memory.current.b3==='b3'||b3SectorFromRoute(memory.current.b3)) ? memory.current.b3 : 'b3'
   const isB3 = route === 'b3' || route.startsWith('b3/')
   const b3Sector = b3SectorFromRoute(route)
