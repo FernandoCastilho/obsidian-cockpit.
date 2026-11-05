@@ -1,14 +1,17 @@
 import { CONCEITOS, CONEXAO, LIGACOES } from './educacao.js'
 import { GLOSSARY } from './glossary.js'
-import { INSUMOS, SETORES } from './insumos.js'
+import { INSUMOS } from './insumos.js'
 import { makeSearchDoc, plainContent } from './globalSearch.js'
+import { BANKING_TOPICS } from './bankingSectors.js'
+import { B3_SECTORS } from './b3Classification.js'
 import generated from './searchContent.generated.json'
 export function staticSearchDocuments() {
   return [
+    ...B3_SECTORS.map(sector=>makeSearchDoc({id:'b3-sector:'+sector.id,title:sector.label,body:'Setor econômico da classificação B3. Nomes conferidos em 05/11/2026. Subsetores e segmentos ainda não incorporados. Indicadores desta categoria indisponíveis no painel.',route:'setores/b3/'+sector.id,kind:'Setor econômico B3'})),
     ...CONCEITOS.map(c=>makeSearchDoc({id:'concept:'+c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'})),
     makeSearchDoc({id:'learning:connections',title:CONEXAO.titulo,body:plainContent(CONEXAO)+' '+plainContent(LIGACOES),route:'aprender',kind:'Conteúdo do painel'}),
     ...Object.entries(GLOSSARY).filter(([key])=>generated.glossaryRoutes[key]).map(([key,g])=>makeSearchDoc({id:'glossary:'+key,title:g.t,body:plainContent(g),route:generated.glossaryRoutes[key] || 'juros',kind:'Explicação',help:g.t})),
-    ...[...SETORES,...INSUMOS].map(t=>makeSearchDoc({id:'sector:'+t.id,title:t.label,body:plainContent(t),route:'setores/'+t.id,kind:'Setor ou insumo'})),
+    ...[...BANKING_TOPICS,...INSUMOS].map(t=>makeSearchDoc({id:'sector:'+t.id,title:t.label,body:plainContent(t)+(t.available===false?' Indicadores e notícias deste tema ainda não estão integrados. Categoria editorial da visão bancária, não classificação oficial.':''),route:'setores/'+t.id,kind:'Setor ou insumo'})),
     ...generated.documents.map(makeSearchDoc),
   ]
 }
