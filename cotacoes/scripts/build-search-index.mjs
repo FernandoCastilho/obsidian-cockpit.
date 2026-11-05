@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 // Explicit routes prevent indexing hidden prototypes and private/transient forms.
 export const SEARCH_PAGES = {
+  'finimpHelpContent.js':['calculadora/finimp','FINIMP: fórmulas e explicações'],
   'FinimpComparacao.jsx':['calculadora/finimp','FINIMP: comparação de propostas e atingir meta'],
   'HeavyVehicles.jsx':['setores/veiculos-pesados','Veículos pesados — ANFAVEA'],
   'Resumo.jsx':['resumo','Mercado hoje'], 'Macro.jsx':['juros','Juros e indicadores'], 'RatesSnapshot.jsx':['juros','Juros de referência'],
