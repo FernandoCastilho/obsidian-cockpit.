@@ -59,3 +59,13 @@ Cobertura automatizada: 24 cenários diretos (12 prazos × dois bancos), três s
 ## Tabela de prazos fixos
 
 As linhas não são editáveis. Cabeçalho agrupa Instituição 1, Instituição 2 e Comparação; cada banco mostra juros, flat, TAC opcional, custo e percentual no período. A comparação mostra diferença monetária e delta em p.p. A tabela mantém todas as colunas e linhas em qualquer largura, com rolagem, cabeçalhos e prazo fixos durante a leitura. O seletor da meta usa os mesmos doze prazos. Nenhuma fórmula financeira foi alterada.
+
+## Explicações em ajudas
+
+A interface concentra as explicações nos botões “?” de simulação, moeda, prazo/base, taxa, flat, TAC, custo total, diferença/delta e atingir meta. Os textos continuam pesquisáveis no índice estático. Valores, unidades, erro de entrada/meta e o estado curto TAC incluída/excluída permanecem visíveis.
+
+O flat é percentual editável em cada instituição, convertido automaticamente em valor sobre o principal. Não há regra de flat zero para a Instituição 2. O teste de interface usa principal de 100.000, flat de 1,5% e 2%: valores de 1.500 e 2.000, com juros independentes de cada proposta.
+
+A ajuda usa diálogo nativo exclusivo do FINIMP, com acionamento por clique/toque/Enter, foco contido, botão Fechar e Escape com retorno ao acionador. Não altera a ajuda global das demais calculadoras. O smoke verifica abertura, dimensões, modalidade, foco, fechamento e ausência dos parágrafos longos na tela em 390/820/1280 px, além de repetir os cálculos e metas do FINIMP.
+
+Trabalho isolado na base publicada ceeb21c; não integra mudanças de persistência ou correções de auditoria de outra branch. Necessita revisão e autorização antes de publicação.

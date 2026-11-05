@@ -9,7 +9,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
     await p.route('**/temas.json*',r=>r.fulfill({json:{generatedAt:Date.now(),windowDays:7,temas:Object.fromEntries(['industria','veiculos-pesados','comercio','servicos','telecom','cobre','aluminio','aco','minerio','petroleo'].map(id=>[id,{label:id,grupo:'setor',items:[]}]))}}))
     // Regressão: a rota raiz é estável e não pode herdar a última seleção da sessão.
     const history=[]
-    const selected=async name=>{const tab=p.getByRole('tab',{name,exact:true,selected:true});await tab.waitFor({timeout:4000});history.push({url:p.url(),selected:await tab.innerText(),group:await p.locator('#setores-group-select').inputValue()})}
+    const selected=async name=>{const tab=p.getByRole('tab',{name,exact:true,selected:true});try{await tab.waitFor({timeout:10000})}catch(error){fs.writeFileSync(`${out}/history-error-${width}.json`,JSON.stringify({url:p.url(),expected:name,errors,history,body:await p.locator('body').innerText()},null,2));await p.screenshot({path:`${out}/history-error-${width}.png`,fullPage:true});throw error}history.push({url:p.url(),selected:await tab.innerText(),group:await p.locator('#setores-group-select').inputValue()})}
     await p.goto(base+'/#setores')
     await selected('Indústria')
     await chooseGroup('setores','Agro e alimentos')
