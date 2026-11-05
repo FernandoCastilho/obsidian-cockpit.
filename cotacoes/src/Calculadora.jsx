@@ -22,7 +22,7 @@ function GiroIcon() {
 }
 
 const CALCS = [
-  { id: 'finimp', title: 'FINIMP', sub: 'Concorrente × Itaú, prazos alternativos e atingir meta de custo', Icon: FinimpIcon },
+  { id: 'finimp', title: 'FINIMP', sub: 'Instituição 1 × Instituição 2, prazos fixos e atingir meta de custo', Icon: FinimpIcon },
   { id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon },
   { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxa final, carência, SAC ou Price e cronograma, com TFB ou TLP do painel', Icon: FinameIcon },
 ]

@@ -1,3 +1,4 @@
+export const FINIMP_TERMS = Object.freeze(Array.from({ length: 12 }, (_, i) => (i + 1) * 30))
 // Percentuais são entradas em %, montantes na mesma moeda. Sem arredondamento intermediário.
 export function finimpCost({ principal, annualRate, flatRate, tac = 0, days }) {
   if (![principal, annualRate, flatRate, tac, days].every(Number.isFinite) || principal <= 0 || annualRate < 0 || flatRate < 0 || tac < 0 || !Number.isSafeInteger(days) || days < 0) return { ok: false, error: 'Informe principal positivo, custos não negativos e dias inteiros não negativos.' }
