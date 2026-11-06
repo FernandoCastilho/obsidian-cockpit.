@@ -72,9 +72,10 @@ jobs:
           THEME_QA_OUTPUT: ${{ runner.temp }}/qa-universal/theme
           TRENDS_QA_OUTPUT: ${{ runner.temp }}/qa-universal/trends
           SMOKE_OUT: ${{ runner.temp }}/qa-universal/alertas-fontes
+          PUBLISHED_QA_OUTPUT: ${{ runner.temp }}/qa-universal/delivered-build
         run: |
           failures=()
-          for s in smoke-theme smoke-trends smoke-alerta smoke-bndes-source-failures; do
+          for s in smoke-theme smoke-trends smoke-alerta smoke-bndes-source-failures smoke-published; do
             echo "::group::$s"
             if ! node scripts/$s.cjs; then
               failures+=("$s")
