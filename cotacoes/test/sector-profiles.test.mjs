@@ -154,12 +154,11 @@ test('atalho à pergunta move foco sem alterar rota e funciona repetidamente', a
   assert.ok(events.every(([, id]) => /^sector-profile-cobre-question-[1-5]$/.test(id)))
 })
 
-test('integração mantém navegação e B3, substitui roteiro genérico e feed antigo apenas nesta tela', async () => {
-  const source = await readFile(new URL('../src/Setores.jsx', import.meta.url), 'utf8')
+test('conteúdo existente conserva fichas e notícias sem seletor B3', async () => {
+  const source = await readFile(new URL('../src/SetoresLegado.jsx', import.meta.url), 'utf8')
   assert.match(source, /<SectorProfile/)
   assert.match(source, /<SectorNews/)
-  assert.match(source, /<SetoresB3/)
-  assert.match(source, /const route = typeof view==='string' \? view : ''/)
+  assert.doesNotMatch(source, /<SetoresB3|Visão bancária|Referência B3/)
   assert.ok(!source.includes('BANKING_VISIT_QUESTIONS'))
   assert.ok(!source.includes("useDataFile('temas.json')"))
   assert.ok(!source.includes('insumo.visita.map'))
