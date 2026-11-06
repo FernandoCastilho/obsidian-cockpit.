@@ -150,15 +150,32 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.match(await p.locator('#fi-principal-err').innerText(), /principal maior que zero/)
       await p.locator('#fi-principal').fill('100000')
       await p.locator('#fi-goal-mode').selectOption('equal')
+      // Cenário de precisão independente dos testes anteriores de TAC e rolagem.
+      await section.getByRole('checkbox').uncheck()
+      await p.locator('#fi-a-rate').fill('6')
+      await p.locator('#fi-a-flat').fill('1')
       await p.locator('#fi-b-flat').fill('1')
+      const difference = rows.nth(5).locator('.fi-difference strong')
+      const assertTinyDifference = async sign => {
+        const expected = `${sign} < 0,01 EUR`
+        try {
+          await p.waitForFunction(expected => document.querySelector('.fi-compare tbody tr:nth-child(6) .fi-difference strong')?.textContent.trim() === expected, expected, { timeout: 5000 })
+        } catch {
+          const inputs = await p.locator('#fi-principal, #fi-currency, #fi-a-rate, #fi-a-flat, #fi-b-rate, #fi-b-flat').evaluateAll(elements => Object.fromEntries(elements.map(element => [element.id, element.value])))
+          assert.equal(await difference.innerText(), expected, `diferença antes de arredondar; condições ${JSON.stringify(inputs)}`)
+        }
+        assert.equal(await difference.innerText(), expected)
+      }
       for (const [rate, sign] of [['6,0000001', '+'], ['5,9999999', '−']]) {
+        await p.locator('#fi-b-rate').focus()
         await p.locator('#fi-b-rate').fill(rate)
-        assert.ok((await rows.nth(5).locator('td strong').last().innerText()).includes(`${sign} < 0,01 EUR`))
+        assert.equal(await p.locator('#fi-b-rate').inputValue(), rate)
+        await assertTinyDifference(sign)
         assert.equal(await rows.nth(5).locator('.fi-difference small').count(), 0)
         assert.equal(await rows.nth(5).locator('.fi-delta').innerText(), `${sign} < 0,01 p.p.`)
         await p.locator('#fi-a-rate').focus()
         assert.equal(await p.locator('#fi-b-rate').inputValue(), '6,00')
-        assert.ok((await rows.nth(5).locator('td strong').last().innerText()).includes(`${sign} < 0,01 EUR`), 'desfocar não arredonda o cálculo')
+        await assertTinyDifference(sign) // Desfocar muda a exibição, preservando o cálculo.
         await p.locator('#fi-b-rate').focus()
         assert.equal(await p.locator('#fi-b-rate').inputValue(), rate, 'foco recupera a precisão digitada')
       }

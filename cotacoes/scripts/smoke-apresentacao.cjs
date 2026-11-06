@@ -105,10 +105,18 @@ const out = process.env.SMOKE_OUT || '/tmp'
       assert.match(await dlg.locator('.apr-manchetes').innerText(), /Dólar sobe com decisão do Fed/)
       await p.waitForTimeout(350)
       await p.screenshot({ path: `${out}/apresentacao-dolar-${width}.png` })
+      // O gráfico usa as setas para percorrer os pontos; a navegação dos slides parte do player.
+      await plot.focus()
+      await p.keyboard.press('ArrowRight')
+      assert.equal(await dlg.locator('.apr-contador').innerText(), '5 / 11', 'seta com foco no gráfico percorre os pontos, sem trocar o slide')
+      assert.equal(await dlg.locator('h2').innerText(), 'Dólar')
+      await dlg.focus()
       await p.keyboard.press('ArrowRight') // aço: só matérias
+      await dlg.getByRole('heading', { name: 'Aço', exact: true }).waitFor()
       assert.equal(await dlg.locator('h2').innerText(), 'Aço')
       assert.match(await dlg.locator('.apr-vazio').first().innerText(), /não tem série de preço/)
       await p.keyboard.press('ArrowRight') // cobre
+      await dlg.getByRole('heading', { name: 'Cobre', exact: true }).waitFor()
       assert.equal(await dlg.locator('h2').innerText(), 'Cobre')
       assert.match(await dlg.locator('.apr-frase').innerText(), /em dólar\. Em reais, [+−]?\d+,\d%: o dólar (subiu|caiu)/)
       await p.waitForTimeout(350)

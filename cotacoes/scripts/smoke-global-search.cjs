@@ -3,12 +3,22 @@ const output=process.env.SEARCH_QA_OUTPUT || path.join(__dirname,'../../qa-unive
 const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
 (async()=>{const browser=await chromium.launch(require('./smoke-launch.cjs')());try{for(const width of [390,1280]){
  const context=await browser.newContext({viewport:{width,height:950},hasTouch:true,serviceWorkers:'block'}), p=await context.newPage(), errors=[], requests=[];
+ // Publication dates are compared with the UI clock captured before fetching.
+ // Keep both clocks aligned; generatedAt must not revive expired/undated news.
+ const now=Date.now(), headline='Manchete de teste sobre crédito e inadimplência';
+ await p.clock.setFixedTime(now);
+ const newsFixture={generatedAt:now,news:{USD:[
+   {title:headline,link:'https://example.test/current',source:'Ensaio',t:now-3600000},
+   {title:'Notícia expirada de teste sobre inadimplência',link:'https://example.test/expired',source:'Ensaio',t:now-121*3600000},
+   {title:'Notícia futura de teste sobre inadimplência',link:'https://example.test/future',source:'Ensaio',t:now+3600000},
+   {title:'Notícia sem data de teste sobre inadimplência',link:'https://example.test/undated',source:'Ensaio'},
+ ]}};
  p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>requests.push(r.url()));
  await p.route('**/*',r=>{const url=new URL(r.request().url());if(url.origin!==new URL(base).origin)return r.fulfill({status:503,body:'offline'});const file=path.basename(url.pathname);if(!url.pathname.startsWith('/src/') && /\.json$/.test(file)){
    if(file==='calendar.json')return r.fulfill({status:503,body:'offline'});
    if(file==='inadimplencia.json')return r.fulfill({path:path.join(__dirname,'../public/inadimplencia.json')});
-   if(file==='news.json')return r.fulfill({json:{generatedAt:Date.now(),news:{USD:[{title:'Manchete de teste sobre crédito e inadimplência',link:'https://example.test',source:'Ensaio',t:Date.now()}]}}});
-   return r.fulfill({json:{generatedAt:Date.now()}});
+   if(file==='news.json')return r.fulfill({json:newsFixture});
+   return r.fulfill({json:{generatedAt:now}});
  }return r.continue()});
  await p.goto(base+'/');await p.locator('.expandable-panel[open]').first().waitFor();assert.equal(await p.locator('.expandable-panel:modal').count(),0,'painel de mercado está no modo normal');
  await p.locator('.expandable-controls button').first().click();await p.locator('.expandable-panel:modal').waitFor();await p.keyboard.press('Control+Shift+F');assert.equal(await p.locator('.global-search-dialog[open]').count(),0,'preserva modal nativo ampliado');await p.keyboard.press('Escape');await p.locator('.expandable-panel:modal').waitFor({state:'hidden'});
@@ -19,7 +29,11 @@ const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
  assert.equal(await dialog.getByRole('region',{name:'Resultados em Configurações'}).count(),0);
  const learn=dialog.getByRole('region',{name:'Resultados em Aprender'}); // sections with labels have region semantics
  for(const name of ['FIDC','CRI','Custo de funding'])assert.ok(await learn.getByRole('button').filter({hasText:name}).count()>0,name);
- await dialog.screenshot({path:path.join(output,`search-dialog-${width}.png`)});assert.ok(await dialog.locator('mark').count()>0);assert.ok(await dialog.getByRole('region',{name:'Resultados em Notícias'}).count()>0);
+ const news=dialog.getByRole('region',{name:'Resultados em Notícias'});
+ await news.getByRole('button').filter({hasText:headline}).waitFor();
+ assert.equal(await news.getByRole('button').filter({hasText:headline}).count(),1,'a busca inclui a manchete publicada dentro das 120 horas');
+ for(const title of newsFixture.news.USD.slice(1).map(item=>item.title))assert.equal(await dialog.getByText(title,{exact:true}).count(),0,`${title}: publicação inválida não aparece pela data de geração do arquivo`);
+ await dialog.screenshot({path:path.join(output,`search-dialog-${width}.png`)});assert.ok(await dialog.locator('mark').count()>0);
  await dialog.locator('.search-coverage summary').click();assert.match(await dialog.locator('.search-coverage').innerText(),/Calendário econômico/);
  for(let i=0;i<12;i++)await p.keyboard.press('Tab');assert.ok(await p.evaluate(()=>document.querySelector('.global-search-dialog').contains(document.activeElement)));
  await input.fill('inadimplência');await learn.getByRole('button',{name:/^FIDC/}).first().click();await p.locator('.learn-card').waitFor();assert.match(p.url(),/#aprender\/fidc$/);assert.match(await p.locator('.learn-card').innerText(),/FIDC/);assert.ok(await p.locator('.search-destination mark').count()>0);

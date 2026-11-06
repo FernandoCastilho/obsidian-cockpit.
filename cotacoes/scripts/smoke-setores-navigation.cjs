@@ -4,9 +4,14 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   fs.mkdirSync(out,{recursive:true})
   try{for(const width of [390,820,1280]){
     const p=await browser.newPage({viewport:{width,height:1000},hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'}),errors=[]
+    const now=Date.now()
+    await p.clock.setFixedTime(now)
     const chooseGroup=async(section,name)=>{const select=p.getByLabel(section==='setores'?'Grupo de atendimento':'Grupo de insumos',{exact:true});if(await select.isVisible())await select.selectOption(name);else await p.getByRole('navigation',{name:section==='setores'?'Grupos editoriais':'Grupos de insumos'}).getByRole('button',{name,exact:true}).click()}
     p.on('pageerror',error=>errors.push(error.message))
-    await p.route('**/temas.json*',r=>r.fulfill({json:{generatedAt:Date.now(),windowDays:7,temas:Object.fromEntries(['industria','veiculos-pesados','comercio','servicos','telecom','cobre','aluminio','aco','minerio','petroleo'].map(id=>[id,{label:id,grupo:'setor',items:[]}]))}}))
+    // Sector coverage now has its own versioned snapshot. No successful source
+    // consultation means unavailable coverage, not a confirmed absence of news.
+    const sectorFixture={schemaVersion:1,generatedAt:new Date(now).toISOString(),topics:{agricultura:{items:[]}},sourceStates:{}}
+    await p.route('**/sector-news.json*',r=>r.fulfill({json:sectorFixture}))
     // Regressão: a rota raiz é estável e não pode herdar a última seleção da sessão.
     const history=[]
     const selected=async name=>{const tab=p.getByRole('tab',{name,exact:true,selected:true});try{await tab.waitFor({timeout:10000})}catch(error){fs.writeFileSync(`${out}/history-error-${width}.json`,JSON.stringify({url:p.url(),expected:name,errors,history,body:await p.locator('body').innerText()},null,2));await p.screenshot({path:`${out}/history-error-${width}.png`,fullPage:true});throw error}history.push({url:p.url(),selected:await tab.innerText(),group:await p.locator('#setores-group-select').inputValue()})}
@@ -42,7 +47,13 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
     assert.match(p.url(),/#setores\/veiculos-pesados$/,'lembra seção e assunto')
     await chooseGroup('setores','Agro e alimentos')
     await p.getByRole('tab',{name:'Agricultura e insumos agrícolas',exact:true}).click()
-    await p.getByRole('region',{name:'Cobertura deste tema'}).getByText(/ainda não estão integrados/).waitFor()
+    const coverage=p.getByRole('region',{name:'Notícias e comunicados · últimos 5 dias'})
+    await coverage.getByRole('status').filter({hasText:/^Cobertura ainda não disponível:/}).waitFor()
+    assert.equal(await coverage.locator('.sector-news-list').count(),0,'não inventa publicações para cobertura indisponível')
+    assert.doesNotMatch(await coverage.innerText(),/Arquivo de notícias inválido|Nenhuma manchete relevante encontrada nas fontes consultadas/)
+    await coverage.getByText('Fontes consultadas e limites da cobertura',{exact:true}).click()
+    assert.equal(await coverage.getByRole('link',{name:'Ministério da Agricultura e Pecuária',exact:true}).count(),1,'mantém a fonte registrada do recorte agrícola')
+    assert.match(await coverage.locator('details').innerText(),/não disponível/)
     await p.screenshot({path:`${out}/bancaria-${width}.png`,fullPage:true})
     await p.getByRole('navigation',{name:'Organização dos setores'}).getByRole('button',{name:'Referência B3',exact:true}).click()
     const b3=p.getByRole('navigation',{name:'Setores econômicos da B3'})

@@ -33,8 +33,9 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       const cell = async (row, col) => norm(await mx.locator('tbody tr').nth(row).locator('td').nth((await heads()).indexOf(col)).innerText())
       assert.deepEqual(await mx.locator('tbody th').allInnerTexts().then((a) => a.map((t) => t.toLowerCase())), ['parcela', 'iof', 'juros totais', 'pagamento final'])
       assert.deepEqual(await heads(), ['Price', 'SAC'])
-      const gap = await sec.locator('.cx-gap').boundingBox(), cond = await sec.locator('.cx-panel').first().boundingBox(), res = await sec.locator('.cx-panel').nth(1).boundingBox()
-      assert.ok(res.y - (cond.y + cond.height) >= 16, 'linha em branco entre as duas seções'); assert.ok(gap.height >= 16)
+      const cond = await sec.locator('.cx-panel').first().boundingBox(), res = await sec.locator('.cx-panel').nth(1).boundingBox()
+      assert.ok(cond && res, 'painéis de condições e resultado visíveis')
+      assert.ok(res.y - (cond.y + cond.height) >= 16, 'ao menos 16px de espaço real entre as duas seções')
       // padrão: R$ 100.000,00, 12 meses, 2% a.m., Price
       assert.match(await cell(0, 'Price'), /^R\$\s*9\.455,96/); assert.match(await cell(0, 'SAC'), /^R\$\s*10\.333,33 até R\$\s*8\.500,00/)
       assert.match(await cell(1, 'Price'), /^R\$\s*2\.060,39/); assert.match(await cell(1, 'SAC'), /^R\$\s*2\.001,55/) // IOF PJ logo abaixo da Parcela
