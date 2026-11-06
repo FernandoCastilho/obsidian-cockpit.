@@ -38,3 +38,15 @@ test('animação possui pausa, sequência e alternativa sem movimento', () => {
   assert.match(css, /animation-play-state:paused/)
   assert.match(css, /animation:none/)
 })
+
+test('modo de apresentação ajusta diagrama e oferece laser opcional', () => {
+  const jsx = source('TechnologyIntegrationDiagram.jsx')
+  const css = source('TechnologyIntegrationDiagram.css')
+  assert.match(jsx, /aria-label="Maximizar diagrama"/)
+  assert.match(jsx, /role="dialog" aria-modal="true"/)
+  assert.match(jsx, /event.key === 'Escape'/)
+  assert.match(jsx, /ResizeObserver/)
+  assert.match(jsx, /createPortal/)
+  assert.match(jsx, /aria-pressed={laser}/)
+  assert.match(css, /\.tic-flow-fullscreen \.tic-flow-controls{display:none}/)
+})

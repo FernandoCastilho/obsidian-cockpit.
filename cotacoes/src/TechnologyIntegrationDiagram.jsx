@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './TechnologyIntegrationDiagram.css'
 
 const delivery = ['Diagnóstico', 'Desenho', 'Aquisição e configuração', 'Implantação', 'Operação e suporte (quando contratados)']
@@ -19,11 +20,62 @@ function FlowIcon({ name }) { return <svg aria-hidden="true" focusable="false" v
 // Texto nativo e listas ordenadas: a leitura não depende da imagem ou das setas.
 export default function TechnologyIntegrationDiagram() {
   const [paused, setPaused] = useState(false)
-  return <figure className="tic-flow" data-paused={paused} aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note">
+  const [expanded, setExpanded] = useState(false)
+  const [laser, setLaser] = useState(false)
+  const [scale, setScale] = useState(1)
+  const figureRef = useRef(null)
+  const maximizeRef = useRef(null)
+  const laserRef = useRef(null)
+  const pointerRef = useRef(null)
+  const wasExpanded = useRef(false)
+  useLayoutEffect(() => {
+    if (!expanded) return
+    const fit = () => {
+      const figure = figureRef.current
+      if (figure) setScale(Math.min((window.innerWidth - 24) / figure.offsetWidth, (window.innerHeight - 72) / figure.offsetHeight, 1.5))
+    }
+    fit()
+    const observer = new ResizeObserver(fit)
+    observer.observe(figureRef.current)
+    window.addEventListener('resize', fit)
+    return () => { observer.disconnect(); window.removeEventListener('resize', fit) }
+  }, [expanded])
+  useEffect(() => {
+    if (!expanded) {
+      if (wasExpanded.current) maximizeRef.current?.focus()
+      wasExpanded.current = false
+      return
+    }
+    wasExpanded.current = true
+    window.history.pushState({ ...window.history.state, ticDiagramFullscreen: true }, '')
+    const onBack = () => { setExpanded(false); setLaser(false) }
+    window.addEventListener('popstate', onBack)
+    const appRoot = document.getElementById('root')
+    const previousInert = appRoot?.inert
+    if (appRoot) appRoot.inert = true
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    laserRef.current?.focus()
+    const onKey = event => {
+      if (event.key === 'Escape') { event.preventDefault(); setExpanded(false); setLaser(false) }
+      if (event.key === 'Tab') { event.preventDefault(); laserRef.current?.focus() }
+      if (event.key.toLowerCase() === 'p') { event.preventDefault(); setPaused(value => !value) }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKey)
+      if (appRoot) appRoot.inert = previousInert
+      window.removeEventListener('popstate', onBack)
+      if (window.history.state?.ticDiagramFullscreen) window.history.back()
+    }
+  }, [expanded])
+  const figure = <figure ref={figureRef} className="tic-flow"  data-paused={paused} style={expanded ? { transform: `translate(-50%, -50%) scale(${scale})` } : undefined} aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note">
     <h4 id="tic-flow-title">Como funciona a <span>integração de tecnologia</span></h4>
     <div className="tic-flow-controls">
       <p>O destaque percorre a cadeia de entrega e, abaixo, o ciclo de caixa.</p>
       <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Retomar animação do diagrama' : 'Pausar animação do diagrama'}>{paused ? 'Retomar animação' : 'Pausar animação'}</button>
+      <button ref={maximizeRef} className="tic-flow-maximize" type="button" aria-label="Maximizar diagrama" title="Maximizar diagrama" onClick={() => { setPaused(false); setExpanded(true) }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" /></svg></button>
       <span className="tic-flow-reduced">Animação desativada pela preferência de movimento reduzido.</span>
     </div>
     <div className="tic-flow-chain">
@@ -39,4 +91,16 @@ export default function TechnologyIntegrationDiagram() {
     <section className="tic-flow-cash" aria-labelledby="tic-flow-cash-title"><h5 id="tic-flow-cash-title">Onde o caixa exige atenção</h5><ol>{cash.map((step, index) => <li key={step} className="tic-flow-stage" style={{ '--flow-step': index + 8 }}>{step}</li>)}</ol></section>
     <figcaption id="tic-flow-note">Síntese do subsetor; modelos de negócio podem coexistir. Etapas, sequência, faturamento e recebimento variam conforme o contrato.</figcaption>
   </figure>
+  if (!expanded) return figure
+  return createPortal(<div className="tic-flow-fullscreen" role="dialog" aria-modal="true" aria-label="Diagrama em tela cheia" aria-describedby="tic-flow-fullscreen-help" onPointerMove={event => {
+    if (pointerRef.current) {
+      pointerRef.current.style.left = `${event.clientX}px`
+      pointerRef.current.style.top = `${event.clientY}px`
+    }
+  }}>
+    <p id="tic-flow-fullscreen-help" className="tic-flow-sr-only">Pressione Escape ou use Voltar do navegador para sair. Pressione P para pausar ou retomar a animação. Ative o laser e mova o ponteiro para destacar uma região.</p>
+    <button ref={laserRef} className="tic-flow-laser-toggle" type="button" aria-pressed={laser} onClick={() => setLaser(value => !value)}>{laser ? 'Desativar laser' : 'Ativar laser'} <span aria-hidden="true">⊙</span></button>
+    {figure}
+    {laser && <span ref={pointerRef} className="tic-flow-laser" aria-hidden="true" />}
+  </div>, document.body)
 }
