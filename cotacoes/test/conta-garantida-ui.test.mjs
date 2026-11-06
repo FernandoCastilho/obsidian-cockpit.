@@ -82,7 +82,7 @@ test('trocar modos, editar, adicionar/remover repetidamente e voltar sem efeitos
   assert.equal(h.back, 1)
 })
 
-test('prazo por data, erros inline, feriados e IOF manual operam sem resultados antigos', async t => {
+test('prazo por data, erros inline, feriados e IOF automático operam sem resultados antigos', async t => {
   const h = await setup(t)
   await h.change('amount', '1000')
   await h.change('rate', '3')
@@ -98,11 +98,10 @@ test('prazo por data, erros inline, feriados e IOF manual operam sem resultados 
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
   await h.change('holidays', '2026-11-09')
   await h.change('taxProfile', 'manual')
-  assert.ok(h.field('iofDaily'))
-  await h.change('iofDaily', '')
+  assert.equal(h.field('iofDaily'), undefined)
+  assert.equal(h.field('iofAdditional'), undefined)
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
-  await h.change('iofDaily', '0')
-  await h.change('iofAdditional', '0')
+  await h.change('taxProfile', 'pj')
   assert.match(h.text(), /Resultado estimado do período/)
 })
 

@@ -12,7 +12,7 @@ import { CONCEITOS, conexoesDe, CONEXAO } from '../src/educacao.js'
 test('Giro mantém continuidade para taxa zero, mensal e anual equivalente', () => {
   for (const unit of ['am', 'aa']) {
     const rate = unit === 'am' ? 1e-12 : Math.expm1(12 * Math.log1p(1e-14)) * 100
-    const r = loan({ value: 100000, n: 12, rate, unit, system: 'price', iof: { fixed: 0, daily: 0 } })
+    const r = loan({ start: '2026-01-01', firstDue: '2026-02-01', value: 100000, n: 12, rate, unit, system: 'price', iof: { fixed: 0, daily: 0 } })
     assert.equal(r.ok, true)
     assert.ok(Math.abs(r.installment - 100000 / 12) < 0.000001)
     assert.ok(Math.abs(r.interest) < 0.00001)
@@ -21,11 +21,11 @@ test('Giro mantém continuidade para taxa zero, mensal e anual equivalente', () 
 })
 
 test('Giro não declara sucesso com infinito e conserva o teto do IOF em limites extremos', () => {
-  const overflow = loan({ value: 100000, n: 600, rate: 1000, unit: 'am', system: 'bullet' })
+  const overflow = loan({ start: '2026-01-01', firstDue: '2026-02-01', value: 100000, n: 600, rate: 1000, unit: 'am', system: 'bullet' })
   assert.equal(overflow.ok, false); assert.match(overflow.error, /limite numérico/)
-  assert.equal(loan({ value: Infinity, n: 12, rate: 2, system: 'sac' }).ok, false)
+  assert.equal(loan({ start: '2026-01-01', firstDue: '2026-02-01', value: Infinity, n: 12, rate: 2, system: 'sac' }).ok, false)
   for (const system of ['price', 'sac', 'bullet']) for (const rate of [0, 1e-12, 2, 1000]) for (const n of [1, 12, 600]) {
-    const r = loan({ value: 100000, n, rate, system })
+    const r = loan({ start: '2026-01-01', firstDue: '2026-02-01', value: 100000, n, rate, system })
     if (!r.ok) { assert.ok(r.error); continue }
     for (const field of ['total', 'interest', 'iof', 'iofFixed', 'iofDaily']) assert.ok(Number.isFinite(r[field]), `${system}/${rate}/${n}/${field}`)
     assert.ok(r.iof >= 380 - 1e-6 && r.iof <= 3373 + 1e-6)
