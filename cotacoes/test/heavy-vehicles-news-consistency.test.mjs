@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 
 const source = name => readFile(new URL(`../src/${name}`, import.meta.url), 'utf8')
 const resumo = await source('Resumo.jsx')
-const setores = await source('Setores.jsx')
+const setores = await source('SetoresLegado.jsx')
 
 // Static wiring checks complement SectorNews's rendered state/window tests.
 test('Veículos pesados usa SectorNews nas duas telas, sem manchetes legadas no resumo', () => {
