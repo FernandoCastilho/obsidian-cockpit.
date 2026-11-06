@@ -7,7 +7,7 @@ import { CATALOGO_SETORIAL } from './centralSetorial.js'
 import generated from './searchContent.generated.json'
 export function staticSearchDocuments() {
   return [
-    ...CATALOGO_SETORIAL.flatMap(group => group.topics.map((topic, index) => makeSearchDoc({id:`sector-topic:${group.id}:${index}`,title:topic,body:`${group.label}. Tópico do catálogo setorial; estudo não incluído.`,route:`setores/topico/${group.id}/${index}`,kind:'Subsetor'}))),
+    ...CATALOGO_SETORIAL.flatMap(group => group.topics.map((topic, index) => makeSearchDoc({id:`sector-topic:${group.id}:${index}`,title:topic,body:`${group.label}. Catálogo setorial. Abra o tópico para consultar o estudo ou o status da pesquisa.`,route:`setores/topico/${group.id}/${index}`,kind:'Subsetor'}))),
     ...CONCEITOS.map(c=>makeSearchDoc({id:'concept:'+c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'})),
     makeSearchDoc({id:'learning:connections',title:CONEXAO.titulo,body:plainContent(CONEXAO)+' '+plainContent(LIGACOES),route:'aprender',kind:'Conteúdo do painel'}),
     ...Object.entries(GLOSSARY).filter(([key])=>generated.glossaryRoutes[key]).map(([key,g])=>makeSearchDoc({id:'glossary:'+key,title:g.t,body:plainContent(g),route:generated.glossaryRoutes[key] || 'juros',kind:'Explicação',help:g.t})),

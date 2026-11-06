@@ -47,3 +47,10 @@ test('every historical valve context chart point reconciles to all nonempty ANP 
   }
   assert.ok(csv.filter(row => row[2] === '2016').some(row => row[3] === ''))
 })
+
+
+test('global search does not label the published valve study as absent', () => {
+  const search = readFileSync('src/searchCatalog.js', 'utf8')
+  assert.doesNotMatch(search, /Tópico do catálogo setorial; estudo não incluído/)
+  assert.match(search, /Abra o tópico para consultar o estudo ou o status da pesquisa/)
+})
