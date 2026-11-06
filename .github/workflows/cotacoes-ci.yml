@@ -55,6 +55,8 @@ jobs:
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
+      - name: Conferir curadorias de tributos e escala 6x1
+        run: CURADORIA_QA_OUTPUT="$RUNNER_TEMP/qa-universal/curadoria" node scripts/smoke-curadoria.cjs
       - name: Conferir largura, ajudas e fluxos das seis calculadoras
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
       - name: Capturas da revisão das calculadoras
@@ -98,8 +100,6 @@ jobs:
             echo "::error::Smokes com falha: ${failures[*]}"
             exit 1
           fi
-      - name: Conferir curadorias de tributos e escala 6x1
-        run: CURADORIA_QA_OUTPUT="$RUNNER_TEMP/qa-universal/curadoria" node scripts/smoke-curadoria.cjs
       - name: Seleção temporal com mouse e toque nos componentes
         run: |
           npm run dev -- --host 127.0.0.1 --port 8770 > "$RUNNER_TEMP/comparison-vite.log" 2>&1 &
