@@ -1,0 +1,223 @@
+/* Shared workspace for every calculator. Product formulas and tables stay local. */
+main.app.app-calculators {
+  --cx-space:clamp(16px, 1.6vw, 24px);
+  width:100%;
+  max-width:none;
+  padding:24px clamp(16px, 2vw, 32px) calc(96px + env(safe-area-inset-bottom));
+}
+
+.app-calculators .cx {
+  width:100%;
+  max-width:none;
+  min-width:0;
+  gap:24px;
+}
+.cx-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:8px 20px; }
+.cx .cx-back { margin:0; padding:0 12px 0 0; min-height:44px; font-size:.875rem; }
+.cx .cx-title {
+  display:flex; align-items:center; flex-wrap:wrap; gap:10px;
+  margin:0; min-width:0; color:var(--fg); font-size:clamp(1.5rem, 1.7vw, 1.75rem);
+  font-weight:650; line-height:1.3; letter-spacing:-.025em;
+}
+.cx-heading, .cx-heading-text { display:flex; align-items:center; gap:10px; min-width:0; }
+.cx-heading { flex-wrap:wrap; }
+.cx-heading-text { overflow-wrap:anywhere; }
+.cx-title > svg, .cx-heading-text > svg { flex:none; }
+.cx .cx-icon { width:44px; height:44px; border-radius:10px; }
+.cx .cx-panel { width:100%; max-width:none; padding:0; border-radius:12px; background:var(--card); }
+.cx .cx-panel > header {
+  min-height:64px; padding:10px var(--cx-space, 20px);
+  justify-content:flex-start; gap:10px; border-radius:12px 12px 0 0; background:var(--surface-2);
+}
+.cx .cx-panel > header h3 {
+  margin:0; color:var(--fg); font-size:1rem; font-weight:600; line-height:1.4;
+  letter-spacing:0; text-transform:none;
+}
+.cx .cx-panel > header small { margin-left:auto; font-size:.75rem; line-height:1.4; }
+.cx .cx-form {
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:18px 24px; align-items:start; padding:var(--cx-space, 20px);
+}
+.cx .cx-field { gap:8px; min-width:0; }
+.cx-field-label, .cx .fi-label, .cx .fm-rotulo {
+  display:flex; align-items:center; gap:4px; min-width:0; min-height:44px;
+}
+.cx .cx-field > label, .cx .cx-field > .cx-label {
+  display:flex; align-items:center; min-height:44px;
+}
+.cx .cx-field label, .cx .cx-label { margin:0; font-size:.8125rem; line-height:1.4; color:var(--mut); }
+.cx .cx-field-label > label, .cx .fi-label > label { min-width:0; }
+.cx .cx-field input:not([type=checkbox]), .cx .cx-field select, .cx .cx-field textarea {
+  width:100%; min-width:0; min-height:46px; border-radius:8px;
+  background:var(--bg); color:var(--fg); border:1px solid var(--line);
+  padding:10px 12px; font:inherit; font-size:.9375rem; line-height:1.4;
+  font-variant-numeric:tabular-nums;
+}
+.cx .cx-field .money-wrap > input { padding-left:42px; }
+.cx .cx-field input:not([type=checkbox]):focus-visible,
+.cx .cx-field select:focus-visible, .cx .cx-field textarea:focus-visible,
+.cx .cx-wrap:focus-visible, .cx .fi-scroll:focus-visible {
+  outline:2px solid var(--amber, #ffb000); outline-offset:2px;
+}
+.cx .cx-field [aria-invalid=true] { border-color:var(--down); }
+.cx .cx-field textarea { min-height:180px; resize:vertical; }
+.cx .cx-rate { flex-wrap:wrap; gap:8px; }
+.cx .cx-rate > input { flex:1 1 150px; width:0; }
+.cx .seg { min-height:46px; border-radius:8px; max-width:100%; }
+.cx .seg button { min-height:44px; padding:8px 12px; font-size:.8125rem; }
+.cx .seg button[aria-pressed=true] { color:var(--amber, #ffb000); }
+.cx .cx-iof { padding-top:14px; }
+.cx .cx-iof summary { font-size:.875rem; }
+.cx .cx-iof-fields { margin-top:12px; gap:18px 24px; }
+.cx .cx-error:empty, .cx .cx-hint:empty { display:none; }
+.cx .cx-error { font-size:.8125rem; }
+.cx .cx-hint { font-size:.8125rem; line-height:1.5; }
+.cx > .status { margin:0; font-size:.8125rem; line-height:1.5; }
+.cx .cx-pad { padding:12px var(--cx-space, 20px) var(--cx-space, 20px); }
+.cx .cx-wrap { padding:0 var(--cx-space, 20px) var(--cx-space, 20px); overscroll-behavior-x:contain; }
+.cx .cx-matrix th, .cx .cx-matrix td { padding:14px 12px; line-height:1.4; }
+.cx .cx-matrix tbody th { font-size:.8125rem; letter-spacing:0; text-transform:none; }
+.cx .cx-matrix td { font-size:1rem; }
+.cx .cx-matrix thead th { font-size:.8125rem; }
+.cx .cx-matrix td small, .cx .cx-matrix th small { font-size:.75rem; }
+.cx .cx-diff { padding:0 var(--cx-space, 20px) var(--cx-space, 20px) calc(var(--cx-space, 20px) + 18px); gap:8px; }
+.cx .cx-tiles { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; }
+.cx .cx-tile { padding:20px; min-height:112px; border-radius:12px; gap:16px; }
+.cx .cx-tile-text { gap:6px; }
+.cx .cx-tile-text small { font-size:.8125rem; line-height:1.5; }
+
+/* Quantitative results use the same rhythm as the input panels. */
+.cx .fm-grade, .cx .cg-kpis, .cx .desconto-kpis {
+  display:grid; grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:16px; padding:var(--cx-space, 20px);
+}
+.cx .desconto-kpis { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+.cx .fm-kpi, .cx .cg-kpis > div, .cx .desconto-kpis > div {
+  min-width:0; padding:16px; gap:8px; border:1px solid var(--line);
+  border-radius:10px; background:var(--surface-2);
+}
+.cx .fm-kpi > b, .cx .cg-kpis b, .cx .desconto-kpis b {
+  font-size:clamp(1.5rem, 1.5vw, 1.75rem); line-height:1.3;
+  letter-spacing:-.025em; overflow-wrap:anywhere;
+}
+.cx .fm-kpi > span, .cx .cg-kpis span, .cx .desconto-kpis span {
+  font-size:.75rem; line-height:1.45; letter-spacing:0; text-transform:none;
+}
+.cx .fm-kpi small, .cx .desconto-kpis small { font-size:.75rem; line-height:1.5; }
+.cx .fm-kpi > .fm-rotulo { margin:0; }
+.cx .fm-kpi .fi-help { text-transform:none; letter-spacing:0; }
+.cx .fm-fluxo .fm-tabela th, .cx .fm-fluxo .fm-tabela td,
+.cx .cg-results td, .cx .cg-results thead th { font-size:.8125rem; }
+.cx .cg-actions, .cx .cg-pagination { padding:var(--cx-space, 20px); }
+.cx .cg-modes { gap:10px; }
+.cx .cg-modes button, .cx .cg-button { border-radius:8px; }
+.cx .cg-tax-reference { padding:14px; border-radius:8px; }
+.cx .cg-check, .cx .lcd-check { min-height:44px; align-items:flex-start; gap:10px; line-height:1.5; }
+.cx .cg-check input, .cx .lcd-check input { width:20px; height:20px; min-height:20px; margin-top:2px; flex:none; }
+.cx .desconto-inset { margin:12px var(--cx-space, 20px); }
+.cx .lcd-chart { margin:var(--cx-space, 20px); }
+.cx .lcd-warnings { padding:12px calc(var(--cx-space, 20px) + 18px); font-size:.8125rem; }
+
+/* FINIMP keeps two proposal groups and a full-width comparison table. */
+.cx.fi .fi-banks { padding:0 var(--cx-space, 20px) var(--cx-space, 20px); gap:20px; }
+.cx.fi .fi-bank { padding:16px; gap:14px 20px; align-content:start; border-radius:10px; }
+.cx.fi .fi-bank legend { font-size:.875rem; padding:0 8px; }
+.cx.fi .fi-tac-toggle, .cx.fi .fi-tac-status { margin-left:var(--cx-space, 20px); margin-right:var(--cx-space, 20px); }
+.cx.fi .fi-tac-toggle { gap:4px; }
+.cx.fi .fi-tac-status { margin-bottom:20px; }
+.cx.fi .fi-goal { padding:0 var(--cx-space, 20px) var(--cx-space, 20px); }
+.cx.fi .fi-goal button { border-radius:8px; }
+.cx.fi .fi-results > .status { padding:16px var(--cx-space, 20px); margin:0; font-size:.875rem; }
+.cx.fi .fi-scroll { margin:0 var(--cx-space, 20px) var(--cx-space, 20px); border-radius:0; }
+.cx.fi .fi-compare tbody th, .cx.fi .fi-compare tbody td { padding:6px 10px; line-height:1.4; }
+.cx.fi .fi-row-select { min-width:44px; min-height:44px; }
+
+/* Calculator help: one recognisable control and one scrollable native dialog. */
+.fi-help { display:inline-flex; vertical-align:middle; flex:none; }
+.cx .fi-help > button, .cx .fi-compare th .fi-help > button {
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  width:44px; min-width:44px; height:44px; min-height:44px; padding:0;
+  border:0; border-radius:8px; background:transparent; color:var(--mut);
+  font:600 12px/1 system-ui, sans-serif; cursor:pointer;
+}
+.cx .fi-help > button::before {
+  content:''; position:absolute; width:20px; height:20px;
+  border:1px solid currentColor; border-radius:50%; pointer-events:none;
+}
+.cx .fi-help > button:hover { color:var(--fg); background:color-mix(in srgb, var(--fg) 5%, transparent); }
+.cx .fi-help > button:focus-visible { outline:2px solid var(--amber, #ffb000); outline-offset:0; }
+.cx .fi-help > button[aria-expanded=true] { color:var(--amber, #ffb000); }
+.cx-help-preview {
+  position:fixed; z-index:90; display:grid; gap:8px; width:min(340px, calc(100vw - 24px));
+  max-height:calc(100dvh - 24px); overflow:auto; box-sizing:border-box;
+  padding:16px; border:1px solid var(--mut, #9aa4af); border-radius:10px;
+  background:var(--surface-2, #1c2330); color:var(--fg, #e6edf3);
+  box-shadow:0 12px 36px #0008; font:400 14px/1.5 system-ui, sans-serif;
+  text-align:left; text-transform:none; letter-spacing:0; overflow-wrap:anywhere;
+}
+.cx-help-preview > strong { font-size:14px; font-weight:650; line-height:1.4; }
+.cx-help-preview > span { color:var(--fg, #e6edf3); }
+.cx-help-preview > small { color:var(--mut, #9aa4af); font-size:12px; line-height:1.4; }
+.fi-help-dialog {
+  position:fixed; inset:auto; margin:0; left:16px; top:80px;
+  width:480px; max-width:calc(100vw - 32px); max-height:calc(100dvh - 32px);
+  overflow:auto; overscroll-behavior:contain; box-sizing:border-box;
+  background:var(--surface-2, #161b22); color:var(--fg, #e6edf3);
+  border:1px solid var(--line, #30363d); border-radius:14px; padding:24px;
+  box-shadow:0 18px 64px #0008; font:14px/1.65 system-ui, sans-serif; text-align:left;
+}
+.fi-help-dialog::backdrop { background:#0007; }
+.fi-help-dialog h3 { margin:0 0 16px; color:var(--fg); font-size:1.125rem; line-height:1.4; }
+.fi-help-dialog p { margin:0 0 14px; }
+.fi-help-dialog p:last-child { margin-bottom:0; }
+.fi-help-dialog ul, .fi-help-dialog ol { padding-left:20px; margin:10px 0 16px; }
+.fi-help-dialog li + li { margin-top:8px; }
+.fi-help-dialog a { color:var(--amber, #ffb000); overflow-wrap:anywhere; }
+.fi-help-close {
+  display:block; width:100%; min-height:44px; margin-top:20px; padding:10px 16px;
+  border:1px solid var(--line, #30363d); border-radius:8px; background:var(--card, #161b22);
+  color:var(--fg, #e6edf3); font:inherit; font-weight:600; cursor:pointer;
+}
+.fi-help-close:hover { border-color:var(--mut); }
+.fi-help-close:focus-visible, .fi-help-dialog a:focus-visible { outline:2px solid var(--amber, #ffb000); outline-offset:3px; }
+
+@media (min-width:1100px) {
+  .cx .cx-form { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width:1280px) {
+  .cx.fi .fi-bank { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .cx .fm-grade, .cx .desconto-kpis { grid-template-columns:repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width:1600px) {
+  .cx .cx-form { grid-template-columns:repeat(4, minmax(0, 1fr)); }
+  .cx .fm-grade, .cx .cg-kpis, .cx .desconto-kpis { grid-template-columns:repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width:959px) {
+  .cx .cx-tiles { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .cx .fm-grade, .cx .cg-kpis, .cx .desconto-kpis { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width:699px) {
+  main.app.app-calculators { padding-top:16px; }
+  .app-calculators .cx { gap:20px; }
+  .cx .cx-form, .cx .cx-iof-fields, .cx.fi .fi-banks { grid-template-columns:1fr; }
+  .cx .cx-form { gap:16px; }
+  .cx .cx-title { font-size:1.375rem; }
+  .cx .cx-panel > header { min-height:60px; }
+  .cx .cx-panel > header small { width:100%; }
+  .cx .cx-matrix th, .cx .cx-matrix td { padding:12px 10px; }
+  .cx .cx-tiles { grid-template-columns:1fr; }
+  .cx .cx-tile { min-height:96px; padding:16px; }
+  .cx .fm-kpi, .cx .cg-kpis > div, .cx .desconto-kpis > div { padding:14px; }
+  .cx .fm-kpi > b, .cx .cg-kpis b, .cx .desconto-kpis b { font-size:1.25rem; }
+  .cx .cg-pagination { flex-wrap:wrap; justify-content:center; }
+}
+@media (max-width:560px) {
+  .cx.fi .cx-title { display:flex; }
+  .fi-help-dialog {
+    width:calc(100vw - 32px); left:16px; top:auto;
+    bottom:calc(76px + env(safe-area-inset-bottom)); max-height:calc(100dvh - 108px); padding:20px;
+  }
+}
+@media (max-width:399px) {
+  .cx .fm-grade, .cx .cg-kpis, .cx .desconto-kpis { grid-template-columns:1fr; }
+}

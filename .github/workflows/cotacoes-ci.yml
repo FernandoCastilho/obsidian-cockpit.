@@ -53,6 +53,16 @@ jobs:
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
+      - name: Conferir largura, ajudas e fluxos das seis calculadoras
+        run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
+      - name: Capturas da revisão das calculadoras
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculadoras-design
+          path: ${{ runner.temp }}/qa-universal/calculators
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Smokes de navegador (abas, mercado, calendário e controles de 44 px)
         run: |
           for s in smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-global-search smoke-recuperacao smoke-heavy-vehicles smoke-setores-navigation smoke-dynamic-notifications smoke-calculadora smoke-finimp smoke-finimp-help smoke-bndes smoke-recado smoke-conceito-diario smoke-motion smoke-alerta smoke-apresentacao; do

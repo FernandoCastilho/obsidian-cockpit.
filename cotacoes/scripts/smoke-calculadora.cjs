@@ -1,7 +1,9 @@
 // Calculadoras › Capital de Giro: ícone, condições gerais, linha em branco e resultado (Parcela, Juros Totais, Pagamento Final).
-const { chromium } = require('playwright'), assert = require('node:assert/strict')
+const { chromium } = require('playwright'), assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path')
 ;(async () => {
   const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
+  const out = process.env.CALCULATOR_QA_OUTPUT ? path.join(process.env.CALCULATOR_QA_OUTPUT, 'functional') : process.env.SMOKE_OUT || 'workspace-qa/calculadoras'
+  fs.mkdirSync(out, { recursive: true })
   try {
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 1000 }, serviceWorkers: 'block' }), errors = []
@@ -14,8 +16,14 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await tile.click()
       await p.waitForURL('**/#calculadora/giro')
       const sec = p.locator('section.cx[aria-labelledby="calc-h"]'); await sec.waitFor()
+      const help = async (title, content) => {
+        await p.getByRole('button', { name: `Ajuda: ${title}`, exact: true }).click()
+        const dialog = p.getByRole('dialog', { name: title, exact: true }); await dialog.waitFor()
+        if (content) assert.match(await dialog.innerText(), content)
+        await p.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' })
+      }
       // estrutura pedida: Condições gerais (Valor, Prazo, Taxa, Sistema) · linha em branco · Resultado (Parcela, Juros Totais, Pagamento Final)
-      assert.deepEqual(await sec.locator('header h3').allInnerTexts(), ['Condições gerais', 'Resultado'])
+      assert.deepEqual((await sec.locator('header h3').allInnerTexts()).map(t => t.replace(/\s*\?\s*$/, '').trim()), ['Condições gerais', 'Resultado'])
       for (const label of ['Valor', 'Prazo (meses)', 'Taxa (%)']) await sec.getByLabel(label, { exact: true }).waitFor()
       await sec.getByText('Sistema de amortização', { exact: true }).waitFor()
       // matriz: linhas Parcela, IOF, Juros Totais, Pagamento Final; colunas Price e SAC (Bullet só quando escolhido)
@@ -47,8 +55,8 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.equal(await sec.locator('.cx-diff li').count(), 2)
       // alíquotas do IOF editáveis (recolhidas por padrão)
       await sec.getByRole('button', { name: 'Price', exact: true }).click()
-      assert.equal(await sec.locator('details.cx-iof').getAttribute('open'), null)
-      await sec.locator('details.cx-iof summary').click()
+      assert.equal(await sec.locator('.cx-iof details').getAttribute('open'), null)
+      await sec.locator('.cx-iof details summary').click()
       await sec.getByLabel('Diária (% ao dia)').fill('0'); assert.match(await cell(1, 'Price'), /^R\$\s*380,00/)
       await sec.getByLabel('Diária (% ao dia)').fill('x'); assert.match(await sec.locator('[role="alert"]').innerText(), /alíquotas do IOF/); assert.equal(await cell(1, 'Price'), '—')
       await sec.getByLabel('Diária (% ao dia)').fill('0,0082')
@@ -77,16 +85,12 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.locator('.fm-grade').waitFor()
       const kpiBox = (nome) => fm.locator('.fm-kpi', { has: p.locator('span.fm-rotulo', { hasText: new RegExp(`^${nome}\\s*\\??$`) }) })
       const kpi = async (nome) => (await kpiBox(nome).locator('b').innerText())
-      assert.match(await kpiBox('Taxa final').innerText(), /14,17% TFC \+ 1,25% BNDES \+ 3,00% spread da instituição/)
-      assert.match(await kpiBox('Spread da instituição').innerText(), /3,00% a\.a\.\s+R\$\s*[\d.]+,\d{2} dos juros \(\d+,\d%\) · \+3,4\d p\.p\./)
+      await help('Taxa final', /14,17% TFC \+ 1,25% BNDES \+ 3,00% spread da instituição/)
+      assert.match(await kpiBox('Spread da instituição').innerText(), /3,00% a\.a\.\s+\+3,4\d p\.p\./)
       // explicações no "?" ao lado do rótulo: abrem e fecham
-      const costHelp = fm.getByRole('button', { name: 'Ajuda: Custo financeiro' })
-      await costHelp.click()
-      // O mouse pode manter outra ajuda em hover; confira a explicação vinculada ao botão acionado.
-      const costTip = await costHelp.getAttribute('aria-describedby'); assert.ok(costTip)
-      assert.match(await p.locator(`[id="${costTip}"]`).innerText(), /Taxa Fixa Composta/); await p.keyboard.press('Escape')
-      assert.equal(await fm.locator('.fm-rotulo .help').count() >= 18, true, 'um "?" por rótulo e por KPI')
-      const spreadHelp = fm.getByRole('button', { name: 'Ajuda: Spread da instituição', exact: true }); await spreadHelp.click(); const spreadTip = await spreadHelp.getAttribute('aria-describedby'); assert.ok(spreadTip); assert.match(await p.locator(`[id="${spreadTip}"]`).innerText(), /juros com a taxa completa menos/); await p.keyboard.press('Escape')
+      await help('Custo financeiro', /Taxa Fixa Composta/)
+      assert.equal(await fm.locator('.fm-rotulo .fi-help').count() >= 18, true, 'um "?" por rótulo e por KPI')
+      await help('Spread da instituição', /juros com a taxa completa menos/)
       await fm.getByRole('button', { name: 'Grande empresa' }).click()
       assert.match(await fm.locator('.fm-custo-valor').innerText(), /TFC_60\.90 \(C01\), grande empresa, faixa até 60 meses: 14,4173%/)
       await fm.getByLabel('Prazo total (meses)', { exact: true }).fill('72')
@@ -94,7 +98,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByLabel('Prazo total (meses)', { exact: true }).fill('60')
       await fm.getByRole('button', { name: 'MPME nas demais regiões' }).click()
       // TFB da faixa de prazo e liberação
-      await fm.getByRole('button', { name: 'TFB (prefixada)' }).click()
+      await fm.locator('#fm-custo').selectOption('tfb')
       await fm.locator('.fm-custo-valor', { hasText: 'TFB da faixa de 60 meses' }).waitFor()
       assert.match(await fm.locator('.fm-custo-valor').innerText(), /16,6300% a\.a\./) // 16 + 0,60 + 0,030
       await fm.locator('.fm-grade').waitFor()
@@ -103,11 +107,12 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.match(await kpiBox('Parcelas').innerText(), /48x mensais/)
       // IOF: sem incidência por padrão (prática de mercado); PJ quando o agente cobra
       const iofKpi = kpiBox('IOF')
-      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+alíquota zero \(art\. 8º, IX\)/)
+      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+Alíquota zero/)
+      await help('IOF', /art\. 8º, IX/)
       const taxaCap = await kpi('Taxa final')
       await fm.getByRole('button', { name: 'Somada' }).click()
       assert.notEqual(await kpi('Taxa final'), taxaCap, 'composição somada muda a taxa')
-      assert.match(await kpiBox('Taxa final').innerText(), /somadas/)
+      await help('Taxa final', /somadas/)
       await fm.getByRole('button', { name: 'Capitalizada' }).click(); assert.equal(await kpi('Taxa final'), taxaCap)
       await fm.locator('details.cx-iof summary').click()
       await fm.getByLabel('Adicional, uma vez (%)', { exact: true }).fill('0,38'); await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('0,0082')
@@ -115,17 +120,17 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('x'); assert.match(await fm.locator('#fm-iof-err').innerText(), /alíquotas do IOF/)
       await fm.getByLabel('Adicional, uma vez (%)', { exact: true }).fill('0'); await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('0')
       await fm.locator('.fm-grade').waitFor()
-      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+alíquota zero \(art\. 8º, IX\)/)
-      await fm.locator('.fm-regras summary').click(); assert.match(await fm.locator('.fm-regras').innerText(), /Base legal e onde cada regra foi conferida/); await fm.locator('.fm-regras summary').click()
+      assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+Alíquota zero/)
+      await help('Regras do produto e fontes', /Base legal e onde cada regra foi conferida/)
       // regra: carência acima de 12 com TFB é erro; com TLP, até 24
       await fm.getByLabel('Carência (meses)', { exact: true }).fill('18')
       await fm.getByText(/Carência de 0 a 12 meses com TFB/).waitFor()
-      await fm.getByRole('button', { name: 'TLP + IPCA' }).click()
+      await fm.locator('#fm-custo').selectOption('tlp')
       // o IPCA esperado vem do Focus quando o macro.json o traz; no smoke, informa o valor para não depender do arquivo servido
       await fm.getByLabel('IPCA esperado (% a.a.)', { exact: true }).fill('4,5')
       await fm.locator('.fm-grade').waitFor()
       assert.match(await kpiBox('Parcelas').innerText(), /42x mensais/)
-      assert.match(await kpiBox('Juros reais \\(sobre saldo corrigido\\)').innerText(), /nominal com IPCA de 4,50%/)
+      await help('Juros reais', /nominal com IPCA de 4,50%/)
       assert.match(await kpiBox('Juros totais').innerText(), /correção pelo IPCA R\$/)
       await fm.getByLabel('Prazo total (meses)', { exact: true }).fill('90')
       await fm.getByText(/Prazo de 1 a 84 meses/).waitFor()
@@ -142,7 +147,15 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       const totalPago = await fm.locator('.fm-tabela tfoot td').nth(7).innerText()
       assert.equal(totalPago, await kpi('Pagamento final'), 'total do fluxo = pagamento final')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Finame sem rolagem lateral a ${width}px`)
-      await p.screenshot({ path: `${process.env.SMOKE_OUT || '/tmp'}/finame-${width}.png`, fullPage: width > 700 })
+      await p.screenshot({ path: `${out}/finame-${width}.png`, fullPage: width > 700 })
+      assert.deepEqual(await fm.locator('#fm-custo option').evaluateAll(options => options.map(option => option.value)), ['tfc', 'tfb', 'tlp', 'lcd', 'tfbd'])
+      await fm.locator('#fm-custo').selectOption('tfbd')
+      await fm.getByText('TFBD indisponível: faltam a taxa fixada e a trajetória cambial contratual.', { exact: true }).waitFor()
+      assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0, 'TFBD não mantém resultado de outra moeda')
+      await p.screenshot({ path: `${out}/finame-tfbd-${width}.png`, fullPage: true })
+      await fm.locator('#fm-custo').selectOption('lcd')
+      await p.waitForURL('**/#calculadora/bndes-selic-lcd')
+      await p.locator('section.cx-lcd').waitFor()
       assert.deepEqual(errors, [])
     }
     console.log('PASS calculadoras: capital de giro e BNDES Finame Materiais (TFC, TFB, TLP, IOF, spread, fluxo) em 390 e 1280')

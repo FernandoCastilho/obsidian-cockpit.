@@ -16,7 +16,7 @@ export const newFinimpDraft = () => ({
   principalText: '', currency: 'USD',
   competitor: { annualRate: '', flatRate: '', tac: '0' },
   itau: { annualRate: '', flatRate: '', tac: '0' },
-  useTac: false,
+  useTac: false, tacFxText: '',
   goalMode: 'equal', goalTerm: 5, targetText: '',
 })
 export const finimpDraftStore = createDraftStore(newFinimpDraft)

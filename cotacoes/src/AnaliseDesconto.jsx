@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import MoneyInput from './MoneyInput.jsx'
+import CalculatorHelp from './CalculatorHelp.jsx'
 import { DISCOUNT_INITIAL_FORM, DISCOUNT_TERMS, TITLE_FEE_MODES, parseDiscountForm } from './analiseDesconto.js'
 import './AnaliseDesconto.css'
 
@@ -17,8 +18,8 @@ export default function AnaliseDesconto({ onBack }) {
   const set = (key, value) => setForm((old) => ({ ...old, [key]: value }))
   const props = (key) => ({ id: `ad-${key}`, 'aria-invalid': !!errors[key], 'aria-describedby': `ad-${key}-err ad-${key}-hint` })
   const field = (key, label, control, hint = '') => <div className="cx-field" key={key}>
-    <label htmlFor={`ad-${key}`}>{label}</label>{control}
-    <p className="cx-hint" id={`ad-${key}-hint`}>{hint}</p>
+    <div className="cx-field-label"><label htmlFor={`ad-${key}`}>{label}</label>{hint && <CalculatorHelp title={label}><p>{hint}</p></CalculatorHelp>}</div>{control}
+    <p className="sr-only" id={`ad-${key}-hint`}>{hint}</p>
     <p className="cx-error" id={`ad-${key}-err`} role={errors[key] ? 'alert' : undefined}>{errors[key] || ''}</p>
   </div>
   const textField = (key, label, hint, inputMode = 'decimal') => field(key, label, <input {...props(key)} inputMode={inputMode} autoComplete="off" value={form[key]} onChange={(event) => set(key, event.target.value)} onFocus={(event) => event.target.select()} />, hint)
@@ -45,12 +46,11 @@ export default function AnaliseDesconto({ onBack }) {
   ]
   return <section className="cx cx-desconto" aria-labelledby="ad-heading">
     <button type="button" className="cx-back" onClick={onBack}><span aria-hidden="true">‹</span> Calculadoras</button>
-    <h2 id="ad-heading" className="cx-title"><span className="cx-icon"><DescontoIcon /></span>Análise de desconto</h2>
-    <p className="desconto-intro">Compare o custo recorrente de antecipar títulos com um capital de giro Price em 12, 24, 36 e 48 meses.</p>
-    <p className="desconto-notice">Exemplo editável. Confirme como a tarifa dos títulos é cobrada e a alíquota adicional de IOF antes de comparar. A quantidade de operações informada abaixo controla todos os resultados.</p>
+    <div className="cx-heading"><h2 id="ad-heading" className="cx-title"><span className="cx-icon"><DescontoIcon /></span>Análise de desconto</h2><CalculatorHelp title="Análise de desconto"><p>Compare o custo recorrente de antecipar títulos com um capital de giro Price em 12, 24, 36 e 48 meses.</p><p>Exemplo editável. Confirme como a tarifa dos títulos é cobrada e a alíquota adicional de IOF antes de comparar. A quantidade de operações informada abaixo controla todos os resultados.</p></CalculatorHelp></div>
+    <p className="desconto-notice">Simulação estimada. Não é CET nem recomendação de contratação.</p>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header><h3>1. Operação real de desconto</h3></header>
+      <header className="cx-heading"><h3>1. Operação real de desconto</h3><CalculatorHelp title="Operação real de desconto"><p>O total de R$ 4.054,75 da primeira referência não inclui a tarifa de títulos. Aqui, custo completo e valor líquido incluem essa tarifa, sem omiti-la.</p></CalculatorHelp></header>
       <div className="cx-form">
         {field('date', 'Data da operação e liberação do giro', <input {...props('date')} type="date" min="1900-01-01" max="9995-12-31" value={form.date} onChange={(event) => set('date', event.target.value)} />, 'A primeira parcela do giro vence no mês seguinte, no mesmo dia, limitado ao último dia do mês.')}
         {moneyField('value', 'Valor bruto da operação')}
@@ -64,25 +64,23 @@ export default function AnaliseDesconto({ onBack }) {
       </div>
       <div className="desconto-kpis" aria-live="polite">
         <div><span>Tarifa total de títulos</span><b>{brl(operation?.titleFee)}</b></div>
-        <div><span>Subtotal sem tarifa de títulos</span><b>{brl(operation?.costWithoutTitles)}</b><small>TAC + juros + IOF</small></div>
-        <div><span>Custo total completo</span><b>{brl(operation?.cost)}</b><small>Inclui a tarifa de títulos</small></div>
-        <div><span>Valor líquido da operação</span><b>{brl(operation?.net)}</b><small>Bruto menos todos os custos</small></div>
+        <div><div className="cx-field-label"><span>Subtotal sem tarifa de títulos</span><CalculatorHelp title="Subtotal sem tarifa de títulos"><p>TAC + juros + IOF.</p></CalculatorHelp></div><b>{brl(operation?.costWithoutTitles)}</b></div>
+        <div><div className="cx-field-label"><span>Custo total completo</span><CalculatorHelp title="Custo total completo"><p>Inclui a tarifa de títulos.</p></CalculatorHelp></div><b>{brl(operation?.cost)}</b></div>
+        <div><div className="cx-field-label"><span>Valor líquido da operação</span><CalculatorHelp title="Valor líquido da operação"><p>Bruto menos todos os custos.</p></CalculatorHelp></div><b>{brl(operation?.net)}</b></div>
       </div>
-      <p className="cx-hint cx-pad">O total de R$ 4.054,75 da primeira referência não inclui a tarifa de títulos. Aqui, custo completo e valor líquido incluem essa tarifa, sem omiti-la.</p>
     </article>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header><h3>2. Projeção mensal do desconto</h3></header>
+      <header className="cx-heading"><h3>2. Projeção mensal do desconto</h3><CalculatorHelp title="Projeção mensal do desconto"><p>A projeção repete a quantidade de títulos, a TAC e os valores de juros e IOF pagos a cada operação. A tarifa percentual, se escolhida, incide sobre o valor médio. Mudar apenas o valor médio não recalcula juros nem IOF; ajuste os valores pagos para cada cenário.</p></CalculatorHelp></header>
       <div className="cx-form">
         {textField('operations', 'Quantidade de operações por mês', 'A primeira referência tem 6 e a comparação tem 7. Vale exclusivamente o número deste campo.', 'numeric')}
         {moneyField('averageValue', 'Valor médio bruto por operação', 'Volume mensal = valor médio × quantidade de operações.')}
         {textField('discountRate', 'Taxa de desconto de referência (% a.m.)', 'Informativa. Não substitui os juros pagos informados, pois não há prazo médio ou vencimentos dos títulos.')}
       </div>
-      <p className="cx-hint cx-pad">A projeção repete a quantidade de títulos, a TAC e os valores de juros e IOF pagos a cada operação. A tarifa percentual, se escolhida, incide sobre o valor médio. Mudar apenas o valor médio não recalcula juros nem IOF; ajuste os valores pagos para cada cenário.</p>
     </article>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header><h3>3. Premissas do capital de giro</h3></header>
+      <header className="cx-heading"><h3>3. Premissas do capital de giro</h3><CalculatorHelp title="Premissas do capital de giro"><p>TAC e IOF são pagos à parte e não financiados. Dias corridos reais entre a liberação e cada vencimento, sem ajuste de feriados ou dias úteis. As alíquotas são premissas editáveis, não validação tributária.</p></CalculatorHelp></header>
       <div className="cx-form">
         {field('giroPrincipalMode', 'Principal usado no giro', <select {...props('giroPrincipalMode')} value={form.giroPrincipalMode} onChange={(event) => set('giroPrincipalMode', event.target.value)}><option value="monthly">Igual ao volume bruto mensal do desconto</option><option value="manual">Informar outro valor</option></select>, 'Usar o volume mensal é uma hipótese de comparação, não uma necessidade de capital de giro (NCG) apurada.')}
         {form.giroPrincipalMode === 'manual' && moneyField('giroPrincipal', 'Valor financiado no giro', 'Ao informar outro principal, os montantes comparados também ficam diferentes.')}
@@ -91,7 +89,6 @@ export default function AnaliseDesconto({ onBack }) {
         {textField('iofDaily', 'IOF diário do giro (% ao dia)', '0,0082% é a premissa da referência. Aplicado a cada amortização, com limite de 365 dias.')}
         {textField('iofAdditional', 'IOF adicional do giro, uma vez (%)', 'Informe explicitamente: 0 reproduz a referência sem adicional; 0,38 adiciona 0,38% do principal. Confirme a condição aplicável.')}
       </div>
-      <p className="cx-hint cx-pad">TAC e IOF são pagos à parte e não financiados. Dias corridos reais entre a liberação e cada vencimento, sem ajuste de feriados ou dias úteis. As alíquotas são premissas editáveis, não validação tributária.</p>
     </article>
 
     <div aria-live="polite" className="desconto-result-status">
@@ -108,13 +105,11 @@ export default function AnaliseDesconto({ onBack }) {
     </article>
 
     <article className="desk-panel cx-panel desconto-comparison-panel">
-      <header><h3>Desconto × giro: custo financeiro</h3></header>
+      <header className="cx-heading"><h3>Desconto × giro: custo financeiro</h3><CalculatorHelp title="Como comparar desconto e giro"><p>Economia = custo do desconto − custo do giro. Positivo: giro tem menor custo no cenário; negativo: maior custo. Na coluna Mês, os custos são a média do cenário de 12 meses; as duas linhas de parcela/desembolso já são mensais.</p><p>A média mensal all-in não é a parcela contratual. Ela distribui principal, juros, TAC e IOF pelo prazo. A parcela Price aparece separadamente, sem TAC e IOF.</p><p>Os fluxos não são equivalentes: o desconto é repetido todo mês e o giro é amortizado. A diferença de custos não comprova economia efetiva nem substitui a análise do ciclo de caixa. Esta simulação não é CET nem recomendação de contratação.</p></CalculatorHelp></header>
       <div className="cx-wrap" role="region" aria-label="Comparação de desconto e giro em 12, 24, 36 e 48 meses; role para ver todas as colunas" tabIndex={0}>
         <table className="cx-matrix desconto-table"><caption className="sr-only">Custo acumulado por prazo, economia estimada e desembolso mensal</caption><thead><tr><th scope="col">Item</th><th scope="col">Mês<small>base: giro de 12 meses</small></th>{DISCOUNT_TERMS.map((months) => <th scope="col" key={months}>{months} meses</th>)}</tr></thead><tbody>{comparisonRows.map((row) => <tr key={row.label} className={row.savings ? 'desconto-savings' : undefined}><th scope="row">{row.label}</th><td data-negative={row.savings && row.month < 0 ? 'true' : undefined}>{brl(row.month)}</td>{DISCOUNT_TERMS.map((months, index) => { const value = result ? row.value(result.comparisons[index]) : null; return <td key={months} data-negative={row.savings && value < 0 ? 'true' : undefined}>{brl(value)}</td> })}</tr>)}</tbody></table>
       </div>
-      <p className="cx-hint cx-pad">Economia = custo do desconto − custo do giro. Positivo: giro tem menor custo no cenário; negativo: maior custo. Na coluna Mês, os custos são a média do cenário de 12 meses; as duas linhas de parcela/desembolso já são mensais.</p>
-      <p className="desconto-notice desconto-inset"><b>A média mensal all-in não é a parcela contratual.</b> Ela distribui principal, juros, TAC e IOF pelo prazo. A parcela Price aparece separadamente, sem TAC e IOF.</p>
-      <p className="cx-hint cx-pad">Os fluxos não são equivalentes: o desconto é repetido todo mês e o giro é amortizado. A diferença de custos não comprova economia efetiva nem substitui a análise do ciclo de caixa. Esta simulação não é CET nem recomendação de contratação.</p>
+      <p className="desconto-notice desconto-inset"><b>A média mensal all-in não é a parcela contratual.</b> Os fluxos não são equivalentes; a diferença de custos não comprova economia efetiva.</p>
     </article>
 
     <article className="desk-panel cx-panel desconto-comparison-panel">
@@ -124,7 +119,7 @@ export default function AnaliseDesconto({ onBack }) {
       </div>
     </article>
 
-    <details className="desconto-method"><summary>Premissas, fórmulas e pontos de atenção</summary>
+    <div className="desconto-method cx-heading"><h3>Premissas e fórmulas</h3><CalculatorHelp title="Premissas, fórmulas e pontos de atenção">
       <ul>
         <li>Tarifa por operação: total informado, custo unitário × títulos ou valor bruto × percentual. Sem arredondamento intermediário; os valores exibidos são arredondados para centavos.</li>
         <li>Desconto mensal = operações × (tarifa de títulos + TAC + juros pagos + IOF pago). Custo do prazo = custo mensal × meses.</li>
@@ -134,6 +129,6 @@ export default function AnaliseDesconto({ onBack }) {
         <li>Não inclui juros de mora por títulos vencidos, despesas de baixa de duplicatas, seguros, outros encargos, renegociações nem reinvestimento dos fluxos.</li>
         <li>Confirme juros, tarifas, alíquotas e calendário na proposta. Os dados iniciais são um exemplo, não condições comerciais vigentes.</li>
       </ul>
-    </details>
+    </CalculatorHelp></div>
   </section>
 }

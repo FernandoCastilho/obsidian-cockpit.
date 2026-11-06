@@ -1,4 +1,4 @@
-.cx { display:flex; flex-direction:column; gap:12px; max-width:760px; }
+.cx { display:flex; flex-direction:column; gap:24px; width:100%; min-width:0; }
 .cx-title { display:flex; align-items:center; gap:10px; margin:0; font-size:1.25rem; }
 .cx-icon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border:1px solid var(--line); background:var(--surface-2); color:var(--amber, #ffb000); flex:none; }
 .cx-tiles { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px; }
@@ -19,12 +19,13 @@
 .cx-field input[aria-invalid="true"] { border-color:var(--down); }
 .cx-rate { display:flex; gap:8px; align-items:stretch; }
 .cx-rate input { flex:1; }
-.cx-error { margin:0; min-height:1.1em; font-size:.75rem; color:var(--down); }
-.cx-hint { margin:0; font-size:.75rem; color:var(--mut); min-height:1.1em; }
+.cx-error { margin:0; font-size:.8rem; line-height:1.45; color:var(--down); }
+.cx-hint { margin:0; font-size:.8rem; line-height:1.45; color:var(--mut); }
+.cx-error:empty, .cx-hint:empty { display:none; }
 .money-wrap { position:relative; display:block; }
 .money-wrap > i { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-style:normal; font-family:var(--mono, monospace); font-size:12px; color:var(--mut); pointer-events:none; }
 .money-wrap > input { padding-left:42px; }
-.cx-gap { height:1.6rem; }
+.cx-gap { display:none; }
 .cx-iof { grid-column:1 / -1; border-top:1px solid var(--line); padding-top:10px; }
 .cx-iof summary { cursor:pointer; min-height:44px; display:flex; align-items:center; color:var(--mut); font-size:.85rem; }
 .cx-iof summary:hover, .cx-iof summary:focus-visible { color:var(--amber, #ffb000); }
@@ -65,15 +66,13 @@
 .fm-regras { margin:0 12px 12px; }
 .fm-rotulo { display:inline-flex; align-items:center; gap:2px; }
 .fm-kpi > .fm-rotulo { display:flex; }
-.fm-kpi .help button { width:14px; height:14px; font-size:9px; }
 .fm-kpi .pop, .fm-rotulo .pop { text-transform:none; letter-spacing:0; font-size:.8rem; font-weight:400; line-height:1.45; text-align:left; }
 .fm-rotulo .help { margin-left:4px; }
 .fm-fluxo-panel header h3 .help { margin-left:8px; vertical-align:middle; }
 .cx-iof > .fm-iof-nota { margin:4px 0 0; }
 .fm-regras summary { cursor:pointer; min-height:44px; display:flex; align-items:center; color:var(--mut); font-size:.85rem; }
 .fm-regras summary:hover { color:var(--amber, #ffb000); }
-.cx-finame { max-width:1180px; }
-.cx-finame > *:not(.fm-fluxo-panel) { max-width:760px; width:100%; }
+.cx-finame > *:not(.cx-back) { width:100%; }
 .fm-fluxo-panel .cx-pad { margin-top:0; }
 .fm-fluxo { padding-bottom:12px; }
 .fm-fluxo .fm-tabela th, .fm-fluxo .fm-tabela td { font-size:.8rem; padding:6px 8px; white-space:nowrap; }
