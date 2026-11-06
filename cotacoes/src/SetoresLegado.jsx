@@ -1,6 +1,5 @@
 import HeavyVehicles from './HeavyVehicles.jsx'
 import { Panel } from './TerminalDesk.jsx'
-import SectorProfile from './SectorProfile.jsx'
 import SectorNews from './SectorNews.jsx'
 import Estado from './Estado.jsx'
 import { useDataFile } from './useDataFile.js'
@@ -31,7 +30,7 @@ function Preco({ item, usd, usdLabel, diario }) {
   )
 }
 
-// Aba Setores e Insumos: escolha Setores ou Insumos e depois o assunto e veja o que a imprensa publicou na semana, por dia; nos insumos, o preço, o que mexe nele e a ficha da visita.
+// Aba Setores e Insumos: escolha Setores ou Insumos e depois o assunto e veja o que a imprensa publicou na semana, por dia; nos insumos, o preço e o que mexe nele.
 export default function Setores({ view = '', quotes }) {
   const route = typeof view === 'string' ? view : ''
   const id = resolveBankingTopic(route) || parseSetor(route)
@@ -54,7 +53,6 @@ export default function Setores({ view = '', quotes }) {
             {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} usdLabel={usdLabel} diario={serie} />) : comm.status === 'loading' ? <Estado>Carregando o preço…</Estado> : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
           </div>
         )}
-        <SectorProfile key={`profile-${id}`} id={id} label={current?.label ?? insumo?.label ?? id} />
         <SectorNews key={`news-${id}`} id={id} label={current?.label ?? insumo?.label ?? id} />
       </Panel>
 

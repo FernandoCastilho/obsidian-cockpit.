@@ -154,9 +154,9 @@ test('atalho à pergunta move foco sem alterar rota e funciona repetidamente', a
   assert.ok(events.every(([, id]) => /^sector-profile-cobre-question-[1-5]$/.test(id)))
 })
 
-test('conteúdo existente conserva fichas e notícias sem seletor B3', async () => {
+test('conteúdo existente conserva notícias sem preparação de visita ou seletor B3', async () => {
   const source = await readFile(new URL('../src/SetoresLegado.jsx', import.meta.url), 'utf8')
-  assert.match(source, /<SectorProfile/)
+  assert.doesNotMatch(source, /<SectorProfile/)
   assert.match(source, /<SectorNews/)
   assert.doesNotMatch(source, /<SetoresB3|Visão bancária|Referência B3/)
   assert.ok(!source.includes('BANKING_VISIT_QUESTIONS'))

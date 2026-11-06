@@ -11,5 +11,5 @@ export const CATALOGO_SETORIAL = [
   ['quimicos', 'Químicos, plásticos e borracha', ['Resinas','Transformação plástica','Embalagens flexíveis','Tintas','Limpeza','Borracha']],
   ['atacado', 'Atacado e distribuição', ['Distribuição de alimentos','Distribuição de medicamentos','Distribuição de materiais de construção','Distribuição de insumos industriais','Distribuição de equipamentos']],
 ].map(([id, label, topics]) => ({ id, label, topics }))
-export const TOPICOS_ESTUDO = ['Resumo executivo','Funcionamento e cadeia de valor','Empresas, concorrência e polos de referência','Histórico e indicadores','Conjuntura e impactos','Economia da empresa e financiamento','Cenários e sinais de acompanhamento','Preparação de visita','Fontes, método e limitações']
+export const TOPICOS_ESTUDO = ['Resumo executivo','Funcionamento e cadeia de valor','Empresas, concorrência e polos de referência','Histórico e indicadores','Conjuntura e impactos','Economia da empresa e financiamento','Cenários e sinais de acompanhamento','Fontes, método e limitações']
 export const normalizeSector = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
