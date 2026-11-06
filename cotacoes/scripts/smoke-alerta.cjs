@@ -81,6 +81,8 @@ const id = '2026-11-05:USD:alta'
       await s.p.reload()
       await s.p.locator('dialog.aviso-inicial:not(.recado)').getByRole('button', { name: 'Entendi' }).click()
       await s.p.locator('.market-table').waitFor()
+      // Espera as fixtures de cotação/intraday terminarem antes de verificar ausência.
+      await s.p.waitForLoadState('networkidle')
       assert.equal(await s.p.locator('.alerta-var-item').count(), 0)
       assert.equal((await s.saved()).dispensado, true)
       assert.equal((await s.ledger()).attempts, 1)
