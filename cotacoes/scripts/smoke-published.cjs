@@ -125,6 +125,11 @@ const links = {
       assert.ok(geometry.scroll <= width + 1, JSON.stringify(geometry))
       assert.ok(formulaGeometry.scroll <= formulaGeometry.client + 1, JSON.stringify(formulaGeometry))
       await page.screenshot({ path: path.join(out, `cet-${width}-${colorScheme}-conteudo.png`), fullPage: true })
+      const go = card.locator('.learn-go')
+      await go.scrollIntoViewIfNeeded()
+      const endVisible = await go.evaluate(el => { const r = el.getBoundingClientRect(); const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2); return r.top >= 0 && r.bottom <= innerHeight && !!hit && el.contains(hit) })
+      assert.equal(endVisible, true, 'ação final do CET alcançável sem cobertura da navegação fixa')
+      await page.screenshot({ path: path.join(out, `cet-${width}-${colorScheme}-fim.png`) })
       const help = card.getByRole('button', { name: 'Sobre CET (Custo Efetivo Total)', exact: true })
       // A ajuda flutuante fecha ao rolar: estabilize a posição antes de focar e abrir pelo teclado.
       await help.scrollIntoViewIfNeeded()
