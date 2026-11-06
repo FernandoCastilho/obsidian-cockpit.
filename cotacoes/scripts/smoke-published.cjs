@@ -126,6 +126,9 @@ const links = {
       assert.ok(formulaGeometry.scroll <= formulaGeometry.client + 1, JSON.stringify(formulaGeometry))
       await page.screenshot({ path: path.join(out, `cet-${width}-${colorScheme}-conteudo.png`), fullPage: true })
       const help = card.getByRole('button', { name: 'Sobre CET (Custo Efetivo Total)', exact: true })
+      // A ajuda flutuante fecha ao rolar: estabilize a posição antes de focar e abrir pelo teclado.
+      await help.scrollIntoViewIfNeeded()
+      await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))) })
       await help.focus()
       await page.keyboard.press('Enter')
       const tooltip = page.getByRole('tooltip')
