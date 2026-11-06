@@ -8,6 +8,8 @@ module.exports = async function checkAlongamento(page, section, directory, width
   const component = section.locator('.alongamento')
   await component.waitFor({ state: 'visible' })
   assert.equal(await component.locator('.along-results').count(), 0)
+  await settleLayout(page)
+  await page.screenshot({ path: path.join(directory, 'alongamento-initial.png'), fullPage: true })
   for (const [key, value] of Object.entries({ balance: '300000', cgRate: '3', amount: '300000', loanRate: '1,5', n: '36', start: '2026-11-06' })) await component.locator(`#along-${key}`).fill(value)
   await component.locator('.along-results').waitFor()
   assert.match(normalize(await component.locator('.along-cash-summary').innerText()), /10\.845,72/)
@@ -27,6 +29,13 @@ module.exports = async function checkAlongamento(page, section, directory, width
   assert.equal(await help.evaluate(node => node === document.activeElement), true)
   await settleLayout(page)
   await assertWorkspace(page, section, `alongamento preenchido ${width}`)
+  const clippedSelections = await component.locator('select').evaluateAll(elements => elements.filter(element => {
+    const style = getComputedStyle(element), canvas = document.createElement('canvas'), context = canvas.getContext('2d')
+    context.font = style.font
+    const required = context.measureText(element.selectedOptions[0].text).width + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 24
+    return element.getBoundingClientRect().width < required
+  }).map(element => element.id))
+  assert.deepEqual(clippedSelections, [], `alongamento ${width}: seleção financeira aparece inteira`)
   await page.screenshot({ path: path.join(directory, 'alongamento-filled.png'), fullPage: true })
 
   await component.locator('#along-amount').fill('400000')
