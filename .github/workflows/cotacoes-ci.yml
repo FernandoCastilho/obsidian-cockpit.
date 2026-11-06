@@ -26,7 +26,7 @@ jobs:
       - name: Conferir preservação no build real
         run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-package-test.json"
   smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: test-build
     timeout-minutes: 15
     defaults:
@@ -34,7 +34,8 @@ jobs:
         working-directory: cotacoes
     env:
       SMOKE_BASE_URL: http://127.0.0.1:8768
-      SMOKE_CHANNEL: chromium
+      SMOKE_CHANNEL: chrome
+      CHROMIUM_PATH: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,10 +46,11 @@ jobs:
       - run: npm ci
       - name: Build com os dados na própria origem
         run: VITE_DATA_BASE=http://127.0.0.1:8768 npm run build
-      - name: Instalar Playwright e Chromium
+      - name: Preparar Playwright com o Chrome do ambiente de testes
+        timeout-minutes: 3
         run: |
           npm install --no-save playwright@1.63.0
-          npx playwright install --with-deps chromium
+          google-chrome --version
       - name: Servir o build
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
