@@ -83,9 +83,9 @@ function fxItems(quotes) {
   return out
 }
 
-// Paridade para a Finimp: a paridade EUR/USD do momento, com 1 centavo a mais ou a menos conforme a moeda do pagamento
-// e a do financiamento. Arredonda a 4 casas para não carregar resíduo de ponto flutuante (1,1172 + 0,01 = 1,1272).
-export const FINIMP_MARGEM = 0.01
+// Paridade para a Finimp: a paridade EUR/USD do momento, com 2 centavos a mais ou a menos conforme a moeda do pagamento
+// e a do financiamento. Arredonda a 4 casas para não carregar resíduo de ponto flutuante (1,1172 + 0,02 = 1,1372).
+export const FINIMP_MARGEM = 0.02
 export function finimpParidade(par) {
   if (!Number.isFinite(par)) return null
   const r = (v) => Math.round(v * 1e4) / 1e4
@@ -101,7 +101,7 @@ export function directParity(quotes, maxGap = 30 * 60000) {
   return d
 }
 // Calculadora da Finimp: valor do pagamento na moeda de pagamento → valor a financiar na outra moeda.
-// 'eur-usd' (paga em EUR, financia em USD): EUR × (paridade + 0,01). 'usd-eur' (paga em USD, financia em EUR): USD ÷ (paridade − 0,01).
+// 'eur-usd' (paga em EUR, financia em USD): EUR × (paridade + 0,02). 'usd-eur' (paga em USD, financia em EUR): USD ÷ (paridade − 0,02).
 export const FINIMP_MODOS = {
   'eur-usd': { label: 'Pagamento em EUR, financiamento em USD', paga: 'EUR', financia: 'USD' },
   'usd-eur': { label: 'Pagamento em USD, financiamento em EUR', paga: 'USD', financia: 'EUR' },

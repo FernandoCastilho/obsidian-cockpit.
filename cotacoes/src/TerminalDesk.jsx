@@ -5,7 +5,7 @@ import { marketDate } from './marketReturns.js'
 import { marketPreviews } from './marketPreviews.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
+import { FINIMP_MARGEM, FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
 import Help from './Help.jsx'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
@@ -125,8 +125,8 @@ function FinimpHelp({ fin, at, comparable, direct }) {
     <Help label="Paridade para a Finimp" align="right" wide fixed>
       <b className="ex-t">Paridade para a Finimp</b>
       <span className="ex">Paridade EUR/USD: <b className="fin-num">{n4(fin.base)}</b> <span className="fin-hora">· cotação de {hm(quando)}</span></span>
-      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <b className="fin-num">{n4(fin.eurUsd)}</b></span>
-      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <b className="fin-num">{n4(fin.usdEur)}</b></span>
+      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD (+{n2(FINIMP_MARGEM)}):</i> <b className="fin-num">{n4(fin.eurUsd)}</b></span>
+      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR (−{n2(FINIMP_MARGEM)}):</i> <b className="fin-num">{n4(fin.usdEur)}</b></span>
       {!comparable && <span className="ex fin-alerta" role="note">⚠ Cotações de horários diferentes; confirme na mesa.</span>}
       <span className="fin-calc" role="group" aria-label="Calcular o valor a financiar">
         <span className="fin-modos" role="radiogroup" aria-label="Combinação de pagamento e financiamento">
