@@ -127,7 +127,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
       await p.close()
     }
-    // Setores: notícias institucionais em 120h, preço e roteiro de investigação da visita.
+    // Setores: notícias institucionais em 120h e preço, com a preparação de visita removida.
     for (const width of [390, 1280]) {
       const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
@@ -160,10 +160,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await painel.locator('.sector-news-list > li').count(), 2, 'duas notícias do cobre em 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Preço do cobre expirado/)
       assert.match(await painel.locator('.sector-news-meta').first().innerText(), /Janela móvel de 120 horas/)
-      const visita = painel.getByRole('region', { name: 'Preparar a visita · Cobre', exact: true })
-      assert.equal(await visita.count(), 1, 'ficha atual da visita')
-      assert.equal(await visita.getByRole('region', { name: 'Pontos sensíveis a verificar', exact: true }).count(), 1, 'fatores do negócio para investigar')
-      assert.equal(await visita.getByRole('region', { name: 'Cinco perguntas específicas', exact: true }).locator('ol > li').count(), 5)
+      assert.equal(await painel.getByRole('region', { name: /Preparar a visita/ }).count(), 0, 'preparação de visita removida conforme o catálogo atual')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       if (out) await p.screenshot({ path: path.join(out, `setores-${width}-cobre.png`), fullPage: true })
       assert.deepEqual(errors, [])
