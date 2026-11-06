@@ -22,10 +22,13 @@
    its touch target; long status messages wrap rather than painting over the date. */
 @media (max-width: 560px) {
   .refresh-wrap { display: inline-grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 2px 4px; }
-  .refresh-wrap .refresh-stamp { grid-column: 1; grid-row: 1; min-width: 0; max-width: none; white-space: normal; }
+  .refresh-wrap .refresh-stamp { grid-column: 1; grid-row: 1; min-width: 0; max-width: none; white-space: normal; overflow-wrap: anywhere; }
   .refresh-wrap .refresh-btn { grid-column: 2; grid-row: 1; }
   .refresh-wrap .refresh-msg { grid-column: 1; grid-row: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; text-align: right; }
   .refresh-wrap:has(.refresh-stamp) .refresh-msg { grid-column: 1 / -1; grid-row: 2; }
   .refresh-wrap:not(:has(.refresh-btn)) { grid-template-columns: minmax(0, 1fr); }
-  .chart > header .refresh-wrap, .history-head .refresh-wrap { flex: 0 1 auto; }
+  .chart > header { flex-wrap: wrap; }
+  .chart > header .refresh-wrap { flex: 0 0 auto; }
+  .chart > header .parity-actions { max-width: 100%; margin-left: auto; }
+  .history-head .refresh-wrap { flex: 0 1 auto; }
 }

@@ -49,7 +49,22 @@ async function colors(page) {
       return { text: button.textContent.trim(), color: style.color, background: style.backgroundColor, ratio: contrast(style.color, style.backgroundColor) }
     })
     const renderedSeries = [...document.querySelectorAll('.plot .line')].map(line => ({ color:getComputedStyle(line).stroke, ratio:contrast(getComputedStyle(line).stroke, card) }))
-    return { theme:document.documentElement.dataset.theme, scheme:root.colorScheme, bg, tokens, selected, renderedSeries,
+    const refreshLayout = [...document.querySelectorAll('.refresh-wrap')].filter(wrap => wrap.getClientRects().length).map(wrap => {
+      const stamp = wrap.querySelector('.refresh-stamp'), button = wrap.querySelector('.refresh-btn')
+      if (!stamp || !button) return null
+      const box = stamp.getBoundingClientRect(), action = button.getBoundingClientRect(), container = wrap.getBoundingClientRect()
+      // The text itself can spill outside a correctly sized grid cell.
+      const textRects = [...stamp.childNodes].filter(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()).flatMap(node => {
+        const range = document.createRange(); range.selectNodeContents(node)
+        return [...range.getClientRects()]
+      })
+      return {
+        label:button.getAttribute('aria-label'), width:action.width, height:action.height,
+        textOutside:textRects.some(text => text.left < box.left - 1 || text.right > box.right + 1 || text.left < container.left - 1 || text.right > container.right + 1),
+        textOverButton:textRects.some(text => Math.min(text.right, action.right) - Math.max(text.left, action.left) > 1 && Math.min(text.bottom, action.bottom) - Math.max(text.top, action.top) > 1),
+      }
+    }).filter(Boolean)
+    return { theme:document.documentElement.dataset.theme, scheme:root.colorScheme, bg, tokens, selected, renderedSeries, refreshLayout,
       horizontal:document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 }
   })
 }
@@ -63,6 +78,11 @@ async function assertTheme(page, theme, label) {
   for (const key of ['--up', '--down', '--currency-usd', '--currency-eur', '--currency-jpy', '--currency-cnh', '--currency-par']) assert.ok(result.tokens[key].ratio >= 3, `${label}: ${key} data contrast ${result.tokens[key].ratio}`)
   for (const selected of result.selected) assert.ok(selected.ratio >= 4.5, `${label}: selection ${selected.text} contrast ${selected.ratio}`)
   for (const series of result.renderedSeries) assert.ok(series.ratio >= 3, `${label}: graph line contrast ${series.ratio}`)
+  for (const refresh of result.refreshLayout) {
+    assert.equal(refresh.textOutside, false, `${label}: timestamp stays inside its cell (${refresh.label})`)
+    assert.equal(refresh.textOverButton, false, `${label}: timestamp does not overlap refresh (${refresh.label})`)
+    assert.ok(refresh.width >= 44 && refresh.height >= 44, `${label}: refresh keeps 44px target (${refresh.label})`)
+  }
   return result
 }
 

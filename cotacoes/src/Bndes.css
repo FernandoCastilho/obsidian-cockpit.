@@ -62,11 +62,14 @@
   .bn-pick small { display:none; }
 }
 @media (max-width:639px) {
-  .bn-main { table-layout:auto; width:100%; min-width:560px; }
-  .bn-main thead th { width:auto; }
+  .bn-main { table-layout:fixed; width:100%; }
+  .bn-main thead th:nth-child(1) { width:35%; }
+  .bn-main thead th:nth-child(2) { width:26%; }
+  .bn-main thead th:nth-child(3) { width:26%; }
   .bn-main tbody td, .bn-main tbody th { overflow-wrap:anywhere; }
+  .bn-main tbody td.num { white-space:normal; }
   .bn-main .bn-pick { max-width:none; }
-  .bn-main td.num .old { display:block; margin-top:4px; white-space:normal; max-width:24ch; }
+  .bn-main td.num .old { display:block; margin-top:4px; white-space:normal; overflow-wrap:anywhere; max-width:min(100%,24ch); }
 }
 
 /* Comparar séries no mesmo gráfico */
