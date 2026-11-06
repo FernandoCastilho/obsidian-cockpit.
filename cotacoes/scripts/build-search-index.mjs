@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 // Explicit routes prevent indexing hidden prototypes and private/transient forms.
 export const SEARCH_PAGES = {
+  'GoogleTrends.jsx':['resumo','Google Trends: interesse de busca, crédito, BNDES, Selic, custos e reforma tributária'],
   'ContaGarantida.jsx':['calculadora/conta-garantida','Conta Garantida: utilização, amortização, juros e IOF'],
   'AnaliseDesconto.jsx':['calculadora/analise-desconto','Análise de desconto: títulos e capital de giro Price'],
   'SetoresB3.jsx':['setores/b3','Classificação setorial B3: fonte e cobertura'],
@@ -49,7 +50,7 @@ export async function buildSearchIndex() {
     const {text,explain,byRoute,explainRoutes}=extractSearchText(await readFile(new URL('../src/'+file,import.meta.url),'utf8'))
     if(['MarketContext.jsx','Outros.jsx'].includes(file)) {
       for(const [target,body] of Object.entries(byRoute))if(target)documents.push({id:'page:'+file+':'+target,title:({'cenarios/atividade':'Atividade e emprego','cenarios/commodities':'Commodities','cenarios/frete':'Frete marítimo','cenarios/fiscal':'Fiscal','cenarios/inflacao':'Inflação'})[target],body,route:target,kind:'Área do painel'})
-    } else documents.push({id:'page:'+file,title,body:text,route,kind:'Área do painel'})
+    } else documents.push({id:'page:'+file,title,body:text,route,kind:'Área do painel',...(file==='GoogleTrends.jsx'?{context:{newsTab:'trends'}}:{})})
     for(const id of explain)glossaryRoutes[id]??=explainRoutes[id] || route
   }
   // Subsections with conditional JSX need their own navigable entries.

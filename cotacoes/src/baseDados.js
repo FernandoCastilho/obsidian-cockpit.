@@ -12,6 +12,9 @@ const PINK = 'https://www.worldbank.org/en/research/commodity-markets'
 const AWESOME = 'https://economia.awesomeapi.com.br/json'
 
 export const BASE_DADOS = [
+  { grupo: 'Interesse de busca', itens: [
+    { nome: 'Google Trends: Em alta no Brasil', orgao: 'Google Trends', api: 'https://trends.google.com/trending/rss?geo=BR', pagina: 'https://trends.google.com/trending?geo=BR', arquivo: 'trends.json', serie: 'RSS Em alta; termos históricos são snapshots estáticos separados no app', freq: '08h e 15h de Brasília; horários sujeitos à fila do GitHub Actions' },
+  ] },
   { grupo: 'Cobertura setorial editorial', itens: [
     { nome: 'Setores e insumos: notícias e comunicados de fontes homologadas', orgao: 'Órgãos públicos identificados em cada publicação; cadastro e estado por fonte no arquivo', api: 'Rotas públicas autorizadas no cadastro SECTOR_NEWS_SOURCES; coleta sem Google Notícias nesta camada', pagina: 'https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa', arquivo: 'sector-news.json', serie: '38 temas editoriais e cinco insumos; títulos originais, atribuição, licença, publicação e coleta; lacuna explícita onde não houver fonte ou resultado', freq: 'Snapshot verificado; coleta externa desabilitada em todos os ambientes até homologar guardas e persistência das suspensões entre execuções. Janela de 120h revalidada no navegador e no build. Revisão editorial independente. Cobertura não exaustiva.' },
   ] },

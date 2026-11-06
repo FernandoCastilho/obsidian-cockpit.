@@ -1,6 +1,7 @@
 import GlobalSearch, { SearchDestination } from './GlobalSearch.jsx'
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { dataTimestamp } from './dataTimestamp.js'
+import { connectSystemTheme } from './systemTheme.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
 import { quoteHealth } from './dataHealth.js'
@@ -50,9 +51,9 @@ const Projecoes = lazy(() => import('./Projecoes.jsx'))
 import { DISCLAIMER } from './whatsapp.js'
 import { MAX_DAYS, fromInput, fullWindow, historyRangeError, toInput } from './useHistory.js'
 
-// cor fixa por moeda (slots 1-4 da paleta categórica, validada no tema escuro)
+// Mesma identidade por moeda; os tons acompanham o contraste do tema do sistema.
 const POLL_MS = 60000 // relê a coleta central a cada 1 min (o arquivo é renovado a cada 5 min; não gasta a cota da API)
-const COLORS = { USD: '#ffb000', EUR: '#4cc3ff', JPY: '#199e70', CNH: '#a371f7', PAR: '#d55181' }
+const COLORS = { USD: 'var(--currency-usd)', EUR: 'var(--currency-eur)', JPY: 'var(--currency-jpy)', CNH: 'var(--currency-cnh)', PAR: 'var(--currency-par)' }
 // Assuntos da aba Cenários (cada um com seu endereço: #cenarios/commodities etc.).
 const CEN_VIEWS = [
   { id: 'projecoes', label: 'Projeções' },
@@ -135,6 +136,7 @@ function Sheet({ onClose, children }) {
 }
 
 export default function App() {
+  useEffect(() => connectSystemTheme(), [])
   const { quotes, error, updatedAt, checkedAt, lastSuccessAt, via, refresh, refreshing, limits } = useQuotes(POLL_MS)
   const health = quoteHealth(quotes, { error, checkedAt, lastSuccessAt, collectedAt: updatedAt })
   const macro = useMacro()

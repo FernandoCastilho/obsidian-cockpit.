@@ -102,6 +102,17 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.equal(await p.locator('#fi-tac-fx').inputValue(), '', 'troca de moeda exige nova cotação')
       await setInput('#fi-tac-fx', '6')
       assert.match(await rows.nth(5).locator('.fi-cost').first().innerText(), /4\.016,67/)
+      assert.deepEqual(await p.locator('#fi-currency option').allTextContents(), ['USD', 'EUR', 'JPY', 'CNH', 'BRL'])
+      for (const [currency, fx] of [['JPY', '0,03488'], ['CNH', '0,8258']]) {
+        await p.locator('#fi-currency').selectOption(currency)
+        assert.equal(await p.locator('#fi-tac-fx').inputValue(), '')
+        assert.equal(await p.locator('#fi-a-tac').inputValue(), '100,00')
+        assert.equal(await p.locator('#fi-principal').inputValue(), '100.000,00')
+        await setInput('#fi-tac-fx', fx)
+        const expected = (4000 + 100 / Number(fx.replace(',', '.'))).toLocaleString('pt-BR', { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        assert.equal(await rows.nth(5).locator('.fi-cost').first().innerText(), expected)
+        assert.match(await rows.nth(5).locator('td').nth(2).innerText(), /^R\$\s*100,00$/)
+      }
       await p.locator('#fi-currency').selectOption('BRL')
       assert.equal(await p.locator('#fi-tac-fx').count(), 0)
       assert.match(await rows.nth(5).locator('.fi-cost').first().innerText(), /^R\$\s*4\.100,00$/)

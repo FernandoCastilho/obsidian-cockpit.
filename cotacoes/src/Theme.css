@@ -1,0 +1,145 @@
+/* System theme: keep the terminal vocabulary, layout and semantic colors.
+   Brand fill stays amber; amber text gets a darker ink on light surfaces. */
+:root {
+  color-scheme: dark;
+  --brand-fill: #ffb000;
+  --on-brand: #000;
+  --muted: var(--mut);
+  --surface-3: #21262d;
+  --pop-bg: #0d1117;
+  --flash-up: #1b4721;
+  --flash-down: #5a1d1a;
+  --currency-usd: #ffb000;
+  --currency-eur: #4cc3ff;
+  --currency-jpy: #199e70;
+  --currency-cnh: #a371f7;
+  --currency-par: #d55181;
+  --chart-teal: #4aa3a2;
+  --chart-gold: #e6b34a;
+  --chart-purple: #a98bd6;
+  --chart-pink: #d55181;
+  --chart-blue: #6fa8dc;
+  --chart-lime: #9bbf5a;
+  --chart-neutral: #c0c0c0;
+  --chart-oil: #ca9c49;
+  --chart-estr: #e0b341;
+  --chart-di: #e5b453;
+  --chart-indicator: #6aa9ff;
+  --series-lightness: 62%;
+}
+
+.bn-official-links { display:flex; flex-wrap:wrap; gap:8px 12px; margin:0 0 16px; }
+main.app .bn-official-links a {
+  display:inline-flex; align-items:center; min-height:44px; padding:10px 14px;
+  border:1px solid var(--line); border-radius:6px; color:var(--amber);
+  background:var(--card); font-size:.85rem; line-height:1.4; overflow-wrap:anywhere;
+}
+.bn-official-links a:hover { border-color:var(--amber); }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #f5f4f0;
+    --card: #fff;
+    --surface-2: #eeece6;
+    --surface-3: #e2ded4;
+    --line: #cec8bb;
+    --fg: #24231f;
+    --mut: #625e53;
+    --up: #087a43;
+    --down: #bb252b;
+    --amber: #865500;
+    --accent: #865500;
+    --warn: #865500;
+    --pop-bg: #fff;
+    --flash-up: #d9f0e2;
+    --flash-down: #f9dddd;
+    --currency-usd: #986100;
+    --currency-eur: #006a9b;
+    --currency-jpy: #087a50;
+    --currency-cnh: #7941ba;
+    --currency-par: #ad3466;
+    --chart-teal: #137978;
+    --chart-gold: #986100;
+    --chart-purple: #7944ad;
+    --chart-pink: #ad3466;
+    --chart-blue: #2b6da5;
+    --chart-lime: #596f20;
+    --chart-neutral: #66625b;
+    --chart-oil: #90601a;
+    --chart-estr: #916100;
+    --chart-di: #916100;
+    --chart-indicator: #246bb1;
+    --series-lightness: 30%;
+    --c-usd: var(--currency-usd);
+    --c-eur: var(--currency-eur);
+    --c-jpy: var(--currency-jpy);
+    --c-cnh: var(--currency-cnh);
+    --c-par: var(--currency-par);
+  }
+
+  /* Legacy terminal surfaces: scoped overrides also cover lazy-loaded screens. */
+  body .term-head, body .topbar, body .tape { background:var(--card); }
+  body .tape-item, body .topbar-tabs button { border-right-color:var(--line); }
+  body .topbar-tabs button:hover, body .kpi:hover { background:var(--surface-2); }
+  body .topbar-brand, body .topbar-tabs button.on {
+    background:var(--brand-fill); color:var(--on-brand);
+  }
+  body .desk-panel > header, body .market-terminal > .terminal-titlebar,
+  body .executive-rates .executive-rates__heading, body .learn-list-title {
+    background:var(--surface-2);
+  }
+  body .market-terminal { background:var(--card); border-color:var(--line); }
+  body .market-terminal .summary-dates input, body .calendar-trigger,
+  body .market-terminal .market-table thead, body .config-table thead th,
+  body .base-busca input, body .learn-search input, body .learn-formula,
+  body .reforma-busca input, body .qb .tk { background:var(--surface-2); }
+  body .compare-trigger, body .calendar-trigger, body .market-terminal .seg,
+  body .market-terminal .summary-dates input, body .config-table kbd,
+  body .learn-tag, body .learn-go, body .learn-nav button.on,
+  body .learn-nav button:hover { border-color:var(--line); }
+  body .market-record, body .market-news li, body .desk-agenda li,
+  body .config-table th, body .config-table td, body .learn-count,
+  body .learn-topic, body .learn-list li + li, body .learn details,
+  body .learn-app, body .reforma li, body .ml-legend li { border-color:var(--line); }
+  body .market-terminal .market-record.is-selected,
+  body .market-terminal .market-record.is-selected .market-values th,
+  body .oil-spot-value, body .config-table kbd, body .learn-tag,
+  body .learn-result, body .learn-list button.on { background:#fff0cc; }
+  body .market-terminal .market-record:hover, body .desk-agenda button:hover,
+  body .learn-list button:hover { background:var(--surface-2); }
+  body .learn-topic, body .reforma-day { background:var(--surface-2); }
+  body .online-pop { background:var(--pop-bg); }
+  body .config-table .chip.up {
+    border-color:color-mix(in srgb, var(--up) 30%, var(--card)); background:#e5f4e9;
+  }
+  body .config-table .chip.down {
+    border-color:color-mix(in srgb, var(--down) 30%, var(--card)); background:#fbe7e7;
+  }
+  body .estado-erro { color:var(--down); }
+  body .estado-aviso, body .context-warning { color:var(--warn); }
+  body .desk-tabs-grupo, body .global-search-scope,
+  body .global-search-results h3 small, body .global-search-result small,
+  body .search-destination small { color:var(--mut); }
+  body .global-search-field input::placeholder { color:var(--mut); }
+  body .cen-nav button, body .seg.bn-fam button { color:var(--mut); }
+  body .cen-nav button.on, body .seg.bn-fam button[aria-pressed=true] { color:var(--amber); }
+  body .seg button, body .seg button + button { border-color:var(--line); }
+  body .seg button:hover { border-color:var(--amber); }
+  body .seg button[aria-pressed=true], body .seg button.on,
+  body .market-terminal .seg button[aria-pressed=true],
+  body .currency-comparison .seg button[aria-pressed=true],
+  body .chips button[aria-pressed=true], body .drp-cell.is-edge,
+  body .update-notice button {
+    background:var(--brand-fill); border-color:var(--brand-fill); color:var(--on-brand);
+  }
+  /* Section tabs remain underlined, rather than looking like data filters. */
+  body .seg.bn-fam button[aria-pressed=true], body .cen-nav button.on {
+    background:transparent; border-color:transparent; border-bottom-color:var(--amber); color:var(--amber);
+  }
+  body .market-terminal .market-values th { background:var(--card); }
+  body .market-terminal .market-table thead th:first-child { background:var(--surface-2); }
+  main a { color:#865500; }
+  main a:visited { color:#72512d; }
+  body .other-market .oil-tile { --series:var(--chart-oil); }
+}

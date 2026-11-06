@@ -1,4 +1,4 @@
-.refresh-wrap { display: inline-flex; align-items: center; gap: 2px; }
+.refresh-wrap { display: inline-flex; align-items: center; gap: 2px; min-width: 0; max-width: 100%; }
 .refresh-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; background: transparent; border: 0; color: var(--mut); cursor: pointer; opacity: .8; }
 .refresh-btn:hover:not(:disabled), .refresh-btn:focus-visible { color: var(--amber, #ffb000); opacity: 1; }
 .refresh-btn:disabled { cursor: progress; opacity: .6; }
@@ -17,3 +17,24 @@
 .executive-rates__heading { display: flex; align-items: center; justify-content: space-between; }
 
 .refresh-btn[aria-disabled="true"] { opacity:.5; cursor:wait; }
+
+/* Date and feedback need separate rows when the panel narrows. The button keeps
+   its touch target; long status messages wrap rather than painting over the date. */
+@media (max-width: 560px) {
+  .refresh-wrap { display: inline-grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 2px 4px; }
+  .refresh-wrap .refresh-stamp { grid-column: 1; grid-row: 1; min-width: 0; max-width: none; white-space: normal; overflow-wrap: anywhere; }
+  .refresh-wrap .refresh-btn { grid-column: 2; grid-row: 1; }
+  .refresh-wrap .refresh-msg { grid-column: 1; grid-row: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; text-align: right; }
+  .refresh-wrap:has(.refresh-stamp) .refresh-msg { grid-column: 1 / -1; grid-row: 2; }
+  .refresh-wrap:not(:has(.refresh-btn)) { grid-template-columns: minmax(0, 1fr); }
+  .chart > header { flex-wrap: wrap; }
+  .chart > header .refresh-wrap { flex: 0 0 auto; }
+  .chart > header .parity-actions { max-width: 100%; margin-left: auto; }
+  .history-head .refresh-wrap { flex: 0 1 auto; }
+}
+
+/* Keep the governance refresh group intact when the tablet header wraps. */
+@media (min-width: 561px) and (max-width: 999px) {
+  .config-desk > .config-wide > header { flex-wrap: wrap; }
+  .config-desk > .config-wide > header .refresh-wrap { flex: 0 0 auto; max-width: 100%; }
+}

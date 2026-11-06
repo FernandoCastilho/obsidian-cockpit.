@@ -1,0 +1,12 @@
+.learn-list .learn-group-actions { display: flex; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.learn-list .learn-group-actions button { display: block; width: auto; flex: 1; min-height: 44px; padding: 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--fg); text-align: center; font-size: .74rem; }
+.learn-list .learn-group-actions button:disabled { opacity: .45; cursor: default; }
+.learn-group > .learn-topic { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 12px; color: var(--amber); background: var(--card); cursor: pointer; list-style: none; }
+.learn-group > .learn-topic::-webkit-details-marker { display: none; }
+.learn-group > .learn-topic::before { content: '›'; font-size: 1.15rem; transition: transform .15s ease; }
+.learn-group[open] > .learn-topic::before { transform: rotate(90deg); }
+.learn-group > .learn-topic span { flex: 1; }
+.learn-group > .learn-topic small { font: inherit; color: var(--mut); }
+.learn-group > .learn-topic:hover { filter: brightness(1.15); }
+.learn-group > .learn-topic:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+@media (prefers-reduced-motion: reduce) { .learn-group > .learn-topic::before { transition: none; } }

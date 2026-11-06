@@ -22,6 +22,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   const news = useNews()
   const reforma = useDataFile('reforma-tributaria.json')
   const temas = useDataFile('temas.json')
+  const trends = useDataFile('trends.json')
   const heavy = useDataFile('heavy-vehicles.json')
   const insumosPrecos = useDataFile('insumos-precos.json')
   const indices = useDataFile('indices.json')
@@ -41,12 +42,13 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   const calendar = useDataFile('calendar.json')
   const ipcaGroups = useDataFile('ipca-groups.json')
   const freightJp = useDataFile('freight-jp.json')
-  const resources = { 'heavy-vehicles':heavy, macro, curves, news, 'reforma-tributaria': reforma, temas, 'insumos-precos': insumosPrecos, indices, policy, oil, indexadores, commodities, 'commodities-brl': commoditiesBrl, fuels, freight, bndes, moedas, ipca, estr, 'euro-curve': euroCurve, divida, calendar, 'ipca-groups': ipcaGroups, 'freight-jp': freightJp }
+  const resources = { trends, 'heavy-vehicles':heavy, macro, curves, news, 'reforma-tributaria': reforma, temas, 'insumos-precos': insumosPrecos, indices, policy, oil, indexadores, commodities, 'commodities-brl': commoditiesBrl, fuels, freight, bndes, moedas, ipca, estr, 'euro-curve': euroCurve, divida, calendar, 'ipca-groups': ipcaGroups, 'freight-jp': freightJp }
   const rows = dataStatus(
     [
       { key: 'quotes', label: `Câmbio${quotesVia ? ` · ${quotesVia === 'central' ? 'coleta central' : quotesVia === 'direto' ? 'consulta direta' : 'fonte reserva'}` : ''}`, at: quotesAt ? new Date(quotesAt).getTime() : null, maxAge: centralMaxAge(), weekdays: false },
       { key: 'macro', label: 'Juros e Focus (Banco Central, NY Fed)', at: macro.data?.generatedAt, maxAge: ATRASO_H.macro * H, weekdays: true },
       { key: 'curves', label: 'Curvas DI x pré, cupom e Treasuries', at: curves.data?.generatedAt, maxAge: ATRASO_H.curves * H, weekdays: true },
+      { key: 'trends', label: 'Google Trends: Em alta no Brasil', at: trends.data?.generatedAt, maxAge: ATRASO_H.trends * H, weekdays: false },
       { key: 'news', label: 'Notícias', at: news.data?.generatedAt, maxAge: ATRASO_H.news * H, weekdays: true },
       { key: 'reforma-tributaria', label: 'Reforma tributária (matérias dos últimos cinco dias)', at: reforma.data?.generatedAt, maxAge: ATRASO_H['reforma-tributaria'] * H, weekdays: true },
       { key:'heavy-vehicles',label:'Veículos pesados (ANFAVEA, publicação mensal)',at:heavy.data?.generatedAt,maxAge:ATRASO_H['heavy-vehicles'] * H,weekdays:true },
@@ -83,7 +85,7 @@ export default function Config({ quotesAt, quotesVia, quotes, quotesHealth, fx, 
   return (
     <div className="config-desk">
       <AcessosPanel />
-      <Panel title="Governança dos dados" note="estado, origem e frequência de cada fonte" className="config-wide" refresh={['macro.json', 'curves.json', 'news.json', 'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
+      <Panel title="Governança dos dados" note="estado, origem e frequência de cada fonte" className="config-wide" refresh={['trends.json', 'macro.json', 'curves.json', 'news.json', 'reforma-tributaria.json', 'temas.json', 'insumos-precos.json', 'indices.json', 'policy-rates.json', 'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json', 'oil.json', 'commodities.json', 'commodities-brl.json', 'fuels.json', 'freight.json', 'freight-jp.json', 'ipca.json', 'divida.json', 'ipca-groups.json', 'calendar.json']}>
         <h3 className="config-sub">Em resumo</h3>
         <ul className="config-list config-resumo">{RESUMO.map((t) => <li key={t}>{t}</li>)}</ul>
         <h3 className="config-sub">Fonte por fonte</h3>

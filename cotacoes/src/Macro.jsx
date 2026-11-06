@@ -15,7 +15,7 @@ import Estado from './Estado.jsx'
 const n2 = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const rate = (v) => `${n2(v)}% a.a.`
 const DAY = 864e5
-const COLORS = { CDI: '#4aa3a2', SELIC: '#a98bd6', ESTR: '#e0b341' }
+const COLORS = { CDI: 'var(--chart-teal)', SELIC: 'var(--chart-purple)', ESTR: 'var(--chart-estr)' }
 
 // Meta Selic só tem os dias de mudança: desenha em degraus.
 const stepify = (pts) => pts.flatMap((p, i) => (i ? [{ t: p.t, bid: pts[i - 1].bid }, p] : [p]))

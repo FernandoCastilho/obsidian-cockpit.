@@ -58,7 +58,7 @@ export default function IpcaGrupoChart({ name, months, onClose }) {
               return (
                 <g key={m.period} onMouseEnter={() => setSel(i)} data-period={m.period}>
                   <rect x={M.l + slot * i} y={M.t} width={slot} height={ih} fill="transparent" />
-                  {m.mom != null && <rect className={`infl-bar bar-grow-y${m.mom < 0 ? ' neg' : ''}`} style={cascade(i, 40)} x={cx - bw / 2} y={Math.min(y(m.mom), y(0))} width={bw} height={Math.max(1, Math.abs(y(m.mom) - y(0)))} rx="2" fill={m.mom >= 0 ? '#ca9c49' : '#4aa3a2'} opacity={sel == null || on ? 1 : 0.55} />}
+                  {m.mom != null && <rect className={`infl-bar bar-grow-y${m.mom < 0 ? ' neg' : ''}`} style={cascade(i, 40)} x={cx - bw / 2} y={Math.min(y(m.mom), y(0))} width={bw} height={Math.max(1, Math.abs(y(m.mom) - y(0)))} rx="2" fill={m.mom >= 0 ? 'var(--chart-oil)' : 'var(--chart-teal)'} opacity={sel == null || on ? 1 : 0.55} />}
                   {m.mom != null && (slot >= 44 || on) && <text x={cx} y={m.mom >= 0 ? y(m.mom) - 5 : y(m.mom) + 13} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--fg)">{sg(m.mom)}</text>}
                   <text x={cx} y={H - 12} textAnchor="middle" fontSize="11" fill={on ? 'var(--fg)' : 'var(--mut)'}>{mes(m.period)}</text>
                 </g>

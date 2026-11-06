@@ -863,9 +863,143 @@ export const CONCEITOS = [
       resposta: 'Em geral, não. Há política de preços, impostos, etanol, margens e defasagem no meio: a alta chega à bomba atrasada e menor do que 10%.',
     },
   },
+  {
+    id: 'escala-6x1',
+    topico: 'Tributos e trabalho',
+    nome: 'Escala 6x1 e transição da jornada',
+    revisadoEm: '2026-11-06',
+    fontes: [
+      { nome: 'Câmara — EC 141/2026, publicação original, arts. 2º a 10', url: 'https://www2.camara.leg.br/legin/fed/emecon/2026/emendaconstitucional-141-16-outubro-2026-800062-publicacaooriginal-181622-pl.html' },
+      { nome: 'Senado — texto da EC 141/2026', url: 'https://legis.senado.leg.br/norma/44184944/publicacao/44189027' },
+    ],
+    frase: 'A escala 6x1 distribui o trabalho em seis dias e o descanso em um; a EC 141/2026 prevê sua substituição com transição.',
+    crianca: [
+      'Escala informa em quais dias a pessoa trabalha; jornada informa quantas horas trabalha. Seis dias de trabalho não significam seis jornadas de oito horas: é preciso respeitar os limites aplicáveis.',
+      'A EC 141 foi publicada em 16/10/2026. Dois meses após a publicação, estabelece até 42 horas semanais e dois dias de repouso remunerado; um ano depois desse prazo, até 40 horas. Em 05/11/2026, a primeira etapa ainda não começou. A redução preserva o salário.',
+      'Para a empresa, o ponto prático é planejar cobertura, produtividade e caixa. Menos horas por empregado não significam automaticamente o mesmo aumento de contratações: demanda, turnos e organização do trabalho também contam.',
+    ],
+    analogia: 'É reorganizar os turnos de uma loja: o horário da loja e o horário de cada empregado são coisas diferentes.',
+    lacunas: [
+      'A emenda já foi promulgada; não é apenas uma proposta. Sua transição não autoriza antecipar a aplicação de todas as regras.',
+      'Acordo ou convenção coletiva pode disciplinar compensações; há regras próprias para regimes diferenciados. A folga não precisa ser sempre sábado e domingo.',
+      'Os arts. 8º e 9º trazem condições específicas para empregados com diploma superior e alta remuneração e para contratos públicos com mão de obra. Confira o enquadramento antes de alterar contratos.',
+      'Jornadas já fixadas em até 40 horas não têm redução proporcional automática. Lei complementar poderá criar medidas transitórias para MEI, micro e pequenas empresas, condicionadas à manutenção do emprego; essa previsão não suspende os prazos da emenda.',
+    ],
+    preciso: {
+      texto: 'Os arts. 6º e 10 da EC 141/2026 definem a transição e a vigência. O planejamento financeiro abaixo compara horas disponíveis; não determina a escala legal de uma categoria.',
+      formula: 'horas disponíveis = número de empregados × horas semanais por empregado',
+    },
+    exemplo: {
+      titulo: 'Planejamento ilustrativo de uma equipe com 10 empregados',
+      passos: ['Com 44 horas por empregado: 10 × 44 = 440 horas por semana.', 'Com 40 horas por empregado: 10 × 40 = 400 horas por semana; diferença de 40 horas.'],
+      resultado: 'A empresa precisa avaliar como cobrir 40 horas semanais a menos. Esta conta não prova que será necessário contratar exatamente uma pessoa.',
+    },
+    noApp: { texto: 'Em Cenários, compare o ambiente de custos da empresa. O painel não calcula folha nem define o enquadramento trabalhista.', tab: 'cenarios' },
+    teste: { pergunta: 'Em 05/11/2026, a publicação da EC 141 já obriga toda empresa a adotar imediatamente 40 horas?', resposta: 'Não. A emenda prevê etapas, prazos e situações específicas. É preciso conferir a vigência, a categoria e os contratos antes de aplicar a mudança.' },
+  },
+  {
+    id: 'reforma-tributaria',
+    topico: 'Tributos e trabalho',
+    nome: 'Reforma Tributária do consumo',
+    revisadoEm: '2026-11-05',
+    fontes: [
+      { nome: 'Câmara — LC 214/2025, texto atualizado', url: 'https://www2.camara.leg.br/legin/fed/leicom/2025/leicomplementar-214-16-janeiro-2025-796905-normaatualizada-pl.html' },
+      { nome: 'Receita Federal — entenda a reforma e a transição', url: 'https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/programas-e-atividades/reforma-tributaria-do-consumo/entenda' },
+    ],
+    frase: 'A reforma reorganiza os tributos sobre o consumo, com CBS federal e IBS de estados e municípios, em uma transição até 2033.',
+    crianca: [
+      'A CBS substitui PIS e Cofins; o IBS substitui ICMS e ISS. A mudança é gradual. O Imposto Seletivo é outro tributo, com regras próprias para produtos e serviços previstos em lei.',
+      'O ano de 2026 é de teste: CBS de 0,9% e IBS de 0,1%, com dispensa de recolhimento para quem cumpre as obrigações previstas. PIS e Cofins terminam em 2027; ICMS e ISS dão lugar ao IBS gradualmente de 2029 a 2032. O modelo fica integral em 2033.',
+      'Na empresa, importa conferir preço de venda, créditos das compras e prazo de recebimento. O efeito muda conforme atividade, regime e cadeia de fornecedores e clientes.',
+    ],
+    analogia: 'É trocar o sistema de cobrança com a empresa funcionando: por um tempo, regras antigas e novas convivem.',
+    lacunas: [
+      'As alíquotas de teste de 2026 não são a carga final de todos os setores. Existem reduções, exceções e regimes específicos.',
+      'Crédito tributário não é dinheiro livre em conta: depende dos requisitos legais, do documento fiscal e das regras de apropriação.',
+      'A reforma do consumo não se confunde com a tributação de dividendos. Consulte cada legislação e não projete uma alíquota única para toda empresa.',
+    ],
+    preciso: {
+      texto: 'No regime regular, débitos das vendas podem ser compensados com créditos admitidos nas aquisições. O exemplo isola essa lógica e não calcula um tributo real.',
+      formula: 'saldo ilustrativo a recolher = débitos das vendas − créditos admitidos',
+    },
+    exemplo: {
+      titulo: 'Débito de R$ 100 e crédito de R$ 40 — valores hipotéticos',
+      passos: ['Admita R$ 100 de débito nas vendas e R$ 40 de crédito válido nas compras.', 'Compensação ilustrativa: R$ 100 − R$ 40 = R$ 60.'],
+      resultado: 'O saldo seria R$ 60, se todos os créditos fossem admitidos. Os valores não representam uma alíquota oficial nem o cálculo de 2026.',
+    },
+    noApp: { texto: 'Em Cenários, acompanhe referências para discutir preços e capital de giro. O painel não apura CBS ou IBS.', tab: 'cenarios' },
+    teste: { pergunta: 'Somar 0,9% de CBS e 0,1% de IBS em 2026 revela a alíquota definitiva de toda empresa?', resposta: 'Não. São alíquotas de teste, com regras de dispensa. A carga final depende do regime, da operação, das alíquotas aplicáveis e dos créditos admitidos.' },
+  },
+  {
+    id: 'split-payment',
+    topico: 'Tributos e trabalho',
+    nome: 'Split Payment',
+    revisadoEm: '2026-11-05',
+    fontes: [
+      { nome: 'Câmara — LC 214/2025 atualizada, arts. 31 a 35', url: 'https://www2.camara.leg.br/legin/fed/leicom/2025/leicomplementar-214-16-janeiro-2025-796905-normaatualizada-pl.html' },
+      { nome: 'Receita Federal — testes de integração do Split Payment, 30/09/2026', url: 'https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/setembro/comunicado-5' },
+    ],
+    frase: 'É a separação de IBS e CBS no pagamento: a parcela do tributo vai ao Fisco e o restante segue para a empresa.',
+    crianca: [
+      'Em vez de a empresa receber todo o valor e depois pagar o tributo, o sistema de pagamento separa os valores na liquidação financeira. Isso exige vínculo entre pagamento, documento fiscal e cálculo do imposto.',
+      'Em 05/11/2026, a plataforma pública está em testes de integração iniciados em 15/10/2026, em ambiente controlado, sem processamento definitivo de operações reais. Não presuma que toda venda já sofre essa separação.',
+      'Na gestão do caixa, compare o valor bruto vendido com o que fica disponível para pagar fornecedor e folha. O tributo separado não deve ser tratado como capital de giro próprio.',
+    ],
+    analogia: 'É um pagamento com dois destinos: uma parte vai para a empresa e outra quita o tributo correspondente.',
+    lacunas: [
+      'O split payment não é um imposto novo: é uma forma de recolher IBS e CBS.',
+      'A implantação depende de atos e cronogramas oficiais. Os procedimentos padrão e simplificado têm regras distintas.',
+      'Vendas parceladas, créditos e valores já quitados afetam o cálculo. Antecipar recebíveis não elimina a obrigação de separar o tributo.',
+    ],
+    preciso: {
+      texto: 'Os arts. 31 a 35 da LC 214/2025, atualizados pela LC 227/2026, regulam a segregação na liquidação. O exemplo supõe um valor de tributo já identificado, sem créditos, tarifas ou outros ajustes.',
+      formula: 'valor disponível ilustrativo = pagamento bruto − tributo separado',
+    },
+    exemplo: {
+      titulo: 'Pagamento de R$ 1.000 com R$ 100 de tributo hipotético',
+      passos: ['Separe R$ 100 do pagamento bruto de R$ 1.000.', 'Restam R$ 900 para a empresa, antes de tarifas e outros ajustes. Em duas parcelas iguais, a hipótese seria R$ 50 separados de cada R$ 500.'],
+      resultado: 'O caixa disponível seria R$ 900. Os R$ 100 são uma hipótese didática, não uma alíquota oficial nem uma cobrança já aplicada ao usuário.',
+    },
+    noApp: { texto: 'Em Juros, consulte referências para avaliar o custo de financiar o giro. O painel não executa split payment.', tab: 'juros' },
+    teste: { pergunta: 'O split payment cria um imposto adicional e já é descontado de toda venda em novembro de 2026?', resposta: 'Não. Ele recolhe IBS e CBS, sem criar outro tributo. Na data desta revisão, os testes oficiais são controlados e não processam operações reais em caráter definitivo.' },
+  },
+  {
+    id: 'dividendos',
+    topico: 'Tributos e trabalho',
+    nome: 'Dividendos e distribuição de lucros',
+    revisadoEm: '2026-11-06',
+    fontes: [
+      { nome: 'Câmara — Lei 9.250/1995 atualizada, art. 6º-A incluído pela Lei 15.270/2025', url: 'https://www2.camara.leg.br/legin/fed/lei/1995/lei-9250-26-dezembro-1995-362566-normaatualizada-pl.html' },
+      { nome: 'Receita Federal — perguntas e respostas sobre lucros e dividendos', url: 'https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/dirf/manual_padrao_rfb_per_tributacao_cotin_v-19-12-2025.pdf' },
+    ],
+    frase: 'Dividendos são lucros distribuídos aos sócios; a distribuição reduz o caixa da empresa e pode gerar imposto para quem recebe.',
+    crianca: [
+      'Ter lucro contábil não significa ter o mesmo valor disponível no banco: parte pode estar em estoque ou em vendas a prazo. Antes de distribuir, confira o lucro distribuível, a documentação e o caixa necessário à operação.',
+      'Desde janeiro de 2026, dividendos de uma mesma pessoa jurídica para uma mesma pessoa física residente no Brasil acima de R$ 50 mil no mês sofrem IRRF de 10% sobre o total, não só sobre o excesso. Pagamentos do mesmo mês são somados.',
+      'A retenção é considerada na apuração anual das altas rendas. Receber até o limite mensal não garante isenção anual: o total de rendimentos do beneficiário também importa.',
+    ],
+    analogia: 'É dividir o resultado de uma loja entre os donos, preservando antes o dinheiro necessário para manter a loja funcionando.',
+    lacunas: [
+      'Não confunda dividendos com pró-labore, salário ou juros sobre capital próprio: são pagamentos com regras diferentes.',
+      'A regra mensal acima trata de pessoa física residente no Brasil. Pagamentos ao exterior e a outros beneficiários exigem análise própria.',
+      'Há regra de transição para resultados até 2025, com aprovação da distribuição até 31/12/2025 e demais requisitos legais. O ano do lucro, sozinho, não garante a exceção.',
+      'A tributação anual de altas rendas alcança rendimentos acima de R$ 600 mil no ano, observadas exclusões e ajustes legais; retenção não é necessariamente imposto definitivo.',
+    ],
+    preciso: {
+      texto: 'O art. 6º-A da Lei 9.250/1995 prevê o limite por mesma fonte pagadora e beneficiário no mesmo mês. Na hipótese tributada abaixo, aplica-se 10% ao total, sem deduções.',
+      formula: 'se total mensal > R$ 50.000: IRRF = total mensal × 10%, ressalvadas exceções legais',
+    },
+    exemplo: {
+      titulo: 'R$ 60.000 distribuídos no mês a um sócio residente, sem exceção legal',
+      passos: ['IRRF: R$ 60.000 × 10% = R$ 6.000, e não R$ 1.000 sobre o excesso.', 'O sócio recebe R$ 54.000; a empresa destina R$ 6.000 ao imposto retido.'],
+      resultado: 'A saída total de caixa da empresa é R$ 60.000. O valor retido deverá ser considerado no ajuste tributário do beneficiário.',
+    },
+    noApp: { texto: 'Em Juros, compare o custo de financiar a empresa após uma distribuição. O painel não apura o imposto pessoal do sócio.', tab: 'juros' },
+    teste: { pergunta: 'A mesma empresa paga R$ 30 mil e depois R$ 30 mil ao mesmo sócio residente no mesmo mês; sem exceção, há retenção?', resposta: 'Sim. Soma-se R$ 60 mil no mês e recalcula-se a retenção de 10% sobre o total: R$ 6 mil. Dividir o pagamento não elimina a regra mensal.' },
+  },
 ]
 
-export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Comércio exterior', 'Inflação', 'Commodities']
+export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Comércio exterior', 'Inflação', 'Commodities', 'Tributos e trabalho']
 
 // Busca por palavras (todas precisam aparecer), sem diferenciar acento nem maiúscula, no conteúdo inteiro do conceito.
 const plain = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -881,6 +1015,11 @@ export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: li
 // outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
 // LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
 export const LIGACOES = [
+  ['escala-6x1', 'custo-de-funding', 'Reorganizar turnos pode mudar o fluxo de caixa e a necessidade de giro; a decisão de financiar depende da produtividade e da operação de cada empresa.'],
+  ['reforma-tributaria', 'split-payment', 'A reforma cria CBS e IBS; o split payment é um dos mecanismos previstos para recolher esses tributos na liquidação financeira.'],
+  ['reforma-tributaria', 'custo-de-funding', 'A transição dos tributos e o aproveitamento de créditos podem alterar o caixa da empresa e o valor de capital de giro a financiar.'],
+  ['split-payment', 'custo-de-funding', 'A parcela tributária separada no pagamento reduz o caixa bruto disponível; planejar o giro exige considerar esse fluxo e o custo de financiá-lo.'],
+  ['dividendos', 'custo-de-funding', 'Distribuir lucros retira recursos da empresa; reter parte do resultado pode reduzir a necessidade de captar, conforme o caixa e o plano de investimento.'],
   ['fee-de-estruturacao', 'custo-de-funding', 'O custo de captar e o spread ajudam a explicar os juros; a remuneração da estruturação deve ser conferida separadamente no custo completo.'],
   ['fee-de-estruturacao', 'debenture', 'Uma emissão pode envolver comissões de estruturação, coordenação e colocação, com condições próprias descritas nos documentos da oferta.'],
   ['diferencial-de-juros', 'cupom-cambial', 'O cupom cambial é o diferencial de juros depois de passar pelo dólar futuro: a parte do juro em reais que sobra em dólar.'],
@@ -929,6 +1068,10 @@ export const LIGACOES = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    { id: 'escala-6x1', texto: 'liga organização dos turnos, produtividade e planejamento do caixa, com transição e enquadramento trabalhista a conferir.' },
+    { id: 'reforma-tributaria', texto: 'muda a apuração dos tributos sobre consumo e exige revisar preços, créditos e fluxo de caixa durante a transição.' },
+    { id: 'split-payment', texto: 'separa IBS e CBS no pagamento, conforme as regras de implantação; afeta o valor disponível para financiar a operação.' },
+    { id: 'dividendos', texto: 'distribuem o resultado aos sócios e conectam lucro, caixa da empresa, tributação do beneficiário e necessidade de financiamento.' },
     { id: 'fee-de-estruturacao', texto: 'remunera a organização da operação e precisa entrar na comparação do custo completo, conforme o contrato.' },
     { id: 'diferencial-de-juros', texto: 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.' },
     { id: 'cupom-cambial', texto: 'é a ponte entre o juro em reais e o juro em dólar.' },

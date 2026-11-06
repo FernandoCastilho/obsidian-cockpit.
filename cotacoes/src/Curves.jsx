@@ -16,7 +16,7 @@ import Estado from './Estado.jsx'
 
 const H = 260
 const M = { t: 14, r: 16, b: 30, l: 52 }
-const SHADES = ['#4aa3a2', '#e6b34a', '#a98bd6', '#d55181', '#6fa8dc', '#9bbf5a', '#c0c0c0']
+const SHADES = ['var(--chart-teal)', 'var(--chart-gold)', 'var(--chart-purple)', 'var(--chart-pink)', 'var(--chart-blue)', 'var(--chart-lime)', 'var(--chart-neutral)']
 const pct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 const day = (iso) => iso.split('-').reverse().join('/')
 

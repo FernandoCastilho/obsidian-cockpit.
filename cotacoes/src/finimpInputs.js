@@ -2,8 +2,12 @@ import { parseDecimal } from './emprestimo.js'
 import { parseMoneyInput } from './moneyInput.js'
 import { FINIMP_TERMS } from './finimpComparison.js'
 
+// As moedas estrangeiras acompanham as referências disponíveis no painel.
+export const FINIMP_CURRENCIES = ['USD', 'EUR', 'JPY', 'CNH', 'BRL']
+
 export function validateFinimpInputs(draft) {
   const errors = {}
+  if (!FINIMP_CURRENCIES.includes(draft.currency)) errors['fi-currency'] = 'Selecione uma moeda disponível para comparar as propostas.'
   const principal = parseMoneyInput(draft.principalText)
   if (!principal.ok || principal.value <= 0) errors['fi-principal'] = principal.error || 'Informe um principal maior que zero.'
   const fxText = String(draft.tacFxText ?? '').trim()

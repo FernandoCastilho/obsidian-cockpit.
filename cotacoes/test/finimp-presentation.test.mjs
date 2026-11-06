@@ -215,6 +215,32 @@ test('aplicar meta de custo inclui a TAC em reais convertida com a precisão com
   assert.ok(Math.abs(comparison.finimpCost({ ...applied.itau, principal: applied.principal, days: 180 }).cost - target) < 1e-9)
 })
 
+test('FINIMP inclui iene e yuan offshore sem converter o principal ou perder a TAC em reais', () => {
+  const renderer = fixture()
+  let tree = renderer.render()
+  const currencies = nodes(field(tree, 'fi-currency')).filter(node => node.type === 'option').map(node => text(node))
+  assert.deepEqual(currencies, ['USD', 'EUR', 'JPY', 'CNH', 'BRL'])
+  draft.finimpDraftStore.update({ useTac: true, tacFxText: '5', competitor: { annualRate: '6', flatRate: '1', tac: '1200' } })
+  for (const [currency, fx] of [['JPY', '0,03488'], ['CNH', '0,8258']]) {
+    tree = renderer.render()
+    field(tree, 'fi-currency').props.onChange({ target: { value: currency } })
+    tree = renderer.render()
+    assert.equal(field(tree, 'fi-principal').props.prefix, currency)
+    assert.equal(field(tree, 'fi-principal').props.value, '100000')
+    assert.equal(field(tree, 'fi-a-tac').props.prefix, 'R$')
+    assert.equal(field(tree, 'fi-a-tac').props.value, '1200')
+    assert.equal(field(tree, 'fi-tac-fx').props.value, '')
+    assert.equal(inputs.validateFinimpInputs(draft.finimpDraftStore.getSnapshot()).conditionsReady, false)
+    field(tree, 'fi-tac-fx').props.onChange({ target: { value: fx } })
+    tree = renderer.render()
+    const parsed = inputs.validateFinimpInputs(draft.finimpDraftStore.getSnapshot())
+    assert.equal(parsed.conditionsReady, true)
+    const expected = comparison.finimpCost({ ...parsed.competitor, principal: parsed.principal, days: 180 }).cost
+    const cost = findAll(bodyRows(tree)[5], node => node.props?.className === 'fi-cost')[0]
+    assert.equal(text(cost), expected.toLocaleString('pt-BR', { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+  }
+})
+
 test('linhas compactas e seleção estilizam todas as células, inclusive prazo fixo, sem depender de hover', async () => {
   const css = await readFile(new URL('../src/FinimpComparacao.css', import.meta.url), 'utf8')
   assert.match(css, /\.fi \.fi-compare tbody th,\.fi \.fi-compare tbody td\{padding:4px 8px/)

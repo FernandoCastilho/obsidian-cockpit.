@@ -85,6 +85,11 @@ export default function Bndes({ view = '', onView = () => {} }) {
       </div>
 
       <Panel title="BNDES · taxas e moedas contratuais" note="BNDES" refresh={['bndes.json', 'moedas.json']}>
+        <nav className="bn-official-links" aria-label="Linhas oficiais BNDES">
+          <span>Linhas oficiais BNDES:</span>
+          <a href="https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados" target="_blank" rel="noopener noreferrer">Materiais Industrializados <span aria-hidden="true">↗</span><span className="sr-only"> (abre em nova aba)</span></a>
+          <a href="https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao" target="_blank" rel="noopener noreferrer">Máquinas e Equipamentos <span aria-hidden="true">↗</span><span className="sr-only"> (abre em nova aba)</span></a>
+        </nav>
         <div className="seg bn-quick" role="group" aria-label="Históricos Selic e LCD">
           <span className="bn-quick-label">Selic / LCD:</span>
           <button type="button" aria-pressed={family === 'moedas' && id === '143' && compare.length < 2} onClick={() => go({ family: 'moedas', id: '143', compare: [] })}>Selic D-2 · 143</button>
@@ -95,6 +100,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined })}>{f.label}</button>)}
         </div>
         <h3 className="bn-sub">{fam.title}</h3>
+        {(family === 'tfb' || family === 'tlp') && bndes.stale && <p className="status stale" role="status">Não foi possível atualizar as séries {fam.label}. Os dados anteriores exibidos podem estar desatualizados.</p>}
         {family === 'moedas' && (moedas.status === 'error' || moedas.stale) && <p className="status stale" role="status">Não foi possível atualizar as moedas contratuais. LD1 permanece no snapshot oficial datado; demais dados anteriores, quando disponíveis, podem estar desatualizados.</p>}
         {family === 'tfc' && moedas.stale && <p className="status stale" role="status">Não foi possível atualizar as séries TFC. Os dados anteriores exibidos podem estar desatualizados.</p>}
         {!error && rows.length > 0 && (
