@@ -25,7 +25,7 @@ export default function OilHistory({ data, points, spark, dates, presets, onDate
     {loading ? <p role="status">Carregando histórico…</p> : !points.length ? <p role="status">Não foi possível carregar o histórico. Tente novamente mais tarde; não é possível concluir se há cotações no intervalo.</p> : selected.points.length ? <>
       <p>Primeira: {date(selected.first.date)} · {money(selected.first.value)}. Última: {date(selected.last.date)} · {money(selected.last.value)}.</p>
       <p>Variação no intervalo: {selected.change == null ? 'indisponível com uma única observação' : `${selected.change > 0 ? '+' : ''}${selected.change.toFixed(2).replace('.', ',')}%`}.</p>
-      <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code="brent-history" intraday={false} fmt={money} vfmt={(v) => v.toFixed(2).replace('.', ',')} label="Brent spot · US$/barril" labels /></div>
+      <div ref={ref}><Plot points={plot} history={history} width={width} color="var(--chart-oil)" code="brent-history" intraday={false} fmt={money} vfmt={(v) => v.toFixed(2).replace('.', ',')} label="Brent spot · US$/barril" labels /></div>
       <div className="oil-history-table"><table><caption>Observações do intervalo · Brent spot · US$/barril</caption><thead><tr><th scope="col">Data</th><th scope="col">US$/barril</th></tr></thead><tbody>{[...selected.points].reverse().map((p) => <tr key={p.date}><th scope="row">{date(p.date)}</th><td>{money(p.value)}</td></tr>)}</tbody></table></div>
     </> : <p role="status">Nenhuma cotação publicada no intervalo selecionado. Escolha outro período; ausência não significa preço zero.</p>}
     <details className="oil-notes" open><summary>Publicação e cobertura</summary>

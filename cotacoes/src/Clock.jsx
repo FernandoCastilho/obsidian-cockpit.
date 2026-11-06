@@ -39,7 +39,7 @@ function One({ zone, now }) {
     >
       <span
         aria-hidden="true"
-        style={{ width: 7, height: 7, borderRadius: '50%', background: open ? '#22c55e' : '#9ca3af', display: 'inline-block' }}
+        style={{ width: 7, height: 7, borderRadius: '50%', background: open ? 'var(--up)' : 'var(--mut)', display: 'inline-block' }}
       />
       <span className="clock-flag" aria-hidden="true" style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: flagSvg(zone.flag, 'width="18" height="12"') }} />
       <b>{part(now, zone.tz, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })}</b>

@@ -6,8 +6,33 @@ import { DESK_TABS, parseCommand } from '../src/terminal.js'
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
+test('novos temas têm fontes oficiais, data de revisão e exemplos que não se passam por alíquotas gerais', () => {
+  for (const id of ['escala-6x1', 'reforma-tributaria', 'split-payment', 'dividendos']) {
+    const c = byId(id)
+    assert.equal(c.topico, 'Tributos e trabalho')
+    assert.equal(c.revisadoEm, '2026-11-05')
+    assert.ok(c.fontes.length >= 2, id)
+    assert.ok(c.fontes.every(f => /\.(gov|leg)\.br$/.test(new URL(f.url).hostname)), id)
+    assert.ok(buscarConceitos(c.nome).some(result => result.id === id), id)
+  }
+  assert.match(text(byId('escala-6x1')), /EC 141/)
+  assert.match(text(byId('escala-6x1')), /primeira etapa ainda não começou/)
+  assert.match(text(byId('escala-6x1')), /Dois meses após/)
+  assert.match(text(byId('escala-6x1')), /contratos públicos/)
+  assert.match(text(byId('reforma-tributaria')), /0,9%.*0,1%/)
+  assert.match(text(byId('reforma-tributaria')), /dispensa de recolhimento/)
+  assert.match(text(byId('reforma-tributaria').exemplo), /não representam uma alíquota oficial/)
+  assert.match(text(byId('split-payment')), /testes de integração/)
+  assert.match(text(byId('split-payment')), /sem processamento definitivo de operações reais/)
+  assert.match(text(byId('split-payment').exemplo), /não uma alíquota oficial/)
+  assert.match(text(byId('dividendos')), /sobre o total, não só sobre o excesso/)
+  assert.match(text(byId('dividendos').exemplo), /R\$ 6\.000/)
+  assert.match(text(byId('dividendos').exemplo), /R\$ 54\.000/)
+  assert.match(text(byId('dividendos')), /não garante isenção anual/)
+})
+
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'lei-de-maquila', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'lei-de-maquila', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis', 'escala-6x1', 'reforma-tributaria', 'split-payment', 'dividendos'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 

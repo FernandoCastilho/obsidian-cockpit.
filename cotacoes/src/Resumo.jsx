@@ -23,6 +23,7 @@ import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
 import NoticiasPorDia from './NoticiasPorDia.jsx'
 import ReformaTributaria, { MoedasNoticias, TemaNoticias } from './ReformaTributaria.jsx'
+import GoogleTrends from './GoogleTrends.jsx'
 import { moedasDaManchete, nomeDaMoeda } from './moedasNoTexto.js'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -246,10 +247,10 @@ function MultiPlot({ series, width, intraday, history = series }) {
                   const p = at(s, hover)
                   const d = s.code === 'JPY' ? 4 : 4
                   return (
-                    <text key={s.code} x={bx + 10} y={M.t + 34 + k * 18} fontSize="12" fill="var(--txt, #e6edf3)">
+                    <text key={s.code} x={bx + 10} y={M.t + 34 + k * 18} fontSize="12" fill="var(--fg)">
                       <tspan fill={s.color} fontWeight="700">{s.code}</tspan>
                       <tspan dx="6">{p.bid.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })}</tspan>
-                      <tspan dx="6" fill={p.v > 0 ? '#3fb950' : p.v < 0 ? '#f85149' : 'var(--mut)'}>{pct(p.v)}</tspan>
+                      <tspan dx="6" fill={p.v > 0 ? 'var(--up)' : p.v < 0 ? 'var(--down)' : 'var(--mut)'}>{pct(p.v)}</tspan>
                     </text>
                   )
                 })}
@@ -431,7 +432,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget 
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><SectorNews id="veiculos-pesados" label="Veículos pesados" /></> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'trends' ? <GoogleTrends /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><SectorNews id="veiculos-pesados" label="Veículos pesados" /></> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -498,6 +499,7 @@ const NEWS_TABS = [
   { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
   { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
   { id: 'eleicoes', label: 'Eleições EUA', refresh: ['temas.json'] },
+  { id: 'trends', label: 'Google Trends', refresh: ['trends.json'] },
   { id: 'veiculos-pesados', label: 'Veículos pesados', refresh: ['sector-news.json','heavy-vehicles.json'] },
 ]
 // Bandeira das moedas de que a manchete provavelmente fala (as da busca e as citadas no título).

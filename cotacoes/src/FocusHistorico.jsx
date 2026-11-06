@@ -4,7 +4,7 @@ import MultiLinhas from './MultiLinhas.jsx'
 import Estado from './Estado.jsx'
 import { INDICATORS } from './scenarios.js'
 
-const COR = ['#ffb000', '#4cc3ff']
+const COR = ['var(--currency-usd)', 'var(--currency-eur)']
 const fmtPct = (v) => `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 const fmtBrl = (v) => `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 const dmy = (d) => d.split('-').reverse().join('/')

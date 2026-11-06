@@ -6,6 +6,7 @@ import DynamicNotifications from './DynamicNotifications.jsx'
 import './styles.css'
 import './Terminal.css'
 import './Abas.css'
+import './Theme.css'
 import { iniciarContagem } from './acessos.js'
 
 createRoot(document.getElementById('root')).render(

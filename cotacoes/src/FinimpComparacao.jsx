@@ -4,7 +4,7 @@ import { FINIMP_HELP } from './finimpHelpContent.js'
 import MoneyInput from './MoneyInput.jsx'
 import { FINIMP_TERMS, compareFinimp, finimpCost, solveFinimpRate } from './finimpComparison.js'
 import { finimpDraftStore } from './calculatorDraft.js'
-import { validateFinimpInputs } from './finimpInputs.js'
+import { FINIMP_CURRENCIES, validateFinimpInputs } from './finimpInputs.js'
 import { parseDecimal } from './emprestimo.js'
 import { formatFinimpRate, formatFinimpPercent as pct, formatFinimpDelta as delta } from './finimpPresentation.js'
 import './FinimpComparacao.css'
@@ -24,7 +24,7 @@ export default function FinimpComparacao({ onBack }) {
   const rows = FINIMP_TERMS.map(days => compareFinimp({ principal, days, competitor: a, itau: b }))
   const selected = finimpCost({ ...a, principal, days: FINIMP_TERMS[goalTerm] })
   const goal = solveFinimpRate({ principal, days: FINIMP_TERMS[goalTerm], flatRate: b.flatRate, tac: b.tac, targetCost: goalMode === 'equal' ? (selected.ok ? selected.cost : null) : target })
-  const money = n => n.toLocaleString('pt-BR', { style: 'currency', currency })
+  const money = n => n.toLocaleString('pt-BR', { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 })
   const moneyBrl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   const differenceAmount = n => n !== 0 && Math.abs(n) < 0.005 ? `${n > 0 ? '+' : '−'} < 0,01 ${currency}` : money(n)
   const help = (key, suffix='') => <FinimpHelp title={FINIMP_HELP[key].title+(suffix?' · '+suffix:'')}><p>{FINIMP_HELP[key].text}</p></FinimpHelp>
@@ -44,7 +44,7 @@ export default function FinimpComparacao({ onBack }) {
     <h2 id="fi-heading" className="cx-title cx-heading"><span className="cx-heading-text"><span className="cx-icon" aria-hidden="true"><FinimpIcon /></span><span>FINIMP · comparação de propostas</span></span>{help('simulation')}</h2>
     <article className="desk-panel cx-panel"><header><h3 className="cx-heading"><span>Condições</span></h3></header><div className="cx-form">
       {field(`Principal (${currency})`, 'fi-principal', principalText, setPrincipal, true)}
-      <div className="cx-field"><div className="fi-label cx-field-label"><label htmlFor="fi-currency">Moeda</label>{help('currency')}</div><select id="fi-currency" value={currency} onChange={e => setCurrency(e.target.value)}><option>USD</option><option>EUR</option><option>BRL</option></select></div>
+      <div className="cx-field"><div className="fi-label cx-field-label"><label htmlFor="fi-currency">Moeda</label>{help('currency')}</div><select id="fi-currency" value={currency} onChange={e => setCurrency(e.target.value)}>{FINIMP_CURRENCIES.map(code => <option key={code}>{code}</option>)}</select></div>
       {useTac && currency !== 'BRL' && field(`Câmbio da TAC (R$ por ${currency})`, 'fi-tac-fx', tacFxText, setTacFx, false, 'tacFx', currency, { raw: true, showError: a.tacBrl > 0 || b.tacBrl > 0 })}
     </div><div className="fi-tac-toggle"><label className="fi-check"><input type="checkbox" checked={useTac} onChange={e => setUseTac(e.target.checked)} /> Incluir TAC à vista</label>{help('tac')}</div>
     <p className="fi-tac-status" role="status">TAC {useTac ? 'incluída' : 'excluída'}.</p>

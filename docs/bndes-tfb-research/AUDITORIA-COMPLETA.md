@@ -6,6 +6,27 @@ Data: 05/11/2026. Escopo: fotografias das três páginas, transcrição, candida
 
 Fernando esclareceu que montou as imagens e os cenários para testes baseados em cálculos oficiais. O material não foi emitido pelo Itaú. As conclusões aritméticas abaixo permanecem, mas a autoria e a pendência de CET referem-se ao cenário do usuário. Esta retificação não é nova validação de fórmulas oficiais.
 
+## Revalidação em 06/11/2026
+
+**Estado: reconciliação aritmética aprovada; certificação contratual e CET pendentes.** A conferência atual executou os cinco arquivos de teste do perfil: **81 testes aprovados**, sem alterar taxas, datas, fórmula ou convenção para ajustar o resultado ao cabeçalho.
+
+Comando reproduzível, dentro de `cotacoes`:
+
+```powershell
+$tfbTests = (Get-ChildItem -LiteralPath 'test' -Filter 'bndes-tfb*.test.mjs').FullName
+node --test @tfbTests 'test/bndes-credito-pequenas-empresas.test.mjs'
+```
+
+As validações executadas incluem os 204 campos das 34 linhas, conservação do principal, saldo final zero, juros por ano civil incluindo ano bissexto, IOF retido uma vez, tarifa somente na primeira cobrança, arredondamento em centavos, bloqueio de entradas incompatíveis, independência do fuso horário e duas apurações independentes do retorno do fluxo. O retorno continua **20,15688993% a.a. em ACT/365 fixo**, frente aos **20,01% a.a. informados**. O motor conserva `cet.validated = false` e `cashFlowComplete = false`; cobertura dos 34 pagamentos não confirma a composição integral dos encargos contratuais.
+
+Para encerrar a certificação, ainda é necessário obter e confrontar:
+
+- A fórmula original do CET do cenário, com datas consideradas, base de dias, encargos incluídos e precisão dos valores antes de arredondar. A divergência de **0,14688993 ponto percentual** e o residual de **-R$ 5.214,24** a 20,01% permanecem sem explicação documental.
+- A taxa com a precisão original das células e a regra de geração da âncora de carência. Os **17,5402% a.a.** que reproduzem os juros e a âncora atual são inferências documentadas.
+- O calendário bancário aplicável e o enquadramento tributário da operação. As datas deslocadas e o IOF das imagens foram reconciliados; isso não certifica o calendário completo nem a aplicabilidade fiscal.
+
+Não faltam páginas do cronograma: as três imagens cobrem os 34 pagamentos. Novos testes sobre os mesmos dados não substituem as entradas e regras originais acima. O resultado disponível permanece no relatório `RECONCILIACAO-COMPLETA.json`; não foi criada uma tela nem atribuída certificação a uma proposta de banco.
+
 ## Conclusão financeira
 
 As 34 linhas das fotografias coincidem com os 204 campos comparados pelo candidato: número, data, saldo inicial, juros, amortização e parcela. A última linha é 16/11/2029 e o saldo final calculado é zero. A taxa precisa continua sendo uma hipótese inferida de 17,5402% a.a., não precisão transcrita do cabeçalho.

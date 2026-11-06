@@ -2,8 +2,8 @@
 const DAY = 864e5
 export const tOf = (iso) => Date.parse(`${iso}T12:00:00Z`)
 export const isoOf = (t) => new Date(t).toISOString().slice(0, 10)
-// Uma cor por série, bem separadas em matiz (funciona no tema escuro e com muitas séries).
-export const colorOf = (i) => `hsl(${Math.round((i * 137.508) % 360)} 68% 62%)`
+// Uma matiz por série; o brilho acompanha a superfície sem alterar os dados.
+export const colorOf = (i) => `hsl(${Math.round((i * 137.508) % 360)} 68% var(--series-lightness, 62%))`
 
 // Último ponto com t <= alvo (série esparsa mantém o último valor conhecido); antes do início, null.
 export function valueAt(points, t) {

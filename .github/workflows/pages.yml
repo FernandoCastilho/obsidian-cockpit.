@@ -5,6 +5,7 @@ on:
     branches: [main, claude/obsidian-plugin-analysis-bagjz3]
     paths: ['cotacoes/**', '.github/workflows/pages.yml']
   schedule:
+    - cron: '0 11,18 * * *' # Trends: 08h e 15h de Brasília; demais fontes preservadas
     # Só de segunda a sexta no horário de Brasília (UTC-3): segunda 00h a sexta 23h. Sem coleta no sábado e no domingo.
     - cron: '17 3-23 * * 1-5' # segunda a sexta, 0h a 20h de Brasília
     - cron: '17 0-2 * * 2-6' # terça a sábado UTC = segunda a sexta, 21h a 23h de Brasília
@@ -42,6 +43,14 @@ jobs:
           cache: npm
           cache-dependency-path: cotacoes/package-lock.json
       - run: npm ci
+      - name: Google Trends (08h e 15h; preserva nas demais execuções)
+        run: node scripts/fetch-trends.mjs
+        timeout-minutes: 2
+        env:
+          TRENDS_COLLECT: ${{ github.event.schedule == '0 11,18 * * *' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
+      - name: Preservar as demais bases na atualização exclusiva de Trends
+        if: github.event.schedule == '0 11,18 * * *'
+        run: node scripts/preserve-for-trends.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"
       - name: Testes (parsers e lógica)
         run: npm test
       - name: Atualizar Focus semanal preservando os demais dados publicados
@@ -49,150 +58,151 @@ jobs:
         run: node scripts/refresh-scenarios.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"
         timeout-minutes: 5
       - name: Histórico do Focus (52 semanas; de hora em hora só preserva o publicado)
+        if: github.event.schedule != '0 11,18 * * *'
         run: node scripts/fetch-focus-history.mjs
         continue-on-error: true
         timeout-minutes: 3
         env:
           FOCUS_WEEKLY: ${{ github.event.schedule == '30 11 * * 1,2' }}
       - name: Coletar notícias
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-news.mjs
         env:
           NEWS_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar dados do Banco Central (CDI, Selic, Focus, PTAX)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-macro.mjs
         timeout-minutes: 15
         env:
           MACRO_STRICT: ${{ github.event_name == 'schedule' }}
       - name: Coletar curvas de juros (DI x pré e Treasuries)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-curves.mjs
         env:
           CURVES_STRICT: ${{ github.event_name == 'schedule' }}
       - uses: actions/setup-python@v5
-        if: github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed')
         continue-on-error: true
         with:
           python-version: '3.12'
       - name: Preparar leitura dos comunicados oficiais em PDF
-        if: github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2' || env.POLICY_BOJ_USE == 'noncommercial' || env.POLICY_BOJ_USE == 'permission-confirmed')
         continue-on-error: true
         run: python -m pip install -r scripts/requirements-policy.txt
       - name: Coletar juros de política monetária (Fed, BCE, BoE e BoJ)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-policy-rates.mjs
         timeout-minutes: 5
       - name: Coletar €STR (Banco Central Europeu)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-estr.mjs
         timeout-minutes: 2
       - name: Coletar curva de juros do euro (Banco Central Europeu)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-euro-curve.mjs
         timeout-minutes: 3
       - name: Coletar indexadores TR, TBF e TLP (Banco Central)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-indexadores.mjs
         continue-on-error: true
         timeout-minutes: 5
       - name: Coletar Taxa Fixa do BNDES (TFB, 4 prazos, liberação em 30 e 90 dias)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-bndes.mjs
         continue-on-error: true
         timeout-minutes: 5
       - name: Coletar TFC e moedas contratuais do BNDES
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-moedas.mjs
         continue-on-error: true
         timeout-minutes: 8
       - name: Gerar CSV das séries do BNDES (Power Query)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/export-csv.mjs
         continue-on-error: true
         timeout-minutes: 2
       - name: Coletar feriados da China (dados oficiais)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
       - name: Coletar matérias da semana sobre a reforma tributária (Google Notícias)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-reforma.mjs
         timeout-minutes: 3
         continue-on-error: true
       - name: Coletar matérias da semana por setor e insumo (Google Notícias)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-temas.mjs
         timeout-minutes: 4
         continue-on-error: true
       - name: Revalidar janela setorial sem coleta externa
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-sector-news.mjs --offline
         timeout-minutes: 12
         continue-on-error: true
       - name: Coletar acessos ao app (Umami, link de compartilhamento)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-acessos.mjs
         timeout-minutes: 2
         continue-on-error: true
       - name: Coletar preço diário aproximado do cobre (COMEX via Yahoo)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-insumos-precos.mjs
         timeout-minutes: 2
         continue-on-error: true
       - name: Coletar fechamento diário do Ibovespa (Yahoo)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-indices.mjs
         timeout-minutes: 2
         continue-on-error: true
       - name: Coletar referência diária de petróleo Brent (EIA)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-oil.mjs
         timeout-minutes: 2
       - name: Coletar commodities diárias e mensais (EIA e Banco Mundial)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-commodities.mjs
         timeout-minutes: 3
       - name: Coletar commodities em reais (IC-Br e soja em R$/saca)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-commodities-brl.mjs
         timeout-minutes: 3
       - name: Coletar preços de combustíveis ao consumidor (ANP)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-fuels.mjs
         timeout-minutes: 8
       - name: Coletar referência mensal de transporte marítimo (BLS, EUA)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-freight.mjs
       - name: Coletar referência mensal de transporte marítimo do Japão (Banco do Japão)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-freight-jp.mjs
         timeout-minutes: 2
       - name: Coletar IPCA oficial e histórico (IBGE)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-ipca.mjs
         timeout-minutes: 2
       - name: Coletar dívida bruta do governo geral (Banco Central)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-divida.mjs
         timeout-minutes: 4
       - name: Coletar IPCA por grupos (IBGE)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-ipca-groups.mjs
         timeout-minutes: 2
       - name: Coletar calendário econômico (Forex Factory, BLS, BEA e Fed)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-calendar.mjs
         timeout-minutes: 3
       - name: Coletar veículos pesados (Carta mensal da ANFAVEA)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-heavy-vehicles.mjs
       - name: Coletar inadimplência PF e PJ (Banco Central)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-inadimplencia.mjs
         timeout-minutes: 10
       - name: Conferir referências de recuperação judicial (semanal, sem contagens)
-        if: github.event.schedule != '30 11 * * 1,2'
+        if: github.event.schedule != '0 11,18 * * *' && (github.event.schedule != '30 11 * * 1,2')
         run: node scripts/fetch-recuperacao.mjs
         timeout-minutes: 2
       - name: Verificar dados desatualizados
@@ -206,7 +216,7 @@ jobs:
         env:
           VITE_DATA_BASE: https://raw.githubusercontent.com/${{ github.repository }}/data
       - name: Conferir todas as bases preservadas no pacote semanal
-        if: github.event.schedule == '30 11 * * 1,2'
+        if: github.event.schedule == '30 11 * * 1,2' || github.event.schedule == '0 11,18 * * *'
         run: node scripts/weekly-data.mjs dist "$RUNNER_TEMP/weekly-data-snapshot.json"
       - uses: actions/upload-pages-artifact@v3
         with:
