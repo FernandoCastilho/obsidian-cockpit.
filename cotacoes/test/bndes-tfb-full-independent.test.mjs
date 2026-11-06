@@ -19,13 +19,14 @@ test('auditoria: Newton independente a partir de valores transcritos', () => {
   assert.ok(Math.abs(rate - 0.20156889928931138) < 1e-12)
   const flows = [{ date: '2026-10-26', amountCents: 290581727 }, ...fullRows.map((row, index) => ({ date: row.date, amountCents: -row.paymentCents - (index === 0 ? 220000 : 0) }))]
   assert.ok(Math.abs(datedReturnActual365(flows).annualRate - rate) < 1e-12)
+  assert.ok(Math.abs(run(fullInput()).cet.calculatedAnnualRateDecimal - rate) < 1e-12)
 })
 
 test('auditoria: política nova preserva as 13 linhas, mas muda a cauda observada', () => {
   const input = fullInput()
   const next = run(input)
   assert.deepEqual(next.paymentEventCoverage, { covered: 34, expected: 34, allExpectedEventsCovered: true })
-  assert.equal(next.cet.status, 'not-validated-scenario-formula-unconfirmed')
+  assert.equal(next.cet.status, 'reference-mismatch')
   assert.equal(next.cet.validated, false)
   input.principalRoundingPolicy = 'constant-cents-final-residual'
   const oldPolicy = run(input)
