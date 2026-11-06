@@ -3,9 +3,29 @@ const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const { buildSync } = require('esbuild')
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768'
 const out = process.env.THEME_QA_OUTPUT || 'workspace-qa/theme'
+
+// The current Mercado screen no longer mounts OilTile. Verify the existing widget
+// component in an isolated test page, without restoring the retired product flow.
+const widgetHarness = buildSync({
+  stdin: {
+    contents: `import {createElement} from 'react';
+      import {createRoot} from 'react-dom/client';
+      import OilLiveQuote from './OilLiveQuote.jsx';
+      import {connectSystemTheme} from './systemTheme.js';
+      connectSystemTheme();
+      createRoot(document.getElementById('widget-root')).render(createElement(OilLiveQuote));`,
+    resolveDir: path.resolve(__dirname, '../src'),
+    loader: 'js',
+  },
+  bundle: true, write: false, format: 'iife', platform: 'browser', target: 'es2022',
+  define: { 'process.env.NODE_ENV': '"production"' }, minify: true,
+}).outputFiles[0].text
+const widgetPage = '<!doctype html><html><head><meta name="theme-color" content="#050505"></head><body><div id="widget-root"></div><script src="./__theme-widget-test.js"></script></body></html>'
+const widgetUrl = new URL('__theme-widget-test.html', `${base.replace(/\/$/, '')}/`).href
 
 async function colors(page) {
   return page.evaluate(() => {
@@ -65,6 +85,8 @@ async function assertTheme(page, theme, label) {
       }
       await context.route('**/*', route => {
         const url = new URL(route.request().url()), name = url.pathname.split('/').pop()
+        if (name === '__theme-widget-test.html') return route.fulfill({contentType:'text/html',body:widgetPage})
+        if (name === '__theme-widget-test.js') return route.fulfill({contentType:'text/javascript',body:widgetHarness})
         if (fixtures[name]) return route.fulfill({json:fixtures[name]})
         if (url.hostname === 'economia.awesomeapi.com.br') return route.fulfill({json:quotes})
         if (url.hostname === 'widgets.tradingview-widget.com') return route.fulfill({contentType:'text/javascript',body:''})
@@ -100,19 +122,20 @@ async function assertTheme(page, theme, label) {
           await page.screenshot({path:path.join(out, `${initial}-${width}-trends.png`),fullPage:true})
         }
       }
-      await page.goto(`${base}/#resumo`)
-      await page.getByRole('button', {name:'Outra referência: CFD indicativo',exact:true}).click()
-      const widget = page.locator('tv-single-ticker')
+      await page.goto(widgetUrl)
+      const widget = page.locator('.oil-live-quote tv-single-ticker')
       await widget.waitFor({state:'attached'})
       assert.equal(await widget.getAttribute('theme'), initial)
+      assert.equal(await widget.getAttribute('symbol'), 'TVC:UKOIL')
       const other = initial === 'dark' ? 'light' : 'dark'
       await page.emulateMedia({colorScheme:other})
       await page.waitForFunction(expected => document.querySelector('tv-single-ticker')?.getAttribute('theme') === expected, other)
+      assert.equal(await widget.count(), 1, 'live switch replaces the widget without duplicates')
       assert.equal(await page.locator('meta[name="theme-color"]').getAttribute('content'), other === 'light' ? '#f5f4f0' : '#050505')
       assert.deepEqual(errors, [], `${initial} ${width}: browser errors`)
       await context.close()
     }
-    const result = {passed:true, checks:['initial dark/light','1440px/390px','rendered contrast','selected controls','live preference change','input and result preservation','widget live theme','browser chrome'], report}
+    const result = {passed:true, checks:['initial dark/light','1440px/390px','rendered contrast','selected controls','live preference change','input and result preservation','isolated widget component live theme','browser chrome'], report}
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(result, null, 2))
     console.log(JSON.stringify({passed:true,checks:result.checks,scenarios:report.length,report:path.join(out, 'report.json')}))
   } catch (error) {
