@@ -276,11 +276,11 @@ export function useIntraday(code, day, skip = false) {
         const selection = intradaySelection(valid, dayYmd)
         const { points, previousDay } = selection
         if (!points.length) {
-          setState({ key, status: 'empty', previousDay, generatedAt: file.generatedAt, refreshing: false })
+          setState({ key, status: 'empty', previousDay, retainedPoints: valid, generatedAt: file.generatedAt, refreshing: false })
           return
         }
         const warning = historyQuality({ points, generatedAt: file.generatedAt, intraday: true })
-        setState({ key, status: 'ok', refreshing: false, warning, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
+        setState({ key, status: 'ok', previousDay, retainedPoints: valid, refreshing: false, warning, data: { source: code, points, generatedAt: file.generatedAt, feed: file.source, resolution: file.resolution } })
       } catch (e) {
         if (!alive) return
         const error = `intraday indisponível (${e.message})`

@@ -585,3 +585,9 @@ main.app .idx-table .idx-rel small { display: block; color: var(--muted, #8a8a8a
 
 /* Notícias do Mercado: bandeiras antes do título na linha do tempo */
 .reforma-list .news-flags { display: inline-flex; gap: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* Miniatures have their own row: prices and daily changes never squeeze the plot. */
+.kpi { min-width: 0; }
+.kpi-change { grid-column: 1 / -1; min-width: 0; }
+.kpi-spark { grid-column: 1 / -1; grid-row: 4; width: 100%; height: 30px; margin-top: 6px; }
+.kpi-chart-date { grid-column: 1 / -1; color: var(--mut); font: .62rem/1.4 system-ui, sans-serif; margin-top: 3px; }

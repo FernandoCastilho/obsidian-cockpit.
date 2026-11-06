@@ -22,6 +22,7 @@ async function setup(t, resource, normalize = data => data) {
     if (name === './useDataFile.js') return { useDataFile: () => resource }
     if (name === './visiblePolling.js') return { DATA_POLL_MS: 60000, startVisiblePolling: fn => { polls.push(fn); return () => {} } }
     if (name === './newsWindow.js') return { NEWS_WINDOW_MS: 120 * 3600000 }
+    if (name === './insumoPresentation.js') return { publicReference: value => value?.startsWith('https://www.gov.br/') }
     if (name === './sectorNews.js') return { normalizeSectorNews: normalize }
     if (name === './Estado.jsx') return ({ children }) => createElement('p', {}, children)
     return require(name)
@@ -32,28 +33,28 @@ async function setup(t, resource, normalize = data => data) {
   return { html: () => renderToStaticMarkup(render.value), advance: async milliseconds => { clock += milliseconds; polls.forEach(fn => fn()); await render.settle() } }
 }
 
-test('UI separa carregamento, falha, ausência de resultados e fonte não homologada', async t => {
+test('UI distingue carregamento e falha sem expor mensagens operacionais', async t => {
   const loading = await setup(t, { status: 'loading' })
-  assert.match(loading.html(), /Carregando a cobertura/)
+  assert.match(loading.html(), /Carregando notícias/)
   const error = await setup(t, { status: 'error' })
-  assert.match(error.html(), /Não foi possível verificar a cobertura/)
-  for (const [status, phrase] of [['empty', 'Nenhuma publicação relevante encontrada'], ['failed', 'A coleta deste tema falhou'], ['unavailable', 'Cobertura ainda indisponível'], ['partial', 'Cobertura parcial']]) {
+  assert.match(error.html(), /Atualização de notícias indisponível/)
+  for (const status of ['empty', 'failed', 'unavailable', 'partial']) {
     const component = await setup(t, { status: 'ok', data: { topics: { teste: { status, items: [], sources: [] } } } })
-    assert.ok(component.html().includes(phrase), status)
-    assert.ok(!component.html().includes('setor sem notícias'))
+    assert.match(component.html(), status === 'failed' ? /Atualização de notícias indisponível/ : /Publicações ainda não disponíveis nesta seleção/)
+    assert.doesNotMatch(component.html(), /Janela móvel|Coleta externa|Nenhuma manchete|Tentativa de coleta|Nenhuma publicação relevante/)
   }
 })
 
 test('UI atribui fonte e licença e não inventa hora para publicação informada somente por dia', async t => {
   const component = await setup(t, { status: 'ok', data: { topics: { teste: {
     status: 'partial', checkedAt: '2026-11-05T11:00:00Z', lastSuccessAt: '2026-11-05T11:00:00Z', sources: [],
-    items: [{ title: 'Título sintético exclusivo do teste', link: 'https://example.org/noticia', source: 'Fonte de teste', type: 'official', licenseUrl: 'https://creativecommons.org/licenses/by-nd/3.0/', publishedAt: '2026-11-03', datePrecision: 'day', collectedAt: '2026-11-05T11:00:00Z', t: Date.parse('2026-11-03T15:00:00Z') }],
+    items: [{ title: 'Título sintético exclusivo do teste', link: 'https://www.gov.br/noticia', source: 'Fonte de teste', type: 'official', licenseUrl: 'https://creativecommons.org/licenses/by-nd/3.0/', publishedAt: '2026-11-03', datePrecision: 'day', collectedAt: '2026-11-05T11:00:00Z', t: Date.parse('2026-11-03T15:00:00Z') }],
   } } } })
   const html = component.html()
-  assert.match(html, /03\/11\/2026 · horário não informado pela fonte/)
+  assert.match(html, /03\/11\/2026/)
   assert.match(html, /dateTime="2026-11-03"/)
-  assert.match(html, /Fonte de teste · Comunicado oficial/)
-  assert.match(html, /Licença de uso da fonte/)
+  assert.match(html, /Fonte de teste/)
+  assert.match(html, /Licença de uso/)
   assert.ok(!html.includes('03/11/2026, 12:00'))
 })
 
@@ -62,28 +63,35 @@ test('normalização é reaplicada após o relógio avançar com a página abert
   const component = await setup(t, { status: 'ok', data: {} }, (data, time) => { times.push(time); return { topics: { teste: { status: 'empty', items: [], sources: [] } } } })
   await component.advance(60000)
   assert.deepEqual(times, [now, now + 60000])
-  assert.match(component.html(), /Janela móvel de 120 horas/)
+  assert.match(component.html(), /Notícias da semana/)
 })
 
 test('arquivo inválido mostra falha, sem simular cobertura atual', async t => {
   const component = await setup(t, { status: 'ok', data: {} }, () => { throw Error('invalid') })
-  assert.match(component.html(), /Arquivo de notícias inválido/)
-  assert.match(component.html(), /Cobertura ainda indisponível/)
+  assert.match(component.html(), /Atualização de notícias indisponível/)
 })
 
 test('leitura falha com snapshot retido preserva aviso, fonte e data das publicações válidas', async t => {
   const component = await setup(t, { status: 'error', stale: true, data: { topics: { teste: {
     status: 'partial', checkedAt: '2026-11-05T11:00:00Z', lastSuccessAt: '2026-11-04T11:00:00Z',
     sources: [{ id: 'teste', label: 'Fonte sintética', status: 'failed', reason: 'Consulta falhou' }],
-    items: [{ title: 'Manchete retida de teste', link: 'https://example.org/retida', source: 'Fonte sintética', type: 'official', publishedAt: '2026-11-04', datePrecision: 'day', collectedAt: '2026-11-04T11:00:00Z', t: Date.parse('2026-11-04T15:00:00Z') }],
+    items: [{ title: 'Manchete retida de teste', link: 'https://www.gov.br/retida', source: 'Fonte sintética', type: 'official', publishedAt: '2026-11-04', datePrecision: 'day', collectedAt: '2026-11-04T11:00:00Z', t: Date.parse('2026-11-04T15:00:00Z') }],
   } } } })
   const html = component.html()
-  assert.match(html, /Arquivo de notícias sem atualização nesta leitura/)
-  assert.match(html, /Somente publicações ainda dentro da janela são mantidas/)
-  assert.match(html, /Cobertura parcial/)
+  assert.match(html, /Atualização de notícias indisponível/)
+  assert.match(html, /Seleção parcial/)
   assert.match(html, /Manchete retida de teste/)
-  assert.match(html, /Fonte sintética · Comunicado oficial/)
-  assert.match(html, /04\/11\/2026 · horário não informado pela fonte/)
-  assert.match(html, /falha de consulta · Consulta falhou/)
-  assert.match(html, /Coleta externa desabilitada/)
+  assert.match(html, /Fonte sintética/)
+  assert.match(html, /04\/11\/2026/)
+  assert.doesNotMatch(html, /falha de consulta|Coleta externa|Tentativa de coleta/)
+})
+
+ test('referências privadas não aparecem na lista de notícias', async t => {
+  const component = await setup(t, { status: 'ok', data: { topics: { teste: { status: 'ok', items: [{ title: 'Notícia privada', link: 'https://empresa.com/noticia' }] } } } })
+  assert.doesNotMatch(component.html(), /Notícia privada|empresa.com/)
+})
+
+test('falha da fonte mantém aviso mesmo quando o arquivo foi lido', async () => {
+  const source = await readFile(new URL('../src/SectorNews.jsx', import.meta.url), 'utf8')
+  assert.match(source, /const readError = topic\?\.status === 'failed' \|\| resource.status === 'error'/)
 })

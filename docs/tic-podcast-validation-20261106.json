@@ -1,0 +1,20 @@
+{
+  "reviewedAt": "2026-11-06",
+  "language": "pt-BR",
+  "synthetic": true,
+  "durationSeconds": 390.768,
+  "defaultPlaybackRate": 1.25,
+  "defaultListeningSeconds": 312.6144,
+  "bytes": 2344608,
+  "audioSha256": "7888f54ef31c711586c156cca278c9c5eb9c83ef058d77dbffb59f3f4edd0640",
+  "transcriptSha256": "1772bbe34112cd141ab96f79bca6e56aaf0fd1f6cecb4a9bc991348d7017418a",
+  "wordCount": 884,
+  "validation": {
+    "fullDecode": "passed",
+    "meanDb": -21.2,
+    "peakDb": -2.9,
+    "auditoryReview": "not performed",
+    "browserPlayback": "pending; local browser sandbox blocked"
+  },
+  "provenance": "Narrative from TIC_STUDY reviewed 2026-11-06. Public information only. No private company names in narration. No numeric forecasts described as actuals."
+}

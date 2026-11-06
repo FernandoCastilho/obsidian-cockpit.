@@ -2,7 +2,7 @@ import RefreshButton from './RefreshButton.jsx'
 import { useId, useLayoutEffect, useRef, useState } from 'react'
 import { fromInput, useIntraday } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
-import { mergeTicks } from './parity.js'
+import { marketPreviews } from './marketPreviews.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
 import { FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
@@ -63,17 +63,7 @@ function useDaySeries() {
   const today = fromInput(marketDate(Date.now()))
   const usd = useIntraday('USD', today)
   const eur = useIntraday('EUR', today)
-  const prev = usd.previousDay || eur.previousDay || null
-  const prevDay = prev ? fromInput(prev) : today
-  const usdPrev = useIntraday('USD', prevDay, !prev)
-  const eurPrev = useIntraday('EUR', prevDay, !prev)
-  const ok = (s) => (s.status === 'ok' ? s.data.points : [])
-  const pick = (now, before) => (ok(now).length > 1 ? ok(now) : ok(before))
-  const u = pick(usd, usdPrev)
-  const e = pick(eur, eurPrev)
-  // a paridade só junta as duas séries se vêm do mesmo pregão
-  const sameSession = ok(usd).length > 1 === ok(eur).length > 1
-  return { USD: u, EUR: e, PAR: u.length > 1 && e.length > 1 && sameSession ? mergeTicks(u, e, true) : [] }
+  return marketPreviews(usd.retainedPoints, eur.retainedPoints, marketDate(Date.now()))
 }
 
 // Indicadores do topo do Mercado, com o título "Mapa de variação – dia" e, abaixo dos quadros, a linha da última consulta (`status`).
@@ -89,7 +79,8 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
       <h2 id="kpi-title" className="kpi-title">Mapa de variação – dia</h2>
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
-        const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code] ?? sparks[i.key]
+        const preview = series[i.code]
+        const points = preview?.points ?? sparks[i.key]
         const note = !series[i.code] && sparks[i.key]?.length && SPARK_NOTE[i.key] ? `${i.label.replace(/ 12m$/, '')}: ${SPARK_NOTE[i.key]}` : null
         const card = (
           <button key={i.key} type="button" className={`kpi${i.rate ? ' kpi-taxa' : ''}`} style={{ '--series': i.rate || i.key === 'IPCA' || i.key === 'IBOV' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'inflacao') : i.key === 'IBOV' ? goto('noticias') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: ${i.key === 'IBOV' ? 'abrir notícias' : 'abrir gráfico'}`}>
@@ -98,7 +89,8 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
             <span className={`kpi-change ${i.tone}`}>
               {i.text ? <><span aria-hidden="true">{MARK[i.tone]}</span> {i.text}</> : <span className="muted" title={i.reason || undefined}>var. indisponível</span>}
             </span>
-            {points?.length > 1 && <span className="kpi-spark" {...(note ? { role: 'img', 'aria-label': note, title: note } : {})}><Sparkline points={points} label={i.label} rate={!!i.rate || i.key==='IPCA'} tone={note ? sparkTone(points) : i.tone} height={30} /></span>}
+            {points?.length > 1 && <span className="kpi-spark" {...(note ? { role: 'img', 'aria-label': note, title: note } : {})}><Sparkline points={points} label={i.label} rate={!!i.rate || i.key==='IPCA'} tone={preview || note ? sparkTone(points) : i.tone} height={30} /></span>}
+            {['USD', 'EUR', 'PAR'].includes(i.code) && <span className="kpi-chart-date" title={preview ? `${preview.source} · amostras observadas; a cor indica a variação do gráfico` : undefined}>{preview ? `Gráfico: ${preview.day.split('-').reverse().join('/')}${i.code === 'PAR' ? ' · cruzado' : ''}` : 'Gráfico sem amostras suficientes'}</span>}
           </button>
         )
         const fin = i.key === 'EURUSD' ? finimpParidade(i.raw) : null
