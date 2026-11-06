@@ -32,3 +32,9 @@
   .chart > header .parity-actions { max-width: 100%; margin-left: auto; }
   .history-head .refresh-wrap { flex: 0 1 auto; }
 }
+
+/* Keep the governance refresh group intact when the tablet header wraps. */
+@media (min-width: 561px) and (max-width: 999px) {
+  .config-desk > .config-wide > header { flex-wrap: wrap; }
+  .config-desk > .config-wide > header .refresh-wrap { flex: 0 0 auto; max-width: 100%; }
+}
