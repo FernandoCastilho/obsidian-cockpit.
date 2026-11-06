@@ -1,5 +1,4 @@
-.cx-lcd { max-width:1180px; }
-.cx-lcd > .status { max-width:880px; margin:0; }
+.cx-lcd > .status { margin:0; }
 .lcd-full { grid-column:1/-1; }
 .lcd-check { display:flex; align-items:flex-start; gap:8px; font-size:.8rem; line-height:1.45; color:var(--mut); }
 .lcd-check input { flex:none; width:18px; height:18px; margin:2px 0; }

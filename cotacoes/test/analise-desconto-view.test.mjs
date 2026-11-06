@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { runInNewContext } from 'node:vm'
 import { transform } from 'esbuild'
+import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { hookRenderer } from './helpers/hooks.mjs'
 import * as engine from '../src/analiseDesconto.js'
@@ -11,6 +12,7 @@ import * as money from '../src/moneyInput.js'
 import { SEARCH_PAGES, buildSearchIndex } from '../scripts/build-search-index.mjs'
 
 const require = createRequire(import.meta.url)
+const CalculatorHelp = ({ title, label }) => createElement('button', { type: 'button', 'aria-label': `Ajuda: ${title || label}`, 'aria-expanded': false }, '?')
 async function compile(file, imports = {}) {
   const source = (await readFile(new URL('../src/' + file, import.meta.url), 'utf8')).replace(/^import ['"].+\.css['"]\s*$/gm, '')
   const { code } = await transform(source, { loader: 'jsx', format: 'cjs', jsx: 'automatic' })
@@ -19,12 +21,13 @@ async function compile(file, imports = {}) {
   return module.exports
 }
 const MoneyInput = await compile('MoneyInput.jsx', { './moneyInput.js': money })
-const component = await compile('AnaliseDesconto.jsx', { './MoneyInput.jsx': MoneyInput, './analiseDesconto.js': engine })
+const component = await compile('AnaliseDesconto.jsx', { './MoneyInput.jsx': MoneyInput, './analiseDesconto.js': engine, './CalculatorHelp.jsx': CalculatorHelp })
 function nodes(node) {
   if (!node || typeof node !== 'object') return []
   if (Array.isArray(node)) return node.flatMap(nodes)
   return [node, ...nodes(node.props?.children)]
 }
+const textOf = node => Array.isArray(node) ? node.map(textOf).join('') : node && typeof node === 'object' ? textOf(node.props?.children) : typeof node === 'string' || typeof node === 'number' ? String(node) : ''
 async function setup(t) {
   const back = []
   const render = hookRenderer(() => component.default({ onBack: () => back.push(true) }))
@@ -96,9 +99,14 @@ test('principal manual, erros de data e retorno de navegação respondem às aç
   assert.equal(h.back.length, 1)
 })
 
-test('texto distingue PMT, all-in, encargos completos, premissas e fluxos não equivalentes', async (t) => {
+test('ressalvas financeiras ficam visíveis e as explicações completas ficam nas ajudas fechadas', async (t) => {
   const h = await setup(t), html = h.html()
-  for (const phrase of ['Parcela Price, sem TAC e IOF', 'não é a parcela contratual', 'Custo total completo', 'não uma necessidade de capital de giro', 'não validação tributária', 'não são equivalentes', 'não é CET', 'não recalcula juros nem IOF']) assert.ok(html.includes(phrase), phrase)
+  for (const phrase of ['Parcela Price, sem TAC e IOF', 'não é a parcela contratual', 'Custo total completo', 'não são equivalentes']) assert.ok(html.includes(phrase), phrase)
+  assert.match(html, /não é CET/i)
+  const helpText = nodes(h.render.value).filter(node => node.type === CalculatorHelp).map(node => textOf(node.props.children)).join(' ')
+  for (const phrase of ['não uma necessidade de capital de giro', 'não validação tributária', 'não recalcula juros nem IOF']) assert.ok(helpText.includes(phrase), phrase)
+  assert.match(html, /aria-expanded="false"/)
+  assert.doesNotMatch(html, /Mudar apenas o valor médio não recalcula juros nem IOF/)
   assert.doesNotMatch(html, /Giro PMT Mensal/)
 })
 

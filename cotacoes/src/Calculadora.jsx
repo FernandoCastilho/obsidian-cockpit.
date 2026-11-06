@@ -8,6 +8,8 @@ import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
 import ContaGarantida, { ContaGarantidaIcon } from './ContaGarantida.jsx'
 import AnaliseDesconto, { DescontoIcon } from './AnaliseDesconto.jsx'
 import BndesLcdCap, { LcdIcon } from './BndesLcdCap.jsx'
+import Help from './CalculatorHelp.jsx'
+import './CalculatorLayout.css'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -25,12 +27,12 @@ function GiroIcon() {
 }
 
 const CALCS = [
-  { id: 'conta-garantida', title: 'Conta Garantida', sub: 'Utilização por prazo ou lançamentos diários, juros e IOF sobre saldos e acréscimos', Icon: ContaGarantidaIcon },
-  { id: 'bndes-selic-lcd', title: 'BNDES Selic + LCD', sub: 'Selic capitalizada, LD1 fixada e remunerações exigíveis, com cenário explícito', Icon: LcdIcon },
-  { id: 'finimp', title: 'FINIMP', sub: 'Instituição 1 × Instituição 2, prazos fixos e atingir meta de custo', Icon: FinimpIcon },
-  { id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon },
-  { id: 'analise-desconto', title: 'Análise de desconto', sub: 'Desconto de títulos × giro Price, custos mensais e comparação por prazo', Icon: DescontoIcon },
-  { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxa final, carência, SAC ou Price e cronograma, com TFB ou TLP do painel', Icon: FinameIcon },
+  { id: 'conta-garantida', title: 'Conta Garantida', sub: 'Juros e IOF sobre saldos', Icon: ContaGarantidaIcon },
+  { id: 'bndes-selic-lcd', title: 'BNDES Selic + LCD', sub: 'Selic, LCD e fluxo projetado', Icon: LcdIcon },
+  { id: 'finimp', title: 'FINIMP', sub: 'Compare propostas e atinja sua meta', Icon: FinimpIcon },
+  { id: 'giro', title: 'Capital de Giro', sub: 'Parcelas, juros e total a pagar', Icon: GiroIcon },
+  { id: 'analise-desconto', title: 'Análise de desconto', sub: 'Compare títulos com giro Price', Icon: DescontoIcon },
+  { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxas, carência e parcelas', Icon: FinameIcon },
 ]
 
 function CapitalDeGiro({ onBack }) {
@@ -65,7 +67,7 @@ function CapitalDeGiro({ onBack }) {
   const sys = SYSTEMS.find((s) => s.id === system)
   const field = (key, label, control) => (
     <div className="cx-field">
-      <label htmlFor={`cx-${key}`}>{label}</label>
+      <div className="cx-field-label"><label htmlFor={`cx-${key}`}>{label}</label></div>
       {control}
       <p className="cx-error" id={`cx-${key}-err`} role={errors[key] ? 'alert' : undefined}>{errors[key] ?? ''}</p>
     </div>
@@ -73,10 +75,10 @@ function CapitalDeGiro({ onBack }) {
   return (
     <section className="cx" aria-labelledby="calc-h">
       <button type="button" className="cx-back" onClick={onBack}><span aria-hidden="true">‹</span> Calculadoras</button>
-      <h2 id="calc-h" className="cx-title"><span className="cx-icon" aria-hidden="true"><GiroIcon /></span>Capital de Giro</h2>
+      <h2 id="calc-h" className="cx-title cx-heading"><span className="cx-heading-text"><span className="cx-icon" aria-hidden="true"><GiroIcon /></span><span>Capital de Giro</span></span><Help title="Capital de Giro: cálculo e premissas"><p>Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. Não é o CET do contrato.</p><p>O IOF de pessoa jurídica é calculado sobre o principal de cada parcela, com meses de 365/12 dias, pois esta calculadora não pede datas. A taxa anual é convertida por juros compostos.</p></Help></h2>
 
       <article className="desk-panel cx-panel">
-        <header><h3>Condições gerais</h3></header>
+        <header><h3 className="cx-heading"><span>Condições gerais</span></h3></header>
         <div className="cx-form">
           {field('value', 'Valor', <MoneyInput id="cx-value" aria-invalid={!!errors.value} aria-describedby="cx-value-err" value={valueText} onChange={setValueText} />)}
           {field('n', 'Prazo (meses)', <input id="cx-n" inputMode="numeric" autoComplete="off" aria-invalid={!!errors.n} aria-describedby="cx-n-err" value={nText} onChange={(e) => setNText(e.target.value)} onFocus={(e) => e.target.select()} />)}
@@ -90,34 +92,35 @@ function CapitalDeGiro({ onBack }) {
             </div>
           ))}
           <div className="cx-field">
-            <span className="cx-label" id="cx-system-l">Sistema de amortização</span>
+            <div className="cx-field-label"><span className="cx-label" id="cx-system-l">Sistema de amortização</span><Help title={`Sistema de amortização: ${sys.label}`}><p>{sys.hint}</p></Help></div>
             <div className="seg" role="group" aria-labelledby="cx-system-l">
               {SYSTEMS.map((s) => <button key={s.id} type="button" aria-pressed={system === s.id} onClick={() => setSystem(s.id)}>{s.label}</button>)}
             </div>
-            <p className="cx-hint">{sys.hint}</p>
           </div>
-          <details className="cx-iof">
-            <summary>Alíquotas do IOF (pessoa jurídica)</summary>
+          <div className="cx-iof">
+            <div className="cx-field-label"><span className="cx-label">IOF de pessoa jurídica</span><Help title="Alíquotas do IOF"><p>Padrão: {IOF_PJ.fixed.toLocaleString('pt-BR')}% sobre o valor, uma vez, mais {IOF_PJ.daily.toLocaleString('pt-BR')}% ao dia sobre o principal de cada parcela, até {IOF_PJ.maxDays} dias (Decreto 12.499/2025). Confirme a alíquota vigente com seu banco.</p></Help></div>
+            <details>
+            <summary>Editar alíquotas</summary>
             <div className="cx-iof-fields">
               <div className="cx-field">
-                <label htmlFor="cx-iof-fixed">Adicional, uma vez (%)</label>
+                <div className="cx-field-label"><label htmlFor="cx-iof-fixed">Adicional, uma vez (%)</label></div>
                 <input id="cx-iof-fixed" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofFixedText} onChange={(e) => setIofFixedText(e.target.value)} onFocus={(e) => e.target.select()} />
               </div>
               <div className="cx-field">
-                <label htmlFor="cx-iof-daily">Diária (% ao dia)</label>
+                <div className="cx-field-label"><label htmlFor="cx-iof-daily">Diária (% ao dia)</label></div>
                 <input id="cx-iof-daily" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofDailyText} onChange={(e) => setIofDailyText(e.target.value)} onFocus={(e) => e.target.select()} />
               </div>
             </div>
             <p className="cx-error" id="cx-iof-err" role={errors.iof ? 'alert' : undefined}>{errors.iof ?? ''}</p>
-            <p className="cx-hint">Padrão: {IOF_PJ.fixed.toLocaleString('pt-BR')}% sobre o valor, uma vez, mais {IOF_PJ.daily.toLocaleString('pt-BR')}% ao dia sobre o principal de cada parcela, até {IOF_PJ.maxDays} dias (Decreto 12.499/2025). Confirme a alíquota vigente com seu banco.</p>
-          </details>
+            </details>
+          </div>
         </div>
       </article>
 
       <div className="cx-gap" aria-hidden="true" />
 
       <article className="desk-panel cx-panel" aria-live="polite">
-        <header><h3>Resultado</h3></header>
+        <header><h3 className="cx-heading"><span>Resultado</span><Help title="Como comparar os resultados"><p>As colunas usam o mesmo valor, prazo, taxa e IOF; muda apenas o sistema de amortização. O pagamento final soma valor, juros e IOF.</p></Help></h3></header>
         <div className="cx-wrap" role="region" aria-label="Resultado por sistema de amortização; role para ver todas as colunas" tabIndex={0}>
           <table className="cx-matrix">
             <thead>
@@ -154,9 +157,8 @@ function CapitalDeGiro({ onBack }) {
             ))}
           </ul>
         )}
-        <p className="cx-hint cx-pad">Mesmo valor, prazo, taxa e IOF nas colunas; só muda o sistema de amortização. Pagamento Final = valor + juros + IOF.</p>
       </article>
-      <p className="status">Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. IOF de pessoa jurídica calculado sobre o principal de cada parcela, com meses de 365/12 dias (a tela não pede datas). Taxa a.a. convertida por juros compostos. Não é o CET do contrato.</p>
+      <p className="status">Estimativa sem tarifas e seguros · Não é CET</p>
     </section>
   )
 }
@@ -168,10 +170,10 @@ export default function Calculadora({ view, onView }) {
   if (view === 'conta-garantida') return <ContaGarantida onBack={() => onView('')} />
   if (view === 'giro') return <CapitalDeGiro onBack={() => onView('')} />
   if (view === 'analise-desconto') return <AnaliseDesconto onBack={() => onView('')} />
-  if (view === 'finame-materiais') return <FinameMateriais onBack={() => onView('')} />
+  if (view === 'finame-materiais') return <FinameMateriais onBack={() => onView('')} onFundingView={onView} />
   return (
     <section className="cx" aria-labelledby="calc-title">
-      <h2 id="calc-title" className="cx-title">Calculadoras</h2>
+      <h2 id="calc-title" className="cx-title cx-heading"><span>Calculadoras</span></h2>
       <div className="cx-tiles">
         {CALCS.map(({ id, title, sub, Icon }) => (
           <button key={id} type="button" className="cx-tile" onClick={() => onView(id)} aria-label={`${title}: abrir calculadora`}>

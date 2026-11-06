@@ -115,23 +115,26 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
       await p.close()
     }
-    // Setores: aba depois de BNDES, com notícias por dia e, nos insumos, preço, "o que mexe" e ficha da visita
+    // Setores: notícias institucionais em 120h, preço e roteiro de investigação da visita.
     for (const width of [390, 1280]) {
       const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
-      // `atras` em minutos (não horas): perto da meia-noite, "1 hora atrás" cai em ontem e a quebra por dia deixa de dizer "Hoje"
-      const agora = Date.now(), min = 60e3
-      const mat = (title, atras) => ({ title, link: `https://exemplo.com/s/${encodeURIComponent(title)}`, source: 'Valor Econômico', t: agora - atras * min })
-      const temas = { schemaVersion: 1, generatedAt: agora, windowDays: 7, stale: false, errors: [], temas: {
-        industria: { label: 'Indústria', grupo: 'setor', items: [mat('Produção industrial cai com juros altos', 2)] },
-        cobre: { label: 'Cobre', grupo: 'insumo', items: [mat('Cobre atinge máxima com demanda da China', 1), mat('Estoques de cobre na LME recuam', 30 * 60)] } } }
-      const comm = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: new Date().toISOString(), variationPct: 2.5, variationBasis: 'mês anterior' }] }
-      await p.route('**/temas.json*', (r) => r.fulfill({ json: temas }))
+      // Relógio e publicações sintéticas compartilham o instante; nenhuma URL é consultada.
+      const agora = Date.parse('2026-11-05T15:00:00Z'), min = 60e3, stamp = new Date(agora).toISOString()
+      await p.clock.setFixedTime(agora)
+      const mat = (title, atras, slug) => ({ title: `QA: ${title}`, link: `https://www.gov.br/mdic/pt-br/assuntos/noticias/qa-${slug}`, sourceId: 'mdic', type: 'comunicado', licenseUrl: 'https://creativecommons.org/licenses/by-nd/3.0/', publishedAt: new Date(agora - atras * min).toISOString(), collectedAt: stamp })
+      const sectorNews = { schemaVersion: 1, generatedAt: stamp, windowDays: 5, sourceStates: { mdic: { status: 'ok', checkedAt: stamp, lastSuccessAt: stamp, reason: 'Fixture sintética do teste; não é publicação real.' } }, topics: {
+        industria: { items: [mat('Produção industrial cai com juros altos', 2, 'industria'), mat('Produção industrial expirada', 121 * 60, 'industria-expirada')] },
+        cobre: { items: [mat('Cobre atinge máxima com demanda da China', 1, 'cobre-demanda'), mat('Estoques de cobre na LME recuam', 30 * 60, 'cobre-estoques'), mat('Preço do cobre expirado', 121 * 60, 'cobre-expirado')] } } }
+      const comm = { schemaVersion: 1, generatedAt: stamp, commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: stamp, variationPct: 2.5, variationBasis: 'mês anterior' }] }
+      await p.route('**/sector-news.json*', (r) => r.fulfill({ json: sectorNews }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: comm }))
       await p.goto(base + '/#setores')
       const painel = p.locator('.setores .desk-panel'); await painel.waitFor()
-      await painel.locator('.reforma li').first().waitFor()
+      await painel.locator('.sector-news-list > li').first().waitFor()
       assert.match(await painel.innerText(), /Produção industrial cai/)
+      assert.equal(await painel.locator('.sector-news-list > li').count(), 1, 'somente publicação industrial dentro de 120h')
+      assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Produção industrial expirada/)
       // título "Setores e Insumos"; dois botões; em Setores só os setores, em Insumos só os insumos (Metais e Energia)
       assert.equal((await p.locator('main h1').first().textContent()).trim(), 'Setores e Insumos')
       const secao = p.getByRole('navigation', { name: 'Setores ou insumos' })
@@ -146,9 +149,13 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await painel.getByRole('tab', { name: 'Cobre' }).click()
       await painel.locator('.setor-preco').waitFor()
       assert.match(await painel.locator('.setor-preco').innerText(), /10\.000,00/)
-      assert.ok(await painel.locator('.reforma li').count() === 2, 'notícias do cobre')
-      assert.equal(await painel.getByRole('region', { name: 'O que mexe no preço' }).count(), 1)
-      assert.equal(await painel.getByRole('region', { name: 'Ficha da visita' }).count(), 1)
+      assert.equal(await painel.locator('.sector-news-list > li').count(), 2, 'duas notícias do cobre em 120h')
+      assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Preço do cobre expirado/)
+      assert.match(await painel.locator('.sector-news-meta').first().innerText(), /Janela móvel de 120 horas/)
+      const visita = painel.getByRole('region', { name: 'Preparar a visita · Cobre', exact: true })
+      assert.equal(await visita.count(), 1, 'ficha atual da visita')
+      assert.equal(await visita.getByRole('region', { name: 'Pontos sensíveis a verificar', exact: true }).count(), 1, 'fatores do negócio para investigar')
+      assert.equal(await visita.getByRole('region', { name: 'Cinco perguntas específicas', exact: true }).locator('ol > li').count(), 5)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       assert.deepEqual(errors, [])
       await p.close()
@@ -463,6 +470,8 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.doesNotMatch(await p.locator('.market-context').innerText(), /Fonte:|AwesomeAPI|SGS \d|EIA|Banco Mundial|ANP/)
       assert.equal(await p.getByText(/Cobertura parcial/).count(), 1, 'só a tabela de commodities em dólar está incompleta (fixture sem os novos ids)')
       // feriados: Londres, Tóquio e China entram na aba, com a bandeira do país em cada linha
+      // O recorte móvel precisa de data conhecida; os escopos locais não herdam feriados nacionais.
+      await p.clock.setFixedTime(Date.parse('2026-11-05T15:00:00Z'))
       await p.goto(base + '/#feriados')
       await p.locator('.fer-filter select').waitFor()
       const opts = await p.locator('.fer-filter option').allInnerTexts()
@@ -471,13 +480,23 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.fer-filter select').selectOption('JP')
       assert.ok(await p.locator('.fer-list li').count() > 0, 'feriados do Japão')
       await p.locator('.fer-filter select').selectOption('CWB')
-      assert.match(await p.locator('main').innerText(), /Aniversário de Curitiba|Nossa Senhora da Luz dos Pinhais/, 'feriados de Curitiba')
+      const padroeira = p.locator('.fer-list li', { hasText: 'Nossa Senhora da Luz dos Pinhais' })
+      assert.equal(await padroeira.count(), 1, 'feriado religioso municipal de Curitiba dentro do recorte')
+      assert.equal(await padroeira.locator('.fer-date b').innerText(), '08/09/27')
+      assert.equal(await padroeira.locator('.fer-where').innerText(), 'Curitiba', 'a linha conserva somente o calendário selecionado')
+      assert.doesNotMatch(await p.locator('.fer-months').innerText(), /Aniversário de Curitiba/, 'aniversário não é feriado municipal')
       await p.locator('.fer-filter select').selectOption('PRE')
-      assert.match(await p.locator('main').innerText(), /Emancipação Política do Paraná/, 'feriado estadual do Paraná')
+      assert.equal(await p.locator('.fer-filter select').inputValue(), 'PRE')
+      assert.equal(await p.locator('.fer-list li').count(), 0, 'sem datas estaduais inventadas ou herdadas dos calendários nacionais e municipais')
+      assert.match(await p.locator('.fer-count').innerText(), /^0 datas cadastradas nesta seleção · cobertura parcial$/)
+      assert.match(await p.locator('.feriados [role="status"]').innerText(), /Cobertura parcial: Estado do Paraná \(2026, 2027\) sem calendário completo verificado nesta base\. A ausência de registros não permite afirmar que não haverá feriados ou suspensões\./)
+      assert.match(await p.locator('.feriados').innerText(), /Não há datas cadastradas nesta seleção\. Consulte a fonte oficial: a cobertura incompleta não indica ausência de feriados\./)
+      assert.doesNotMatch(await p.locator('.feriados').innerText(), /Emancipação Política do Paraná/, '19 de dezembro não volta a ser apresentado como feriado civil estadual')
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 20)
+      assert.equal(await p.locator('.learn-list li').count(), 21)
+      assert.equal(await p.locator('.learn-list button', { hasText: 'Regime FÁCIL' }).count(), 1, 'o catálogo inclui o conceito adicionado de Regime FÁCIL')
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
@@ -491,7 +510,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await p.locator('.learn-count').innerText(), /2 conceitos encontrados/)
       await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
       await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
-      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 20)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 21)
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /subordinação[\s\S]*30%[\s\S]*R\$ 1\.000\.000[\s\S]*R\$ 1\.000\.000/)
@@ -510,7 +529,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
       await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
-      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 20, 'um papel para cada conceito')
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 21, 'um papel para cada conceito')
       assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
       await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()

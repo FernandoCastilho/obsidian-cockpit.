@@ -10,10 +10,11 @@ import { hookRenderer } from './helpers/hooks.mjs'
 import * as model from '../src/contaGarantida.js'
 
 const require = createRequire(import.meta.url)
+const CalculatorHelp = ({ title, label }) => React.createElement('button', { type: 'button', 'aria-label': `Ajuda: ${title || label}`, 'aria-expanded': false }, '?')
 const nodes = el => Array.isArray(el) ? el.flatMap(nodes) : el && typeof el === 'object' ? [el, ...nodes(el.props?.children)] : []
-const textOf = el => Array.isArray(el) ? el.map(textOf).join('') : el && typeof el === 'object' ? textOf(el.props?.children) : typeof el === 'string' || typeof el === 'number' ? String(el) : ''
+const textOf = el => Array.isArray(el) ? el.map(textOf).join('') : el && typeof el === 'object' ? el.type === CalculatorHelp || String(el.props?.className ?? '').split(/\s+/).includes('sr-only') ? '' : textOf(el.props?.children) : typeof el === 'string' || typeof el === 'number' ? String(el) : ''
 async function setup(t) {
-  const deps = { react: React, './contaGarantida.js': { ...model, cgInitialForm: () => model.cgInitialForm('2026-11-05') }, './ContaGarantida.css': {} }
+  const deps = { react: React, './contaGarantida.js': { ...model, cgInitialForm: () => model.cgInitialForm('2026-11-05') }, './ContaGarantida.css': {}, './CalculatorHelp.jsx': CalculatorHelp }
   for (const file of ['MoneyInput.jsx', 'ContaGarantida.jsx']) {
     const source = await readFile(new URL('../src/' + file, import.meta.url), 'utf8')
     const { code } = await transform(source, { loader: 'jsx', format: 'cjs', jsx: 'automatic' })
@@ -43,7 +44,11 @@ test('inicia sem valores presumidos, taxa vazia impede resultado e não oferece 
   assert.equal(h.field('amount').props.value, '')
   assert.equal(h.field('capitalization'), undefined)
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
-  assert.match(h.text(), /Juros e IOF são pagos à parte, nunca incorporados ao saldo/)
+  assert.match(h.text(), /Estimativa para operação adimplente e rotativa/)
+  assert.match(h.text(), /Não é extrato, cotação bancária nem CET/)
+  const help = nodes(h.render.value).find(node => node.type === CalculatorHelp && node.props.title === 'Conta Garantida')
+  assert.match(renderToStaticMarkup(help.props.children), /Juros e IOF são pagos à parte, nunca incorporados ao saldo/)
+  assert.doesNotMatch(h.text(), /Juros e IOF são pagos à parte, nunca incorporados ao saldo/)
   assert.equal(h.button('Utilização única').props['aria-pressed'], true)
   await h.change('amount', '100.000')
   await h.change('rate', '3')
@@ -101,7 +106,7 @@ test('prazo por data, erros inline, feriados e IOF manual operam sem resultados 
   assert.match(h.text(), /Resultado estimado do período/)
 })
 
-test('Simples exige confirmação e operação inválida não recebe cálculo', async t => {
+test('Simples exige confirmação e a validação continua rejeitando operação não suportada', async t => {
   const h = await setup(t)
   await h.change('amount', '1000')
   await h.change('rate', '0')
@@ -110,9 +115,36 @@ test('Simples exige confirmação e operação inválida não recebe cálculo', 
   await h.change('operationValue', '30000')
   await h.change('eligible', true)
   assert.match(h.text(), /Resultado estimado do período/)
-  await h.change('status', 'unsupported')
+  const unsupported = model.parseContaGarantidaForm({ ...model.cgInitialForm('2026-11-05'), amount: '1000', rate: '0', status: 'unsupported' })
+  assert.equal(unsupported.result, null)
+  assert.match(unsupported.errors.status, /regras próprias/)
+})
+
+test('taxa mensal simplificada preserva os encargos de 2% por 10 dias e o enquadramento de IOF', async t => {
+  const h = await setup(t)
+  for (const id of ['status', 'rateBase', 'conversion']) assert.equal(h.field(id), undefined, id)
+  const rateLabel = nodes(h.render.value).find(node => node.type === 'label' && node.props.htmlFor === 'cg-rate')
+  assert.equal(textOf(rateLabel), 'Taxa do contrato (% a.m.)')
+  assert.equal(h.field('taxProfile').props.value, 'pj')
+  assert.equal(h.field('taxProfile').props.children.length, model.CG_TAX_PROFILES.length)
+  await h.change('amount', '100.000')
+  await h.change('rate', '2')
+  await h.change('duration', '10')
+  assert.equal(h.field('rate').props.value, '2')
+  const original = model.parseContaGarantidaForm({ ...model.cgInitialForm('2026-11-05'), amount: '100.000', rate: '2', duration: '10', rateBase: '30', conversion: 'proportional', status: 'performing' })
+  assert.equal(original.result.ok, true)
+  const kpis = nodes(h.render.value).find(node => node.props?.className === 'cg-kpis')
+  const actual = nodes(kpis).filter(node => node.type === 'b').map(textOf)
+  const brl = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  assert.deepEqual(actual, [original.result.totals.interest, original.result.totals.dailyIof, original.result.totals.additionalIof, original.result.totals.cost, original.result.balance, original.result.totals.draw].map(brl))
+  assert.equal(actual[0], brl(666.67))
+  assert.equal(actual[1], brl(82))
+  assert.equal(actual[2], brl(380))
+  assert.equal(actual[3], brl(1128.67))
+  await h.change('taxProfile', 'simples')
+  assert.ok(h.field('operationValue'))
+  assert.ok(h.field('eligible'))
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
-  assert.match(h.text(), /regras próprias/)
 })
 
 test('paginação diária e estrutura acessível renderizada sem navegador', async t => {

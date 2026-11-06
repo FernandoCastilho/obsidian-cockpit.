@@ -272,7 +272,7 @@ export default function App() {
         <OnlineBadge /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
       </div>
     )}
-    <main className="app" ref={mainRef}>
+    <main className={`app${tab === 'calculadora' ? ' app-calculators' : ''}`} ref={mainRef}>
 
       <Suspense fallback={<p className="status" role="status">Carregando seção…</p>}>
       {update && (

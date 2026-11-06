@@ -279,10 +279,10 @@ test('datas e valores independem do timezone do processo', () => {
   assert.ok(outputs.every(output => output === outputs[0]))
 })
 
-test('Finame preservado byte a byte após as correções UX já reconciliadas', () => {
+test('Finame: motor e testes preservados, interface revisada com custos financeiros separados', () => {
   const hashes = [
     ['../src/finameMateriais.js', '6fa9f1165eac10b84fcb8be989cd1e92e2eba00033dd6b79aae622704cf63ea7'],
-    ['../src/FinameMateriais.jsx', 'f9a3ecc17d72f7876981e992fafff2ab83c3eab32888e0d436c1b9ed3046a62b'],
+    ['../src/FinameMateriais.jsx', '8c29f1ef224f8c1a82232b7961e042932f58265367070eb59ab82a38919d8602'],
     ['./finame-materiais.test.mjs', 'e9d3ade3d94338ed34ca8ac874b323039eb0185eb39c80515443d4052ef2121a'],
   ]
   for (const [path, expected] of hashes) assert.equal(createHash('sha256').update(readFileSync(new URL(path, import.meta.url))).digest('hex'), expected)
