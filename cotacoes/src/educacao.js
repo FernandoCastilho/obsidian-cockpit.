@@ -46,6 +46,10 @@ export const taxaCdiMaisSpread = (cdi, spread) => (1 + cdi) * (1 + spread) - 1
 // Juros de um prazo, a juros compostos: principal × ((1 + taxa anual)^t − 1), com t em fração do ano (CDI: dias úteis ÷ 252).
 export const jurosNoPrazo = ({ principal, taxaAnual, fracaoAno }) => principal * ((1 + taxaAnual) ** fracaoAno - 1)
 
+// Exemplo didático de CET: uma entrada líquida e uma única saída, em dias corridos/365.
+// Para várias parcelas, a taxa é a que iguala o valor presente de todas as saídas à entrada.
+export const cetParcelaUnica = ({ liquido, pagamento, dias }) => (pagamento / liquido) ** (365 / dias) - 1
+
 // FIDC: índice de subordinação (cotas subordinadas sobre o total de cotas) e a distribuição de uma perda da carteira.
 export const indiceSubordinacao = ({ senior, subordinada }) => subordinada / (senior + subordinada)
 // A perda consome primeiro a cota subordinada; só o que passa dela atinge a sênior.
@@ -300,6 +304,46 @@ export const CONCEITOS = [
       {nome:'BNDES — serviços de coordenação em ofertas públicas',url:'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-servicos-coordenacao-em-ofertas-publicas/'},
       {nome:'Autoban — prospecto definitivo de 27/07/2017, páginas 66–68 (exemplo contratual histórico)',url:'https://www.itau.com.br/content/dam/ibba/ofertas-publicas/pdfs/concessionaria-do-sistema-anhanguera-bandeirantes-sa/2017/junho/autoban-prospecto-definitivo.pdf'},
     ],
+  },
+  {
+    id: 'cet', topico: 'Operações de crédito', nome: 'CET (Custo Efetivo Total)', revisadoEm: '2026-11-06',
+    frase: 'É a taxa anual que reúne o custo do crédito, considerando quanto entra no caixa e quanto sai, nas datas de cada pagamento.',
+    crianca: [
+      'A taxa contratual remunera o dinheiro emprestado. O CET reúne também os outros encargos da operação: ajuda a comparar propostas que parecem baratas nos juros, mas cobram mais na entrada ou nas parcelas.',
+      'A conta começa pelo dinheiro líquido recebido. Depois entram as prestações e as demais cobranças vinculadas ao crédito, cada uma na sua data. Mudar uma data pode mudar o CET, mesmo sem alterar o total pago.',
+      'Não se calcula o CET somando os percentuais dos juros, do IOF e de uma tarifa. É preciso encontrar a taxa que faz os pagamentos futuros equivalerem ao dinheiro recebido hoje.',
+    ],
+    analogia: 'É como comparar duas viagens pelo valor completo: a passagem anunciada não revela sozinha o gasto com bagagem e taxas. No crédito, o momento de cada pagamento também entra na comparação.',
+    ajuda: [
+      'A Resolução CMN 4.881 exige cálculo e informação do CET para pessoas físicas, inclusive empresários individuais, e para ME e EPP nos termos da LC 123. Não abrange automaticamente toda empresa; o art. 9º exclui repasses de recursos externos e crédito rural.',
+      'Para adiantamento a depositantes, desconto, cheque especial e crédito rotativo, o art. 6º determina prazo de 30 dias e limite pactuado. Essa regra especial difere do cronograma de um financiamento parcelado.',
+    ],
+    lacunas: [
+      'Considere juros, tarifas, tributos, seguros e outras despesas aplicáveis ligadas à operação, inclusive serviços de terceiros de responsabilidade do tomador. Confira o demonstrativo e o contrato.',
+      'Uma cobrança descontada na liberação reduz o líquido recebido; uma cobrança posterior entra na data em que será paga. Não desconte o mesmo IOF ou a mesma tarifa duas vezes.',
+      'O CET usa dias corridos e base fixa de 365 dias, inclusive quando o intervalo passa por ano bissexto. A apresentação é percentual ao ano, com duas casas decimais; não arredonde as etapas antes de concluir.',
+    ],
+    preciso: {
+      texto: 'FC0 é o crédito líquido; FCj é cada saída; d0 é a data de liberação e dj, a de pagamento. Resolva a equação para CET. Pelo art. 5º, taxas flutuantes e índices de preços não entram no CET regulatório e devem ser informados separadamente. Uma projeção com CDI ou IPCA futuro não é esse CET.',
+      formula: 'Σ [FCj ÷ (1 + CET)^((dj − d0) ÷ 365)] = FC0',
+    },
+    exemplo: (() => {
+      const principal = 10_000, iof = 200, tarifa = 100, pagamento = 11_000, dias = 365
+      const liquido = principal - iof - tarifa
+      const cet = cetParcelaUnica({ liquido, pagamento, dias })
+      return {
+        titulo: 'Didático: uma cobrança ao final de 365 dias',
+        passos: [
+          `Crédito de ${money(principal, 'R$')}, com IOF de ${money(iof, 'R$')} e tarifa de ${money(tarifa, 'R$')} descontados na liberação. São valores fictícios, não alíquotas ou condições comerciais. Líquido recebido: ${money(liquido, 'R$')}.`,
+          `Após ${dias} dias corridos, pagamento único de ${money(pagamento, 'R$')}, sem outras cobranças. Juros sobre o principal: ${pct(pagamento / principal - 1)}.`,
+          `CET = (${nf(pagamento, 0)} ÷ ${nf(liquido, 0)})^(365 ÷ ${dias}) − 1 = ${pct(cet)} ao ano.`,
+        ],
+        resultado: `A taxa contratual do exemplo é ${pct(pagamento / principal - 1)} ao ano, mas o CET é ${pct(cet)} ao ano, porque a empresa recebe ${money(liquido, 'R$')} e paga ${money(pagamento, 'R$')}.`,
+      }
+    })(),
+    noApp: { texto: 'Na aba Juros, acompanhe os referenciais usados nas propostas. Eles ajudam na análise, mas não substituem o CET do fluxo completo de cada operação.', tab: 'juros' },
+    teste: { pergunta: 'Duas propostas com a mesma taxa contratual sempre têm o mesmo CET?', resposta: 'Não. O líquido recebido, os demais encargos e as datas dos pagamentos podem ser diferentes. Compare o fluxo completo e confira se as propostas usam as mesmas condições.' },
+    fontes: [{ nome: 'Banco Central — Resolução CMN 4.881, arts. 1º a 9º', url: 'https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf' }],
   },
   {
     id: 'liquidacao-antecipada',
@@ -1015,6 +1059,8 @@ export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: li
 // outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
 // LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
 export const LIGACOES = [
+  ['cet', 'fee-de-estruturacao', 'Uma comissão vinculada ao crédito altera o líquido recebido ou os pagamentos; o CET considera o valor e a data dessa cobrança, quando aplicável.'],
+  ['cet', 'custo-de-funding', 'O funding ajuda a explicar a taxa cobrada pela instituição; o CET mede o custo do fluxo para o tomador, incluindo os demais encargos aplicáveis.'],
   ['escala-6x1', 'custo-de-funding', 'Reorganizar turnos pode mudar o fluxo de caixa e a necessidade de giro; a decisão de financiar depende da produtividade e da operação de cada empresa.'],
   ['reforma-tributaria', 'split-payment', 'A reforma cria CBS e IBS; o split payment é um dos mecanismos previstos para recolher esses tributos na liquidação financeira.'],
   ['reforma-tributaria', 'custo-de-funding', 'A transição dos tributos e o aproveitamento de créditos podem alterar o caixa da empresa e o valor de capital de giro a financiar.'],
@@ -1068,6 +1114,7 @@ export const LIGACOES = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    { id: 'cet', texto: 'reúne o custo do crédito para o tomador, com o líquido recebido, os encargos aplicáveis e as datas dos pagamentos.' },
     { id: 'escala-6x1', texto: 'liga organização dos turnos, produtividade e planejamento do caixa, com transição e enquadramento trabalhista a conferir.' },
     { id: 'reforma-tributaria', texto: 'muda a apuração dos tributos sobre consumo e exige revisar preços, créditos e fluxo de caixa durante a transição.' },
     { id: 'split-payment', texto: 'separa IBS e CBS no pagamento, conforme as regras de implantação; afeta o valor disponível para financiar a operação.' },

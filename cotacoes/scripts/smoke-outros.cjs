@@ -127,7 +127,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
       await p.close()
     }
-    // Setores: notícias institucionais em 120h, preço e roteiro de investigação da visita.
+    // Setores: notícias institucionais em 120h e preço, com a preparação de visita removida.
     for (const width of [390, 1280]) {
       const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
@@ -147,10 +147,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await painel.innerText(), /Produção industrial cai/)
       assert.equal(await painel.locator('.sector-news-list > li').count(), 1, 'somente publicação industrial dentro de 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Produção industrial expirada/)
-      await p.getByRole('button', { name: '← Central de setores' }).click()
-      await p.waitForURL('**/#setores/central')
       const central = p.locator('.central-setorial')
       await central.getByRole('heading', { name: 'Central de setores', exact: true }).waitFor()
+      assert.equal(await central.locator('.central-catalog').count(), 1, 'menus permanecem ao abrir o conteúdo setorial')
       assert.equal(await central.getByRole('button', { name: 'Referência B3', exact: true }).count(), 0)
       await central.getByRole('button', { name: 'Cobre', exact: true }).click()
       await p.waitForURL('**/#setores/cobre')
@@ -160,10 +159,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await painel.locator('.sector-news-list > li').count(), 2, 'duas notícias do cobre em 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Preço do cobre expirado/)
       assert.match(await painel.locator('.sector-news-meta').first().innerText(), /Janela móvel de 120 horas/)
-      const visita = painel.getByRole('region', { name: 'Preparar a visita · Cobre', exact: true })
-      assert.equal(await visita.count(), 1, 'ficha atual da visita')
-      assert.equal(await visita.getByRole('region', { name: 'Pontos sensíveis a verificar', exact: true }).count(), 1, 'fatores do negócio para investigar')
-      assert.equal(await visita.getByRole('region', { name: 'Cinco perguntas específicas', exact: true }).locator('ol > li').count(), 5)
+      assert.equal(await painel.getByRole('region', { name: /Preparar a visita/ }).count(), 0, 'preparação de visita removida conforme o catálogo atual')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       if (out) await p.screenshot({ path: path.join(out, `setores-${width}-cobre.png`), fullPage: true })
       assert.deepEqual(errors, [])
@@ -510,7 +506,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
         if (!(await button.isDisabled())) await button.click()
         assert.equal(await p.locator('.learn-group[open]').count(), 7)
       }
-      assert.equal(await p.locator('.learn-list li').count(), 25)
+      assert.equal(await p.locator('.learn-list li').count(), 26)
       assert.equal(await p.locator('.learn-list button', { hasText: 'Regime FÁCIL' }).count(), 1, 'o conceito existente de Regime FÁCIL está preservado')
       assert.equal(await p.locator('.learn-group[open]').count(), 0, 'categorias começam recolhidas')
       if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-recolhido.png`), fullPage: true })
@@ -533,7 +529,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await p.locator('.learn-count').innerText(), /2 conceitos encontrados/)
       await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
       await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
-      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 25)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 26)
       assert.equal(await p.locator('.learn-group[open]').count(), 7, 'limpar busca restaura categorias abertas manualmente')
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
@@ -554,14 +550,21 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
       await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
-      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 25, 'um papel para cada conceito')
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 26, 'um papel para cada conceito')
       assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
       const buscaFinal = p.getByRole('searchbox', { name: 'Buscar conceito' })
-      for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos']]) {
+      for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos'], ['CET', /CET \(Custo Efetivo Total\)/, 'cet']]) {
         await buscaFinal.fill(buscaTema)
-        await p.locator('.learn-list li button', { hasText: titulo }).first().click()
+        await p.locator('.learn-list li button', { hasText: slug === 'cet' ? /^CET/ : titulo }).first().click()
         await p.locator('.learn-detail h2', { hasText: titulo }).waitFor()
         assert.equal(await p.locator('.learn-detail details').filter({ has: p.locator('summary', { hasText: /^Fontes$/ }) }).count(), 1, 'novo tema informa fontes')
+        if (slug === 'cet') {
+          assert.match(await p.locator('.learn-detail').innerText(), /13,40% ao ano/)
+          await p.locator('.learn-detail summary', { hasText: /^Versão precisa$/ }).click()
+          assert.match(await p.locator('.learn-detail [role="math"]').innerText(), /dj − d0.*365/)
+          await p.locator('.learn-detail summary', { hasText: /^Fontes$/ }).click()
+          assert.equal(await p.locator('.learn-detail a[href="https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf"]').count(), 1)
+        }
         if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-${slug}.png`), fullPage: true })
       }
       await buscaFinal.fill('')
