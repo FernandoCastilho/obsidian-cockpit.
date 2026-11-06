@@ -510,7 +510,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
         if (!(await button.isDisabled())) await button.click()
         assert.equal(await p.locator('.learn-group[open]').count(), 7)
       }
-      assert.equal(await p.locator('.learn-list li').count(), 25)
+      assert.equal(await p.locator('.learn-list li').count(), 26)
       assert.equal(await p.locator('.learn-list button', { hasText: 'Regime FÁCIL' }).count(), 1, 'o conceito existente de Regime FÁCIL está preservado')
       assert.equal(await p.locator('.learn-group[open]').count(), 0, 'categorias começam recolhidas')
       if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-recolhido.png`), fullPage: true })
@@ -533,7 +533,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.match(await p.locator('.learn-count').innerText(), /2 conceitos encontrados/)
       await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
       await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
-      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 25)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 26)
       assert.equal(await p.locator('.learn-group[open]').count(), 7, 'limpar busca restaura categorias abertas manualmente')
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
@@ -554,14 +554,21 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
       await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
-      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 25, 'um papel para cada conceito')
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 26, 'um papel para cada conceito')
       assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
       const buscaFinal = p.getByRole('searchbox', { name: 'Buscar conceito' })
-      for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos']]) {
+      for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos'], ['CET', /CET \(Custo Efetivo Total\)/, 'cet']]) {
         await buscaFinal.fill(buscaTema)
         await p.locator('.learn-list li button', { hasText: titulo }).first().click()
         await p.locator('.learn-detail h2', { hasText: titulo }).waitFor()
         assert.equal(await p.locator('.learn-detail details').filter({ has: p.locator('summary', { hasText: /^Fontes$/ }) }).count(), 1, 'novo tema informa fontes')
+        if (slug === 'cet') {
+          assert.match(await p.locator('.learn-detail').innerText(), /13,40% ao ano/)
+          await p.locator('.learn-detail summary', { hasText: /^Versão precisa$/ }).click()
+          assert.match(await p.locator('.learn-detail [role="math"]').innerText(), /dj − d0.*365/)
+          await p.locator('.learn-detail summary', { hasText: /^Fontes$/ }).click()
+          assert.equal(await p.locator('.learn-detail a[href="https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf"]').count(), 1)
+        }
         if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-${slug}.png`), fullPage: true })
       }
       await buscaFinal.fill('')

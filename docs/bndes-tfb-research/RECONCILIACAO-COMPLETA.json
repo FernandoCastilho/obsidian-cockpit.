@@ -25,13 +25,19 @@
       "interval": "elapsed-days",
       "regulatoryCetValidated": false
     },
-    "reportedAnnualCet": 0.2001,
-    "annualDifferencePercentagePoints": 0.14688992893113206,
+    "reportedAnnualCet": null,
+    "annualDifferencePercentagePoints": null,
     "monthly30DayEquivalent": 0.01520719239968107,
     "evidenceOrigin": "user-authored-test",
-    "cetPending": "Reference source formula/cell ranges, initial date and selected flows remain unconfirmed; the declared-flow CET is computed. Contract/tax coverage remains unconfirmed.",
     "calculatedAnnualCetPercentDisplayed": "20.16",
-    "cetStatus": "reference-mismatch"
+    "cetStatus": "calculated-no-reference",
+    "monthlyOneTwelfthEquivalent": 0.015420023595220246,
+    "referencePolicy": "ignored-by-user-instruction",
+    "mathematicalCetValidation": "validated-declared-cash-flow",
+    "mathematicalCetPending": null,
+    "contractCertificationPending": [
+      "Completude contratual dos encargos e enquadramento normativo e fiscal não certificados; separados da validação matemática do fluxo declarado."
+    ]
   },
   "calculation": {
     "ok": true,
@@ -1456,17 +1462,17 @@
     "totalContractCostCents": null,
     "finalPayment": null,
     "cet": {
-      "reportedAnnualRateDecimal": "0.2001",
+      "reportedAnnualRateDecimal": null,
       "calculatedAnnualRateDecimal": 0.20156889928931132,
-      "annualDifferencePercentagePoints": 0.14688992893113206,
+      "annualDifferencePercentagePoints": null,
       "residualCents": 5.960464477539063e-8,
-      "referenceResidualCents": -521424.41051644087,
+      "referenceResidualCents": null,
       "referenceTolerancePercentagePoints": 0.005,
       "dayCount": "actual-365-fixed",
       "interval": "elapsed-days",
       "calculationStatus": "calculated-declared-cash-flow",
       "validated": false,
-      "status": "reference-mismatch"
+      "status": "calculated-no-reference"
     },
     "warnings": [
       "Estimativa não validada contratualmente. Reconciliação limitada ao horizonte documentado.",
@@ -1475,7 +1481,6 @@
       "Aplicabilidade das alíquotas e da base de IOF precisa de confirmação fiscal para a operação.",
       "Liberação no mês de cobrança (item 5.6), múltiplas liberações e IOF financiado não são suportados.",
       "Expoentes fracionários usam aritmética binária com bloqueio próximo de meio centavo; a reprodução não certifica arredondamento contratual em todos os casos.",
-      "O CET calculado do fluxo declarado diverge da referência informada. A referência foi preservada; sua fórmula e suas entradas originais ainda não foram conciliadas.",
       "A taxa precisa foi inferida do cenário, não fornecida com a precisão original das células. Não confundir com taxa oficial ou cotação atual.",
       "Âncora de carência inferida; assinatura não foi substituída pela data de liberação.",
       "Calendário parcial informado: as datas calculadas são hipóteses dentro da cobertura, não calendário bancário validado."

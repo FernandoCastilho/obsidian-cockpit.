@@ -26,7 +26,7 @@ test('auditoria: política nova preserva as 13 linhas, mas muda a cauda observad
   const input = fullInput()
   const next = run(input)
   assert.deepEqual(next.paymentEventCoverage, { covered: 34, expected: 34, allExpectedEventsCovered: true })
-  assert.equal(next.cet.status, 'reference-mismatch')
+  assert.equal(next.cet.status, 'calculated-no-reference')
   assert.equal(next.cet.validated, false)
   input.principalRoundingPolicy = 'constant-cents-final-residual'
   const oldPolicy = run(input)

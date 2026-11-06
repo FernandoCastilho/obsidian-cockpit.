@@ -1,8 +1,8 @@
-> Estado atual: perfil de conferência `0.2.2-research`, integrado em `cotacoes/src/bndesCreditoPequenasEmpresas.js` e sem tela própria. As evidências ficam em `cotacoes/test/fixtures/bndes-tfb`; não são configurações padrão nem cotações atuais. O CET do fluxo completo é calculado; a referência original e a certificação contratual permanecem separadas.
+> Estado atual, revisado em 06/11/2026: perfil de conferência `0.2.2-research`, integrado em `cotacoes/src/bndesCreditoPequenasEmpresas.js` e sem tela própria. Por instrução de Fernando, o CET do cabeçalho foi desconsiderado no cenário ativo. O resultado usa as 34 parcelas, suas datas, IOF e tarifa. As evidências preservadas ficam em `cotacoes/test/fixtures/bndes-tfb`; não são configurações padrão nem cotações atuais.
 
 # BNDES Crédito Pequenas Empresas: conferência das três páginas
 
-**Versão 0.2.2-research. Todos os 34 pagamentos foram reconciliados em centavos. CET do fluxo informado: 20,16% a.a.; referência de 20,01% a.a. divergente. Isso não certifica o contrato.**
+**Todos os 34 pagamentos foram reconciliados em centavos. CET do fluxo informado: 20,16% a.a., validado matematicamente sem usar uma taxa de referência. Isso não certifica o contrato.**
 
 ## Origem corrigida
 
@@ -29,23 +29,23 @@ Assim, as linhas 29, 31 e 33 amortizam R$ 90.909,10; a última amortiza R$ 90.90
 
 O cronograma também exige o deslocamento observado de 15/06/2028 para 16/06/2028. A lista de dias não úteis continua sendo uma lista explícita suficiente para os vencimentos fotografados, não um calendário bancário completo certificado.
 
-## CET calculado e referência divergente
+## CET calculado pelas parcelas e pelos encargos
 
 Com o líquido inicial, as 34 datas impressas, IOF retido e tarifa no primeiro pagamento, o retorno anual do fluxo em ACT/365 é:
 
-**20,1568899289% a.a., que arredonda para 20,16%, contra 20,01% informado no cabeçalho.**
+**20,1568899289% a.a., que arredonda para 20,16%.**
 
-A diferença é de aproximadamente **0,14689 ponto percentual**. À taxa informada de 20,01%, o valor presente dos pagamentos excede o líquido recebido em **R$ 5.214,24**.
+O cenário ativo define `reportedCet = null`. Os 20,01% do cabeçalho e os 1,51% mensais originais ficam apenas na transcrição histórica; não são entradas, metas, critérios de aceitação nem pendências do novo cálculo. Não é necessário obter a fórmula que gerou esses valores para calcular o CET do fluxo conhecido.
 
-Esse resultado foi confirmado por bisseção, Newton e cálculo independente de alta precisão. Na versão 0.2.2, o motor preenche `cet.calculatedAnnualRateDecimal` quando todos os eventos esperados estão cobertos, com `dayCount = actual-365-fixed` e `status = reference-mismatch`. A referência continua em `reportedAnnualRateDecimal` e nunca substitui o resultado calculado.
+Esse resultado foi confirmado por bisseção, Newton diretamente das 34 linhas e cálculo independente Decimal com 70 dígitos. O motor preenche `cet.calculatedAnnualRateDecimal` quando todos os eventos esperados estão cobertos, com `dayCount = actual-365-fixed`, `status = calculated-no-reference` e `reportedAnnualRateDecimal = null`. Os testes também verificam que uma referência opcional não altera parcelas, fluxo ou CET apurado.
 
 A fórmula geral está definida no [art. 4º da Resolução CMN 4.881](https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf): dias corridos e denominador 365, inclusive quando o intervalo passa por ano bissexto. Para apurar o CET dos pagamentos já documentados não é necessário conhecer como o gerador montou cada parcela.
 
-Para explicar os 20,01% faltam a fórmula original do cenário, referências das células/intervalos, data de liberação usada e encargos selecionados. Precisão da taxa, âncora e calendário são pendências da validação do **gerador**. Composição integral dos encargos e enquadramento da operação são pendências da certificação **contratual/regulatória**, cujo alcance também depende dos arts. 1º e 9º; o método matemático não confirma esse enquadramento. Não faltam linhas do cronograma.
+O cálculo matemático do fluxo declarado está concluído. Precisão da taxa, âncora e calendário são assuntos separados da validação do **gerador**. Composição integral dos encargos e enquadramento da operação dizem respeito à certificação **contratual/regulatória**, cujo alcance também depende dos arts. 1º e 9º; o método matemático não confirma esse enquadramento. Essas ressalvas não tornam ausente o CET das parcelas já documentadas. Não faltam linhas do cronograma.
 
 `cet.validated = false`, `cashFlowComplete = false` e `validationStatus = estimate-not-contract-validated` continuam preservados. Em horizonte parcial, o CET permanece nulo; não há extrapolação de parcelas.
 
-O valor mensal de 1,51% não prova, sozinho, outro erro: 20,01% a.a. convertido por 30/365 resulta em 1,5105129%, compatível com o cabeçalho. A conversão por 1/12 é diferente.
+O resultado regulatório é apresentado ao ano. Para uma explicação financeira adicional, o equivalente por 1/12 do CET calculado é **1,54200236% a.m.**; por 30/365, é **1,52071924% em 30 dias**. São convenções distintas e devem ser identificadas. Nenhuma reutiliza a taxa mensal original do cabeçalho.
 
 ## Testes e uso
 
@@ -56,7 +56,7 @@ $tfbTests = (Get-ChildItem -LiteralPath 'test' -Filter 'bndes-tfb*.test.mjs').Fu
 node --test @tfbTests 'test/bndes-credito-pequenas-empresas.test.mjs'
 ```
 
-As regressões incluem conferência por Newton independente, fórmula fechada de uma cobrança, fluxo sem encargos, ano bissexto, tarifa/IOF uma única vez, referência compatível na precisão exibida, ausência de referência e limite numérico sem teto arbitrário de taxa. O resultado final e a execução da suíte do projeto são registrados na alteração que acompanha esta versão.
+Nesta revisão, **92/92 testes TFB foram aprovados**. As regressões incluem conferência por Newton independente, fórmula fechada de uma cobrança, fluxo sem encargos, ano bissexto, tarifa/IOF uma única vez, referência compatível na precisão exibida, ausência e invariância de referência, preservação das 34 linhas e limite numérico sem teto arbitrário de taxa. O resultado da suíte geral do projeto é registrado na alteração que acompanha esta revisão.
 
 Exemplo, também dentro de `cotacoes`:
 
@@ -65,8 +65,8 @@ import { fullInput } from './test/fixtures/bndes-tfb/full-input.mjs'
 import { reconcileCreditoPequenasEmpresas } from './src/bndesCreditoPequenasEmpresas.js'
 const result = reconcileCreditoPequenasEmpresas(fullInput())
 // result.cet.calculatedAnnualRateDecimal ≈ 0.2015688992893113
-// result.cet.reportedAnnualRateDecimal === '0.2001'
-// result.cet.status === 'reference-mismatch'
+// result.cet.reportedAnnualRateDecimal === null
+// result.cet.status === 'calculated-no-reference'
 ```
 
 O fixture é evidência de pesquisa, não configuração padrão nem cotação atual. A taxa de **17,5402% a.a. continua inferida**, embora reproduza todos os 34 juros com uma única precisão. A regra de geração da âncora, a precisão original das células e o enquadramento tributário não foram certificados.
@@ -85,4 +85,4 @@ Consulte também `ADENDO-FATORES-E-ORIGEM.md` para a composição TLP/IPCA e a d
 - `RECONCILIACAO-COMPLETA.json`: resultado do motor e comparação dos totais.
 - `AUDITORIA-COMPLETA.md`: histórico e estado da conferência.
 
-O perfil permanece sem tela própria; a validação é feita pelo motor, testes e relatório. Finame/TFC, as alíquotas, as datas e os 34 pagamentos não foram alterados para ajustar a referência de 20,01%.
+O perfil permanece sem tela própria; a validação é feita pelo motor, testes e relatório. Finame/TFC, as alíquotas, as datas e os 34 pagamentos foram preservados. O histórico anterior, inclusive a comparação com 20,01%, foi superado por esta instrução e permanece somente para rastreabilidade em `AUDITORIA-COMPLETA.md` e `ADENDO-FATORES-E-ORIGEM.md`.
