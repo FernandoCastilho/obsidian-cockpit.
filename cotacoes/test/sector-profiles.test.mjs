@@ -155,7 +155,7 @@ test('atalho à pergunta move foco sem alterar rota e funciona repetidamente', a
 })
 
 test('integração mantém navegação e B3, substitui roteiro genérico e feed antigo apenas nesta tela', async () => {
-  const source = await readFile(new URL('../src/Setores.jsx', import.meta.url), 'utf8')
+  const source = await readFile(new URL('../src/SetoresLegado.jsx', import.meta.url), 'utf8')
   assert.match(source, /<SectorProfile/)
   assert.match(source, /<SectorNews/)
   assert.match(source, /<SetoresB3/)
