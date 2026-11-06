@@ -1,0 +1,263 @@
+{
+  "studyKey": "atacado/5",
+  "reviewedAt": "2026-11-06",
+  "reviewType": "independent-documentary-and-numeric",
+  "status": "approved-with-disclosed-limitations",
+  "conclusion": "Aprovado documentalmente no recorte declarado. Não foram identificados erros materiais nas métricas, unidades, períodos ou atribuições examinadas. Aprovação não valida engenharia, tributação de operação concreta, concessão de crédito, áudio ou publicação.",
+  "reviewedArtifacts": {
+    "studyFile": "docs/sector-research/atacado.json",
+    "studyCanonicalSha256": "f096678e1e518f3604d320c6a694331d6c478d8ced0c1520f9658526017f8e66",
+    "studyHashConvention": "Objeto atacado/5, JSON UTF-8 ensure_ascii=False sort_keys=True separators=(comma,colon), inclui reviewStatus existente no instante da leitura. Alterações apenas de status não alteram o mérito.",
+    "ledgerSha256": "bfa026132cb89cacd78c0b13b5fa5ffec04188c5cae7435852e4713b469f48df",
+    "sourcesSha256": "2353a51dd735baaed1f48622754f69a7d3c5124f66f73367a4d7537136dc6838",
+    "csvSha256": "0b8bb15fe851afd2feb0e6f9afb62fdf525694c3c3515970bca265b01f14e83f"
+  },
+  "coverage": {
+    "sectionsRead": [
+      "negocio",
+      "cadeia",
+      "concorrencia",
+      "indicadores",
+      "conjuntura",
+      "regulacao",
+      "caixa",
+      "swot",
+      "porter",
+      "cenarios",
+      "visita"
+    ],
+    "summaryRead": true,
+    "chartsRead": true,
+    "diagramRead": true,
+    "canvasQuestionsRead": true,
+    "transcriptRead": true,
+    "limitationsAndMethodRead": true,
+    "ledgerItemsChecked": 20,
+    "historicalPointsRecalculated": 9,
+    "monthlyMetricsChecked": 5,
+    "publishedSourcesChecked": 10
+  },
+  "numericChecks": [
+    {
+      "id": "oil-2017",
+      "value": 956.928,
+      "result": "verified",
+      "independentTotalMilBarris": "956927.6714185",
+      "independentValue": "956.928",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2018",
+      "value": 944.117,
+      "result": "verified",
+      "independentTotalMilBarris": "944117.41430355",
+      "independentValue": "944.117",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2019",
+      "value": 1017.531,
+      "result": "verified",
+      "independentTotalMilBarris": "1017531.452",
+      "independentValue": "1017.531",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2020",
+      "value": 1076.02,
+      "result": "verified",
+      "independentTotalMilBarris": "1076020.36979862",
+      "independentValue": "1076.020",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2021",
+      "value": 1060.369,
+      "result": "verified",
+      "independentTotalMilBarris": "1060369.007",
+      "independentValue": "1060.369",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2022",
+      "value": 1102.85,
+      "result": "verified",
+      "independentTotalMilBarris": "1102849.64764705",
+      "independentValue": "1102.850",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2023",
+      "value": 1241.592,
+      "result": "verified",
+      "independentTotalMilBarris": "1241592.152582",
+      "independentValue": "1241.592",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2024",
+      "value": 1229.012,
+      "result": "verified",
+      "independentTotalMilBarris": "1229011.684",
+      "independentValue": "1229.012",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-2025",
+      "value": 1376.065,
+      "result": "verified",
+      "independentTotalMilBarris": "1376065.39996731",
+      "independentValue": "1376.065",
+      "method": "17 linhas UF/localização por ano, soma Decimal, divisão por 1000, arredondamento a três casas; conferência também com gráfico do estudo."
+    },
+    {
+      "id": "oil-sep",
+      "value": 4.711,
+      "result": "verified",
+      "evidence": "Comunicado ANP de 03/11/2026, corpo do texto, setembro de 2026; verificados conceito, unidade, período e comparação. O subtítulo contém unidade de gás inconsistente; usado o corpo explícito em milhões de m³/d."
+    },
+    {
+      "id": "oil-yoy",
+      "value": 20.3,
+      "result": "verified",
+      "evidence": "Comunicado ANP de 03/11/2026, corpo do texto, setembro de 2026; verificados conceito, unidade, período e comparação. O subtítulo contém unidade de gás inconsistente; usado o corpo explícito em milhões de m³/d."
+    },
+    {
+      "id": "gas-gross",
+      "value": 223.98,
+      "result": "verified",
+      "evidence": "Comunicado ANP de 03/11/2026, corpo do texto, setembro de 2026; verificados conceito, unidade, período e comparação. O subtítulo contém unidade de gás inconsistente; usado o corpo explícito em milhões de m³/d."
+    },
+    {
+      "id": "gas-market",
+      "value": 66.37,
+      "result": "verified",
+      "evidence": "Comunicado ANP de 03/11/2026, corpo do texto, setembro de 2026; verificados conceito, unidade, período e comparação. O subtítulo contém unidade de gás inconsistente; usado o corpo explícito em milhões de m³/d."
+    },
+    {
+      "id": "offshore-share",
+      "value": 98.1,
+      "result": "verified",
+      "evidence": "Comunicado ANP de 03/11/2026, corpo do texto, setembro de 2026; verificados conceito, unidade, período e comparação. O subtítulo contém unidade de gás inconsistente; usado o corpo explícito em milhões de m³/d."
+    },
+    {
+      "id": "cnae-code",
+      "value": "4663-0/00",
+      "result": "verified",
+      "evidence": "Índice público IBGE/Concla confirma código, descrição e notas explicativas. Aceito somente como candidato amplo, não enquadramento definitivo."
+    },
+    {
+      "id": "ncm-heading",
+      "value": "8481",
+      "result": "verified",
+      "evidence": "Sefaz-SP RC40028/2026, relato e ementa: posição8481 inclui torneiras, válvulas e dispositivos semelhantes."
+    },
+    {
+      "id": "nr-code",
+      "value": "NR-13",
+      "result": "verified",
+      "evidence": "PDF oficial MTE lido; itens13.1,13.2,13.3.4 e13.5.4.9. Identificador, não métrica de mercado."
+    },
+    {
+      "id": "pde-edition",
+      "value": "2036",
+      "result": "verified",
+      "evidence": "Notícia EPE de05/11/2026 confirma horizonte2036 e consulta pública aberta até06/11/2026; estudo não apresenta plano como contrato."
+    },
+    {
+      "id": "scenario-horizon",
+      "value": "doze a vinte e quatro meses",
+      "result": "accepted-analytical-assumption",
+      "evidence": "Horizonte próprio doze a vinte e quatro meses, explicitamente qualitativo e sem probabilidade; não atribuído à ANP/EPE."
+    },
+    {
+      "id": "research-date",
+      "value": "2026-11-06",
+      "result": "verified",
+      "evidence": "Data de execução da pesquisa/revisão 06/11/2026, distinta do período dos dados."
+    }
+  ],
+  "sourceChecks": [
+    {
+      "source": "ANP Anuário2026, CSV2.14 e metadados",
+      "result": "verified",
+      "detail": "Página do anuário aberta; CSV local com hash consistente; PDF de metadados baixado e lido. Unidade mil barris, condensado e óleo de xisto confirmados. XLS oficial2.14 também baixado e lido como contraprova. Pequenas diferenças de precisão entre CSV e total XLS não afetam três casas em milhões de barris."
+    },
+    {
+      "source": "ANP setembro2026",
+      "result": "verified",
+      "detail": "4,711 milhões bbl/d;20,3% versus setembro2025;223,98 milhões m³/d produzidos;66,37 milhões m³/d ao mercado;98,1% de petróleo marítimo. Não houve soma de gás bruto com gás disponível, nem extrapolação anual."
+    },
+    {
+      "source": "EPE PDE2036",
+      "result": "verified",
+      "detail": "Data05/11/2026, consulta pública até06/11/2026, bacias citadas, revitalização, novas unidades, reservas e descomissionamento confirmados. Relação com vendas de válvulas explicitamente inferencial."
+    },
+    {
+      "source": "IBGE/Concla4663-0/00",
+      "result": "verified-with-access-limitation",
+      "detail": "Índice oficial confirma título e notas. Ficha direta não usada como inspeção integral. Frase operacional de falha foi removida pelo autor na última versão relida, mantendo candidato e dependência das atividades efetivas."
+    },
+    {
+      "source": "MDIC Comex Stat",
+      "result": "verified",
+      "detail": "Filtros de produto/país/período, FOB, quilograma líquido e quantidade estatística confirmados. Não se atribui ao sistema capacidade de identificar aplicação final automaticamente."
+    },
+    {
+      "source": "Sefaz-SP RC40028/2026",
+      "result": "verified",
+      "detail": "Ementa, relato, interpretação e limite ao consulente lidos. Texto preserva descrição/classificação, uso possível na construção civil e jurisdição paulista; não promete isenção geral."
+    },
+    {
+      "source": "MTE NR13",
+      "result": "verified",
+      "detail": "PDF oficial lido: escopo restrito, responsabilidade do empregador, inspeção/manutenção e dispositivos de segurança. Estudo não exige certificação universal do distribuidor nem equipara dutos, tubulações e todos os componentes."
+    },
+    {
+      "source": "Inmetro dispositivos de segurança seriados",
+      "result": "verified",
+      "detail": "Página e atualização22/07/2026 confirmadas; ensaios, marcação e certificação dependem do código de construção. Não universalizado para todas as válvulas."
+    }
+  ],
+  "materialClaimReview": [
+    {
+      "area": "Escopo e modelos",
+      "result": "pass",
+      "detail": "Revenda, representação, importação, serviços e fabricação são distinguidos. Distribuição de combustível, família específica de válvula e instalação submarina não são presumidas."
+    },
+    {
+      "area": "Mercado e concorrência",
+      "result": "pass-with-limits",
+      "detail": "Sem TAM, market share, ranking, margem média ou estimativa de concentração inventados. Produção e localização de ativos são contexto comprador, não receita do distribuidor. Ausência de medição e de comparação internacional explicitada."
+    },
+    {
+      "area": "Cadeia, preço, caixa e câmbio",
+      "result": "pass-as-analysis",
+      "detail": "Mecanismos econômicos condicionais plausíveis, sem estatísticas empíricas não sustentadas. Pedido, faturamento, aceite e recebimento separados; créditos tributários não tratados universalmente como custo."
+    },
+    {
+      "area": "Financiamento",
+      "result": "pass-as-analysis",
+      "detail": "Alternativas apresentadas para avaliar por operação, não como linhas disponíveis, taxas observadas ou elegibilidade garantida. Aceite/exigibilidade, cessões, concentração e exposição cambial são condicionantes."
+    },
+    {
+      "area": "SWOT, Porter, cenários e visita",
+      "result": "pass-as-analysis",
+      "detail": "Mecanismos e hipóteses explicitamente qualitativos, sem pontuações, probabilidades ou previsão de vendas inventadas. Perguntas pedem comprovação na empresa."
+    },
+    {
+      "area": "Transcrição e diagrama",
+      "result": "pass-documentary-only",
+      "detail": "Texto da narração fiel ao recorte e limites. Diagrama didático não confere habilitação a prestadores. Nenhum áudio foi escutado nesta revisão."
+    }
+  ],
+  "findings": [],
+  "nonBlockingNotes": [
+    "O ledger tem20 entradas:14 métricas e6 identificadores, horizontes ou data. Datas editoriais de fontes e2016 na explicação do recorte foram conferidas adicionalmente nesta revisão, sem confundi-las com métricas.",
+    "O vazio Paraná/Terra2016 está apenas no CSV; o XLS oficial registra zero. Recorte2017–2025 é metodologicamente aceitável e a limitação publicada se refere ao arquivo usado, não à inexistência absoluta de dado oficial2016.",
+    "O crescimento anual12,3% do comunicado mensal2025 não foi inserido no estudo: a série consolidada anual implica11,9652%. A versão revisada evita misturar essas bases.",
+    "CSV2.19 contém subtotais e não foi usado no estudo; não houve dupla contagem de gás.",
+    "A aprovação documental limita-se ao texto/ledger identificados. Alterações materiais de números, fontes, escopo ou conclusões precisam de nova revisão."
+  ],
+  "reviewerActions": "Leitura integral, consultas independentes a fontes oficiais, recálculo Decimal e verificação de hashes. Somente este parecer foi escrito no repositório; sem edição do estudo, deploy ou publicação."
+}

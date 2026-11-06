@@ -1,8 +1,8 @@
 {
-  "totalTarget": 66,
+  "totalTarget": 67,
   "existingTicPreserved": true,
-  "prepared": 66,
-  "approved": 66,
+  "prepared": 67,
+  "approved": 67,
   "studies": [
     {
       "group": "alimentos-agroindustria",
@@ -91,6 +91,14 @@
       "status": "approved",
       "sourceFile": "atacado.json",
       "sourceSha256": "81f7bac543bdc8052ab985f5f95d4c03bd44d095b67b93f1289632fb68e7e4f5"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 5,
+      "title": "Distribuição de válvulas para óleo e gás",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "fd01490b4980108db0e21676e45702bb16d9694ecc92469457db0764a442b2d7"
     },
     {
       "group": "automotivo",

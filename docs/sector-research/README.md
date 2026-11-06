@@ -1,6 +1,6 @@
 # Estudos setoriais
 
-O catálogo contém 67 recortes. O estudo original de integração de TIC permanece preservado; estes arquivos desenvolvem os outros 66 recortes.
+O catálogo contém 68 recortes. O estudo original de integração de TIC permanece preservado; estes arquivos desenvolvem os outros 67 recortes.
 
 ## Pesquisa e rastreabilidade
 
@@ -19,3 +19,5 @@ Os arquivos de evidências e os pareceres registram verificações e divergênci
 7. Para um lote parcial de produção, executar `node scripts/sync-sector-studies.mjs --approved-only`. Os demais recortes mantêm a indicação de pesquisa pendente, sem conteúdo apresentado como final.
 
 As cópias locais de PDFs e capturas integrais das páginas consultadas não são redistribuídas. Referências a esses arquivos nos pareceres identificam material de verificação local, não arquivos públicos. URLs, períodos, evidências numéricas e pareceres permitem repetir a verificação.
+
+Em 06/11/2026 foi acrescentado o recorte atacado/5, Distribuição de válvulas para óleo e gás. A inclusão preserva os índices anteriores. A publicação documental permanece sem áudio novo; a gravação deste estudo também precisará de geração e revisão próprias antes da publicação do lote ampliado.

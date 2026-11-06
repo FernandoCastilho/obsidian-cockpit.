@@ -1,0 +1,212 @@
+{
+  "studyKey": "atacado/5",
+  "reviewStatus": "pending-independent-review",
+  "items": [
+    {
+      "id": "oil-2017",
+      "value": 956.928,
+      "unit": "milhões de barris/ano",
+      "period": "2017",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "956927.6714185",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2018",
+      "value": 944.117,
+      "unit": "milhões de barris/ano",
+      "period": "2018",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "944117.41430355",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2019",
+      "value": 1017.531,
+      "unit": "milhões de barris/ano",
+      "period": "2019",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1017531.452",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2020",
+      "value": 1076.02,
+      "unit": "milhões de barris/ano",
+      "period": "2020",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1076020.36979862",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2021",
+      "value": 1060.369,
+      "unit": "milhões de barris/ano",
+      "period": "2021",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1060369.007",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2022",
+      "value": 1102.85,
+      "unit": "milhões de barris/ano",
+      "period": "2022",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1102849.64764705",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2023",
+      "value": 1241.592,
+      "unit": "milhões de barris/ano",
+      "period": "2023",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1241592.152582",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2024",
+      "value": 1229.012,
+      "unit": "milhões de barris/ano",
+      "period": "2024",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1229011.684",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-2025",
+      "value": 1376.065,
+      "unit": "milhões de barris/ano",
+      "period": "2025",
+      "scope": "Brasil; petróleo inclusive condensado e óleo de xisto; UF e localização",
+      "kind": "calculation",
+      "formula": "sum(17 UF/localização rows in source year, mil barris)/1000, rounded to 3 decimals",
+      "inputTotalMilBarris": "1376065.39996731",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-sep",
+      "value": 4.711,
+      "unit": "milhões de barris/dia",
+      "period": "setembro de 2026",
+      "scope": "Produção nacional de petróleo",
+      "kind": "reported",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "publicationDate": "2026-11-03",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "oil-yoy",
+      "value": 20.3,
+      "unit": "% ante setembro de 2025",
+      "period": "setembro de 2026",
+      "scope": "Variação da produção nacional de petróleo",
+      "kind": "reported",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "publicationDate": "2026-11-03",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "gas-gross",
+      "value": 223.98,
+      "unit": "milhões de m³/dia",
+      "period": "setembro de 2026",
+      "scope": "Produção bruta nacional de gás",
+      "kind": "reported",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "publicationDate": "2026-11-03",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "gas-market",
+      "value": 66.37,
+      "unit": "milhões de m³/dia",
+      "period": "setembro de 2026",
+      "scope": "Gás disponibilizado ao mercado",
+      "kind": "reported",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "publicationDate": "2026-11-03",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "offshore-share",
+      "value": 98.1,
+      "unit": "%",
+      "period": "setembro de 2026",
+      "scope": "Participação marítima na produção nacional de petróleo",
+      "kind": "reported",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "publicationDate": "2026-11-03",
+      "status": "author-verified-pending-independent-review"
+    },
+    {
+      "id": "cnae-code",
+      "value": "4663-0/00",
+      "kind": "classification",
+      "scope": "Referência candidata de comércio atacadista industrial, sem enquadramento universal",
+      "sourceUrl": "https://cnae.ibge.gov.br/?subclasse=4663000&tipo=cnae&versao=9&view=subclasse",
+      "accessLimitation": "Full page unavailable with 403; official search index confirms title and code."
+    },
+    {
+      "id": "ncm-heading",
+      "value": "8481",
+      "kind": "classification",
+      "scope": "Posição ampla, não apenas válvulas de óleo e gás",
+      "sourceUrl": "https://legislacao.fazenda.sp.gov.br/Paginas/RC40028_2026.aspx"
+    },
+    {
+      "id": "nr-code",
+      "value": "NR-13",
+      "kind": "norm_identifier",
+      "sourceUrl": "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-13-atualizada-2023-b.pdf"
+    },
+    {
+      "id": "pde-edition",
+      "value": "2036",
+      "kind": "planning_horizon",
+      "scope": "Caderno em consulta pública no corte, não aprovado como plano definitivo",
+      "sourceUrl": "https://epe.gov.br/pt/imprensa/noticias/pde-2036-projeta-producao-de-4-9-milhoes-de-barris-de-petroleo-por-dia-e-destaca-importancia-da-reposicao-de-reservas-e-de-novas-fronteiras-exploratorias",
+      "publicationDate": "2026-11-05"
+    },
+    {
+      "id": "scenario-horizon",
+      "value": "doze a vinte e quatro meses",
+      "kind": "analytical_assumption",
+      "scope": "Cenários qualitativos próprios desde a pesquisa; sem probabilidade atribuída"
+    },
+    {
+      "id": "research-date",
+      "value": "2026-11-06",
+      "kind": "access_date",
+      "scope": "Data de consulta das fontes; não data dos dados"
+    }
+  ],
+  "itemCount": 20,
+  "notes": "Repetições em gráfico/tabela e prosa usam o mesmo ID; anos dos pontos e unidades estão em cada item. Sem número de mercado de válvulas inventado. Datas e identificadores normativos são registrados separadamente."
+}

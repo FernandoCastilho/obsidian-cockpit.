@@ -43,5 +43,5 @@ for (const file of files) {
   }
 }
 await writeFile(new URL('../src/sectorStudies/studies.json', import.meta.url), `${JSON.stringify(studies, null, 2)}\n`)
-await writeFile(new URL('progress.json', directory), `${JSON.stringify({ totalTarget: 66, existingTicPreserved: true, prepared: progress.length, approved: progress.filter(item => item.status === 'approved').length, studies: progress }, null, 2)}\n`)
+await writeFile(new URL('progress.json', directory), `${JSON.stringify({ totalTarget: 67, existingTicPreserved: true, prepared: progress.length, approved: progress.filter(item => item.status === 'approved').length, studies: progress }, null, 2)}\n`)
 console.log(`Integrated ${studies.length} researched studies from ${files.length} files; approved TIC preserved.`)

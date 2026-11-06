@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-06",
+  "baselineProductionCommit": "731d6e3804db6d65b8ed82bb26befb0fd238f5c5",
+  "baselineTree": "4a08084c4a1a7bc61c35ef4cd813f5da8ee40d8e",
+  "existingStudiesPreserved": 66,
+  "newStudyKey": "atacado/5",
+  "catalogTopics": 68,
+  "newStudiesTotal": 67,
+  "audio": "deferred; no MP3 or new manifest",
+  "localUnitTests": {
+    "passed": 1125,
+    "failed": 0
+  },
+  "lint": {
+    "errors": 0,
+    "preExistingWarnings": 5
+  },
+  "build": "passed",
+  "focusedTests": {
+    "passed": 36,
+    "failed": 0
+  },
+  "browser": "local launch blocked by OS socket permission; remote CI required before production",
+  "publication": "pending independent review and remote browser CI"
+}
