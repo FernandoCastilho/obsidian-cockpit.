@@ -21,11 +21,18 @@ test('TFBD não calcula com cotação 604 nem reutiliza taxa anterior ao trocar 
 })
 
 test('perfis existentes aceitam zero explícito e recusam ausência, string e taxa inválida', () => {
-  for (const id of ['tfc', 'tfb', 'tlp']) {
+  for (const id of ['tfc', 'tfb']) {
     assert.equal(finameFundingAnnualRate(id, { [id]: 0 }), 0)
     assert.equal(finameFundingAnnualRate(id, { [id]: 6.5 }), 6.5)
     for (const value of [null, undefined, '', '6.5', NaN, Infinity, -1, 101]) {
       assert.equal(finameFundingAnnualRate(id, { [id]: value }), null)
     }
   }
+})
+
+
+test('TLP exigível tem motor próprio e nunca reutiliza o cronograma capitalizado', () => {
+  assert.equal(finameFundingOption('tlp').mode, 'dedicated')
+  assert.equal(finameFundingOption('tlp').calculatorId, 'bndes-tlp-exigivel')
+  assert.equal(finameFundingAnnualRate('tlp', { tlp: 8.12 }), null)
 })

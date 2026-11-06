@@ -3,6 +3,21 @@
 // confirma as condições de cada operação. A tela mostra a data da regra e avisa o que precisa de conferência.
 import { IOF_PJ, monthlyRate, parseDecimal } from './emprestimo.js'
 
+// Limite técnico para conservar precisão em centavos. Não é um limite de crédito ou enquadramento.
+export const LIMITE_MONETARIO = 1_000_000_000_000
+const dentroDoLimite = value => Number.isFinite(value) && Math.abs(value) <= LIMITE_MONETARIO
+const erroNumerico = 'Resultado fora do limite numérico de R$ 1 trilhão ou sem fechamento em centavos. Reduza o valor, a taxa ou o prazo.'
+// Soma compensada evita perder centavos em cronogramas de maior magnitude.
+const somar = values => {
+  let total = 0, ajuste = 0
+  for (const value of values) {
+    const parcela = value - ajuste, proximo = total + parcela
+    ajuste = (proximo - total) - parcela
+    total = proximo
+  }
+  return total
+}
+
 export const REGRAS = {
   conferidoEm: '2026-11-04',
   prazoMaxMeses: 84, // até 7 anos
@@ -34,6 +49,8 @@ export const FONTES = [
   { regra: 'TFC (Taxa Fixa Composta): prefixada, combinação de duas taxas fixas; séries TFC_60.90, TFC_120.90, TFC_MPME_60.90 e TFC_MPME_120.90 (códigos C01 a C04); a faixa de prazo (até 60 ou 61 a 120 meses) e a liberação em 90 dias vêm da denominação das séries; TFB por faixa de prazo e liberação em 30 ou 90 dias', fonte: 'Guia de custos financeiros (definição da TFC) e Moedas Contratuais do BNDES (nomes, códigos e valores), lidos em 04/11/2026; séries coletadas pelo painel (aba BNDES); a página própria da TFC não pôde ser lida', url: 'https://www.bndes.gov.br/moedas' },
   { regra: 'Composição da taxa final: fator do custo financeiro × fator da taxa do BNDES × fator da taxa do agente − 1 (exemplo oficial: 1,07 × 1,015 × 1,03 − 1 = 11,86% a.a.)', fonte: 'Guia "Taxa de juros" do BNDES, lido em 04/11/2026', url: 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/guia/taxa-de-juros' },
   { regra: 'TLP: parcela prefixada (taxa real) mais IPCA', fonte: 'Lei 13.483/2017 e Resolução CMN 4.600/2017; guia de custos financeiros do BNDES', url: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13483.htm' },
+  { regra: 'TLP exigível e TLPCAP são perfis distintos; esta interface encaminha TLP exigível à projeção própria', fonte: 'BNDES, Anexo IV: Condições a serem observadas na contratação, seções 1 e 2', url: 'https://www.bndes.gov.br/sbn/BNDES_online/Arquivos/04-22Cir13-Anexo-IV-Condicoes-a-Serem-Observadas-na-Contratacao.pdf' },
+  { regra: 'Cobranças na carência contadas retroativamente desde seu fim; calendário contratual tem data-base e ajustes próprios, não reproduzidos pelas datas ilustrativas desta tela', fonte: 'BNDES, Anexo I: Procedimentos Operacionais, itens 5.1–5.4', url: 'https://www.bndes.gov.br/sbn/BNDES_online/Arquivos/01-22Cir13-Anexo-I-Procedimentos-Operacionais.pdf' },
   { regra: 'IOF: alíquota zero na operação com recursos da FINAME (art. 8º, IX), sem o adicional de 0,38% (§ 5º não lista o inciso IX); se cobrado por funding diverso, crédito PJ 0,38% + 0,0082% ao dia sobre o principal de cada parcela, até 365 dias', fonte: 'Decreto 6.306/2007, texto consolidado na Câmara dos Deputados, lido em 04/11/2026: art. 8º, IX vigente, XXX revogado pelo Decreto 8.511/2015, §§ 4º e 5º; art. 7º, I, b e § 1º; Decreto 12.499/2025 (STF, ADI 7827 e ADC 96, jul/2025); informativo da Abimaq de janeiro de 2026 sobre o Finame Materiais ("sem incidência de IOF"; página não lida diretamente)', url: 'https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html' },
 ]
 export const PORTES = [
@@ -44,7 +61,7 @@ export const PORTES = [
 export const CUSTOS = [
   { id: 'tfc', label: 'TFC (prefixada)', hint: 'Taxa Fixa Composta: prefixada, combinação de duas taxas fixas do BNDES, com série própria para MPME. A faixa de prazo (até 60 ou 61 a 120 meses) e a liberação em 90 dias seguem a denominação das séries nas Moedas Contratuais (TFC_60.90, TFC_120.90); confirme com o agente. Carência de até 12 meses.' },
   { id: 'tfb', label: 'TFB (prefixada)', hint: 'Taxa Fixa do BNDES: prefixada, por faixa de prazo do financiamento e prazo até a liberação dos recursos (30 ou 90 dias). Carência de até 12 meses.' },
-  { id: 'tlp', label: 'TLP + IPCA', hint: 'TLP é a parcela prefixada em termos reais (Lei 13.483/2017); o saldo é corrigido pelo IPCA. A conta usa o IPCA esperado (Focus) como projeção.' },
+  { id: 'tlp', label: 'TLPCAP · perfil capitalizado', hint: 'Perfil programático explícito: IPCA projetado capitalizado no saldo. Não representa TLP exigível; a interface encaminha TLP à projeção própria.' },
 ]
 export const PERIODICIDADES = [
   { id: 1, label: 'Mensal' },
@@ -72,16 +89,18 @@ export const codigoTfc = (porte, prazoMeses) => TFC_CODIGOS[PORTES.find((p) => p
 export const CUSTOS_FIXOS = new Set(['tfb', 'tfc'])
 
 // Taxa final da operação indireta (todas em % a.a.).
-export const taxaFinal = (custo, bndes, agente, composicao = 'capitalizada') => (composicao === 'somada' ? custo + bndes + agente : ((1 + custo / 100) * (1 + bndes / 100) * (1 + agente / 100) - 1) * 100)
+export const taxaFinal = (custo, bndes, agente, composicao = 'capitalizada') => (composicao === 'somada' ? custo + bndes + agente : Math.expm1(Math.log1p(custo / 100) + Math.log1p(bndes / 100) + Math.log1p(agente / 100)) * 100)
 
 // Custo financeiro nominal da TLP: parcela prefixada (TLP) composta com o IPCA projetado.
-export const tlpNominal = (tlp, ipca) => ((1 + tlp / 100) * (1 + ipca / 100) - 1) * 100
+export const tlpNominal = (tlp, ipca) => Math.expm1(Math.log1p(tlp / 100) + Math.log1p(ipca / 100)) * 100
 
 // Conferência das regras do produto. Devolve { erros: [...], avisos: [...] }: erro impede a conta; aviso só alerta.
 export function conferir({ valor, participacao, prazo, carencia, custo }) {
   const erros = [], avisos = []
-  if (!(valor > 0)) erros.push('Informe o valor dos materiais.')
-  if (!(participacao >= REGRAS.participacaoMinPct && participacao <= REGRAS.participacaoMaxPct)) erros.push(`A participação do BNDES vai de ${REGRAS.participacaoMinPct}% a ${REGRAS.participacaoMaxPct}% dos itens financiáveis.`)
+  if (!Number.isFinite(valor) || !(valor > 0)) erros.push('Informe um valor finito e positivo dos materiais.')
+  else if (!dentroDoLimite(valor)) erros.push(erroNumerico)
+  if (!Number.isFinite(participacao) || !(participacao >= REGRAS.participacaoMinPct && participacao <= REGRAS.participacaoMaxPct)) erros.push(`A participação do BNDES vai de ${REGRAS.participacaoMinPct}% a ${REGRAS.participacaoMaxPct}% dos itens financiáveis.`)
+  if (!CUSTOS.some(option => option.id === custo)) erros.push('Escolha um custo financeiro suportado: TFC, TFB ou TLPCAP explícita.')
   if (!Number.isInteger(prazo) || prazo < 1) erros.push('Informe o prazo total em meses.')
   else if (prazo > REGRAS.prazoMaxMeses) erros.push(`Prazo total acima do máximo do produto: ${REGRAS.prazoMaxMeses} meses (7 anos).`)
   if (!Number.isInteger(carencia) || carencia < 0) erros.push('Informe a carência em meses (0 se não houver).')
@@ -91,7 +110,7 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
     if (carencia > max) erros.push(`Carência acima do máximo: ${max} meses${fixa ? ` com ${custo.toUpperCase()} (1 ano)` : ' (2 anos)'}.`)
     if (Number.isInteger(prazo) && prazo >= 1 && carencia >= prazo) erros.push('A carência precisa ser menor que o prazo total.')
   }
-  const financiado = valor > 0 && participacao > 0 ? (valor * participacao) / 100 : 0
+  const financiado = Number.isFinite(valor) && valor > 0 && Number.isFinite(participacao) && participacao > 0 ? valor * (participacao / 100) : 0
   if (financiado > REGRAS.tetoOperacao) avisos.push(`Valor financiado acima de R$ 20 milhões por operação: teto citado em materiais de divulgação de terceiros (Observatório da Indústria RS, Fomento Paraná e CNI, 2020 a 2025) que não consta na página oficial do produto em 04/11/2026; confirme com o agente.`)
   if (financiado > REGRAS.tetoCliente12m) avisos.push(`Valor acima do limite por cliente em 12 meses (R$ 150 milhões).`)
   return { erros, avisos, financiado }
@@ -99,12 +118,19 @@ export function conferir({ valor, participacao, prazo, carencia, custo }) {
 
 // Cronograma: carência com juros pagos na periodicidade escolhida (sobre o saldo, capitalizados mês a mês dentro do período) e depois
 // SAC ou Price mensal com juros junto do principal. taxaAnual em % a.a. é a taxa de juros; ipcaAnual (% a.a., só na TLP) é a correção
-// monetária capitalizada ao saldo todo mês, como no contrato do BNDES: a amortização é calculada sobre o saldo corrigido
+// monetária capitalizada ao saldo todo mês no perfil TLPCAP explícito, não TLP exigível. Modelo de meses iguais: não é memória contratual.
+// A amortização é calculada sobre o saldo corrigido
 // (SAC = saldo corrigido ÷ parcelas vincendas; Price = prestação recalculada sobre o saldo corrigido). Com ipcaAnual 0, é o SAC/Price nominal.
 // Devolve parcelas [{ mes, correcao, juros, amortizacao, principal, parcela, saldo, carencia }]; `principal` é a parte da
 // amortização que corresponde ao valor entregue (amortização sem a correção acumulada): a soma dos principais é o financiado, e é
 // sobre ele que incide o IOF diário (Decreto 6.306/2007, art. 7º, I, b: "valor do principal de cada uma das parcelas").
 export function cronograma({ financiado, prazo, carencia, taxaAnual, sistema, periodicidade = 1, ipcaAnual = 0 }) {
+  if (!dentroDoLimite(financiado) || financiado <= 0 || !Number.isInteger(prazo) || prazo < 1 || prazo > REGRAS.prazoMaxMeses
+    || !Number.isInteger(carencia) || carencia < 0 || carencia >= prazo || carencia > REGRAS.carenciaMaxMeses
+    || !Number.isFinite(taxaAnual) || taxaAnual < 0 || taxaAnual > 700 || !validIpcaProjection(ipcaAnual)
+    || !SISTEMAS.some(option => option.id === sistema) || !PERIODICIDADES.some(option => option.id === periodicidade)) {
+    throw new RangeError('Parâmetros inválidos para o cronograma Finame.')
+  }
   const i = monthlyRate(taxaAnual, 'aa'), c = monthlyRate(ipcaAnual, 'aa')
   const parcelas = []
   let saldo = financiado
@@ -114,7 +140,8 @@ export function cronograma({ financiado, prazo, carencia, taxaAnual, sistema, pe
     const correcao = saldo * c
     saldo += correcao; fator *= 1 + c
     acumulado = (saldo + acumulado) * i + acumulado // juros do mês sobre o saldo corrigido + juros ainda não pagos (capitalização dentro do período)
-    const paga = m % periodicidade === 0 || m === carencia
+    // Anexo I, item 5.3: contar retroativamente a partir do fim da carência.
+    const paga = (carencia - m) % periodicidade === 0
     parcelas.push({ mes: m, correcao, juros: paga ? acumulado : 0, amortizacao: 0, principal: 0, parcela: paga ? acumulado : 0, saldo, carencia: true })
     if (paga) acumulado = 0
   }
@@ -124,14 +151,18 @@ export function cronograma({ financiado, prazo, carencia, taxaAnual, sistema, pe
     saldo += correcao; fator *= 1 + c
     const juros = saldo * i
     const restantes = n - k + 1
-    const pmt = i === 0 ? saldo / restantes : (saldo * i) / (1 - (1 + i) ** -restantes)
-    const amortizacao = sistema === 'price' ? pmt - juros : saldo / restantes
-    saldo = Math.max(0, saldo - amortizacao)
+    // Amortização Price equivalente à PMT menos juros, sem cancelamento nas taxas ínfimas.
+    const amortizacao = restantes === 1 ? saldo : sistema === 'price' && i !== 0 ? saldo * (i / Math.expm1(restantes * Math.log1p(i))) : saldo / restantes
+    saldo -= amortizacao
     parcelas.push({ mes: carencia + k, correcao, juros, amortizacao, principal: amortizacao / fator, parcela: juros + amortizacao, saldo, carencia: false })
   }
+  if (parcelas.some(parcela => !['correcao', 'juros', 'amortizacao', 'principal', 'parcela', 'saldo'].every(key => dentroDoLimite(parcela[key]))
+    || ['juros', 'amortizacao', 'principal', 'parcela', 'saldo'].some(key => parcela[key] < 0))
+    || parcelas.at(-1).saldo !== 0) throw new RangeError(erroNumerico)
   return parcelas
 }
 
+// Helper legado aproximado, fora da UI: não é apuração tributária por datas reais.
 // IOF de crédito PJ sobre o cronograma: adicional único sobre o financiado + alíquota diária sobre o principal de cada parcela (sem a
 // correção pelo IPCA) pelos dias até o vencimento (meses de 365/12 dias, contando a carência), limitados a 365 dias (Decreto 6.306/2007,
 // art. 7º, § 1º). Por construção, nunca passa de financiado × (fixed + maxDays × daily). iof = { fixed, daily, maxDays? } em % e dias.
@@ -150,8 +181,9 @@ export function vencimento(liberacao, mes) {
   return new Date(d.getFullYear(), d.getMonth() + mes, Math.min(d.getDate(), alvo.getDate()))
 }
 
-// Resumo da operação. Entradas em % a.a. e R$. Na TFB e na TFC, custoFinanceiro é a taxa fixa e a taxa é nominal. Na TLP, custoFinanceiro é a
-// TLP (parcela prefixada, real) e `ipca` é a projeção anual: a taxa de juros composta é real e o saldo é corrigido pelo IPCA.
+// Resumo da operação. Entradas em % a.a. e R$. Na TFB e na TFC, custoFinanceiro é a taxa fixa e a taxa é nominal.
+// custo='tlp' exige perfilTlp='tlpcap': modelo capitalizado histórico, disponível somente para uso programático explícito.
+// TLP exigível usa bndesTlpExigivel.js; nunca presumir que estes perfis são intercambiáveis.
 export const IOF_ZERO = { fixed: 0, daily: 0 }
 export const validIpcaProjection = ipca => Number.isFinite(ipca) && ipca >= -50 && ipca <= 100
 export function parseIpcaProjection(text) {
@@ -159,37 +191,64 @@ export function parseIpcaProjection(text) {
   const parsed = parseDecimal(negative ? value.slice(1) : value)
   return parsed === null ? null : negative ? -parsed : parsed
 }
-export function simular({ valor, participacao = 100, prazo, carencia = 0, custo, custoFinanceiro, ipca = 0, taxaBndes, taxaAgente, sistema = 'sac', periodicidade = 1, composicao = 'capitalizada', iof = IOF_ZERO }) {
+export function simular({ valor, participacao = 100, prazo, carencia = 0, custo, custoFinanceiro, ipca = 0, perfilTlp, taxaBndes, taxaAgente, sistema = 'sac', periodicidade = 1, composicao = 'capitalizada', iof = IOF_ZERO }) {
   const check = conferir({ valor, participacao, prazo, carencia, custo })
   const iofOk = iof && [iof.fixed, iof.daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
+    && (iof.maxDays == null || (Number.isInteger(iof.maxDays) && iof.maxDays >= 0 && iof.maxDays <= IOF_PJ.maxDays))
   const ipcaOk = custo !== 'tlp' || validIpcaProjection(ipca)
   const taxasOk = [custoFinanceiro, taxaBndes, taxaAgente].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
   if (!taxasOk) check.erros.push('Informe o custo financeiro, a taxa do BNDES e o spread da instituição em % a.a.')
   if (!ipcaOk) check.erros.push('Informe o IPCA esperado de -50 a 100% a.a., limite deste modelo.')
   if (!iofOk) check.erros.push('Informe as alíquotas do IOF em % (0 e 0 se o agente confirmar alíquota zero).')
+  if (!SISTEMAS.some(option => option.id === sistema)) check.erros.push('Escolha SAC ou Price.')
+  if (!PERIODICIDADES.some(option => option.id === periodicidade)) check.erros.push('Escolha periodicidade mensal, trimestral ou semestral.')
+  if (!COMPOSICOES.some(option => option.id === composicao)) check.erros.push('Escolha composição capitalizada ou somada.')
+  if (custo === 'tlp' && perfilTlp !== 'tlpcap') check.erros.push('TLP exigível requer a projeção própria. Este motor só aceita o perfil TLPCAP capitalizado explicitamente.')
   if (check.erros.length) return { ok: false, ...check }
   const financiado = check.financiado
   const taxa = taxaFinal(custoFinanceiro, taxaBndes, taxaAgente, composicao)
   const ipcaAnual = custo === 'tlp' ? ipca : 0
-  const parcelas = cronograma({ financiado, prazo, carencia, taxaAnual: taxa, sistema, periodicidade, ipcaAnual })
-  const jurosCarencia = parcelas.filter((p) => p.carencia).reduce((a, p) => a + p.juros, 0)
-  const correcao = parcelas.reduce((a, p) => a + p.correcao, 0)
+  let parcelas
+  try { parcelas = cronograma({ financiado, prazo, carencia, taxaAnual: taxa, sistema, periodicidade, ipcaAnual }) }
+  catch (error) {
+    if (!(error instanceof RangeError)) throw error
+    return { ok: false, ...check, erros: [erroNumerico] }
+  }
+  const jurosCarencia = somar(parcelas.filter((p) => p.carencia).map(p => p.juros))
+  const correcao = somar(parcelas.map(p => p.correcao))
   const amort = parcelas.filter((p) => !p.carencia)
   const iofCalc = iofCronograma(financiado, parcelas, iof)
   // Quanto dos juros remunera cada parte: custo financeiro (só o custo), BNDES (custo + BNDES menos só o custo) e spread do agente
   // (taxa completa menos custo + BNDES), sempre com o mesmo cronograma; a soma fecha nos juros totais.
-  const jurosDe = (t) => cronograma({ financiado, prazo, carencia, taxaAnual: t, sistema, periodicidade, ipcaAnual }).reduce((a, p) => a + p.juros, 0)
-  const jSoCusto = jurosDe(taxaFinal(custoFinanceiro, 0, 0, composicao)), jSemAgente = jurosDe(taxaFinal(custoFinanceiro, taxaBndes, 0, composicao))
-  const juros = parcelas.reduce((a, p) => a + p.juros, 0)
+  const jurosDe = (t) => somar(cronograma({ financiado, prazo, carencia, taxaAnual: t, sistema, periodicidade, ipcaAnual }).map(p => p.juros))
+  let jSoCusto, jSemAgente
+  try {
+    jSoCusto = jurosDe(taxaFinal(custoFinanceiro, 0, 0, composicao))
+    jSemAgente = jurosDe(taxaFinal(custoFinanceiro, taxaBndes, 0, composicao))
+  } catch (error) {
+    if (!(error instanceof RangeError)) throw error
+    return { ok: false, ...check, erros: [erroNumerico] }
+  }
+  const juros = somar(parcelas.map(p => p.juros))
   const atribuicao = { custoFinanceiro: jSoCusto, bndes: jSemAgente - jSoCusto, agente: juros - jSemAgente }
   const spreadAgentePp = taxa - taxaFinal(custoFinanceiro, taxaBndes, 0, composicao) // quanto o spread do agente acrescenta à taxa final, em pontos
   // Fluxo parcela a parcela: saldo inicial (antes da correção do mês), IOF diário da parcela e total pago no vencimento.
   const fluxo = parcelas.map((p, k) => ({ ...p, saldoInicial: k ? parcelas[k - 1].saldo : financiado, iof: iofCalc.porParcela[k], pago: p.parcela + iofCalc.porParcela[k] }))
+  const total = somar(fluxo.map(p => p.pago)) + iofCalc.fixo
+  const somaAmortizacao = somar(parcelas.map(p => p.amortizacao)), somaPrincipal = somar(parcelas.map(p => p.principal))
+  const fecha = (a, b) => Math.abs(a - b) < 0.005
+  if (![total, juros, correcao, jurosCarencia, ...Object.values(atribuicao), iofCalc.total, iofCalc.fixo, iofCalc.diario].every(dentroDoLimite)
+    || !fluxo.every(p => dentroDoLimite(p.pago) && dentroDoLimite(p.iof))
+    || !fecha(somaAmortizacao, financiado + correcao) || !fecha(somaPrincipal, financiado)
+    || !fecha(total, financiado + correcao + juros + iofCalc.total)) {
+    return { ok: false, ...check, erros: [erroNumerico] }
+  }
   return {
     ok: true, financiado, taxa, taxaMensal: monthlyRate(taxa, 'aa') * 100, taxaNominal: custo === 'tlp' ? tlpNominal(taxa, ipca) : taxa, composicao, parcelas: fluxo,
+    perfil: custo === 'tlp' ? 'tlpcap' : custo, calendario: 'meses-iguais-hipoteticos',
     jurosCarencia, juros, correcao, atribuicao, spreadAgentePp, iof: iofCalc.total, iofFixo: iofCalc.fixo, iofDiario: iofCalc.diario,
     primeiraParcela: amort[0]?.parcela ?? 0, ultimaParcela: amort.at(-1)?.parcela ?? 0, parcelasAmortizacao: amort.length,
-    total: financiado + correcao + juros + iofCalc.total, recursosProprios: valor - financiado, avisos: check.avisos,
+    total, recursosProprios: valor - financiado, avisos: check.avisos,
   }
 }
 

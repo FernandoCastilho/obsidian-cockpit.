@@ -1,0 +1,28 @@
+/* One quiet 44px control; the three choices only appear on request. */
+.theme-control { position:relative; flex:0 0 44px; align-self:center; color:var(--mut); }
+.theme-control .theme-trigger { display:flex; align-items:center; justify-content:center; width:44px; min-width:44px; height:44px; padding:0; border:0; border-radius:6px; background:transparent; color:var(--mut); cursor:pointer; }
+.theme-control .theme-trigger:hover, .theme-control .theme-trigger[aria-expanded=true] { background:var(--surface-2); color:var(--fg); }
+.theme-control button:focus-visible { outline:2px solid var(--amber); outline-offset:-3px; }
+.theme-options { position:absolute; top:calc(100% + 4px); right:0; z-index:90; width:220px; max-width:calc(100vw - 24px); padding:5px; background:var(--card); border:1px solid var(--line); border-radius:8px; box-shadow:0 8px 24px #0004; }
+.theme-options button { display:flex; align-items:center; gap:10px; width:100%; min-height:44px; padding:9px 10px; border:0; border-radius:4px; background:transparent; color:var(--fg); text-align:left; font:500 .82rem/1.4 system-ui,sans-serif; cursor:pointer; }
+.theme-options button:hover, .theme-options button[aria-pressed=true] { background:var(--surface-2); }
+.theme-options svg { flex:none; }
+.theme-options small { display:block; font-size:.72rem; font-weight:400; color:var(--mut); }
+.theme-check { margin-left:auto; color:var(--amber); }
+@media (min-width:1000px) {
+  .theme-mobile { display:none; }
+  .topbar:has(.theme-control) { height:44px; }
+}
+@media print { .theme-control { display:none; } }
+
+/* Leave enough room for every section at the compact desktop breakpoint. */
+@media (min-width:1000px) and (max-width:1199px) { .topbar:has(.theme-control) .topbar-brand span { display:none; } }
+
+/* Long section names must yield space to the three 44px mobile controls. */
+@media (max-width:999px) {
+  main.app .top:has(.theme-mobile) > h1 {
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}

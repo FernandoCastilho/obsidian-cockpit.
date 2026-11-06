@@ -9,6 +9,8 @@ import FinimpComparacao, { FinimpIcon } from './FinimpComparacao.jsx'
 import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
 import ContaGarantida, { ContaGarantidaIcon } from './ContaGarantida.jsx'
 import AnaliseDesconto, { DescontoIcon } from './AnaliseDesconto.jsx'
+import BndesTlpExigivel, { TlpIcon } from './BndesTlpExigivel.jsx'
+import BndesCreditoTfb, { TfbIcon } from './BndesCreditoTfb.jsx'
 import BndesLcdCap, { LcdIcon } from './BndesLcdCap.jsx'
 import Help from './CalculatorHelp.jsx'
 import './CalculatorLayout.css'
@@ -29,6 +31,8 @@ function GiroIcon() {
 }
 
 const CALCS = [
+  { id: 'bndes-tlp-exigivel', title: 'BNDES TLP exigível', sub: 'IPCA e juros exigíveis, sem capitalização do principal', Icon: TlpIcon },
+  { id: 'bndes-credito-tfb', title: 'BNDES Crédito · TFB', sub: 'Conferência do exemplo histórico de 34 parcelas', Icon: TfbIcon },
   { id: 'conta-garantida', title: 'Conta Garantida', sub: 'Juros e IOF sobre saldos', Icon: ContaGarantidaIcon },
   { id: 'bndes-selic-lcd', title: 'BNDES Selic + LCD', sub: 'Selic, LCD e fluxo projetado', Icon: LcdIcon },
   { id: 'finimp', title: 'FINIMP', sub: 'Compare propostas e atinja sua meta', Icon: FinimpIcon },
@@ -101,8 +105,8 @@ function CapitalDeGiro({ onBack }) {
               {SYSTEMS.map((s) => <button key={s.id} type="button" aria-pressed={system === s.id} onClick={() => setSystem(s.id)}>{s.label}</button>)}
             </div>
           </div>
-          {field('start', 'Data da liberação', <input id="cx-start" type="date" value={start} onChange={e => setStart(e.target.value)} />)}
-          {field('firstDue', 'Primeiro vencimento mensal', <input id="cx-firstDue" type="date" value={firstDue} onChange={e => setFirstDue(e.target.value)} />)}
+          {field('start', 'Data da liberação', <input id="cx-start" type="date" max="9999-12-31" value={start} onChange={e => setStart(e.target.value)} />)}
+          {field('firstDue', 'Primeiro vencimento mensal', <input id="cx-firstDue" type="date" max="9999-12-31" value={firstDue} onChange={e => setFirstDue(e.target.value)} />)}
           <div className="cx-iof">
             <label htmlFor="cx-profile">Enquadramento do IOF</label>
             <select id="cx-profile" value={profile} onChange={e => { setProfile(e.target.value); setEligible(false) }}><option value="pj">Pessoa jurídica geral</option><option value="simples">Simples/MEI: operação elegível até R$ 30 mil</option></select>
@@ -163,6 +167,8 @@ function CapitalDeGiro({ onBack }) {
 
 // Aba Calculadoras: lista de calculadoras (ícones) e a calculadora aberta, com endereço próprio (#calculadora/giro).
 export default function Calculadora({ view, onView }) {
+  if (view === 'bndes-tlp-exigivel') return <BndesTlpExigivel onBack={() => onView('')} />
+  if (view === 'bndes-credito-tfb') return <BndesCreditoTfb onBack={() => onView('')} />
   if (view === 'bndes-selic-lcd') return <BndesLcdCap onBack={() => onView('')} />
   if (view === 'finimp') return <FinimpComparacao onBack={() => onView('')} />
   if (view === 'conta-garantida') return <ContaGarantida onBack={() => onView('')} />

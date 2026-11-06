@@ -1,0 +1,20 @@
+.bndes-profile { min-width: 0; }
+.bndes-profile .cx-title { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.bndes-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.4rem; padding: 1rem; margin: 0; }
+.bndes-facts dt { font-size: .8rem; color: var(--mut); margin-bottom: .25rem; }
+.bndes-facts dd { margin: 0; font-size: .95rem; line-height: 1.45; overflow-wrap: anywhere; }
+.bndes-limits { margin: 1rem 0; border: 1px solid var(--line); padding: 1rem; border-radius: .65rem; line-height: 1.55; }
+.bndes-limits summary { cursor: pointer; font-weight: 600; }
+.bndes-limits li + li { margin-top: .5rem; }
+.bndes-profile .cx-panel > header { flex-wrap: wrap; gap: .6rem; }
+.bndes-profile .cx-matrix caption { text-align: left; padding: .75rem; font-size: .8rem; color: var(--mut); }
+.bndes-profile textarea { width: 100%; min-height: 8rem; resize: vertical; font: inherit; padding: .7rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: .4rem; }
+.bndes-profile .bndes-full { grid-column: 1 / -1; }
+.bndes-check { display: flex; align-items: flex-start; gap: .55rem; font-size: .85rem; line-height: 1.45; }
+.bndes-check input { flex-shrink: 0; margin-top: .2rem; }
+@media (max-width: 700px) { .bndes-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .bndes-facts { grid-template-columns: minmax(0, 1fr); } .bndes-profile .cx-title { font-size: 1.15rem; } }
+
+.bndes-profile .bndes-check input { width: auto; min-height: 20px; height: 20px; }
+.bndes-profile form { margin: 0; }
+.bndes-profile .cx-form { padding-bottom: 14px; }

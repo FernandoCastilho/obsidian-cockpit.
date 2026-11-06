@@ -4,7 +4,7 @@ import { COLOR, DECAY_MS, arrowHead, atalho, isDrag, kindOf, lifeOf, shapeAlpha,
 import './Laser.css'
 
 // Onde a camada de desenho entra: dentro do diálogo modal aberto (senão ele ficaria por cima e travaria o ponteiro) ou no corpo da página.
-const hostNow = () => [...document.querySelectorAll('dialog[open]')].at(-1) ?? document.body
+const hostNow = () => [...document.querySelectorAll('dialog[open], [data-laser-host]')].filter(el => el.getClientRects().length && !el.closest('[inert]')).at(-1) ?? document.body
 
 // Camada só de desenho: nunca captura o mouse. Quem ouve os gestos é a janela, então o clique simples e o passar do mouse seguem para a página.
 function Camada() {
@@ -95,57 +95,56 @@ function Camada() {
   return <canvas ref={ref} className="laser-canvas" aria-hidden="true" data-laser="on" />
 }
 
-// Primeiro encaixe `.laser-slot` visível (o cabeçalho muda com a aba e com a largura da tela).
-const slotNow = () => [...document.querySelectorAll('.laser-slot')].find((el) => el.offsetParent !== null) ?? null
-function useSlot() {
-  const [slot, setSlot] = useState(null)
+// Um único laser acompanha o diálogo ativo. O encaixe interno mantém o botão
+// disponível mesmo desligado, sem criar outra instância ou outro estado do laser.
+function usePlacement() {
+  const [placement, setPlacement] = useState({ host: null, slot: null })
   useEffect(() => {
     let raf = 0
-    const check = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => setSlot((cur) => { const n = slotNow(); return n === cur ? cur : n })) }
+    const check = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const host = hostNow()
+        const slot = [...host.querySelectorAll('.laser-slot'), ...document.querySelectorAll('.laser-slot')].find(el => el.getClientRects().length && !el.closest('[inert]')) ?? null
+        setPlacement(cur => cur.host === host && cur.slot === slot ? cur : { host, slot })
+      })
+    }
     check()
     const mo = new MutationObserver(check)
-    mo.observe(document.body, { subtree: true, childList: true })
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['open', 'inert'] })
     addEventListener('resize', check)
     return () => { cancelAnimationFrame(raf); mo.disconnect(); removeEventListener('resize', check) }
   }, [])
-  return slot
+  return placement
 }
 
 // Botão discreto (um ponto no canto) que liga e desliga o laser; Ctrl + ~ ou Ctrl + " alterna (Alt+L também) e Esc para.
 export default function Laser() {
   const [on, setOn] = useState(false)
-  const [host, setHost] = useState(null)
+  const { host, slot } = usePlacement()
   const onRef = useRef(false)
   onRef.current = on
   const toggle = useCallback(() => setOn((v) => !v), [])
   useEffect(() => {
     const key = (e) => {
       if (atalho(e)) { e.preventDefault(); setOn((v) => !v) }
-      else if (e.key === 'Escape' && onRef.current) { e.preventDefault(); e.stopPropagation(); setOn(false) }
+      else if (e.key === 'Escape' && onRef.current) { e.preventDefault(); e.stopImmediatePropagation(); setOn(false) }
     }
     addEventListener('keydown', key, true)
     return () => removeEventListener('keydown', key, true)
   }, [])
-  useEffect(() => {
-    if (!on) { setHost(null); return undefined }
-    setHost(hostNow())
-    const mo = new MutationObserver(() => setHost(hostNow()))
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['open'] })
-    return () => mo.disconnect()
-  }, [on])
   const botao = (
     <button type="button" className={`laser-btn${on ? ' on' : ''}`} aria-pressed={on} aria-label="Laser pointer: riscar a tela" title={'Laser pointer (Ctrl + ~ ou Ctrl + "): com ele ligado, o mouse segue normal (clique); arraste para riscar, com Ctrl faz retângulo e com Shift, seta. Clique de novo, ou Esc, para parar'} onClick={toggle}>
       <span className="laser-dot" aria-hidden="true" />
     </button>
   )
-  // Lugar do botão: o encaixe visível no cabeçalho (ao lado do "i"), para não cobrir dados; sem encaixe, fica flutuando no canto.
-  // Com um diálogo modal aberto e o laser ligado, o botão vai para dentro do diálogo (fora dele não dá para clicar).
-  const slot = useSlot()
-  const inDialog = on && host && host !== document.body
+  // No diagrama, o encaixe preserva o foco ao ligar/desligar. Diálogos nativos
+  // sem encaixe mantêm o comportamento anterior: botão interno só quando ligado.
+  const buttonHost = on && host && host !== document.body && !host.contains(slot) ? host : slot
   return (
     <>
-      {on && host && createPortal(<><Camada />{inDialog && botao}<p className="laser-hint" role="status">Laser ligado: clique normal · arraste para riscar · Ctrl retângulo · Shift seta · Esc para parar</p></>, host)}
-      {!inDialog && (slot ? createPortal(botao, slot) : botao)}
+      {on && host && createPortal(<><Camada /><p className="laser-hint" role="status">Laser ligado: clique normal · arraste para riscar · Ctrl retângulo · Shift seta · Esc para parar</p></>, host)}
+      {buttonHost ? createPortal(botao, buttonHost) : botao}
     </>
   )
 }

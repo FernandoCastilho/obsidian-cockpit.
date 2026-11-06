@@ -53,3 +53,9 @@ O roteiro `scripts/smoke-alerta.cjs` preserva a verificação de dispensa separa
 `node --test test/conta-garantida*.test.mjs` verifica utilização única e lançamentos por data, amortização, reutilização, dias reais e úteis, feriados informados, meses, IOF sobre saldos e acréscimos, referências e bloqueios tributários, erros e fluxo React sem navegador. Juros e IOF são pagos à parte, nunca capitalizados; o motor rejeita encargos incorporados. O caso R$ 100 mil, dez dias, 3% a.m. proporcional/30 e IOF padrão resulta em R$ 1.000 de juros + R$ 462 de IOF.
 
 Os testes de interface cobrem troca de modos, repetição de edição/adição/remoção, resultado inválido sem dados antigos, Simples, feriados, paginação, labels/IDs e rota de busca. São testes React em memória, não smoke visual. Não foi usado servidor/socket/preview/fixture Python nem feita publicação. Convenções e limites: `../docs/conta-garantida.md`.
+
+## Aparência manual e automática
+
+`node --test test/system-theme.test.mjs test/theme-control.test.mjs` cobre escolha Claro/Escuro/Automático, persistência, prioridade sobre o sistema, retorno ao automático, sincronia entre abas, armazenamento bloqueado, limpeza de listeners, primeiro paint, foco, Escape e dispensa do seletor. Sem armazenamento disponível, a escolha vale apenas na visita atual.
+
+No preview de desenvolvimento, `test/fixtures/theme-responsive.html` renderiza o app real em um iframe com larguras selecionáveis de 320, 390, 768, 1024 e 1440 px. É um ensaio de layout, não emulação de toque ou dispositivo. Verifique o botão em Mercado e nas demais seções, troca de tema com entrada de calculadora preservada, reabertura/reload, opção Automático, teclado e ausência de corte no menu e nas abas. O arquivo não faz parte do build publicado.

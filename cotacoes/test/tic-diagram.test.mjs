@@ -26,12 +26,13 @@ test('referências visíveis apenas de órgãos públicos sem apagar proveniênc
   assert.match(jsx, /publicAgencySources\(\[chart.source\]\)/)
 })
 
-test('animação possui pausa, sequência e alternativa sem movimento', () => {
+test('animação sem botão de pausa mantém teclado, sequência e movimento reduzido', () => {
   const jsx = source('TechnologyIntegrationDiagram.jsx')
   const css = source('TechnologyIntegrationDiagram.css')
   assert.match(jsx, /data-paused={paused}/)
   assert.match(jsx, /setPaused\(value => !value\)/)
-  assert.match(jsx, /Retomar animação/)
+  assert.doesNotMatch(jsx, /<button[^>]*setPaused|Pausar animação do diagrama|Retomar animação do diagrama/)
+  assert.match(jsx, /aria-keyshortcuts="P"/)
   assert.match(jsx, /'--flow-step': index \+ 2/)
   assert.match(jsx, /'--flow-step': index \+ 8/)
   assert.match(css, /prefers-reduced-motion:reduce/)
@@ -47,6 +48,8 @@ test('modo de apresentação ajusta diagrama e oferece laser opcional', () => {
   assert.match(jsx, /event.key === 'Escape'/)
   assert.match(jsx, /ResizeObserver/)
   assert.match(jsx, /createPortal/)
-  assert.match(jsx, /aria-pressed={laser}/)
+  assert.match(jsx, /data-laser-host="true"/)
+  assert.match(jsx, /className="laser-slot tic-flow-laser-slot"/)
+  assert.doesNotMatch(jsx, /pointerRef|setLaser|tic-flow-laser-toggle/)
   assert.match(css, /\.tic-flow-fullscreen \.tic-flow-controls{display:none}/)
 })

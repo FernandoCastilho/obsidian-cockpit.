@@ -5,8 +5,8 @@ import { marketDate } from './marketReturns.js'
 import { marketPreviews } from './marketPreviews.js'
 import { upcoming } from './agenda.js'
 import Sparkline from './Sparkline.jsx'
-import { FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
-import Help from './Help.jsx'
+import { FINIMP_MARGEM, FINIMP_MODOS, SPARK_NOTE, finimpConverte, finimpParidade, ibovSpark, kpiItems, kpiSparks, sparkTone, tapeItems } from './terminal.js'
+import HelpDialog from './HelpDialog.jsx'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
 import Flag from './Flag.jsx'
@@ -115,6 +115,7 @@ const hm = (t) => (Number.isFinite(t) && t > 0 ? new Date(t).toLocaleString('pt-
 const SIMBOLO = { EUR: '€', USD: 'US$' }
 // Paridade para a Finimp: as duas paridades, o horário da cotação e uma calculadora (valor do pagamento → valor a financiar).
 function FinimpHelp({ fin, at, comparable, direct }) {
+  const groupId = useId(), selectedMode = useRef(null)
   const [modo, setModo] = useState('eur-usd')
   const [texto, setTexto] = useState('')
   const lido = parseMoneyInput(texto)
@@ -122,24 +123,27 @@ function FinimpHelp({ fin, at, comparable, direct }) {
   const quando = direct ? at?.PAR : Math.min(at?.EUR ?? Infinity, at?.USD ?? Infinity)
   const m = FINIMP_MODOS[modo]
   return (
-    <Help label="Paridade para a Finimp" align="right" wide fixed>
-      <b className="ex-t">Paridade para a Finimp</b>
+    <HelpDialog title="Paridade para a Finimp" initialFocusRef={selectedMode}>
       <span className="ex">Paridade EUR/USD: <b className="fin-num">{n4(fin.base)}</b> <span className="fin-hora">· cotação de {hm(quando)}</span></span>
-      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD:</i> <b className="fin-num">{n4(fin.eurUsd)}</b></span>
-      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR:</i> <b className="fin-num">{n4(fin.usdEur)}</b></span>
+      <span className="ex fin-linha"><i>Pagamento em EUR e financiamento em USD (+{n2(FINIMP_MARGEM)}):</i> <b className="fin-num">{n4(fin.eurUsd)}</b></span>
+      <span className="ex fin-linha"><i>Pagamento em USD e financiamento em EUR (−{n2(FINIMP_MARGEM)}):</i> <b className="fin-num">{n4(fin.usdEur)}</b></span>
       {!comparable && <span className="ex fin-alerta" role="note">⚠ Cotações de horários diferentes; confirme na mesa.</span>}
-      <span className="fin-calc" role="group" aria-label="Calcular o valor a financiar">
-        <span className="fin-modos" role="radiogroup" aria-label="Combinação de pagamento e financiamento">
+      <div className="fin-calc" role="group" aria-label="Calcular o valor a financiar">
+        <fieldset className="fin-modos">
+          <legend className="sr-only">Combinação de pagamento e financiamento</legend>
           {Object.entries(FINIMP_MODOS).map(([id, o]) => (
-            <button key={id} type="button" role="radio" aria-checked={modo === id} className={modo === id ? 'on' : ''} onClick={() => setModo(id)}>{o.label}</button>
+            <label key={id} className={modo === id ? 'on' : ''}>
+              <input ref={modo === id ? selectedMode : undefined} type="radio" name={groupId} value={id} checked={modo === id} onChange={() => setModo(id)} />
+              <span>{o.label}</span>
+            </label>
           ))}
-        </span>
+        </fieldset>
         <label className="fin-campo">Valor do pagamento ({m.paga})
           <MoneyInput prefix={SIMBOLO[m.paga]} value={texto} onChange={setTexto} placeholder="100.000,00" aria-invalid={!!texto && !lido.ok} />
         </label>
         <span className="fin-result" aria-live="polite">{conta ? <>Valor a financiar: <b className="fin-num">{SIMBOLO[conta.moeda]} {n2(conta.valor)}</b></> : texto && !lido.ok ? 'Use o formato 100.000,00 ou 100000.' : 'Digite o valor para ver o valor a financiar.'}</span>
-      </span>
-    </Help>
+      </div>
+    </HelpDialog>
   )
 }
 

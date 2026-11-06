@@ -4,6 +4,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 const { buildSync } = require('esbuild')
+const { widths, headerMatrix } = require('./smoke-calculator-matrix.cjs')
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768'
 const out = process.env.THEME_QA_OUTPUT || 'workspace-qa/theme'
@@ -86,12 +87,58 @@ async function assertTheme(page, theme, label) {
   return result
 }
 
+async function assertSectorHeader(page, initial) {
+  const header = page.locator('main.app .top:has(.theme-mobile)')
+  await header.locator('.laser-btn').waitFor()
+  await page.evaluate(() => document.fonts.ready)
+  const geometry = await header.evaluate(element => {
+    const box = node => { const r = node.getBoundingClientRect(); return { left: r.left, right: r.right, width: r.width, height: r.height } }
+    const title = element.querySelector('h1')
+    return { viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth,
+      title: { ...box(title), text: title.textContent.trim(), nowrap: getComputedStyle(title).whiteSpace === 'nowrap', clipped: title.scrollWidth > title.clientWidth + 1 },
+      controls: [...element.querySelectorAll('.avisos-btn, .laser-btn, .theme-trigger')].filter(node => node.getClientRects().length).map(node => ({ label: node.getAttribute('aria-label'), ...box(node) })) }
+  })
+  assert.equal(geometry.title.text, 'Central de setores')
+  assert.equal(geometry.title.nowrap, false, 'Setores320: title can wrap')
+  assert.equal(geometry.title.clipped, false, 'Setores320: full title is visible')
+  assert.ok(geometry.document <= geometry.viewport + 1, 'Setores320: no horizontal document overflow')
+  assert.equal(geometry.controls.length, 3, 'Setores320: all three controls are visible')
+  for (const control of geometry.controls) {
+    assert.ok(control.width >= 43.9 && control.height >= 43.9, `${control.label}: 44px target`)
+    assert.ok(control.left >= -1 && control.right <= geometry.viewport + 1, `${control.label}: inside viewport`)
+    assert.ok(control.left >= geometry.title.right - 1, `${control.label}: no title overlap`)
+  }
+  await page.screenshot({ path: path.join(out, `setores-${initial}-320-header.png`), fullPage: true })
+  const control = header.locator('.theme-control'), trigger = control.locator('.theme-trigger')
+  await trigger.click()
+  const menu = control.getByRole('group', { name: 'Aparência do painel' })
+  await menu.waitFor()
+  const menuBox = await menu.boundingBox()
+  assert.ok(menuBox.x >= -1 && menuBox.x + menuBox.width <= geometry.viewport + 1, 'theme menu fits Setores320')
+  for (const option of await menu.getByRole('button').all()) {
+    const rect = await option.boundingBox()
+    assert.ok(rect.width >= 43.9 && rect.height >= 43.9, 'theme options retain 44px targets')
+  }
+  await page.keyboard.press('Escape')
+  assert.equal(await trigger.evaluate(node => node === document.activeElement), true, 'Escape restores theme trigger focus')
+  await trigger.click()
+  const other = initial === 'dark' ? 'light' : 'dark'
+  await control.getByRole('button', { name: other === 'light' ? 'Claro' : 'Escuro', exact: true }).click()
+  await assertTheme(page, other, `Setores320 manual ${other}`)
+  assert.equal(await trigger.evaluate(node => node === document.activeElement), true, 'manual choice restores focus')
+  await page.screenshot({ path: path.join(out, `setores-${initial}-320-manual.png`), fullPage: true })
+  await trigger.click()
+  await control.getByRole('button', { name: /Automático/ }).click()
+  await assertTheme(page, initial, 'Setores320 automatic restored')
+  return { route: 'setores', width: 320, theme: initial, status: 'pass', geometry }
+}
+
 ;(async () => {
   fs.mkdirSync(out, { recursive:true })
-  const browser = await chromium.launch(require('./smoke-launch.cjs')()), report = [], diagnostics = []
+  const browser = await chromium.launch(require('./smoke-launch.cjs')()), report = [], diagnostics = [], headerScenarios = []
   let currentPage
   try {
-    for (const width of [1440, 390]) for (const initial of ['dark', 'light']) {
+    for (const width of widths) for (const initial of ['dark', 'light']) {
       const context = await browser.newContext({ viewport:{width,height:1000}, colorScheme:initial, reducedMotion:'reduce', serviceWorkers:'block' })
       const now = Date.now(), date = new Date(now).toISOString().slice(0, 10), points = [[now - 864e5 * 3, 12], [now - 864e5, 12.2]]
       const quotes = Object.fromEntries(['USDBRL', 'EURBRL', 'JPYBRL', 'USDCNH'].map(code => [code, { code:code.slice(0, 3), codein:code.slice(3), bid:code === 'JPYBRL' ? '.035' : '5', ask:code === 'JPYBRL' ? '.0351' : '5.01', high:code === 'JPYBRL' ? '.036' : '5.1', low:code === 'JPYBRL' ? '.034' : '4.9', pctChange:'1', varBid:'.01', timestamp:String(Math.floor(now / 1000)) }]))
@@ -124,10 +171,11 @@ async function assertTheme(page, theme, label) {
         diagnostics.push({kind:'console',width,initial,message:message.text()})
         console.error(`Widget ${initial} ${width}: ${message.text()}`)
       })
-      for (const [route, selector] of [['resumo','.terminal-desk'],['calculadora/giro','.cx #cx-value'],['aprender','.learn'],['juros','.macro .plot svg[role=img]']]) {
+      for (const [route, selector] of [['resumo','.terminal-desk'],['calculadora/giro','.cx #cx-value'],['aprender','.learn'],['juros','.macro .plot svg[role=img]'], ...(width === 320 ? [['setores','main.app .top h1']] : [])]) {
         await page.goto(`${base}/#${route}`); await page.locator(selector).first().waitFor()
         const label = `${initial}-${width}-${route.replace('/', '-')}`
         report.push({ label, ...await assertTheme(page, initial, label) })
+        if (route === 'setores') headerScenarios.push(await assertSectorHeader(page, initial))
         if (route === 'calculadora/giro') {
           await page.locator('#cx-value').fill('250.000,00')
           const before = await page.locator('.cx-matrix').innerText()
@@ -164,12 +212,12 @@ async function assertTheme(page, theme, label) {
       assert.deepEqual(errors, [], `${initial} ${width}: browser errors`)
       await context.close()
     }
-    const result = {passed:true, checks:['initial dark/light','1440px/390px','rendered contrast','selected controls','live preference change','input and result preservation','isolated widget component live theme','browser chrome'], report}
+    const result = {passed:true, checks:['initial dark/light','320/390/768/1024/1440px', 'Setores320 title and three 44px controls', 'manual theme and Escape focus','rendered contrast','selected controls','live preference change','input and result preservation','isolated widget component live theme','browser chrome'], expectedHeaders: headerMatrix, headerScenarios, report}
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(result, null, 2))
     console.log(JSON.stringify({passed:true,checks:result.checks,scenarios:report.length,report:path.join(out, 'report.json')}))
   } catch (error) {
     await currentPage?.screenshot({path:path.join(out, 'failure.png'),fullPage:true}).catch(() => {})
-    fs.writeFileSync(path.join(out, 'failure.json'), JSON.stringify({message:error.message,diagnostics,report}, null, 2))
+    fs.writeFileSync(path.join(out, 'failure.json'), JSON.stringify({message:error.message,diagnostics,expectedHeaders:headerMatrix,headerScenarios,report}, null, 2))
     throw error
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

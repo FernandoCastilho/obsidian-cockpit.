@@ -65,8 +65,8 @@ test('FINIMP associa erro ao campo, aceita custo zero e mantém os doze prazos f
   assert.deepEqual(r.days, [30,60,90,120,150,180,210,240,270,300,330,360]); assert.ok(Object.isFrozen(r.days)); assert.ok(r.errors['fi-target'])
 })
 
-test('Finame compartilha o domínio de IPCA entre campo e cálculo, incluindo deflação', () => {
-  const base = { valor: 100000, prazo: 12, custo: 'tlp', custoFinanceiro: 7, taxaBndes: 1.25, taxaAgente: 3 }
+test('Finame TLPCAP explícita valida o domínio da projeção IPCA, incluindo deflação', () => {
+  const base = { valor: 100000, prazo: 12, custo: 'tlp', perfilTlp: 'tlpcap', custoFinanceiro: 7, taxaBndes: 1.25, taxaAgente: 3 }
   for (const value of [-50, -0.5, 0, 100]) {
     assert.equal(validIpcaProjection(parseIpcaProjection(String(value).replace('.', ','))), true)
     assert.equal(simular({ ...base, ipca: value }).ok, true)

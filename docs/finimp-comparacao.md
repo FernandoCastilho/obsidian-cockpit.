@@ -1,19 +1,21 @@
 # FINIMP: comparação de propostas
 
-Implementação genérica autorizada por Fernando. Não reproduz imagem, valores de cliente ou tabela comercial. Entrada em Calculadoras, endereço `#calculadora/finimp` e comando FINIMP. Nenhum dado do formulário é persistido, enviado ou indexado pela busca.
+Descrição da interface e do motor vigentes, revisada em 06/11/2026. Os exemplos são sintéticos, não valores de cliente nem ofertas comerciais. Entrada em Calculadoras, endereço `#calculadora/finimp` e comando FINIMP. Os campos do formulário não são enviados nem indexados pela busca. O rascunho segue a política de sessão descrita abaixo.
 
 ## Premissas explícitas
 
-- Principal na mesma moeda de todos os custos; USD, EUR e BRL são rótulos, sem conversão.
-- Juros simples, com dias digitados e divisor 360. Não calcula datas nem escolhe ACT/360 ou 30/360.
+- Principal e resultados na moeda selecionada: USD, EUR, JPY, CNH ou BRL. Trocar a moeda muda a unidade, não converte automaticamente o principal. A troca limpa o câmbio da TAC para exigir nova conferência.
+- Juros simples com divisor 360. A UI usa doze prazos fixos de 30 a 360 dias, em passos de 30; não há campo de dias livres. O motor puro aceita dias inteiros em seu domínio. A tela não calcula datas nem escolhe ACT/360 ou 30/360.
 - Flat único sobre o principal. O contrato determina quando ele é pago; não há desconto a valor presente.
-- TAC opcional, na moeda escolhida, exclusivamente sob premissa editável de pagamento à vista e sem financiamento; não gera juros.
+- TAC opcional informada em reais (R$), paga à vista, sem financiamento nem juros. Se a moeda do principal for estrangeira e houver TAC positiva, informe câmbio explícito em R$ por unidade da moeda. TAC convertida = TAC em R$ ÷ câmbio. Para BRL, o fator é 1. TAC zero ou excluída dispensa câmbio.
 - Pagamento do principal no vencimento. Sem estimar impostos, câmbio, hedge, seguros, outras tarifas ou indexadores. Não é custo final travado em reais nem CET anual.
 - Doze prazos fixos, de 30 a 360 dias em passos de 30, usam as mesmas condições; não presumem uma oferta válida para todos os vencimentos.
 
+O rascunho FINIMP fica somente em memória e sobrevive à navegação interna. Recarregar ou fechar a aba apaga os campos; “Nova simulação” reinicia o rascunho. Não usa armazenamento persistente do navegador.
+
 ## Fórmulas auditáveis
 
-Com principal P, taxa anual em percentual r, flat percentual f, TAC T e dias d:
+Com principal P, taxa anual em percentual r, flat percentual f, TAC T já convertida para a moeda do principal e dias d:
 
 J = P × (r / 100) × (d / 360)
 
@@ -52,7 +54,7 @@ Matriz sintética, P = 100.000, TAC = 0. Instituição 1 r = 6%, f = 1%; Institu
 | 330 | 6.500,00 | 7.833,33 | 1.333,33 |
 | 360 | 7.000,00 | 8.500,00 | 1.500,00 |
 
-Teste inverso adicional: P = 100.000, flat Instituição 2 = 0,5%, TAC Instituição 2 = 100. Para igualar a Instituição 1 acima, taxa requerida de 6,8% em 180 dias e 6,4% em 360 dias. Recalculando: 3.400 + 500 + 100 = 4.000; 6.400 + 500 + 100 = 7.000.
+Teste inverso adicional no motor: P = 100.000, flat Instituição 2 = 0,5%, TAC convertida da Instituição 2 = 100 (por exemplo R$ 600 com câmbio 6 R$/USD). Para igualar a Instituição 1 acima, taxa requerida de 6,8% em 180 dias e 6,4% em 360 dias. Recalculando: 3.400 + 500 + 100 = 4.000; 6.400 + 500 + 100 = 7.000.
 
 Cobertura automatizada: 24 cenários diretos (12 prazos × dois bancos), três sinais da diferença, TAC, zeros, valores inválidos/overflow, metas em 180/360 dias, ausência/indeterminação de solução e precisão. Smoke de interface preenche os 24 resultados, aplica meta, altera moeda e TAC, testa erros e busca em 390/820/1280 px. Não substitui validação das condições comerciais de um contrato concreto.
 
@@ -74,6 +76,14 @@ A interface concentra as explicações nos botões “?” de simulação, moeda
 
 O flat é percentual editável em cada instituição, convertido automaticamente em valor sobre o principal. Não há regra de flat zero para a Instituição 2. O teste de interface usa principal de 100.000, flat de 1,5% e 2%: valores de 1.500 e 2.000, com juros independentes de cada proposta.
 
-A ajuda usa diálogo nativo exclusivo do FINIMP, com acionamento por clique/toque/Enter, foco contido, botão Fechar e Escape com retorno ao acionador. Não altera a ajuda global das demais calculadoras. O smoke verifica abertura, dimensões, modalidade, foco, fechamento e ausência dos parágrafos longos na tela em 390/820/1280 px, além de repetir os cálculos e metas do FINIMP.
+A ajuda da comparação usa o componente de diálogo das calculadoras, com acionamento por clique/toque/Enter, foco contido, botão Fechar e Escape com retorno ao acionador. O conversor de paridade em Mercado é um componente separado desta comparação. O smoke verifica abertura, dimensões, modalidade, foco, fechamento e ausência dos parágrafos longos na tela em 390/820/1280 px, além de repetir os cálculos e metas do FINIMP.
 
-Trabalho isolado na base publicada ceeb21c; não integra mudanças de persistência ou correções de auditoria de outra branch. Necessita revisão e autorização antes de publicação.
+## Conversão da TAC e testes atuais
+
+Exemplo reproduzível em `test/calculator-doc-examples.test.mjs`: USD 100.000 por 180 dias, câmbio 5 R$/USD. Instituição 1: 6% a.a., flat 1%, TAC R$ 1.000 → custo USD 4.200. Instituição 2: 8% a.a., flat 0,5%, TAC R$ 1.500 → custo USD 4.800. Para igualar USD 4.200, a taxa da Instituição 2 é 6,8% a.a. TAC é paga uma vez e não integra principal.
+
+`test/finimp-inputs.test.mjs` cobre as cinco moedas, TAC em reais, fator unitário BRL, câmbio zero/inválido, exclusão de TAC e meta usando valor convertido sem arredondamento intermediário. `test/finimp-presentation.test.mjs` cobre limpeza do câmbio ao trocar moeda, rascunho e precisão de apresentação. Os roteiros de navegador são evidência apenas quando efetivamente executados.
+
+## Histórico documental
+
+A versão inicial deste documento descrevia apenas USD/EUR/BRL e TAC na moeda escolhida. Esse modelo de entrada foi substituído: a tela atual recebe TAC em reais e oferece cinco moedas. Exemplos antigos com TAC já convertida continuam úteis para o motor, mas não descrevem a unidade do campo da UI. A referência de integração `ceeb21c` era histórica, não a base desta revisão.

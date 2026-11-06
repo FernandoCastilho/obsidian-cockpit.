@@ -8,5 +8,5 @@
 @media (max-width:600px) {
   .researched-flow-fullscreen { overflow-y:auto; overscroll-behavior:contain; padding:76px 12px 12px; }
   .researched-flow-fullscreen > .researched-flow { position:relative; left:auto; top:auto; width:100%; max-width:100%; transform:none; }
-  .researched-flow-fullscreen > .tic-flow-laser-toggle { position:fixed; }
+  .researched-flow-fullscreen > .tic-flow-laser-slot { position:fixed; }
 }

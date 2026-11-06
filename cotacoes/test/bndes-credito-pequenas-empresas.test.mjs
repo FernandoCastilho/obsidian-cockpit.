@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createHash } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { simular } from '../src/finameMateriais.js'
+import { finameFundingOption, finameFundingAnnualRate } from '../src/finameFunding.js'
 import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { addCivilMonths, actualActualCalendarYears, civilDaysBetween, followingBusinessDay, graceOffsetsBackwards, reconcileCreditoPequenasEmpresas } from '../src/bndesCreditoPequenasEmpresas.js'
@@ -279,12 +279,16 @@ test('datas e valores independem do timezone do processo', () => {
   assert.ok(outputs.every(output => output === outputs[0]))
 })
 
-// UI tributária revisada: IOF automático zero condicionado à origem FINAME elegível; motor preservado.
-test('Finame: motor e testes preservados, interface com confirmação tributária FINAME', () => {
-  const hashes = [
-    ['../src/finameMateriais.js', '6fa9f1165eac10b84fcb8be989cd1e92e2eba00033dd6b79aae622704cf63ea7'],
-    ['../src/FinameMateriais.jsx', '7dfe28f4e13bfd0b24e24a957cc38e8308fa8196a309f56ebf6ac10b6cbe114d'],
-    ['./finame-materiais.test.mjs', 'e9d3ade3d94338ed34ca8ac874b323039eb0185eb39c80515443d4052ef2121a'],
-  ]
-  for (const [path, expected] of hashes) assert.equal(createHash('sha256').update(readFileSync(new URL(path, import.meta.url))).digest('hex'), expected)
+// A auditoria autorizou corrigir Finame; teste de comportamento substitui hashes do motor antigo.
+test('Finame conserva referência TFC e separa o perfil exigível sem herdar capitalização', () => {
+  const input = { valor: 500000, prazo: 60, carencia: 12, custo: 'tfc', custoFinanceiro: 14.1743, taxaBndes: 1.25, taxaAgente: 3, sistema: 'sac', periodicidade: 3 }
+  const result = simular(input)
+  assert.equal(result.ok, true)
+  assert.equal(result.juros.toFixed(2), '268676.25')
+  assert.equal(result.total.toFixed(2), '768676.25')
+  assert.equal(result.parcelas.at(-1).saldo, 0)
+  assert.equal(result.iof, 0)
+  assert.equal(simular({ ...input, custo: 'tlp', ipca: 4 }).ok, false)
+  assert.equal(finameFundingOption('tlp').calculatorId, 'bndes-tlp-exigivel')
+  assert.equal(finameFundingAnnualRate('tlp', { tlp: 8.12 }), null)
 })

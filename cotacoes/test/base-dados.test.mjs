@@ -43,6 +43,9 @@ test('fontes detalhadas ficam na Base de dados, com exceções contextuais de At
     let t = f === 'MarketContext.jsx' ? raw.replace(/<details><summary>Fontes e conferência dos indicadores<\/summary>[\s\S]*?<\/details>/, '') : raw
     // São acessos de produto solicitados, não uma repetição do catálogo de fontes.
     if (f === 'Bndes.jsx') t = t.replace(/<nav className="bn-official-links"[\s\S]*?<\/nav>/, '')
+    // As duas conferências de crédito mantêm somente as normas do próprio cálculo
+    // no bloco recolhido de limites; não liberam links avulsos no resto do painel.
+    if (['BndesCreditoTfb.jsx', 'BndesTlpExigivel.jsx'].includes(f)) t = t.replace(/<details className="bndes-limits">[\s\S]*?<\/details>/, '')
     assert.doesNotMatch(t, /Fontes?: /, `${f}: texto "Fonte:" em painel`)
     assert.doesNotMatch(t, /href="https?:\/\/(?!wa\.me)/, `${f}: link externo fixo em painel`)
     assert.doesNotMatch(t, /\{[^}]*sourceName[^}]*\}\s*[·<]/, `${f}: nome da fonte exibido`)

@@ -1,4 +1,4 @@
-> Estado atual, revisado em 06/11/2026: perfil de conferência `0.2.2-research`, integrado em `cotacoes/src/bndesCreditoPequenasEmpresas.js` e sem tela própria. Por instrução de Fernando, o CET do cabeçalho foi desconsiderado no cenário ativo. O resultado usa as 34 parcelas, suas datas, IOF e tarifa. As evidências preservadas ficam em `cotacoes/test/fixtures/bndes-tfb`; não são configurações padrão nem cotações atuais.
+> Estado atual, revisado em 06/11/2026: perfil de conferência `0.2.2-research`, integrado em `cotacoes/src/bndesCreditoPequenasEmpresas.js` e na tela de conferência histórica `#calculadora/bndes-credito-tfb`. A tela não é calculadora contratual genérica. Por instrução de Fernando, o CET do cabeçalho foi desconsiderado no cenário ativo. O resultado usa as 34 parcelas, suas datas, IOF e tarifa. As evidências preservadas ficam em `cotacoes/test/fixtures/bndes-tfb`; não são configurações padrão nem cotações atuais.
 
 # BNDES Crédito Pequenas Empresas: conferência das três páginas
 
@@ -85,4 +85,4 @@ Consulte também `ADENDO-FATORES-E-ORIGEM.md` para a composição TLP/IPCA e a d
 - `RECONCILIACAO-COMPLETA.json`: resultado do motor e comparação dos totais.
 - `AUDITORIA-COMPLETA.md`: histórico e estado da conferência.
 
-O perfil permanece sem tela própria; a validação é feita pelo motor, testes e relatório. Finame/TFC, as alíquotas, as datas e os 34 pagamentos foram preservados. O histórico anterior, inclusive a comparação com 20,01%, foi superado por esta instrução e permanece somente para rastreabilidade em `AUDITORIA-COMPLETA.md` e `ADENDO-FATORES-E-ORIGEM.md`.
+O perfil dispõe da tela `#calculadora/bndes-credito-tfb` para conferir exclusivamente o exemplo histórico; não é uma calculadora contratual genérica nem cotação atual. A tela executa o motor validado pelos testes e pelo relatório, preservando alíquotas, datas e os 34 pagamentos desse exemplo. Não transfere essas condições para Finame/TFC. O histórico anterior, inclusive a comparação com 20,01%, foi superado por esta instrução e permanece somente para rastreabilidade em `AUDITORIA-COMPLETA.md` e `ADENDO-FATORES-E-ORIGEM.md`.

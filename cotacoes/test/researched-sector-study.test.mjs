@@ -30,7 +30,8 @@ test('renderer mostra pesquisa específica, Canvas, cadeia, tabela, fontes públ
   for (const text of ['Resumo verificado','Qual aplicação domina as vendas?','Toras','Painéis','Transformação','Laminação','Volume observado','Limite específico','Método específico','Síntese textual do estudo','Áudio ainda não disponível para este estudo.']) assert.ok(html.includes(text),text)
   assert.doesNotMatch(html,/Fonte privada|example\.com|speechSynthesis/)
   assert.match(html,/Maximizar diagrama/)
-  assert.match(html,/Pausar animação/)
+  assert.doesNotMatch(html, /Pausar animação do diagrama|Retomar animação do diagrama/)
+  assert.match(html, /aria-keyshortcuts="P"/)
 })
 test('áudio exige arquivo explícito e oferece velocidade e transcrição', async () => {
   const Component = await component('src/ResearchedSectorStudy.jsx')
@@ -57,7 +58,7 @@ test('apresentação móvel mantém tamanho do texto e rolagem sem alterar o pil
   assert.match(css, /\.researched-flow-fullscreen > \.researched-flow\s*\{\s*transform:var\(--sector-flow-transform\)/)
   assert.match(css, /@media \(max-width:600px\)[\s\S]*\.researched-flow-fullscreen\s*\{[^}]*overflow-y:auto/)
   assert.match(css, /\.researched-flow-fullscreen > \.researched-flow\s*\{[^}]*position:relative;[^}]*width:100%;[^}]*transform:none/)
-  assert.match(css, /\.researched-flow-fullscreen > \.tic-flow-laser-toggle\s*\{\s*position:fixed/)
+  assert.match(css, /\.researched-flow-fullscreen > \.tic-flow-laser-slot\s*\{\s*position:fixed/)
 })
 test('todos os estudos integrados renderizam sem erros e mantêm sua identidade', async () => {
   const studies=JSON.parse(await readFile('src/sectorStudies/studies.json','utf8'))

@@ -21,12 +21,10 @@ function FlowIcon({ name }) { return <svg aria-hidden="true" focusable="false" v
 export default function TechnologyIntegrationDiagram() {
   const [paused, setPaused] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const [laser, setLaser] = useState(false)
   const [scale, setScale] = useState(1)
   const figureRef = useRef(null)
   const maximizeRef = useRef(null)
-  const laserRef = useRef(null)
-  const pointerRef = useRef(null)
+  const dialogRef = useRef(null)
   const wasExpanded = useRef(false)
   useLayoutEffect(() => {
     if (!expanded) return
@@ -48,21 +46,28 @@ export default function TechnologyIntegrationDiagram() {
     }
     wasExpanded.current = true
     window.history.pushState({ ...window.history.state, ticDiagramFullscreen: true }, '')
-    const onBack = () => { setExpanded(false); setLaser(false) }
+    const onBack = () => setExpanded(false)
     window.addEventListener('popstate', onBack)
     const appRoot = document.getElementById('root')
     const previousInert = appRoot?.inert
     if (appRoot) appRoot.inert = true
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    laserRef.current?.focus()
+    const focusLaser = () => dialogRef.current?.querySelector('.laser-btn')?.focus()
+    dialogRef.current?.focus()
+    const focusObserver = new MutationObserver(() => {
+      if (dialogRef.current?.querySelector('.laser-btn')) { focusLaser(); focusObserver.disconnect() }
+    })
+    focusObserver.observe(dialogRef.current, { childList: true, subtree: true })
+    focusLaser()
     const onKey = event => {
-      if (event.key === 'Escape') { event.preventDefault(); setExpanded(false); setLaser(false) }
-      if (event.key === 'Tab') { event.preventDefault(); laserRef.current?.focus() }
-      if (event.key.toLowerCase() === 'p') { event.preventDefault(); setPaused(value => !value) }
+      if (event.key === 'Escape' && !event.defaultPrevented) { event.preventDefault(); setExpanded(false) }
+      if (event.key === 'Tab') { event.preventDefault(); focusLaser() }
+      if (event.key.toLowerCase() === 'p' && !event.ctrlKey && !event.altKey && !event.metaKey) { event.preventDefault(); setPaused(value => !value) }
     }
     document.addEventListener('keydown', onKey)
     return () => {
+      focusObserver.disconnect()
       document.body.style.overflow = previousOverflow
       document.removeEventListener('keydown', onKey)
       if (appRoot) appRoot.inert = previousInert
@@ -70,12 +75,14 @@ export default function TechnologyIntegrationDiagram() {
       if (window.history.state?.ticDiagramFullscreen) window.history.back()
     }
   }, [expanded])
-  const figure = <figure ref={figureRef} className="tic-flow"  data-paused={paused} style={expanded ? { transform: `translate(-50%, -50%) scale(${scale})` } : undefined} aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note">
+  const figure = <figure ref={figureRef} className="tic-flow"  data-paused={paused} style={expanded ? { transform: `translate(-50%, -50%) scale(${scale})` } : undefined} aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note tic-flow-motion-help" tabIndex={0} aria-keyshortcuts="P" onKeyDown={event => {
+    if (!expanded && event.key.toLowerCase() === 'p' && !event.ctrlKey && !event.altKey && !event.metaKey) { event.preventDefault(); setPaused(value => !value) }
+  }}>
     <h4 id="tic-flow-title">Como funciona a <span>integração de tecnologia</span></h4>
     <div className="tic-flow-controls">
       <p>O destaque percorre a cadeia de entrega e, abaixo, o ciclo de caixa.</p>
-      <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Retomar animação do diagrama' : 'Pausar animação do diagrama'}>{paused ? 'Retomar animação' : 'Pausar animação'}</button>
       <button ref={maximizeRef} className="tic-flow-maximize" type="button" aria-label="Maximizar diagrama" title="Maximizar diagrama" onClick={() => { setPaused(false); setExpanded(true) }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" /></svg></button>
+      <span id="tic-flow-motion-help" className="tic-flow-sr-only">Com o diagrama em foco, pressione P para pausar ou retomar a animação.</span>
       <span className="tic-flow-reduced">Animação desativada pela preferência de movimento reduzido.</span>
     </div>
     <div className="tic-flow-chain">
@@ -92,15 +99,9 @@ export default function TechnologyIntegrationDiagram() {
     <figcaption id="tic-flow-note">Síntese do subsetor; modelos de negócio podem coexistir. Etapas, sequência, faturamento e recebimento variam conforme o contrato.</figcaption>
   </figure>
   if (!expanded) return figure
-  return createPortal(<div className="tic-flow-fullscreen" role="dialog" aria-modal="true" aria-label="Diagrama em tela cheia" aria-describedby="tic-flow-fullscreen-help" onPointerMove={event => {
-    if (pointerRef.current) {
-      pointerRef.current.style.left = `${event.clientX}px`
-      pointerRef.current.style.top = `${event.clientY}px`
-    }
-  }}>
-    <p id="tic-flow-fullscreen-help" className="tic-flow-sr-only">Pressione Escape ou use Voltar do navegador para sair. Pressione P para pausar ou retomar a animação. Ative o laser e mova o ponteiro para destacar uma região.</p>
-    <button ref={laserRef} className="tic-flow-laser-toggle" type="button" aria-pressed={laser} onClick={() => setLaser(value => !value)}>{laser ? 'Desativar laser' : 'Ativar laser'} <span aria-hidden="true">⊙</span></button>
+  return createPortal(<div ref={dialogRef} tabIndex={-1} data-laser-host="true" className="tic-flow-fullscreen" role="dialog" aria-modal="true" aria-label="Diagrama em tela cheia" aria-describedby="tic-flow-fullscreen-help">
+    <p id="tic-flow-fullscreen-help" className="tic-flow-sr-only">Ative o laser padrão para riscar; Ctrl faz retângulos e Shift faz setas. Escape desliga o laser; com ele desligado, Escape sai da tela cheia. Use Voltar do navegador para sair. Pressione P para pausar ou retomar a animação.</p>
+    <span className="laser-slot tic-flow-laser-slot" />
     {figure}
-    {laser && <span ref={pointerRef} className="tic-flow-laser" aria-hidden="true" />}
   </div>, document.body)
 }
