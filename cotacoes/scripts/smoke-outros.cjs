@@ -559,7 +559,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const buscaFinal = p.getByRole('searchbox', { name: 'Buscar conceito' })
       for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos'], ['CET', /CET \(Custo Efetivo Total\)/, 'cet']]) {
         await buscaFinal.fill(buscaTema)
-        await p.locator('.learn-list li button', { hasText: titulo }).first().click()
+        await p.locator('.learn-list li button', { hasText: slug === 'cet' ? /^CET/ : titulo }).first().click()
         await p.locator('.learn-detail h2', { hasText: titulo }).waitFor()
         assert.equal(await p.locator('.learn-detail details').filter({ has: p.locator('summary', { hasText: /^Fontes$/ }) }).count(), 1, 'novo tema informa fontes')
         if (slug === 'cet') {

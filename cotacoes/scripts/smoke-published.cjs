@@ -57,7 +57,7 @@ const links = {
       }
       assert.equal(await page.locator('.learn-list li').count(), 26)
       assert.equal(await page.locator('.learn-list li button').filter({ hasText: 'Regime FÁCIL' }).count(), 1)
-      await page.getByRole('button', { name: 'CET (Custo Efetivo Total)', exact: true }).click()
+      await page.locator('.learn-list li button').filter({ has: page.getByText('CET', { exact: true }) }).click()
       await page.locator('.learn-detail h2', { hasText: 'CET (Custo Efetivo Total)' }).waitFor()
       assert.match(await page.locator('.learn-detail').innerText(), /13,40% ao ano/)
       await page.locator('.learn-detail summary', { hasText: /^Versão precisa$/ }).click()
