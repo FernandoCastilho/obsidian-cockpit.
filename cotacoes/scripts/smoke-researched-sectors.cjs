@@ -164,11 +164,12 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
             assert.match(await article.innerText(), /Áudio ainda não disponível para este estudo\./)
             await article.getByText('Ler síntese em texto', { exact: true }).click()
           }
-          if (!capturedGroups.has(study.group)) {
+          if (!capturedGroups.has(study.group) || (study.group === 'atacado' && study.topicIndex === 5)) {
             capturedGroups.add(study.group)
             await captureComponent(article.locator('.study-canvas-callout'), `${key}-${width}-canvas.png`)
             await captureComponent(article.locator('.researched-flow'), `${key}-${width}-cadeia.png`)
           }
+          if (study.group === 'atacado' && study.topicIndex === 5) await captureComponent(article.locator('section.study-chart').last(), `${key}-${width}-historico.png`)
           if (study.group === 'tic' && study.topicIndex === 6) await captureComponent(article.locator('section.study-chart').last(), `${key}-${width}-mercados.png`)
           if (study.charts.some(chart => chart.series.some(series => series.values.some(value => value < 0))) && !fs.existsSync(path.join(out, `bipolar-${width}.png`))) await captureComponent(article.locator('section.study-chart').last(), `bipolar-${width}.png`)
           report.results.push({ width, study: key, status: 'passed' })
@@ -192,7 +193,7 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       await page.locator('#tic-study-title').waitFor()
       assert.equal(await page.locator('.tic-flow-stage').count(), 13, 'piloto TIC preservado')
       if (!studies.length) { await context.close(); continue }
-      const selected = studies.find(study => study.group === 'base-florestal' && study.topicIndex === 3) || studies[0]
+      const selected = studies.find(study => study.group === 'atacado' && study.topicIndex === 5) || studies.find(study => study.group === 'base-florestal' && study.topicIndex === 3) || studies[0]
       const alternate = studies.find(study => study.title !== selected.title) || null
       await page.goto(`${base}/#setores/topico/${selected.group}/${selected.topicIndex}`)
       const diagram = page.locator('.researched-flow')
