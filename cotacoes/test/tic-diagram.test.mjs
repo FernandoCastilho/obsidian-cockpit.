@@ -25,3 +25,16 @@ test('referências visíveis apenas de órgãos públicos sem apagar proveniênc
   assert.match(jsx, /publicAgencySources\(study.sources\)/)
   assert.match(jsx, /publicAgencySources\(\[chart.source\]\)/)
 })
+
+test('animação possui pausa, sequência e alternativa sem movimento', () => {
+  const jsx = source('TechnologyIntegrationDiagram.jsx')
+  const css = source('TechnologyIntegrationDiagram.css')
+  assert.match(jsx, /data-paused={paused}/)
+  assert.match(jsx, /setPaused\(value => !value\)/)
+  assert.match(jsx, /Retomar animação/)
+  assert.match(jsx, /'--flow-step': index \+ 2/)
+  assert.match(jsx, /'--flow-step': index \+ 8/)
+  assert.match(css, /prefers-reduced-motion:reduce/)
+  assert.match(css, /animation-play-state:paused/)
+  assert.match(css, /animation:none/)
+})

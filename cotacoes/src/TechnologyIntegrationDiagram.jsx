@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './TechnologyIntegrationDiagram.css'
 
 const delivery = ['Diagnóstico', 'Desenho', 'Aquisição e configuração', 'Implantação', 'Operação e suporte (quando contratados)']
@@ -17,19 +18,25 @@ function FlowIcon({ name }) { return <svg aria-hidden="true" focusable="false" v
 
 // Texto nativo e listas ordenadas: a leitura não depende da imagem ou das setas.
 export default function TechnologyIntegrationDiagram() {
-  return <figure className="tic-flow" aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note">
+  const [paused, setPaused] = useState(false)
+  return <figure className="tic-flow" data-paused={paused} aria-labelledby="tic-flow-title" aria-describedby="tic-flow-note">
     <h4 id="tic-flow-title">Como funciona a <span>integração de tecnologia</span></h4>
+    <div className="tic-flow-controls">
+      <p>O destaque percorre a cadeia de entrega e, abaixo, o ciclo de caixa.</p>
+      <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Retomar animação do diagrama' : 'Pausar animação do diagrama'}>{paused ? 'Retomar animação' : 'Pausar animação'}</button>
+      <span className="tic-flow-reduced">Animação desativada pela preferência de movimento reduzido.</span>
+    </div>
     <div className="tic-flow-chain">
-      <div className="tic-flow-party tic-flow-maker"><FlowIcon name="factory" /><strong>Fabricantes e plataformas</strong></div>
+      <div className="tic-flow-party tic-flow-maker tic-flow-stage" style={{ '--flow-step': 0 }}><FlowIcon name="factory" /><strong>Fabricantes e plataformas</strong></div>
       <span className="tic-flow-arrow" aria-hidden="true">→</span>
-      <div className="tic-flow-party tic-flow-distributor"><FlowIcon name="box" /><strong>Distribuidores <small>(quando envolvidos)</small></strong></div>
+      <div className="tic-flow-party tic-flow-distributor tic-flow-stage" style={{ '--flow-step': 1 }}><FlowIcon name="box" /><strong>Distribuidores <small>(quando envolvidos)</small></strong></div>
       <span className="tic-flow-arrow" aria-hidden="true">→</span>
-      <section className="tic-flow-integrator" aria-labelledby="tic-flow-integrator-title"><h5 id="tic-flow-integrator-title">Integradora de tecnologia</h5><ol>{delivery.map((step, index) => <li key={step}><FlowIcon name={['search', 'pencil', 'gear', 'helmet', 'headset'][index]} />{step}</li>)}</ol></section>
+      <section className="tic-flow-integrator" aria-labelledby="tic-flow-integrator-title"><h5 id="tic-flow-integrator-title">Integradora de tecnologia</h5><ol>{delivery.map((step, index) => <li key={step} className="tic-flow-stage" style={{ '--flow-step': index + 2 }}><FlowIcon name={['search', 'pencil', 'gear', 'helmet', 'headset'][index]} />{step}</li>)}</ol></section>
       <span className="tic-flow-arrow" aria-hidden="true">→</span>
-      <div className="tic-flow-party tic-flow-client"><FlowIcon name="users" /><strong>Clientes</strong></div>
+      <div className="tic-flow-party tic-flow-client tic-flow-stage" style={{ '--flow-step': 7 }}><FlowIcon name="users" /><strong>Clientes</strong></div>
     </div>
     <p className="tic-flow-direct"><span>Fabricantes e plataformas → Clientes</span><strong>Contratação direta</strong></p>
-    <section className="tic-flow-cash" aria-labelledby="tic-flow-cash-title"><h5 id="tic-flow-cash-title">Onde o caixa exige atenção</h5><ol>{cash.map(step => <li key={step}>{step}</li>)}</ol></section>
+    <section className="tic-flow-cash" aria-labelledby="tic-flow-cash-title"><h5 id="tic-flow-cash-title">Onde o caixa exige atenção</h5><ol>{cash.map((step, index) => <li key={step} className="tic-flow-stage" style={{ '--flow-step': index + 8 }}>{step}</li>)}</ol></section>
     <figcaption id="tic-flow-note">Síntese do subsetor; modelos de negócio podem coexistir. Etapas, sequência, faturamento e recebimento variam conforme o contrato.</figcaption>
   </figure>
 }

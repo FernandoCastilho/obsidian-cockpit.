@@ -154,6 +154,7 @@ const links = {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify({ base, checkedAt: new Date().toISOString(), report, cetReport }, null, 2))
     console.log('PASS CET em Aprender: ' + JSON.stringify(cetReport))
     console.log('PASS versão entregue: ' + JSON.stringify(report))
+    require('node:child_process').execFileSync(process.execPath, [require('node:path').join(__dirname, 'smoke-tic-animation.cjs')], { stdio: 'inherit', env: process.env })
   } catch (error) {
     await page?.screenshot({ path: path.join(out, 'failure.png'), fullPage: true }).catch(() => {})
     throw error

@@ -6,3 +6,23 @@
 @media(max-width:600px){.tic-flow{padding:12px;border-radius:14px}}
 
 .tic-flow svg{width:36px;height:36px;flex-shrink:0}.tic-flow-party svg{width:44px;height:44px}.tic-flow-integrator ol li{flex-direction:column;gap:10px;overflow-wrap:anywhere}
+
+/* One quiet pass through delivery, then cash. No content depends on motion. */
+.tic-flow-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-10px 0 18px;font-size:.85rem;line-height:1.45}
+.tic-flow-controls p{flex:1 1 240px;margin:0!important}
+.tic-flow-controls button{font:inherit;font-weight:650;color:#000d3c;background:#fff;border:1px solid #627ea9;border-radius:8px;padding:9px 12px;min-height:44px;cursor:pointer}
+.tic-flow-controls button:focus-visible{outline:3px solid #0131ff;outline-offset:3px}
+.tic-flow-reduced{display:none}
+.tic-flow-stage{animation:tic-flow-stage 19.5s ease-in-out infinite;animation-delay:calc(var(--flow-step)*1.5s)}
+.tic-flow-arrow{animation:tic-flow-arrow 19.5s ease-in-out infinite;animation-delay:.75s}
+.tic-flow-arrow:nth-child(4){animation-delay:2.25s}
+.tic-flow-arrow:nth-child(6){animation-delay:10.25s}
+.tic-flow-cash ol li:not(:last-child)::after{animation:tic-flow-arrow 19.5s ease-in-out infinite;animation-delay:calc(var(--flow-step)*1.5s + .75s)}
+.tic-flow[data-paused="true"] .tic-flow-stage,.tic-flow[data-paused="true"] .tic-flow-arrow,.tic-flow[data-paused="true"] .tic-flow-cash li::after{animation-play-state:paused}
+@keyframes tic-flow-stage{0%,8%,100%{box-shadow:inset 0 0 0 0 transparent}2%,6%{box-shadow:inset 0 0 0 4px #ff8a3d}}
+@keyframes tic-flow-arrow{0%,8%,100%{opacity:.5}2%,6%{opacity:1;color:#b34500}}
+@media(prefers-reduced-motion:reduce){
+  .tic-flow-stage,.tic-flow-arrow,.tic-flow-cash ol li:not(:last-child)::after{animation:none}
+  .tic-flow-controls button{display:none}
+  .tic-flow-reduced{display:block}
+}
