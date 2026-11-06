@@ -54,3 +54,12 @@ test('global search does not label the published valve study as absent', () => {
   assert.doesNotMatch(search, /Tópico do catálogo setorial; estudo não incluído/)
   assert.match(search, /Abra o tópico para consultar o estudo ou o status da pesquisa/)
 })
+
+
+test('research charts reserve readable width and keep numeric values on one line', () => {
+  const css = readFileSync('src/ResearchedSectorStudy.css', 'utf8')
+  assert.match(css, /research-bar-row\{grid-template-columns:72px minmax\(0,1fr\) 112px\}/)
+  assert.match(css, /research-bar-row strong\{white-space:nowrap;font-variant-numeric:tabular-nums\}/)
+  const smoke = readFileSync('scripts/smoke-researched-sectors.cjs', 'utf8')
+  assert.match(smoke, /value.lines === 1 && value.fits/)
+})

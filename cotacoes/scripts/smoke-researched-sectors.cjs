@@ -140,6 +140,12 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
               const values = chart.series[seriesIndex].values
               const signed = chart.series.some(series => series.values.some(value => value < 0))
               assert.deepEqual(await panel.locator('.study-bar-row strong').allTextContents(), values.map(value => value.toLocaleString('pt-BR', { signDisplay: signed ? 'exceptZero' : 'auto' })), key)
+              const valueLabels = await panel.locator('.study-bar-row strong').evaluateAll(elements => elements.map(element => {
+                const range = document.createRange()
+                range.selectNodeContents(element)
+                return { lines: range.getClientRects().length, fits: element.scrollWidth <= element.clientWidth + 1 }
+              }))
+              assert.ok(valueLabels.every(value => value.lines === 1 && value.fits), `números sem quebra ou corte ${width} ${key}`)
               assert.equal(await panel.locator('.research-bar-negative').count(), values.filter(value => value < 0).length, key)
               if (signed) assert.ok((await panel.locator('.research-bar-axis').innerText()).includes('0'), key)
               const geometry = await panel.locator('.research-bar').evaluateAll(elements => elements.map(element => ({ left: parseFloat(element.style.left), width: parseFloat(element.style.width) })))
