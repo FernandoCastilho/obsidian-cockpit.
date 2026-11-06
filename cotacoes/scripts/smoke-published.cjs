@@ -126,10 +126,11 @@ const links = {
       assert.ok(formulaGeometry.scroll <= formulaGeometry.client + 1, JSON.stringify(formulaGeometry))
       await page.screenshot({ path: path.join(out, `cet-${width}-${colorScheme}-conteudo.png`), fullPage: true })
       const go = card.locator('.learn-go')
-      await go.scrollIntoViewIfNeeded()
-      const endVisible = await go.evaluate(el => { const r = el.getBoundingClientRect(); const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2); return r.top >= 0 && r.bottom <= innerHeight && !!hit && el.contains(hit) })
-      assert.equal(endVisible, true, 'ação final do CET alcançável sem cobertura da navegação fixa')
+      // Confira o fim real da página: a rolagem mínima de scrollIntoView pode parar atrás da barra fixa.
+      await page.evaluate(async () => { window.scrollTo({ top: document.scrollingElement.scrollHeight, behavior: 'instant' }); await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))) })
+      const endState = await go.evaluate(el => { const r = el.getBoundingClientRect(); const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2); return { visible: r.top >= 0 && r.bottom <= innerHeight && !!hit && el.contains(hit), top: r.top, bottom: r.bottom, viewport: innerHeight, hit: hit?.className, scrollTop: document.scrollingElement.scrollTop } })
       await page.screenshot({ path: path.join(out, `cet-${width}-${colorScheme}-fim.png`) })
+      assert.equal(endState.visible, true, `ação final do CET alcançável a ${width}px/${colorScheme}: ${JSON.stringify(endState)}`)
       const help = card.getByRole('button', { name: 'Sobre CET (Custo Efetivo Total)', exact: true })
       // A ajuda flutuante fecha ao rolar: estabilize a posição antes de focar e abrir pelo teclado.
       await help.scrollIntoViewIfNeeded()
