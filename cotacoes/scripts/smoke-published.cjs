@@ -83,7 +83,7 @@ const links = {
       await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark')
       await contained('Configurações')
       const refresh = page.getByRole('button', { name: 'Atualizar Governança dos dados', exact: true })
-      await page.locator('.config-wide > header .refresh-stamp').waitFor()
+      await refresh.locator('..').locator('.refresh-stamp').waitFor()
       const box = await refresh.boundingBox()
       assert.ok(box && box.width >= 44 && box.height >= 44 && box.x >= 0 && box.x + box.width <= width + 1, 'Governança: botão inteiro dentro da tela')
       await page.screenshot({ path: path.join(out, width + '-config.png') })
