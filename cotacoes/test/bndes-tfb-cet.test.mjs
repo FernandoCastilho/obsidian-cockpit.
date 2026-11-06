@@ -6,31 +6,57 @@ import { fullInput } from './fixtures/bndes-tfb/full-input.mjs'
 
 const ACT365_ORACLE = Number('0.20156889928931125684944')
 
-test('CET completo: apuração do fluxo e divergência preservam a referência e a ressalva contratual', () => {
+test('CET completo: cenário ativo usa somente o fluxo, sem referência anterior como alvo', () => {
   const input = fullInput(), before = structuredClone(input)
   const result = run(input), { cet } = result
   assert.equal(result.ok, true)
-  assert.equal(cet.reportedAnnualRateDecimal, '0.2001')
+  assert.equal(input.reportedCet, null)
+  assert.equal(cet.reportedAnnualRateDecimal, null)
   // Valor confirmado separadamente com Decimal de 60 casas, sem o solver JS.
   assert.ok(Math.abs(cet.calculatedAnnualRateDecimal - ACT365_ORACLE) < 1e-12)
-  assert.ok(Math.abs(cet.annualDifferencePercentagePoints - 0.14688992893112568) < 1e-10)
-  assert.ok(Math.abs(cet.referenceResidualCents + 521424.4105164493) < 0.001)
+  assert.equal(cet.annualDifferencePercentagePoints, null)
+  assert.equal(cet.referenceResidualCents, null)
   assert.ok(Math.abs(cet.residualCents) < 0.001)
   assert.equal(cet.calculationStatus, 'calculated-declared-cash-flow')
-  assert.equal(cet.status, 'reference-mismatch')
+  assert.equal(cet.status, 'calculated-no-reference')
   assert.equal(cet.dayCount, 'actual-365-fixed')
   assert.equal(cet.interval, 'elapsed-days')
   assert.equal(cet.validated, false)
   assert.equal(result.cashFlowComplete, false)
   assert.equal(result.horizon.completeContractFlow, false)
   assert.equal(result.validationStatus, 'estimate-not-contract-validated')
-  assert.ok(result.warnings.some(text => text.includes('diverge da referência')))
+  assert.ok(!result.warnings.some(text => text.includes('diverge da referência')))
   assert.deepEqual(input, before)
+})
+
+test('referências opcionais nunca alteram os 34 pagamentos nem o CET calculado', () => {
+  const baseline = run(fullInput())
+  assert.equal(baseline.rows.length, 34)
+  for (const annualRateDecimal of ['0.2001', '0.2016', '0.5']) {
+    const input = fullInput()
+    input.reportedCet = { annualRateDecimal, source: 'Referência de teste opcional, sem efeito no cálculo.', status: 'observed' }
+    const result = run(input)
+    assert.equal(result.ok, true)
+    assert.equal(result.cet.calculatedAnnualRateDecimal, baseline.cet.calculatedAnnualRateDecimal)
+    assert.deepEqual(result.rows, baseline.rows)
+    assert.deepEqual(result.cashFlows, baseline.cashFlows)
+  }
+})
+
+test('comparação opcional divergente é informativa e preserva a ressalva contratual', () => {
+  const input = fullInput()
+  input.reportedCet = { annualRateDecimal: '0.2001', source: 'Referência histórica usada apenas neste teste de comparação.', status: 'observed' }
+  const { cet } = run(input)
+  assert.equal(cet.status, 'reference-mismatch')
+  assert.equal(cet.reportedAnnualRateDecimal, '0.2001')
+  assert.ok(Math.abs(cet.annualDifferencePercentagePoints - 0.14688992893112568) < 1e-10)
+  assert.ok(Math.abs(cet.referenceResidualCents + 521424.4105164493) < 0.001)
+  assert.equal(cet.validated, false)
 })
 
 test('referência compatível na apresentação não substitui o CET calculado nem certifica contrato', () => {
   const input = fullInput()
-  input.reportedCet.annualRateDecimal = '0.2016'
+  input.reportedCet = { annualRateDecimal: '0.2016', source: 'Referência de teste opcional.', status: 'observed' }
   const { cet, warnings } = run(input)
   assert.equal(cet.status, 'reference-consistent-at-display-precision')
   assert.equal(cet.reportedAnnualRateDecimal, '0.2016')
@@ -56,6 +82,7 @@ test('fluxo completo dispensa referência para apurar o CET e não inventa compa
 
 test('horizonte parcial continua sem CET, mesmo com taxa de referência e imposto total conhecidos', () => {
   const input = fullInput()
+  input.reportedCet = { annualRateDecimal: '0.2001', source: 'Referência de teste opcional.', status: 'observed' }
   input.horizon = { lastNominalDate: '2028-02-15', observedRowCount: 13, source: 'Trecho inicial de teste.' }
   const result = run(input)
   assert.equal(result.ok, true)
@@ -139,9 +166,12 @@ test('relatório de reconciliação preserva as parcelas e publica o CET apurado
   assert.deepEqual(stored.calculation.rows, current.rows)
   assert.deepEqual(stored.calculation.cashFlows, current.cashFlows)
   assert.ok(Math.abs(stored.calculation.cet.calculatedAnnualRateDecimal - current.cet.calculatedAnnualRateDecimal) < 1e-12)
-  assert.equal(stored.calculation.cet.reportedAnnualRateDecimal, '0.2001')
+  assert.equal(stored.calculation.cet.reportedAnnualRateDecimal, null)
+  assert.equal(stored.report.reportedAnnualCet, null)
+  assert.equal(stored.report.annualDifferencePercentagePoints, null)
+  assert.equal(stored.report.referencePolicy, 'ignored-by-user-instruction')
   assert.equal(stored.report.calculatedAnnualCetPercentDisplayed, '20.16')
-  assert.equal(stored.report.cetStatus, 'reference-mismatch')
+  assert.equal(stored.report.cetStatus, 'calculated-no-reference')
   assert.equal(stored.calculation.cet.validated, false)
   assert.equal(stored.calculation.cashFlowComplete, false)
 })

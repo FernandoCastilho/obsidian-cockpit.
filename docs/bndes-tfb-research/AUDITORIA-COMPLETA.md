@@ -1,5 +1,23 @@
 # Auditoria independente da extensão v0.2
 
+## Estado vigente em 06/11/2026 — CET independente da referência anterior
+
+Fernando determinou desconsiderar o CET apresentado no cabeçalho e calcular usando as parcelas e todas as demais informações disponíveis. O cenário completo agora define `reportedCet = null`: **20,01% não é mais alvo, comparação ativa ou pendência de aceitação.** A transcrição original foi preservada.
+
+**Validação matemática concluída: CET de 20,1568899289311% a.a., apresentado como 20,16% a.a.** O cálculo usa dias corridos/365, valor líquido de R$ 2.905.817,27 em 26/10/2026 e os 34 pagamentos nas datas transcritas, com tarifa de R$ 2.200,00 somente na primeira cobrança. O IOF de R$ 94.182,73 é descontado uma única vez na liberação. Parcelas, encargos e datas não foram ajustados para atingir uma taxa.
+
+A nova conferência independente usa Newton com Decimal de 70 dígitos diretamente das 34 linhas: taxa anual `0.2015688992893112568494449836469052116318712437222958731943678583891447`, com residual de `2e-61` centavo. Confere principal de R$ 3.000.000,00, juros de R$ 842.970,58 e prestações mais tarifa de R$ 3.845.170,58.
+
+O resultado ativo passa a `status = calculated-no-reference`, com `reportedAnnualRateDecimal`, `annualDifferencePercentagePoints` e `referenceResidualCents` nulos. A nova regressão demonstra que referências opcionais diferentes não alteram as 34 parcelas, o fluxo ou a taxa calculada. O relatório foi regenerado pelo motor; nenhum valor de CET foi ajustado manualmente.
+
+Verificação executada nesta revisão: **92/92 testes TFB aprovados**. As novas verificações do cenário sem referência e do relatório falharam antes do ajuste e passaram depois. A regressão dos 204 campos preserva todas as informações das 34 linhas. O comando reproduzível está no `README.md`.
+
+Não há pendência matemática do CET para esse fluxo. A precisão original da taxa, a âncora e o calendário dizem respeito ao **gerador**. Completude contratual dos encargos, enquadramento normativo e aplicabilidade fiscal dizem respeito a uma **certificação contratual/regulatória separada**, que não foi atribuída ao cenário. Por isso, `cet.validated = false`, `cashFlowComplete = false` e `validationStatus = estimate-not-contract-validated` continuam explícitos; eles não indicam falta de parcelas nem de cálculo.
+
+## Registro histórico preservado — superado pelo estado vigente acima
+
+As seções seguintes documentam as revisões anteriores. As exigências de explicar a origem dos 20,01%, a comparação ativa e os antigos estados de CET pendente foram superados pela instrução atual. A referência anterior não bloqueia o cálculo validado do fluxo declarado.
+
 Data: 05/11/2026. Escopo: fotografias das três páginas, transcrição, candidato isolado v0.2, entrada completa, cálculo de retorno datado e testes. Não houve publicação, integração com UI, preview, sockets ou execução de fixture Python. O auditor não modificou o candidato nem o cálculo de retorno.
 
 ## Retificação posterior de origem

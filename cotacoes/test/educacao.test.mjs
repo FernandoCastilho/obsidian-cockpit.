@@ -1,10 +1,41 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { sacaEmReais, galaoParaLitro, CONCEITOS, CONEXAO, LIGACOES, TOPICOS, conexoesDe, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva } from '../src/educacao.js'
+import { sacaEmReais, galaoParaLitro, CONCEITOS, CONEXAO, LIGACOES, TOPICOS, conexoesDe, breakFunding, buscarConceitos, cupomCambial, indiceSubordinacao, inflacaoAcumulada, jurosNoPrazo, juroReal, perdaNasCotas, porTopico, taxaCdiMaisSpread, custoMedio, diferencialDeJuros, dolarDeEquilibrio, jurosAnuais, jurosDeUmDia, premioCds, valorAMercado, valorNaCurva, cetParcelaUnica } from '../src/educacao.js'
 import { DESK_TABS, parseCommand } from '../src/terminal.js'
 
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
+
+test('CET: exemplo anual usa o líquido recebido e mantém separada a taxa contratual', () => {
+  const cet = cetParcelaUnica({ liquido: 9700, pagamento: 11000, dias: 365 })
+  assert.ok(Math.abs(cet - 0.134020618556701) < 1e-12)
+  assert.ok(Math.abs(cetParcelaUnica({ liquido: 10000, pagamento: 11000, dias: 365 }) - 0.1) < 1e-12)
+  assert.equal(cetParcelaUnica({ liquido: 10000, pagamento: 10000, dias: 365 }), 0)
+  assert.ok(cet > 0.1)
+  assert.match(text(byId('cet').exemplo), /9\.700/)
+  assert.match(text(byId('cet').exemplo), /13,40%/)
+  assert.match(text(byId('cet').exemplo), /10,00%/)
+  assert.match(text(byId('cet').exemplo), /valores fictícios, não alíquotas/)
+})
+
+test('CET: material explica método, encargos, âmbito e exceções com fonte primária', () => {
+  const c = byId('cet'), body = text(c)
+  assert.equal(c.topico, 'Operações de crédito')
+  assert.equal(c.revisadoEm, '2026-11-06')
+  assert.ok(c.fontes.some(f => f.url === 'https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf'))
+  assert.match(body, /dias corridos e base fixa de 365 dias/)
+  assert.match(c.preciso.formula, /dj − d0.*365/)
+  assert.match(c.preciso.texto, /taxas flutuantes e índices de preços não entram no CET regulatório/)
+  assert.match(c.preciso.texto, /informados separadamente/)
+  assert.match(body, /inclusive serviços de terceiros/)
+  assert.match(body, /Não desconte o mesmo IOF/)
+  assert.match(c.ajuda.join(' '), /pessoas físicas.*empresários individuais.*ME e EPP/)
+  assert.match(c.ajuda.join(' '), /repasses de recursos externos e crédito rural/)
+  assert.match(c.ajuda.join(' '), /30 dias e limite pactuado/)
+  assert.ok(buscarConceitos('CET').some(x => x.id === 'cet'))
+  assert.ok(buscarConceitos('custo efetivo total').some(x => x.id === 'cet'))
+  assert.doesNotMatch(body, /20,01|20,16|TFB/)
+})
 
 test('dividendos: fonte oficial usa o PDF existente conferido em 06/11/2026', () => {
   assert.ok(byId('dividendos').fontes.some(f => f.url === 'https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/dirf/manual_padrao_rfb_per_tributacao_cotin_v-19-12-2025.pdf'))
@@ -42,7 +73,7 @@ test('novos temas têm fontes oficiais, data de revisão e exemplos que não se 
 })
 
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'lei-de-maquila', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis', 'escala-6x1', 'reforma-tributaria', 'split-payment', 'dividendos'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'cet', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'lei-de-maquila', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis', 'escala-6x1', 'reforma-tributaria', 'split-payment', 'dividendos'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 
@@ -150,7 +181,7 @@ test('cada conceito pertence a um tópico existente e os tópicos agrupam sem pe
   const g = porTopico(CONCEITOS)
   assert.deepEqual(g.map((x) => x.topico), TOPICOS)
   assert.equal(g.reduce((n, x) => n + x.itens.length, 0), CONCEITOS.length)
-  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['fee-de-estruturacao', 'liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil'])
+  assert.deepEqual(g.find((x) => x.topico === 'Operações de crédito').itens.map((c) => c.id), ['fee-de-estruturacao', 'cet', 'liquidacao-antecipada', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil'])
   assert.deepEqual(porTopico([CONCEITOS[0]]).map((x) => x.topico), ['Juros e câmbio'], 'tópico vazio não aparece')
 })
 test('busca: todas as palavras, sem acento nem maiúscula, no conteúdo inteiro', () => {
