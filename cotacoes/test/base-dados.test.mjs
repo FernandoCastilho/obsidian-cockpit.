@@ -33,8 +33,9 @@ test('base de dados: todas as fontes da governança aparecem na Base de dados', 
   assert.ok(ATRIBUICOES.some((a) => /BLS/.test(a.fonte)) && ATRIBUICOES.every((a) => a.texto.length > 30))
 })
 test('fontes detalhadas ficam na Base de dados, com exceções contextuais de Atividade e conteúdo setorial', () => {
-  // Preserva a conferência contextual C04 e as atribuições editoriais setoriais.
-  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'SectorProfile.jsx', 'SectorNews.jsx', 'GoogleTrends.jsx'])
+  // Preserva a conferência contextual C04 e as atribuições editoriais setoriais,
+  // inclusive o estudo com fontes e períodos junto aos gráficos.
+  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'SectorProfile.jsx', 'SectorStudy.jsx', 'SectorNews.jsx', 'GoogleTrends.jsx'])
   for (const f of readdirSync(new URL('../src/', import.meta.url)).filter((x) => x.endsWith('.jsx') && !permitidos.has(x))) {
     const raw = src(f)
     // C04 exige fonte e data da conferência perto do indicador. Mantém a regra
