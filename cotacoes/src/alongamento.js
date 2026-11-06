@@ -1,10 +1,14 @@
 import { cgDate, cgToday } from './contaGarantida.js'
-import { resolveCreditIof } from './iofRules.js'
+import { IOF_SOURCE, resolveCreditIof } from './iofRules.js'
 import { parseMoneyInput } from './moneyInput.js'
 
 const DAY = 86400000
 const MAX_MONEY = 1e12
 const MAX_TOTAL = Number.MAX_SAFE_INTEGER / 100
+export const ALONGAMENTO_SOURCES = [
+  { label: 'Decreto 6.306/2007, art. 7º', url: IOF_SOURCE },
+  { label: 'IN RFB 1.969/2020', url: 'https://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=111336' },
+]
 const finiteMoney = n => Number.isFinite(n) && n >= 0 && n <= MAX_MONEY
 const fail = error => ({ ok: false, error })
 
