@@ -22,7 +22,8 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { normalizeIpca } from './ipca.js'
 import Explain from './Explain.jsx'
 import NoticiasPorDia from './NoticiasPorDia.jsx'
-import ReformaTributaria, { MoedasNoticias, TemaNoticias } from './ReformaTributaria.jsx'
+import { MoedasNoticias, TemaNoticias } from './ReformaTributaria.jsx'
+import CuradoriaNoticias from './CuradoriaNoticias.jsx'
 import { moedasDaManchete, nomeDaMoeda } from './moedasNoTexto.js'
 import { CURRENCIES, seriesName } from './useQuotes.js'
 import { centralFull, fullWindow, fromInput, toInput, useHistory, useIntraday, useCentralDaily } from './useHistory.js'
@@ -431,7 +432,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget 
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><SectorNews id="veiculos-pesados" label="Veículos pesados" /></> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : ['imposto', 'split-payment', 'reforma', 'escala-6x1'].includes(newsTab) ? <CuradoriaNoticias id={newsTab} /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><SectorNews id="veiculos-pesados" label="Veículos pesados" /></> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -496,7 +497,10 @@ export function RatesTop({ macro, curves, onOpen }) {
 const NEWS_TABS = [
   { id: 'moedas', label: 'Moedas', refresh: ['temas.json'] },
   { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
-  { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
+  { id: 'imposto', label: 'Imposto', refresh: ['curadoria-noticias.json'] },
+  { id: 'split-payment', label: 'Split payment', refresh: ['curadoria-noticias.json'] },
+  { id: 'reforma', label: 'Reforma tributária', refresh: ['curadoria-noticias.json'] },
+  { id: 'escala-6x1', label: 'Escala 6x1', refresh: ['curadoria-noticias.json'] },
   { id: 'eleicoes', label: 'Eleições EUA', refresh: ['temas.json'] },
   { id: 'veiculos-pesados', label: 'Veículos pesados', refresh: ['sector-news.json','heavy-vehicles.json'] },
 ]

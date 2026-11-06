@@ -20,7 +20,7 @@ test('weekly Focus cron at 08:30 Brazil on Monday and Tuesday (Monday holiday); 
  const y=await readFile(new URL('../../.github/workflows/pages.yml',import.meta.url),'utf8')
  const crons=[...y.matchAll(/- cron: '([^']+)'/g)].map(m=>m[1]);assert.equal(crons.length,3);assert.equal(new Set(crons).size,3)
  assert.match(y,/if: github.event.schedule == '30 11 \* \* 1,2'/)
- assert.equal((y.match(/if: github.event.schedule != '30 11 \* \* 1,2'/g)||[]).length,32)
+ assert.equal((y.match(/if: github.event.schedule != '30 11 \* \* 1,2'/g)||[]).length,33)
  assert.match(y,/Revalidar janela setorial sem coleta externa\n\s+if: github.event.schedule != '30 11 \* \* 1,2'\n\s+run: node scripts\/fetch-sector-news\.mjs --offline/)
 })
 test('Focus failure/skip preserves actual publication date, values and quote timestamps',()=>{

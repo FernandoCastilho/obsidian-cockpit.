@@ -98,6 +98,8 @@ jobs:
             echo "::error::Smokes com falha: ${failures[*]}"
             exit 1
           fi
+      - name: Conferir curadorias de tributos e escala 6x1
+        run: CURADORIA_QA_OUTPUT="$RUNNER_TEMP/qa-universal/curadoria" node scripts/smoke-curadoria.cjs
       - name: Seleção temporal com mouse e toque nos componentes
         run: |
           npm run dev -- --host 127.0.0.1 --port 8770 > "$RUNNER_TEMP/comparison-vite.log" 2>&1 &

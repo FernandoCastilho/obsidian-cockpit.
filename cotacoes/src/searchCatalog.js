@@ -4,9 +4,11 @@ import { INSUMOS } from './insumos.js'
 import { makeSearchDoc, plainContent } from './globalSearch.js'
 import { BANKING_TOPICS } from './bankingSectors.js'
 import { B3_SECTORS } from './b3Classification.js'
+import { CURADORIA_TOPICS } from './curadoria.js'
 import generated from './searchContent.generated.json'
 export function staticSearchDocuments() {
   return [
+    ...CURADORIA_TOPICS.map(topic => makeSearchDoc({ id: 'curadoria:' + topic.id, title: topic.label + ': notícias dos últimos sete dias', body: 'Curadoria automática de notícias em fontes oficiais e imprensa selecionada. Janela de 7 dias, 168 horas de publicação.', route: 'resumo', context: { newsTab: topic.id }, kind: 'Área do painel' })),
     ...B3_SECTORS.map(sector=>makeSearchDoc({id:'b3-sector:'+sector.id,title:sector.label,body:'Setor econômico da classificação B3. Nomes conferidos em 05/11/2026. Subsetores e segmentos ainda não incorporados. Indicadores desta categoria indisponíveis no painel.',route:'setores/b3/'+sector.id,kind:'Setor econômico B3'})),
     ...CONCEITOS.map(c=>makeSearchDoc({id:'concept:'+c.id,title:c.nome,body:plainContent(c),route:'aprender/'+c.id,kind:'Conceito'})),
     makeSearchDoc({id:'learning:connections',title:CONEXAO.titulo,body:plainContent(CONEXAO)+' '+plainContent(LIGACOES),route:'aprender',kind:'Conteúdo do painel'}),

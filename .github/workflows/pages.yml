@@ -115,6 +115,11 @@ jobs:
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-holidays.mjs
         continue-on-error: true
+      - name: Curadoria de tributos e escala 6x1 (últimos sete dias)
+        if: github.event.schedule != '30 11 * * 1,2'
+        run: node scripts/fetch-curadoria.mjs
+        timeout-minutes: 2
+        continue-on-error: true
       - name: Coletar matérias da semana sobre a reforma tributária (Google Notícias)
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-reforma.mjs
