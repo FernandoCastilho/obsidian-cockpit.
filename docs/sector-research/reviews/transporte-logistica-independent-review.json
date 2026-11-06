@@ -1,0 +1,270 @@
+{
+  "reviewer": "research_manufacturing_sector_studies",
+  "role": "Revisão independente de precisão, não auditoria formal acionada pelo usuário",
+  "date": "2026-11-06",
+  "authorshipConflict": false,
+  "file": "docs/sector-research/transporte-logistica.json",
+  "sha256": "249a72bdd272579ea68d32fbcfccc9252c0280301d3e2796acfab3f66704c136",
+  "status": "Aprovação individual parcial; ver decisões por estudo",
+  "coverage": "Leitura de estrutura, texto, todos os gráficos e varredura programática de números. Verificação direta das fontes materiais acessíveis. Análises de cadeia, caixa, SWOT, Porter e cenários avaliadas como inferências, não estatísticas comprovadas.",
+  "numericItems": [
+    {
+      "id": "armazenagem-2015",
+      "value": 166.1,
+      "unit": "milhões de toneladas",
+      "period": "segundo semestre de 2015",
+      "scope": "Brasil, capacidade útil de estabelecimentos ativos da Pesquisa de Estoques",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+      "label": "Capacidade útil agrícola",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Não conferido: fontes integrais IBGE403; indexação não basta"
+    },
+    {
+      "id": "armazenagem-2025",
+      "value": 233.8,
+      "unit": "milhões de toneladas",
+      "period": "segundo semestre de 2025",
+      "scope": "Brasil, capacidade útil de estabelecimentos ativos da Pesquisa de Estoques",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+      "label": "Capacidade útil agrícola",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Não conferido: fontes integrais IBGE403; indexação não basta"
+    },
+    {
+      "id": "portos-2024",
+      "value": 1.32,
+      "unit": "bilhões de toneladas",
+      "period": "2024",
+      "scope": "Brasil, movimentação aquaviária reportada pela ANTAQ",
+      "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+      "label": "Movimentação anual",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em página ANTAQ integral, valores arredondados"
+    },
+    {
+      "id": "portos-2025",
+      "value": 1.4,
+      "unit": "bilhões de toneladas",
+      "period": "2025",
+      "scope": "Brasil, movimentação aquaviária reportada pela ANTAQ",
+      "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+      "label": "Movimentação anual",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em página ANTAQ integral, valores arredondados"
+    },
+    {
+      "id": "pms-cargas-2023",
+      "value": 10.1,
+      "unit": "% variação acumulada no ano",
+      "period": "2023",
+      "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+      "location": "transporte-logistica[0].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em API direta independente, registro reviews/pms-independent-api.json"
+    },
+    {
+      "id": "pms-cargas-2024",
+      "value": -4.5,
+      "unit": "% variação acumulada no ano",
+      "period": "2024",
+      "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+      "location": "transporte-logistica[0].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em API direta independente, registro reviews/pms-independent-api.json"
+    },
+    {
+      "id": "pms-cargas-2025",
+      "value": 2.0,
+      "unit": "% variação acumulada no ano",
+      "period": "2025",
+      "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+      "location": "transporte-logistica[0].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em API direta independente, registro reviews/pms-independent-api.json"
+    },
+    {
+      "id": "pms-cargas-202608",
+      "value": 0.5,
+      "unit": "% variação acumulada no ano",
+      "period": "janeiro–agosto de 2026 contra igual período de 2025",
+      "scope": "Brasil, volume rodoviário de cargas, PMS",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/56696/c11046/56726",
+      "location": "transporte-logistica[0].sections.conjuntura",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em API direta independente, registro reviews/pms-independent-api.json"
+    }
+  ],
+  "counts": {
+    "numericObservationsIdentified": 8,
+    "numericObservationsVerified": 6,
+    "numericObservationsPending": 2
+  },
+  "materialFindings": [
+    {
+      "severity": "Alta",
+      "study": "Armazenagem",
+      "finding": "Dois pontos quantitativos e sua comparabilidade ainda dependem de fontes inacessíveis. Não validar gráfico final antes de conferir semestre, universo e unidade."
+    },
+    {
+      "severity": "Média",
+      "study": "Transporte de madeira",
+      "finding": "Afirmação sobre mudança PEVS em 2026 e referência ao ano anterior não foi confirmada: abertura da nota retornou 403. DOF+ para espécies nativas foi confirmado diretamente em página Ibama atualizada em 28/10/2026."
+    },
+    {
+      "severity": "Resolvido",
+      "study": "Transporte de produtos perigosos",
+      "finding": "Notícia ANP de 09/10/2026 anuncia aprovação da retomada da restrição com vigência condicionada à publicação no DOU. Sem ato publicado conferido, trocar afirmação de retomada efetiva por anúncio de aprovação.",
+      "resolution": "Corrigido pela autoria: texto atual diz anunciou aprovação da retomada, sem afirmar vigência."
+    },
+    {
+      "severity": "Média",
+      "study": "Transporte de produtos perigosos",
+      "finding": "A menção a resíduo em veículo vazio requer referência específica ao regulamento/FAQ; página genérica citada confirma exigências gerais, não esse detalhe."
+    },
+    {
+      "severity": "Baixa",
+      "study": "Logística portuária",
+      "finding": "Preencher data de publicação 10/02/2026 e atualização 03/11/2026 no ledger; ambas visíveis na fonte integral."
+    },
+    {
+      "severity": "Limite de cobertura",
+      "study": "Grupo completo",
+      "finding": "Não há séries próprias longas, preços ou rankings completos em todos os recortes. O texto reconhece lacunas, o que é adequado, mas não demonstra pesquisa quantitativa completa."
+    }
+  ],
+  "verifiedClaims": [
+    {
+      "claim": "ANTT integra MDF-e e RNTRC e apresenta corredores de soja e milho",
+      "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+      "result": "Confirmado nos parágrafos centrais e descrição do painel. Não mede receita."
+    },
+    {
+      "claim": "Conab relata diesel e insumos pressionando fretes em setembro/2026, com diferenças regionais",
+      "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+      "result": "Confirmado em notícia publicada em 27/10/2026. Não extrapolar a carga geral."
+    },
+    {
+      "claim": "DOF+ é ferramenta de origem florestal de espécies nativas",
+      "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+      "result": "Confirmado no escopo oficial, sem generalizar a madeira plantada."
+    },
+    {
+      "claim": "Transporte refrigerado exige temperatura pertinente e monitoramento",
+      "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+      "result": "Orientação municipal confirmada. Não representa regra nacional única; estudo preserva limite."
+    },
+    {
+      "claim": "ANTT regula transporte perigoso e exige documentação/equipamento conforme operação",
+      "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+      "result": "Confirmado na seção Produtos Perigosos. ANTT esclarece não emitir licença específica de transporte perigoso."
+    },
+    {
+      "claim": "Santos, Santarém e Porto Sudeste são exemplos da movimentação ANTAQ",
+      "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+      "result": "Confirmado; Santos público, Porto Sudeste autorizado. Sem confundir instalações com empresas médias."
+    }
+  ],
+  "nextStep": "Autor deve corrigir formulação ANP, completar provenance e manter números não conferidos bloqueados ou obter evidência autorizada. Nova versão precisa de novo hash e releitura.",
+  "priorVersion": {
+    "file": "cotacoes/docs/sector-research/transporte-logistica.json",
+    "sha256": "b7f4f94924626888b9b4b72eb5802116cd99973f9622da694276f4adaeb16610"
+  },
+  "versionFollowup": "Versão congelada final relida: gráfico PMS e conjuntura acumulada janeiro–agosto2026 conferidos com unidade, variável e atividade. Mantidas pendências qualitativas identificadas.",
+  "studyDecisions": [
+    {
+      "id": "transporte-logistica:0",
+      "topicIndex": 0,
+      "title": "Carga geral",
+      "reviewStatus": "approved",
+      "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+      "studySha256": "f60065a62a198c61a12a9fea65178f55e2024e1265a28928d3335e238e504044",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:1",
+      "topicIndex": 1,
+      "title": "Transporte de madeira",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: página SFB/PEVS integral confirma cobertura estadual e atualização de outubro de 2026. Removida afirmação metodológica não confirmada. DOF e distinção nativa/plantada preservados. Sem estatísticas estreitas inventadas.",
+      "studySha256": "3e77d17fa3471c4054469952d43ba6bd4fb762986afba2b62e1e34c0a240127e",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:2",
+      "topicIndex": 2,
+      "title": "Transporte de grãos",
+      "reviewStatus": "approved",
+      "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+      "studySha256": "6b4920a7555533b42f81f7154e4ad2b521b6309ed4758b0250b4d0197105fd80",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:3",
+      "topicIndex": 3,
+      "title": "Transporte refrigerado",
+      "reviewStatus": "approved",
+      "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+      "studySha256": "91208773f0bebead4b9ec3b740ebf26d2d2b20d307e3feaa562a618f32f95bbe",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:4",
+      "topicIndex": 4,
+      "title": "Transporte de produtos perigosos",
+      "reviewStatus": "approved",
+      "reason": "Revisão independente adicional confirmou ANTTlegis consolidado, artigo6 parágrafo2 e artigo10: resíduos em veículo vazio mantêm prescrições e sinalização. Demais afirmações e limites já conferidos. Aprovado individualmente.",
+      "studySha256": "98d8d86e651114f4aadfbce69e39cd7701f58da17aa8b9f597066295d8e6eb55",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:5",
+      "topicIndex": 5,
+      "title": "Armazenagem",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: PDFs integrais IBGE confirmam 166,1 milhões de toneladas no segundo semestre de 2015 e 233,8 no segundo semestre de 2025; ambos convertem armazenagem convencional a 0,6 t/m³. Polos e limite capacidade versus ocupação conferidos. Não representa todos os armazéns logísticos.",
+      "studySha256": "21fef55455195c862dfd2467052df5d986d7407b60bd7251e75086bb694aa418",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "transporte-logistica:6",
+      "topicIndex": 6,
+      "title": "Logística portuária",
+      "reviewStatus": "approved",
+      "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+      "studySha256": "af8b3e1ffd3ad7f6907289c3d34bf6f219c7e46a8ce88af0ca90a7abf5c29f1c",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    }
+  ],
+  "followupReviews": [
+    {
+      "id": "transporte-logistica:4",
+      "date": "2026-11-06",
+      "result": "Revisão independente adicional confirmou ANTTlegis consolidado, artigo6 parágrafo2 e artigo10: resíduos em veículo vazio mantêm prescrições e sinalização. Demais afirmações e limites já conferidos. Aprovado individualmente."
+    },
+    {
+      "id": "transporte-logistica:1",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: página SFB/PEVS integral confirma cobertura estadual e atualização de outubro de 2026. Removida afirmação metodológica não confirmada. DOF e distinção nativa/plantada preservados. Sem estatísticas estreitas inventadas."
+    },
+    {
+      "id": "transporte-logistica:5",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: PDFs integrais IBGE confirmam 166,1 milhões de toneladas no segundo semestre de 2015 e 233,8 no segundo semestre de 2025; ambos convertem armazenagem convencional a 0,6 t/m³. Polos e limite capacidade versus ocupação conferidos. Não representa todos os armazéns logísticos."
+    }
+  ],
+  "finalStatus": "approved",
+  "finalScope": "Revisão documental individual concluída. Não inclui QA de interface, reprodução ou escuta de áudio.",
+  "finalRevalidation": "2026-11-06: todas as decisões individuais aprovadas após correções. Achados iniciais devem ser lidos como histórico, resoluções em followupReviews.",
+  "editorialAddendum": "Após aprovação, corrigidos espaços em registro editorial-corrections-applied.json, distinção Porter rivalidade/substitutos na logística portuária e limitação MAPA histórica. Sem alteração numérica; hashes atualizados."
+}

@@ -1,0 +1,703 @@
+{
+  "group": "automotivo",
+  "accessedAt": "2026-11-06",
+  "numericEvidence": [
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": -27.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 20.1,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 3.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": -7.1,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 12.4,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": -27.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 20.1,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 3.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": -7.1,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 12.4,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "sourceRegister": [
+    {
+      "label": "IBGE · PIM-PF Brasil",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+      "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · PIA-Produto",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+      "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Agência Brasil · produção industrial em setembro",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+      "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · Finame BK Aquisição e Comercialização",
+      "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+      "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "MDIC · Programa Mover",
+      "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+      "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "MDIC · habilitações ao Mover",
+      "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+      "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Anuário Estatístico: produção industrial",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "purpose": "Taxas anuais de produção física, Brasil, 2020–2024. Dados recuperados na indexação; abertura do PDF retornou acesso proibido, pendente conferência independente.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Prefeitura de Caxias do Sul · Memorial Randon",
+      "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+      "purpose": "Vínculo histórico entre Randon e Caxias do Sul, sem quantificação de participação ou capacidade.",
+      "accessedAt": "2026-11-06"
+    }
+  ],
+  "review": {
+    "status": "NÃO CONFERIDO",
+    "independentReviewer": null,
+    "totalNumericItems": 10,
+    "independentlyVerified": 0
+  },
+  "notes": [
+    "Repetições idênticas compartilham URL, conceito e período; datas, índices de catálogo e identificadores estruturais não são métricas econômicas.",
+    "Todas as afirmações analíticas são inferências e exigem validação da empresa; não apresentadas como estatísticas observadas."
+  ],
+  "qualitativeEvidence": [
+    {
+      "study": "Componentes automotivos",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Componentes automotivos",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Implementos rodoviários",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Reposição de autopeças",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Distribuidores de peças",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    }
+  ],
+  "supersededNumericEvidence": [
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": -27.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 20.1,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 3.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": -7.1,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Componentes automotivos",
+      "location": "charts.historico-producao",
+      "value": 12.5,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": -27.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 20.1,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 3.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": -7.1,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "location": "charts.historico-producao",
+      "value": 12.5,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "pimRevision": {
+    "date": "2026-11-06",
+    "source": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+    "method": "API direta; histórico antigo preservado em supersededNumericEvidence apenas para rastreabilidade, não para interface.",
+    "reason": "Revisão independente detectou diferenças no ano2024 entre publicação histórica indexada e API corrente."
+  },
+  "verifiedCaseSupplement": [
+    {
+      "study": "Componentes automotivos",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-financiamento-para-projeto-de-inovacao-da-ZEN-voltado-a-mobilidade-eletrificada/",
+      "publicationOrStartDate": "2026-10-22",
+      "accessDate": "2026-11-06",
+      "method": "Abertura integral do documento público; síntese delimitada, sem montante, ranking, número de instalações ou meta transformada em resultado.",
+      "claim": "Exemplo recente verificável: em outubro de 2026, o BNDES anunciou aprovação de financiamento ao plano de inovação da ZEN, de Brusque, para componentes ligados a veículos híbridos e elétricos e processos industriais. A publicação descreve pesquisa e desenvolvimento, não produtos já vendidos ou retorno já obtido. O caso mostra que a transição tecnológica também passa por fornecedores especializados; não prova crescimento de todo o mercado de autopeças.",
+      "analysis": "Na visita, separar o custo de desenvolver e homologar uma nova família de componentes do giro necessário à produção de itens já aprovados. Uma aprovação de financiamento a outra empresa não comprova acesso, taxa ou garantia para o cliente analisado."
+    },
+    {
+      "study": "Implementos rodoviários",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Producao-de-reboques-e-vagoes-e-financiada-pelo-BNDES-para-exportacao/",
+      "publicationOrStartDate": "2023-09-19",
+      "accessDate": "2026-11-06",
+      "method": "Abertura integral do documento público; síntese delimitada, sem montante, ranking, número de instalações ou meta transformada em resultado.",
+      "claim": "Referência empresarial histórica: o BNDES descreveu a Randon, sediada em Caxias do Sul, como fabricante de implementos rodoviários, semirreboques, carrocerias e vagões, ao anunciar apoio à produção destinada à exportação em setembro de 2023. Reboques rodoviários e vagões ferroviários pertencem a mercados diferentes; o exemplo não permite somar suas vendas nem inferir participação da empresa no recorte.",
+      "analysis": "O caso de produção para exportação ajuda a distinguir financiamento antes do embarque de antecipação de recebível já constituído. Na análise de uma empresa média, conferir pedido externo, cronograma de produção, moeda e risco de cancelamento; as condições daquele caso histórico não são oferta atual."
+    },
+    {
+      "study": "Reposição de autopeças e Distribuidores de peças",
+      "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+      "accessDate": "2026-11-06",
+      "publicationDate": "2023",
+      "location": "PDF páginas58–59 (índices57–58), linhas2404–2460",
+      "method": "PDF integral aberto; separada preocupação levantada por terceiro da conclusão da SG. Sem acusação, market share ou ranking atual.",
+      "claim": [
+        "Como referência histórica de portfólio, o estudo do Departamento de Estudos Econômicos do Cade sobre a operação Fras-Le/Nakata descreve famílias como freios, cubos de roda e componentes para veículos pesados. O documento registra aprovação sem restrições em 2020. Esse caso não estima o tamanho atual da reposição, mas mostra por que separar aplicação e família de peça antes de comparar concorrentes.",
+        "O estudo do Departamento de Estudos Econômicos do Cade que sintetiza o caso Fras-Le/Nakata registra que clientes consultados recorriam a mais de um fornecedor para ampliar a diversidade de produtos. A análise histórica não confirmou destaque excepcional do portfólio combinado frente ao mercado. É evidência sobre compras e canais, não prova de exclusividade ou prática ilícita atual. Para o distribuidor médio, diversidade de fornecedores e estoque adequado devem ser analisados junto da demanda atendida."
+      ]
+    }
+  ]
+}

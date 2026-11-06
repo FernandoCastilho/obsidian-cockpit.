@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-06",
+  "status": "Fontes abertas independentemente; casos têxteis incorporados e aprovados documentalmente, conforme relatório individual. Não implica QA visual/áudio.",
+  "sources": [
+    {
+      "url": "https://fiacao.com.br/index.html",
+      "verified": "Oferta de fios algodão, mescla e poliéster, aplicações e representantes; São Bento do Sul. Declaração empresarial, sem confirmar capacidade."
+    },
+    {
+      "url": "https://jeanswear.cedro.com.br/produtos/",
+      "verified": "Denim e Colours, aplicações por elasticidade, representantes e coleções2026. Sem adotar ranking ou idade desatualizada no rodapé."
+    },
+    {
+      "url": "https://ecommerce.dalilatextil.com.br/como-comprar",
+      "verified": "Malharia circular, categorias e aplicações, canal ecommerce e informação técnica. Sem validar alegações ambientais."
+    },
+    {
+      "url": "https://hjtinturaria.com.br/orcamento/",
+      "verified": "Prestação de tingimento/acabamento em malhas em rolo, exclusão de tecido plano e peça pronta, orçamento e testes, Brusque. Sem validar produtividade, prazo ou capacidade."
+    },
+    {
+      "url": "https://www.fitesa.com/pt/solutions/",
+      "verified": false,
+      "limitation": "Abertura retornou429; não aprovada por snippet."
+    },
+    {
+      "url": "https://www.obergeo.com.br/linha-de-produtos",
+      "verified": "Página integral: GeoFort não tecido PET/PP, drenagem, separação, proteção e geoformas; endereço Nova Odessa. Oferta declarada, sem validação de desempenho ou vendas."
+    },
+    {
+      "url": "https://www.portobello.com.br/lancamentos",
+      "verified": "Página de lançamentos: revestimentos cerâmicos e canais Shop, multimarcas, construção e internacional. Catálogo PDF não lido por limite de tamanho; não é evidência de vendas."
+    },
+    {
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/2666",
+      "verified": "Resumo oficial de setembro de 2007 confirma classificação vidro plano/oco e concentração histórica; não atualiza estrutura de 2026."
+    }
+  ]
+}

@@ -1,5 +1,22 @@
 // Calculadoras › Capital de Giro: ícone, condições gerais, linha em branco e resultado (Parcela, Juros Totais, Pagamento Final).
 const { chromium } = require('playwright'), assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path')
+
+// Fixed release 06/11/2026 and first due 06/12/2026. Civil-calendar offsets,
+// with iterative outstanding-principal accounting independent of emprestimo.js.
+const giroOracle = (system, principal = 100000, daily = 0.0082) => {
+  const days = [30, 61, 92, 120, 151, 181, 212, 242, 273, 304, 334, 365]
+  const payment = principal * 0.02 / (1 - 1.02 ** -12)
+  let balance = principal, interest = 0, iof = principal * 0.0038
+  for (const day of days) {
+    const charge = balance * 0.02
+    const amortization = system === 'sac' ? principal / 12 : payment - charge
+    interest += charge; iof += amortization * Math.min(day, 365) * daily / 100
+    balance -= amortization
+  }
+  return { iof, total: principal + interest + iof }
+}
+const brl = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s+/g, ' ')
+
 ;(async () => {
   const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
   const out = process.env.CALCULATOR_QA_OUTPUT ? path.join(process.env.CALCULATOR_QA_OUTPUT, 'functional') : process.env.SMOKE_OUT || 'workspace-qa/calculadoras'
@@ -26,6 +43,9 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.deepEqual((await sec.locator('header h3').allInnerTexts()).map(t => t.replace(/\s*\?\s*$/, '').trim()), ['Condições gerais', 'Resultado'])
       for (const label of ['Valor', 'Prazo (meses)', 'Taxa (%)']) await sec.getByLabel(label, { exact: true }).waitFor()
       await sec.getByText('Sistema de amortização', { exact: true }).waitFor()
+      await sec.locator('#cx-start').fill('2026-11-06')
+      await sec.locator('#cx-firstDue').fill('2026-12-06')
+      const expectedPrice = giroOracle('price'), expectedSac = giroOracle('sac')
       // matriz: linhas Parcela, IOF, Juros Totais, Pagamento Final; colunas Price e SAC (Bullet só quando escolhido)
       const mx = sec.locator('.cx-matrix')
       const norm = (t) => t.replace(/\s+/g, ' ').trim()
@@ -38,38 +58,52 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.ok(res.y - (cond.y + cond.height) >= 16, 'ao menos 16px de espaço real entre as duas seções')
       // padrão: R$ 100.000,00, 12 meses, 2% a.m., Price
       assert.match(await cell(0, 'Price'), /^R\$\s*9\.455,96/); assert.match(await cell(0, 'SAC'), /^R\$\s*10\.333,33 até R\$\s*8\.500,00/)
-      assert.match(await cell(1, 'Price'), /^R\$\s*2\.060,39/); assert.match(await cell(1, 'SAC'), /^R\$\s*2\.001,55/) // IOF PJ logo abaixo da Parcela
+      assert.equal(await cell(1, 'Price'), brl(expectedPrice.iof)); assert.equal(await cell(1, 'SAC'), brl(expectedSac.iof)) // IOF PJ por dias reais
       assert.match(await cell(2, 'Price'), /^R\$\s*13\.471,52/); assert.match(await cell(2, 'SAC'), /^R\$\s*13\.000,00/)
-      assert.match(await cell(3, 'Price'), /^R\$\s*115\.531,91/); assert.match(await cell(3, 'SAC'), /^R\$\s*115\.001,55/) // valor + juros + IOF
+      assert.equal(await cell(3, 'Price'), brl(expectedPrice.total)); assert.equal(await cell(3, 'SAC'), brl(expectedSac.total)) // principal + juros + IOF
       const ys = await mx.locator('tbody tr').evaluateAll((es) => es.map((e) => e.getBoundingClientRect().y))
       assert.ok(ys.every((y, i) => i === 0 || y > ys[i - 1]), 'IOF abaixo da Parcela')
       // sistema escolhido destacado na coluna; diferença em frase
       const selected = async () => (await mx.locator('thead th.cx-selected').innerText()).split('\n')[0].trim()
       assert.equal(await selected(), 'Price'); assert.equal(await mx.locator('thead th.cx-selected small').innerText().then((t) => t.toLowerCase()), 'selecionado')
-      assert.match(await sec.locator('.cx-diff').innerText(), /SAC, o Pagamento Final fica R\$\s*530,36 menor que no Price/)
+      assert.ok(norm(await sec.locator('.cx-diff').innerText()).includes(`SAC, o Pagamento Final fica ${brl(expectedPrice.total - expectedSac.total)} menor que no Price`))
       await sec.getByRole('button', { name: 'SAC', exact: true }).click()
       assert.equal(await selected(), 'SAC'); assert.deepEqual(await heads(), ['Price', 'SAC'])
-      assert.match(await sec.locator('.cx-diff').innerText(), /Price, o Pagamento Final fica R\$\s*530,36 maior que no SAC/)
+      assert.ok(norm(await sec.locator('.cx-diff').innerText()).includes(`Price, o Pagamento Final fica ${brl(expectedPrice.total - expectedSac.total)} maior que no SAC`))
       await sec.getByRole('button', { name: 'Bullet', exact: true }).click()
       assert.deepEqual(await heads(), ['Price', 'SAC', 'Bullet']); assert.equal(await selected(), 'Bullet')
       assert.match(await cell(0, 'Bullet'), /^— pagamento único/); assert.match(await cell(1, 'Bullet'), /^R\$\s*3\.373,00/); assert.match(await cell(3, 'Bullet'), /^R\$\s*130\.197,18/)
       assert.equal(await sec.locator('.cx-diff li').count(), 2)
-      // alíquotas do IOF editáveis (recolhidas por padrão)
+      // IOF automático: enquadramento exige confirmação, limite de R$ 30 mil e recuperação.
       await sec.getByRole('button', { name: 'Price', exact: true }).click()
-      assert.equal(await sec.locator('.cx-iof details').getAttribute('open'), null)
-      await sec.locator('.cx-iof details summary').click()
-      await sec.getByLabel('Diária (% ao dia)').fill('0'); assert.match(await cell(1, 'Price'), /^R\$\s*380,00/)
-      await sec.getByLabel('Diária (% ao dia)').fill('x'); assert.match(await sec.locator('[role="alert"]').innerText(), /alíquotas do IOF/); assert.equal(await cell(1, 'Price'), '—')
-      await sec.getByLabel('Diária (% ao dia)').fill('0,0082')
+      assert.equal(await sec.getByLabel('Diária (% ao dia)', { exact: true }).count(), 0)
+      await sec.locator('#cx-profile').selectOption('simples')
+      assert.match(await sec.locator('.cx-iof [role="alert"]').innerText(), /Confirme/)
+      assert.equal(await cell(1, 'Price'), '—')
+      const eligible = sec.getByRole('checkbox', { name: /Confirmo o enquadramento/ })
+      await eligible.check()
+      assert.equal(await cell(1, 'Price'), brl(expectedPrice.iof), 'acima de R$ 30 mil mantém diária geral')
+      await sec.getByLabel('Valor', { exact: true }).fill('30.000,00')
+      assert.equal(await cell(1, 'Price'), brl(giroOracle('price', 30000, 0.00274).iof), 'limite inclusivo usa diária reduzida')
+      await eligible.uncheck(); assert.equal(await cell(1, 'Price'), '—')
+      await sec.locator('#cx-profile').selectOption('pj')
+      await sec.getByLabel('Valor', { exact: true }).fill('100.000,00')
+      assert.equal(await cell(1, 'Price'), brl(expectedPrice.iof))
       // taxa anual convertida; entrada inválida mostra aviso e zera o resultado
       await sec.getByRole('button', { name: 'a.a.', exact: true }).click(); await sec.getByLabel('Taxa (%)', { exact: true }).fill('12,6825') // 12,6825% a.a. = 1% a.m. (PMT de R$ 100.000 em 12 meses a 1% a.m.)
       assert.match(await cell(0, 'Price'), /^R\$\s*8\.884,88/)
       await sec.getByLabel('Prazo (meses)', { exact: true }).fill('0')
-      assert.match(await sec.locator('[role="alert"]').innerText(), /prazo em meses/)
+      assert.match(await sec.locator('#cx-n-err[role="alert"]').innerText(), /prazo em meses/)
       assert.equal(await cell(0, 'Price'), '—'); assert.equal(await sec.locator('.cx-diff').count(), 0, 'sem resultado, sem comparação')
       await sec.getByLabel('Prazo (meses)', { exact: true }).fill('12')
       await sec.getByLabel('Valor', { exact: true }).fill('1,000.00')
-      assert.match(await sec.locator('[role="alert"]').innerText(), /formato brasileiro/)
+      assert.match(await sec.locator('#cx-value-err[role="alert"]').innerText(), /formato brasileiro/)
+      assert.match(await sec.locator('.cx-iof [role="alert"]').innerText(), /Informe o valor total da operação/)
+      assert.equal(await sec.getByLabel('Valor', { exact: true }).getAttribute('aria-invalid'), 'true')
+      assert.equal(await cell(0, 'Price'), '—'); assert.equal(await cell(1, 'Price'), '—')
+      await sec.getByLabel('Valor', { exact: true }).fill('100.000,00')
+      assert.equal(await sec.locator('[role="alert"]').count(), 0, 'entrada corrigida recupera os resultados sem avisos antigos')
+      assert.match(await cell(0, 'Price'), /^R\$\s*8\.884,88/)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await sec.getByRole('button', { name: /Calculadoras/ }).click(); await p.waitForURL('**/#calculadora')
       // BNDES Finame Materiais: tile, condições com as regras (prazo 84, carência 12 com TFB), TFB do painel, resultado e cronograma
@@ -83,6 +117,9 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       // padrão: TFC da série MPME (porte padrão MPME nas demais regiões), faixa até 60 meses
       await fm.locator('.fm-custo-valor', { hasText: 'TFC_MPME_60.90 (C03)' }).waitFor()
       assert.match(await fm.locator('.fm-custo-valor').innerText(), /MPME, faixa até 60 meses: 14,1743% a\.a\. em 04\/11\/2026/)
+      assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0, 'sem confirmação não simula IOF zero')
+      assert.match(await fm.locator('#fm-iof-err').innerText(), /Confirme os recursos FINAME/)
+      await fm.locator('#fm-finame-eligible').check()
       await fm.locator('.fm-grade').waitFor()
       const kpiBox = (nome) => fm.locator('.fm-kpi', { has: p.locator('span.fm-rotulo', { hasText: new RegExp(`^${nome}\\s*\\??$`) }) })
       const kpi = async (nome) => (await kpiBox(nome).locator('b').innerText())
@@ -100,13 +137,16 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByRole('button', { name: 'MPME nas demais regiões' }).click()
       // TFB da faixa de prazo e liberação
       await fm.locator('#fm-custo').selectOption('tfb')
+      assert.equal(await fm.locator('#fm-finame-eligible').isChecked(), false, 'trocar funding revoga confirmação')
+      assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0)
+      await fm.locator('#fm-finame-eligible').check()
       await fm.locator('.fm-custo-valor', { hasText: 'TFB da faixa de 60 meses' }).waitFor()
       assert.match(await fm.locator('.fm-custo-valor').innerText(), /16,6300% a\.a\./) // 16 + 0,60 + 0,030
       await fm.locator('.fm-grade').waitFor()
       assert.match(await kpi('Taxa final'), /^\d{2},\d{2}% a\.a\.$/)
       assert.equal(await kpi('Valor financiado'), 'R$\u00a0500.000,00')
       assert.match(await kpiBox('Parcelas').innerText(), /48x mensais/)
-      // IOF: sem incidência por padrão (prática de mercado); PJ quando o agente cobra
+      // IOF zero apenas após confirmação explícita da elegibilidade dos recursos
       const iofKpi = kpiBox('IOF')
       assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+Alíquota zero/)
       await help('IOF', /art\. 8º, IX/)
@@ -115,11 +155,11 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.notEqual(await kpi('Taxa final'), taxaCap, 'composição somada muda a taxa')
       await help('Taxa final', /somadas/)
       await fm.getByRole('button', { name: 'Capitalizada' }).click(); assert.equal(await kpi('Taxa final'), taxaCap)
-      await fm.locator('details.cx-iof summary').click()
-      await fm.getByLabel('Adicional, uma vez (%)', { exact: true }).fill('0,38'); await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('0,0082')
-      assert.match(await iofKpi.innerText(), /R\$\s*[\d.]+,\d{2}\s+R\$\s*1\.900,00 adicional \+ R\$/) // 0,38% de 500 mil
-      await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('x'); assert.match(await fm.locator('#fm-iof-err').innerText(), /alíquotas do IOF/)
-      await fm.getByLabel('Adicional, uma vez (%)', { exact: true }).fill('0'); await fm.getByLabel('Diária (% ao dia)', { exact: true }).fill('0')
+      assert.equal(await fm.getByLabel('Diária (% ao dia)', { exact: true }).count(), 0, 'não permite inventar alíquota')
+      await fm.locator('#fm-finame-eligible').uncheck()
+      assert.match(await fm.locator('#fm-iof-err').innerText(), /Confirme os recursos FINAME/)
+      assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0, 'revogar elegibilidade remove resultado e fluxo')
+      await fm.locator('#fm-finame-eligible').check()
       await fm.locator('.fm-grade').waitFor()
       assert.match(await iofKpi.innerText(), /R\$\s*0,00\s+Alíquota zero/)
       await help('Regras do produto e fontes', /Base legal e onde cada regra foi conferida/)
@@ -127,6 +167,9 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await fm.getByLabel('Carência (meses)', { exact: true }).fill('18')
       await fm.getByText(/Carência de 0 a 12 meses com TFB/).waitFor()
       await fm.locator('#fm-custo').selectOption('tlp')
+      assert.equal(await fm.locator('#fm-finame-eligible').isChecked(), false, 'trocar funding revoga confirmação')
+      assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0)
+      await fm.locator('#fm-finame-eligible').check()
       // o IPCA esperado vem do Focus quando o macro.json o traz; no smoke, informa o valor para não depender do arquivo servido
       await fm.getByLabel('IPCA esperado (% a.a.)', { exact: true }).fill('4,5')
       await fm.locator('.fm-grade').waitFor()
@@ -143,7 +186,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       assert.deepEqual(await fm.locator('.fm-tabela thead th').allInnerTexts(), ['Nº', 'Vencimento', 'Saldo inicial', 'Correção IPCA', 'Juros pagos', 'Amortização', 'Parcela', 'IOF', 'Total pago', 'Saldo final'])
       assert.match(await fm.locator('.fm-tabela tbody tr.fm-liberacao td').first().innerText(), /^\d{2}\/\d{2}\/\d{4}$/, 'data da liberação')
       assert.match(await fm.locator('.fm-tabela tbody tr.fm-liberacao td').last().innerText(), /^R\$\s*500\.000,00$/, 'saldo após a liberação')
-      assert.match(await fm.locator('.fm-tabela tbody tr.fm-liberacao td').nth(7).innerText(), /^R\$\s*0,00$/, 'sem IOF na liberação')
+      assert.match(await fm.locator('.fm-tabela tbody tr.fm-liberacao td').nth(6).innerText(), /^R\$\s*0,00$/, 'sem IOF na liberação')
       assert.match(await fm.locator('.fm-tabela tbody tr').last().locator('td').last().innerText(), /^R\$\s*0,00$/, 'saldo zera')
       const totalPago = await fm.locator('.fm-tabela tfoot td').nth(7).innerText()
       assert.equal(totalPago, await kpi('Pagamento final'), 'total do fluxo = pagamento final')

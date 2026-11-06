@@ -1,0 +1,605 @@
+{
+  "createdAt": "2026-11-06T17:41:16.058582+00:00",
+  "scope": "Only positive-whitelist word/number spacing in frozen construction/textile. URLs, IDs, formulas, review notes and audit metadata excluded. No semantic changes.",
+  "groups": [
+    {
+      "file": "docs/sector-research/construcao.json",
+      "beforeHash": "bdfae4a262440c29545850f963f7a7adbc0861152f41c88afa8f40c3905dd6b4",
+      "afterHash": "c1bb3474878cb1163b2ef5c63963d2a7b69551d3e7814075858ae82e348cfd83",
+      "changes": [
+        {
+          "path": "/0/sections/0/sources/2/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/0/sections/1/paragraphs/3",
+          "before": "Caso observado: publicação estadual de janeiro de2026 registra a entrega da etapa final do Residencial Cores de Outono, na Cidade Industrial de Curitiba, com projeto e execução da MRV Engenharia, parceria com o Estado e financiamento da Caixa. O caso associa localização, produto e apoio à entrada do comprador; não comprova liderança nacional nem condições disponíveis hoje a qualquer empreendimento.",
+          "after": "Caso observado: publicação estadual de janeiro de 2026 registra a entrega da etapa final do Residencial Cores de Outono, na Cidade Industrial de Curitiba, com projeto e execução da MRV Engenharia, parceria com o Estado e financiamento da Caixa. O caso associa localização, produto e apoio à entrada do comprador; não comprova liderança nacional nem condições disponíveis hoje a qualquer empreendimento."
+        },
+        {
+          "path": "/0/sections/1/sources/2/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/0/sections/1/sources/3/purpose",
+          "before": "Publicação de05/01/2026: empreendimento entregue, MRV, Caixa e apoio estadual; não condições financeiras universais.",
+          "after": "Publicação de 05/01/2026: empreendimento entregue, MRV, Caixa e apoio estadual; não condições financeiras universais."
+        },
+        {
+          "path": "/0/sections/3/paragraphs/4",
+          "before": "O caso de Curitiba documenta entrega, não somente lançamento. Os subsídios de entrada e o financiamento integram o acesso ao produto, mas dependem do enquadramento dos compradores. Em Manaus, a entrega do Morar Melhor em maio de2026 ocorreu com Habite-se municipal emitido. Inferência: capacidade de pagar e regularização da obra são condições distintas; uma obra vendida pode ter o recebimento final postergado se documentação ou repasse não estiverem concluídos.",
+          "after": "O caso de Curitiba documenta entrega, não somente lançamento. Os subsídios de entrada e o financiamento integram o acesso ao produto, mas dependem do enquadramento dos compradores. Em Manaus, a entrega do Morar Melhor em maio de 2026 ocorreu com Habite-se municipal emitido. Inferência: capacidade de pagar e regularização da obra são condições distintas; uma obra vendida pode ter o recebimento final postergado se documentação ou repasse não estiverem concluídos."
+        },
+        {
+          "path": "/0/sections/3/sources/3/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/0/sections/3/sources/4/purpose",
+          "before": "Caso de26/05/2026 documenta entrega e regularização; não taxa de mercado.",
+          "after": "Caso de 26/05/2026 documenta entrega e regularização; não taxa de mercado."
+        },
+        {
+          "path": "/0/sources/6/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/0/sources/7/purpose",
+          "before": "Publicação de05/01/2026: empreendimento entregue, MRV, Caixa e apoio estadual; não condições financeiras universais.",
+          "after": "Publicação de 05/01/2026: empreendimento entregue, MRV, Caixa e apoio estadual; não condições financeiras universais."
+        },
+        {
+          "path": "/0/sources/8/purpose",
+          "before": "Caso de26/05/2026 documenta entrega e regularização; não taxa de mercado.",
+          "after": "Caso de 26/05/2026 documenta entrega e regularização; não taxa de mercado."
+        },
+        {
+          "path": "/0/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/0/transcript",
+          "before": "Construção residencial. Construção residencial: Terreno e incorporação antecedem projeto, licenciamento, comercialização, obra e entrega. Tese operacional: Localização, produto adequado, execução e confiança influenciam vendas; concorrência se dá em micromercados e faixas de renda, não só em volume nacional. Principal vulnerabilidade: Venda depende de capacidade de pagamento e eventual repasse ao comprador; aumento de custo ou atraso pode consumir resultado mesmo com boa velocidade de venda. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiamento à produção, recebíveis e capital próprio têm usos e garantias distintos. Examinar segregação por empreendimento, recursos vinculados e custo a completar antes de tratar caixa consolidado como livre. Terreno e incorporação antecedem projeto, licenciamento, comercialização, obra e entrega. Incorporador assume risco comercial; construtora contratada assume execução conforme contrato. Separar habitação subsidiada, mercado de renda intermediária e alto padrão, sem aplicar média única. Vendas líquidas de distratos, recebimentos, obra realizada versus orçamento, custo a incorrer e unidades prontas não vendidas. Valor geral de vendas não é caixa disponível nem receita integral no lançamento. Não há ranking nacional único adequado a construtoras médias: a competição é local. A PAIC permite análise regional, mas seus resultados não foram extraídos em série para esse recorte. O SINAPI oferece referência de custo e a PAIC estrutura de produção; nenhum deles mede diretamente lançamento, preço do imóvel ou aprovação de crédito do comprador. Financiamento à produção, recebíveis e capital próprio têm usos e garantias distintos. Examinar segregação por empreendimento, recursos vinculados e custo a completar antes de tratar caixa consolidado como livre. Industrialização de etapas, compatibilização de projetos e redução de retrabalho podem proteger margem quando não comprimem qualidade e prazo. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Aluguel, compra de imóvel usado ou reforma podem substituir a aquisição de imóvel novo. Localização, crédito, preferência por posse e adequação da unidade condicionam a escolha. Para novos entrantes: Terreno adequado, aprovações, equipe de execução e confiança do comprador demandam capital antes das vendas. Histórico de entrega e capacidade de administrar garantias reduzem entrada confiável. No ambiente externo, Juros e restrição de crédito podem reduzir compradores elegíveis; queda de renda ou excesso de oferta no micromercado alongam vendas enquanto custos da obra continuam. Evidência comercial complementar. Caso observado: publicação estadual de janeiro de2026 registra a entrega da etapa final do Residencial Cores de Outono, na Cidade Industrial de Curitiba, com projeto e execução da MRV Engenharia, parceria com o Estado e financiamento da Caixa. O caso associa localização, produto e apoio à entrada do comprador; não comprova liderança nacional nem condições disponíveis hoje a qualquer empreendimento. O caso de Curitiba documenta entrega, não somente lançamento. Os subsídios de entrada e o financiamento integram o acesso ao produto, mas dependem do enquadramento dos compradores. Em Manaus, a entrega do Morar Melhor em maio de2026 ocorreu com Habite-se municipal emitido. Inferência: capacidade de pagar e regularização da obra são condições distintas; uma obra vendida pode ter o recebimento final postergado se documentação ou repasse não estiverem concluídos.",
+          "after": "Construção residencial. Construção residencial: Terreno e incorporação antecedem projeto, licenciamento, comercialização, obra e entrega. Tese operacional: Localização, produto adequado, execução e confiança influenciam vendas; concorrência se dá em micromercados e faixas de renda, não só em volume nacional. Principal vulnerabilidade: Venda depende de capacidade de pagamento e eventual repasse ao comprador; aumento de custo ou atraso pode consumir resultado mesmo com boa velocidade de venda. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiamento à produção, recebíveis e capital próprio têm usos e garantias distintos. Examinar segregação por empreendimento, recursos vinculados e custo a completar antes de tratar caixa consolidado como livre. Terreno e incorporação antecedem projeto, licenciamento, comercialização, obra e entrega. Incorporador assume risco comercial; construtora contratada assume execução conforme contrato. Separar habitação subsidiada, mercado de renda intermediária e alto padrão, sem aplicar média única. Vendas líquidas de distratos, recebimentos, obra realizada versus orçamento, custo a incorrer e unidades prontas não vendidas. Valor geral de vendas não é caixa disponível nem receita integral no lançamento. Não há ranking nacional único adequado a construtoras médias: a competição é local. A PAIC permite análise regional, mas seus resultados não foram extraídos em série para esse recorte. O SINAPI oferece referência de custo e a PAIC estrutura de produção; nenhum deles mede diretamente lançamento, preço do imóvel ou aprovação de crédito do comprador. Financiamento à produção, recebíveis e capital próprio têm usos e garantias distintos. Examinar segregação por empreendimento, recursos vinculados e custo a completar antes de tratar caixa consolidado como livre. Industrialização de etapas, compatibilização de projetos e redução de retrabalho podem proteger margem quando não comprimem qualidade e prazo. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Aluguel, compra de imóvel usado ou reforma podem substituir a aquisição de imóvel novo. Localização, crédito, preferência por posse e adequação da unidade condicionam a escolha. Para novos entrantes: Terreno adequado, aprovações, equipe de execução e confiança do comprador demandam capital antes das vendas. Histórico de entrega e capacidade de administrar garantias reduzem entrada confiável. No ambiente externo, Juros e restrição de crédito podem reduzir compradores elegíveis; queda de renda ou excesso de oferta no micromercado alongam vendas enquanto custos da obra continuam. Evidência comercial complementar. Caso observado: publicação estadual de janeiro de 2026 registra a entrega da etapa final do Residencial Cores de Outono, na Cidade Industrial de Curitiba, com projeto e execução da MRV Engenharia, parceria com o Estado e financiamento da Caixa. O caso associa localização, produto e apoio à entrada do comprador; não comprova liderança nacional nem condições disponíveis hoje a qualquer empreendimento. O caso de Curitiba documenta entrega, não somente lançamento. Os subsídios de entrada e o financiamento integram o acesso ao produto, mas dependem do enquadramento dos compradores. Em Manaus, a entrega do Morar Melhor em maio de 2026 ocorreu com Habite-se municipal emitido. Inferência: capacidade de pagar e regularização da obra são condições distintas; uma obra vendida pode ter o recebimento final postergado se documentação ou repasse não estiverem concluídos."
+        },
+        {
+          "path": "/1/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/2/sections/1/paragraphs/3",
+          "before": "A ANTT disponibiliza edital, programa de exploração e modelo econômico-financeiro do processo competitivo da Via Brasil no corredor BR-163/230 entre Pará e Mato Grosso, com atualizações em2026. É evidência de canal de contratação regulado e de participante identificado, não garantia de contratação de uma empreiteira. Concessionária, investidor e executora de obra ocupam papéis distintos.",
+          "after": "A ANTT disponibiliza edital, programa de exploração e modelo econômico-financeiro do processo competitivo da Via Brasil no corredor BR-163/230 entre Pará e Mato Grosso, com atualizações em 2026. É evidência de canal de contratação regulado e de participante identificado, não garantia de contratação de uma empreiteira. Concessionária, investidor e executora de obra ocupam papéis distintos."
+        },
+        {
+          "path": "/2/sections/1/sources/3/purpose",
+          "before": "Página integral lista documentos e atualizações2026. Não atesta conclusão do processo ou adjudicação de obra.",
+          "after": "Página integral lista documentos e atualizações 2026. Não atesta conclusão do processo ou adjudicação de obra."
+        },
+        {
+          "path": "/2/sections/3/paragraphs/4",
+          "before": "Aviso do Ministério dos Transportes de setembro de2026 informa obras de duplicação em execução entre Ravena e Caeté, na BR-381/MG, e agenda envolvendo a EPR Via Mineira na BR-040. O documento distingue execução em curso, entrega prevista e assinatura de contrato prevista; não se tratam todos os anúncios como obra entregue. Inferência: o fornecedor deve qualificar a oportunidade por projeto, contratante, fase, medição e autorização, e não usar montante global de concessão como carteira firme.",
+          "after": "Aviso do Ministério dos Transportes de setembro de 2026 informa obras de duplicação em execução entre Ravena e Caeté, na BR-381/MG, e agenda envolvendo a EPR Via Mineira na BR-040. O documento distingue execução em curso, entrega prevista e assinatura de contrato prevista; não se tratam todos os anúncios como obra entregue. Inferência: o fornecedor deve qualificar a oportunidade por projeto, contratante, fase, medição e autorização, e não usar montante global de concessão como carteira firme."
+        },
+        {
+          "path": "/2/sources/7/purpose",
+          "before": "Página integral lista documentos e atualizações2026. Não atesta conclusão do processo ou adjudicação de obra.",
+          "after": "Página integral lista documentos e atualizações 2026. Não atesta conclusão do processo ou adjudicação de obra."
+        },
+        {
+          "path": "/2/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/2/transcript",
+          "before": "Infraestrutura. Infraestrutura: Projetos de transporte, saneamento e energia passam por planejamento, licenças, contratação, mobilização, execução, medição e operação. Tese operacional: Qualificação técnica, engenharia, mobilização e gestão de subcontratados são barreiras; contratação pública e grandes compradores impõem regras e capacidade de garantia. Principal vulnerabilidade: Interferências, geologia, desapropriação e mudança de escopo podem aumentar custo e atrasar aceite. Pleito de reequilíbrio não equivale a dinheiro certo ou já recebível. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro de mobilização e medição, investimento em equipamentos e garantias contratuais devem ser separados. Financiamento de projeto da concessionária não corresponde ao crédito de giro de uma empreiteira média. Projetos de transporte, saneamento e energia passam por planejamento, licenças, contratação, mobilização, execução, medição e operação. Empreiteira, concessionária e fornecedora de equipamentos têm riscos e ciclos diferentes. Carteira contratada e mobilizável, licenças, desapropriações, medições aceitas, recebíveis vencidos, reajustes e pleitos. Carteira anunciada não deve ser tratada como receita garantida. A PAIC distingue obras de infraestrutura de edifícios e serviços; não foi obtido ranking comparável de empresas por especialidade. Organismos contratantes são clientes, não produtores concorrentes. Novo PAC informa agenda pública de investimento, mas anúncio, seleção, licitação, empenho e pagamento são etapas diferentes. A análise deve localizar a obra efetivamente contratada e sua fonte pagadora. Giro de mobilização e medição, investimento em equipamentos e garantias contratuais devem ser separados. Financiamento de projeto da concessionária não corresponde ao crédito de giro de uma empreiteira média. Planejamento de execução, manutenção de ativos e soluções para saneamento e resiliência geram oportunidades condicionadas à contratação e capacidade técnica. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Manutenção ou ampliação de infraestrutura existente e soluções alternativas de mobilidade, saneamento ou energia podem substituir obra nova, conforme o problema. Não são intercambiáveis sem projeto e avaliação de capacidade. Para novos entrantes: Qualificação técnica, equipamentos, garantias, licenças e capital para suportar medições contestadas limitam entrada. Cada especialidade exige acervo e gestão de riscos próprios. No ambiente externo, Atraso de orçamento, licenças ou desapropriações pode interromper frentes; inflação de insumos e disputa de medições pressionam contratos sem reajuste adequado. Evidência comercial complementar. A ANTT disponibiliza edital, programa de exploração e modelo econômico-financeiro do processo competitivo da Via Brasil no corredor BR-163/230 entre Pará e Mato Grosso, com atualizações em2026. É evidência de canal de contratação regulado e de participante identificado, não garantia de contratação de uma empreiteira. Concessionária, investidor e executora de obra ocupam papéis distintos. Aviso do Ministério dos Transportes de setembro de2026 informa obras de duplicação em execução entre Ravena e Caeté, na BR-381/MG, e agenda envolvendo a EPR Via Mineira na BR-040. O documento distingue execução em curso, entrega prevista e assinatura de contrato prevista; não se tratam todos os anúncios como obra entregue. Inferência: o fornecedor deve qualificar a oportunidade por projeto, contratante, fase, medição e autorização, e não usar montante global de concessão como carteira firme.",
+          "after": "Infraestrutura. Infraestrutura: Projetos de transporte, saneamento e energia passam por planejamento, licenças, contratação, mobilização, execução, medição e operação. Tese operacional: Qualificação técnica, engenharia, mobilização e gestão de subcontratados são barreiras; contratação pública e grandes compradores impõem regras e capacidade de garantia. Principal vulnerabilidade: Interferências, geologia, desapropriação e mudança de escopo podem aumentar custo e atrasar aceite. Pleito de reequilíbrio não equivale a dinheiro certo ou já recebível. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro de mobilização e medição, investimento em equipamentos e garantias contratuais devem ser separados. Financiamento de projeto da concessionária não corresponde ao crédito de giro de uma empreiteira média. Projetos de transporte, saneamento e energia passam por planejamento, licenças, contratação, mobilização, execução, medição e operação. Empreiteira, concessionária e fornecedora de equipamentos têm riscos e ciclos diferentes. Carteira contratada e mobilizável, licenças, desapropriações, medições aceitas, recebíveis vencidos, reajustes e pleitos. Carteira anunciada não deve ser tratada como receita garantida. A PAIC distingue obras de infraestrutura de edifícios e serviços; não foi obtido ranking comparável de empresas por especialidade. Organismos contratantes são clientes, não produtores concorrentes. Novo PAC informa agenda pública de investimento, mas anúncio, seleção, licitação, empenho e pagamento são etapas diferentes. A análise deve localizar a obra efetivamente contratada e sua fonte pagadora. Giro de mobilização e medição, investimento em equipamentos e garantias contratuais devem ser separados. Financiamento de projeto da concessionária não corresponde ao crédito de giro de uma empreiteira média. Planejamento de execução, manutenção de ativos e soluções para saneamento e resiliência geram oportunidades condicionadas à contratação e capacidade técnica. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Manutenção ou ampliação de infraestrutura existente e soluções alternativas de mobilidade, saneamento ou energia podem substituir obra nova, conforme o problema. Não são intercambiáveis sem projeto e avaliação de capacidade. Para novos entrantes: Qualificação técnica, equipamentos, garantias, licenças e capital para suportar medições contestadas limitam entrada. Cada especialidade exige acervo e gestão de riscos próprios. No ambiente externo, Atraso de orçamento, licenças ou desapropriações pode interromper frentes; inflação de insumos e disputa de medições pressionam contratos sem reajuste adequado. Evidência comercial complementar. A ANTT disponibiliza edital, programa de exploração e modelo econômico-financeiro do processo competitivo da Via Brasil no corredor BR-163/230 entre Pará e Mato Grosso, com atualizações em 2026. É evidência de canal de contratação regulado e de participante identificado, não garantia de contratação de uma empreiteira. Concessionária, investidor e executora de obra ocupam papéis distintos. Aviso do Ministério dos Transportes de setembro de 2026 informa obras de duplicação em execução entre Ravena e Caeté, na BR-381/MG, e agenda envolvendo a EPR Via Mineira na BR-040. O documento distingue execução em curso, entrega prevista e assinatura de contrato prevista; não se tratam todos os anúncios como obra entregue. Inferência: o fornecedor deve qualificar a oportunidade por projeto, contratante, fase, medição e autorização, e não usar montante global de concessão como carteira firme."
+        },
+        {
+          "path": "/3/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de cimento. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de cimento. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/3/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/3/sources/7/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/4/sections/0/sources/1/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/4/sections/1/sources/1/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/4/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de cerâmica. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de cerâmica. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/4/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/sections/3/sources/2/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/4/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/4/sources/5/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/4/sources/6/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/5/sections/0/sources/2/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/5/sections/1/paragraphs/3",
+          "before": "O mapeamento industrial publicado pela Prefeitura de Jacareí identifica a Cebrace na fabricação de vidro plano e de segurança. Já a ata do pregão da Defensoria Pública do RS em2025 registra fornecedores oferecendo vidro liso com marcas Cebrace e Guardian. A indústria primária e o revendedor que apresenta proposta são elos diferentes; a presença de marca na proposta não significa participação direta do fabricante no certame.",
+          "after": "O mapeamento industrial publicado pela Prefeitura de Jacareí identifica a Cebrace na fabricação de vidro plano e de segurança. Já a ata do pregão da Defensoria Pública do RS em 2025 registra fornecedores oferecendo vidro liso com marcas Cebrace e Guardian. A indústria primária e o revendedor que apresenta proposta são elos diferentes; a presença de marca na proposta não significa participação direta do fabricante no certame."
+        },
+        {
+          "path": "/5/sections/1/sources/2/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/5/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de vidros. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos de minerais não metálicos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de vidros. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/5/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/sections/3/sources/3/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/5/sections/3/sources/4/purpose",
+          "before": "Ata2025: fornecedores, propostas e marcas; não equivale a entrega ou pagamento.",
+          "after": "Ata 2025: fornecedores, propostas e marcas; não equivale a entrega ou pagamento."
+        },
+        {
+          "path": "/5/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/5/sources/6/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/5/sources/7/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/sources/9/purpose",
+          "before": "Ata2025: fornecedores, propostas e marcas; não equivale a entrega ou pagamento.",
+          "after": "Ata 2025: fornecedores, propostas e marcas; não equivale a entrega ou pagamento."
+        },
+        {
+          "path": "/5/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/5/transcript",
+          "before": "Vidros. Vidros: Delimitação: vidro plano e beneficiamento para construção. Tese operacional: Fabricante primário depende de escala e processo contínuo; beneficiador compete por especificação, prazo, qualidade e proximidade da obra. Principal vulnerabilidade: Chapas compradas antes de confirmar medidas e alteração de projeto geram sobra; erro de dimensionamento ou instalação traz risco de segurança e substituição. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro cobre vidro bruto e processamento até medição; investimento em têmpera e laminação exige volume e manutenção. Não comparar estrutura de dívida de vidraria média com produtor primário de grande porte. Delimitação: vidro plano e beneficiamento para construção. Produção primária em forno contínuo difere de corte, lapidação, têmpera, laminação e montagem de unidades especiais; embalagens e vidro automotivo não entram como receita desse recorte. Rendimento no corte, quebra, defeitos, capacidade de forno de têmpera e prazo de montagem. Área de vidro bruto não equivale a área vendável instalada. O estudo BNDES documenta historicamente indústria primária concentrada; não é prova da concentração atual dos beneficiadores. Não há ranking ou participação atual recuperados. A demanda acompanha etapa de fechamento e acabamento das obras, podendo chegar depois de cimento e estruturas; a produção agregada de minerais não metálicos não identifica essa defasagem. Giro cobre vidro bruto e processamento até medição; investimento em têmpera e laminação exige volume e manutenção. Não comparar estrutura de dívida de vidraria média com produtor primário de grande porte. Controle solar, desempenho acústico e segurança ampliam valor se especificação e instalação forem adequadas; atributo comercial precisa de ensaio e aplicação correta. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Policarbonato, acrílico e fechamentos opacos podem substituir vidro em usos específicos. Transparência, risco de impacto, fogo, envelhecimento e desempenho térmico/acústico limitam a troca. Para novos entrantes: Vidro primário exige forno contínuo, energia e escala; beneficiamento exige corte, tratamento e controle dimensional com menos capital, mas instalação e segurança continuam barreiras relevantes. No ambiente externo, Desaceleração de obras e restrição de oferta primária podem pressionar beneficiadores; energia, quebra no transporte e substituição por outros materiais alteram custo e demanda. Evidência comercial complementar. O mapeamento industrial publicado pela Prefeitura de Jacareí identifica a Cebrace na fabricação de vidro plano e de segurança. Já a ata do pregão da Defensoria Pública do RS em2025 registra fornecedores oferecendo vidro liso com marcas Cebrace e Guardian. A indústria primária e o revendedor que apresenta proposta são elos diferentes; a presença de marca na proposta não significa participação direta do fabricante no certame. Em entrevista setorial sobre as perspectivas para 2026, dirigentes da Cebrace relataram pressão de juros e importações no ano anterior e destacaram produtos de controle solar e desempenho acústico. São avaliações empresariais atribuídas, não crescimento estatístico ou decisão antidumping aqui validada. O pregão gaúcho comprova um canal concreto de aquisição de vidro especificado; a ata não comprova entrega física ou pagamento. Inferência: diferenciar vidro-base, processamento e instalação evita comparar margens de elos distintos.",
+          "after": "Vidros. Vidros: Delimitação: vidro plano e beneficiamento para construção. Tese operacional: Fabricante primário depende de escala e processo contínuo; beneficiador compete por especificação, prazo, qualidade e proximidade da obra. Principal vulnerabilidade: Chapas compradas antes de confirmar medidas e alteração de projeto geram sobra; erro de dimensionamento ou instalação traz risco de segurança e substituição. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro cobre vidro bruto e processamento até medição; investimento em têmpera e laminação exige volume e manutenção. Não comparar estrutura de dívida de vidraria média com produtor primário de grande porte. Delimitação: vidro plano e beneficiamento para construção. Produção primária em forno contínuo difere de corte, lapidação, têmpera, laminação e montagem de unidades especiais; embalagens e vidro automotivo não entram como receita desse recorte. Rendimento no corte, quebra, defeitos, capacidade de forno de têmpera e prazo de montagem. Área de vidro bruto não equivale a área vendável instalada. O estudo BNDES documenta historicamente indústria primária concentrada; não é prova da concentração atual dos beneficiadores. Não há ranking ou participação atual recuperados. A demanda acompanha etapa de fechamento e acabamento das obras, podendo chegar depois de cimento e estruturas; a produção agregada de minerais não metálicos não identifica essa defasagem. Giro cobre vidro bruto e processamento até medição; investimento em têmpera e laminação exige volume e manutenção. Não comparar estrutura de dívida de vidraria média com produtor primário de grande porte. Controle solar, desempenho acústico e segurança ampliam valor se especificação e instalação forem adequadas; atributo comercial precisa de ensaio e aplicação correta. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Policarbonato, acrílico e fechamentos opacos podem substituir vidro em usos específicos. Transparência, risco de impacto, fogo, envelhecimento e desempenho térmico/acústico limitam a troca. Para novos entrantes: Vidro primário exige forno contínuo, energia e escala; beneficiamento exige corte, tratamento e controle dimensional com menos capital, mas instalação e segurança continuam barreiras relevantes. No ambiente externo, Desaceleração de obras e restrição de oferta primária podem pressionar beneficiadores; energia, quebra no transporte e substituição por outros materiais alteram custo e demanda. Evidência comercial complementar. O mapeamento industrial publicado pela Prefeitura de Jacareí identifica a Cebrace na fabricação de vidro plano e de segurança. Já a ata do pregão da Defensoria Pública do RS em 2025 registra fornecedores oferecendo vidro liso com marcas Cebrace e Guardian. A indústria primária e o revendedor que apresenta proposta são elos diferentes; a presença de marca na proposta não significa participação direta do fabricante no certame. Em entrevista setorial sobre as perspectivas para 2026, dirigentes da Cebrace relataram pressão de juros e importações no ano anterior e destacaram produtos de controle solar e desempenho acústico. São avaliações empresariais atribuídas, não crescimento estatístico ou decisão antidumping aqui validada. O pregão gaúcho comprova um canal concreto de aquisição de vidro especificado; a ata não comprova entrega física ou pagamento. Inferência: diferenciar vidro-base, processamento e instalação evita comparar margens de elos distintos."
+        },
+        {
+          "path": "/6/sections/0/sources/0/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/6/sections/1/paragraphs/3",
+          "before": "O pregão do Batalhão de Engenharia de Construção em Cuiabá, divulgado em junho de2026, demanda fabricação e instalação de esquadrias de madeira, incluindo transporte, ajustes, vedação e acabamento. É exemplo de comprador e pacote contratado pretendido, não venda concluída. Na oferta industrial, certificado disponibilizado pela Prado Alumínio identifica a empresa em Iperó (SP) e uma linha específica de janela externa; não certifica automaticamente todo seu catálogo ou qualquer instalação.",
+          "after": "O pregão do Batalhão de Engenharia de Construção em Cuiabá, divulgado em junho de 2026, demanda fabricação e instalação de esquadrias de madeira, incluindo transporte, ajustes, vedação e acabamento. É exemplo de comprador e pacote contratado pretendido, não venda concluída. Na oferta industrial, certificado disponibilizado pela Prado Alumínio identifica a empresa em Iperó (SP) e uma linha específica de janela externa; não certifica automaticamente todo seu catálogo ou qualquer instalação."
+        },
+        {
+          "path": "/6/sections/1/sources/0/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/6/sections/1/sources/2/purpose",
+          "before": "Extrato integral de pregão2026, comprador em Cuiabá e objeto; não demonstra resultado, contrato ou pagamento.",
+          "after": "Extrato integral de pregão 2026, comprador em Cuiabá e objeto; não demonstra resultado, contrato ou pagamento."
+        },
+        {
+          "path": "/6/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos de metal, exceto máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de esquadrias. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos de metal, exceto máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de esquadrias. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/6/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/6/sections/3/sources/1/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/6/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/6/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/6/sources/4/purpose",
+          "before": "Página pública atualizada em26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual.",
+          "after": "Página pública atualizada em 26/05/2026: SiAC para construtoras e SiMaC/PSQ para materiais. Não comprova qualificação individual."
+        },
+        {
+          "path": "/6/sources/6/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/6/sources/7/purpose",
+          "before": "Extrato integral de pregão2026, comprador em Cuiabá e objeto; não demonstra resultado, contrato ou pagamento.",
+          "after": "Extrato integral de pregão 2026, comprador em Cuiabá e objeto; não demonstra resultado, contrato ou pagamento."
+        },
+        {
+          "path": "/6/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/6/transcript",
+          "before": "Esquadrias. Esquadrias: Perfis de alumínio, aço, PVC ou madeira, ferragens, vedações e vidro são combinados em portas e janelas. Tese operacional: Projeto, precisão e qualidade de instalação diferenciam o fornecedor; preço baixo não demonstra desempenho de vedação, vento, ruído ou durabilidade. Principal vulnerabilidade: Medida incorreta e obra fora de prumo geram refabricação; atraso da obra deixa produto customizado parado e posterga medição. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro por encomenda deve ligar sinal, compra de perfil/vidro, fabricação e instalação; retenções e assistência precisam de provisão. Equipamento de corte e montagem requer retorno comprovado por produtividade e menos refugo. Perfis de alumínio, aço, PVC ou madeira, ferragens, vedações e vidro são combinados em portas e janelas. Produtos seriados de revenda diferem de fabricação sob medida com instalação; o material muda insumos e concorrentes. Pedido por vão e sistema, aproveitamento de perfil, retrabalho de medida, estanqueidade, prazo e chamadas de assistência. Área nominal não compara desempenho ou complexidade. Não foi recuperado ranking atual comparável entre esquadrias de alumínio, aço, PVC e madeira. Referências de qualidade do Ministério das Cidades não definem participação de mercado. A página pública do Ministério das Cidades distingue o SiAC, ligado à gestão da qualidade das construtoras, do SiMaC e seus programas setoriais para materiais. A conformidade deve ser verificada por produto e fornecedor; participação institucional não é certificação automática. Giro por encomenda deve ligar sinal, compra de perfil/vidro, fabricação e instalação; retenções e assistência precisam de provisão. Equipamento de corte e montagem requer retorno comprovado por produtividade e menos refugo. Padronização de sistemas, conferência digital de medidas e soluções de desempenho podem reduzir falhas e melhorar ticket quando remuneradas pelo cliente. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Alumínio, aço, PVC e madeira competem entre si como sistemas de esquadrias; fechamentos fixos podem substituir aberturas em certos projetos. Vedação, manutenção, dimensões, fogo e arquitetura condicionam a troca. Para novos entrantes: Projeto, ferramental, controle dimensional, ensaios e instalação correta sustentam barreiras. Uma oficina de corte não equivale a fornecedor de sistema ensaiado e com assistência em obra. No ambiente externo, Adiamento de obras posterga medições e entrega; matéria-prima mais cara, novos requisitos de desempenho e inadimplência de construtoras pressionam fornecedores. Evidência comercial complementar. O pregão do Batalhão de Engenharia de Construção em Cuiabá, divulgado em junho de2026, demanda fabricação e instalação de esquadrias de madeira, incluindo transporte, ajustes, vedação e acabamento. É exemplo de comprador e pacote contratado pretendido, não venda concluída. Na oferta industrial, certificado disponibilizado pela Prado Alumínio identifica a empresa em Iperó (SP) e uma linha específica de janela externa; não certifica automaticamente todo seu catálogo ou qualquer instalação. O documento da Prado condiciona a validade à manutenção da avaliação e delimita modelo, dimensões e aplicação. Sua situação atual deve ser confirmada no organismo certificador antes de contratar. Inferência: vender apenas pelo material do perfil esconde diferenças de desempenho e serviço. O comprador institucional observado exige produto mais instalação; separar o que será fabricado, medido em obra e aceito reduz risco de refabricação. Edital divulgado não é contrato assinado nem recebível.",
+          "after": "Esquadrias. Esquadrias: Perfis de alumínio, aço, PVC ou madeira, ferragens, vedações e vidro são combinados em portas e janelas. Tese operacional: Projeto, precisão e qualidade de instalação diferenciam o fornecedor; preço baixo não demonstra desempenho de vedação, vento, ruído ou durabilidade. Principal vulnerabilidade: Medida incorreta e obra fora de prumo geram refabricação; atraso da obra deixa produto customizado parado e posterga medição. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro por encomenda deve ligar sinal, compra de perfil/vidro, fabricação e instalação; retenções e assistência precisam de provisão. Equipamento de corte e montagem requer retorno comprovado por produtividade e menos refugo. Perfis de alumínio, aço, PVC ou madeira, ferragens, vedações e vidro são combinados em portas e janelas. Produtos seriados de revenda diferem de fabricação sob medida com instalação; o material muda insumos e concorrentes. Pedido por vão e sistema, aproveitamento de perfil, retrabalho de medida, estanqueidade, prazo e chamadas de assistência. Área nominal não compara desempenho ou complexidade. Não foi recuperado ranking atual comparável entre esquadrias de alumínio, aço, PVC e madeira. Referências de qualidade do Ministério das Cidades não definem participação de mercado. A página pública do Ministério das Cidades distingue o SiAC, ligado à gestão da qualidade das construtoras, do SiMaC e seus programas setoriais para materiais. A conformidade deve ser verificada por produto e fornecedor; participação institucional não é certificação automática. Giro por encomenda deve ligar sinal, compra de perfil/vidro, fabricação e instalação; retenções e assistência precisam de provisão. Equipamento de corte e montagem requer retorno comprovado por produtividade e menos refugo. Padronização de sistemas, conferência digital de medidas e soluções de desempenho podem reduzir falhas e melhorar ticket quando remuneradas pelo cliente. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Na análise de concorrência: Alumínio, aço, PVC e madeira competem entre si como sistemas de esquadrias; fechamentos fixos podem substituir aberturas em certos projetos. Vedação, manutenção, dimensões, fogo e arquitetura condicionam a troca. Para novos entrantes: Projeto, ferramental, controle dimensional, ensaios e instalação correta sustentam barreiras. Uma oficina de corte não equivale a fornecedor de sistema ensaiado e com assistência em obra. No ambiente externo, Adiamento de obras posterga medições e entrega; matéria-prima mais cara, novos requisitos de desempenho e inadimplência de construtoras pressionam fornecedores. Evidência comercial complementar. O pregão do Batalhão de Engenharia de Construção em Cuiabá, divulgado em junho de 2026, demanda fabricação e instalação de esquadrias de madeira, incluindo transporte, ajustes, vedação e acabamento. É exemplo de comprador e pacote contratado pretendido, não venda concluída. Na oferta industrial, certificado disponibilizado pela Prado Alumínio identifica a empresa em Iperó (SP) e uma linha específica de janela externa; não certifica automaticamente todo seu catálogo ou qualquer instalação. O documento da Prado condiciona a validade à manutenção da avaliação e delimita modelo, dimensões e aplicação. Sua situação atual deve ser confirmada no organismo certificador antes de contratar. Inferência: vender apenas pelo material do perfil esconde diferenças de desempenho e serviço. O comprador institucional observado exige produto mais instalação; separar o que será fabricado, medido em obra e aceito reduz risco de refabricação. Edital divulgado não é contrato assinado nem recebível."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/textil.json",
+      "beforeHash": "c0e232e0df76596d7c96096601ad113d09e55364dfb86dae7eb0cf7907fdfb60",
+      "afterHash": "ab7ffae3a6e5eb5bb78215bb0ddbacc10bad6cbc182f3718d58ac9ab19a66b9d",
+      "changes": [
+        {
+          "path": "/0/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de fiação. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de fiação. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/0/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/0/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/0/sections/3/sources/5/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/0/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/0/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/0/sources/8/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/0/sources/9/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/0/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/1/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecelagem. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecelagem. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/1/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/1/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/1/sections/3/sources/5/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/1/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/1/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/1/sources/8/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/1/sources/9/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/1/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/2/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de malharia. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de malharia. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/2/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/2/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/2/sections/3/sources/4/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/2/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/2/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/2/sources/7/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/2/sources/8/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/2/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/3/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tinturaria. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tinturaria. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/3/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/3/sections/3/sources/3/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/3/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/3/sources/6/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/3/sources/7/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/3/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/4/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Confecção de artigos do vestuário e acessórios, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de confecção. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Confecção de artigos do vestuário e acessórios, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de confecção. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/4/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de confecção de artigos do vestuário e acessórios variou -0,94% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de confecção de artigos do vestuário e acessórios variou -0,94% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/4/sections/3/sources/4/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/4/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/4/sources/7/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/4/sources/8/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/4/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        },
+        {
+          "path": "/5/sections/2/paragraphs/0",
+          "before": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecidos técnicos. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "after": "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecidos técnicos. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências."
+        },
+        {
+          "path": "/5/sections/2/sources/0/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/sections/3/paragraphs/5",
+          "before": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela6903, variável1396, consultada em06/11/2026.",
+          "after": "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        },
+        {
+          "path": "/5/sections/3/sources/3/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/5/charts/0/source/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/charts/0/method",
+          "before": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela8888, variável11603, vintage06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+          "after": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado."
+        },
+        {
+          "path": "/5/sources/6/purpose",
+          "before": "Volume industrial, variação anual2020–2024, divisões CNAE. API direta recuperada em06/11/2026; vintage atual substitui tabela histórica indexada.",
+          "after": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        {
+          "path": "/5/sources/7/purpose",
+          "before": "Variação mensal do preço ao produtor em setembro de2026 frente a agosto. API direta; não mede produção, receita nem margem.",
+          "after": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+        },
+        {
+          "path": "/5/method",
+          "before": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage06/11/2026, com revisões documentadas em registro separado.",
+          "after": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado."
+        }
+      ]
+    }
+  ]
+}

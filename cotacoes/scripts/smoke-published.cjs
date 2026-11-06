@@ -52,7 +52,7 @@ const links = {
       assert.equal(await page.locator('.learn-group[open]').count(), 0)
       await page.getByRole('button', { name: 'Expandir todas', exact: true }).click()
       await page.waitForFunction(() => document.querySelectorAll('.learn-group[open]').length === 7)
-      for (const term of ['Escala 6x1', 'Reforma tributária', 'Split payment', 'Dividendos', 'CET']) {
+      for (const term of ['Escala 6x1', 'Reforma tributária', 'Split payment', 'Dividendos', 'CET', 'Controle forçado de juros']) {
         assert.equal(await page.locator('.learn-list li button').filter({ hasText: new RegExp(term, 'i') }).count(), 1, term)
       }
       assert.equal(await page.locator('.learn-list li').count(), 27)
@@ -97,7 +97,7 @@ const links = {
       assert.ok(box && box.width >= 44 && box.height >= 44 && box.x >= 0 && box.x + box.width <= width + 1, 'Governança: botão inteiro dentro da tela')
       await page.screenshot({ path: path.join(out, width + '-config.png') })
       assert.deepEqual(errors, [])
-      report.push({ width, passed: true, checks: ['FINIMP JPY/CNH', 'Conta Garantida % a.m. e IOF', 'Aprender 27/7, CET e categorias', 'dois links BNDES', 'Google Trends', 'tema automático', 'Governança sem overflow'], errors })
+      report.push({ width, passed: true, checks: ['FINIMP JPY/CNH', 'Conta Garantida % a.m. e IOF', 'Aprender 27/7, CET, história dos juros e categorias', 'dois links BNDES', 'Google Trends', 'tema automático', 'Governança sem overflow'], errors })
       await context.close()
       page = null
     }

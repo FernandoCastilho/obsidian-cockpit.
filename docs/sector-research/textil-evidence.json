@@ -1,0 +1,1582 @@
+{
+  "group": "textil",
+  "accessedAt": "2026-11-06",
+  "numericEvidence": [
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 4.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 4.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 4.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 4.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -23.7,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": 12.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -8.4,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -7.3,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": 4.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 4.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "sections.conjuntura",
+      "value": 0.35,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Fabricação de produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "sections.conjuntura",
+      "value": 0.35,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Fabricação de produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    },
+    {
+      "study": "Malharia",
+      "location": "sections.conjuntura",
+      "value": 0.35,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Fabricação de produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "sections.conjuntura",
+      "value": 0.35,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Fabricação de produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    },
+    {
+      "study": "Confecção",
+      "location": "sections.conjuntura",
+      "value": -0.94,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "sections.conjuntura",
+      "value": 0.35,
+      "unit": "% variação mensal de preço ao produtor",
+      "period": "setembro/2026 sobre agosto/2026",
+      "scope": "Brasil; Fabricação de produtos têxteis",
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na API direta em revisão independente; releitura dos metadados finais pendente.",
+      "concept": "Preço de saída da fábrica; não produção, receita ou margem."
+    }
+  ],
+  "sourceRegister": [
+    {
+      "label": "IBGE · PIM-PF Brasil",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+      "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · PIA-Produto",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+      "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Agência Brasil · produção industrial em setembro",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+      "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · Finame BK Aquisição e Comercialização",
+      "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+      "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE/CONCLA · indústria têxtil",
+      "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+      "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · cadeia têxtil e inovação",
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+      "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Fundação Seade · têxtil e confecções paulista",
+      "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+      "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Banco do Nordeste · indústria têxtil e confecção",
+      "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+      "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Anuário Estatístico: produção industrial",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "purpose": "Taxas anuais de produção física, Brasil, 2020–2024. Dados recuperados na indexação; abertura do PDF retornou acesso proibido, pendente conferência independente.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Índice de Preços ao Produtor",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor.html",
+      "purpose": "Preços de saída da fábrica. Não mede preço ao consumidor nem margem. Consulta da página apresentou setembro/2026.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+      "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+      "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Assembleia Legislativa de Santa Catarina · fórum têxtil",
+      "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+      "purpose": "Notícia de 12/04/2023 confirma referências regionais. Números associativos e títulos promocionais não foram usados como ranking.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Sefaz Pernambuco · Nota da Moda",
+      "url": "https://www.sefaz.pe.gov.br/Servicos/Nota-Fiscal-Avulsa/Paginas/notadamoda.aspx",
+      "purpose": "Página oficial identifica municípios do Polo Têxtil de Pernambuco; usada apenas para referência regional, sem recomendação tributária ou enquadramento individual.",
+      "accessedAt": "2026-11-06"
+    }
+  ],
+  "review": {
+    "status": "NÃO CONFERIDO",
+    "independentReviewer": null,
+    "totalNumericItems": 36,
+    "independentlyVerified": 0
+  },
+  "notes": [
+    "Repetições idênticas compartilham URL, conceito e período; datas, índices de catálogo e identificadores estruturais não são métricas econômicas.",
+    "Todas as afirmações analíticas são inferências e exigem validação da empresa; não apresentadas como estatísticas observadas."
+  ],
+  "qualitativeEvidence": [
+    {
+      "study": "Fiação",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/1964"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fiação",
+      "section": "concorrencia",
+      "claim": "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+      "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Tecelagem",
+      "section": "concorrencia",
+      "claim": "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+      "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Malharia",
+      "section": "concorrencia",
+      "claim": "Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em malharia. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria.",
+      "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Tinturaria",
+      "section": "concorrencia",
+      "claim": "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+      "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Confecção",
+      "section": "concorrencia",
+      "claim": "Referência comercial verificável: a Sefaz de Pernambuco identifica Santa Cruz do Capibaribe, Toritama e Caruaru no Polo Têxtil atendido pela Nota da Moda. A concentração de canais de compra é pertinente à confecção; não se confunde circulação no polo com faturamento fabril formal ou com número de empregos.",
+      "url": "https://www.sefaz.pe.gov.br/Servicos/Nota-Fiscal-Avulsa/Paginas/notadamoda.aspx",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Tecidos técnicos",
+      "section": "concorrencia",
+      "claim": "Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em tecidos técnicos. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria.",
+      "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+      "accessedAt": "2026-11-06",
+      "type": "Referência geográfica institucional com inferência comercial delimitada",
+      "retrieval": "Texto integral aberto e consultado",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    }
+  ],
+  "supersededNumericEvidence": [
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fiação",
+      "location": "charts.historico-producao",
+      "value": 4.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecelagem",
+      "location": "charts.historico-producao",
+      "value": 4.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Malharia",
+      "location": "charts.historico-producao",
+      "value": 4.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tinturaria",
+      "location": "charts.historico-producao",
+      "value": 4.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -23.7,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": 12.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -8.4,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": -7.3,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Confecção",
+      "location": "charts.historico-producao",
+      "value": 3.9,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": -6.9,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 8.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": -12.8,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 0.9,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Tecidos técnicos",
+      "location": "charts.historico-producao",
+      "value": 4.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos têxteis",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "pimRevision": {
+    "date": "2026-11-06",
+    "source": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+    "method": "API direta; histórico antigo preservado em supersededNumericEvidence apenas para rastreabilidade, não para interface.",
+    "reason": "Revisão independente detectou diferenças no ano2024 entre publicação histórica indexada e API corrente."
+  },
+  "ippRevision": {
+    "date": "2026-11-06",
+    "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+    "valuesConfirmed": "Têxteis0,35%; confecção-0,94%; setembro2026/agosto2026",
+    "rawEvidence": "review-manufacturing-ipp-api.json"
+  }
+}

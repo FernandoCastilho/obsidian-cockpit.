@@ -9,6 +9,23 @@ const out = process.env.CALCULATOR_QA_OUTPUT || 'workspace-qa/calculator-layout'
 const routes = ['conta-garantida', 'bndes-selic-lcd', 'finimp', 'giro', 'analise-desconto', 'finame-materiais']
 const normalize = text => text.replace(/\s+/g, ' ').trim()
 
+// Fixed release 06/11/2026 and first due 06/12/2026. Civil-calendar offsets,
+// with iterative outstanding-principal accounting independent of emprestimo.js.
+const giroOracle = (system, principal = 100000, daily = 0.0082) => {
+  const days = [30, 61, 92, 120, 151, 181, 212, 242, 273, 304, 334, 365]
+  const payment = principal * 0.02 / (1 - 1.02 ** -12)
+  let balance = principal, interest = 0, iof = principal * 0.0038
+  for (const day of days) {
+    const charge = balance * 0.02
+    const amortization = system === 'sac' ? principal / 12 : payment - charge
+    interest += charge; iof += amortization * Math.min(day, 365) * daily / 100
+    balance -= amortization
+  }
+  return { iof, total: principal + interest + iof }
+}
+const brl = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s+/g, ' ')
+
+
 async function settleLayout(page) {
   await page.evaluate(async () => {
     await document.fonts.ready
@@ -53,6 +70,11 @@ async function assertWorkspace(page, section, label) {
   }))
   assert.ok(controls.length > 0)
   assert.deepEqual(controls.filter(control => control.height < 43.9 || control.width < 43.9), [], `${label}: campos e ? com pelo menos 44px`)
+  const currencyOverlaps = await section.locator('.money-wrap').evaluateAll(elements => elements.filter(element => element.getClientRects().length).filter(element => {
+    const input = element.querySelector('input'), prefix = element.querySelector('i')
+    return input && prefix && prefix.getBoundingClientRect().right + 4 > input.getBoundingClientRect().left + parseFloat(getComputedStyle(input).paddingLeft)
+  }).map(element => element.closest('label')?.textContent.trim() || element.querySelector('input')?.id))
+  assert.deepEqual(currencyOverlaps, [], `${label}: prefixo monetário não sobrepõe o valor`)
   const checkboxes = await section.locator('input[type=checkbox]').evaluateAll(elements => elements.filter(element => element.getClientRects().length).map(element => ({ label: element.closest('label')?.textContent.trim(), height: element.closest('label')?.getBoundingClientRect().height || 0 })))
   assert.deepEqual(checkboxes.filter(control => control.height < 43.9), [], `${label}: checkbox possui rótulo com área de toque acessível`)
 
@@ -84,6 +106,7 @@ async function assertWorkspace(page, section, label) {
 
   const explanations = await section.locator('p').evaluateAll(paragraphs => paragraphs.filter(element => {
     if (element.closest('dialog, [role=tooltip], .sr-only, [hidden], [role=alert], .cx-error, .cg-notice, .desconto-notice, .lcd-warnings, [role=status]')) return false
+    if (element.classList.contains('cx-hint') && element.parentElement.querySelector('#fm-finame-eligible')) return false // Required eligibility warning stays visible.
     const rect = element.getBoundingClientRect(), style = getComputedStyle(element)
     return rect.width > 2 && rect.height > 2 && style.visibility !== 'hidden' && style.display !== 'none' && element.textContent.replace(/\s+/g, ' ').trim().length > 180
   }).map(element => element.textContent.replace(/\s+/g, ' ').trim()))
@@ -134,11 +157,13 @@ async function assertHelp(page, section, label, directory) {
 
 async function fillScenario(page, section, route) {
   if (route === 'giro') {
+    await section.locator('#cx-start').fill('2026-11-06')
+    await section.locator('#cx-firstDue').fill('2026-12-06')
     const table = section.locator('.cx-matrix')
     assert.match(normalize(await table.locator('tbody tr').nth(0).locator('td').first().innerText()), /^R\$\s*9\.455,96/)
-    assert.match(normalize(await table.locator('tbody tr').nth(3).locator('td').first().innerText()), /^R\$\s*115\.531,91/)
+    assert.equal(normalize(await table.locator('tbody tr').nth(3).locator('td').first().innerText()), brl(giroOracle('price').total))
     await section.getByRole('button', { name: 'SAC', exact: true }).click()
-    assert.match(normalize(await table.locator('tbody tr').nth(3).locator('td').nth(1).innerText()), /^R\$\s*115\.001,55/)
+    assert.equal(normalize(await table.locator('tbody tr').nth(3).locator('td').nth(1).innerText()), brl(giroOracle('sac').total))
   } else if (route === 'conta-garantida') {
     assert.equal(await section.locator('#cg-status, #cg-rateBase, #cg-conversion').count(), 0)
     assert.equal(await section.getByText('Situação da operação', { exact: true }).count(), 0)
@@ -153,14 +178,33 @@ async function fillScenario(page, section, route) {
     assert.match(await interest.locator('b').innerText(), /^R\$\s*1\.000,00$/, '3% mensal proporcional a 10 dias')
   } else if (route === 'analise-desconto') {
     await page.locator('#ad-titleFeeMode').selectOption('total')
-    await page.locator('#ad-iofAdditional').fill('0,38')
+    assert.equal(await page.locator('#ad-iofAdditional, #ad-iofPaid, #ad-interest').count(), 0)
     await page.locator('#ad-date').fill('2026-11-05')
+    await section.getByLabel('Vencimento contratual', { exact: true }).fill('2026-12-05')
+    // The nested MoneyInput adds the currency prefix to the label's text.
+    const nominal = section.getByLabel(/^Valor nominal total do grupo/)
+    assert.equal(await nominal.count(), 1, 'um grupo de títulos no cenário fixo')
+    await nominal.fill('225.600,43')
+    assert.equal(await nominal.inputValue(), '225.600,43')
+    await page.locator('#ad-operationRate').fill('1,83')
+    await page.locator('#ad-taxProfile').selectOption('pj')
+    await page.locator('#ad-convention').selectOption('commercial30')
+    await page.locator('#ad-titleFeeTotal').fill('564,00')
+    await page.locator('#ad-tac').fill('260,00')
+    await page.locator('#ad-averageValue').fill('225.600,43')
+    await page.locator('#ad-discountRate').fill('1,75')
+    await page.locator('#ad-operations').fill('6')
+    // Independent 30-calendar-day commercial discount: IOF on nominal minus interest.
+    const gross = 225600.43, interest = gross * 0.0183
+    const cost = interest + (gross - interest) * (0.0038 + 30 * 0.000082) + 564 + 260
     const kpis = section.locator('.desconto-kpis')
-    assert.match(await kpis.innerText(), /4\.618,75/)
-    assert.match(await kpis.innerText(), /220\.981,68/)
+    assert.ok(normalize(await kpis.innerText()).includes(brl(cost)))
+    assert.ok(normalize(await kpis.innerText()).includes(brl(gross - cost)))
+    const monthlyInterest = gross * 0.0175
+    const monthlyCost = 6 * (monthlyInterest + (gross - monthlyInterest) * (0.0038 + 30 * 0.000082) + 564 + 260)
     const row = section.locator('.desconto-summary-panel tbody tr', { has: page.getByRole('rowheader', { name: 'Custo total do desconto', exact: true }) })
-    assert.match(await row.locator('td').first().innerText(), /^R\$\s*27\.712,50$/)
-    assert.match(await row.locator('td').nth(1).innerText(), /^R\$\s*332\.550,00$/)
+    assert.equal(normalize(await row.locator('td').first().innerText()), brl(monthlyCost))
+    assert.equal(normalize(await row.locator('td').nth(1).innerText()), brl(monthlyCost * 12))
   } else if (route === 'finimp') {
     for (const [id, value] of [['fi-principal', '100000'], ['fi-a-rate', '6'], ['fi-a-flat', '1'], ['fi-b-rate', '8'], ['fi-b-flat', '0,5']]) await page.locator(`#${id}`).fill(value)
     const row = section.locator('tbody tr').nth(5)
@@ -179,6 +223,12 @@ async function fillScenario(page, section, route) {
     assert.equal(await section.locator('.lcd-table tbody tr').count(), 3)
     assert.match(await section.locator('.lcd-table tbody tr').last().locator('td').last().innerText(), /^R\$\s*0,00$/)
   } else if (route === 'finame-materiais') {
+    assert.equal(await section.locator('.fm-grade, .fm-fluxo-panel').count(), 0)
+    assert.match(await section.locator('#fm-iof-err').innerText(), /Confirme os recursos FINAME/)
+    const eligibilityWarning = section.locator('.cx-iof > .cx-hint')
+    assert.equal(await eligibilityWarning.isVisible(), true, 'aviso tributário obrigatório permanece visível')
+    assert.match(await eligibilityWarning.innerText(), /Para outras origens ou dúvida, a simulação fica bloqueada/)
+    await section.locator('#fm-finame-eligible').check()
     await section.locator('.fm-grade').waitFor()
     assert.equal(await section.locator('.fm-tabela tbody tr:not(.fm-liberacao)').count(), 60)
     assert.match(await section.locator('.fm-tabela tbody tr').last().locator('td').last().innerText(), /^R\$\s*0,00$/)
@@ -199,7 +249,7 @@ async function fillScenario(page, section, route) {
           await fixtures(page)
           await page.goto(`${base}/#calculadora/${route}`)
           const section = page.locator('main.app section.cx'); await section.waitFor()
-          if (route === 'finame-materiais') await section.locator('.fm-grade').waitFor()
+          if (route === 'finame-materiais') await section.locator('#fm-finame-eligible').waitFor()
           await settleLayout(page)
           await assertWorkspace(page, section, `${route} ${width}`)
           await page.screenshot({ path: path.join(directory, `${route}-initial.png`), fullPage: true })

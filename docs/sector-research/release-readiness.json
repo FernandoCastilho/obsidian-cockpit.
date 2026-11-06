@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-06",
+  "catalogTopics": 67,
+  "existingTicPreserved": true,
+  "newStudiesPrepared": 66,
+  "newStudiesDocumentaryApproved": 66,
+  "newAudioRecordingsVerified": 0,
+  "newBrowserScreenshotsReviewed": 0,
+  "publishedToProduction": false,
+  "remainingChecks": [
+    "Generate narrated summaries only after authorization for the external speech service.",
+    "Validate recording duration, full decode, transcript hash and playback behavior.",
+    "Run isolated browser CI after authorization to resume the remote QA transfer.",
+    "Inspect desktop and mobile screenshots and correct any presentation failures.",
+    "Publish approved artifacts and confirm the production smoke tests."
+  ],
+  "qualification": "Documentary approval is not completion of audio, visual QA or publication.",
+  "localValidation": {
+    "testsPassed": 1073,
+    "testsFailed": 0,
+    "lintErrors": 0,
+    "lintWarnings": 5,
+    "build": "passed",
+    "diffCheck": "passed",
+    "documentaryReleaseGate": "passed",
+    "audioCompletionGate": "not passed: recordings missing",
+    "visualQa": "not performed"
+  }
+}

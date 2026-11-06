@@ -1,5 +1,8 @@
 name: Cotações CI
 on:
+  push:
+    branches: ['feat/estudos-setoriais-completos']
+    paths: ['cotacoes/**', 'docs/sector-research/**', '.github/workflows/cotacoes-ci.yml']
   pull_request:
     paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
@@ -68,6 +71,17 @@ jobs:
           retention-days: 7
       - name: Conferir largura, ajudas e fluxos das seis calculadoras
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
+      - name: Conferir estudos incluídos, recortes pendentes, apresentação e áudio
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: RESEARCHED_SECTORS_QA_OUTPUT="$RUNNER_TEMP/qa-universal/researched-sectors" node scripts/smoke-researched-sectors.cjs
+      - name: Capturas e relatório dos estudos setoriais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: estudos-setoriais-design
+          path: ${{ runner.temp }}/qa-universal/researched-sectors
+          if-no-files-found: error
+          retention-days: 7
       - name: Capturas da revisão das calculadoras
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,6 +110,17 @@ jobs:
             echo "::error::Cenários corrigidos com falha: ${failures[*]}"
             exit 1
           fi
+      - name: Conferir história dos juros, busca e navegação em Aprender
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: INTEREST_HISTORY_QA_OUTPUT="$RUNNER_TEMP/qa-universal/interest-history" node scripts/smoke-interest-history.cjs
+      - name: Capturas da história dos juros em Aprender
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-historia-juros
+          path: ${{ runner.temp }}/qa-universal/interest-history
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Conferir os fluxos alterados de busca, calculadoras e BNDES
         if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         env:

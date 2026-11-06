@@ -1,0 +1,2920 @@
+[
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 0,
+    "title": "Carga geral",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Cumprimento de prazo, integridade e visibilidade da entrega. Separar carga lotação, em que um embarcador ocupa a viagem, da fracionada, que exige coleta, consolidação e distribuição. Uma mesma receita por tonelada não representa a mesma produtividade nos dois modelos.",
+      "A margem nasce do uso da capacidade ao longo de toda a rota, não apenas do frete de ida. Retorno vazio, redespacho, avaria, espera e reentrega podem tornar deficitário um contrato com faturamento crescente. Segregar custos da transferência e da última etapa evita subsidiar clientes complexos.",
+      "A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo carga geral. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Cumprimento de prazo, integridade e visibilidade da entrega. Separar carga lotação, em que um embarcador ocupa a viagem, da fracionada, que exige coleta, consolidação e distribuição. Uma mesma receita por tonelada não representa a mesma produtividade nos dois modelos.",
+          "Indústrias, distribuidores e varejistas compram cobertura, frequência e confiabilidade. Compras centralizadas e concorrências ampliam a pressão de preço; pedidos pequenos e entrega urbana exigem tarifa que remunere paradas e tentativas.",
+          "Caminhões, motoristas, pneus, diesel, pedágio, seguro e bases de transbordo. Transportador com frota própria carrega manutenção e depreciação; quem contrata terceiros troca parte desse custo fixo por risco de disponibilidade e qualidade."
+        ],
+        "sources": [
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Base oficial de cadastro, frota e operações; não é receita do recorte."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação vinculada a documentos fiscais e RNTRC."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Escopo regulatório da ANTT."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Polos devem ser definidos pelos pares origem-destino e bases, não pela sede da transportadora. A ANTT oferece visualização de movimentação integrada a documentos fiscais. São referências de método para localizar corredores industriais e centros consumidores; não foi fechado ranking de empresas de carga geral.",
+          "A fragmentação entre autônomos, empresas e cooperativas convive com redes integradas. Cadastro no RNTRC mede agentes e frota registrados; não mede capacidade disponível por rota nem participação por faturamento. A regulamentação da ANTT abrange registro, pagamento de frete, pedágio e outras obrigações, cuja incidência deve ser conferida por operação."
+        ],
+        "sources": [
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Base oficial de cadastro, frota e operações; não é receita do recorte."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação vinculada a documentos fiscais e RNTRC."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Escopo regulatório da ANTT."
+          },
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Alerta de diesel: evidência em fretes agrícolas, sem extrapolar tarifa de carga geral."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Ocupação e retorno",
+            "Carga útil e distância remunerada versus deslocamento total",
+            "Separar peso, cubagem e restrição urbana"
+          ],
+          [
+            "Pontualidade e qualidade",
+            "Entregas no prazo, avarias, devoluções e reentregas",
+            "Identificar custo e responsabilidade por ocorrência"
+          ],
+          [
+            "Margem por rota",
+            "Receita líquida menos custo diretamente atribuível",
+            "Incluir espera, terceiros e retorno vazio"
+          ],
+          [
+            "Conversão em caixa",
+            "Viagens realizadas, faturadas e recebidas",
+            "Tratar documentos pendentes como carteira em risco"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Base oficial de cadastro, frota e operações; não é receita do recorte."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação vinculada a documentos fiscais e RNTRC."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Escopo regulatório da ANTT."
+          },
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Alerta de diesel: evidência em fretes agrícolas, sem extrapolar tarifa de carga geral."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Base oficial de cadastro, frota e operações; não é receita do recorte."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação vinculada a documentos fiscais e RNTRC."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Escopo regulatório da ANTT."
+          },
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Alerta de diesel: evidência em fretes agrícolas, sem extrapolar tarifa de carga geral."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A margem nasce do uso da capacidade ao longo de toda a rota, não apenas do frete de ida. Retorno vazio, redespacho, avaria, espera e reentrega podem tornar deficitário um contrato com faturamento crescente. Segregar custos da transferência e da última etapa evita subsidiar clientes complexos.",
+          "Combustível, folha, pedágios e contratação de terceiros antecedem o recebimento do embarcador. Divergências de comprovante, faltas e glosas atrasam cobrança. Um limite de giro deve acompanhar viagens efetivamente executadas e valores incontroversos, não somente contratos assinados.",
+          "Renovação de caminhões, telemetria e mecanização de bases precisam ser avaliadas por ganho de disponibilidade e custo total. Alongar dívida de veículos não resolve rotas estruturalmente deficitárias.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Densidade de rotas e relacionamento com embarcadores"
+          ],
+          [
+            "Fraquezas",
+            "Baixa visibilidade da margem por entrega e ociosidade no retorno"
+          ],
+          [
+            "Oportunidades",
+            "Integração de rastreio e consolidação de cargas de clientes compatíveis"
+          ],
+          [
+            "Ameaças",
+            "Venda de frete abaixo do custo total e sinistros"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Fabricantes e combustível afetam reposição e custo; terceiros podem encarecer em pico de demanda"
+          ],
+          [
+            "Clientes",
+            "Embarcadores de grande volume negociam preço, prazo e penalidades"
+          ],
+          [
+            "Rivalidade",
+            "Redes disputam frequência e abrangência; autônomos competem em trechos específicos"
+          ],
+          [
+            "Entrantes",
+            "Entrada em uma rota é diferente de construir uma rede fracionada confiável"
+          ],
+          [
+            "Substitutos",
+            "Frota própria do cliente, ferrovia e cabotagem substituem trechos, não necessariamente a entrega final"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Carteira estável e disciplina de preço mantêm uso dos ativos, com giro sensível ao prazo de cobrança",
+            "Ocupação e retorno; Conversão em caixa"
+          ],
+          [
+            "Favorável",
+            "Densidade e retorno carregado crescem sem expansão proporcional de frota; caixa melhora após o custo de implantação",
+            "Pontualidade e qualidade; Conversão em caixa"
+          ],
+          [
+            "Adverso",
+            "Volume cai ou diesel sobe sem repasse; veículo ocioso e cobrança mais lenta comprimem caixa",
+            "Margem por rota; Conversão em caixa"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual contrato parece lucrativo antes de alocar retorno vazio e reentrega?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Como se confirma a entrega antes de ceder um recebível?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Qual renovação de frota reduz custo por viagem, em vez de apenas ampliar capacidade?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "rodoviario-pms",
+        "title": "Volume de serviços rodoviários de cargas",
+        "unit": "% de variação anual",
+        "scope": "Brasil; rodoviário de cargas na PMS. Agregado mais amplo que carga geral; não atribuir aos especializados.",
+        "years": [
+          2023,
+          2024,
+          2025
+        ],
+        "period": "Anos completos de 2023, 2024 e 2025",
+        "source": {
+          "label": "IBGE/SIDRA · PMS rodoviário de cargas",
+          "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+          "purpose": "Variação acumulada em dezembro, volume de serviços rodoviários de cargas. API recuperada diretamente; valores anteriores ausentes, não zeros."
+        },
+        "method": "SIDRA tabela 8688, variável 11625, dezembro de cada ano, índice de volume. Foram solicitados dez anos; períodos anteriores a 2023 retornaram símbolo de ausência e foram omitidos. Não são níveis de produção.",
+        "series": [
+          {
+            "label": "Variação do volume",
+            "values": [
+              10.1,
+              -4.5,
+              2.0
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+        "purpose": "Base oficial de cadastro, frota e operações; não é receita do recorte."
+      },
+      {
+        "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+        "purpose": "Movimentação vinculada a documentos fiscais e RNTRC."
+      },
+      {
+        "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+        "purpose": "Escopo regulatório da ANTT."
+      },
+      {
+        "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+        "purpose": "Alerta de diesel: evidência em fretes agrícolas, sem extrapolar tarifa de carga geral."
+      },
+      {
+        "label": "IBGE/SIDRA · PMS rodoviário de cargas",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+        "purpose": "Variação acumulada em dezembro, volume de serviços rodoviários de cargas. API recuperada diretamente; valores anteriores ausentes, não zeros."
+      },
+      {
+        "label": "IBGE/SIDRA · rodoviário de cargas, acumulado recente",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/56696/c11046/56726",
+        "purpose": "Janeiro a agosto de 2026 contra igual período anterior; não é agosto contra julho."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "A consulta de dez anos à tabela PMS retornou ausência para períodos anteriores a 2023 neste recorte; não houve preenchimento artificial."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual contrato parece lucrativo antes de alocar retorno vazio e reentrega?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual renovação de frota reduz custo por viagem, em vez de apenas ampliar capacidade?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Como se confirma a entrega antes de ceder um recebível?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Embarcador industrial ou comercial",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Coleta e consolidação",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Transferência entre bases",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Distribuição e comprovante de entrega",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de carga geral. Cumprimento de prazo, integridade e visibilidade da entrega. Separar carga lotação, em que um embarcador ocupa a viagem, da fracionada, que exige coleta, consolidação e distribuição. Uma mesma receita por tonelada não representa a mesma produtividade nos dois modelos. A margem nasce do uso da capacidade ao longo de toda a rota, não apenas do frete de ida. Retorno vazio, redespacho, avaria, espera e reentrega podem tornar deficitário um contrato com faturamento crescente. Segregar custos da transferência e da última etapa evita subsidiar clientes complexos. A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos. Combustível, folha, pedágios e contratação de terceiros antecedem o recebimento do embarcador. Divergências de comprovante, faltas e glosas atrasam cobrança. Um limite de giro deve acompanhar viagens efetivamente executadas e valores incontroversos, não somente contratos assinados. Renovação de caminhões, telemetria e mecanização de bases precisam ser avaliadas por ganho de disponibilidade e custo total. Alongar dívida de veículos não resolve rotas estruturalmente deficitárias. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 1,
+    "title": "Transporte de madeira",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Disponibilidade sincronizada com colheita e consumo industrial, com transporte seguro de toras. Separar madeira plantada destinada à indústria de produtos de espécies nativas sujeitos à comprovação de origem; uma regra documental não deve ser generalizada a toda madeira.",
+      "A economia é de ciclo completo: carga, deslocamento, fila, descarga e retorno. Peso, volume e umidade não são intercambiáveis. Aumento do raio de abastecimento deve ser refletido em custo e remuneração; preço por tonelada sem distância e tempo esconde erosão de margem.",
+      "O Serviço Florestal Brasileiro mantém base pública de produtos madeireiros e não madeireiros com origem na PEVS, atualizada em outubro de 2026 e granularidade estadual. Ela permite mapear a origem da demanda florestal, mas não mede contratos de frete. O DOF+ trata da rastreabilidade de produtos florestais nativos; verificar a aplicação ao produto e à operação."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo transporte de madeira. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Disponibilidade sincronizada com colheita e consumo industrial, com transporte seguro de toras. Separar madeira plantada destinada à indústria de produtos de espécies nativas sujeitos à comprovação de origem; uma regra documental não deve ser generalizada a toda madeira.",
+          "Celulose, painéis, serrarias e produtores florestais contratam fluxo físico contínuo. Um contrato dedicado pode dar previsibilidade, mas atrela utilização a uma fábrica, talhão e distância de abastecimento.",
+          "Conjuntos florestais, carregadores, manutenção severa, pneus, diesel e motoristas habilitados. Estradas internas, chuva e fila no pátio afetam o número de ciclos realizável mesmo sem mudar a quilometragem contratada."
+        ],
+        "sources": [
+          {
+            "label": "Produção da Extração Vegetal e da Silvicultura | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producaoda-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Volume e localização da produção florestal, não mercado de fretes."
+          },
+          {
+            "label": "DOF+ Rastreabilidade — Ibama",
+            "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+            "purpose": "Escopo do DOF+ para espécies nativas."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A PEVS disponibiliza recortes municipais e por destino industrial para mapear bacias de abastecimento. O cadastro de concessões florestais permite acompanhar madeira nativa. Não foi recuperado ranking público de transportadores exclusivamente florestais nem sua distribuição de receita; polos são hipóteses a validar pelo mapa floresta-fábrica.",
+          "Especialização do implemento, segurança operacional e integração à fábrica criam barreiras. Concentração em cliente industrial é risco estrutural; chuva e mudança de frente de corte são choques operacionais. A PEVS mede madeira produzida e sua destinação, não faturamento do transportador."
+        ],
+        "sources": [
+          {
+            "label": "Produção da Extração Vegetal e da Silvicultura | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producaoda-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Volume e localização da produção florestal, não mercado de fretes."
+          },
+          {
+            "label": "DOF+ Rastreabilidade — Ibama",
+            "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+            "purpose": "Escopo do DOF+ para espécies nativas."
+          },
+          {
+            "label": "Monitoramento das Concessões Florestais — Ministério da Agricultura e Pecuária",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/florestal/concessao-florestal-1/monitoramento-das-concessoes-florestais",
+            "purpose": "Rastreabilidade em concessões florestais."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Ciclo",
+            "Tempo entre início da carga e retorno disponível",
+            "Decompor fila e estrada interna"
+          ],
+          [
+            "Custo por entrega",
+            "Diesel, manutenção e pessoal por rota e talhão",
+            "Ajustar distância e condição da via"
+          ],
+          [
+            "Disponibilidade",
+            "Horas aptas a operar versus comprometidas",
+            "Separar manutenção e espera por embarcador"
+          ],
+          [
+            "Regularidade",
+            "Documentos de origem e transporte aplicáveis",
+            "Conferir espécie e jurisdição antes de exigir DOF"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Produção da Extração Vegetal e da Silvicultura | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producaoda-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Volume e localização da produção florestal, não mercado de fretes."
+          },
+          {
+            "label": "DOF+ Rastreabilidade — Ibama",
+            "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+            "purpose": "Escopo do DOF+ para espécies nativas."
+          },
+          {
+            "label": "Monitoramento das Concessões Florestais — Ministério da Agricultura e Pecuária",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/florestal/concessao-florestal-1/monitoramento-das-concessoes-florestais",
+            "purpose": "Rastreabilidade em concessões florestais."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "O Serviço Florestal Brasileiro mantém base pública de produtos madeireiros e não madeireiros com origem na PEVS, atualizada em outubro de 2026 e granularidade estadual. Ela permite mapear a origem da demanda florestal, mas não mede contratos de frete. O DOF+ trata da rastreabilidade de produtos florestais nativos; verificar a aplicação ao produto e à operação.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Produção da Extração Vegetal e da Silvicultura | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producaoda-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Volume e localização da produção florestal, não mercado de fretes."
+          },
+          {
+            "label": "DOF+ Rastreabilidade — Ibama",
+            "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+            "purpose": "Escopo do DOF+ para espécies nativas."
+          },
+          {
+            "label": "Monitoramento das Concessões Florestais — Ministério da Agricultura e Pecuária",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/florestal/concessao-florestal-1/monitoramento-das-concessoes-florestais",
+            "purpose": "Rastreabilidade em concessões florestais."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · dados da produção florestal",
+            "url": "https://dados.florestal.gov.br/pt_BR/dataset/producao-da-extracao-vegetal-e-silvicultura",
+            "purpose": "Base oficial derivada da PEVS, produtos madeireiros e não madeireiros; cobertura estadual. Não mede mercado de fretes."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A economia é de ciclo completo: carga, deslocamento, fila, descarga e retorno. Peso, volume e umidade não são intercambiáveis. Aumento do raio de abastecimento deve ser refletido em custo e remuneração; preço por tonelada sem distância e tempo esconde erosão de margem.",
+          "Frota e pessoal ficam comprometidos antes de a medição do contratante liberar pagamento. Apurar diferença entre disponibilidade contratada e efetivamente faturável. Mudança do talhão pode exigir capital adicional sem aumentar a receita na mesma proporção.",
+          "Implementos especializados e manutenção preventiva são investimentos vinculados ao contrato. O prazo do ativo e o saldo de dívida devem sobreviver à possibilidade de encerramento ou remanejamento; verificar mercado secundário e custo de adaptação.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento da operação florestal e integração com a colheita"
+          ],
+          [
+            "Fraquezas",
+            "Ativo pouco flexível e forte dependência de um contratante"
+          ],
+          [
+            "Oportunidades",
+            "Telemetria e coordenação de carga para reduzir filas"
+          ],
+          [
+            "Ameaças",
+            "Interdição de vias, acidentes e carga documentalmente irregular"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Peças e implementos especializados dificultam substituição imediata"
+          ],
+          [
+            "Clientes",
+            "Grandes fábricas têm poder por volume e capacidade de impor medição"
+          ],
+          [
+            "Rivalidade",
+            "Competição se concentra em contratos dedicados e disponibilidade"
+          ],
+          [
+            "Entrantes",
+            "Segurança, histórico operacional e investimento limitam entrada"
+          ],
+          [
+            "Substitutos",
+            "Frota própria e mudanças de modal em trajetos longos podem reduzir terceirização"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Abastecimento industrial mantém operação, com remuneração ajustada às frentes de corte",
+            "Ciclo; Regularidade"
+          ],
+          [
+            "Favorável",
+            "Menor fila e melhor planejamento elevam viagens úteis sem nova frota",
+            "Custo por entrega; Regularidade"
+          ],
+          [
+            "Adverso",
+            "Parada de fábrica ou chuva prolongada deixa ativos sem receita e mantém serviço da dívida",
+            "Disponibilidade; Regularidade"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Quem absorve o aumento da distância quando muda a frente de corte?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "O contrato paga disponibilidade quando a fábrica ou a colheita paralisa?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Como a empresa valida a origem e as condições de amarração antes de carregar?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Produção da Extração Vegetal e da Silvicultura | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producaoda-extracao-vegetal-e-da-silvicultura.html",
+        "purpose": "Volume e localização da produção florestal, não mercado de fretes."
+      },
+      {
+        "label": "DOF+ Rastreabilidade — Ibama",
+        "url": "https://www.gov.br/ibama/pt-br/assuntos/biodiversidade/flora-e-madeira/documento-de-origem-florestal-dof/dof-rastreabilidade",
+        "purpose": "Escopo do DOF+ para espécies nativas."
+      },
+      {
+        "label": "Monitoramento das Concessões Florestais — Ministério da Agricultura e Pecuária",
+        "url": "https://www.gov.br/agricultura/pt-br/assuntos/florestal/concessao-florestal-1/monitoramento-das-concessoes-florestais",
+        "purpose": "Rastreabilidade em concessões florestais."
+      },
+      {
+        "label": "Serviço Florestal Brasileiro · dados da produção florestal",
+        "url": "https://dados.florestal.gov.br/pt_BR/dataset/producao-da-extracao-vegetal-e-silvicultura",
+        "purpose": "Base oficial derivada da PEVS, produtos madeireiros e não madeireiros; cobertura estadual. Não mede mercado de fretes."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "A alegação sobre mudanças específicas da PEVS foi retirada porque a nota técnica não pôde ser conferida integralmente. Conferir a metodologia de cada variável antes de comparar anos."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem absorve o aumento da distância quando muda a frente de corte?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Como a empresa valida a origem e as condições de amarração antes de carregar?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O contrato paga disponibilidade quando a fábrica ou a colheita paralisa?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Floresta e talhão",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Carregamento de toras",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Estrada florestal e rodovia",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Pátio de fábrica ou serraria",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Transporte de madeira. Disponibilidade sincronizada com colheita e consumo industrial, com transporte seguro de toras. Separar madeira plantada destinada à indústria de produtos de espécies nativas sujeitos à comprovação de origem; uma regra documental não deve ser generalizada a toda madeira. A economia é de ciclo completo: carga, deslocamento, fila, descarga e retorno. Peso, volume e umidade não são intercambiáveis. Aumento do raio de abastecimento deve ser refletido em custo e remuneração; preço por tonelada sem distância e tempo esconde erosão de margem. O Serviço Florestal Brasileiro mantém base pública de produtos madeireiros e não madeireiros com origem na PEVS, atualizada em outubro de 2026 e granularidade estadual. Ela permite mapear a origem da demanda florestal, mas não mede contratos de frete. O DOF+ trata da rastreabilidade de produtos florestais nativos; verificar a aplicação ao produto e à operação. Como funciona. Celulose, painéis, serrarias e produtores florestais contratam fluxo físico contínuo. Um contrato dedicado pode dar previsibilidade, mas atrela utilização a uma fábrica, talhão e distância de abastecimento. Conjuntos florestais, carregadores, manutenção severa, pneus, diesel e motoristas habilitados. Estradas internas, chuva e fila no pátio afetam o número de ciclos realizável mesmo sem mudar a quilometragem contratada. Caixa e financiamento. Frota e pessoal ficam comprometidos antes de a medição do contratante liberar pagamento. Apurar diferença entre disponibilidade contratada e efetivamente faturável. Mudança do talhão pode exigir capital adicional sem aumentar a receita na mesma proporção. Implementos especializados e manutenção preventiva são investimentos vinculados ao contrato. O prazo do ativo e o saldo de dívida devem sobreviver à possibilidade de encerramento ou remanejamento; verificar mercado secundário e custo de adaptação. Cenários. Abastecimento industrial mantém operação, com remuneração ajustada às frentes de corte. Menor fila e melhor planejamento elevam viagens úteis sem nova frota. Parada de fábrica ou chuva prolongada deixa ativos sem receita e mantém serviço da dívida. Na visita, pergunte: Quem absorve o aumento da distância quando muda a frente de corte? O contrato paga disponibilidade quando a fábrica ou a colheita paralisa? Como a empresa valida a origem e as condições de amarração antes de carregar? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Revalidação individual: página SFB/PEVS integral confirma cobertura estadual e atualização de outubro de 2026. Removida afirmação metodológica não confirmada. DOF e distinção nativa/plantada preservados. Sem estatísticas estreitas inventadas."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 2,
+    "title": "Transporte de grãos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Escoamento no calendário de colheita e embarque. Soja, milho e trigo têm fluxos distintos, e a rota de insumos no retorno pode alterar a rentabilidade. Separar transportador, agenciador de frete e trading que comercializa a mercadoria.",
+      "Preço por tonelada deve ser comparado com distância, fila, pedágio, retorno e perdas. A sazonalidade cria disputa por frota no pico e ociosidade depois; renovar frota com base na melhor tarifa da safra superestima capacidade de pagamento.",
+      "Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo transporte de grãos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Escoamento no calendário de colheita e embarque. Soja, milho e trigo têm fluxos distintos, e a rota de insumos no retorno pode alterar a rentabilidade. Separar transportador, agenciador de frete e trading que comercializa a mercadoria.",
+          "Produtores, cooperativas, cerealistas, tradings e esmagadoras. O volume comercializado só vira demanda do transportador quando se conhece origem, destino, modal e janela; safra recorde não assegura frete alto em todas as praças.",
+          "Graneleiros, diesel, pneus, manutenção, motoristas e pontos de apoio. Umidade, contaminação, limpeza e diferenças de pesagem influenciam perdas, rejeição e responsabilidade."
+        ],
+        "sources": [
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Conjuntura por corredor em setembro de 2026, publicação de outubro."
+          },
+          {
+            "label": "Boletim Logístico — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/logistica/boletim-logistico/boletim-logistico-1",
+            "purpose": "Boletins históricos de frete."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação fiscal de cargas e corredores agrícolas."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Os corredores pesquisados pela Conab incluem origens em Mato Grosso, Mato Grosso do Sul, Goiás e Matopiba e destinos portuários como Paranaguá. A ANTT publicou infográfico de soja e milho baseado em documentos fiscais. Estes são recortes operacionais, sem ranking de operadores.",
+          "Os corredores ligam originação, armazenagem, transbordo e portos, com competição entre modais. A Conab oferece histórico de safra e boletins por rota; mudança do destino interno, inclusive processamento, pode alterar fretes sem queda da produção."
+        ],
+        "sources": [
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Conjuntura por corredor em setembro de 2026, publicação de outubro."
+          },
+          {
+            "label": "Boletim Logístico — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/logistica/boletim-logistico/boletim-logistico-1",
+            "purpose": "Boletins históricos de frete."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação fiscal de cargas e corredores agrícolas."
+          },
+          {
+            "label": "Séries Históricas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas",
+            "purpose": "Séries históricas de produção; não equivalem a frete."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Frete por corredor",
+            "Preço, distância, tempo total e retorno",
+            "Não usar média nacional para decidir contrato"
+          ],
+          [
+            "Safra e calendário",
+            "Produção e ritmo de colheita por cultura e origem",
+            "Produção não equivale a carga contratada"
+          ],
+          [
+            "Filas e entrega",
+            "Espera no armazém, terminal e porto",
+            "Mensurar custo da indisponibilidade"
+          ],
+          [
+            "Perda",
+            "Diferença de peso e rejeição por qualidade",
+            "Verificar quem suporta o risco"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Conjuntura por corredor em setembro de 2026, publicação de outubro."
+          },
+          {
+            "label": "Boletim Logístico — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/logistica/boletim-logistico/boletim-logistico-1",
+            "purpose": "Boletins históricos de frete."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação fiscal de cargas e corredores agrícolas."
+          },
+          {
+            "label": "Séries Históricas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas",
+            "purpose": "Séries históricas de produção; não equivalem a frete."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+            "purpose": "Conjuntura por corredor em setembro de 2026, publicação de outubro."
+          },
+          {
+            "label": "Boletim Logístico — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/logistica/boletim-logistico/boletim-logistico-1",
+            "purpose": "Boletins históricos de frete."
+          },
+          {
+            "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+            "purpose": "Movimentação fiscal de cargas e corredores agrícolas."
+          },
+          {
+            "label": "Séries Históricas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas",
+            "purpose": "Séries históricas de produção; não equivalem a frete."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Preço por tonelada deve ser comparado com distância, fila, pedágio, retorno e perdas. A sazonalidade cria disputa por frota no pico e ociosidade depois; renovar frota com base na melhor tarifa da safra superestima capacidade de pagamento.",
+          "O desembolso por viagem antecede recebimento. Antecipação ao motorista e demora de descarga aumentam giro. Recebíveis dependem de comprovantes e ajustes de peso; giro sazonal deve ter liquidação compatível com o calendário real de escoamento.",
+          "Graneleiros e sistemas de agendamento podem ampliar produtividade. Antes de aumentar frota, testar ociosidade de entressafra e possibilidade de transportar insumos compatíveis no retorno, incluindo limpeza e segregação.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento de corredores e combinação de carga e retorno"
+          ],
+          [
+            "Fraquezas",
+            "Sazonalidade e dependência de filas de terceiros"
+          ],
+          [
+            "Oportunidades",
+            "Integração com armazéns, transbordos e rotas de insumos"
+          ],
+          [
+            "Ameaças",
+            "Quebra de safra local, diesel sem repasse e concentração de compradores"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Frota terceirizada e diesel ganham poder durante o pico"
+          ],
+          [
+            "Clientes",
+            "Tradings e cooperativas podem concentrar demanda em cada origem"
+          ],
+          [
+            "Rivalidade",
+            "Tarifa spot muda por janela e disponibilidade, além da eficiência"
+          ],
+          [
+            "Entrantes",
+            "Cadastro e veículo permitem entrar, mas acesso a contratos e capital limita escala"
+          ],
+          [
+            "Substitutos",
+            "Ferrovia e hidrovia substituem percurso longo; rodovia pode preservar primeira etapa"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Fluxos agrícolas permanecem, com diferenças entre culturas e corredores",
+            "Frete por corredor; Perda"
+          ],
+          [
+            "Favorável",
+            "Programação reduz filas e contrata retorno, elevando utilização anual",
+            "Safra e calendário; Perda"
+          ],
+          [
+            "Adverso",
+            "Clima, restrição de porto ou queda de embarques desloca frota e deprime frete local",
+            "Filas e entrega; Perda"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Quanto do resultado anual depende da janela mais cara da colheita?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Qual retorno é contratado e qual é apenas expectativa?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quem remunera espera e quem responde por diferença de peso?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Preço dos combustíveis e demanda por insumos influenciam fretes agrícolas em setembro — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/preco-dos-combustiveis-e-demanda-por-insumos-influenciam-fretes-agricolas-em-setembro",
+        "purpose": "Conjuntura por corredor em setembro de 2026, publicação de outubro."
+      },
+      {
+        "label": "Boletim Logístico — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/atuacao/logistica/boletim-logistico/boletim-logistico-1",
+        "purpose": "Boletins históricos de frete."
+      },
+      {
+        "label": "Movimentação de Cargas — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc/movimentacao-de-cargas",
+        "purpose": "Movimentação fiscal de cargas e corredores agrícolas."
+      },
+      {
+        "label": "Séries Históricas — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas",
+        "purpose": "Séries históricas de produção; não equivalem a frete."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quanto do resultado anual depende da janela mais cara da colheita?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quem remunera espera e quem responde por diferença de peso?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual retorno é contratado e qual é apenas expectativa?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Produtor e armazém de origem",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Carga rodoviária a granel",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Transbordo ferroviário ou hidroviário",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Indústria ou porto",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Transporte de grãos. Escoamento no calendário de colheita e embarque. Soja, milho e trigo têm fluxos distintos, e a rota de insumos no retorno pode alterar a rentabilidade. Separar transportador, agenciador de frete e trading que comercializa a mercadoria. Preço por tonelada deve ser comparado com distância, fila, pedágio, retorno e perdas. A sazonalidade cria disputa por frota no pico e ociosidade depois; renovar frota com base na melhor tarifa da safra superestima capacidade de pagamento. Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída. Como funciona. Produtores, cooperativas, cerealistas, tradings e esmagadoras. O volume comercializado só vira demanda do transportador quando se conhece origem, destino, modal e janela; safra recorde não assegura frete alto em todas as praças. Graneleiros, diesel, pneus, manutenção, motoristas e pontos de apoio. Umidade, contaminação, limpeza e diferenças de pesagem influenciam perdas, rejeição e responsabilidade. Caixa e financiamento. O desembolso por viagem antecede recebimento. Antecipação ao motorista e demora de descarga aumentam giro. Recebíveis dependem de comprovantes e ajustes de peso; giro sazonal deve ter liquidação compatível com o calendário real de escoamento. Graneleiros e sistemas de agendamento podem ampliar produtividade. Antes de aumentar frota, testar ociosidade de entressafra e possibilidade de transportar insumos compatíveis no retorno, incluindo limpeza e segregação. Cenários. Fluxos agrícolas permanecem, com diferenças entre culturas e corredores. Programação reduz filas e contrata retorno, elevando utilização anual. Clima, restrição de porto ou queda de embarques desloca frota e deprime frete local. Na visita, pergunte: Quanto do resultado anual depende da janela mais cara da colheita? Qual retorno é contratado e qual é apenas expectativa? Quem remunera espera e quem responde por diferença de peso? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 3,
+    "title": "Transporte refrigerado",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Preservar condição do produto durante todo o trajeto, com prova de temperatura e rastreio. Alimento refrigerado, congelado e medicamento termolábil são mercados distintos; este estudo foca alimentos e não transfere exigências farmacêuticas automaticamente.",
+      "A tarifa precisa remunerar refrigeração ligada durante espera, limpeza, monitoramento e risco contratual. Misturar produtos incompatíveis para ocupar veículo pode aumentar perdas. Aberturas de porta e entregas sucessivas exigem desenho de rota diferente da lotação.",
+      "Os dados oficiais de abate e leite são sinais de atividade dos embarcadores, não volume contratado de transporte refrigerado. Não foi localizada série nacional autônoma de receita ou volume do frete refrigerado nem preço recente comparável; a conjuntura quantitativa permanece aberta."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo transporte refrigerado. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Preservar condição do produto durante todo o trajeto, com prova de temperatura e rastreio. Alimento refrigerado, congelado e medicamento termolábil são mercados distintos; este estudo foca alimentos e não transfere exigências farmacêuticas automaticamente.",
+          "Frigoríficos, laticínios, processadores, distribuidores e redes de alimentação. A entrega só cria valor se for aceita, e pode ser recusada por temperatura, embalagem ou janela mesmo com viagem concluída.",
+          "Baú isotérmico, unidade frigorífica, energia, manutenção, higienização e sensores. A carga deve chegar à expedição nas condições corretas: o veículo não deve ser tratado como substituto do processo industrial de resfriamento."
+        ],
+        "sources": [
+          {
+            "label": "Qual a temperatura adequada para o transporte de alimentos? – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+            "purpose": "Orientação sanitária local; não universalizar temperatura."
+          },
+          {
+            "label": "Transporte de Alimentos – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/",
+            "purpose": "Condições de transporte de alimentos."
+          },
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Abate como indicador de embarcadores, não de fretes."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A localização econômica acompanha plantas de proteína animal, processamento lácteo, centrais de distribuição e consumo urbano. Fonte municipal de Jundiaí orienta temperatura no transporte de alimentos, mas não comprova polo nacional. Não se atribuiu liderança a empresa com base em publicidade.",
+          "Perdas podem ser irreversíveis e a prova de cadeia fria é uma barreira de qualidade. Orientações de vigilância sanitária devem ser aplicadas por produto e jurisdição. Documentos consultados sobre amostras laboratoriais não foram usados como regra de transporte comercial."
+        ],
+        "sources": [
+          {
+            "label": "Qual a temperatura adequada para o transporte de alimentos? – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+            "purpose": "Orientação sanitária local; não universalizar temperatura."
+          },
+          {
+            "label": "Transporte de Alimentos – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/",
+            "purpose": "Condições de transporte de alimentos."
+          },
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Abate como indicador de embarcadores, não de fretes."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Integridade térmica",
+            "Registro contínuo conforme produto e procedimento",
+            "Não impor temperatura universal"
+          ],
+          [
+            "Aceite",
+            "Recusas, devoluções e causa comprovada",
+            "Separar falha de origem e de transporte"
+          ],
+          [
+            "Eficiência",
+            "Energia e combustível com equipamento em operação",
+            "Incluir tempo de espera"
+          ],
+          [
+            "Manutenção",
+            "Falhas da unidade frigorífica e tempo de reparo",
+            "Medir impacto na carga e no veículo"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Qual a temperatura adequada para o transporte de alimentos? – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+            "purpose": "Orientação sanitária local; não universalizar temperatura."
+          },
+          {
+            "label": "Transporte de Alimentos – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/",
+            "purpose": "Condições de transporte de alimentos."
+          },
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Abate como indicador de embarcadores, não de fretes."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "Os dados oficiais de abate e leite são sinais de atividade dos embarcadores, não volume contratado de transporte refrigerado. Não foi localizada série nacional autônoma de receita ou volume do frete refrigerado nem preço recente comparável; a conjuntura quantitativa permanece aberta.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Qual a temperatura adequada para o transporte de alimentos? – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+            "purpose": "Orientação sanitária local; não universalizar temperatura."
+          },
+          {
+            "label": "Transporte de Alimentos – Vigilância Sanitária",
+            "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/",
+            "purpose": "Condições de transporte de alimentos."
+          },
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Abate como indicador de embarcadores, não de fretes."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A tarifa precisa remunerar refrigeração ligada durante espera, limpeza, monitoramento e risco contratual. Misturar produtos incompatíveis para ocupar veículo pode aumentar perdas. Aberturas de porta e entregas sucessivas exigem desenho de rota diferente da lotação.",
+          "O custo aparece antes do aceite sanitário e comercial; uma ocorrência pode bloquear recebimento e gerar indenização maior que o frete. Capital de giro não deve antecipar como líquido um valor sujeito a discussão de perda de carga.",
+          "Manutenção preventiva, sensores e redundância operacional sustentam serviço. O investimento em baú e unidade frigorífica deve considerar vida útil, disponibilidade de assistência e custo energético ao longo do contrato.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Qualificação e registros de qualidade criam diferenciação"
+          ],
+          [
+            "Fraquezas",
+            "Equipamento caro e carga com perda potencial elevada"
+          ],
+          [
+            "Oportunidades",
+            "Contratos que valorizam rastreio e redução de recusa"
+          ],
+          [
+            "Ameaças",
+            "Falha térmica, contaminação cruzada e glosa"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Assistência técnica e peças de refrigeração podem restringir disponibilidade"
+          ],
+          [
+            "Clientes",
+            "Embarcadores homologam operadores e exigem prova de qualidade"
+          ],
+          [
+            "Rivalidade",
+            "Preço compete com histórico de perdas e disponibilidade"
+          ],
+          [
+            "Entrantes",
+            "Baú não basta: procedimentos, manutenção e registros são barreiras"
+          ],
+          [
+            "Substitutos",
+            "Frota dedicada própria substitui serviço; venda de produto estável pode mudar necessidade logística"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Volume dos clientes sustenta rotas com prioridade ao controle de perdas",
+            "Integridade térmica; Manutenção"
+          ],
+          [
+            "Favorável",
+            "Melhor roteirização e registros reduzem recusas e sustentam renovação contratual",
+            "Aceite; Manutenção"
+          ],
+          [
+            "Adverso",
+            "Falha de equipamento ou crise sanitária provoca perda, suspensão e tensão de caixa",
+            "Eficiência; Manutenção"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Como o registro distingue temperatura do ar e condição do produto?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quem responde se a carga já chega inadequada à expedição?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A cobertura de seguro inclui os riscos térmicos efetivamente assumidos?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Qual a temperatura adequada para o transporte de alimentos? – Vigilância Sanitária",
+        "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/qual-a-temperatura-adequada-para-o-transporte-de-alimentos/",
+        "purpose": "Orientação sanitária local; não universalizar temperatura."
+      },
+      {
+        "label": "Transporte de Alimentos – Vigilância Sanitária",
+        "url": "https://visa.jundiai.sp.gov.br/duvidas-tecnicas-visa/alimentos/transporte-de-alimentos/",
+        "purpose": "Condições de transporte de alimentos."
+      },
+      {
+        "label": "Resultados completos | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+        "purpose": "Abate como indicador de embarcadores, não de fretes."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Como o registro distingue temperatura do ar e condição do produto?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A cobertura de seguro inclui os riscos térmicos efetivamente assumidos?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Quem responde se a carga já chega inadequada à expedição?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Indústria de perecíveis",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Pré-resfriamento e expedição",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Transporte com monitoramento",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Recebimento e conferência",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Transporte refrigerado. Preservar condição do produto durante todo o trajeto, com prova de temperatura e rastreio. Alimento refrigerado, congelado e medicamento termolábil são mercados distintos; este estudo foca alimentos e não transfere exigências farmacêuticas automaticamente. A tarifa precisa remunerar refrigeração ligada durante espera, limpeza, monitoramento e risco contratual. Misturar produtos incompatíveis para ocupar veículo pode aumentar perdas. Aberturas de porta e entregas sucessivas exigem desenho de rota diferente da lotação. Os dados oficiais de abate e leite são sinais de atividade dos embarcadores, não volume contratado de transporte refrigerado. Não foi localizada série nacional autônoma de receita ou volume do frete refrigerado nem preço recente comparável; a conjuntura quantitativa permanece aberta. Como funciona. Frigoríficos, laticínios, processadores, distribuidores e redes de alimentação. A entrega só cria valor se for aceita, e pode ser recusada por temperatura, embalagem ou janela mesmo com viagem concluída. Baú isotérmico, unidade frigorífica, energia, manutenção, higienização e sensores. A carga deve chegar à expedição nas condições corretas: o veículo não deve ser tratado como substituto do processo industrial de resfriamento. Caixa e financiamento. O custo aparece antes do aceite sanitário e comercial; uma ocorrência pode bloquear recebimento e gerar indenização maior que o frete. Capital de giro não deve antecipar como líquido um valor sujeito a discussão de perda de carga. Manutenção preventiva, sensores e redundância operacional sustentam serviço. O investimento em baú e unidade frigorífica deve considerar vida útil, disponibilidade de assistência e custo energético ao longo do contrato. Cenários. Volume dos clientes sustenta rotas com prioridade ao controle de perdas. Melhor roteirização e registros reduzem recusas e sustentam renovação contratual. Falha de equipamento ou crise sanitária provoca perda, suspensão e tensão de caixa. Na visita, pergunte: Como o registro distingue temperatura do ar e condição do produto? Quem responde se a carga já chega inadequada à expedição? A cobertura de seguro inclui os riscos térmicos efetivamente assumidos? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 4,
+    "title": "Transporte de produtos perigosos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Transportar substâncias classificadas como perigosas com segurança e documentação apropriada. O recorte inclui carga embalada e granel, mas os requisitos dependem da classe, produto, equipamento e operação, e não de uma temperatura ou licença única.",
+      "O frete deve pagar inspeções, limpeza, descontaminação, retorno com resíduo e disponibilidade de emergência. Receita por quilômetro sem esses componentes pode parecer competitiva enquanto transfere risco não precificado para o transportador.",
+      "A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo transporte de produtos perigosos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Transportar substâncias classificadas como perigosas com segurança e documentação apropriada. O recorte inclui carga embalada e granel, mas os requisitos dependem da classe, produto, equipamento e operação, e não de uma temperatura ou licença única.",
+          "Indústrias químicas, distribuidores de combustíveis e outros expedidores. Continuidade, qualificação e resposta a incidentes são parte da compra; contrato comercial não elimina responsabilidade legal.",
+          "Tanques, embalagens, válvulas, equipamentos de emergência, motoristas treinados, seguros e locais de limpeza. Compatibilidade química determina possibilidade de reaproveitar capacidade entre produtos.",
+          "O regulamento consolidado da ANTT exige manutenção da sinalização quando persistirem contaminação ou resíduos, mesmo no veículo vazio. Equipamento não limpo com resíduo continua sujeito às prescrições aplicáveis ao carregado. Por isso, o retorno, a limpeza e sua comprovação fazem parte da operação e do custo; não basta encerrar a nota da entrega."
+        ],
+        "sources": [
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Competências regulatórias para perigosos."
+          },
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Indicadores e certificações no anuário TRC."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Movimento na comercialização de biodiesel; não é norma geral de transporte."
+          },
+          {
+            "label": "ANTT · regulamento consolidado do transporte de perigosos",
+            "url": "https://anttlegis.antt.gov.br/action/UrlPublicasAction.php?acao=abrirAtoPublico&cod_menu=5408&cod_modulo=161&num_ato=00005998&seq_ato=000&sgl_orgao=DG/ANTT/MI&sgl_tipo=RES&vlr_ano=2022",
+            "purpose": "Artigos 6 e 10: sinalização e veículos vazios com resíduos. Texto integral consultado."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Polos devem ser mapeados por refinaria, base de distribuição, indústria química e destino, com disponibilidade de limpeza licenciada. Não foi obtida lista de transportadores habilitados por classe nem concentração regional; cadastro total de TRC não substitui essa lacuna.",
+          "A ANTT exige enquadramento do produto nas instruções complementares do regulamento e cadastro pertinente do transportador. A classificação é do produto e de suas condições de transporte; não basta o nome comercial. Uma carga vazia com resíduo pode continuar exigindo cuidados e sinalização."
+        ],
+        "sources": [
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Competências regulatórias para perigosos."
+          },
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Indicadores e certificações no anuário TRC."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Movimento na comercialização de biodiesel; não é norma geral de transporte."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Conformidade",
+            "Classificação, documento e equipamento por produto",
+            "Confirmar requisitos aplicáveis, sem lista genérica"
+          ],
+          [
+            "Custo do ciclo",
+            "Carga, viagem, descarga e limpeza",
+            "Incluir retorno com resíduo"
+          ],
+          [
+            "Segurança",
+            "Incidentes, quase acidentes e manutenção",
+            "Avaliar causas e plano de resposta"
+          ],
+          [
+            "Concentração",
+            "Receita por produto e expedidor",
+            "Mensurar dependência e custo de substituição"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Competências regulatórias para perigosos."
+          },
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Indicadores e certificações no anuário TRC."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Movimento na comercialização de biodiesel; não é norma geral de transporte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Competências regulatórias para perigosos."
+          },
+          {
+            "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+            "purpose": "Indicadores e certificações no anuário TRC."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Movimento na comercialização de biodiesel; não é norma geral de transporte."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "O frete deve pagar inspeções, limpeza, descontaminação, retorno com resíduo e disponibilidade de emergência. Receita por quilômetro sem esses componentes pode parecer competitiva enquanto transfere risco não precificado para o transportador.",
+          "Pagamentos operacionais e manutenção precedem recebimento; evento ambiental pode gerar despesas e interrupção. Separar giro normal de contingências, franquias e obrigações não cobertas, sem presumir que uma apólice elimina todo passivo.",
+          "Equipamento compatível e certificações devem ser conferidos antes de financiar expansão. Dívida longa requer contratos e possibilidade real de realocação; tanque especializado não tem liquidez equivalente a veículo genérico.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conformidade demonstrável e histórico seguro"
+          ],
+          [
+            "Fraquezas",
+            "Ativo dedicado e custos de prevenção não flexíveis"
+          ],
+          [
+            "Oportunidades",
+            "Contratos que remuneram disponibilidade e gestão de risco"
+          ],
+          [
+            "Ameaças",
+            "Acidente ambiental, incompatibilidade e interdição"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Fornecedores de tanques e inspeção limitam substituição imediata"
+          ],
+          [
+            "Clientes",
+            "Grandes expedidores impõem homologação e regras de segurança"
+          ],
+          [
+            "Rivalidade",
+            "Rivalidade deve ser medida por produto compatível, não pelo total de caminhões"
+          ],
+          [
+            "Entrantes",
+            "Regulação, capital e reputação elevam a barreira"
+          ],
+          [
+            "Substitutos",
+            "Dutos, ferrovia e frota do expedidor substituem rotas específicas"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Operação segue com contratos aderentes aos custos de segurança e limpeza",
+            "Conformidade; Concentração"
+          ],
+          [
+            "Favorável",
+            "Melhor utilização de equipamento compatível reduz ociosidade sem comprometer prevenção",
+            "Custo do ciclo; Concentração"
+          ],
+          [
+            "Adverso",
+            "Incidente ou paralisação de cliente reduz receita e cria necessidade extraordinária de caixa",
+            "Segurança; Concentração"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual substância exige equipamento que não pode ser realocado?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Como se valida compatibilidade antes de aceitar nova carga?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Existe obrigação ambiental ou indenização assumida acima da cobertura contratada?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+        "purpose": "Competências regulatórias para perigosos."
+      },
+      {
+        "label": "Dados do TRC — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/assuntos/cargas/dadostrc",
+        "purpose": "Indicadores e certificações no anuário TRC."
+      },
+      {
+        "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+        "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+        "purpose": "Movimento na comercialização de biodiesel; não é norma geral de transporte."
+      },
+      {
+        "label": "ANTT · regulamento consolidado do transporte de perigosos",
+        "url": "https://anttlegis.antt.gov.br/action/UrlPublicasAction.php?acao=abrirAtoPublico&cod_menu=5408&cod_modulo=161&num_ato=00005998&seq_ato=000&sgl_orgao=DG/ANTT/MI&sgl_tipo=RES&vlr_ano=2022",
+        "purpose": "Artigos 6 e 10: sinalização e veículos vazios com resíduos. Texto integral consultado."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "Texto consolidado do regulamento de produtos perigosos deve ser consultado na ANTT antes de qualquer decisão operacional; não é parecer jurídico."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual substância exige equipamento que não pode ser realocado?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Existe obrigação ambiental ou indenização assumida acima da cobertura contratada?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Como se valida compatibilidade antes de aceitar nova carga?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Expedidor e classificação",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Embalagem ou tanque compatível",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Transporte sinalizado e controlado",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Destinatário e descontaminação",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Transporte de produtos perigosos. Transportar substâncias classificadas como perigosas com segurança e documentação apropriada. O recorte inclui carga embalada e granel, mas os requisitos dependem da classe, produto, equipamento e operação, e não de uma temperatura ou licença única. O frete deve pagar inspeções, limpeza, descontaminação, retorno com resíduo e disponibilidade de emergência. Receita por quilômetro sem esses componentes pode parecer competitiva enquanto transfere risco não precificado para o transportador. A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos. Como funciona. Indústrias químicas, distribuidores de combustíveis e outros expedidores. Continuidade, qualificação e resposta a incidentes são parte da compra; contrato comercial não elimina responsabilidade legal. Tanques, embalagens, válvulas, equipamentos de emergência, motoristas treinados, seguros e locais de limpeza. Compatibilidade química determina possibilidade de reaproveitar capacidade entre produtos. Caixa e financiamento. Pagamentos operacionais e manutenção precedem recebimento; evento ambiental pode gerar despesas e interrupção. Separar giro normal de contingências, franquias e obrigações não cobertas, sem presumir que uma apólice elimina todo passivo. Equipamento compatível e certificações devem ser conferidos antes de financiar expansão. Dívida longa requer contratos e possibilidade real de realocação; tanque especializado não tem liquidez equivalente a veículo genérico. Cenários. Operação segue com contratos aderentes aos custos de segurança e limpeza. Melhor utilização de equipamento compatível reduz ociosidade sem comprometer prevenção. Incidente ou paralisação de cliente reduz receita e cria necessidade extraordinária de caixa. Na visita, pergunte: Qual substância exige equipamento que não pode ser realocado? Como se valida compatibilidade antes de aceitar nova carga? Existe obrigação ambiental ou indenização assumida acima da cobertura contratada? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Revisão independente adicional confirmou ANTTlegis consolidado, artigo6 parágrafo2 e artigo10: resíduos em veículo vazio mantêm prescrições e sinalização. Demais afirmações e limites já conferidos. Aprovado individualmente."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 5,
+    "title": "Armazenagem",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Guardar, preservar e disponibilizar mercadoria conforme contrato. Distinguir armazenagem agrícola a granel, depósito geral de bens embalados e cadeia fria. A evidência quantitativa recuperada refere-se a capacidade agrícola, não a todo o mercado de galpões e serviços.",
+      "Margem depende de ocupação e giros, mix de serviços, consumo de energia e perdas. Manter mercadoria por mais tempo pode gerar receita de guarda e bloquear capacidade para nova safra. Capacidade estática e fluxo anual não podem ser comparados como se fossem a mesma unidade econômica.",
+      "A Pesquisa de Estoques registra expansão de capacidade útil nos pontos comparáveis recuperados. O aumento nacional não elimina gargalos locais e tampouco mede o segmento refrigerado. A comparação entre extremos não é uma série anual contínua e não foi usada para calcular déficit por subtração simples da safra."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo armazenagem. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Guardar, preservar e disponibilizar mercadoria conforme contrato. Distinguir armazenagem agrícola a granel, depósito geral de bens embalados e cadeia fria. A evidência quantitativa recuperada refere-se a capacidade agrícola, não a todo o mercado de galpões e serviços.",
+          "Produtores, cooperativas, indústrias e comerciantes. A receita pode vir de ocupação, movimentação, secagem e serviços; guardar estoque próprio é economicamente diferente de cobrar pela guarda de terceiros.",
+          "Silos ou galpões, balanças, secagem, energia, aeração, controle de pragas, sistemas e seguro. Capacidade nominal não prova capacidade efetiva se a recepção, secagem ou expedição é gargalo."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+            "purpose": "Pesquisa de Estoques e capacidade agrícola."
+          },
+          {
+            "label": "Capacidade de armazenagem agrícola fica em 166,1 milhões de toneladas no 2º semestre de 2015 | Agência de Notícias",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+            "purpose": "Capacidade no segundo semestre de 2015."
+          },
+          {
+            "label": "Armazenagem e estocagem - Anuário Estatístico do Brasil - IBGE",
+            "url": "https://anuario.ibge.gov.br/2024/agropecuaria-e-extracao-vegetal/armazenagem-e-estocagem.html",
+            "purpose": "Metodologia, cobertura e mudança anterior da pesquisa."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A pesquisa permite recortes estaduais e municipais e distingue armazenadores comerciais, cooperativas, indústria e produtores. A Conab mantém rede e cadastro; são caminhos para localizar concorrentes verificáveis, sem atribuir um ranking a operadores privados.",
+          "Localização entre produção, indústria e corredor é vantagem estrutural. Falta de capacidade nacional não prova viabilidade local: calendário de colheita, distância, utilização de concorrentes e serviços disponíveis precisam ser analisados. As bases IBGE e Sicarm têm universos distintos.",
+          "O resultado oficial de referência em 2025 destaca Mato Grosso, Rio Grande do Sul e Paraná na capacidade instalada. A distribuição está associada à produção de grãos e ao tipo de estrutura: silos, graneleiros e convencionais não têm o mesmo perfil operacional. São polos de capacidade agrícola, não ranking de empresas de armazenagem geral."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+            "purpose": "Pesquisa de Estoques e capacidade agrícola."
+          },
+          {
+            "label": "Capacidade de armazenagem agrícola fica em 166,1 milhões de toneladas no 2º semestre de 2015 | Agência de Notícias",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+            "purpose": "Capacidade no segundo semestre de 2015."
+          },
+          {
+            "label": "Armazenagem e estocagem - Anuário Estatístico do Brasil - IBGE",
+            "url": "https://anuario.ibge.gov.br/2024/agropecuaria-e-extracao-vegetal/armazenagem-e-estocagem.html",
+            "purpose": "Metodologia, cobertura e mudança anterior da pesquisa."
+          },
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9199-pesquisa-de-estoques.html",
+            "purpose": "Série de capacidade agrícola, distinta de galpões gerais."
+          },
+          {
+            "label": "IBGE · Pesquisa de Estoques, segundo semestre de 2025, PDF integral",
+            "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/2025_2_semestre/BR_2_semestre_2025.pdf",
+            "purpose": "Capacidade útil agrícola, estabelecimentos ativos. Totais em toneladas na publicação; conversão oficial dos convencionais."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Capacidade útil",
+            "Espaço disponível por tecnologia e produto",
+            "Distinguir toneladas e volume cúbico"
+          ],
+          [
+            "Ocupação e giro",
+            "Utilização ao longo da safra e tempo de permanência",
+            "Estoque em uma data não mede fluxo anual"
+          ],
+          [
+            "Perda e qualidade",
+            "Quebra, umidade, temperatura e segregação",
+            "Separar perda técnica contratual de divergência"
+          ],
+          [
+            "Serviços",
+            "Receita por guarda, secagem e movimentação",
+            "Analisar margem e consumo energético"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+            "purpose": "Pesquisa de Estoques e capacidade agrícola."
+          },
+          {
+            "label": "Capacidade de armazenagem agrícola fica em 166,1 milhões de toneladas no 2º semestre de 2015 | Agência de Notícias",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+            "purpose": "Capacidade no segundo semestre de 2015."
+          },
+          {
+            "label": "Armazenagem e estocagem - Anuário Estatístico do Brasil - IBGE",
+            "url": "https://anuario.ibge.gov.br/2024/agropecuaria-e-extracao-vegetal/armazenagem-e-estocagem.html",
+            "purpose": "Metodologia, cobertura e mudança anterior da pesquisa."
+          },
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9199-pesquisa-de-estoques.html",
+            "purpose": "Série de capacidade agrícola, distinta de galpões gerais."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A Pesquisa de Estoques registra expansão de capacidade útil nos pontos comparáveis recuperados. O aumento nacional não elimina gargalos locais e tampouco mede o segmento refrigerado. A comparação entre extremos não é uma série anual contínua e não foi usada para calcular déficit por subtração simples da safra.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+            "purpose": "Pesquisa de Estoques e capacidade agrícola."
+          },
+          {
+            "label": "Capacidade de armazenagem agrícola fica em 166,1 milhões de toneladas no 2º semestre de 2015 | Agência de Notícias",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+            "purpose": "Capacidade no segundo semestre de 2015."
+          },
+          {
+            "label": "Armazenagem e estocagem - Anuário Estatístico do Brasil - IBGE",
+            "url": "https://anuario.ibge.gov.br/2024/agropecuaria-e-extracao-vegetal/armazenagem-e-estocagem.html",
+            "purpose": "Metodologia, cobertura e mudança anterior da pesquisa."
+          },
+          {
+            "label": "Pesquisa de Estoques | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9199-pesquisa-de-estoques.html",
+            "purpose": "Série de capacidade agrícola, distinta de galpões gerais."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Margem depende de ocupação e giros, mix de serviços, consumo de energia e perdas. Manter mercadoria por mais tempo pode gerar receita de guarda e bloquear capacidade para nova safra. Capacidade estática e fluxo anual não podem ser comparados como se fossem a mesma unidade econômica.",
+          "Armazenador de terceiros financia operação e prazo de cobrança; comerciante proprietário do grão financia também estoque e risco de preço. Contratos e controles devem identificar titularidade, ônus e disponibilidade física antes de qualquer garantia.",
+          "Ampliação de silo, secador, balança e expedição deve corrigir o gargalo demonstrado. Não assumir elegibilidade a programa direcionado nem anunciar recursos sem verificar abertura e condições atuais. Avaliação de investimento deve testar sazonalidade e capacidade licenciada.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Localização e capacidade de preservar qualidade"
+          ],
+          [
+            "Fraquezas",
+            "Capital imobilizado e sazonalidade de ocupação"
+          ],
+          [
+            "Oportunidades",
+            "Serviços de secagem e segregação que reduzem perdas do cliente"
+          ],
+          [
+            "Ameaças",
+            "Incêndio, quebra de estoque, gargalo de acesso e demanda concentrada"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Equipamentos e energia condicionam custo e continuidade"
+          ],
+          [
+            "Clientes",
+            "Clientes grandes podem construir capacidade própria ou negociar sazonalidade"
+          ],
+          [
+            "Rivalidade",
+            "A competição é local e depende de acesso e serviços"
+          ],
+          [
+            "Entrantes",
+            "Licenciamento, capital e terreno criam barreiras, mas não garantem ocupação"
+          ],
+          [
+            "Substitutos",
+            "Silos próprios, expedição direta e armazenagem temporária substituem parte do serviço"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Expansão acompanha demanda local, preservando ocupação e controles",
+            "Capacidade útil; Serviços"
+          ],
+          [
+            "Favorável",
+            "Melhor coordenação de expedição aumenta giros e receita sem expansão equivalente",
+            "Ocupação e giro; Serviços"
+          ],
+          [
+            "Adverso",
+            "Safra local menor ou concorrente novo reduz ocupação, enquanto dívida e manutenção persistem",
+            "Perda e qualidade; Serviços"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual gargalo impede usar a capacidade declarada?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "O estoque dado em garantia pertence a quem e está conciliado fisicamente?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quanto da margem depende de secagem, guarda e movimentação?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "capacidade-agricola",
+        "title": "Capacidade útil de armazenagem agrícola: pontos recuperados",
+        "unit": "milhões de toneladas",
+        "scope": "Brasil, estabelecimentos ativos da Pesquisa de Estoques. Não inclui todo mercado de armazenagem geral ou refrigerada.",
+        "years": [
+          2015,
+          2025
+        ],
+        "period": "Segundo semestre de 2015 e de 2025",
+        "source": {
+          "label": "IBGE · Pesquisa de Estoques, segundo semestre de 2025, PDF integral",
+          "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/2025_2_semestre/BR_2_semestre_2025.pdf",
+          "purpose": "Capacidade útil agrícola, estabelecimentos ativos. Totais em toneladas na publicação; conversão oficial dos convencionais."
+        },
+        "method": "Comparação de observações oficiais nos mesmos semestres. O intervalo não foi preenchido, não é série anual completa. Mudanças cadastrais e de cobertura devem ser consideradas; não calcula déficit contra safra anual. Valores conferidos nos PDFs oficiais de comentários de 2015 e resultados de 2025. Ambas as publicações convertem capacidade dos armazéns convencionais de volume para massa pelo mesmo fator oficial, sem equivaler a estoques efetivos.",
+        "series": [
+          {
+            "label": "Capacidade útil",
+            "values": [
+              166.1,
+              233.8
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Pesquisa de Estoques | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/2070-np-pesquisa-de-estoques/9199-pesquisa-de-estoques.html",
+        "purpose": "Pesquisa de Estoques e capacidade agrícola."
+      },
+      {
+        "label": "Capacidade de armazenagem agrícola fica em 166,1 milhões de toneladas no 2º semestre de 2015 | Agência de Notícias",
+        "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9960-capacidade-de-armazenagem-agricola-fica-em-166-1-milhoes-de-toneladas-no-2-semestre-de-2015",
+        "purpose": "Capacidade no segundo semestre de 2015."
+      },
+      {
+        "label": "Armazenagem e estocagem - Anuário Estatístico do Brasil - IBGE",
+        "url": "https://anuario.ibge.gov.br/2024/agropecuaria-e-extracao-vegetal/armazenagem-e-estocagem.html",
+        "purpose": "Metodologia, cobertura e mudança anterior da pesquisa."
+      },
+      {
+        "label": "Pesquisa de Estoques | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9199-pesquisa-de-estoques.html",
+        "purpose": "Série de capacidade agrícola, distinta de galpões gerais."
+      },
+      {
+        "label": "IBGE · Pesquisa de Estoques, segundo semestre de 2015, PDF integral",
+        "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/01_Comentarios/2015/estoque_201502comentarios.pdf",
+        "purpose": "Capacidade útil agrícola, estabelecimentos ativos. Totais em toneladas na publicação; conversão oficial dos convencionais."
+      },
+      {
+        "label": "IBGE · Pesquisa de Estoques, segundo semestre de 2025, PDF integral",
+        "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/2025_2_semestre/BR_2_semestre_2025.pdf",
+        "purpose": "Capacidade útil agrícola, estabelecimentos ativos. Totais em toneladas na publicação; conversão oficial dos convencionais."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual gargalo impede usar a capacidade declarada?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quanto da margem depende de secagem, guarda e movimentação?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O estoque dado em garantia pertence a quem e está conciliado fisicamente?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Recepção e classificação",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Secagem ou preparação",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Conservação e controle de estoque",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Expedição e conciliação",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Armazenagem. Guardar, preservar e disponibilizar mercadoria conforme contrato. Distinguir armazenagem agrícola a granel, depósito geral de bens embalados e cadeia fria. A evidência quantitativa recuperada refere-se a capacidade agrícola, não a todo o mercado de galpões e serviços. Margem depende de ocupação e giros, mix de serviços, consumo de energia e perdas. Manter mercadoria por mais tempo pode gerar receita de guarda e bloquear capacidade para nova safra. Capacidade estática e fluxo anual não podem ser comparados como se fossem a mesma unidade econômica. A Pesquisa de Estoques registra expansão de capacidade útil nos pontos comparáveis recuperados. O aumento nacional não elimina gargalos locais e tampouco mede o segmento refrigerado. A comparação entre extremos não é uma série anual contínua e não foi usada para calcular déficit por subtração simples da safra. Como funciona. Produtores, cooperativas, indústrias e comerciantes. A receita pode vir de ocupação, movimentação, secagem e serviços; guardar estoque próprio é economicamente diferente de cobrar pela guarda de terceiros. Silos ou galpões, balanças, secagem, energia, aeração, controle de pragas, sistemas e seguro. Capacidade nominal não prova capacidade efetiva se a recepção, secagem ou expedição é gargalo. Caixa e financiamento. Armazenador de terceiros financia operação e prazo de cobrança; comerciante proprietário do grão financia também estoque e risco de preço. Contratos e controles devem identificar titularidade, ônus e disponibilidade física antes de qualquer garantia. Ampliação de silo, secador, balança e expedição deve corrigir o gargalo demonstrado. Não assumir elegibilidade a programa direcionado nem anunciar recursos sem verificar abertura e condições atuais. Avaliação de investimento deve testar sazonalidade e capacidade licenciada. Cenários. Expansão acompanha demanda local, preservando ocupação e controles. Melhor coordenação de expedição aumenta giros e receita sem expansão equivalente. Safra local menor ou concorrente novo reduz ocupação, enquanto dívida e manutenção persistem. Na visita, pergunte: Qual gargalo impede usar a capacidade declarada? O estoque dado em garantia pertence a quem e está conciliado fisicamente? Quanto da margem depende de secagem, guarda e movimentação? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Revalidação individual: PDFs integrais IBGE confirmam 166,1 milhões de toneladas no segundo semestre de 2015 e 233,8 no segundo semestre de 2025; ambos convertem armazenagem convencional a 0,6 t/m³. Polos e limite capacidade versus ocupação conferidos. Não representa todos os armazéns logísticos."
+  },
+  {
+    "group": "transporte-logistica",
+    "topicIndex": 6,
+    "title": "Logística portuária",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Coordenar acesso, movimentação, armazenagem e embarque ou desembarque. Separar autoridade portuária, terminal arrendado ou autorizado, operador, agente marítimo e prestador logístico; não são receitas intercambiáveis.",
+      "Receita varia entre movimentação, guarda e serviços acessórios. Volume em toneladas, contêineres em TEU e quantidade de escalas respondem a questões distintas. Maior permanência pode elevar cobrança e simultaneamente reduzir capacidade e satisfação do cliente.",
+      "O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo logística portuária. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Coordenar acesso, movimentação, armazenagem e embarque ou desembarque. Separar autoridade portuária, terminal arrendado ou autorizado, operador, agente marítimo e prestador logístico; não são receitas intercambiáveis.",
+          "Armadores, importadores, exportadores e donos de carga. Ganho de volume não é suficiente quando o contrato remunera mal a movimentação ou a infraestrutura exige expansão antes da receita.",
+          "Berços, calado, guindastes, correias, pátio, mão de obra, energia e sistemas de agendamento. O elo mais lento pode estar fora do terminal, na ferrovia, acesso rodoviário ou liberação documental."
+        ],
+        "sources": [
+          {
+            "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+            "purpose": "Movimentação anual oficial, mercadorias e instalações."
+          },
+          {
+            "label": "Estatísticos Aquaviários — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/estatisticos-aquaviarios",
+            "purpose": "Repositório histórico do estatístico aquaviário."
+          },
+          {
+            "label": "Aquaviário - Geo Portal INFRA S.A.",
+            "url": "https://geoportal.infrasa.gov.br/ontl/aquaviario/",
+            "purpose": "Cobertura histórica do painel; série não integralmente extraída."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Santos é referência de movimentação entre portos públicos no balanço consultado; Santarém ilustra corredor amazônico e Porto Sudeste terminal autorizado. As referências são instalações e regimes diferentes, não ranking de empresas médias nem comparação homogênea de receita.",
+          "A ANTAQ distingue portos públicos, terminais autorizados, mercadorias e tipos de navegação. Movimento portuário não equivale a exportação líquida nem a mercado faturado pelos prestadores. A série histórica oficial existe, mas os pontos longos não foram integralmente extraídos nesta pesquisa."
+        ],
+        "sources": [
+          {
+            "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+            "purpose": "Movimentação anual oficial, mercadorias e instalações."
+          },
+          {
+            "label": "Estatísticos Aquaviários — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/estatisticos-aquaviarios",
+            "purpose": "Repositório histórico do estatístico aquaviário."
+          },
+          {
+            "label": "Aquaviário - Geo Portal INFRA S.A.",
+            "url": "https://geoportal.infrasa.gov.br/ontl/aquaviario/",
+            "purpose": "Cobertura histórica do painel; série não integralmente extraída."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Movimentação",
+            "Toneladas por carga e TEU quando pertinente",
+            "Não somar unidades incompatíveis"
+          ],
+          [
+            "Produtividade",
+            "Tempo de operação e uso de berço ou equipamento",
+            "Separar espera externa e operação"
+          ],
+          [
+            "Dwell time",
+            "Permanência e ocupação do pátio",
+            "Receita de guarda pode ocultar congestionamento"
+          ],
+          [
+            "Carteira",
+            "Volume contratado e receita por serviço",
+            "Validar mínimos, reajuste e penalidades"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+            "purpose": "Movimentação anual oficial, mercadorias e instalações."
+          },
+          {
+            "label": "Estatísticos Aquaviários — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/estatisticos-aquaviarios",
+            "purpose": "Repositório histórico do estatístico aquaviário."
+          },
+          {
+            "label": "Aquaviário - Geo Portal INFRA S.A.",
+            "url": "https://geoportal.infrasa.gov.br/ontl/aquaviario/",
+            "purpose": "Cobertura histórica do painel; série não integralmente extraída."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+            "purpose": "Movimentação anual oficial, mercadorias e instalações."
+          },
+          {
+            "label": "Estatísticos Aquaviários — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+            "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/estatisticos-aquaviarios",
+            "purpose": "Repositório histórico do estatístico aquaviário."
+          },
+          {
+            "label": "Aquaviário - Geo Portal INFRA S.A.",
+            "url": "https://geoportal.infrasa.gov.br/ontl/aquaviario/",
+            "purpose": "Cobertura histórica do painel; série não integralmente extraída."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Receita varia entre movimentação, guarda e serviços acessórios. Volume em toneladas, contêineres em TEU e quantidade de escalas respondem a questões distintas. Maior permanência pode elevar cobrança e simultaneamente reduzir capacidade e satisfação do cliente.",
+          "Operadores médios podem financiar serviços antes do aceite e pagamentos a terceiros. Um terminal com infraestrutura própria tem outra estrutura de capital. Recebíveis contestados por avaria, demora ou cobrança adicional exigem validação antes de antecipação.",
+          "Investimentos em equipamento precisam de demanda contratada e compatibilidade com prazo e condições da outorga. Prestador de serviço pode investir em sistemas e ativos móveis; não presumir acesso a estrutura financeira de concessionária de grande porte.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Localização, acesso multimodal e escala de operação"
+          ],
+          [
+            "Fraquezas",
+            "Custo fixo, dependência de infraestrutura e cliente âncora"
+          ],
+          [
+            "Oportunidades",
+            "Agendamento e integração documental reduzem espera"
+          ],
+          [
+            "Ameaças",
+            "Mudança de rota marítima, congestionamento e restrições de calado"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Infraestrutura de acesso e equipamentos limitam alternativas"
+          ],
+          [
+            "Clientes",
+            "Armadores e grandes embarcadores concentram volumes e rotas"
+          ],
+          [
+            "Rivalidade",
+            "Portos competem por hinterlândia, conexão e produtividade"
+          ],
+          [
+            "Entrantes",
+            "Capital, licenças e outorga restringem entrada em terminal"
+          ],
+          [
+            "Substitutos",
+            "Corredores terrestres podem substituir o trecho marítimo apenas quando origem, destino, carga e custo total permitem dispensá-lo; outro porto é rival, não substituto da função portuária."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda acompanha comércio e produção, com crescimento limitado pelo acesso",
+            "Movimentação; Carteira"
+          ],
+          [
+            "Favorável",
+            "Melhor produtividade libera capacidade e preserva margem sem mesma expansão física",
+            "Produtividade; Carteira"
+          ],
+          [
+            "Adverso",
+            "Desvio de rota, atraso de obra ou queda do cliente âncora deixa ativos ociosos",
+            "Dwell time; Carteira"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual parte da fila é controlável pelo operador?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "O contrato cobre investimento antes de vencer a outorga ou o acordo comercial?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quanto da receita depende de armazenagem causada por atraso do cliente?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "movimentacao-portuaria",
+        "title": "Movimentação portuária anual",
+        "unit": "bilhões de toneladas",
+        "scope": "Brasil; portos e terminais na cobertura ANTAQ. Movimentação, não receita dos operadores nem exportação líquida.",
+        "years": [
+          2024,
+          2025
+        ],
+        "period": "2024 e 2025",
+        "source": {
+          "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+          "purpose": "Balanço ANTAQ publicado em fevereiro de 2026, atualizado em novembro."
+        },
+        "method": "Valores arredondados como divulgados pela ANTAQ. Não calcular taxa exata a partir destes arredondamentos.",
+        "series": [
+          {
+            "label": "Movimentação",
+            "values": [
+              1.32,
+              1.4
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Setor aquaviário brasileiro movimentou, em 2025, 1,4 bi de toneladas — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+        "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+        "purpose": "Movimentação anual oficial, mercadorias e instalações."
+      },
+      {
+        "label": "Estatísticos Aquaviários — Agência Nacional de Transportes Aquaviários (ANTAQ)",
+        "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/publicacoes-da-antaq/estatisticos-aquaviarios",
+        "purpose": "Repositório histórico do estatístico aquaviário."
+      },
+      {
+        "label": "Aquaviário - Geo Portal INFRA S.A.",
+        "url": "https://geoportal.infrasa.gov.br/ontl/aquaviario/",
+        "purpose": "Cobertura histórica do painel; série não integralmente extraída."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual parte da fila é controlável pelo operador?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quanto da receita depende de armazenagem causada por atraso do cliente?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O contrato cobre investimento antes de vencer a outorga ou o acordo comercial?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Originação ou importação",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Acesso rodoviário, ferroviário ou hidroviário",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Terminal e armazenagem",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Navio e destino comercial",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Logística portuária. Coordenar acesso, movimentação, armazenagem e embarque ou desembarque. Separar autoridade portuária, terminal arrendado ou autorizado, operador, agente marítimo e prestador logístico; não são receitas intercambiáveis. Receita varia entre movimentação, guarda e serviços acessórios. Volume em toneladas, contêineres em TEU e quantidade de escalas respondem a questões distintas. Maior permanência pode elevar cobrança e simultaneamente reduzir capacidade e satisfação do cliente. O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real. Como funciona. Armadores, importadores, exportadores e donos de carga. Ganho de volume não é suficiente quando o contrato remunera mal a movimentação ou a infraestrutura exige expansão antes da receita. Berços, calado, guindastes, correias, pátio, mão de obra, energia e sistemas de agendamento. O elo mais lento pode estar fora do terminal, na ferrovia, acesso rodoviário ou liberação documental. Caixa e financiamento. Operadores médios podem financiar serviços antes do aceite e pagamentos a terceiros. Um terminal com infraestrutura própria tem outra estrutura de capital. Recebíveis contestados por avaria, demora ou cobrança adicional exigem validação antes de antecipação. Investimentos em equipamento precisam de demanda contratada e compatibilidade com prazo e condições da outorga. Prestador de serviço pode investir em sistemas e ativos móveis; não presumir acesso a estrutura financeira de concessionária de grande porte. Cenários. Demanda acompanha comércio e produção, com crescimento limitado pelo acesso. Melhor produtividade libera capacidade e preserva margem sem mesma expansão física. Desvio de rota, atraso de obra ou queda do cliente âncora deixa ativos ociosos. Na visita, pergunte: Qual parte da fila é controlável pelo operador? O contrato cobre investimento antes de vencer a outorga ou o acordo comercial? Quanto da receita depende de armazenagem causada por atraso do cliente? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/transporte-logistica-independent-review.json",
+    "reviewNotes": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado."
+  }
+]

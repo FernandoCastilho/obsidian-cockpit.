@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-06",
+  "supersedes": "Somente os quatro veredictos insuficientes da segunda revisão, após reforço comercial.",
+  "studies": [
+    {
+      "id": "papel-celulose:5",
+      "title": "Tubetes",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "contentHashBefore": "0b6b050193e11a8b9f9ec2c24e6f4f0cac1e600d2d7cce618a21ef49dcd127e6"
+    },
+    {
+      "id": "quimicos:0",
+      "title": "Resinas",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "contentHashBefore": "9bb8b142187a0aee6c4f6d43a8a048c623c04bc4ed4f449d727fbe1625e4bca0"
+    },
+    {
+      "id": "quimicos:3",
+      "title": "Tintas",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "contentHashBefore": "6208565ed1cafa5e26f3a5f64f3c97e023feeaf9fbe2189a1118c7f46ac2b118"
+    },
+    {
+      "id": "quimicos:4",
+      "title": "Limpeza",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "contentHashBefore": "3797b6ba7aa283df047631bd32a4d752f60c0388fb5519599e7b18a6ac3aa8ed"
+    }
+  ]
+}

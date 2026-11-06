@@ -2,6 +2,7 @@ const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const studies = require('../src/sectorStudies/studies.json')
 
 ;(async () => {
   const browser = await chromium.launch(require('./smoke-launch.cjs')())
@@ -31,7 +32,14 @@ const path = require('node:path')
         await page.reload()
         await detail.getByRole('heading', { name: 'Compensados', exact: true }).waitFor()
         assert.match(page.url(), /#setores\/topico\/base-florestal\/3$/)
-        assert.equal(await detail.locator('ol > li').count(), 8)
+        const compensados = studies.find(study => study.group === 'base-florestal' && study.topicIndex === 3)
+        if (compensados) {
+          assert.equal(await detail.locator('.sector-study').count(), 1)
+          assert.equal(await detail.locator('.study-canvas-questions > li').count(), compensados.canvasQuestions.length)
+        } else {
+          assert.equal(await detail.locator('ol > li').count(), 8)
+          assert.match(await detail.innerText(), /Estudo setorial não incluído/)
+        }
         await page.waitForFunction(() => document.activeElement?.classList.contains('central-detail'))
         // O detalhe deve ser levado ao campo visual, especialmente na tela estreita.
         const visible = await detail.evaluate(el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight })
@@ -79,13 +87,13 @@ const path = require('node:path')
         await detail.getByRole('heading', { name: 'Compensados', exact: true }).waitFor()
 
         await page.goto(base + '/#setores/agricultura')
-        const coverage = page.getByRole('region', { name: 'Notícias e comunicados · últimos 5 dias' })
-        await coverage.getByRole('status').filter({ hasText: /^Cobertura ainda não disponível:/ }).waitFor()
+        const coverage = page.getByRole('region', { name: 'Notícias da semana · Agricultura e insumos agrícolas', exact: true })
+        await coverage.getByRole('status').filter({ hasText: /^Publicações ainda não disponíveis nesta seleção\.$/ }).waitFor()
         assert.equal(await coverage.locator('.sector-news-list').count(), 0, 'não inventa notícias ausentes')
         assert.doesNotMatch(await coverage.innerText(), /Arquivo de notícias inválido|Nenhuma manchete relevante encontrada nas fontes consultadas/)
-        await coverage.getByText('Fontes consultadas e limites da cobertura', { exact: true }).click()
-        assert.equal(await coverage.getByRole('link', { name: 'Ministério da Agricultura e Pecuária', exact: true }).count(), 1)
-        assert.match(await coverage.locator('details').innerText(), /não disponível/)
+        assert.equal(await coverage.getByRole('link').count(), 0, 'fixture sem consulta bem-sucedida não atribui fontes a notícias inexistentes')
+        const dateLabel = value => new Date(value).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+        assert.equal(await coverage.locator('.sector-news-meta').first().innerText(), `Publicações de ${dateLabel(now - 120 * 3600000)} a ${dateLabel(now)}.`)
 
         await page.goto(base + '/#setores/b3/financeiro')
         await page.locator('.central-setorial > p[role="status"]').filter({ hasText: /antiga classificação B3 foi substituída/ }).waitFor()

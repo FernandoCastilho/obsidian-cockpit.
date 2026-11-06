@@ -158,7 +158,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await painel.locator('.sector-news-list > li').first().waitFor()
       assert.equal(await painel.locator('.sector-news-list > li').count(), 2, 'duas notícias do cobre em 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Preço do cobre expirado/)
-      assert.match(await painel.locator('.sector-news-meta').first().innerText(), /Janela móvel de 120 horas/)
+      assert.equal(await painel.locator('.sector-news-meta').first().innerText(), 'Publicações de 31/10/2026 a 05/11/2026.') // Frozen fixture clock; retention assertions above remain in place.
       assert.equal(await painel.getByRole('region', { name: /Preparar a visita/ }).count(), 0, 'preparação de visita removida conforme o catálogo atual')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       if (out) await p.screenshot({ path: path.join(out, `setores-${width}-cobre.png`), fullPage: true })

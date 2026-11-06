@@ -1,0 +1,12 @@
+.researched-flow .sector-chain-nodes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:0;list-style:none}.researched-flow .sector-chain-node{display:block;text-align:left;background:#d6e8ff;padding:18px;border:1px solid #b3c9e7;min-height:0;font-size:1rem;animation:sector-chain-step var(--chain-duration) linear infinite;animation-delay:calc(var(--chain-step)*1.8s)}.sector-chain-number{display:block;color:#0131ff;font-weight:750;font-size:.8rem;margin-bottom:8px}.researched-flow .sector-chain-node p{font-size:.9rem;font-weight:400;line-height:1.5;margin:8px 0 0}.sector-chain-edges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0;list-style:none}.sector-chain-edges li{border-left:3px solid #ff6200;padding:8px 12px;font-size:.9rem;line-height:1.5;background:#fff}.researched-flow[data-paused="true"] .sector-chain-node{animation-play-state:paused}.sector-study audio{display:block;width:100%;margin:12px 0}.sector-study button:focus-visible,.sector-study audio:focus-visible{outline:3px solid #0131ff;outline-offset:3px}@keyframes sector-chain-step{0%,100%{box-shadow:inset 0 0 0 4px #ff8a3d}12%,99%{box-shadow:inset 0 0 0 0 transparent}}@container(max-width:540px){.researched-flow .sector-chain-nodes,.sector-chain-edges{grid-template-columns:minmax(0,1fr)}}@media(prefers-reduced-motion:reduce){.researched-flow .sector-chain-node{animation:none}}
+.research-bar-row{grid-template-columns:72px minmax(0,1fr) 76px}.research-bar-track{position:relative;overflow:visible}.research-bar{position:absolute;top:0;border:0;max-width:100%}.research-bar-negative{background:#b34500}.research-bar-zero{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--fg);z-index:1}.research-bar-track:has(.research-bar-negative){background:var(--surface)}
+
+.research-bar-axis{display:flex;justify-content:space-between;margin:16px 86px 0 82px;font-size:.8rem;font-weight:650}@media(max-width:600px){.research-bar-axis{margin-left:78px;margin-right:82px}}
+
+/* Keep desktop presentation fitted, but preserve readable text on narrow screens. */
+.researched-flow-fullscreen > .researched-flow { transform:var(--sector-flow-transform); }
+@media (max-width:600px) {
+  .researched-flow-fullscreen { overflow-y:auto; overscroll-behavior:contain; padding:76px 12px 12px; }
+  .researched-flow-fullscreen > .researched-flow { position:relative; left:auto; top:auto; width:100%; max-width:100%; transform:none; }
+  .researched-flow-fullscreen > .tic-flow-laser-toggle { position:fixed; }
+}

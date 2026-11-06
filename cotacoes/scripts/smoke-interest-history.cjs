@@ -1,0 +1,120 @@
+// Read-only checks of Aprender's historical study. Does not visit external sources.
+const { chromium } = require('playwright')
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const path = require('node:path')
+const { pathToFileURL } = require('node:url')
+const base = (process.env.SMOKE_PUBLISHED_URL || process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768').replace(/\/$/, '')
+const output = process.env.INTEREST_HISTORY_QA_OUTPUT || 'workspace-qa/interest-history'
+const report = { scope: 'Interface, navegação, busca e links da história dos juros. Não é uma revisão das fontes externas.', results: [] }
+const normalized = text => text.replace(/\s+/g, ' ').trim()
+
+;(async () => {
+  const { CASOS_JUROS, FONTES_JUROS, CONCEITO_JUROS_FORCADOS: concept } = await import(pathToFileURL(path.join(__dirname, '../src/jurosForcados.js')).href)
+  assert.deepEqual(CASOS_JUROS.map(item => item.pais), ['Estados Unidos', 'Reino Unido e outras economias', 'Brasil', 'Japão', 'Austrália', 'Turquia'])
+  fs.mkdirSync(output, { recursive: true })
+  const browser = await chromium.launch(require('./smoke-launch.cjs')())
+  let page
+  try {
+    for (const width of [390, 1440]) {
+      const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: 'light', reducedMotion: 'reduce', serviceWorkers: 'block', permissions: [] })
+      page = await context.newPage()
+      const errors = []
+      page.on('pageerror', error => errors.push(error.message))
+      const history = page.getByRole('region', { name: 'Seis histórias, mecanismos diferentes', exact: true })
+      const contained = async label => {
+        const geometry = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth }))
+        assert.ok(geometry.document <= geometry.viewport + 1, `${label}: ${JSON.stringify(geometry)}`)
+      }
+      await page.goto(`${base}/?qa=${Date.now()}#aprender`, { waitUntil: 'domcontentloaded' })
+      await page.locator('.learn-list').waitFor()
+      const notice = page.getByRole('dialog', { name: 'Aviso', exact: true })
+      if (await notice.isVisible()) await notice.getByRole('button', { name: 'Entendi', exact: true }).click()
+      await page.evaluate(() => document.fonts.ready)
+      const localSearch = page.getByRole('searchbox', { name: 'Buscar conceito', exact: true })
+      for (const term of ['Turquia', 'Japao', 'repressao financeira', '1942', 'Austrália', 'Reino Unido', 'Copom 2012', 'controle forçado']) {
+        await localSearch.fill(term)
+        const result = page.locator('.learn-list li button').filter({ hasText: concept.nome })
+        await result.waitFor()
+        assert.equal(await result.count(), 1, `busca local: ${term}`)
+      }
+      await page.locator('.learn-list li button').filter({ hasText: concept.nome }).click()
+      await history.waitFor()
+      assert.match(page.url(), /#aprender\/juros-forcados$/)
+      assert.equal(await page.locator('.learn-detail').evaluate(element => element === document.activeElement), true, 'foco na explicação após seleção')
+      await page.getByRole('button', { name: 'Limpar busca', exact: true }).click()
+      assert.match(await page.locator('.learn-count').innerText(), /27 conceitos em 7 tópicos/)
+      assert.equal(await history.locator('.learn-history-case').count(), 6)
+      assert.equal(await history.locator('.learn-history-case[open]').count(), 0)
+      assert.equal(normalized(await history.locator('.learn-history-scope').innerText()), normalized(concept.estudoHistorico.escopo))
+      await contained('história recolhida')
+      await history.screenshot({ path: path.join(output, `${width}-overview.png`) })
+
+      for (const [index, expected] of CASOS_JUROS.entries()) {
+        const item = history.locator('.learn-history-case').nth(index)
+        const summary = item.locator('summary')
+        assert.equal(await summary.locator('strong').innerText(), expected.pais)
+        assert.match(await summary.innerText(), new RegExp(expected.periodo))
+        await summary.scrollIntoViewIfNeeded()
+        const box = await summary.boundingBox()
+        assert.ok(box && box.height >= 44 && box.width >= 44, `${expected.id}: área de toque`)
+        await summary.focus()
+        await page.keyboard.press('Enter')
+        await item.locator('.learn-history-takeaway').waitFor()
+        assert.equal(await item.evaluate(element => element.open), true, `${expected.id}: abre pelo teclado`)
+        assert.deepEqual(await item.locator('h4').allTextContents(), ['O contexto', 'Como seguraram os juros', 'O que aconteceu', 'O que a história não prova'])
+        const body = normalized(await item.innerText())
+        for (const field of ['contexto', 'mecanismo', 'resultado', 'limite']) assert.ok(body.includes(normalized(expected[field])), `${expected.id}: ${field} completo`)
+        assert.deepEqual(await item.locator('.learn-history-timeline li').allTextContents(), expected.marcos)
+        const sourceLinks = await item.locator('.learn-history-sources a').evaluateAll(elements => elements.map(element => ({ href: element.href, target: element.target, rel: element.rel })))
+        assert.deepEqual(sourceLinks.map(link => link.href), expected.fontes.map(id => FONTES_JUROS[id].url))
+        assert.ok(sourceLinks.every(link => link.target === '_blank' && /\bnoopener\b/.test(link.rel)), `${expected.id}: fontes externas seguras`)
+        const horizontalOverflow = await item.evaluate(element => [...element.querySelectorAll('p, li, a')].some(child => child.scrollWidth > child.clientWidth + 1 && getComputedStyle(child).display !== 'inline'))
+        assert.equal(horizontalOverflow, false, `${expected.id}: texto sem corte lateral`)
+        await contained(expected.id)
+        await item.screenshot({ path: path.join(output, `${width}-${expected.id}.png`) })
+        await summary.click()
+        await item.locator('.learn-history-takeaway').waitFor({ state: 'hidden' })
+        assert.equal(await item.evaluate(element => element.open), false, `${expected.id}: fecha pelo toque/clique`)
+      }
+      assert.equal(await history.locator('.learn-history-comparison > section').count(), 4)
+      assert.deepEqual(await history.locator('.learn-history-comparison h4').allTextContents(), concept.estudoHistorico.comparacao.map(item => item.titulo))
+      assert.equal(await history.locator('.learn-history-comparison + h3 + ul > li').count(), 6)
+      await history.locator('.learn-history-comparison').screenshot({ path: path.join(output, `${width}-comparison.png`) })
+      await contained('comparação histórica')
+
+      await page.goBack()
+      await page.waitForURL(/#aprender$/)
+      await history.waitFor({ state: 'hidden' })
+      await page.goForward()
+      await page.waitForURL(/#aprender\/juros-forcados$/)
+      await history.waitFor()
+      await page.reload({ waitUntil: 'domcontentloaded' })
+      await history.waitFor()
+      assert.equal(await history.locator('.learn-history-case').count(), 6, 'rota direta funciona após recarregar')
+      await page.keyboard.press('Control+Shift+F')
+      const dialog = page.getByRole('dialog', { name: 'Buscar no painel', exact: true })
+      await dialog.waitFor()
+      await dialog.getByRole('searchbox').fill('YCC')
+      const globalResult = dialog.getByRole('region', { name: 'Resultados em Aprender' }).getByRole('button').filter({ hasText: concept.nome })
+      await globalResult.waitFor()
+      assert.equal(await globalResult.count(), 1, 'busca global encontra conteúdo interno do estudo')
+      await dialog.screenshot({ path: path.join(output, `${width}-global-search.png`) })
+      await globalResult.click()
+      await dialog.waitFor({ state: 'hidden' })
+      await history.waitFor()
+      assert.match(page.url(), /#aprender\/juros-forcados$/)
+      assert.deepEqual(errors, [])
+      report.results.push({ width, cases: 6, localQueries: 8, globalQuery: 'YCC', keyboardAndPointer: true, navigation: ['selection', 'back', 'forward', 'reload', 'global-search'], errors })
+      await context.close()
+      console.log(`PASS história dos juros ${width}: seis casos, busca local/global, teclado, links, navegação e capturas`)
+    }
+  } catch (error) {
+    report.failure = error.stack
+    if (page && !page.isClosed()) await page.screenshot({ path: path.join(output, 'failure.png'), fullPage: true }).catch(() => {})
+    throw error
+  } finally {
+    fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify(report, null, 2))
+    await browser.close()
+  }
+})().catch(error => { console.error(error); process.exitCode = 1 })

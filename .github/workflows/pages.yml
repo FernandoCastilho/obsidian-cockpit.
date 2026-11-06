@@ -53,6 +53,8 @@ jobs:
         run: node scripts/preserve-for-trends.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"
       - name: Testes (parsers e lógica)
         run: npm test
+      - name: Validar lote documental sem áudio conforme publicação autorizada
+        run: node scripts/validate-sector-release.mjs --require-audio --allow-no-audio
       - name: Atualizar Focus semanal preservando os demais dados publicados
         if: github.event.schedule == '30 11 * * 1,2'
         run: node scripts/refresh-scenarios.mjs "$RUNNER_TEMP/weekly-data-snapshot.json"

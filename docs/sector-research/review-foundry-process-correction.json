@@ -1,0 +1,23 @@
+{
+  "accessDate": "2026-11-06",
+  "study": "metalmecanico-0",
+  "finding": "A versão anterior agrupava areia com a carga metálica destinada à fusão. Erro factual identificado em revisão editorial posterior; revisão documental anterior não o detectou.",
+  "correctivePrinciple": "Separar carga metálica fundida de areia usada em moldagem/macharia. Vazamento une metal líquido ao molde; acabamento remove areia e rebarbas, seguido de controle de qualidade.",
+  "source": {
+    "url": "https://ri.tupy.com.br/nossos-processos/manufatura-e-usinagem/",
+    "type": "Fonte empresarial primária de processo",
+    "verification": "Página integral, seções Fusão, Macharia, Moldagem, Vazamento e Acabamento.",
+    "uiDisplay": false
+  },
+  "status": "Correção aplicada pela coordenação e conferida no artefato; aprovação documental de metalmecanico-0 mantida após correção.",
+  "artifactSha256": "b369ca654d84d86742834fab3ba18284158ee8378b2322c80a6f7407fb09c36b",
+  "locationsChecked": {
+    "summary": 1,
+    "sections": 1,
+    "transcript": 2,
+    "diagram": 1
+  },
+  "newNumbers": false,
+  "otherStudiesModifiedByReviewer": false,
+  "sourceCapture": "Full source capture retained locally; not redistributed."
+}

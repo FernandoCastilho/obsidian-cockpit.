@@ -1,0 +1,607 @@
+{
+  "numericItems": [
+    {
+      "study": 2,
+      "location": "chart:acessos-fixos",
+      "value": 52.5,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2024",
+      "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 2,
+      "location": "chart:acessos-fixos",
+      "value": 53.9,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2025",
+      "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 7,
+      "location": "chart:acessos-fixos",
+      "value": 52.5,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2024",
+      "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 7,
+      "location": "chart:acessos-fixos",
+      "value": 53.9,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2025",
+      "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 7,
+      "location": "chart:acessos-moveis",
+      "value": 263.4,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2024",
+      "scope": "Estoque em dezembro; pode incluir mais de uma linha por pessoa. Não somar aos fixos como usuários.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 7,
+      "location": "chart:acessos-moveis",
+      "value": 270.2,
+      "unit": "milhões de acessos",
+      "period": "dezembro 2025",
+      "scope": "Estoque em dezembro; pode incluir mais de uma linha por pessoa. Não somar aos fixos como usuários.",
+      "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+      "sourcePublication": "2026-01-02 (página original; atualizada2026-10-27; republicação AgênciaGov2026-02-04)",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MCom e republicação Agência Gov l28/31; conferido pelo autor, pendente auditor"
+    },
+    {
+      "study": 1,
+      "location": "indicadores",
+      "value": 186,
+      "unit": "comunicações de incidentes",
+      "period": "2021",
+      "scope": "Processos comunicados à ANPD, não todos os ataques",
+      "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+      "sourcePublication": null,
+      "accessedAt": "2026-11-06",
+      "verification": "Página resultados da fiscalização texto integral; séries de vintages diferentes, não calcular crescimento"
+    },
+    {
+      "study": 1,
+      "location": "indicadores",
+      "value": 275,
+      "unit": "comunicações de incidentes",
+      "period": "2022",
+      "scope": "Processos comunicados à ANPD, não todos os ataques",
+      "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+      "sourcePublication": null,
+      "accessedAt": "2026-11-06",
+      "verification": "Página resultados da fiscalização texto integral; séries de vintages diferentes, não calcular crescimento"
+    },
+    {
+      "study": 1,
+      "location": "indicadores",
+      "value": 352,
+      "unit": "comunicações de incidentes",
+      "period": "2023",
+      "scope": "Processos comunicados à ANPD, não todos os ataques",
+      "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+      "sourcePublication": null,
+      "accessedAt": "2026-11-06",
+      "verification": "Página resultados da fiscalização texto integral; séries de vintages diferentes, não calcular crescimento"
+    },
+    {
+      "study": 1,
+      "location": "indicadores",
+      "value": 362,
+      "unit": "comunicações de incidentes",
+      "period": "2025",
+      "scope": "Processos comunicados à ANPD, não todos os ataques",
+      "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/auditoria/relatorio-integrado-de-gestao-anpd-2025.pdf/@@display-file/file",
+      "sourcePublication": null,
+      "accessedAt": "2026-11-06",
+      "verification": "Relatório2025 p82 texto e pixels"
+    },
+    {
+      "study": 6,
+      "location": "indicadores",
+      "value": 52,
+      "unit": "pedidos/processos",
+      "period": "até junho2025",
+      "scope": "total processos; acesso à Rede Básica no Brasil",
+      "url": "https://www.gov.br/mme/pt-br/assuntos/noticias/2023-2026/conexao-de-data-centers-a-rede-eletrica-supera-50-pedidos-segundo-mme",
+      "sourcePublication": "2025-06-27",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MME, linhas357–359; pendente independente"
+    },
+    {
+      "study": 6,
+      "location": "indicadores",
+      "value": 18,
+      "unit": "pedidos/processos",
+      "period": "até junho2025",
+      "scope": "alternativa reconhecida por portaria; acesso à Rede Básica no Brasil",
+      "url": "https://www.gov.br/mme/pt-br/assuntos/noticias/2023-2026/conexao-de-data-centers-a-rede-eletrica-supera-50-pedidos-segundo-mme",
+      "sourcePublication": "2025-06-27",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MME, linhas357–359; pendente independente"
+    },
+    {
+      "study": 6,
+      "location": "indicadores",
+      "value": 34,
+      "unit": "pedidos/processos",
+      "period": "até junho2025",
+      "scope": "em análise; acesso à Rede Básica no Brasil",
+      "url": "https://www.gov.br/mme/pt-br/assuntos/noticias/2023-2026/conexao-de-data-centers-a-rede-eletrica-supera-50-pedidos-segundo-mme",
+      "sourcePublication": "2025-06-27",
+      "accessedAt": "2026-11-06",
+      "verification": "Texto integral MME, linhas357–359; pendente independente"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 0.1,
+      "unit": "%",
+      "period": "dezembro 2016",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 2.0,
+      "unit": "%",
+      "period": "dezembro 2017",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 6.7,
+      "unit": "%",
+      "period": "dezembro 2018",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 13.0,
+      "unit": "%",
+      "period": "dezembro 2019",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 8.3,
+      "unit": "%",
+      "period": "dezembro 2020",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 24.8,
+      "unit": "%",
+      "period": "dezembro 2021",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 16.6,
+      "unit": "%",
+      "period": "dezembro 2022",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 4.7,
+      "unit": "%",
+      "period": "dezembro 2023",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 7.9,
+      "unit": "%",
+      "period": "dezembro 2024",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 12.4,
+      "unit": "%",
+      "period": "dezembro 2025",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 131.87832,
+      "unit": "Número-índice",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Número-índice (2022=100)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 136.32049,
+      "unit": "Número-índice",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Número-índice com ajuste sazonal (2022=100)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 0.8,
+      "unit": "%",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação mês/mês imediatamente anterior, com ajuste sazonal (M/M-1)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 3.7,
+      "unit": "%",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação mês/mesmo mês do ano anterior (M/M-12)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 8.4,
+      "unit": "%",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 5,
+      "location": "PMS chart/current",
+      "value": 9.6,
+      "unit": "%",
+      "period": "agosto 2026",
+      "scope": "2.1.2 Serviços de Tecnologia da Informação; Índice de volume de serviços; PMS - Variação acumulada em 12 meses (em relação ao período anterior de 12 meses)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw retained in evidence/pms-ti-annual.json and pms-ti-current.json; pending independent"
+    },
+    {
+      "study": 1,
+      "location": "cyber-gasto chart/text/transcript",
+      "value": 13.4,
+      "unit": "R$ bilhões nominais",
+      "period": "2023",
+      "scope": "Gastos Brasil hardware software serviços; histórico estimado setorial",
+      "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+      "sourcePublication": "outubro2026",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF baixado evidence/cyber-brasscom-2026.pdf; p7 pdftotext e render pixels conferidos; pending independent"
+    },
+    {
+      "study": 1,
+      "location": "cyber-gasto chart/text/transcript",
+      "value": 17.8,
+      "unit": "R$ bilhões nominais",
+      "period": "2024",
+      "scope": "Gastos Brasil hardware software serviços; histórico estimado setorial",
+      "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+      "sourcePublication": "outubro2026",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF baixado evidence/cyber-brasscom-2026.pdf; p7 pdftotext e render pixels conferidos; pending independent"
+    },
+    {
+      "study": 1,
+      "location": "cyber-gasto chart/text/transcript",
+      "value": 22.2,
+      "unit": "R$ bilhões nominais",
+      "period": "2025",
+      "scope": "Gastos Brasil hardware software serviços; histórico estimado setorial",
+      "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+      "sourcePublication": "outubro2026",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF baixado evidence/cyber-brasscom-2026.pdf; p7 pdftotext e render pixels conferidos; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 493,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "São Paulo",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 148,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Santiago",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 994,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Frankfurt",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 1104,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Londres",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 3046,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Virgínia do Norte",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 700,
+      "unit": "MW",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Brasil estimado",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 6,
+      "location": "indicadores/market chart",
+      "value": 80,
+      "unit": "instalações",
+      "period": "levantamento citado setembro2025; corte exato não explícito",
+      "scope": "Brasil instalações",
+      "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+      "accessedAt": "2026-11-06",
+      "verification": "PDF texto p175/p178; origens distintas para total Brasil e mercados; não dividir; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -3.4,
+      "unit": "%",
+      "period": "dezembro 2016",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -2.8,
+      "unit": "%",
+      "period": "dezembro 2017",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -2.6,
+      "unit": "%",
+      "period": "dezembro 2018",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -0.9,
+      "unit": "%",
+      "period": "dezembro 2019",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -3.4,
+      "unit": "%",
+      "period": "dezembro 2020",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -0.2,
+      "unit": "%",
+      "period": "dezembro 2021",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": -6.7,
+      "unit": "%",
+      "period": "dezembro 2022",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": 3.5,
+      "unit": "%",
+      "period": "dezembro 2023",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": 4.8,
+      "unit": "%",
+      "period": "dezembro 2024",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "telecom-volume-anual",
+      "value": 0.4,
+      "unit": "%",
+      "period": "dezembro 2025",
+      "scope": "2.1.1 Telecomunicações; Índice de volume de serviços; PMS - Variação acumulada no ano (em relação ao mesmo período do ano anterior)",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "API raw evidence/pms-telecom-annual.json; pending independent"
+    },
+    {
+      "study": 7,
+      "location": "conjuntura",
+      "value": 2.8,
+      "unit": "%",
+      "period": "janeiro–agosto2026",
+      "scope": "volume telecom PMS, comparação mesmo período anterior",
+      "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/39321/c11046/56726",
+      "accessedAt": "2026-11-06",
+      "verification": "evidence/pms-all-current.json; pending independent"
+    }
+  ],
+  "notes": [
+    "Datas editoriais e horizonte 12–24 meses são metadados e hipóteses, não dados observados.",
+    "Repetições em resumo/transcrição e gráficos referem aos mesmos itens; os valores de acessos são repetidos em dois estudos sem somar recortes.",
+    "ANPD relatório baixado e pdftotext, página82 renderizada e verificada. PDF local evidence/anpd-2025.pdf.",
+    "BNDES/Etice/Recife foram encontrados em indexação pública; auditor deve abrir fonte integral antes aprovar afirmações materiais.",
+    "Consulta Nuvem3.0 requereu login; não contornei. Usada consulta pública distinta histórica.",
+    "ANATEL notícias de2026 e de2022 receberam captcha/401; não contornei, não publiquei números desses trechos.",
+    "PMS taxa8,4% agosto2026 encontrada somente em imprensa, omitida.",
+    "Anuário IBGE PDF recebeu403; não contornei."
+  ],
+  "status": "pending-independent-review",
+  "materialAdditions": [
+    {
+      "source": {
+        "label": "Soow Sigma · portfólio público",
+        "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+        "purpose": "Autodescrição pública lida em06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+      },
+      "verification": "Página integral aberta em06/11/2026; sem números publicados a partir destas fontes."
+    },
+    {
+      "source": {
+        "label": "Logicalis · serviços gerenciados",
+        "url": "https://www.la.logicalis.com/pt-br/solucoes-e-servicos/por-servico/servicos-gerenciados",
+        "purpose": "Portfólio público lido em06/11/2026. Exemplo, sem ranking e sem equivalência de porte."
+      },
+      "verification": "Página integral aberta em06/11/2026; sem números publicados a partir destas fontes."
+    },
+    {
+      "source": {
+        "label": "BNDES · plataforma PD Case",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-apoia-desenvolvimento-de-plataforma-com-IA-voltada-ao-segmento-financeiro/",
+        "purpose": "Notícia de05/09/2025 sobre projeto aprovado. Não significa produto já concluído, benefício disponível ou condições replicáveis."
+      },
+      "verification": "Página integral aberta em06/11/2026; sem números publicados a partir destas fontes."
+    }
+  ]
+}
