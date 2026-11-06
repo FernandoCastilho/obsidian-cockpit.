@@ -93,9 +93,22 @@ async function assertHelp(page, section, label, directory) {
   const dialog = page.getByRole('dialog', { name: title, exact: true })
   await dialog.waitFor()
   assert.equal(await dialog.evaluate(element => element.matches(':modal')), true, `${label}: clique abre ajuda modal`)
+  assert.equal(await dialog.evaluate(element => element === document.activeElement || element.contains(document.activeElement)), true, `${label}: ajuda recebe o foco`)
+  // Native showModal makes the page inert without adding an inert attribute.
+  // Prove that even a direct focus request cannot reach the background.
+  assert.equal(await section.locator('.cx-back').first().evaluate(element => { element.focus(); return element === document.activeElement }), false, `${label}: fundo modal recusa foco`)
   for (const key of ['Tab', 'Tab', 'Shift+Tab']) {
     await page.keyboard.press(key)
-    assert.equal(await dialog.evaluate(element => element === document.activeElement || element.contains(document.activeElement)), true, `${label}: foco permanece na ajuda`)
+    const focus = await dialog.evaluate(element => ({ inside: element === document.activeElement || element.contains(document.activeElement), body: document.activeElement === document.body, modal: element.matches(':modal') }))
+    assert.equal(focus.modal, true, `${label}: ajuda permanece modal`)
+    assert.ok(focus.inside || focus.body, `${label}: Tab não alcança um controle do fundo`)
+    assert.equal(await section.locator(':focus').count(), 0, `${label}: nenhum controle de fundo está focado`)
+    // Chromium exposes body while focus passes through browser chrome.
+    // The following Tab must return to this dialog, never to the form.
+    if (focus.body) {
+      await page.keyboard.press('Tab')
+      assert.equal(await dialog.evaluate(element => element === document.activeElement || element.contains(document.activeElement)), true, `${label}: Tab seguinte retorna à ajuda`)
+    }
   }
   await page.screenshot({ path: path.join(directory, `${label}-help.png`) })
   await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' })
@@ -144,10 +157,13 @@ async function fillScenario(page, section, route) {
     assert.match(await row.locator('.fi-cost').first().innerText(), /4\.200,00/)
     assert.match(await row.locator('td').nth(2).innerText(), /^R\$\s*1\.000,00$/)
   } else if (route === 'bndes-selic-lcd') {
-    for (const [id, value] of [['principal', '100000'], ['contract', '2026-11-04'], ['release', '2026-11-05'], ['selic', '14'], ['ld1', '0,5'], ['fixing', '2026-11-04'], ['source', 'Contrato de teste QA'], ['bndes', '1'], ['intermediation', '0'], ['agent', '2'], ['schedule', '2026-12-05; 21; C\n2027-01-05; 22; A\n2027-02-05; 23; A'], ['schedule-source', 'Cronograma de teste QA']]) await page.locator(`#lcd-${id}`).fill(value)
+    for (const [id, value] of [['principal', '100000'], ['contract', '2026-11-04'], ['release', '2026-11-05'], ['selic', '14'], ['ld1', '0,5'], ['fixing', '2026-11-04'], ['source', 'Contrato de teste QA'], ['bndes', '1'], ['intermediation', '0'], ['agent', '2'], ['schedule', '2026-12-07; 21; C\n2027-01-05; 20; A\n2027-02-05; 23; A'], ['schedule-source', 'Cronograma sintético QA, vencimentos úteis ajustados']]) await page.locator(`#lcd-${id}`).fill(value)
     for (const checkbox of await section.getByRole('checkbox').all()) await checkbox.check()
-    await section.locator('.lcd-table').waitFor()
+    try { await section.locator('.lcd-table').waitFor({ timeout: 5000 }) } catch (error) {
+      throw new Error(`Cenário LCD não calculou: ${(await section.locator('[role=status], [role=alert]').allInnerTexts()).map(normalize).join(' | ')}`, { cause: error })
+    }
     assert.equal(await section.locator('.lcd-table tbody tr').count(), 3)
+    assert.match(await section.locator('.lcd-table tbody tr').last().locator('td').last().innerText(), /^R\$\s*0,00$/)
   } else if (route === 'finame-materiais') {
     await section.locator('.fm-grade').waitFor()
     assert.equal(await section.locator('.fm-tabela tbody tr:not(.fm-liberacao)').count(), 60)
@@ -174,7 +190,7 @@ async function fillScenario(page, section, route) {
           await assertWorkspace(page, section, `${route} ${width}`)
           await page.screenshot({ path: path.join(directory, `${route}-initial.png`), fullPage: true })
           await fillScenario(page, section, route)
-          await page.locator('main.app').click({ position: { x: 2, y: 2 } })
+          await section.locator('.cx-back').first().focus()
           await page.evaluate(() => window.scrollTo(0, 0))
           await settleLayout(page)
           await assertWorkspace(page, section, `${route} preenchida ${width}`)

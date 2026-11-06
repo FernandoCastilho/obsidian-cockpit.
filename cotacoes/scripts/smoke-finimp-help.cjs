@@ -24,10 +24,18 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
       const dialog=p.getByRole('dialog',{name:title,exact:true});await dialog.waitFor()
       assert.equal(await dialog.evaluate(el=>el.matches(':modal')),true)
       assert.equal(await dialog.evaluate(el=>el.contains(document.activeElement)),true)
+      assert.equal(await p.locator('#fi-principal').evaluate(el=>{el.focus();return el===document.activeElement}),false,'página inerte recusa foco no formulário de fundo')
       const box=await dialog.boundingBox();assert.ok(box.x>=0&&box.x+box.width<=width+1&&box.y>=0&&box.y+box.height<=900)
       for(const key of ['Tab','Tab','Shift+Tab']){
         await p.keyboard.press(key)
-        assert.equal(await dialog.evaluate(el=>el===document.activeElement||el.contains(document.activeElement)),true,'foco contido na ajuda modal')
+        const focus=await dialog.evaluate(el=>({inside:el===document.activeElement||el.contains(document.activeElement),body:document.activeElement===document.body,modal:el.matches(':modal')}))
+        assert.equal(focus.modal,true)
+        assert.ok(focus.inside||focus.body,'Tab não alcança um controle do fundo')
+        assert.equal(await section.locator(':focus').count(),0,'nenhum controle do formulário de fundo está focado')
+        if(focus.body){
+          await p.keyboard.press('Tab')
+          assert.equal(await dialog.evaluate(el=>el===document.activeElement||el.contains(document.activeElement)),true,'Tab seguinte retorna do chrome do navegador à ajuda')
+        }
       }
       await p.screenshot({path:`${out}/${title.replace(/[^\p{L}\d]/gu,'-')}-${width}.png`})
       await p.keyboard.press('Escape');await dialog.waitFor({state:'hidden'})
