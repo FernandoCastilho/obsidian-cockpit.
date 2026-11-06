@@ -56,6 +56,16 @@ jobs:
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
+      - name: Conferir estudo histórico de controle de juros em três larguras
+        run: JUROS_QA_OUTPUT="$RUNNER_TEMP/qa-juros" node scripts/smoke-aprender-juros.cjs
+      - name: Capturas e relatório do estudo de juros
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-juros-design
+          path: ${{ runner.temp }}/qa-juros
+          if-no-files-found: error
+          retention-days: 7
       - name: Conferir largura, ajudas e fluxos das seis calculadoras
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
       - name: Capturas da revisão das calculadoras
