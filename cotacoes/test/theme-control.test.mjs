@@ -86,3 +86,10 @@ test('narrow section headers let long titles wrap without shrinking theme target
   const fixture = await readFile(new URL('./fixtures/theme-responsive.html', import.meta.url), 'utf8')
   assert.match(fixture, /data-route="setores"/)
 })
+
+test('compact desktop keeps the full brand on two lines without reducing type or controls', async () => {
+  const css = await readFile(new URL('../src/ThemeControl.css', import.meta.url), 'utf8')
+  assert.doesNotMatch(css, /\.topbar-brand span\s*\{\s*display:none/)
+  assert.match(css, /@media\s*\(min-width:1000px\) and \(max-width:1199px\)\s*\{\s*\.topbar:has\(\.theme-control\) \.topbar-brand\s*\{[^}]*flex:none;[^}]*flex-direction:column;[^}]*justify-content:center;[^}]*gap:0;[^}]*line-height:1\.15;/)
+  assert.match(css, /\.theme-control \.theme-trigger\s*\{[^}]*width:44px;[^}]*min-width:44px;[^}]*height:44px;/)
+})

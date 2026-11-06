@@ -15,8 +15,10 @@
 }
 @media print { .theme-control { display:none; } }
 
-/* Leave enough room for every section at the compact desktop breakpoint. */
-@media (min-width:1000px) and (max-width:1199px) { .topbar:has(.theme-control) .topbar-brand span { display:none; } }
+/* Keep the complete brand and all sections beside the 44px theme control. */
+@media (min-width:1000px) and (max-width:1199px) {
+  .topbar:has(.theme-control) .topbar-brand { flex:none; flex-direction:column; justify-content:center; gap:0; line-height:1.15; }
+}
 
 /* Long section names must yield space to the three 44px mobile controls. */
 @media (max-width:999px) {

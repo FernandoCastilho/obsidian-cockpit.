@@ -70,3 +70,29 @@ test('CI connects browser loops, alongamento, reports and always-uploaded matrix
   assert.match(workflow, /Capturas de tela dos smokes\n\s+if: always\(\)[\s\S]*?\$\{\{ runner\.temp \}\}\/qa-universal/)
   assert.ok(workflow.indexOf('verify-smoke-matrix.cjs') < workflow.indexOf('name: Capturas de tela dos smokes'))
 })
+
+test('browser assertions wait for shared portals and select the intended help preview', () => {
+  for (const file of ['smoke-researched-sectors', 'smoke-tic-animation']) {
+    const script = source(`../scripts/${file}.cjs`)
+    const wait = script.indexOf("getByRole('button', { name: 'Laser pointer: riscar a tela', exact: true }).waitFor()")
+    assert.ok(wait >= 0, file)
+    assert.ok(wait < script.indexOf("locator('button:visible').count()"), `${file}: wait before instantaneous count`)
+  }
+  const theme = source('../scripts/smoke-theme.cjs')
+  assert.match(theme, /help\.getAttribute\('aria-describedby'\)/)
+  assert.match(theme, /\[role="tooltip"\]\[id="\$\{previewId\}"\]/)
+  assert.doesNotMatch(theme, /page\.getByRole\('tooltip'\)\.waitFor/)
+  const calculator = source('../scripts/smoke-calculadora.cjs')
+  assert.match(calculator, /\['Nº', 'Data ilustrativa', 'Saldo inicial'/)
+})
+
+test('CI measures compact desktop branding and both amortization choices instead of hiding text', () => {
+  const bndes = source('../scripts/smoke-bndes.cjs'), alongamento = source('../scripts/smoke-alongamento.cjs')
+  assert.match(bndes, /\[1000, 1024, 1100, 1199, 1299\]/)
+  assert.match(bndes, /topbar-geometry\.json/)
+  assert.match(bndes, /geometry\.theme\.width >= 43\.9 && geometry\.theme\.height >= 43\.9/)
+  assert.match(alongamento, /await assertSelections\('price'\)/)
+  assert.match(alongamento, /await assertSelections\('sac'\)/)
+  assert.match(alongamento, /alongamento-selections\.json/)
+  assert.match(alongamento, /control\.width < control\.required/)
+})

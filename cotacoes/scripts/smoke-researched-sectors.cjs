@@ -219,6 +219,8 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       await diagram.getByRole('button', { name: 'Maximizar diagrama' }).click()
       const modal = page.getByRole('dialog', { name: 'Diagrama em tela cheia' })
       await modal.waitFor()
+      // The shared laser portal follows the newly visible host on the next frame.
+      await modal.getByRole('button', { name: 'Laser pointer: riscar a tela', exact: true }).waitFor()
       assert.equal(await modal.locator('button:visible').count(), 1)
       const expandedDiagram = modal.locator('.researched-flow')
       const bounds = await expandedDiagram.boundingBox()
