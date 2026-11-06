@@ -72,7 +72,7 @@ main.app.app-calculators {
 .cx .cx-rate > input { flex:1 1 150px; width:0; }
 .cx .seg { min-height:46px; border-radius:8px; max-width:100%; }
 .cx .seg button { min-height:44px; padding:8px 12px; font-size:.8125rem; }
-.cx .seg button[aria-pressed=true] { color:var(--amber, #ffb000); }
+.cx .seg button[aria-pressed=true] { color:#000; }
 .cx .cx-iof { padding-top:14px; }
 .cx .cx-iof summary { font-size:.875rem; }
 .cx .cx-iof-fields { margin-top:12px; gap:18px 24px; }

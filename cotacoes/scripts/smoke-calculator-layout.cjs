@@ -56,6 +56,20 @@ async function assertWorkspace(page, section, label) {
   const checkboxes = await section.locator('input[type=checkbox]').evaluateAll(elements => elements.filter(element => element.getClientRects().length).map(element => ({ label: element.closest('label')?.textContent.trim(), height: element.closest('label')?.getBoundingClientRect().height || 0 })))
   assert.deepEqual(checkboxes.filter(control => control.height < 43.9), [], `${label}: checkbox possui rótulo com área de toque acessível`)
 
+  const selectedContrast = await section.locator('.seg button[aria-pressed="true"]').evaluateAll(buttons => buttons.map(button => {
+    const style = getComputedStyle(button)
+    const luminance = color => {
+      const channels = color.match(/[\d.]+/g).slice(0, 3).map(Number).map(value => {
+        const channel = value / 255
+        return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+      })
+      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722
+    }
+    const foreground = luminance(style.color), background = luminance(style.backgroundColor)
+    return { text: button.textContent.trim(), ratio: (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05) }
+  }))
+  assert.deepEqual(selectedContrast.filter(button => button.ratio < 4.5), [], `${label}: texto selecionado legível sobre seu fundo`)
+
   // Tables may be wider than the viewport only when a local scrolling region contains them.
   const escapedTables = await section.locator('table').evaluateAll(tables => tables.filter(table => {
     const box = table.getBoundingClientRect()
