@@ -35,6 +35,10 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
   const offline = async (p) => { await p.route('**/*', (r) => r.request().url().startsWith(base) ? r.continue() : r.abort()); return p }
   const openPage = async (options) => offline(await b.newPage(options))
   try {
+    const { FONTES } = await import('../src/governanca.js')
+    assert.equal(new Set(FONTES.map((fonte) => fonte.id)).size, FONTES.length, 'catálogo não duplica fonte por id')
+    const expectedSources = FONTES.map((fonte) => fonte.nome)
+    assert.equal(new Set(expectedSources).size, expectedSources.length, 'catálogo não duplica nome de fonte')
     // aviso de entrada: aparece a cada abertura do app, fecha com o botão e não volta ao trocar de aba
     for (const width of [390, 1280]) {
       const ctx = await b.newContext({ viewport: { width, height: 800 }, serviceWorkers: 'block' })
@@ -111,7 +115,10 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 21, 'uma linha por fonte')
+      const sourceNames = (await gov.locator('.config-gov tbody tr > th[scope="row"]').allTextContents()).map((name) => name.trim())
+      assert.deepEqual(sourceNames, expectedSources, 'uma linha para cada fonte do catálogo, sem omissões ou duplicatas')
+      assert.equal(new Set(sourceNames).size, sourceNames.length, 'cada fonte aparece uma única vez na tabela')
+      assert.match(await gov.locator('.config-gov tbody tr', { has: p.getByRole('rowheader', { name: 'Google Trends: Em alta no Brasil', exact: true }) }).innerText(), /RSS oficial[\s\S]*08h e 15h[\s\S]*25 h/)
       assert.match(await gov.locator('.config-gov tbody tr',{hasText:'Veículos pesados'}).innerText(),/ANFAVEA[\s\S]*1080 h/i)
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)

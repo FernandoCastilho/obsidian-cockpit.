@@ -14,6 +14,12 @@ const id = '2026-11-05:USD:alta'
   const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
   const out = process.env.SMOKE_OUT || path.join(process.cwd(), 'qa-output', 'alerta')
   await mkdir(out, { recursive: true })
+  const capture = async (p, name) => {
+    // Captura a partir do topo: o cabeçalho fixo não deve cobrir a faixa após cliques que rolam a página.
+    await p.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }))
+    await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    await p.screenshot({ path: path.join(out, name), fullPage: true })
+  }
   const start = async (width, permission = 'default', fail = false) => {
     const ctx = await b.newContext({ viewport: { width, height: 850 }, serviceWorkers: 'block' })
     await ctx.addInitScript(({ permission, fail }) => {
@@ -66,7 +72,7 @@ const id = '2026-11-05:USD:alta'
       let s = await start(width)
       await s.checkBanner()
       assert.equal((await s.ledger()).attempts, 0)
-      await s.p.screenshot({ path: path.join(out, `alerta-${width}-permissao-pendente.png`), fullPage: true })
+      await capture(s.p, `alerta-${width}-permissao-pendente.png`)
       await s.enter(true); await s.checkBanner()
       assert.equal((await s.ledger()).attempts, 0)
       await s.p.getByRole('button', { name: 'Permitir notificações de câmbio' }).click()
@@ -98,7 +104,7 @@ const id = '2026-11-05:USD:alta'
       await s.p.evaluate(() => { window.qaNotification.patch({ permission: 'denied' }); window.dispatchEvent(new Event('focus')) })
       await s.p.getByText('Notificações bloqueadas.', { exact: true }).waitFor()
       await s.checkBanner()
-      await s.p.screenshot({ path: path.join(out, `alerta-${width}-bloqueado.png`), fullPage: true })
+      await capture(s.p, `alerta-${width}-bloqueado.png`)
       await s.p.evaluate(() => { window.qaNotification.patch({ permission: 'granted' }); document.dispatchEvent(new Event('visibilitychange')); window.dispatchEvent(new Event('focus')) })
       await s.p.waitForFunction(() => window.qaNotification.read().sent.length === 1)
       assert.equal((await s.ledger()).attempts, 1, 'eventos de retorno não duplicam notificação')
@@ -110,7 +116,7 @@ const id = '2026-11-05:USD:alta'
       const retry = s.p.getByRole('button', { name: 'Tentar enviar novamente' }); await retry.waitFor()
       assert.equal((await s.ledger()).attempts, 1)
       assert.equal(await s.saved(), undefined)
-      await s.p.screenshot({ path: path.join(out, `alerta-${width}-falha-envio.png`), fullPage: true })
+      await capture(s.p, `alerta-${width}-falha-envio.png`)
       await s.p.evaluate(() => window.qaNotification.patch({ fail: false }))
       await retry.click()
       await s.p.waitForFunction(() => window.qaNotification.read().sent.length === 1)
@@ -119,7 +125,7 @@ const id = '2026-11-05:USD:alta'
       assert.equal((await s.ledger()).attempts, 2)
       await s.enter(true); await s.checkBanner()
       assert.equal((await s.ledger()).attempts, 2)
-      await s.p.screenshot({ path: path.join(out, `alerta-${width}-envio-recuperado.png`), fullPage: true })
+      await capture(s.p, `alerta-${width}-envio-recuperado.png`)
       await s.finish()
       console.log(`${width} PASS alerta após9h, base09h, permissão tardia/externa, dispensa/reload, falha/retry e deduplicação`)
     }

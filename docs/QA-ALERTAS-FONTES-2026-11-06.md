@@ -43,3 +43,31 @@ O trecho antigo de `smoke-outros` aguardava `.reforma li` na área de Setores e 
 O Edge encerrou antes de abrir a página (`Crashpad / TransactNamedPipe` no ambiente isolado); o Chromium do Playwright não estava instalado dentro desse isolamento. Portanto, **nenhum teste de navegador nem captura visual desta revisão foi concluído localmente**. A execução dos scripts e a inspeção das capturas ficam pendentes do CI; essa limitação não altera o resultado dos testes React/cálculo executados.
 
 Aceitação pela API de notificações não comprova que o sistema operacional mostrou ou que a pessoa leu a mensagem. Testar o aviso real em um dispositivo autorizado continua sendo uma validação distinta. A faixa é recalculada com cotações válidas do dia: não conserva um cruzamento antigo após o preço voltar ao limite ou envelhecer. O aplicativo precisa estar aberto e visível para verificar; não foi criado monitoramento com o aplicativo fechado.
+
+## CI e inspeção das capturas
+
+Os dois smokes de alertas/fontes passaram na [rodada42154279199](https://github.com/FernandoCastilho/painel-especialista/actions/runs/42154279199), commit `b596277`. Os arquivos foram baixados e tiveram a integridade SHA256 validada na integração. Em seguida, **26 imagens foram efetivamente abertas e inspecionadas**, nas larguras390 e1280px:
+
+| Arquivo, substituindo `{largura}` por390 e1280 | Evidência visual |
+| --- | --- |
+| `alerta-{largura}-permissao-pendente.png` | Faixa de +0,36%, base09h e preço14h59; convite com botão e regra de funcionamento legíveis. |
+| `alerta-{largura}-bloqueado.png` | No celular, instrução de bloqueio completa e faixa mantida. A imagem desktop precisa de recaptura: o cabeçalho fixo encobriu parte do conteúdo após o scroll provocado pelo clique. |
+| `alerta-{largura}-falha-envio.png` | Faixa permanece, mensagem de falha e ação de tentar novamente presentes. |
+| `alerta-{largura}-envio-recuperado.png` | Faixa permanece e a mensagem de falha desaparece após envio aceito/reload. |
+| `bndes-{largura}-moedas-falha-tfc.png` | TFC/dólar indisponíveis, TFB/TLP preservadas; erro explícito, ausência não convertida em zero. |
+| `bndes-{largura}-moedas-falha-snapshot.png` | Aviso de fonte indisponível e LD1 -0,110000% datada; demais moedas ausentes. Colisão da observação LD1 com Dia/Data foi identificada no celular. |
+| `bndes-{largura}-moedas-recuperada.png` | TFC12,34% e dólar5,0100 retornam, sem aviso residual da fonte. |
+| `bndes-{largura}-bndes-falha-tfb.png` | TFB/TLP indisponíveis enquanto TFC12,34% e dólar5,0100 continuam no topo. |
+| `bndes-{largura}-bndes-recuperada.png` | TFB10,50% e TLP6,90% retornam; histórico TLP legível. |
+| `bndes-{largura}-tfc-dado-retido.png` | Valor12,34% e histórico preservados com aviso permanente de possível desatualização. |
+| `bndes-{largura}-tfc-dado-recuperado.png` | Fonte recuperada: TFC13,34%, dólar6,0100 e aviso removido. A tela capturada é Moedas, última aba verificada pelo roteiro. |
+| `bndes-{largura}-tfb-dado-retido.png` | TFB11,50% preservada com aviso próprio; demais cartões mantêm seus dados. |
+| `bndes-{largura}-tfb-tlp-dado-recuperado.png` | TFB12,50% e TLP8,90% após recuperação, sem aviso antigo; tabela e histórico TLP correspondem. |
+
+As capturas também revelaram sobreposição entre data e mensagem de atualização no cabeçalho móvel. As correções locais seguintes permitem rolagem interna da tabela, colocam a observação LD1 abaixo do valor e separam data/mensagem do botão. O roteiro agora mede os textos dentro da célula e a separação dos elementos do cabeçalho, preservando o botão de44px. Antes de gerar imagens, retorna ao topo e aguarda dois quadros de renderização para não registrar o cabeçalho fixo no meio da página. As imagens originais foram preservadas.
+
+**Ainda depende da nova rodada de CI e inspeção das novas imagens:** confirmação visual da correção LD1, do cabeçalho móvel e do bloqueio desktop recapturado. Os testes funcionais da rodada acima passaram, mas as imagens originais não aprovam esses três pontos de apresentação.
+
+Na rodada `42156020503`, `smoke-outros` parou na contagem fixa de21 fontes. O catálogo já tinha22 com a entrada legítima de Google Trends: os22 IDs e22 nomes são únicos. O roteiro agora compara todos os nomes da tabela com o catálogo e verifica unicidade de ambos, preservando uma linha por fonte e detectando omissões/duplicações. Também verifica RSS oficial, horários08h/15h e atraso25h na linha Trends. Os seis testes de governança passaram localmente. Não foi necessária mudança na implementação.
+
+Para inspecionar o cabeçalho após consulta, o roteiro BNDES fecha a notificação transitória pelo botão próprio, sem esperar a mensagem local expirar. Confere que a mensagem continua no cabeçalho e gera a captura limpa. O aviso transitório permanece documentado separadamente nos arquivos `bndes-{largura}-moedas-recuperada-notificacao.png` e `bndes-{largura}-tfc-dado-retido-notificacao.png`.

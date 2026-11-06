@@ -21,7 +21,7 @@ const widgetHarness = buildSync({
     resolveDir: path.resolve(__dirname, '../src'),
     loader: 'js',
   },
-  bundle: true, write: false, format: 'iife', platform: 'browser', target: 'es2022',
+  bundle: true, write: false, format: 'iife', platform: 'browser', target: 'es2022', jsx: 'automatic',
   define: { 'process.env.NODE_ENV': '"production"' }, minify: true,
 }).outputFiles[0].text
 const widgetPage = '<!doctype html><html><head><meta name="theme-color" content="#050505"></head><body><div id="widget-root"></div><script src="./__theme-widget-test.js"></script></body></html>'
@@ -68,7 +68,7 @@ async function assertTheme(page, theme, label) {
 
 ;(async () => {
   fs.mkdirSync(out, { recursive:true })
-  const browser = await chromium.launch(require('./smoke-launch.cjs')()), report = []
+  const browser = await chromium.launch(require('./smoke-launch.cjs')()), report = [], diagnostics = []
   let currentPage
   try {
     for (const width of [1440, 390]) for (const initial of ['dark', 'light']) {
@@ -94,7 +94,16 @@ async function assertTheme(page, theme, label) {
       })
       const page = await context.newPage(), errors = []
       currentPage = page
-      page.on('pageerror', error => errors.push(error.message))
+      page.on('pageerror', error => {
+        errors.push(error.message)
+        diagnostics.push({kind:'pageerror',width,initial,message:error.message})
+        console.error(`Theme ${initial} ${width}: ${error.message}`)
+      })
+      page.on('console', message => {
+        if (message.type() !== 'error' || !page.url().includes('__theme-widget-test.html')) return
+        diagnostics.push({kind:'console',width,initial,message:message.text()})
+        console.error(`Widget ${initial} ${width}: ${message.text()}`)
+      })
       for (const [route, selector] of [['resumo','.terminal-desk'],['calculadora/giro','.cx #cx-value'],['aprender','.learn'],['juros','.macro .plot svg[role=img]']]) {
         await page.goto(`${base}/#${route}`); await page.locator(selector).first().waitFor()
         const label = `${initial}-${width}-${route.replace('/', '-')}`
@@ -140,7 +149,7 @@ async function assertTheme(page, theme, label) {
     console.log(JSON.stringify({passed:true,checks:result.checks,scenarios:report.length,report:path.join(out, 'report.json')}))
   } catch (error) {
     await currentPage?.screenshot({path:path.join(out, 'failure.png'),fullPage:true}).catch(() => {})
-    fs.writeFileSync(path.join(out, 'failure.json'), JSON.stringify({message:error.message,report}, null, 2))
+    fs.writeFileSync(path.join(out, 'failure.json'), JSON.stringify({message:error.message,diagnostics,report}, null, 2))
     throw error
   } finally { await browser.close() }
 })().catch(error => { console.error(error); process.exitCode = 1 })

@@ -6,11 +6,21 @@ import { DESK_TABS, parseCommand } from '../src/terminal.js'
 const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
+test('dividendos: fonte oficial usa o PDF existente conferido em 06/11/2026', () => {
+  assert.ok(byId('dividendos').fontes.some(f => f.url === 'https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/dirf/manual_padrao_rfb_per_tributacao_cotin_v-19-12-2025.pdf'))
+})
+
+test('escala 6x1: medidas para MEI e pequenas empresas preservam os prazos gerais', () => {
+  assert.match(text(byId('escala-6x1')), /Lei complementar poderá criar medidas transitórias para MEI/)
+  assert.match(text(byId('escala-6x1')), /condicionadas à manutenção do emprego/)
+  assert.match(text(byId('escala-6x1')), /não suspende os prazos da emenda/)
+})
+
 test('novos temas têm fontes oficiais, data de revisão e exemplos que não se passam por alíquotas gerais', () => {
   for (const id of ['escala-6x1', 'reforma-tributaria', 'split-payment', 'dividendos']) {
     const c = byId(id)
     assert.equal(c.topico, 'Tributos e trabalho')
-    assert.equal(c.revisadoEm, '2026-11-05')
+    assert.equal(c.revisadoEm, ['escala-6x1', 'dividendos'].includes(id) ? '2026-11-06' : '2026-11-05')
     assert.ok(c.fontes.length >= 2, id)
     assert.ok(c.fontes.every(f => /\.(gov|leg)\.br$/.test(new URL(f.url).hostname)), id)
     assert.ok(buscarConceitos(c.nome).some(result => result.id === id), id)

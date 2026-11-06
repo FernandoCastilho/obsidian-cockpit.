@@ -867,7 +867,7 @@ export const CONCEITOS = [
     id: 'escala-6x1',
     topico: 'Tributos e trabalho',
     nome: 'Escala 6x1 e transição da jornada',
-    revisadoEm: '2026-11-05',
+    revisadoEm: '2026-11-06',
     fontes: [
       { nome: 'Câmara — EC 141/2026, publicação original, arts. 2º a 10', url: 'https://www2.camara.leg.br/legin/fed/emecon/2026/emendaconstitucional-141-16-outubro-2026-800062-publicacaooriginal-181622-pl.html' },
       { nome: 'Senado — texto da EC 141/2026', url: 'https://legis.senado.leg.br/norma/44184944/publicacao/44189027' },
@@ -883,7 +883,7 @@ export const CONCEITOS = [
       'A emenda já foi promulgada; não é apenas uma proposta. Sua transição não autoriza antecipar a aplicação de todas as regras.',
       'Acordo ou convenção coletiva pode disciplinar compensações; há regras próprias para regimes diferenciados. A folga não precisa ser sempre sábado e domingo.',
       'Os arts. 8º e 9º trazem condições específicas para empregados com diploma superior e alta remuneração e para contratos públicos com mão de obra. Confira o enquadramento antes de alterar contratos.',
-      'Jornadas já fixadas em até 40 horas não têm redução proporcional automática. Micro e pequenas empresas dependem das medidas de adaptação que vierem a ser estabelecidas em lei complementar.',
+      'Jornadas já fixadas em até 40 horas não têm redução proporcional automática. Lei complementar poderá criar medidas transitórias para MEI, micro e pequenas empresas, condicionadas à manutenção do emprego; essa previsão não suspende os prazos da emenda.',
     ],
     preciso: {
       texto: 'Os arts. 6º e 10 da EC 141/2026 definem a transição e a vigência. O planejamento financeiro abaixo compara horas disponíveis; não determina a escala legal de uma categoria.',
@@ -967,10 +967,10 @@ export const CONCEITOS = [
     id: 'dividendos',
     topico: 'Tributos e trabalho',
     nome: 'Dividendos e distribuição de lucros',
-    revisadoEm: '2026-11-05',
+    revisadoEm: '2026-11-06',
     fontes: [
       { nome: 'Câmara — Lei 9.250/1995 atualizada, art. 6º-A incluído pela Lei 15.270/2025', url: 'https://www2.camara.leg.br/legin/fed/lei/1995/lei-9250-26-dezembro-1995-362566-normaatualizada-pl.html' },
-      { nome: 'Receita Federal — perguntas e respostas sobre lucros e dividendos', url: 'https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/dirf/perguntas-e-respostas-sobre-tributacao-de-altas-rendas_consideracoes-sobre-lucros-e-dividendos2025.pdf' },
+      { nome: 'Receita Federal — perguntas e respostas sobre lucros e dividendos', url: 'https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/dirf/manual_padrao_rfb_per_tributacao_cotin_v-19-12-2025.pdf' },
     ],
     frase: 'Dividendos são lucros distribuídos aos sócios; a distribuição reduz o caixa da empresa e pode gerar imposto para quem recebe.',
     crianca: [

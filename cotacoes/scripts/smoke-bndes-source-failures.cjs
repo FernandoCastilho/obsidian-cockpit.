@@ -45,8 +45,42 @@ function fixtures(revision) {
       for (const name of Object.keys(requests)) assert.equal(requests[name], previous[name] + 1, `atualização consulta ${name} uma vez`)
     }
     const capture = async (name) => {
-      await panel.scrollIntoViewIfNeeded()
+      // O cabeçalho fixo aparecia no meio da captura completa ao rolar o painel até o topo.
+      await p.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }))
+      await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+      const notice = p.getByRole('region', { name: 'Resultado da atualização' })
+      if (await notice.count()) {
+        // Preserva uma prova separada do aviso transitório, sem deixá-lo cobrir o cabeçalho na captura de layout.
+        if (['moedas-recuperada', 'tfc-dado-retido'].includes(name)) await p.screenshot({ path: path.join(out, `bndes-${width}-${name}-notificacao.png`), fullPage: true })
+        const feedback = panel.locator('.refresh-msg'), message = await feedback.innerText()
+        assert.ok(message.trim(), 'resultado da consulta está disponível no cabeçalho')
+        await notice.getByRole('button', { name: 'Fechar notificação', exact: true }).click()
+        await notice.waitFor({ state: 'detached' })
+        assert.equal(await feedback.innerText(), message, 'fechar notificação preserva mensagem da consulta')
+        // O retorno de foco ao botão de atualizar pode rolar a página; restaura o topo antes da captura final.
+        await p.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }))
+        await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+      }
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'sem rolagem horizontal da página')
+      if (width < 640) {
+        const overlaps = await panel.locator('.bn-main td.num .old').evaluateAll((nodes) => nodes.map((old) => {
+          const element = old.closest('td'), cell = element.getBoundingClientRect(), next = element.nextElementSibling.getBoundingClientRect()
+          const range = document.createRange(); range.selectNodeContents(element)
+          return [...range.getClientRects()].some((text) => text.width > 0 && text.height > 0 && (text.left < cell.left - 1 || text.right > cell.right + 1 || text.right > next.left + 1 || text.bottom > cell.bottom + 1))
+        }))
+        assert.equal(overlaps.some(Boolean), false, 'valor e aviso de dado anterior ficam dentro da célula, sem invadir Dia/Data')
+        const refresh = await panel.locator('header .refresh-wrap').evaluate((wrap) => {
+          const container = wrap.getBoundingClientRect()
+          const rects = [...wrap.querySelectorAll('.refresh-stamp, .refresh-msg, .refresh-btn')].map((node) => node.getBoundingClientRect()).filter((box) => box.width && box.height)
+          const overlap = rects.some((a, i) => rects.slice(i + 1).some((b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1))
+          const outside = rects.some((box) => box.left < container.left - 1 || box.right > container.right + 1 || box.top < container.top - 1 || box.bottom > container.bottom + 1)
+          const button = wrap.querySelector('.refresh-btn').getBoundingClientRect()
+          return { overlap, outside, width: button.width, height: button.height }
+        })
+        assert.equal(refresh.overlap, false, 'data, mensagem da consulta e botão não se sobrepõem no cabeçalho móvel')
+        assert.equal(refresh.outside, false, 'data, mensagem e botão ficam dentro da área do cabeçalho')
+        assert.ok(refresh.width >= 44 && refresh.height >= 44, 'Atualizar mantém área de toque de44px')
+      }
       await p.screenshot({ path: path.join(out, `bndes-${width}-${name}.png`), fullPage: true })
     }
     const finish = async () => { assert.deepEqual(errors, []); await p.close() }
