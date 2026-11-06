@@ -44,6 +44,7 @@ const fixture = mode => ({ schemaVersion: 1, windowDays: 7, generatedAt: now, to
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await panel.screenshot({ path: path.join(out, `curadoria-${width}.png`) })
       await panel.getByRole('tab', { name: 'Manchetes', exact: true }).click()
+      await panel.getByText(/5 dias \(120 horas\)/).waitFor()
       assert.match(await panel.innerText(), /5 dias \(120 horas\)/)
       await panel.getByRole('tab', { name: 'Split payment', exact: true }).focus(); await page.keyboard.press('Enter')
       await panel.getByRole('link', { name: titles['split-payment'], exact: true }).waitFor()
