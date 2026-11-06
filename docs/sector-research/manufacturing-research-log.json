@@ -1,0 +1,50 @@
+{
+  "accessedAt": "2026-11-06",
+  "groups": [
+    "metalmecanico",
+    "automotivo",
+    "construcao",
+    "textil"
+  ],
+  "coverage": {
+    "studies": 23,
+    "historicalTarget": "Busca plurianual de estrutura e produção; série comparável recuperada 2020–2024 para divisões industriais, não todos os recortes.",
+    "recentTarget": "Buscas 2025–2026; contexto PIM setembro/2026, IPP setembro/2026, SINAPI setembro/2026 e documentos institucionais, sem pressupor dados próprios de subsetor."
+  },
+  "accessRestrictions": [
+    {
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "result": "403 Forbidden ao abrir. Não houve tentativa de contornar; dados presentes na indexação registrados com limitação."
+    },
+    {
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/42574-producao-industrial-varia-0-3-em-dezembro-e-fecha-2024-com-crescimento-de-3-1",
+      "result": "403 Forbidden ao abrir; não usado para presumir leitura integral."
+    },
+    {
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor.html",
+      "result": "403 Forbidden ao abrir; números identificados na indexação, revisão pendente."
+    }
+  ],
+  "successfulOpen": {
+    "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+    "publicationDate": "2026-11-05",
+    "use": "Contexto qualitativo da desaceleração industrial em setembro, sem atribuí-la individualmente aos recortes."
+  },
+  "excludedPrivateData": "Localizados relatórios privados sobre vacância e locação de galpões. Não foram incorporados números pela diferença de universos e pela exigência de interface com fontes públicas.",
+  "remainingGaps": [
+    "Sem séries próprias de preço, produção, margem, inadimplência e comércio exterior para todos os recortes.",
+    "Sem ranking atual de empresas/polos validado por métrica comparável. Exemplos históricos são identificados como tais.",
+    "Sem revisão independente concluída. Não marcar como estudo final conferido."
+  ],
+  "independentReviewFollowup": {
+    "date": "2026-11-06",
+    "numbers": "Revisor independente recuperou APIs SIDRA completas PIM/IPP.96 ocorrências numéricas conferidas;2024 atualizado para vintage corrente, antigo conservado apenas na trilha supersededNumericEvidence.",
+    "sources": [
+      "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all"
+    ],
+    "method": "APIs públicas de dados distintos dos PDFs/notícias com acesso negado; não houve contorno das restrições desses documentos.",
+    "qualitativeChanges": "Afirmação INT não comprovada removida. Acrescentados casos BNDES ZEN,Randon e IFRN9411 integralmente abertos; sem ranking, montante ou promessa de acesso a crédito. Cenários explicitam um a dois anos após novembro2026.",
+    "status": "Aprovação final individual sob responsabilidade do revisor, não autodeclarada pelo autor."
+  }
+}

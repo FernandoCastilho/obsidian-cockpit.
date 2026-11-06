@@ -1,0 +1,1261 @@
+{
+  "group": "construcao",
+  "accessedAt": "2026-11-06",
+  "numericEvidence": [
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": 4.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": 4.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": 4.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "sourceRegister": [
+    {
+      "label": "IBGE · PIM-PF Brasil",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+      "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · PIA-Produto",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+      "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Agência Brasil · produção industrial em setembro",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+      "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · Finame BK Aquisição e Comercialização",
+      "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+      "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+      "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · SINAPI",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+      "purpose": "Página consultada com referência setembro/2026; índice de custo, não preço de imóvel, margem ou orçamento completo da obra.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Ministério das Cidades · PBQP-H",
+      "url": "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf",
+      "purpose": "Cartilha institucional com programas de qualidade de materiais, incluindo esquadrias de aço. Qualificação individual precisa de consulta atual.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Prefeitura de Joinville · estudo de impacto de galpões",
+      "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2025/09/Resposta-ao-Oficio-SEI-no-267683222025-SEPUR.UIN_.AAP-EIV-MMV-Galpoes-Logisticos.pdf",
+      "purpose": "Documento técnico de empreendimento local, datado de setembro/2025. Exemplo de tramitação urbanística, não demonstra aprovação, ocupação ou rentabilidade.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Ministério das Cidades · Novo PAC",
+      "url": "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/pac",
+      "purpose": "Estrutura institucional de investimentos; anúncio e orçamento não equivalem a contrato, desembolso ou receita da empreiteira.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · indústria de cimento",
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3183",
+      "purpose": "Estudo histórico de estrutura industrial e mercados regionais; desatualizado para conjuntura, concentração ou preços.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · tecnologias da Votorantim Cimentos",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R%24-403-milhoes-BNDES-apoia-investimentos-da-Votorantim-Cimentos-em-novas-tecnologias-industriais/",
+      "purpose": "Caso empresarial de financiamento de tecnologia industrial localizado em 2026; não extrapolado a médias empresas.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Anuário Estatístico: produção industrial",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "purpose": "Taxas anuais de produção física, Brasil, 2020–2024. Dados recuperados na indexação; abertura do PDF retornou acesso proibido, pendente conferência independente.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "INT · planejamento de APLs de cerâmica vermelha",
+      "url": "https://www.gov.br/int/pt-br/assuntos/noticias/projeto-planeja-acoes-para-ceramicas-do-rio-grande-do-norte-ate-2043",
+      "purpose": "Publicado em 01/04/2025; referência regional e tecnológica de cerâmica vermelha no RN, não representa revestimentos.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · considerações sobre indústria do vidro",
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/2666",
+      "purpose": "Estudo histórico: diferencia estrutura industrial; não prova concentração atual, receita ou situação de plantas.",
+      "accessedAt": "2026-11-06"
+    }
+  ],
+  "review": {
+    "status": "NÃO CONFERIDO",
+    "independentReviewer": null,
+    "totalNumericItems": 20,
+    "independentlyVerified": 0
+  },
+  "notes": [
+    "Repetições idênticas compartilham URL, conceito e período; datas, índices de catálogo e identificadores estruturais não são métricas econômicas.",
+    "Todas as afirmações analíticas são inferências e exigem validação da empresa; não apresentadas como estatísticas observadas."
+  ],
+  "qualitativeEvidence": [
+    {
+      "study": "Construção residencial",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Construção residencial",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2025/09/Resposta-ao-Oficio-SEI-no-267683222025-SEPUR.UIN_.AAP-EIV-MMV-Galpoes-Logisticos.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2025/09/Resposta-ao-Oficio-SEI-no-267683222025-SEPUR.UIN_.AAP-EIV-MMV-Galpoes-Logisticos.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2025/09/Resposta-ao-Oficio-SEI-no-267683222025-SEPUR.UIN_.AAP-EIV-MMV-Galpoes-Logisticos.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Galpões",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/pac",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/pac",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/pac",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Infraestrutura",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/3183",
+        "https://agenciadenoticias.bndes.gov.br/noticia/Com-R%24-403-milhoes-BNDES-apoia-investimentos-da-Votorantim-Cimentos-em-novas-tecnologias-industriais/",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/3183",
+        "https://agenciadenoticias.bndes.gov.br/noticia/Com-R%24-403-milhoes-BNDES-apoia-investimentos-da-Votorantim-Cimentos-em-novas-tecnologias-industriais/",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/3183",
+        "https://agenciadenoticias.bndes.gov.br/noticia/Com-R%24-403-milhoes-BNDES-apoia-investimentos-da-Votorantim-Cimentos-em-novas-tecnologias-industriais/",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cimento",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/int/pt-br/assuntos/noticias/projeto-planeja-acoes-para-ceramicas-do-rio-grande-do-norte-ate-2043",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/int/pt-br/assuntos/noticias/projeto-planeja-acoes-para-ceramicas-do-rio-grande-do-norte-ate-2043",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/int/pt-br/assuntos/noticias/projeto-planeja-acoes-para-ceramicas-do-rio-grande-do-norte-ate-2043",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Cerâmica",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/2666",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/2666",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/2666",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Vidros",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados",
+        "https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/habitacao/programa-brasileiro-de-qualidade-e-produtividade-do-habitat-pbqp/arquivos/copy_of_2020_11_09_pbqph_cartilha_consumidores.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9270-sistema-nacional-de-pesquisa-de-custos-e-indices-da-construcao-civil.html?t=resultados"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Esquadrias",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    }
+  ],
+  "supersededNumericEvidence": [
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cimento",
+      "location": "charts.historico-producao",
+      "value": 3.9,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Cerâmica",
+      "location": "charts.historico-producao",
+      "value": 3.9,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -2.6,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": 13.8,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -5.1,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": -6.0,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Vidros",
+      "location": "charts.historico-producao",
+      "value": 3.9,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de minerais não metálicos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Esquadrias",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "pimRevision": {
+    "date": "2026-11-06",
+    "source": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+    "method": "API direta; histórico antigo preservado em supersededNumericEvidence apenas para rastreabilidade, não para interface.",
+    "reason": "Revisão independente detectou diferenças no ano2024 entre publicação histórica indexada e API corrente."
+  },
+  "reviewCorrections": {
+    "date": "2026-11-06",
+    "removedClaim": "Projeto INT cerâmica vermelha RN2025; acesso direto401, referência factual retirada em vez de presumir validação.",
+    "effect": "Descrição do modelo de negócio preservada como análise; lacuna regional e conjuntural declarada."
+  },
+  "verifiedCaseSupplement": [
+    {
+      "study": "Cerâmica",
+      "url": "https://portal.ifrn.edu.br/projetos-de-pesquisa/9411/",
+      "publicationOrStartDate": "2025-07-30",
+      "accessDate": "2026-11-06",
+      "method": "Abertura integral do documento público; síntese delimitada, sem montante, ranking, número de instalações ou meta transformada em resultado.",
+      "claim": "Evidência técnica regional verificável: o IFRN registra projeto iniciado em julho de 2025, em execução na página consultada, que investiga resíduos de pegmatito em massas de cerâmica vermelha utilizando argila de Parelhas, no Rio Grande do Norte. É pesquisa de viabilidade, não comprovação de adoção comercial, produtividade realizada ou desempenho de toda a cerâmica brasileira.",
+      "analysis": "Para discutir eficiência com uma cerâmica média, pedir ensaios, taxa de perda e aceitação do produto antes de tratar matéria-prima alternativa como economia realizada. O estudo do IFRN ilustra a necessidade de validação técnica; não estabelece mistura recomendada ou receita universal de fabricação."
+    },
+    {
+      "study": "Construção residencial, Cerâmica, Vidros e Esquadrias",
+      "url": "https://www.gov.br/cidades/pt-br/assuntos/habitacao/pbqp-h/como-participar",
+      "accessDate": "2026-11-06",
+      "publicationDate": "2019-07-09",
+      "updatedDate": "2026-05-26",
+      "method": "Página pública integral, linhas314–318; substitui referência a cartilha restrita sem tentar acesso ao documento protegido.",
+      "claim": "SiAC para gestão da qualidade de construtoras; SiMaC/PSQs para conformidade de materiais."
+    }
+  ]
+}

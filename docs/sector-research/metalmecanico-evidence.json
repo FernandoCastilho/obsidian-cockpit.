@@ -1,0 +1,1470 @@
+{
+  "group": "metalmecanico",
+  "accessedAt": "2026-11-06",
+  "numericEvidence": [
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": 15.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -5.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -2.8,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": 2.6,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": 2.6,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": 2.6,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": 2.6,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "API direta recuperada; divergências do vintage histórico substituídas. Releitura independente da versão final pendente.",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "sourceRegister": [
+    {
+      "label": "IBGE · PIM-PF Brasil",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+      "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · PIA-Produto",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+      "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Agência Brasil · produção industrial em setembro",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+      "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · Finame BK Aquisição e Comercialização",
+      "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+      "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+      "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+      "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "Prefeitura de Joinville · ambiente construído",
+      "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+      "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Anuário Estatístico: produção industrial",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "purpose": "Taxas anuais de produção física, Brasil, 2020–2024. Dados recuperados na indexação; abertura do PDF retornou acesso proibido, pendente conferência independente.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · inovação e transformação digital da Tupy",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+      "purpose": "Notícia publicada em 04/12/2024; exemplo de investimento aprovado, não prova de desembolso integral, retorno obtido ou condição atual de crédito.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · Romi e produção para exportação",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+      "purpose": "Notícia publicada em 29/11/2022, atualizada em 17/10/2023. Caso observado de fabricante e crédito à produção exportável; sem extrapolar condições a médias empresas atuais.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+      "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+      "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · investimento em máquinas e MPMEs",
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+      "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "BNDES · avaliação do financiamento a máquinas agrícolas",
+      "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+      "purpose": "Estudo publicado em janeiro/2022; evidência de financiamento observado, não promessa de condições atuais.",
+      "accessedAt": "2026-11-06"
+    },
+    {
+      "label": "MDA · indústrias cadastradas Mais Alimentos",
+      "url": "https://sistemasweb.mda.gov.br/maisalimentos/consulta-publica/industrias-associadas-credenciadas",
+      "purpose": "Exemplos de fabricantes listados: AGCO e John Deere. Cadastro não prova liderança, vigência de oferta ou elegibilidade de compra.",
+      "accessedAt": "2026-11-06"
+    }
+  ],
+  "review": {
+    "status": "NÃO CONFERIDO",
+    "independentReviewer": null,
+    "totalNumericItems": 30,
+    "independentlyVerified": 0
+  },
+  "notes": [
+    "Repetições idênticas compartilham URL, conceito e período; datas, índices de catálogo e identificadores estruturais não são métricas econômicas.",
+    "Todas as afirmações analíticas são inferências e exigem validação da empresa; não apresentadas como estatísticas observadas."
+  ],
+  "qualitativeEvidence": [
+    {
+      "study": "Fundição",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Estruturas metálicas",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+        "https://sistemasweb.mda.gov.br/maisalimentos/consulta-publica/industrias-associadas-credenciadas"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+        "https://sistemasweb.mda.gov.br/maisalimentos/consulta-publica/industrias-associadas-credenciadas"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+        "https://sistemasweb.mda.gov.br/maisalimentos/consulta-publica/industrias-associadas-credenciadas"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "negocio",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "concorrencia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "indicadores",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+        "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "conjuntura",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "economia",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [
+        "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao"
+      ],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "swot",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "porter",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "cenarios",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "visita",
+      "type": "Síntese analítica e interpretação de fontes; não é observação de empresa individual",
+      "sources": [],
+      "reviewStatus": "Revisão independente pendente"
+    },
+    {
+      "study": "Fundição",
+      "section": "concorrencia",
+      "claim": "Exemplo empresarial datado: o BNDES descreveu em sua notícia de dezembro de 2024 a Tupy como fabricante de componentes estruturais de ferro fundido e anunciou aprovação de apoio à digitalização em Betim e Joinville. O caso ilustra investimento em processo e rastreabilidade; não demonstra produtividade já realizada nem média de fundições.",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+      "accessedAt": "2026-11-06",
+      "type": "Fato empresarial datado e interpretação delimitada",
+      "retrieval": "Página integral consultada",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Usinagem",
+      "section": "concorrencia",
+      "claim": "Referência da cadeia, não concorrente equivalente: a notícia do BNDES identifica a Romi, sediada em Santa Bárbara d’Oeste, como fabricante de máquinas industriais e peças fundidas e usinadas. Para um prestador médio, ela pode ser fornecedor de equipamento ou referência de integração, não base automática para comparação de margem.",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+      "accessedAt": "2026-11-06",
+      "type": "Fato empresarial datado e interpretação delimitada",
+      "retrieval": "Página integral consultada",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Máquinas industriais",
+      "section": "concorrencia",
+      "claim": "Caso observado: o BNDES anunciou em novembro de 2022 financiamento à produção exportável de máquinas de usinagem da Romi. O exemplo separa crédito de pré-embarque ao fabricante do financiamento da máquina comprada pelo cliente. Não confirma oferta, custo ou elegibilidade atuais.",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+      "accessedAt": "2026-11-06",
+      "type": "Fato empresarial datado e interpretação delimitada",
+      "retrieval": "Página integral consultada",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    },
+    {
+      "study": "Equipamentos",
+      "section": "concorrencia",
+      "claim": "Referência de equipamento: a mesma notícia do BNDES descreve a MWM, subsidiária da Tupy, com motores, geradores e motobombas. É exemplo de portfólio do grupo na data da publicação, não de toda a categoria nem de condição atual de cada produto.",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+      "accessedAt": "2026-11-06",
+      "type": "Fato empresarial datado e interpretação delimitada",
+      "retrieval": "Página integral consultada",
+      "reviewStatus": "Conferência do autor; revisão independente pendente"
+    }
+  ],
+  "supersededNumericEvidence": [
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": 15.4,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -5.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": -2.8,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Fundição",
+      "location": "charts.historico-producao",
+      "value": 2.7,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Metalurgia",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Usinagem",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 0.1,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 5.2,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": -9.0,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": -3.4,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Estruturas metálicas",
+      "location": "charts.historico-producao",
+      "value": 5.0,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas industriais",
+      "location": "charts.historico-producao",
+      "value": 2.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "location": "charts.historico-producao",
+      "value": 2.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -4.2,
+      "unit": "% variação anual produção física",
+      "period": "2020",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": 24.0,
+      "unit": "% variação anual produção física",
+      "period": "2021",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -2.3,
+      "unit": "% variação anual produção física",
+      "period": "2022",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": -7.2,
+      "unit": "% variação anual produção física",
+      "period": "2023",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    },
+    {
+      "study": "Equipamentos",
+      "location": "charts.historico-producao",
+      "value": 2.8,
+      "unit": "% variação anual produção física",
+      "period": "2024",
+      "scope": "Brasil; Máquinas e equipamentos",
+      "url": "https://anuario.ibge.gov.br/images/aeb/2024/s4/2_pdf/s4t4101.pdf",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "entity": "IBGE",
+      "status": "Conferido na indexação; PDF bloqueado; revisão independente pendente",
+      "concept": "Produção física anual sobre ano anterior; divisão agregada, não subsetor."
+    }
+  ],
+  "pimRevision": {
+    "date": "2026-11-06",
+    "source": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+    "method": "API direta; histórico antigo preservado em supersededNumericEvidence apenas para rastreabilidade, não para interface.",
+    "reason": "Revisão independente detectou diferenças no ano2024 entre publicação histórica indexada e API corrente."
+  },
+  "privateCommercialEvidence": [
+    {
+      "study": "Estruturas metálicas",
+      "url": "https://site2.medabil.com.br/services/",
+      "accessDate": "2026-11-06",
+      "claim": "Como exemplo de oferta, a Medabil descreve sistemas para construções horizontais que combinam estrutura metálica, cobertura, fechamentos e ventilação. É portfólio do fornecedor, não comprovação de contrato, participação ou desempenho realizado. A integração de engenharia e componentes mostra por que comparar só o preço do aço não compara propostas equivalentes.",
+      "method": "Página integral aberta; seção oferta, não imagens placeholder e não liderança promocional."
+    },
+    {
+      "study": "Máquinas agrícolas",
+      "url": "https://jacto.com/brasil/agriculturalmachines",
+      "accessDate": "2026-11-06",
+      "claim": "A Jacto apresenta catálogo de plantadeiras, pulverizadores, adubadoras e colhedoras e identifica sua matriz em Pompeia, São Paulo. É evidência de portfólio declarado pelo fabricante, não ranking, venda realizada ou elegibilidade de financiamento.",
+      "method": "Catálogo integral aberto; categorias e localização confirmadas. Substitui cadastro MDA inacessível, sem afirmar credenciamento."
+    }
+  ]
+}

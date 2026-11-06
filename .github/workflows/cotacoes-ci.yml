@@ -1,5 +1,8 @@
 name: Cotações CI
 on:
+  push:
+    branches: ['feat/estudos-setoriais-completos']
+    paths: ['cotacoes/**', 'docs/sector-research/**', '.github/workflows/cotacoes-ci.yml']
   pull_request:
     paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
@@ -58,6 +61,17 @@ jobs:
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
       - name: Conferir largura, ajudas e fluxos das seis calculadoras
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
+      - name: Conferir estudos incluídos, recortes pendentes, apresentação e áudio
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: RESEARCHED_SECTORS_QA_OUTPUT="$RUNNER_TEMP/qa-universal/researched-sectors" node scripts/smoke-researched-sectors.cjs
+      - name: Capturas e relatório dos estudos setoriais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: estudos-setoriais-design
+          path: ${{ runner.temp }}/qa-universal/researched-sectors
+          if-no-files-found: error
+          retention-days: 7
       - name: Capturas da revisão das calculadoras
         if: always()
         uses: actions/upload-artifact@v4

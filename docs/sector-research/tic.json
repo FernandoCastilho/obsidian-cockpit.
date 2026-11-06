@@ -1,0 +1,3418 @@
+[
+  {
+    "group": "tic",
+    "topicIndex": 1,
+    "title": "Cibersegurança",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "A demanda combina prevenção contínua e resposta emergencial. Licenças, equipe de analistas e responsabilidade contratual têm economias diferentes; vender proteção não equivale a garantir ausência de incidente.",
+      "A ANPD registrou 362 comunicações de incidentes em 2025. É um indicador administrativo de ocorrências reportadas envolvendo dados pessoais, não tamanho do mercado nem contagem total de ataques.",
+      "Inferência: especialização e integração com processos do cliente podem sustentar diferenciação, mas escala de atendimento, custo de pessoal e dependência de plataformas limitam a margem."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Prestadores empresariais de proteção, monitoramento, resposta a incidentes e segurança industrial. Separar revenda de licenças, consultoria e operação recorrente; não somar seus faturamentos aos gastos totais de TIC.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Licenças e appliances",
+            "Compra ou compromisso com fabricante antes do recebimento.",
+            "Separar receita de revenda da remuneração do serviço."
+          ],
+          [
+            "Monitoramento recorrente",
+            "Cobertura e capacidade de análise exigem equipe e ferramentas mesmo com poucos alertas.",
+            "Custo por ambiente, qualidade dos alertas e obrigações de atendimento."
+          ],
+          [
+            "Resposta a incidente",
+            "Mobilização imprevisível e risco de escopo crescente.",
+            "Critérios de aceite, evidência preservada e limite de responsabilidade."
+          ],
+          [
+            "Segurança industrial",
+            "Parada de produção pode custar mais que o equipamento protegido.",
+            "Janelas de intervenção e compatibilidade com sistemas legados."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "Comparar especialistas, integradoras, prestadores globais e equipes internas pelo mesmo escopo e cobertura. Não foi validado ranking de receita de empresas médias nem um cadastro exaustivo de concorrentes.",
+          "Recife é referência institucional de formação e empresas de TIC; essa característica não prova concentração ou superioridade específica em segurança. A escolha de prestador crítico pode depender mais da capacidade de resposta que da proximidade física.",
+          "Exemplo verificável, sem ranking: Soow Sigma divulga monitoramento, resposta a incidentes e gestão de vulnerabilidades. É oferta declarada em portfólio, não comprovação de predominância de receita ou qualidade técnica."
+        ],
+        "sources": [
+          {
+            "label": "ANPD · Relatório Integrado de Gestão 2025, p. 82",
+            "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/auditoria/relatorio-integrado-de-gestao-anpd-2025.pdf/@@display-file/file",
+            "purpose": "Comunicações de incidentes recebidas; não mede todos os ataques nem receita do mercado."
+          },
+          {
+            "label": "ANPD · resultados da fiscalização",
+            "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+            "purpose": "Série histórica de processos de comunicação de incidentes; página consultada em 06/11/2026."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "Soow Sigma · portfólio público",
+            "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+            "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "O relatório integrado de gestão da ANPD registra 362 comunicações em 2025. A página histórica apresenta 186 em 2021, 275 em 2022 e 352 em 2023; como as versões podem sofrer reclassificação, não se calculou taxa de crescimento combinando publicações distintas.",
+          "O histórico estimado do mercado apresenta R$ 13,4 bilhões em 2023, R$ 17,8 bilhões em 2024 e R$ 22,2 bilhões em 2025, em valores nominais. O conjunto inclui tecnologias e serviços, não apenas prestadores especializados. Aumento de gasto agregado não comprova ganho real de margem; não foram usados pontos projetados como realizados."
+        ],
+        "rows": [
+          [
+            "Externos",
+            "Comunicações à ANPD, normas e adoção de tecnologias",
+            "Não usar comunicados como incidência total ou receita."
+          ],
+          [
+            "Operacionais",
+            "Alertas relevantes, tempo de resposta e cobertura de ativos",
+            "Qualidade e criticidade importam mais que quantidade bruta."
+          ],
+          [
+            "Econômicos",
+            "Margem por contrato, licenças antecipadas e renovações",
+            "Recorrência contratual não elimina risco de cancelamento."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "ANPD · Relatório Integrado de Gestão 2025, p. 82",
+            "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/auditoria/relatorio-integrado-de-gestao-anpd-2025.pdf/@@display-file/file",
+            "purpose": "Comunicações de incidentes recebidas; não mede todos os ataques nem receita do mercado."
+          },
+          {
+            "label": "ANPD · resultados da fiscalização",
+            "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+            "purpose": "Série histórica de processos de comunicação de incidentes; página consultada em 06/11/2026."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "Brasscom · Relatório de Cibersegurança, outubro de 2026, p.7",
+            "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+            "purpose": "Histórico estimado de gasto em hardware, software e serviços. Fonte privada setorial, não estatística oficial; p.7 e metodologia IDC 2025V 4."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "A regulamentação e a digitalização ampliam requisitos de governança, mas não comprovam aumento imediato de contratos. Uma ocorrência pode acelerar compras de emergência; passado o evento, o orçamento pode voltar a ser disputado com outras prioridades.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "ANPD · Relatório Integrado de Gestão 2025, p. 82",
+            "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/auditoria/relatorio-integrado-de-gestao-anpd-2025.pdf/@@display-file/file",
+            "purpose": "Comunicações de incidentes recebidas; não mede todos os ataques nem receita do mercado."
+          },
+          {
+            "label": "ANPD · resultados da fiscalização",
+            "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+            "purpose": "Série histórica de processos de comunicação de incidentes; página consultada em 06/11/2026."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Implantação e licenças",
+            "Giro compatível com marcos de recebimento.",
+            "Validar adiantamento e aceite; não financiar expectativa como recebível exigível."
+          ],
+          [
+            "Expansão de operação",
+            "Investimento em plataforma e equipe associado a contratos.",
+            "Separar gasto de capacidade de receita já contratada."
+          ],
+          [
+            "Resposta emergencial",
+            "Reserva de liquidez e mobilização.",
+            "Não pressupor recorrência da demanda extraordinária."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Dependência tecnológica",
+            "Uma plataforma proprietária limita migração e pode reajustar custos.",
+            "Alternativas homologadas e cláusulas de renovação."
+          ],
+          [
+            "Capacidade técnica",
+            "Vendas acima da capacidade de atendimento elevam backlog e falhas.",
+            "Carga por analista, alertas sem tratamento e escalonamento."
+          ],
+          [
+            "Responsabilidade",
+            "Promessas comerciais podem exceder cobertura técnica.",
+            "SLA, exclusões, seguro aplicável e obrigação de reparar."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Especialização e conhecimento do ambiente do cliente."
+          ],
+          [
+            "Fraquezas",
+            "Dependência de pessoas-chave e plataformas."
+          ],
+          [
+            "Oportunidades",
+            "Proteção de ativos industriais e terceirização qualificada."
+          ],
+          [
+            "Ameaças",
+            "Ferramentas incorporadas à nuvem e responsabilidade por falhas."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Especialistas e integradoras competem pela confiança e execução; validar propostas realmente equivalentes."
+          ],
+          [
+            "Compradores",
+            "Cliente com equipe própria pode internalizar partes do serviço; medir custo de troca e concentração."
+          ],
+          [
+            "Fornecedores",
+            "Licenças proprietárias e certificações criam dependência; testar alternativas práticas."
+          ],
+          [
+            "Entrantes",
+            "Consultoria básica tem entrada mais simples que operação crítica continuada."
+          ],
+          [
+            "Substitutos",
+            "Equipe interna e proteção nativa das plataformas substituem partes da oferta, não necessariamente todo o serviço."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Renovações seletivas e exigência de demonstrar redução de exposição.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Novos ambientes protegidos com equipe e preços dimensionados antes da expansão.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Concorrência reduz preço enquanto salários e licenças sobem; incidentes geram custo e retrabalho.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Quais ativos críticos ficam protegidos, e o que está expressamente fora do contrato?"
+          ],
+          [
+            "2",
+            "Quem decide a contratação e qual problema justifica terceirizar em vez de manter equipe interna?"
+          ],
+          [
+            "3",
+            "Que parte da receita vem de licenças, implantação, monitoramento e emergência?"
+          ],
+          [
+            "4",
+            "Quais fabricantes e especialistas não podem ser substituídos rapidamente?"
+          ],
+          [
+            "5",
+            "Como a empresa prova capacidade de atendimento e acompanha margem por contrato?"
+          ],
+          [
+            "6",
+            "Qual desembolso acontece antes do recebimento e como cancelamentos afetam esse fluxo?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "cyber-gasto",
+        "title": "Gastos em cibersegurança no Brasil",
+        "unit": "R$ bilhões nominais",
+        "scope": "Hardware, software e serviços; histórico estimado por estudo setorial, não receita apenas das empresas médias nem volume real.",
+        "years": [
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2023–2025",
+        "source": {
+          "label": "Brasscom · Relatório de Cibersegurança, outubro de 2026, p.7",
+          "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+          "purpose": "Histórico estimado de gasto em hardware, software e serviços. Fonte privada setorial, não estatística oficial; p.7 e metodologia IDC 2025V 4."
+        },
+        "method": "Valores históricos estimados extraídos da página 7 de estudo de outubro de 2026 e conferidos na imagem. Projeções de 2026 em diante excluídas. Não é estatística oficial; metodologia de mercado tem cobertura e interesses próprios.",
+        "series": [
+          {
+            "label": "Histórico estimado de gastos",
+            "values": [
+              13.4,
+              17.8,
+              22.2
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "ANPD · Relatório Integrado de Gestão 2025, p. 82",
+        "url": "https://www.gov.br/anpd/pt-br/acesso-a-informacao/auditoria/relatorio-integrado-de-gestao-anpd-2025.pdf/@@display-file/file",
+        "purpose": "Comunicações de incidentes recebidas; não mede todos os ataques nem receita do mercado."
+      },
+      {
+        "label": "ANPD · resultados da fiscalização",
+        "url": "https://www.gov.br/anpd/pt-br/assuntos/fiscalizacao/resultados-da-fiscalizacao",
+        "purpose": "Série histórica de processos de comunicação de incidentes; página consultada em 06/11/2026."
+      },
+      {
+        "label": "Prefeitura do Recife · ecossistema de tecnologia",
+        "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+        "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+      },
+      {
+        "label": "Brasscom · Relatório de Cibersegurança, outubro de 2026, p.7",
+        "url": "https://brasscom.org.br/wp-content/uploads/2026/10/BRI2-2026-018-Relatorio-de-Ciberseguranca-v30.pdf",
+        "purpose": "Histórico estimado de gasto em hardware, software e serviços. Fonte privada setorial, não estatística oficial; p.7 e metodologia IDC 2025V 4."
+      },
+      {
+        "label": "Soow Sigma · portfólio público",
+        "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+        "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+      }
+    ],
+    "limitations": [
+      "Os comunicados à ANPD não cobrem todos os ataques e podem refletir maior notificação ou mudanças de classificação.",
+      "A série de gasto estimado cobre três anos e não mede margem ou participação dos prestadores. Não foi recuperada série mais longa com metodologia equivalente.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Quais ativos críticos ficam protegidos, e o que está expressamente fora do contrato?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Quem decide a contratação e qual problema justifica terceirizar em vez de manter equipe interna?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "Que parte da receita vem de licenças, implantação, monitoramento e emergência?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais fabricantes e especialistas não podem ser substituídos rapidamente?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Como a empresa prova capacidade de atendimento e acompanha margem por contrato?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "Qual desembolso acontece antes do recebimento e como cancelamentos afetam esse fluxo?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Plataformas de proteção",
+          "detail": "Licenças, atualização e inteligência de ameaças"
+        },
+        {
+          "id": "n1",
+          "label": "Especialista de segurança",
+          "detail": "Configura, integra, monitora e testa controles"
+        },
+        {
+          "id": "n2",
+          "label": "Operação do cliente",
+          "detail": "Autoriza mudanças, controla acessos e prioriza ativos"
+        },
+        {
+          "id": "n3",
+          "label": "Resposta e continuidade",
+          "detail": "Contenção, recuperação e comunicação conforme o caso"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Cibersegurança. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nA demanda combina prevenção contínua e resposta emergencial. Licenças, equipe de analistas e responsabilidade contratual têm economias diferentes; vender proteção não equivale a garantir ausência de incidente.\n\nA ANPD registrou 362 comunicações de incidentes em 2025. É um indicador administrativo de ocorrências reportadas envolvendo dados pessoais, não tamanho do mercado nem contagem total de ataques.\n\nInferência: especialização e integração com processos do cliente podem sustentar diferenciação, mas escala de atendimento, custo de pessoal e dependência de plataformas limitam a margem.\n\nPrestadores empresariais de proteção, monitoramento, resposta a incidentes e segurança industrial. Separar revenda de licenças, consultoria e operação recorrente; não somar seus faturamentos aos gastos totais de TIC.\n\nO negócio funciona assim. Plataformas de proteção: Licenças, atualização e inteligência de ameaças. Especialista de segurança: Configura, integra, monitora e testa controles. Operação do cliente: Autoriza mudanças, controla acessos e prioriza ativos. Resposta e continuidade: Contenção, recuperação e comunicação conforme o caso.\n\nA dinâmica de mercado. A regulamentação e a digitalização ampliam requisitos de governança, mas não comprovam aumento imediato de contratos. Uma ocorrência pode acelerar compras de emergência; passado o evento, o orçamento pode voltar a ser disputado com outras prioridades.\n\nNa empresa média, observe os modelos de receita. Licenças e appliances: Compra ou compromisso com fabricante antes do recebimento. Separar receita de revenda da remuneração do serviço. Monitoramento recorrente: Cobertura e capacidade de análise exigem equipe e ferramentas mesmo com poucos alertas. Custo por ambiente, qualidade dos alertas e obrigações de atendimento. Resposta a incidente: Mobilização imprevisível e risco de escopo crescente. Critérios de aceite, evidência preservada e limite de responsabilidade. Segurança industrial: Parada de produção pode custar mais que o equipamento protegido. Janelas de intervenção e compatibilidade com sistemas legados.\n\nOs pontos de atenção são: Dependência tecnológica: Uma plataforma proprietária limita migração e pode reajustar custos. Verificar Alternativas homologadas e cláusulas de renovação. Capacidade técnica: Vendas acima da capacidade de atendimento elevam backlog e falhas. Verificar Carga por analista, alertas sem tratamento e escalonamento. Responsabilidade: Promessas comerciais podem exceder cobertura técnica. Verificar SLA, exclusões, seguro aplicável e obrigação de reparar.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Implantação e licenças: Giro compatível com marcos de recebimento. Validar adiantamento e aceite; não financiar expectativa como recebível exigível. Expansão de operação: Investimento em plataforma e equipe associado a contratos. Separar gasto de capacidade de receita já contratada. Resposta emergencial: Reserva de liquidez e mobilização. Não pressupor recorrência da demanda extraordinária.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Renovações seletivas e exigência de demonstrar redução de exposição. Favorável: Novos ambientes protegidos com equipe e preços dimensionados antes da expansão. Adverso: Concorrência reduz preço enquanto salários e licenças sobem; incidentes geram custo e retrabalho.\n\nNa visita, comece por estas perguntas. Quais ativos críticos ficam protegidos, e o que está expressamente fora do contrato? Quem decide a contratação e qual problema justifica terceirizar em vez de manter equipe interna? Que parte da receita vem de licenças, implantação, monitoramento e emergência? Quais fabricantes e especialistas não podem ser substituídos rapidamente? Como a empresa prova capacidade de atendimento e acompanha margem por contrato? Qual desembolso acontece antes do recebimento e como cancelamentos afetam esse fluxo?\n\nLimites da pesquisa. O histórico estimado de gastos cobre três anos, mas não mede margem ou participação dos prestadores. Os comunicados à ANPD não cobrem todos os ataques e podem refletir maior notificação ou mudanças de classificação.\n\nO mercado estimado de hardware, software e serviços de segurança passou de treze vírgula quatro bilhões de reais em dois mil e vinte e três para vinte e dois vírgula dois bilhões em dois mil e vinte e cinco. São estimativas nominais de estudo setorial, não estatística oficial nem faturamento apenas das empresas médias.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "2e4fca87a43ed263b69e09211d294048dad5041ec6e494e1fb65f929190b6f47"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 2,
+    "title": "Redes e conectividade",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "O valor da integradora está em transformar equipamento e link em uma rede confiável para o processo do cliente. Projeto, instalação e manutenção têm ciclos de caixa diferentes.",
+      "O crescimento da base de banda larga é contexto de conectividade, não receita de redes corporativas. A expansão não elimina competição por preço ou custos de manutenção.",
+      "Inferência: disponibilidade, documentação e capacidade de diagnóstico podem diferenciar a empresa média; estoque sem demanda e projetos com aceite tardio pressionam caixa."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Empresas que projetam, instalam e mantêm redes locais, enlaces e conectividade empresarial. Separar integradora de redes de operadora de acesso regulada e de fabricante de equipamentos.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Projeto e implantação",
+            "Materiais e mão de obra precedem aceite.",
+            "Faturamento por marcos e documentação do escopo."
+          ],
+          [
+            "Equipamento com serviço",
+            "Preço do hardware pode mascarar margem de instalação.",
+            "Margem por item e horas efetivamente consumidas."
+          ],
+          [
+            "Manutenção",
+            "Receita contratada exige disponibilidade técnica e peças.",
+            "Chamados, deslocamentos e compromisso de reposição."
+          ],
+          [
+            "Gestão de links",
+            "Integração depende de prestadores distintos.",
+            "Responsabilidades e limites do SLA de cada parte."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "Concorrência local em instalação convive com integradoras nacionais em projetos complexos. Fabricantes, distribuidores e operadoras podem atuar também como canal ou concorrente; comparar proposta completa e custo de manutenção.",
+          "O Ceará reúne infraestrutura pública de conectividade e conexão a cabos submarinos, documentada pela Etice. Isso favorece aplicações sensíveis a conectividade, mas não elimina a necessidade de estudar a última milha de cada cliente.",
+          "Exemplos de integradores, sem ranking: Soow Sigma divulga conectividade e redes ópticas; Logicalis apresenta redes empresariais e conectividade em seu portfólio. A comparação competitiva depende do escopo, praça e nível de serviço contratado."
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Página informa publicação em 02/01/2026 e atualização em 27/10/2026; caminho e republicação divergem. Observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "Soow Sigma · portfólio público",
+            "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+            "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+          },
+          {
+            "label": "Logicalis · serviços gerenciados",
+            "url": "https://www.la.logicalis.com/pt-br/solucoes-e-servicos/por-servico/servicos-gerenciados",
+            "purpose": "Portfólio público lido em 06/11/2026. Exemplo, sem ranking e sem equivalência de porte."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "O Ministério das Comunicações informa 52,5 milhões de acessos de banda larga fixa em dezembro de 2024 e 53,9 milhões em dezembro de 2025. Esse é um estoque de acessos, não quantidade de pessoas ou receita das integradoras."
+        ],
+        "rows": [
+          [
+            "Contexto externo",
+            "Acessos fixos e tecnologia de acesso",
+            "Base de acesso não mede rede corporativa."
+          ],
+          [
+            "Operação",
+            "Disponibilidade, latência, falhas e tempo de reparo",
+            "Medir por aplicação e período, não só velocidade nominal."
+          ],
+          [
+            "Resultado",
+            "Margem de projeto, backlog e estoque",
+            "Separar pedido, execução e aceite."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "A renovação de redes acompanha mudança de aplicações, unidades e equipamentos. Em fase de restrição de investimento, clientes podem adiar substituição e comprar manutenção; o prestador precisa distinguir receita temporária de contrato sustentável.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Compra de equipamentos",
+            "Giro vinculado ao pedido e ao prazo do fornecedor.",
+            "Estoque especulativo e preço em moeda estrangeira."
+          ],
+          [
+            "Execução",
+            "Cronograma físico-financeiro por marco.",
+            "Atraso de obra ou aceite muda o prazo do caixa."
+          ],
+          [
+            "Frota e instrumentos",
+            "Investimento compatível com uso contratado.",
+            "Não usar prazo curto para ativo de retorno longo."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Obsolescência",
+            "Estoque de equipamentos envelhece antes da venda.",
+            "Pedidos firmes, ciclo do produto e política de troca."
+          ],
+          [
+            "Aceite",
+            "Desempenho depende da rede do cliente e de terceiros.",
+            "Testes, documentação e critérios de responsabilidade."
+          ],
+          [
+            "Custo de campo",
+            "Chamados dispersos encarecem deslocamentos.",
+            "Densidade geográfica e custo por atendimento."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento da instalação e proximidade operacional."
+          ],
+          [
+            "Fraquezas",
+            "Deslocamentos, estoque e dependência de fabricante."
+          ],
+          [
+            "Oportunidades",
+            "Modernização de redes e redundância para processos críticos."
+          ],
+          [
+            "Ameaças",
+            "Comoditização de equipamentos e venda direta."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Instaladores e integradoras disputam projetos por preço e qualidade; comparar garantia e suporte."
+          ],
+          [
+            "Compradores",
+            "Compradores com projeto padronizado têm mais alternativas; ambientes complexos elevam custo de troca."
+          ],
+          [
+            "Fornecedores",
+            "Homologação e compatibilidade podem concentrar fornecedores."
+          ],
+          [
+            "Entrantes",
+            "Barreiras crescem com certificação, estoque de reposição e capacidade regional."
+          ],
+          [
+            "Substitutos",
+            "Soluções sem fio e serviços gerenciados podem substituir partes de uma rede própria, condicionadas à aplicação."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Renovação gradual com projetos menores e manutenção.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Expansão de unidades e aplicações críticas aumenta demanda por redundância.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Investimento adiado, estoque parado e contratos de suporte sem reajuste suficiente.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Que problema de disponibilidade a rede resolve para o cliente?"
+          ],
+          [
+            "2",
+            "O comprador é empresa final, operadora ou outra integradora, e quem define a especificação?"
+          ],
+          [
+            "3",
+            "Quanto do contrato é equipamento, implantação e manutenção?"
+          ],
+          [
+            "4",
+            "Quais componentes e enlaces não têm alternativa homologada?"
+          ],
+          [
+            "5",
+            "Quais testes liberam o aceite e quem responde por falhas de terceiros?"
+          ],
+          [
+            "6",
+            "Como se financiam materiais e equipe entre o pedido e o recebimento?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "acessos-fixos",
+        "title": "Banda larga fixa: acessos no Brasil",
+        "unit": "milhões de acessos",
+        "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+        "years": [
+          2024,
+          2025
+        ],
+        "period": "dezembro de 2024 e dezembro de 2025",
+        "source": {
+          "label": "Ministério das Comunicações · acessos de telecomunicações",
+          "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+          "purpose": "Página original informa publicação em 02/01/2026 e atualização em 27/10/2026; observações dezembro de 2024 e 2025."
+        },
+        "method": "Valores divulgados pelo MCom com base na Anatel. Não se encadearam notícias antigas com bases possivelmente revisadas. Dois pontos não demonstram tendência de longo prazo.",
+        "series": [
+          {
+            "label": "Banda larga fixa",
+            "values": [
+              52.5,
+              53.9
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Ministério das Comunicações · acessos de telecomunicações",
+        "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+        "purpose": "Página informa publicação em 02/01/2026 e atualização em 27/10/2026; caminho e republicação divergem. Observações de dezembro de 2024 e 2025, base Anatel."
+      },
+      {
+        "label": "Governo do Ceará · Cinturão Digital",
+        "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+        "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+      },
+      {
+        "label": "Soow Sigma · portfólio público",
+        "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+        "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+      },
+      {
+        "label": "Logicalis · serviços gerenciados",
+        "url": "https://www.la.logicalis.com/pt-br/solucoes-e-servicos/por-servico/servicos-gerenciados",
+        "purpose": "Portfólio público lido em 06/11/2026. Exemplo, sem ranking e sem equivalência de porte."
+      }
+    ],
+    "limitations": [
+      "Não foi recuperada série específica do mercado brasileiro de integração de redes corporativas.",
+      "Dados de acesso ao serviço público não substituem faturamento nem margem de projetos empresariais.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Que problema de disponibilidade a rede resolve para o cliente?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "O comprador é empresa final, operadora ou outra integradora, e quem define a especificação?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "Quanto do contrato é equipamento, implantação e manutenção?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais componentes e enlaces não têm alternativa homologada?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Quais testes liberam o aceite e quem responde por falhas de terceiros?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "Como se financiam materiais e equipe entre o pedido e o recebimento?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Fabricantes e distribuidores",
+          "detail": "Switches, roteadores, cabos e equipamentos sem fio"
+        },
+        {
+          "id": "n1",
+          "label": "Projeto e instalação",
+          "detail": "Dimensionamento, cabeamento e configuração"
+        },
+        {
+          "id": "n2",
+          "label": "Operadoras e enlaces",
+          "detail": "Acesso externo, redundância e transporte"
+        },
+        {
+          "id": "n3",
+          "label": "Rede do cliente",
+          "detail": "Aplicações, usuários e monitoramento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Redes e conectividade. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nO valor da integradora está em transformar equipamento e link em uma rede confiável para o processo do cliente. Projeto, instalação e manutenção têm ciclos de caixa diferentes.\n\nO crescimento da base de banda larga é contexto de conectividade, não receita de redes corporativas. A expansão não elimina competição por preço ou custos de manutenção.\n\nInferência: disponibilidade, documentação e capacidade de diagnóstico podem diferenciar a empresa média; estoque sem demanda e projetos com aceite tardio pressionam caixa.\n\nEmpresas que projetam, instalam e mantêm redes locais, enlaces e conectividade empresarial. Separar integradora de redes de operadora de acesso regulada e de fabricante de equipamentos.\n\nO negócio funciona assim. Fabricantes e distribuidores: Switches, roteadores, cabos e equipamentos sem fio. Projeto e instalação: Dimensionamento, cabeamento e configuração. Operadoras e enlaces: Acesso externo, redundância e transporte. Rede do cliente: Aplicações, usuários e monitoramento.\n\nA dinâmica de mercado. A renovação de redes acompanha mudança de aplicações, unidades e equipamentos. Em fase de restrição de investimento, clientes podem adiar substituição e comprar manutenção; o prestador precisa distinguir receita temporária de contrato sustentável.\n\nNa empresa média, observe os modelos de receita. Projeto e implantação: Materiais e mão de obra precedem aceite. Faturamento por marcos e documentação do escopo. Equipamento com serviço: Preço do hardware pode mascarar margem de instalação. Margem por item e horas efetivamente consumidas. Manutenção: Receita contratada exige disponibilidade técnica e peças. Chamados, deslocamentos e compromisso de reposição. Gestão de links: Integração depende de prestadores distintos. Responsabilidades e limites do SLA de cada parte.\n\nOs pontos de atenção são: Obsolescência: Estoque de equipamentos envelhece antes da venda. Verificar Pedidos firmes, ciclo do produto e política de troca. Aceite: Desempenho depende da rede do cliente e de terceiros. Verificar Testes, documentação e critérios de responsabilidade. Custo de campo: Chamados dispersos encarecem deslocamentos. Verificar Densidade geográfica e custo por atendimento.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Compra de equipamentos: Giro vinculado ao pedido e ao prazo do fornecedor. Estoque especulativo e preço em moeda estrangeira. Execução: Cronograma físico-financeiro por marco. Atraso de obra ou aceite muda o prazo do caixa. Frota e instrumentos: Investimento compatível com uso contratado. Não usar prazo curto para ativo de retorno longo.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Renovação gradual com projetos menores e manutenção. Favorável: Expansão de unidades e aplicações críticas aumenta demanda por redundância. Adverso: Investimento adiado, estoque parado e contratos de suporte sem reajuste suficiente.\n\nNa visita, comece por estas perguntas. Que problema de disponibilidade a rede resolve para o cliente? O comprador é empresa final, operadora ou outra integradora, e quem define a especificação? Quanto do contrato é equipamento, implantação e manutenção? Quais componentes e enlaces não têm alternativa homologada? Quais testes liberam o aceite e quem responde por falhas de terceiros? Como se financiam materiais e equipe entre o pedido e o recebimento?\n\nLimites da pesquisa. Não foi recuperada série específica do mercado brasileiro de integração de redes corporativas. Dados de acesso ao serviço público não substituem faturamento nem margem de projetos empresariais.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "70bb196abc0c107f04b988e54e3b7db51c04c85e2d11d773be7b0c6094971710"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 3,
+    "title": "Serviços gerenciados de TI",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "Recorrência de faturamento não significa receita sem risco: implantação, licenças e escala de suporte podem consumir caixa antes da estabilização.",
+      "O modelo de contratação multinuvem do MGI distingue projeto, migração, configuração, manutenção e gestão. É evidência de desenho contratual público, não medida de demanda privada.",
+      "Inferência: a empresa ganha eficiência quando padroniza atendimento sem ignorar criticidade; contratos mal delimitados transformam volume de chamados em custo não remunerado."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Operação continuada de infraestrutura e suporte de TI, incluindo monitoramento, ambiente em nuvem e atendimento. Separar contrato recorrente, implantação, revenda de licenças e cessão de profissionais.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Entrada do contrato",
+            "Inventário e correção de passivos técnicos exigem esforço inicial.",
+            "Cobrança da transição e registro das exclusões."
+          ],
+          [
+            "Mensalidade fixa",
+            "Receita previsível com volume de demanda variável.",
+            "Limites de usuários, ativos, horas e escopo."
+          ],
+          [
+            "Consumo em nuvem",
+            "Fatura depende de uso e de compromisso com provedor.",
+            "Conciliação do consumo e regras de repasse."
+          ],
+          [
+            "Serviço extraordinário",
+            "Mudanças e novos projetos fora do contrato.",
+            "Autorização prévia e faturamento separado."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "Prestadores locais, integradoras e operações de fabricantes disputam escopos diferentes. O Serpro aparece em contratos públicos de serviços multinuvem, mas é referência empresarial pública específica, não modelo de preço ou acesso para empresas médias.",
+          "Centros de software e serviços como Recife favorecem recrutamento e colaboração. A localização de uma central de suporte deve ser avaliada pela disponibilidade de profissionais e continuidade, não por um ranking não demonstrado.",
+          "Exemplos privados, sem ranking: Logicalis divulga gestão de infraestrutura, monitoramento e suporte; Soow Sigma apresenta gestão de plataformas críticas. Portfólios comprovam atuação declarada, não condições comerciais ou participação."
+        ],
+        "sources": [
+          {
+            "label": "MGI · consulta pública de contratação multinuvem",
+            "url": "https://www.gov.br/gestao/pt-br/assuntos/central-de-compras/transparencia/consultas-publicas/consultas-publicas/encerradas/consulta-publica-no-01-2023-termo-de-referencia-e-artefatos-de-planejamento-para-a-contratacao-centralizada-de-servicos-de-computacao-em-nuvem",
+            "purpose": "Objeto publicado de contratação, não receita realizada nem oportunidade aberta."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "Funarte · extrato de contrato com Serpro",
+            "url": "https://www.gov.br/funarte/pt-br/acesso-a-informacao-lai/licitacoes-e-contratos/contratos-1/instrumentos-contratuais/2024/contrato-no-12-2024-servico-federal-de-processamento-de-dados-serpro/contrato-12-2024-servico-federal-de-processamento-de-dados-serpro",
+            "purpose": "Extrato publicado no DOU em 25/09/2024. Evidência histórica de contrato multinuvem, não oferta vigente ou preço médio."
+          },
+          {
+            "label": "Soow Sigma · portfólio público",
+            "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+            "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+          },
+          {
+            "label": "Logicalis · serviços gerenciados",
+            "url": "https://www.la.logicalis.com/pt-br/solucoes-e-servicos/por-servico/servicos-gerenciados",
+            "purpose": "Portfólio público lido em 06/11/2026. Exemplo, sem ranking e sem equivalência de porte."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "A consulta pública do MGI descreve concepção, projeto, provisionamento, configuração, migração, suporte, manutenção e gestão de topologias multinuvem. A existência desse objeto não prova contratação concluída ou crescimento do mercado."
+        ],
+        "rows": [
+          [
+            "Qualidade",
+            "Fila, reincidência e cumprimento do SLA",
+            "Não premiar fechamento de chamados sem solução."
+          ],
+          [
+            "Economia",
+            "Horas por contrato e margem após licenças",
+            "Mensalidade pode ocultar atendimento deficitário."
+          ],
+          [
+            "Retenção",
+            "Renovações, cancelamentos e concentração",
+            "Receita contratada não é garantia de recebimento."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "MGI · consulta pública de contratação multinuvem",
+            "url": "https://www.gov.br/gestao/pt-br/assuntos/central-de-compras/transparencia/consultas-publicas/consultas-publicas/encerradas/consulta-publica-no-01-2023-termo-de-referencia-e-artefatos-de-planejamento-para-a-contratacao-centralizada-de-servicos-de-computacao-em-nuvem",
+            "purpose": "Objeto publicado de contratação, não receita realizada nem oportunidade aberta."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "Terceirização pode substituir capex próprio por serviço, mas o fornecedor passa a suportar investimento e capacidade. Redução do orçamento do cliente pode elevar cobrança por eficiência e revisão de escopo, mesmo quando o contrato é recorrente.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "MGI · consulta pública de contratação multinuvem",
+            "url": "https://www.gov.br/gestao/pt-br/assuntos/central-de-compras/transparencia/consultas-publicas/consultas-publicas/encerradas/consulta-publica-no-01-2023-termo-de-referencia-e-artefatos-de-planejamento-para-a-contratacao-centralizada-de-servicos-de-computacao-em-nuvem",
+            "purpose": "Objeto publicado de contratação, não receita realizada nem oportunidade aberta."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Implantação",
+            "Giro para transição vinculado a pagamentos de implantação.",
+            "Subestimar passivos técnicos prolonga retorno."
+          ],
+          [
+            "Licenças e nuvem",
+            "Compatibilizar obrigações com renovação dos clientes.",
+            "Compromisso anual pode superar prazo do cliente."
+          ],
+          [
+            "Expansão",
+            "Investimento em automação e capacidade comprovada.",
+            "Crescimento de folha antes de contratos firmes."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Transição deficitária",
+            "Passivo técnico descoberto depois da assinatura.",
+            "Inventário, baseline e termo de transição."
+          ],
+          [
+            "Escopo aberto",
+            "Mais ativos e chamados sem reajuste.",
+            "Métricas contratadas e regra de mudança."
+          ],
+          [
+            "Dependência de pessoas",
+            "Ausência de especialista interrompe atendimento.",
+            "Documentação, escala e substituição."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento acumulado e padronização de processos."
+          ],
+          [
+            "Fraquezas",
+            "Custo fixo e transições mal precificadas."
+          ],
+          [
+            "Oportunidades",
+            "Gestão de ambientes híbridos e continuidade."
+          ],
+          [
+            "Ameaças",
+            "Automação nativa e concorrência de preço."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Comparar escopo e níveis de serviço, não apenas mensalidade."
+          ],
+          [
+            "Compradores",
+            "Cliente com inventário e documentação pode trocar fornecedor mais facilmente."
+          ],
+          [
+            "Fornecedores",
+            "Plataformas e profissionais especializados limitam alternativas."
+          ],
+          [
+            "Entrantes",
+            "Suporte simples permite entrada; ambientes críticos exigem processos e escala."
+          ],
+          [
+            "Substitutos",
+            "Equipe interna e ferramentas automatizadas substituem funções, mas não toda responsabilidade operacional."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Renovação com renegociação de escopo e produtividade.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Automação reduz esforço e libera capacidade para novos contratos com margem.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Chamados e custos sobem sem repasse, com cancelamento de clientes concentrados.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Que atividade o cliente deixa de executar ao contratar a empresa?"
+          ],
+          [
+            "2",
+            "Qual segmento é atendido e quem decide renovar ou cancelar?"
+          ],
+          [
+            "3",
+            "Quais receitas cobrem transição, mensalidade, licenças e demandas extras?"
+          ],
+          [
+            "4",
+            "Quais ferramentas e pessoas são essenciais para continuar operando?"
+          ],
+          [
+            "5",
+            "Como a margem e a qualidade são medidas por contrato?"
+          ],
+          [
+            "6",
+            "Quanto caixa a transição consome antes de o contrato se pagar?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "MGI · consulta pública de contratação multinuvem",
+        "url": "https://www.gov.br/gestao/pt-br/assuntos/central-de-compras/transparencia/consultas-publicas/consultas-publicas/encerradas/consulta-publica-no-01-2023-termo-de-referencia-e-artefatos-de-planejamento-para-a-contratacao-centralizada-de-servicos-de-computacao-em-nuvem",
+        "purpose": "Objeto publicado de contratação, não receita realizada nem oportunidade aberta."
+      },
+      {
+        "label": "MGI · modelo de contratação de software e nuvem",
+        "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+        "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+      },
+      {
+        "label": "Prefeitura do Recife · ecossistema de tecnologia",
+        "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+        "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+      },
+      {
+        "label": "Funarte · extrato de contrato com Serpro",
+        "url": "https://www.gov.br/funarte/pt-br/acesso-a-informacao-lai/licitacoes-e-contratos/contratos-1/instrumentos-contratuais/2024/contrato-no-12-2024-servico-federal-de-processamento-de-dados-serpro/contrato-12-2024-servico-federal-de-processamento-de-dados-serpro",
+        "purpose": "Extrato publicado no DOU em 25/09/2024. Evidência histórica de contrato multinuvem, não oferta vigente ou preço médio."
+      },
+      {
+        "label": "Soow Sigma · portfólio público",
+        "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+        "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+      },
+      {
+        "label": "Logicalis · serviços gerenciados",
+        "url": "https://www.la.logicalis.com/pt-br/solucoes-e-servicos/por-servico/servicos-gerenciados",
+        "purpose": "Portfólio público lido em 06/11/2026. Exemplo, sem ranking e sem equivalência de porte."
+      }
+    ],
+    "limitations": [
+      "Não foi localizada série oficial que separe serviços gerenciados de todos os serviços de TI.",
+      "Contratação pública é exemplo de estrutura; não foi usada como média de preços, margens ou prazos do setor.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Que atividade o cliente deixa de executar ao contratar a empresa?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Qual segmento é atendido e quem decide renovar ou cancelar?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "Quais receitas cobrem transição, mensalidade, licenças e demandas extras?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais ferramentas e pessoas são essenciais para continuar operando?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Como a margem e a qualidade são medidas por contrato?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "Quanto caixa a transição consome antes de o contrato se pagar?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Plataformas e pessoas",
+          "detail": "Ferramentas de monitoramento, nuvem e especialistas"
+        },
+        {
+          "id": "n1",
+          "label": "Transição inicial",
+          "detail": "Inventário, migração e documentação do ambiente"
+        },
+        {
+          "id": "n2",
+          "label": "Operação recorrente",
+          "detail": "Suporte, manutenção e resposta a falhas"
+        },
+        {
+          "id": "n3",
+          "label": "Gestão do cliente",
+          "detail": "Priorização, aceite e revisão dos níveis de serviço"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Serviços gerenciados de TI. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nRecorrência de faturamento não significa receita sem risco: implantação, licenças e escala de suporte podem consumir caixa antes da estabilização.\n\nO modelo de contratação multinuvem do MGI distingue projeto, migração, configuração, manutenção e gestão. É evidência de desenho contratual público, não medida de demanda privada.\n\nInferência: a empresa ganha eficiência quando padroniza atendimento sem ignorar criticidade; contratos mal delimitados transformam volume de chamados em custo não remunerado.\n\nOperação continuada de infraestrutura e suporte de TI, incluindo monitoramento, ambiente em nuvem e atendimento. Separar contrato recorrente, implantação, revenda de licenças e cessão de profissionais.\n\nO negócio funciona assim. Plataformas e pessoas: Ferramentas de monitoramento, nuvem e especialistas. Transição inicial: Inventário, migração e documentação do ambiente. Operação recorrente: Suporte, manutenção e resposta a falhas. Gestão do cliente: Priorização, aceite e revisão dos níveis de serviço.\n\nA dinâmica de mercado. Terceirização pode substituir capex próprio por serviço, mas o fornecedor passa a suportar investimento e capacidade. Redução do orçamento do cliente pode elevar cobrança por eficiência e revisão de escopo, mesmo quando o contrato é recorrente.\n\nNa empresa média, observe os modelos de receita. Entrada do contrato: Inventário e correção de passivos técnicos exigem esforço inicial. Cobrança da transição e registro das exclusões. Mensalidade fixa: Receita previsível com volume de demanda variável. Limites de usuários, ativos, horas e escopo. Consumo em nuvem: Fatura depende de uso e de compromisso com provedor. Conciliação do consumo e regras de repasse. Serviço extraordinário: Mudanças e novos projetos fora do contrato. Autorização prévia e faturamento separado.\n\nOs pontos de atenção são: Transição deficitária: Passivo técnico descoberto depois da assinatura. Verificar Inventário, baseline e termo de transição. Escopo aberto: Mais ativos e chamados sem reajuste. Verificar Métricas contratadas e regra de mudança. Dependência de pessoas: Ausência de especialista interrompe atendimento. Verificar Documentação, escala e substituição.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Implantação: Giro para transição vinculado a pagamentos de implantação. Subestimar passivos técnicos prolonga retorno. Licenças e nuvem: Compatibilizar obrigações com renovação dos clientes. Compromisso anual pode superar prazo do cliente. Expansão: Investimento em automação e capacidade comprovada. Crescimento de folha antes de contratos firmes.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Renovação com renegociação de escopo e produtividade. Favorável: Automação reduz esforço e libera capacidade para novos contratos com margem. Adverso: Chamados e custos sobem sem repasse, com cancelamento de clientes concentrados.\n\nNa visita, comece por estas perguntas. Que atividade o cliente deixa de executar ao contratar a empresa? Qual segmento é atendido e quem decide renovar ou cancelar? Quais receitas cobrem transição, mensalidade, licenças e demandas extras? Quais ferramentas e pessoas são essenciais para continuar operando? Como a margem e a qualidade são medidas por contrato? Quanto caixa a transição consome antes de o contrato se pagar?\n\nLimites da pesquisa. Não foi localizada série oficial que separe serviços gerenciados de todos os serviços de TI. Contratação pública é exemplo de estrutura; não foi usada como média de preços, margens ou prazos do setor.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "a068c07c496689bcdf50d618cbe41b18ee43a59a98bd9ce60023bdb83fd94c61"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 4,
+    "title": "Comunicação e colaboração",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "A proposta de valor está na comunicação utilizável e integrada ao trabalho, não apenas em licenças ou aparelhos. Implantação, adoção e suporte condicionam a renovação.",
+      "O Iphan publicou em setembro de 2026 um objeto de contratação de telefonia VoIP e PABX em nuvem com equipamentos em comodato. É um exemplo concreto de demanda, sem extrapolar volume ou preço para o mercado.",
+      "Inferência: cobrança recorrente pode coexistir com equipamentos e migração pagos antecipadamente, exigindo disciplina de prazo e de recuperação do investimento."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Soluções empresariais de voz, reuniões, mensagens, contact center e colaboração, integradas ou em nuvem. Não confundir com mídia/publicidade nem com a operação de telecomunicações regulada.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Licença por usuário",
+            "Custo e receita variam com assentos contratados.",
+            "Licenças compradas, ativas e efetivamente usadas."
+          ],
+          [
+            "Comunicação em nuvem",
+            "Serviço depende de conectividade e plataforma.",
+            "Qualidade, gravação, armazenamento e responsabilidade."
+          ],
+          [
+            "Equipamento em comodato",
+            "Investimento permanece no fornecedor.",
+            "Prazo de recuperação e devolução em cancelamento."
+          ],
+          [
+            "Integração e migração",
+            "Trabalho inicial antes de estabilizar a operação.",
+            "Portabilidade, treinamento e aceite."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "Plataformas globais, operadoras e integradores locais podem atender a partes da necessidade. A comparação deve considerar interoperabilidade, migração, suporte e custos de saída, sem presumir equivalência entre licença simples e serviço completo.",
+          "A entrega pode ser remota, mas implantação em unidades dispersas e qualidade da última milha continuam locais. Não foi verificado polo brasileiro especializado com participação mensurada neste recorte.",
+          "Exemplo de canal integrador, sem ranking: Soow Sigma apresenta comunicação e colaboração em seu portfólio. Fabricantes/plataformas e integradores ocupam elos diferentes; o nome de uma plataforma não define quem assume implantação e suporte."
+        ],
+        "sources": [
+          {
+            "label": "Iphan · contratação de telefonia em nuvem",
+            "url": "https://www.gov.br/iphan/pt-br/acesso-a-informacao/licitacoes-e-contratos/iphan-ba_uasg-343007/licitacoes/pregao-eletronico/2026/pregao-no-01-2026",
+            "purpose": "Edital publicado em 03/09/2026; exemplo de demanda, não contrato adjudicado nem tamanho do mercado."
+          },
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Soow Sigma · portfólio público",
+            "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+            "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "A contratação publicada pelo Iphan descreve VoIP, PABX em nuvem e comodato de aparelhos. Não foi confirmada adjudicação ou execução; o edital foi usado apenas como evidência de escopo demandado."
+        ],
+        "rows": [
+          [
+            "Adoção",
+            "Usuários ativos e funções utilizadas",
+            "Licença vendida não prova valor entregue."
+          ],
+          [
+            "Qualidade",
+            "Falhas de chamada e disponibilidade",
+            "Medir experiência por localidade."
+          ],
+          [
+            "Caixa",
+            "Equipamentos cedidos, antecipações e cancelamentos",
+            "Mensalidade precisa recuperar custos iniciais."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Iphan · contratação de telefonia em nuvem",
+            "url": "https://www.gov.br/iphan/pt-br/acesso-a-informacao/licitacoes-e-contratos/iphan-ba_uasg-343007/licitacoes/pregao-eletronico/2026/pregao-no-01-2026",
+            "purpose": "Edital publicado em 03/09/2026; exemplo de demanda, não contrato adjudicado nem tamanho do mercado."
+          },
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "A substituição de telefonia tradicional por soluções digitais é mecanismo estrutural. No ciclo, clientes podem reduzir assentos, consolidar ferramentas ou adiar equipamentos; expansão do trabalho digital não implica aumento de margem do canal.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "Iphan · contratação de telefonia em nuvem",
+            "url": "https://www.gov.br/iphan/pt-br/acesso-a-informacao/licitacoes-e-contratos/iphan-ba_uasg-343007/licitacoes/pregao-eletronico/2026/pregao-no-01-2026",
+            "purpose": "Edital publicado em 03/09/2026; exemplo de demanda, não contrato adjudicado nem tamanho do mercado."
+          },
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Comodato",
+            "Investimento com prazo aderente ao contrato.",
+            "Cancelamento pode deixar ativo sem reutilização."
+          ],
+          [
+            "Migração",
+            "Giro por marcos de implantação.",
+            "Aceite e dependência de operadora."
+          ],
+          [
+            "Licenças",
+            "Compatibilizar compra e faturamento.",
+            "Renovação e moeda do fornecedor."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Licenças ociosas",
+            "Compromissos mínimos excedem uso do cliente.",
+            "Assentos ativos e prazo de redução."
+          ],
+          [
+            "Migração",
+            "Portabilidade e integração atrasam entrada em operação.",
+            "Plano de contingência e aceites parciais."
+          ],
+          [
+            "Qualidade",
+            "Falha de rede pode parecer falha da plataforma.",
+            "Monitoramento ponta a ponta e divisão de responsabilidades."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento do fluxo de trabalho e integração com sistemas."
+          ],
+          [
+            "Fraquezas",
+            "Dependência de plataforma e conectividade."
+          ],
+          [
+            "Oportunidades",
+            "Consolidação de ferramentas e modernização de atendimento."
+          ],
+          [
+            "Ameaças",
+            "Venda direta e recursos incluídos em pacotes existentes."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Integradores e operadoras disputam solução e suporte; distinguir ofertas."
+          ],
+          [
+            "Compradores",
+            "Grandes compradores podem padronizar plataforma e negociar assentos."
+          ],
+          [
+            "Fornecedores",
+            "Fabricante controla licenciamento e interfaces de integração."
+          ],
+          [
+            "Entrantes",
+            "Revenda simples tem barreira menor que migração crítica e operação continuada."
+          ],
+          [
+            "Substitutos",
+            "Aplicativos já contratados e atendimento assíncrono podem substituir partes da solução."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Consolidação de ferramentas com foco em uso e suporte.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Migrações e novas integrações ampliam receita com implantação remunerada.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Redução de assentos e renovação mais cara comprimem margem do integrador.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Qual falha de comunicação ou atendimento a solução resolve?"
+          ],
+          [
+            "2",
+            "Quem usa, quem compra e quem decide renovar?"
+          ],
+          [
+            "3",
+            "A receita vem de usuário, consumo, projeto, equipamento ou suporte?"
+          ],
+          [
+            "4",
+            "Quais plataformas e operadoras determinam custo e continuidade?"
+          ],
+          [
+            "5",
+            "Como são medidos adoção, qualidade e entrega da implantação?"
+          ],
+          [
+            "6",
+            "O contrato recupera o investimento em aparelhos e migração mesmo se houver cancelamento?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Iphan · contratação de telefonia em nuvem",
+        "url": "https://www.gov.br/iphan/pt-br/acesso-a-informacao/licitacoes-e-contratos/iphan-ba_uasg-343007/licitacoes/pregao-eletronico/2026/pregao-no-01-2026",
+        "purpose": "Edital publicado em 03/09/2026; exemplo de demanda, não contrato adjudicado nem tamanho do mercado."
+      },
+      {
+        "label": "Ministério das Comunicações · acessos de telecomunicações",
+        "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+        "purpose": "Página informa publicação em 02/01/2026 e atualização em 27/10/2026; caminho e republicação divergem. Observações de dezembro de 2024 e 2025, base Anatel."
+      },
+      {
+        "label": "MGI · modelo de contratação de software e nuvem",
+        "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+        "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+      },
+      {
+        "label": "Soow Sigma · portfólio público",
+        "url": "https://www.soow.com.br/servico/monitoramento-continuo-mssp-it-ot/",
+        "purpose": "Autodescrição pública lida em 06/11/2026; comprova oferta declarada, não faturamento, qualidade ou liderança."
+      }
+    ],
+    "limitations": [
+      "Não foi recuperada série oficial específica de comunicação unificada empresarial.",
+      "Telefonia fixa agrega usos residenciais e empresariais; sua evolução não mede diretamente receitas de colaboração.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual falha de comunicação ou atendimento a solução resolve?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Quem usa, quem compra e quem decide renovar?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "A receita vem de usuário, consumo, projeto, equipamento ou suporte?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais plataformas e operadoras determinam custo e continuidade?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Como são medidos adoção, qualidade e entrega da implantação?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "O contrato recupera o investimento em aparelhos e migração mesmo se houver cancelamento?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Plataformas e operadoras",
+          "detail": "Licenças, numeração e conectividade"
+        },
+        {
+          "id": "n1",
+          "label": "Integração",
+          "detail": "Configuração, migração e ligação com sistemas"
+        },
+        {
+          "id": "n2",
+          "label": "Usuários e atendimento",
+          "detail": "Reuniões, mensagens e comunicação com clientes"
+        },
+        {
+          "id": "n3",
+          "label": "Suporte e renovação",
+          "detail": "Adoção, disponibilidade e ajuste de capacidade"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Comunicação e colaboração. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nA proposta de valor está na comunicação utilizável e integrada ao trabalho, não apenas em licenças ou aparelhos. Implantação, adoção e suporte condicionam a renovação.\n\nO Iphan publicou em setembro de 2026 um objeto de contratação de telefonia VoIP e PABX em nuvem com equipamentos em comodato. É um exemplo concreto de demanda, sem extrapolar volume ou preço para o mercado.\n\nInferência: cobrança recorrente pode coexistir com equipamentos e migração pagos antecipadamente, exigindo disciplina de prazo e de recuperação do investimento.\n\nSoluções empresariais de voz, reuniões, mensagens, contact center e colaboração, integradas ou em nuvem. Não confundir com mídia/publicidade nem com a operação de telecomunicações regulada.\n\nO negócio funciona assim. Plataformas e operadoras: Licenças, numeração e conectividade. Integração: Configuração, migração e ligação com sistemas. Usuários e atendimento: Reuniões, mensagens e comunicação com clientes. Suporte e renovação: Adoção, disponibilidade e ajuste de capacidade.\n\nA dinâmica de mercado. A substituição de telefonia tradicional por soluções digitais é mecanismo estrutural. No ciclo, clientes podem reduzir assentos, consolidar ferramentas ou adiar equipamentos; expansão do trabalho digital não implica aumento de margem do canal.\n\nNa empresa média, observe os modelos de receita. Licença por usuário: Custo e receita variam com assentos contratados. Licenças compradas, ativas e efetivamente usadas. Comunicação em nuvem: Serviço depende de conectividade e plataforma. Qualidade, gravação, armazenamento e responsabilidade. Equipamento em comodato: Investimento permanece no fornecedor. Prazo de recuperação e devolução em cancelamento. Integração e migração: Trabalho inicial antes de estabilizar a operação. Portabilidade, treinamento e aceite.\n\nOs pontos de atenção são: Licenças ociosas: Compromissos mínimos excedem uso do cliente. Verificar Assentos ativos e prazo de redução. Migração: Portabilidade e integração atrasam entrada em operação. Verificar Plano de contingência e aceites parciais. Qualidade: Falha de rede pode parecer falha da plataforma. Verificar Monitoramento ponta a ponta e divisão de responsabilidades.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Comodato: Investimento com prazo aderente ao contrato. Cancelamento pode deixar ativo sem reutilização. Migração: Giro por marcos de implantação. Aceite e dependência de operadora. Licenças: Compatibilizar compra e faturamento. Renovação e moeda do fornecedor.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Consolidação de ferramentas com foco em uso e suporte. Favorável: Migrações e novas integrações ampliam receita com implantação remunerada. Adverso: Redução de assentos e renovação mais cara comprimem margem do integrador.\n\nNa visita, comece por estas perguntas. Qual falha de comunicação ou atendimento a solução resolve? Quem usa, quem compra e quem decide renovar? A receita vem de usuário, consumo, projeto, equipamento ou suporte? Quais plataformas e operadoras determinam custo e continuidade? Como são medidos adoção, qualidade e entrega da implantação? O contrato recupera o investimento em aparelhos e migração mesmo se houver cancelamento?\n\nLimites da pesquisa. Não foi recuperada série oficial específica de comunicação unificada empresarial. Telefonia fixa agrega usos residenciais e empresariais; sua evolução não mede diretamente receitas de colaboração.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "08a16e0b5615370823433b12d7839fcc0f0003fb828f0da973486fb283d49bfb"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 5,
+    "title": "Software e serviços de TI",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "Uma mesma empresa pode combinar receita recorrente de produto com projetos intensivos em horas. A composição define margem, crescimento e capital de giro.",
+      "As pesquisas do IBGE cobrem atividades mais amplas que SaaS ou fábricas de software isoladamente. Não se usou crescimento agregado dos serviços como crescimento deste mercado.",
+      "Inferência: produto reutilizável permite escala, mas exige desenvolvimento, suporte e aquisição de clientes antes do retorno; personalização excessiva pode transformar produto em projeto."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Desenvolvimento, licenciamento, implantação e manutenção de software, com recorte no Brasil e foco na economia da empresa média. Separar produto próprio, software sob encomenda, consultoria e alocação de equipe.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Produto próprio",
+            "Desenvolvimento antecede receita e pode ser reutilizado.",
+            "Receita recorrente, retenção e custo de atender."
+          ],
+          [
+            "Sob encomenda",
+            "Escopo e horas determinam custo de entrega.",
+            "Mudanças, aceite e retrabalho."
+          ],
+          [
+            "Implantação",
+            "Integração e migração condicionam o uso.",
+            "Marcos faturáveis e dependências do cliente."
+          ],
+          [
+            "Equipe dedicada",
+            "Receita ligada à capacidade de profissionais.",
+            "Ociosidade, reajuste e concentração contratual."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "A concorrência depende da função do software, setor comprador e porte. ERP vertical, aplicativo sob medida e ferramenta global não formam um único mercado. Não foi publicado ranking de fornecedores sem recorte e métrica verificáveis.",
+          "A Prefeitura do Recife identifica o Porto Digital como ecossistema de software, TIC e economia criativa. É referência de articulação e talento, não prova de que toda empresa ali tenha produtividade ou risco superiores.",
+          "Exemplo brasileiro específico: o BNDES divulgou em setembro de 2025 financiamento aprovado para a PD Case desenvolver plataforma com IA voltada ao segmento financeiro. O caso ilustra produto vertical e investimento em desenvolvimento; aprovação não comprova entrega concluída nem acesso de toda média empresa às mesmas condições."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Pesquisa Mensal de Serviços",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9229-pesquisa-mensal-de-servicos.html",
+            "purpose": "Cobertura e método; não foi recuperada série numérica integral específica de cada especialidade."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "BNDES · plataforma PD Case",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-apoia-desenvolvimento-de-plataforma-com-IA-voltada-ao-segmento-financeiro/",
+            "purpose": "Notícia de 05/09/2025 sobre projeto aprovado. Não significa produto já concluído, benefício disponível ou condições replicáveis."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Série oficial recuperada na API SIDRA: volume de serviços de TI cresceu em todos os anos observados de 2016 a 2025, com intensidade variável. São taxas anuais, não nível de faturamento ou margem. A observação de 2026 é parcial e não foi adicionada como ano completo.",
+          "No agregado, a taxa anual foi de 24,8% em 2021,4,7% em 2023 e 12,4% em 2025. O ritmo não se traduz automaticamente no desempenho de uma fábrica de software ou produto SaaS."
+        ],
+        "rows": [
+          [
+            "Produto",
+            "Retenção, expansão e cancelamento de receita",
+            "Separar novos clientes de reajuste e mudança de escopo."
+          ],
+          [
+            "Projeto",
+            "Horas, entregas e retrabalho",
+            "Avanço técnico sem aceite não é recebimento."
+          ],
+          [
+            "Caixa",
+            "Desenvolvimento, cobrança e aquisição de clientes",
+            "Receita contábil e caixa precisam ser reconciliados."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Pesquisa Mensal de Serviços",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9229-pesquisa-mensal-de-servicos.html",
+            "purpose": "Cobertura e método; não foi recuperada série numérica integral específica de cada especialidade."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "IBGE · SIDRA 8688, serviços de TI",
+            "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+            "purpose": "Variação anual do volume de serviços de TI, Brasil, 2016–2025. API consultada em 06/11/2026; base encadeada 2022=100."
+          },
+          {
+            "label": "IBGE · SIDRA 8688, agosto 2026",
+            "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+            "purpose": "Volume de serviços de TI; indicadores de comparação distintos, não somar."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "Dado observado: em agosto de 2026, o volume de serviços de TI variou 0,8% frente a julho com ajuste sazonal e 3,7% frente a agosto de 2025. O acumulado janeiro–agosto cresceu 8,4%; os 12 meses,9,6%. Comparações diferentes, não somáveis. Inferência: expansão agregada cria contexto de demanda, mas não comprova margens ou conversão de vendas da empresa média.",
+          "Mudanças tecnológicas e integração de inteligência artificial podem alterar produtividade e produto. A oportunidade comercial depende de disposição de pagar e segurança de uso; não foi projetada receita apenas com base no interesse por tecnologia.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Pesquisa Mensal de Serviços",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9229-pesquisa-mensal-de-servicos.html",
+            "purpose": "Cobertura e método; não foi recuperada série numérica integral específica de cada especialidade."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "Prefeitura do Recife · ecossistema de tecnologia",
+            "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+            "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+          },
+          {
+            "label": "IBGE · SIDRA 8688, agosto 2026",
+            "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+            "purpose": "Volume de serviços de TI; indicadores de comparação distintos, não somar."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Projetos",
+            "Giro alinhado a entregas contratadas.",
+            "Aceite, disputa de escopo e concentração."
+          ],
+          [
+            "Produto",
+            "Capital compatível com desenvolvimento e retorno incerto.",
+            "Crédito curto pode não combinar com produto ainda sem venda validada."
+          ],
+          [
+            "Recebíveis",
+            "Cessão apenas de créditos documentados e compatíveis com contrato.",
+            "Prestação futura e cláusulas de rescisão."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Personalização",
+            "Produto acumula versões específicas sem remuneração.",
+            "Horas por cliente e custo de manutenção."
+          ],
+          [
+            "Concentração",
+            "Um projeto financia equipe permanente.",
+            "Diversificação e calendário de renovação."
+          ],
+          [
+            "Propriedade intelectual",
+            "Licenças e contratos podem limitar uso e cessão do código.",
+            "Titularidade, componentes e obrigações contratuais."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento de processo e reaproveitamento de produto."
+          ],
+          [
+            "Fraquezas",
+            "Dependência de equipe e esforço de manutenção."
+          ],
+          [
+            "Oportunidades",
+            "Digitalização de nichos e integração entre sistemas."
+          ],
+          [
+            "Ameaças",
+            "Comoditização de funções e concorrência de plataformas."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Definir a aplicação antes de mapear rivais; solução horizontal não equivale a vertical."
+          ],
+          [
+            "Compradores",
+            "Migração de dados e treinamento elevam custo de troca, sem garantir retenção."
+          ],
+          [
+            "Fornecedores",
+            "Nuvem, ferramentas e profissionais podem concentrar custos."
+          ],
+          [
+            "Entrantes",
+            "Protótipo é acessível, mas produto confiável exige manutenção, distribuição e reputação."
+          ],
+          [
+            "Substitutos",
+            "Planilhas, processos manuais e software já contratado podem atender parte da necessidade."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Compradores priorizam retorno e integração; vendas seletivas.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Produto repetível e implantação disciplinada elevam receita sem custo proporcional.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Projetos cancelados, inadimplência e manutenção crescente reduzem caixa.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Qual processo do cliente melhora e qual resultado justifica pagar?"
+          ],
+          [
+            "2",
+            "Qual nicho compra e quem é o decisor econômico?"
+          ],
+          [
+            "3",
+            "Quanto da receita é produto, implantação, projeto e equipe dedicada?"
+          ],
+          [
+            "4",
+            "A empresa controla o código e quais plataformas ou pessoas são indispensáveis?"
+          ],
+          [
+            "5",
+            "Como diferencia produto repetível de customização deficitária?"
+          ],
+          [
+            "6",
+            "Quanto tempo separa desenvolver, vender, entregar e receber?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "ti-volume-anual",
+        "title": "Volume de serviços de TI no Brasil",
+        "unit": "% em relação ao ano anterior",
+        "scope": "Agregado de serviços de tecnologia da informação, não apenas software próprio ou SaaS. Empresas formais da cobertura PMS.",
+        "years": [
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "anos completos 2016–2025",
+        "source": {
+          "label": "IBGE · SIDRA 8688, serviços de TI",
+          "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+          "purpose": "Variação anual do volume de serviços de TI, Brasil, 2016–2025. API consultada em 06/11/2026; base encadeada 2022=100."
+        },
+        "method": "Variação acumulada no ano na observação dezembro, variável 11625, atividade 39322 e índice de volume 56726. Mesma extração da tabela 8688. Não é receita nominal nem lucro. A taxa não foi recalculada a partir de pontos arredondados.",
+        "series": [
+          {
+            "label": "Volume de serviços de TI",
+            "values": [
+              0.1,
+              2.0,
+              6.7,
+              13.0,
+              8.3,
+              24.8,
+              16.6,
+              4.7,
+              7.9,
+              12.4
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · Pesquisa Mensal de Serviços",
+        "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9229-pesquisa-mensal-de-servicos.html",
+        "purpose": "Cobertura e método; não foi recuperada série numérica integral específica de cada especialidade."
+      },
+      {
+        "label": "MGI · modelo de contratação de software e nuvem",
+        "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+        "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+      },
+      {
+        "label": "Prefeitura do Recife · ecossistema de tecnologia",
+        "url": "https://investerecife.recife.pe.gov.br/tecnologia/",
+        "purpose": "Polo de software e serviços digitais; referência institucional, não ranking de produtividade."
+      },
+      {
+        "label": "IBGE · SIDRA 8688, serviços de TI",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39322/c11046/56726",
+        "purpose": "Variação anual do volume de serviços de TI, Brasil, 2016–2025. API consultada em 06/11/2026; base encadeada 2022=100."
+      },
+      {
+        "label": "IBGE · SIDRA 8688, agosto 2026",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/7167,7168,11623,11624,11625,11626/p/202608/c12355/39322/c11046/56726",
+        "purpose": "Volume de serviços de TI; indicadores de comparação distintos, não somar."
+      },
+      {
+        "label": "BNDES · plataforma PD Case",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-apoia-desenvolvimento-de-plataforma-com-IA-voltada-ao-segmento-financeiro/",
+        "purpose": "Notícia de 05/09/2025 sobre projeto aprovado. Não significa produto já concluído, benefício disponível ou condições replicáveis."
+      }
+    ],
+    "limitations": [
+      "Não há base verificada para publicar margem, custo de aquisição ou taxa de cancelamento típicos de empresas médias.",
+      "A PMS mede agregado de serviços de TI; não isola SaaS, licenciamento, projetos e equipes dedicadas. Série não usada como participação de mercado ou rentabilidade.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual processo do cliente melhora e qual resultado justifica pagar?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Qual nicho compra e quem é o decisor econômico?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "Quanto da receita é produto, implantação, projeto e equipe dedicada?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "A empresa controla o código e quais plataformas ou pessoas são indispensáveis?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Como diferencia produto repetível de customização deficitária?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "Quanto tempo separa desenvolver, vender, entregar e receber?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Conhecimento e infraestrutura",
+          "detail": "Equipe, ferramentas, nuvem e componentes"
+        },
+        {
+          "id": "n1",
+          "label": "Desenvolvimento",
+          "detail": "Produto, código, testes e propriedade intelectual"
+        },
+        {
+          "id": "n2",
+          "label": "Implantação e venda",
+          "detail": "Integração, migração, treinamento e aceite"
+        },
+        {
+          "id": "n3",
+          "label": "Uso e evolução",
+          "detail": "Assinatura, suporte, manutenção e novas versões"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Software e serviços de TI. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nUma mesma empresa pode combinar receita recorrente de produto com projetos intensivos em horas. A composição define margem, crescimento e capital de giro.\n\nAs pesquisas do IBGE cobrem atividades mais amplas que SaaS ou fábricas de software isoladamente. Não se usou crescimento agregado dos serviços como crescimento deste mercado.\n\nInferência: produto reutilizável permite escala, mas exige desenvolvimento, suporte e aquisição de clientes antes do retorno; personalização excessiva pode transformar produto em projeto.\n\nDesenvolvimento, licenciamento, implantação e manutenção de software, com recorte no Brasil e foco na economia da empresa média. Separar produto próprio, software sob encomenda, consultoria e alocação de equipe.\n\nO negócio funciona assim. Conhecimento e infraestrutura: Equipe, ferramentas, nuvem e componentes. Desenvolvimento: Produto, código, testes e propriedade intelectual. Implantação e venda: Integração, migração, treinamento e aceite. Uso e evolução: Assinatura, suporte, manutenção e novas versões.\n\nA dinâmica de mercado. Mudanças tecnológicas e integração de inteligência artificial podem alterar produtividade e produto. A oportunidade comercial depende de disposição de pagar e segurança de uso; não foi projetada receita apenas com base no interesse por tecnologia.\n\nNa empresa média, observe os modelos de receita. Produto próprio: Desenvolvimento antecede receita e pode ser reutilizado. Receita recorrente, retenção e custo de atender. Sob encomenda: Escopo e horas determinam custo de entrega. Mudanças, aceite e retrabalho. Implantação: Integração e migração condicionam o uso. Marcos faturáveis e dependências do cliente. Equipe dedicada: Receita ligada à capacidade de profissionais. Ociosidade, reajuste e concentração contratual.\n\nOs pontos de atenção são: Personalização: Produto acumula versões específicas sem remuneração. Verificar Horas por cliente e custo de manutenção. Concentração: Um projeto financia equipe permanente. Verificar Diversificação e calendário de renovação. Propriedade intelectual: Licenças e contratos podem limitar uso e cessão do código. Verificar Titularidade, componentes e obrigações contratuais.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Projetos: Giro alinhado a entregas contratadas. Aceite, disputa de escopo e concentração. Produto: Capital compatível com desenvolvimento e retorno incerto. Crédito curto pode não combinar com produto ainda sem venda validada. Recebíveis: Cessão apenas de créditos documentados e compatíveis com contrato. Prestação futura e cláusulas de rescisão.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Compradores priorizam retorno e integração; vendas seletivas. Favorável: Produto repetível e implantação disciplinada elevam receita sem custo proporcional. Adverso: Projetos cancelados, inadimplência e manutenção crescente reduzem caixa.\n\nNa visita, comece por estas perguntas. Qual processo do cliente melhora e qual resultado justifica pagar? Qual nicho compra e quem é o decisor econômico? Quanto da receita é produto, implantação, projeto e equipe dedicada? A empresa controla o código e quais plataformas ou pessoas são indispensáveis? Como diferencia produto repetível de customização deficitária? Quanto tempo separa desenvolver, vender, entregar e receber?\n\nLimites da pesquisa. O histórico do IBGE foi recuperado para dez anos completos, de dois mil e dezesseis a dois mil e vinte e cinco. É o agregado de serviços de TI, não apenas software como serviço. Não há base verificada para publicar margem, custo de aquisição ou taxa de cancelamento típicos de empresas médias.\n\nNo dado mais recente recuperado, agosto de dois mil e vinte e seis, o volume de serviços de TI cresceu oito vírgula quatro por cento no acumulado do ano. Isso não comprova melhora de margens ou do caixa de uma empresa específica.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "999763ab32dc39bef9c9af1134c4e2eb500bbcb5c31cd8b9b4af3a318443bf3a"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 6,
+    "title": "Data centers e nuvem",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "Data center combina investimento físico, energia, conectividade e continuidade. Nuvem acrescenta plataforma e cobrança por consumo; os elos não devem ser somados como se fossem um único mercado.",
+      "O MDIC informou a sanção do Redata em setembro de 2026 com contrapartidas e critérios de sustentabilidade. Não se confirmou habilitação de uma empresa ou benefício automaticamente disponível.",
+      "Inferência: contratos e acesso à energia precisam preceder expansão disciplinada. Anúncio de projeto não é capacidade operacional nem receita."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Infraestrutura de centros de dados e serviços de computação em nuvem. Separar colocation, operação de infraestrutura, provedores de nuvem e integradores; capacidade instalada não equivale a receita ou capacidade contratada.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Colocation",
+            "Cliente ocupa espaço e capacidade elétrica.",
+            "Capacidade contratada, ocupação e repasse de energia."
+          ],
+          [
+            "Nuvem",
+            "Receita depende de consumo e serviços agregados.",
+            "Custo de infraestrutura e utilização efetiva."
+          ],
+          [
+            "Infraestrutura própria",
+            "Capex antecede contratos e operação.",
+            "Obras, energização e rampa de ocupação."
+          ],
+          [
+            "Integração multinuvem",
+            "Serviço combina plataformas de terceiros.",
+            "Margem de gestão separada do consumo repassado."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "Operadores de infraestrutura, plataformas globais e integradores têm papéis distintos. O financiamento divulgado pelo BNDES à Tec.to em Fortaleza é exemplo de expansão empresarial, não ranking nem condição de crédito para uma empresa média.",
+          "Fortaleza reúne conectividade internacional e infraestrutura pública descrita pela Etice. A utilidade para cada projeto depende de energia, latência, capacidade de conexão e clientes, não apenas da localização do terreno.",
+          "Contexto internacional: levantamento de mercados compilado pelo BNDES aponta maior escala em Virgínia do Norte, Londres e Frankfurt que em São Paulo. A comparação é por mercado geográfico, não país. Inferência: conectividade, clientes e energia ajudam a explicar aglomeração; copiar a escala estrangeira não garante retorno local."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · sanção do Redata",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/setembro/presidente-sanciona-o-redata-que-estimula-datacenters-e-desenvolvimento-tecnologico-no-brasil",
+            "purpose": "Publicação de 15/09/2026, atualizada em 26/10/2026. Política pública, sem confirmação individual de habilitação."
+          },
+          {
+            "label": "BNDES · expansão de data center em Fortaleza",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-233-mi-a-Tec.to-para-expansao-de-data-center-em-Fortaleza-CE",
+            "purpose": "Financiamento empresarial divulgado em janeiro de 2026; não é condição disponível para toda empresa média."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "BNDES Setorial · infraestrutura computacional, setembro de 2025",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+            "purpose": "Artigo setorial, pp.175–178. Compila estimativas privadas; não censo oficial nem fotografia de novembro de 2026."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "O MDIC divulgou em 15/09/2026 a sanção do Redata, com pesquisa e desenvolvimento, mercado interno e sustentabilidade entre as contrapartidas. A notícia não comprova regulamentação completa ou habilitação de um projeto específico.",
+          "O MME informou 52 pedidos de acesso à Rede Básica até junho de 2025: 18 com alternativa técnica reconhecida em portaria e 34 em análise. Reconhecimento de alternativa não significa acesso assegurado ou data center operando; o parecer de acesso é etapa posterior. A atualização da página em 2026 não atualiza automaticamente o período destes números.",
+          "Dimensionamento estimado, não censo oficial: artigo do BNDES de setembro de 2025 compila cerca de 700 MW e 80 instalações comerciais no Brasil. O levantamento de mercados citado separadamente informa 493 MW em São Paulo. Bases distintas: não calcular participação paulista dividindo esses números. Projetos anunciados não foram somados à capacidade em operação."
+        ],
+        "rows": [
+          [
+            "Capacidade",
+            "Potência disponível, contratada e efetivamente utilizada",
+            "Não equiparar anúncio de investimento a operação."
+          ],
+          [
+            "Eficiência",
+            "Energia e água por carga processada",
+            "Comparar tecnologia e clima, sem ranking automático."
+          ],
+          [
+            "Caixa",
+            "Obra, equipamento, ramp-up e contratos",
+            "Separar investimento comprometido e desembolsado."
+          ],
+          [
+            "Pipeline regulatório",
+            "52 processos: 18 com alternativa reconhecida e 34 em análise, até junho de 2025",
+            "Não mede MW instalados, ocupação ou receita."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "MDIC · sanção do Redata",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/setembro/presidente-sanciona-o-redata-que-estimula-datacenters-e-desenvolvimento-tecnologico-no-brasil",
+            "purpose": "Publicação de 15/09/2026, atualizada em 26/10/2026. Política pública, sem confirmação individual de habilitação."
+          },
+          {
+            "label": "BNDES · expansão de data center em Fortaleza",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-233-mi-a-Tec.to-para-expansao-de-data-center-em-Fortaleza-CE",
+            "purpose": "Financiamento empresarial divulgado em janeiro de 2026; não é condição disponível para toda empresa média."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          },
+          {
+            "label": "MME · pedidos de conexão de data centers",
+            "url": "https://www.gov.br/mme/pt-br/assuntos/noticias/2023-2026/conexao-de-data-centers-a-rede-eletrica-supera-50-pedidos-segundo-mme",
+            "purpose": "Publicação em 27/06/2025, atualizada em 26/10/2026. Estoque de processos até junho de 2025, não capacidade instalada."
+          },
+          {
+            "label": "BNDES Setorial · infraestrutura computacional, setembro de 2025",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+            "purpose": "Artigo setorial, pp.175–178. Compila estimativas privadas; não censo oficial nem fotografia de novembro de 2026."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "A política industrial pode melhorar condições de investimento, mas demanda, energização e regras de habilitação continuam determinantes. Demanda por IA pode exigir densidade e refrigeração diferentes, com risco de tecnologia e ociosidade.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · sanção do Redata",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/setembro/presidente-sanciona-o-redata-que-estimula-datacenters-e-desenvolvimento-tecnologico-no-brasil",
+            "purpose": "Publicação de 15/09/2026, atualizada em 26/10/2026. Política pública, sem confirmação individual de habilitação."
+          },
+          {
+            "label": "BNDES · expansão de data center em Fortaleza",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-233-mi-a-Tec.to-para-expansao-de-data-center-em-Fortaleza-CE",
+            "purpose": "Financiamento empresarial divulgado em janeiro de 2026; não é condição disponível para toda empresa média."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "MGI · modelo de contratação de software e nuvem",
+            "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+            "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Implantação física",
+            "Estrutura de longo prazo associada a contratos e cronograma.",
+            "Licenças, conexão e contingência de obra."
+          ],
+          [
+            "Equipamento",
+            "Prazo compatível com vida tecnológica e geração de caixa.",
+            "Obsolescência e exposição cambial."
+          ],
+          [
+            "Operação",
+            "Giro para energia, pessoal e rampa de ocupação.",
+            "Receita começa depois de despesas relevantes."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Energia",
+            "Potência contratada e entrega efetiva podem divergir do cronograma.",
+            "Conexão, redundância, custo e prazo documentados."
+          ],
+          [
+            "Ocupação",
+            "Construir antes de contratar prolonga retorno.",
+            "Clientes âncora, rescisão e compromissos mínimos."
+          ],
+          [
+            "Tecnologia",
+            "Equipamento muda mais rápido que a edificação.",
+            "Vida útil, modularidade e necessidade de atualização."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Infraestrutura confiável e conexão a clientes e redes."
+          ],
+          [
+            "Fraquezas",
+            "Capex elevado e custos fixos antes da ocupação."
+          ],
+          [
+            "Oportunidades",
+            "Demanda de processamento e localização de serviços no país."
+          ],
+          [
+            "Ameaças",
+            "Obsolescência, restrição elétrica e concorrência global."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Comparar localização, capacidade, disponibilidade e serviços equivalentes."
+          ],
+          [
+            "Compradores",
+            "Clientes grandes podem exigir contratos e preços próprios; concentração muda negociação."
+          ],
+          [
+            "Fornecedores",
+            "Energia, equipamentos e conectividade limitam substituição."
+          ],
+          [
+            "Entrantes",
+            "Capital, licenças e continuidade criam barreiras materiais."
+          ],
+          [
+            "Substitutos",
+            "Nuvem externa ou infraestrutura do cliente pode substituir partes da oferta, conforme latência e regras de dados."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Expansão modular apoiada em contratos e energização confirmada.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Contratação cresce junto com capacidade elétrica e ocupação sustentável.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Projetos atrasam, equipamentos encarecem e capacidade fica ociosa.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "A empresa vende espaço, potência, computação, plataforma ou gestão?"
+          ],
+          [
+            "2",
+            "Quais clientes contratam capacidade e por quanto tempo?"
+          ],
+          [
+            "3",
+            "A cobrança é fixa, por consumo ou inclui repasse de energia?"
+          ],
+          [
+            "4",
+            "Quais conexões, fornecedores e licenças são condição para operar?"
+          ],
+          [
+            "5",
+            "Como distingue capacidade anunciada, disponível, contratada e utilizada?"
+          ],
+          [
+            "6",
+            "O prazo do financiamento suporta obra, energização e rampa de ocupação?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "data-centers-mercados",
+        "categoryLabel": "Mercado",
+        "title": "Capacidade de mercados selecionados de data centers",
+        "unit": "MW",
+        "scope": "Estimativas de levantamento de mercados compiladas em artigo do BNDES, não censo oficial; cidades/regiões, não países. Sem somar com total nacional de outra base.",
+        "years": [
+          "São Paulo",
+          "Santiago",
+          "Frankfurt",
+          "Londres",
+          "Virgínia do Norte"
+        ],
+        "period": "levantamento citado em setembro de 2025",
+        "source": {
+          "label": "BNDES Setorial · infraestrutura computacional, setembro de 2025",
+          "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+          "purpose": "Artigo setorial, pp.175–178. Compila estimativas privadas; não censo oficial nem fotografia de novembro de 2026."
+        },
+        "method": "Valores da página 175 do artigo, referentes a mercados selecionados. Data exata de corte do levantamento não explicitada no trecho; não apresentar como capacidade atual. Amostra não exaustiva nem ranking mundial.",
+        "series": [
+          {
+            "label": "Capacidade estimada por mercado",
+            "values": [
+              493,
+              148,
+              994,
+              1104,
+              3046
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "MDIC · sanção do Redata",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/setembro/presidente-sanciona-o-redata-que-estimula-datacenters-e-desenvolvimento-tecnologico-no-brasil",
+        "purpose": "Publicação de 15/09/2026, atualizada em 26/10/2026. Política pública, sem confirmação individual de habilitação."
+      },
+      {
+        "label": "BNDES · expansão de data center em Fortaleza",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-233-mi-a-Tec.to-para-expansao-de-data-center-em-Fortaleza-CE",
+        "purpose": "Financiamento empresarial divulgado em janeiro de 2026; não é condição disponível para toda empresa média."
+      },
+      {
+        "label": "Governo do Ceará · Cinturão Digital",
+        "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+        "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+      },
+      {
+        "label": "MGI · modelo de contratação de software e nuvem",
+        "url": "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/legislacao/modelo-de-contratacao-de-software-e-servicos-em-nuvem/vigentes/portaria-sgd-mgi-no-5-950-de-26-de-outubro-de-2023",
+        "purpose": "Modelo público para distinguir licenciamento, consumo, ordens de serviço e resultados; não representa contratos privados."
+      },
+      {
+        "label": "MME · pedidos de conexão de data centers",
+        "url": "https://www.gov.br/mme/pt-br/assuntos/noticias/2023-2026/conexao-de-data-centers-a-rede-eletrica-supera-50-pedidos-segundo-mme",
+        "purpose": "Publicação em 27/06/2025, atualizada em 26/10/2026. Estoque de processos até junho de 2025, não capacidade instalada."
+      },
+      {
+        "label": "BNDES Setorial · infraestrutura computacional, setembro de 2025",
+        "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/29008/3/Infraestrutura%20computacional_216916_vf.pdf",
+        "purpose": "Artigo setorial, pp.175–178. Compila estimativas privadas; não censo oficial nem fotografia de novembro de 2026."
+      }
+    ],
+    "limitations": [
+      "Não foram confirmadas condições de acesso a incentivo ou financiamento para uma empresa específica.",
+      "Recuperado dimensionamento pontual estimado em publicação de 2025, não série histórica nacional homogênea de capacidade ou ocupação. Não confundir estimativas compiladas com censo oficial.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "A empresa vende espaço, potência, computação, plataforma ou gestão?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Quais clientes contratam capacidade e por quanto tempo?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "A cobrança é fixa, por consumo ou inclui repasse de energia?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais conexões, fornecedores e licenças são condição para operar?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Como distingue capacidade anunciada, disponível, contratada e utilizada?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "O prazo do financiamento suporta obra, energização e rampa de ocupação?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Terreno, energia e rede",
+          "detail": "Licenças, alimentação elétrica e conectividade"
+        },
+        {
+          "id": "n1",
+          "label": "Infraestrutura física",
+          "detail": "Edificação, refrigeração, redundância e segurança"
+        },
+        {
+          "id": "n2",
+          "label": "Capacidade computacional",
+          "detail": "Servidores, armazenamento e plataformas"
+        },
+        {
+          "id": "n3",
+          "label": "Clientes e aplicações",
+          "detail": "Colocation, nuvem, consumo e integração"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Data centers e nuvem. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nData center combina investimento físico, energia, conectividade e continuidade. Nuvem acrescenta plataforma e cobrança por consumo; os elos não devem ser somados como se fossem um único mercado.\n\nO MDIC informou a sanção do Redata em setembro de 2026 com contrapartidas e critérios de sustentabilidade. Não se confirmou habilitação de uma empresa ou benefício automaticamente disponível.\n\nInferência: contratos e acesso à energia precisam preceder expansão disciplinada. Anúncio de projeto não é capacidade operacional nem receita.\n\nInfraestrutura de centros de dados e serviços de computação em nuvem. Separar colocation, operação de infraestrutura, provedores de nuvem e integradores; capacidade instalada não equivale a receita ou capacidade contratada.\n\nO negócio funciona assim. Terreno, energia e rede: Licenças, alimentação elétrica e conectividade. Infraestrutura física: Edificação, refrigeração, redundância e segurança. Capacidade computacional: Servidores, armazenamento e plataformas. Clientes e aplicações: Colocation, nuvem, consumo e integração.\n\nA dinâmica de mercado. A política industrial pode melhorar condições de investimento, mas demanda, energização e regras de habilitação continuam determinantes. Demanda por IA pode exigir densidade e refrigeração diferentes, com risco de tecnologia e ociosidade.\n\nNa empresa média, observe os modelos de receita. Colocation: Cliente ocupa espaço e capacidade elétrica. Capacidade contratada, ocupação e repasse de energia. Nuvem: Receita depende de consumo e serviços agregados. Custo de infraestrutura e utilização efetiva. Infraestrutura própria: Capex antecede contratos e operação. Obras, energização e rampa de ocupação. Integração multinuvem: Serviço combina plataformas de terceiros. Margem de gestão separada do consumo repassado.\n\nOs pontos de atenção são: Energia: Potência contratada e entrega efetiva podem divergir do cronograma. Verificar Conexão, redundância, custo e prazo documentados. Ocupação: Construir antes de contratar prolonga retorno. Verificar Clientes âncora, rescisão e compromissos mínimos. Tecnologia: Equipamento muda mais rápido que a edificação. Verificar Vida útil, modularidade e necessidade de atualização.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Implantação física: Estrutura de longo prazo associada a contratos e cronograma. Licenças, conexão e contingência de obra. Equipamento: Prazo compatível com vida tecnológica e geração de caixa. Obsolescência e exposição cambial. Operação: Giro para energia, pessoal e rampa de ocupação. Receita começa depois de despesas relevantes.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Expansão modular apoiada em contratos e energização confirmada. Favorável: Contratação cresce junto com capacidade elétrica e ocupação sustentável. Adverso: Projetos atrasam, equipamentos encarecem e capacidade fica ociosa.\n\nNa visita, comece por estas perguntas. A empresa vende espaço, potência, computação, plataforma ou gestão? Quais clientes contratam capacidade e por quanto tempo? A cobrança é fixa, por consumo ou inclui repasse de energia? Quais conexões, fornecedores e licenças são condição para operar? Como distingue capacidade anunciada, disponível, contratada e utilizada? O prazo do financiamento suporta obra, energização e rampa de ocupação?\n\nLimites da pesquisa. Há dimensionamento pontual estimado em artigo público de dois mil e vinte e cinco, mas não série nacional homogênea de capacidade e ocupação. Não foram confirmadas condições de acesso a incentivo ou financiamento para uma empresa específica.\n\nUm indicador de investimento potencial: o Ministério de Minas e Energia informou cinquenta e dois pedidos de conexão à Rede Básica até junho de dois mil e vinte e cinco. Dezoito tinham alternativa técnica reconhecida e trinta e quatro estavam em análise. Isso não significa capacidade instalada nem autorização final de acesso.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "d98345918637c7c20be55ae1ccc9f78feb9de6bd3cbcb1e40c54d12fc77b65f9"
+    }
+  },
+  {
+    "group": "tic",
+    "topicIndex": 7,
+    "title": "Operadoras de telecomunicações",
+    "reviewedAt": "2026-11-06",
+    "reviewStatus": "approved",
+    "summary": [
+      "Receita depende de base ativa, preço, qualidade e permanência do cliente. Expansão física exige investimento antes de atingir ocupação e retorno.",
+      "O MCom registra aumento dos acessos fixos e móveis entre dezembro de 2024 e 2025. Acesso é contrato/conexão, não pessoa, e os números não demonstram margem ou rentabilidade.",
+      "Inferência: competir com qualidade e densidade de rede pode ser mais sustentável que crescer apenas por aquisição ou desconto; o resultado precisa ser medido por praça."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Prestadoras de conectividade fixa e móvel no Brasil. Separar serviços, área de atuação e porte; o mercado relevante de um provedor regional não é necessariamente o nacional.",
+          "Síntese analítica do funcionamento: o fluxo físico e operacional deve ser reconciliado com contratação, faturamento e recebimento. CNAE cadastral e enquadramento tributário dependem da atividade efetivamente exercida, não apenas do nome comercial."
+        ],
+        "rows": [
+          [
+            "Banda larga fixa",
+            "Rede antecede ativação de assinantes.",
+            "Casas passadas, clientes ativos e ocupação por área."
+          ],
+          [
+            "Móvel",
+            "Rede e capacidade precisam acompanhar tráfego.",
+            "Base, utilização e custos por serviço."
+          ],
+          [
+            "Atacado",
+            "Capacidade vendida a outras prestadoras.",
+            "Concentração e contratos de longo prazo."
+          ],
+          [
+            "Serviços empresariais",
+            "Disponibilidade e atendimento diferenciados.",
+            "SLA, redundância e custo real de operação."
+          ]
+        ],
+        "columns": [
+          "Modelo",
+          "Resultado e caixa",
+          "O que verificar"
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, concorrência e polos de referência",
+        "paragraphs": [
+          "A disputa deve ser mapeada por município, bairro e segmento. Participação nacional não basta para avaliar concorrência local. Grandes grupos e provedores regionais podem competir ou comprar capacidade uns dos outros.",
+          "Infraestrutura como o Cinturão Digital do Ceará ilustra papel de redes e interconexão. Para empresa média, densidade local, backhaul e compartilhamento de infraestrutura podem importar mais que presença em um polo reconhecido."
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Segundo o MCom, os acessos fixos foram 52,5 milhões em dezembro de 2024 e 53,9 milhões em dezembro de 2025; os móveis, 263,4 milhões e 270,2 milhões. As bases se sobrepõem e não devem ser somadas como usuários únicos.",
+          "A série de volume do IBGE mostra retrações anuais entre 2016 e 2022, seguidas de avanços em 2023, 2024 e 2025. Isso não contradiz mecanicamente o aumento dos acessos: a PMS mede receita deflacionada de um conjunto de serviços, enquanto acessos são estoques físicos. A composição entre voz, dados e outros serviços muda."
+        ],
+        "rows": [
+          [
+            "Mercado",
+            "Acessos por serviço e território",
+            "Não somar como pessoas únicas."
+          ],
+          [
+            "Economia",
+            "Receita por cliente, churn e inadimplência",
+            "Comparar mesma base e período."
+          ],
+          [
+            "Investimento",
+            "Capex, ocupação e manutenção",
+            "Crescimento de rede não garante caixa."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Indicador",
+          "Limite de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "IBGE · volume de telecomunicações, SIDRA 8688",
+            "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+            "purpose": "Variação anual do volume de telecomunicações, Brasil, mesma extração de 2016–2025; não receita nominal ou lucro."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura, estrutura e ciclo",
+        "paragraphs": [
+          "Dado observado: volume de telecomunicações cresceu 2,8% no acumulado de janeiro a agosto de 2026 frente ao mesmo período anterior, segundo a API SIDRA. É um indicador agregado; não demonstra rentabilidade de provedores regionais ou crescimento igual em cada praça.",
+          "A expansão de fibra e uso de dados muda a composição do setor. Mesmo com base crescente, desconto comercial, churn e custo de rede podem reduzir retorno. Mudança tecnológica é estrutural; promoções, inadimplência e ritmo de investimento têm componente cíclico.",
+          "A pesquisa foi realizada em 06/11/2026. Períodos dos dados são próprios. Não se apresentou previsão como resultado nem se inferiu melhora de margem a partir de crescimento agregado."
+        ],
+        "sources": [
+          {
+            "label": "Ministério das Comunicações · acessos de telecomunicações",
+            "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+            "purpose": "Publicado em 04/02/2026; observações de dezembro de 2024 e 2025, base Anatel."
+          },
+          {
+            "label": "Governo do Ceará · Cinturão Digital",
+            "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+            "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+          },
+          {
+            "label": "IBGE · telecomunicações, janeiro–agosto de 2026",
+            "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/39321/c11046/56726",
+            "purpose": "Acumulado no ano até agosto; comparado ao mesmo período anterior, não ano completo."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa e financiamento",
+        "paragraphs": [
+          "Encaixes analíticos propostos para empresas médias, não evidência de uso predominante, oferta bancária, aprovação ou elegibilidade. Não há taxa, prazo ou margem típica presumida.",
+          "Antes de propor dívida, reconciliar contratos, desembolsos, recebimentos e manutenção do negócio. Cessão de recebíveis depende de exigibilidade e cláusulas; dívida de mercado não é automaticamente acessível a uma empresa média."
+        ],
+        "rows": [
+          [
+            "Expansão",
+            "Investimento aderente ao retorno por área.",
+            "Projeto, ocupação e contingência."
+          ],
+          [
+            "Equipamentos importados",
+            "Financiamento e proteção cambial ligados ao fluxo.",
+            "Moeda e prazo de recebimento não necessariamente coincidem."
+          ],
+          [
+            "Giro",
+            "Cobrança e instalação com disciplina de capital de giro.",
+            "Não financiar expansão permanente só com dívida curta."
+          ]
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a avaliar",
+          "Condição e risco"
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos, dependências e pontos cegos",
+        "paragraphs": [
+          "Hipóteses a validar na empresa, sem diagnóstico ou classificação de risco individual."
+        ],
+        "rows": [
+          [
+            "Rede subutilizada",
+            "Construção não se converte em assinantes suficientes.",
+            "Ocupação e retorno por projeto."
+          ],
+          [
+            "Preço e churn",
+            "Promoções captam clientes que saem rapidamente.",
+            "Custo de ativação, permanência e receita líquida."
+          ],
+          [
+            "Regulação e infraestrutura",
+            "Operação depende de obrigações e direitos de uso.",
+            "Outorgas aplicáveis, documentação e contratos."
+          ]
+        ],
+        "columns": [
+          "Ponto",
+          "Mecanismo",
+          "Evidência na visita"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT do recorte",
+        "paragraphs": [
+          "Síntese analítica, condicionada ao modelo e ao mercado atendido."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Base local, rede e relacionamento operacional."
+          ],
+          [
+            "Fraquezas",
+            "Capital imobilizado e manutenção recorrente."
+          ],
+          [
+            "Oportunidades",
+            "Conectividade empresarial e ocupação da rede existente."
+          ],
+          [
+            "Ameaças",
+            "Concorrência por preço, substituição tecnológica e falhas."
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Leitura"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Cinco forças de Porter",
+        "paragraphs": [
+          "Mecanismos condicionais, sem pontuação inventada de intensidade."
+        ],
+        "rows": [
+          [
+            "Rivalidade",
+            "Rivalidade depende de cobertura sobreposta e qualidade local."
+          ],
+          [
+            "Compradores",
+            "Portabilidade e alternativas ampliam escolha, condicionadas ao serviço e cobertura."
+          ],
+          [
+            "Fornecedores",
+            "Postes, transporte, equipamentos e espectro podem limitar negociação."
+          ],
+          [
+            "Entrantes",
+            "A entrada exige rede ou acesso de atacado, capital e conformidade."
+          ],
+          [
+            "Substitutos",
+            "Acesso móvel, satélite ou outra tecnologia pode substituir conexão em certos usos, sem equivalência universal."
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo a validar"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para os próximos 12 a 24 meses, sem probabilidades nem taxas inventadas."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Crescimento seletivo com ocupação da rede existente.",
+            "Acompanhar carteira, margem e recebimento por contrato."
+          ],
+          [
+            "Favorável",
+            "Melhor utilização e carteira empresarial elevam receita sem expansão desproporcional.",
+            "Confirmar que ganho comercial se converte em caixa e capacidade de entrega."
+          ],
+          [
+            "Adverso",
+            "Guerra de preços, inadimplência e custo de manutenção consomem caixa.",
+            "Observar cancelamentos, atrasos, custo fixo e obrigações com fornecedores."
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e mecanismo",
+          "Sinais"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Preparação para visita",
+        "paragraphs": [
+          "Pedir um contrato e um fluxo recente que possam ser discutidos sem expor dados de terceiros. As perguntas abaixo testam hipóteses, não presumem a situação do cliente."
+        ],
+        "rows": [
+          [
+            "1",
+            "Qual serviço e qual território definem o negócio da operadora?"
+          ],
+          [
+            "2",
+            "Quem é o cliente e por que permanece em vez de trocar?"
+          ],
+          [
+            "3",
+            "Como preço, base ativa e cancelamentos se transformam em receita?"
+          ],
+          [
+            "4",
+            "Quais redes, contratos e autorizações são indispensáveis?"
+          ],
+          [
+            "5",
+            "Qual é o retorno por expansão depois de instalação e manutenção?"
+          ],
+          [
+            "6",
+            "A geração de caixa cobre dívida e renovação tecnológica sem depender de novas vendas?"
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "O que esclarecer"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "acessos-fixos",
+        "title": "Banda larga fixa: acessos no Brasil",
+        "unit": "milhões de acessos",
+        "scope": "Estoque em dezembro. Contexto de conectividade, não pessoas únicas nem faturamento do subsetor.",
+        "years": [
+          2024,
+          2025
+        ],
+        "period": "dezembro de 2024 e dezembro de 2025",
+        "source": {
+          "label": "Ministério das Comunicações · acessos de telecomunicações",
+          "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+          "purpose": "Página original informa publicação em 02/01/2026 e atualização em 27/10/2026; observações dezembro de 2024 e 2025."
+        },
+        "method": "Valores divulgados pelo MCom com base na Anatel. Não se encadearam notícias antigas com bases possivelmente revisadas. Dois pontos não demonstram tendência de longo prazo.",
+        "series": [
+          {
+            "label": "Banda larga fixa",
+            "values": [
+              52.5,
+              53.9
+            ]
+          }
+        ]
+      },
+      {
+        "id": "acessos-moveis",
+        "title": "Telefonia móvel: acessos no Brasil",
+        "unit": "milhões de acessos",
+        "scope": "Estoque em dezembro; pode incluir mais de uma linha por pessoa. Não somar aos fixos como usuários.",
+        "years": [
+          2024,
+          2025
+        ],
+        "period": "dezembro de 2024 e dezembro de 2025",
+        "source": {
+          "label": "Ministério das Comunicações · acessos de telecomunicações",
+          "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+          "purpose": "Página original informa publicação em 02/01/2026 e atualização em 27/10/2026; observações dezembro de 2024 e 2025."
+        },
+        "method": "Observações do comunicado do MCom de data de publicação divergente da republicação; consulta em 06/11/2026. Sem extrapolação para 2026.",
+        "series": [
+          {
+            "label": "Telefonia móvel",
+            "values": [
+              263.4,
+              270.2
+            ]
+          }
+        ]
+      },
+      {
+        "id": "telecom-volume-anual",
+        "title": "Volume de telecomunicações no Brasil",
+        "unit": "% frente ao ano anterior",
+        "scope": "Agregado de telecomunicações da PMS, não somente banda larga fixa nem uma operadora.",
+        "years": [
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2016–2025, anos completos",
+        "source": {
+          "label": "IBGE · volume de telecomunicações, SIDRA 8688",
+          "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+          "purpose": "Variação anual do volume de telecomunicações, Brasil, mesma extração de 2016–2025; não receita nominal ou lucro."
+        },
+        "method": "Tabela 8688, variável 11625 na observação dezembro, atividade 39321 e volume 56726. Extração única da série encadeada. Mudança de composição e deflatores não permite converter índice em número de assinantes ou margem.",
+        "series": [
+          {
+            "label": "Variação anual do volume",
+            "values": [
+              -3.4,
+              -2.8,
+              -2.6,
+              -0.9,
+              -3.4,
+              -0.2,
+              -6.7,
+              3.5,
+              4.8,
+              0.4
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Ministério das Comunicações · acessos de telecomunicações",
+        "url": "https://www.gov.br/mcom/pt-br/noticias/2026/fevereiro/acesso-a-banda-larga-fixa-cresceu-2-7-em-dezembro-de-2025-em-comparacao-ao-mesmo-periodo-do-ano-anterior-segundo-anatel",
+        "purpose": "Página informa publicação em 02/01/2026 e atualização em 27/10/2026; caminho e republicação divergem. Observações de dezembro de 2024 e 2025, base Anatel."
+      },
+      {
+        "label": "Governo do Ceará · Cinturão Digital",
+        "url": "https://www.ce.gov.br/etice/cinturao-digital-2/",
+        "purpose": "Conectividade e polo cearense; referência institucional, sem ranking independente."
+      },
+      {
+        "label": "IBGE · volume de telecomunicações, SIDRA 8688",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/39321/c11046/56726",
+        "purpose": "Variação anual do volume de telecomunicações, Brasil, mesma extração de 2016–2025; não receita nominal ou lucro."
+      },
+      {
+        "label": "IBGE · telecomunicações, janeiro–agosto de 2026",
+        "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/39321/c11046/56726",
+        "purpose": "Acumulado no ano até agosto; comparado ao mesmo período anterior, não ano completo."
+      }
+    ],
+    "limitations": [
+      "Relatórios trimestrais de 2026 da Anatel foram localizados, mas a leitura integral foi bloqueada por desafio de acesso. Não se usaram seus trechos como série confirmada.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa de fontes públicas com distinção entre evidência, síntese analítica e cenário. Dados numéricos mantêm período, unidade e cobertura; não se usa o total de TIC como medida de cada especialidade. Histórico incompleto e fontes inacessíveis são declarados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual serviço e qual território definem o negócio da operadora?"
+      },
+      {
+        "dimension": "Clientes e canais",
+        "question": "Quem é o cliente e por que permanece em vez de trocar?"
+      },
+      {
+        "dimension": "Receitas",
+        "question": "Como preço, base ativa e cancelamentos se transformam em receita?"
+      },
+      {
+        "dimension": "Recursos e parceiros",
+        "question": "Quais redes, contratos e autorizações são indispensáveis?"
+      },
+      {
+        "dimension": "Atividades e entrega",
+        "question": "Qual é o retorno por expansão depois de instalação e manutenção?"
+      },
+      {
+        "dimension": "Custos e caixa",
+        "question": "A geração de caixa cobre dívida e renovação tecnológica sem depender de novas vendas?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Infraestrutura e direitos",
+          "detail": "Rede, espectro quando aplicável, postes e equipamentos"
+        },
+        {
+          "id": "n1",
+          "label": "Transporte e acesso",
+          "detail": "Backbone, última milha e interconexão"
+        },
+        {
+          "id": "n2",
+          "label": "Operação e atendimento",
+          "detail": "Instalação, manutenção e cobrança"
+        },
+        {
+          "id": "n3",
+          "label": "Assinantes",
+          "detail": "Uso, pagamento, suporte e renovação"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Entrega e dependência",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Entrega e dependência",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e dependência",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Operadoras de telecomunicações. Estudo pesquisado em seis de novembro de dois mil e vinte e seis. Narração sintética de uma análise setorial, sem recomendação de crédito.\n\nReceita depende de base ativa, preço, qualidade e permanência do cliente. Expansão física exige investimento antes de atingir ocupação e retorno.\n\nO MCom registra aumento dos acessos fixos e móveis entre dezembro de 2024 e 2025. Acesso é contrato/conexão, não pessoa, e os números não demonstram margem ou rentabilidade.\n\nInferência: competir com qualidade e densidade de rede pode ser mais sustentável que crescer apenas por aquisição ou desconto; o resultado precisa ser medido por praça.\n\nPrestadoras de conectividade fixa e móvel no Brasil. Separar serviços, área de atuação e porte; o mercado relevante de um provedor regional não é necessariamente o nacional.\n\nO negócio funciona assim. Infraestrutura e direitos: Rede, espectro quando aplicável, postes e equipamentos. Transporte e acesso: Backbone, última milha e interconexão. Operação e atendimento: Instalação, manutenção e cobrança. Assinantes: Uso, pagamento, suporte e renovação.\n\nA dinâmica de mercado. A expansão de fibra e uso de dados muda a composição do setor. Mesmo com base crescente, desconto comercial, churn e custo de rede podem reduzir retorno. Mudança tecnológica é estrutural; promoções, inadimplência e ritmo de investimento têm componente cíclico.\n\nNa empresa média, observe os modelos de receita. Banda larga fixa: Rede antecede ativação de assinantes. Casas passadas, clientes ativos e ocupação por área. Móvel: Rede e capacidade precisam acompanhar tráfego. Base, utilização e custos por serviço. Atacado: Capacidade vendida a outras prestadoras. Concentração e contratos de longo prazo. Serviços empresariais: Disponibilidade e atendimento diferenciados. SLA, redundância e custo real de operação.\n\nOs pontos de atenção são: Rede subutilizada: Construção não se converte em assinantes suficientes. Verificar Ocupação e retorno por projeto. Preço e churn: Promoções captam clientes que saem rapidamente. Verificar Custo de ativação, permanência e receita líquida. Regulação e infraestrutura: Operação depende de obrigações e direitos de uso. Verificar Outorgas aplicáveis, documentação e contratos.\n\nNo financiamento, as seguintes estruturas são hipóteses, não oferta ou aprovação. Expansão: Investimento aderente ao retorno por área. Projeto, ocupação e contingência. Equipamentos importados: Financiamento e proteção cambial ligados ao fluxo. Moeda e prazo de recebimento não necessariamente coincidem. Giro: Cobrança e instalação com disciplina de capital de giro. Não financiar expansão permanente só com dívida curta.\n\nPara os próximos doze a vinte e quatro meses, os cenários são qualitativos. Base: Crescimento seletivo com ocupação da rede existente. Favorável: Melhor utilização e carteira empresarial elevam receita sem expansão desproporcional. Adverso: Guerra de preços, inadimplência e custo de manutenção consomem caixa.\n\nNa visita, comece por estas perguntas. Qual serviço e qual território definem o negócio da operadora? Quem é o cliente e por que permanece em vez de trocar? Como preço, base ativa e cancelamentos se transformam em receita? Quais redes, contratos e autorizações são indispensáveis? Qual é o retorno por expansão depois de instalação e manutenção? A geração de caixa cobre dívida e renovação tecnológica sem depender de novas vendas?\n\nLimites da pesquisa. Relatórios trimestrais de 2026 da Anatel foram localizados, mas a leitura integral foi bloqueada por desafio de acesso. Não se usaram seus trechos como série confirmada. Séries anteriores recuperadas de publicações diferentes apresentam revisões; não foram encadeadas sem conciliação.\n\nO histórico oficial do IBGE cobre dez anos completos. No acumulado de janeiro a agosto de dois mil e vinte e seis, o volume de telecomunicações cresceu dois vírgula oito por cento. Volume deflacionado e número de acessos são conceitos distintos; nenhum deles prova margem de uma operadora.",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "87deb4ccd81da5174bdd66dbbca1c3804a6e051279600e06bedb35fb2908ad4e"
+    }
+  }
+]

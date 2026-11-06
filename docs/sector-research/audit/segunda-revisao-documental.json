@@ -1,0 +1,228 @@
+{
+  "date": "2026-11-06",
+  "scope": "documentary; not publication authorization; not visual or generated-audio QA",
+  "rubric": {
+    "adherence": {
+      "weight": 30,
+      "earned": 26.25
+    },
+    "correctness": {
+      "weight": 25,
+      "earned": 25
+    },
+    "evidence": {
+      "weight": 25,
+      "earned": 20.833333333333332
+    },
+    "integrity": {
+      "weight": 15,
+      "earned": 15
+    },
+    "clarity": {
+      "weight": 5,
+      "earned": 5
+    }
+  },
+  "studies": [
+    {
+      "id": "base-florestal:0",
+      "title": "Florestas plantadas",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "511f5bb47ef076793d29103149a4e615dc1196eb7d926c17a5e5a411fb5ea52c",
+      "score": 92.08
+    },
+    {
+      "id": "base-florestal:1",
+      "title": "Serrarias",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "11608e8282af75817493d2f08baef24cc91632f0d02b7b8cfb77639fab2d0c89",
+      "score": 92.08
+    },
+    {
+      "id": "base-florestal:2",
+      "title": "Lâminas",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "70afc5aa5f2bba7ba5d2913b434a75ab2be75b131b73fbb25da3ba9fe37aa1a9",
+      "score": 92.08
+    },
+    {
+      "id": "base-florestal:3",
+      "title": "Compensados",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "e17200457f5f9febfb7df312f3f4a8c32572432b5acc00b093e3b305735e4fa1",
+      "score": 92.08
+    },
+    {
+      "id": "base-florestal:4",
+      "title": "MDF e MDP",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "92d12f6a0272692150fbaec6fd0d71330cdf79b727eb1ed8f426fdfbf615f1bd",
+      "score": 92.08
+    },
+    {
+      "id": "base-florestal:5",
+      "title": "Móveis",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "3f24546340315ded595789b5480acf73fc83738b39639c67b7a1eff93478a0d1",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:0",
+      "title": "Celulose",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "53e0baa6b7b8db6e04e1d3853feefdc83adb4c5d1464eb0f3a538eef6cf7af9d",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:1",
+      "title": "Papel",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "2309811774c5f2b7985338e59dacf047fde11aa96234c974ee51e1a143144e1a",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:2",
+      "title": "Papelão ondulado",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "b870f1be4c50404a45c227a0cb744af3e6c661e963372625f9c06c991375620e",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:3",
+      "title": "Caixas",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "9431d0d95ef7ed188ccc164fbdea98dfca0cd681edf1b6de2c3779150a404481",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:4",
+      "title": "Sacos industriais",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "be70b67b11bda930255806f1b5c4221b46712886ecf50c221ed65879cb57002f",
+      "score": 92.08
+    },
+    {
+      "id": "papel-celulose:5",
+      "title": "Tubetes",
+      "verdict": "Insuficiente para validar",
+      "reason": "Tubetes: falta evidência comercial contemporânea específica; o precedente fiscal de 2015 não descreve demanda, canais ou dinâmica atual.",
+      "contentHashBefore": "0b6b050193e11a8b9f9ec2c24e6f4f0cac1e600d2d7cce618a21ef49dcd127e6",
+      "score": null
+    },
+    {
+      "id": "quimicos:0",
+      "title": "Resinas",
+      "verdict": "Insuficiente para validar",
+      "reason": "Resinas: investigação de PVC sustenta apenas recorte regulatório; falta contexto comercial verificável por famílias ou mercados, sem confundir resinas com transformação.",
+      "contentHashBefore": "9bb8b142187a0aee6c4f6d43a8a048c623c04bc4ed4f449d727fbe1625e4bca0",
+      "score": null
+    },
+    {
+      "id": "quimicos:1",
+      "title": "Transformação plástica",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "6e120d727c30bbad294c406cf82bece9f953717676274de4bfc9fd4188178794",
+      "score": 92.08
+    },
+    {
+      "id": "quimicos:2",
+      "title": "Embalagens flexíveis",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "da80b7578667882fa96dd7d9022198d36df3767a1494a6b1dd1526617926db6f",
+      "score": 92.08
+    },
+    {
+      "id": "quimicos:3",
+      "title": "Tintas",
+      "verdict": "Insuficiente para validar",
+      "reason": "Tintas: casos Adece/Fortex e lista CETESB apenas parcialmente recuperados; falta sustentação integral do contexto comercial por aplicação.",
+      "contentHashBefore": "6208565ed1cafa5e26f3a5f64f3c97e023feeaf9fbe2189a1118c7f46ac2b118",
+      "score": null
+    },
+    {
+      "id": "quimicos:4",
+      "title": "Limpeza",
+      "verdict": "Insuficiente para validar",
+      "reason": "Limpeza: regulação e fiscalização não bastam para caracterizar mercado e concorrência; falta evidência comercial verificável.",
+      "contentHashBefore": "3797b6ba7aa283df047631bd32a4d752f60c0388fb5519599e7b18a6ac3aa8ed",
+      "score": null
+    },
+    {
+      "id": "quimicos:5",
+      "title": "Borracha",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "20676b88f6328b7c73b4a9a0cbef45633a7568e01d1db24cec018ddd7595ad5f",
+      "score": 92.08
+    },
+    {
+      "id": "tic:1",
+      "title": "Cibersegurança",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "2e4fca87a43ed263b69e09211d294048dad5041ec6e494e1fb65f929190b6f47",
+      "score": 92.08
+    },
+    {
+      "id": "tic:2",
+      "title": "Redes e conectividade",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "70bb196abc0c107f04b988e54e3b7db51c04c85e2d11d773be7b0c6094971710",
+      "score": 92.08
+    },
+    {
+      "id": "tic:3",
+      "title": "Serviços gerenciados de TI",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "a068c07c496689bcdf50d618cbe41b18ee43a59a98bd9ce60023bdb83fd94c61",
+      "score": 92.08
+    },
+    {
+      "id": "tic:4",
+      "title": "Comunicação e colaboração",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "08a16e0b5615370823433b12d7839fcc0f0003fb828f0da973486fb283d49bfb",
+      "score": 92.08
+    },
+    {
+      "id": "tic:5",
+      "title": "Software e serviços de TI",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "999763ab32dc39bef9c9af1134c4e2eb500bbcb5c31cd8b9b4af3a318443bf3a",
+      "score": 92.08
+    },
+    {
+      "id": "tic:6",
+      "title": "Data centers e nuvem",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "d98345918637c7c20be55ae1ccc9f78feb9de6bd3cbcb1e40c54d12fc77b65f9",
+      "score": 92.08
+    },
+    {
+      "id": "tic:7",
+      "title": "Operadoras de telecomunicações",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "contentHashBefore": "87deb4ccd81da5174bdd66dbbca1c3804a6e051279600e06bedb35fb2908ad4e",
+      "score": 92.08
+    }
+  ]
+}

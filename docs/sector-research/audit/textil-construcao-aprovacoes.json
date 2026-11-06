@@ -1,0 +1,231 @@
+{
+  "date": "2026-11-06",
+  "rubricReference": "segunda-revisao-documental.md: subdivisões iguais. Mercado/histórico e cobertura de fontes parciais; Canvas corrigido e revalidado.",
+  "numericProvenance": "Revisor logística conferiu96 ocorrências nos quatro grupos. Este revisor confirmou correspondência dos50 pontos de gráficos de textil/construcao com seu ledger, sem alegar reextração própria das APIs.",
+  "studies": [
+    {
+      "id": "textil:0",
+      "title": "Fiação",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "3c5d0a3caf4cd2cc800ff20e794b9bc49be32356e8eb35c5933e73186942d3c4",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Oferta da Fiação São Bento conferida no portfólio; matérias-primas, processos e canais delimitados."
+    },
+    {
+      "id": "textil:1",
+      "title": "Tecelagem",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "6bb3e3c4d53d63090d9c592df13a36f57e6bafc08c229c4a6a367f006fc25514",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Cedro Jeanswear: portfólio e representantes conferidos, sem inferência de participação ou demanda realizada."
+    },
+    {
+      "id": "textil:2",
+      "title": "Malharia",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "8c6b18ad869b0f9caa934167d54a80233b22d0b68eac78c3206646ee5de3e558",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Dalila: malharia circular, aplicações e canal eletrônico conferidos, sem estatística de vendas."
+    },
+    {
+      "id": "textil:3",
+      "title": "Tinturaria",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "492a449668beac3d0adc049f22f6e49a330197ecfad9b989ae20190b8d7c811b",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "HJ: serviço específico para malhas em rolo e exclusões conferidos, sem extrapolar para todo acabamento."
+    },
+    {
+      "id": "textil:4",
+      "title": "Confecção",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "bafdac69fe908912e71c2fd5802ef2e304eae020814a397846d7963833ab4d5f",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "SefazPE, BNB e Seade sustentam canal e estrutura; Canvas corrigido."
+    },
+    {
+      "id": "textil:5",
+      "title": "Tecidos técnicos",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "f0db1da9a7873191d28ced313aab7888b9cb48cfcfc85d15e6a5769d69be011f",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Ober GeoFort: página integral confirma PET/PP, aplicações e geoformas; não tecido separado de geomembrana PEAD."
+    },
+    {
+      "id": "construcao:0",
+      "title": "Construção residencial",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "ed287d2eb3a6c4e3a82a1ca517dd644e441f3bd9f9a8fa990319a88de89850d5",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Paraná confirma entrega residencial MRV em Curitiba em janeiro de 2026; Manaus confirma Habite-se/entrega em maio. Não confunde parceria com ranking nacional."
+    },
+    {
+      "id": "construcao:1",
+      "title": "Galpões",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "4499f3f69f31b1543c9e813833aee4bb9e952e5eca080ffe28fcfbccb07c75a8",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "InvestSP reproduz inauguração Unilever em Itupeva em novembro de 2026 e operação Kuehne+Nagel. Não infere propriedade, aluguel ou preço. EIV histórico separado de obra executada."
+    },
+    {
+      "id": "construcao:2",
+      "title": "Infraestrutura",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "9af6b28257ea7d8fdc264cde904e82ef7cc93652a8894641872ce5fefcde7cf0",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "ANTT confirma processo competitivo Via Brasil 2026 e documentos. Aviso Transportes distingue obra em andamento de eventos programados; concessão não equivale a contrato garantido de construção."
+    },
+    {
+      "id": "construcao:3",
+      "title": "Cimento",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "62da4509111b156b69f61b7f39fb301aec9b4f0440dfcb5744cb7deb0fe5a6dd",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Cimento revalidado após Canvas: BNDES 1999 estrutural histórico e aprovação de investimento Votorantim 2026 não tratada como capacidade já entregue."
+    },
+    {
+      "id": "construcao:4",
+      "title": "Cerâmica",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "e642db25acb484e9fe2b84f83e659e6e8a49c441eb1e73dc885733895d4cf579",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "IFRN confirma pesquisa de cerâmica vermelha em Parelhas, não adoção comercial. Portobello demonstra oferta e canais de revestimentos, não vendas. Lacuna de louças sanitárias explícita."
+    },
+    {
+      "id": "construcao:5",
+      "title": "Vidros",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "bf744f58ee028b0cace432044117afd32a9385bfc6901ba6516465ac54949f8f",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "BNDES 2007 sustenta estrutura histórica; Jacareí identifica Cebrace; ata DefensoriaRS distingue marcas de proponentes. Entrevista empresarial delimitada como declaração, não estatística ou decisão regulatória."
+    },
+    {
+      "id": "construcao:6",
+      "title": "Esquadrias",
+      "verdict": "Aprovado",
+      "scope": "documentary",
+      "score": 92.08,
+      "rubric": {
+        "adherence": 26.25,
+        "correctness": 25,
+        "evidence": 20.833333333333332,
+        "integrity": 15,
+        "clarity": 5
+      },
+      "contentHashExcludingAudit": "56ce678aa823c93116af6e5d7983a84202d58cbb26dc03cb576c1e1c5d6b16bd",
+      "limitations": "Histórico agregado ou não recuperado e cobertura parcial de mercado explicitados. Não inclui QA visual, audição do áudio gerado ou validação operacional.",
+      "reason": "Edital Exército Cuiabá 2026 confirma fabricação/instalação de esquadrias, não execução. Certificado Prado delimita produto, estabelecimento, prazo e manutenção; não valida catálogo inteiro."
+    }
+  ],
+  "editorialResidual": "Canvas e perguntas de visita corrigidos e revalidados. Revisão editorial adicional coordenada pelo parent controla alterações posteriores e hashes finais.",
+  "hashDefinition": "contentHashExcludingAudit: SHA256 do objeto JSON UTF-8, chaves ordenadas, separadores compactos, excluído apenas campo audit. Hash deve ser renovado após qualquer alteração de conteúdo.",
+  "finalVerdict": "13 estudos aprovados individualmente no escopo documental, com limites substantivos preservados."
+}

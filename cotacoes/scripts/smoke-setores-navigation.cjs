@@ -2,6 +2,7 @@ const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const studies = require('../src/sectorStudies/studies.json')
 
 ;(async () => {
   const browser = await chromium.launch(require('./smoke-launch.cjs')())
@@ -31,7 +32,14 @@ const path = require('node:path')
         await page.reload()
         await detail.getByRole('heading', { name: 'Compensados', exact: true }).waitFor()
         assert.match(page.url(), /#setores\/topico\/base-florestal\/3$/)
-        assert.equal(await detail.locator('ol > li').count(), 8)
+        const compensados = studies.find(study => study.group === 'base-florestal' && study.topicIndex === 3)
+        if (compensados) {
+          assert.equal(await detail.locator('.sector-study').count(), 1)
+          assert.equal(await detail.locator('.study-canvas-questions > li').count(), compensados.canvasQuestions.length)
+        } else {
+          assert.equal(await detail.locator('ol > li').count(), 8)
+          assert.match(await detail.innerText(), /Estudo setorial não incluído/)
+        }
         await page.waitForFunction(() => document.activeElement?.classList.contains('central-detail'))
         // O detalhe deve ser levado ao campo visual, especialmente na tela estreita.
         const visible = await detail.evaluate(el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight })

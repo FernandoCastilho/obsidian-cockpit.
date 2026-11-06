@@ -1,0 +1,928 @@
+{
+  "transporte-logistica": [
+    {
+      "path": "[0].topicIndex",
+      "text": 0
+    },
+    {
+      "path": "[0].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[0].summary[2]",
+      "text": "A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos."
+    },
+    {
+      "path": "[0].sections[3].paragraphs[0]",
+      "text": "A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos."
+    },
+    {
+      "path": "[0].charts[0].years[0]",
+      "text": 2023
+    },
+    {
+      "path": "[0].charts[0].years[1]",
+      "text": 2024
+    },
+    {
+      "path": "[0].charts[0].years[2]",
+      "text": 2025
+    },
+    {
+      "path": "[0].charts[0].period",
+      "text": "Anos completos de 2023, 2024 e 2025"
+    },
+    {
+      "path": "[0].charts[0].method",
+      "text": "SIDRA tabela 8688, variável 11625, dezembro de cada ano, índice de volume. Foram solicitados dez anos; períodos anteriores a 2023 retornaram símbolo de ausência e foram omitidos. Não são níveis de produção."
+    },
+    {
+      "path": "[0].charts[0].series[0].values[0]",
+      "text": 10.1
+    },
+    {
+      "path": "[0].charts[0].series[0].values[1]",
+      "text": -4.5
+    },
+    {
+      "path": "[0].charts[0].series[0].values[2]",
+      "text": 2.0
+    },
+    {
+      "path": "[0].limitations[5]",
+      "text": "A consulta de dez anos à tabela PMS retornou ausência para períodos anteriores a 2023 neste recorte; não houve preenchimento artificial."
+    },
+    {
+      "path": "[0].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[0].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[0].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[0].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[0].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[0].transcript",
+      "text": "Estudo de carga geral. Cumprimento de prazo, integridade e visibilidade da entrega. Separar carga lotação, em que um embarcador ocupa a viagem, da fracionada, que exige coleta, consolidação e distribuição. Uma mesma receita por tonelada não representa a mesma produtividade nos dois modelos. A margem nasce do uso da capacidade ao longo de toda a rota, não apenas do frete de ida. Retorno vazio, redespacho, avaria, espera e reentrega podem tornar deficitário um contrato com faturamento crescente. Segregar custos da transferência e da última etapa evita subsidiar clientes complexos. A PMS do IBGE registra crescimento de 0,5% no volume de serviços rodoviários de cargas no acumulado de janeiro a agosto de 2026 contra igual período anterior. É agregado amplo, não taxa exclusiva de carga geral. A série anual recuperada mostra movimentos em direções distintas; comparar o ano parcial com anos completos exige manter os períodos explícitos. A margem nasce do uso da capacidade ao longo de toda a rota, não apenas do frete de ida. Retorno vazio, redespacho, avaria, espera e reentrega podem tornar deficitário um contrato com faturamento crescente. Segregar custos da transferência e da última etapa evita subsidiar clientes complexos. Combustível, folha, pedágios e contratação de terceiros antecedem o recebimento do embarcador. Divergências de comprovante, faltas e glosas atrasam cobrança. Um limite de giro deve acompanhar viagens efetivamente executadas e valores incontroversos, não somente contratos assinados. Renovação de caminhões, telemetria e mecanização de bases precisam ser avaliadas por ganho de disponibilidade e custo total. Alongar dívida de veículos não resolve rotas estruturalmente deficitárias. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+    },
+    {
+      "path": "[1].topicIndex",
+      "text": 1
+    },
+    {
+      "path": "[1].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[1].summary[2]",
+      "text": "A nota técnica da PEVS publicada em 2026 altera produtos e detalhamentos a partir do ano de referência anterior. Ao comparar histórico de espécies e destinos, conferir a mudança de cobertura. O DOF+ é a ferramenta oficial para rastreabilidade de produtos florestais nativos; a aplicabilidade concreta exige análise da carga."
+    },
+    {
+      "path": "[1].sections[3].paragraphs[0]",
+      "text": "A nota técnica da PEVS publicada em 2026 altera produtos e detalhamentos a partir do ano de referência anterior. Ao comparar histórico de espécies e destinos, conferir a mudança de cobertura. O DOF+ é a ferramenta oficial para rastreabilidade de produtos florestais nativos; a aplicabilidade concreta exige análise da carga."
+    },
+    {
+      "path": "[1].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[1].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[1].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[1].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[1].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[1].transcript",
+      "text": "Estudo de Transporte de madeira. Disponibilidade sincronizada com colheita e consumo industrial, com transporte seguro de toras. Separar madeira plantada destinada à indústria de produtos de espécies nativas sujeitos à comprovação de origem; uma regra documental não deve ser generalizada a toda madeira. A economia é de ciclo completo: carga, deslocamento, fila, descarga e retorno. Peso, volume e umidade não são intercambiáveis. Aumento do raio de abastecimento deve ser refletido em custo e remuneração; preço por tonelada sem distância e tempo esconde erosão de margem. A nota técnica da PEVS publicada em 2026 altera produtos e detalhamentos a partir do ano de referência anterior. Ao comparar histórico de espécies e destinos, conferir a mudança de cobertura. O DOF+ é a ferramenta oficial para rastreabilidade de produtos florestais nativos; a aplicabilidade concreta exige análise da carga. Como funciona. Celulose, painéis, serrarias e produtores florestais contratam fluxo físico contínuo. Um contrato dedicado pode dar previsibilidade, mas atrela utilização a uma fábrica, talhão e distância de abastecimento. Conjuntos florestais, carregadores, manutenção severa, pneus, diesel e motoristas habilitados. Estradas internas, chuva e fila no pátio afetam o número de ciclos realizável mesmo sem mudar a quilometragem contratada. Caixa e financiamento. Frota e pessoal ficam comprometidos antes de a medição do contratante liberar pagamento. Apurar diferença entre disponibilidade contratada e efetivamente faturável. Mudança do talhão pode exigir capital adicional sem aumentar a receita na mesma proporção. Implementos especializados e manutenção preventiva são investimentos vinculados ao contrato. O prazo do ativo e o saldo de dívida devem sobreviver à possibilidade de encerramento ou remanejamento; verificar mercado secundário e custo de adaptação. Cenários. Abastecimento industrial mantém operação, com remuneração ajustada às frentes de corte. Menor fila e melhor planejamento elevam viagens úteis sem nova frota. Parada de fábrica ou chuva prolongada deixa ativos sem receita e mantém serviço da dívida. Na visita, pergunte: Quem absorve o aumento da distância quando muda a frente de corte? O contrato paga disponibilidade quando a fábrica ou a colheita paralisa? Como a empresa valida a origem e as condições de amarração antes de carregar? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[2].topicIndex",
+      "text": 2
+    },
+    {
+      "path": "[2].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[2].summary[2]",
+      "text": "Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída."
+    },
+    {
+      "path": "[2].sections[3].paragraphs[0]",
+      "text": "Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída."
+    },
+    {
+      "path": "[2].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[2].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[2].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[2].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[2].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[2].transcript",
+      "text": "Estudo de Transporte de grãos. Escoamento no calendário de colheita e embarque. Soja, milho e trigo têm fluxos distintos, e a rota de insumos no retorno pode alterar a rentabilidade. Separar transportador, agenciador de frete e trading que comercializa a mercadoria. Preço por tonelada deve ser comparado com distância, fila, pedágio, retorno e perdas. A sazonalidade cria disputa por frota no pico e ociosidade depois; renovar frota com base na melhor tarifa da safra superestima capacidade de pagamento. Em setembro de 2026, a Conab relatou fretes pressionados por diesel e movimentação de insumos, com diferenças entre Mato Grosso, Mato Grosso do Sul, Goiás e outras praças. A leitura analítica é que a exposição deve ser medida por corredor, não por crescimento agregado da safra. Comparação completa de tarifas históricas ainda não foi extraída. Como funciona. Produtores, cooperativas, cerealistas, tradings e esmagadoras. O volume comercializado só vira demanda do transportador quando se conhece origem, destino, modal e janela; safra recorde não assegura frete alto em todas as praças. Graneleiros, diesel, pneus, manutenção, motoristas e pontos de apoio. Umidade, contaminação, limpeza e diferenças de pesagem influenciam perdas, rejeição e responsabilidade. Caixa e financiamento. O desembolso por viagem antecede recebimento. Antecipação ao motorista e demora de descarga aumentam giro. Recebíveis dependem de comprovantes e ajustes de peso; giro sazonal deve ter liquidação compatível com o calendário real de escoamento. Graneleiros e sistemas de agendamento podem ampliar produtividade. Antes de aumentar frota, testar ociosidade de entressafra e possibilidade de transportar insumos compatíveis no retorno, incluindo limpeza e segregação. Cenários. Fluxos agrícolas permanecem, com diferenças entre culturas e corredores. Programação reduz filas e contrata retorno, elevando utilização anual. Clima, restrição de porto ou queda de embarques desloca frota e deprime frete local. Na visita, pergunte: Quanto do resultado anual depende da janela mais cara da colheita? Qual retorno é contratado e qual é apenas expectativa? Quem remunera espera e quem responde por diferença de peso? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[3].topicIndex",
+      "text": 3
+    },
+    {
+      "path": "[3].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[3].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[3].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[3].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[3].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[3].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[4].topicIndex",
+      "text": 4
+    },
+    {
+      "path": "[4].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[4].summary[2]",
+      "text": "A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos."
+    },
+    {
+      "path": "[4].sections[3].paragraphs[0]",
+      "text": "A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos."
+    },
+    {
+      "path": "[4].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[4].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[4].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[4].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[4].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[4].transcript",
+      "text": "Estudo de Transporte de produtos perigosos. Transportar substâncias classificadas como perigosas com segurança e documentação apropriada. O recorte inclui carga embalada e granel, mas os requisitos dependem da classe, produto, equipamento e operação, e não de uma temperatura ou licença única. O frete deve pagar inspeções, limpeza, descontaminação, retorno com resíduo e disponibilidade de emergência. Receita por quilômetro sem esses componentes pode parecer competitiva enquanto transfere risco não precificado para o transportador. A fonte oficial da ANTT recuperada em 2026 mantém o regulamento e perguntas frequentes. A ANP anunciou aprovação da retomada de restrição à comercialização de biodiesel entre distribuidores, ilustrando mudança na cadeia de combustível, mas esse ato não altera automaticamente contratos de transporte de todos os perigosos. Como funciona. Indústrias químicas, distribuidores de combustíveis e outros expedidores. Continuidade, qualificação e resposta a incidentes são parte da compra; contrato comercial não elimina responsabilidade legal. Tanques, embalagens, válvulas, equipamentos de emergência, motoristas treinados, seguros e locais de limpeza. Compatibilidade química determina possibilidade de reaproveitar capacidade entre produtos. Caixa e financiamento. Pagamentos operacionais e manutenção precedem recebimento; evento ambiental pode gerar despesas e interrupção. Separar giro normal de contingências, franquias e obrigações não cobertas, sem presumir que uma apólice elimina todo passivo. Equipamento compatível e certificações devem ser conferidos antes de financiar expansão. Dívida longa requer contratos e possibilidade real de realocação; tanque especializado não tem liquidez equivalente a veículo genérico. Cenários. Operação segue com contratos aderentes aos custos de segurança e limpeza. Melhor utilização de equipamento compatível reduz ociosidade sem comprometer prevenção. Incidente ou paralisação de cliente reduz receita e cria necessidade extraordinária de caixa. Na visita, pergunte: Qual substância exige equipamento que não pode ser realocado? Como se valida compatibilidade antes de aceitar nova carga? Existe obrigação ambiental ou indenização assumida acima da cobertura contratada? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[5].topicIndex",
+      "text": 5
+    },
+    {
+      "path": "[5].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[5].charts[0].years[0]",
+      "text": 2015
+    },
+    {
+      "path": "[5].charts[0].years[1]",
+      "text": 2025
+    },
+    {
+      "path": "[5].charts[0].period",
+      "text": "Segundo semestre de 2015 e de 2025"
+    },
+    {
+      "path": "[5].charts[0].series[0].values[0]",
+      "text": 166.1
+    },
+    {
+      "path": "[5].charts[0].series[0].values[1]",
+      "text": 233.8
+    },
+    {
+      "path": "[5].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[5].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[5].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[5].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[5].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[5].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[5].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[6].topicIndex",
+      "text": 6
+    },
+    {
+      "path": "[6].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[6].summary[2]",
+      "text": "O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real."
+    },
+    {
+      "path": "[6].sections[3].paragraphs[0]",
+      "text": "O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real."
+    },
+    {
+      "path": "[6].charts[0].years[0]",
+      "text": 2024
+    },
+    {
+      "path": "[6].charts[0].years[1]",
+      "text": 2025
+    },
+    {
+      "path": "[6].charts[0].period",
+      "text": "2024 e 2025"
+    },
+    {
+      "path": "[6].charts[0].series[0].values[0]",
+      "text": 1.32
+    },
+    {
+      "path": "[6].charts[0].series[0].values[1]",
+      "text": 1.4
+    },
+    {
+      "path": "[6].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[6].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[6].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[6].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[6].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[6].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[6].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[6].transcript",
+      "text": "Estudo de Logística portuária. Coordenar acesso, movimentação, armazenagem e embarque ou desembarque. Separar autoridade portuária, terminal arrendado ou autorizado, operador, agente marítimo e prestador logístico; não são receitas intercambiáveis. Receita varia entre movimentação, guarda e serviços acessórios. Volume em toneladas, contêineres em TEU e quantidade de escalas respondem a questões distintas. Maior permanência pode elevar cobrança e simultaneamente reduzir capacidade e satisfação do cliente. O balanço da ANTAQ mostra maior movimentação em 2025 frente a 2024. Isso favorece demanda potencial por serviços, mas a conclusão de margem é inferência condicionada a tarifas, produtividade e custos. O último mês de 2026 não foi recuperado; o balanço anual não deve ser chamado de dado em tempo real. Como funciona. Armadores, importadores, exportadores e donos de carga. Ganho de volume não é suficiente quando o contrato remunera mal a movimentação ou a infraestrutura exige expansão antes da receita. Berços, calado, guindastes, correias, pátio, mão de obra, energia e sistemas de agendamento. O elo mais lento pode estar fora do terminal, na ferrovia, acesso rodoviário ou liberação documental. Caixa e financiamento. Operadores médios podem financiar serviços antes do aceite e pagamentos a terceiros. Um terminal com infraestrutura própria tem outra estrutura de capital. Recebíveis contestados por avaria, demora ou cobrança adicional exigem validação antes de antecipação. Investimentos em equipamento precisam de demanda contratada e compatibilidade com prazo e condições da outorga. Prestador de serviço pode investir em sistemas e ativos móveis; não presumir acesso a estrutura financeira de concessionária de grande porte. Cenários. Demanda acompanha comércio e produção, com crescimento limitado pelo acesso. Melhor produtividade libera capacidade e preserva margem sem mesma expansão física. Desvio de rota, atraso de obra ou queda do cliente âncora deixa ativos ociosos. Na visita, pergunte: Qual parte da fila é controlável pelo operador? O contrato cobre investimento antes de vencer a outorga ou o acordo comercial? Quanto da receita depende de armazenagem causada por atraso do cliente? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    }
+  ],
+  "alimentos-agroindustria": [
+    {
+      "path": "[0].topicIndex",
+      "text": 0
+    },
+    {
+      "path": "[0].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[0].summary[2]",
+      "text": "O IBGE publicou recorde de abate anual em 2025 e resultados trimestrais posteriores. O material recuperado para o primeiro trimestre de 2026 mostra expansão ante igual período anterior, mas os valores preliminares e revisados podem divergir. A análise não transforma aumento de abate em melhora automática de margem, e não afirma ter recuperado o trimestre mais recente integralmente."
+    },
+    {
+      "path": "[0].sections[3].paragraphs[0]",
+      "text": "O IBGE publicou recorde de abate anual em 2025 e resultados trimestrais posteriores. O material recuperado para o primeiro trimestre de 2026 mostra expansão ante igual período anterior, mas os valores preliminares e revisados podem divergir. A análise não transforma aumento de abate em melhora automática de margem, e não afirma ter recuperado o trimestre mais recente integralmente."
+    },
+    {
+      "path": "[0].charts[0].years[0]",
+      "text": 2015
+    },
+    {
+      "path": "[0].charts[0].years[1]",
+      "text": 2025
+    },
+    {
+      "path": "[0].charts[0].period",
+      "text": "2015 e 2025; não é série anual contínua"
+    },
+    {
+      "path": "[0].charts[0].series[0].values[0]",
+      "text": 30.64
+    },
+    {
+      "path": "[0].charts[0].series[0].values[1]",
+      "text": 42.94
+    },
+    {
+      "path": "[0].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[0].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[0].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[0].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[0].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[0].transcript",
+      "text": "Estudo de Frigoríficos. Converter animal em cortes e coprodutos com rendimento, segurança sanitária e acesso comercial. Separar bovinos de aves e suínos: compra de gado, integração de criação, ração e ciclos biológicos mudam radicalmente a formação da margem. Nos bovinos, o spread entre compra do animal e realização dos cortes precisa incorporar rendimento, perdas, subprodutos e despesas de abate. Em aves e suínos integrados, ração e desempenho zootécnico entram antes do abate. Preço exportado maior pode coexistir com custo maior do animal. O IBGE publicou recorde de abate anual em 2025 e resultados trimestrais posteriores. O material recuperado para o primeiro trimestre de 2026 mostra expansão ante igual período anterior, mas os valores preliminares e revisados podem divergir. A análise não transforma aumento de abate em melhora automática de margem, e não afirma ter recuperado o trimestre mais recente integralmente. Como funciona. Redes varejistas, distribuidores, alimentação fora do lar e compradores externos. A habilitação sanitária é específica da planta, produto e destino; exportar é oportunidade condicionada, não característica automática de um frigorífico médio. Animais, ração quando houver criação integrada, energia, água, embalagem, frio e transporte. Rendimento de carcaça, aproveitamento dos cortes e destinação de subprodutos determinam o valor recuperado por animal. Caixa e financiamento. Compra de animais ou custeio da integração antecede venda e recebimento. Estoque congelado prolonga o ciclo e expõe preço, energia e validade. Exportação acrescenta prazo de embarque, documentos e recebimento em moeda estrangeira; hedge só faz sentido sobre exposição líquida comprovada. Linhas de abate, tratamento de efluentes, frio, rastreabilidade e eficiência energética exigem capital. Expansão deve ser testada contra disponibilidade local de animais e canais habilitados; capacidade industrial sem suprimento não gera caixa. Cenários. Volume segue demanda e oferta local, sem expansão de margem presumida. Melhor rendimento e acesso comercial ampliam realização por animal com giro controlado. Animal ou ração encarece e preço de venda não acompanha; estoque e necessidade de giro sobem. Na visita, pergunte: Qual é o resultado por espécie e por planta após atribuir subprodutos e perdas? Se um destino de exportação fechar, qual canal absorve os cortes e a que condição? A ampliação tem animal, licença e cliente antes de contrair dívida? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[1].topicIndex",
+      "text": 1
+    },
+    {
+      "path": "[1].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[1].summary[2]",
+      "text": "O primeiro trimestre de 2026 teve aquisição de leite cru de 6,78 bilhões de litros nos estabelecimentos sob inspeção, segundo o IBGE. A publicação revisada muda variações em relação à divulgação inicial; por isso o estudo usa o nível e explicita o universo, sem misturar taxas das versões. Esse dado não mede produção de queijo nem mercado total de leite."
+    },
+    {
+      "path": "[1].sections[3].paragraphs[0]",
+      "text": "O primeiro trimestre de 2026 teve aquisição de leite cru de 6,78 bilhões de litros nos estabelecimentos sob inspeção, segundo o IBGE. A publicação revisada muda variações em relação à divulgação inicial; por isso o estudo usa o nível e explicita o universo, sem misturar taxas das versões. Esse dado não mede produção de queijo nem mercado total de leite."
+    },
+    {
+      "path": "[1].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[1].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[1].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[1].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[1].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[1].transcript",
+      "text": "Estudo de Laticínios. Transformar leite cru em produtos de vidas úteis e margens distintas. UHT, queijo, leite em pó e refrigerados têm calendários de fabricação, maturação, estocagem e canais diferentes. Volume captado não é lucro nem receita de derivados. Margem é a realização líquida do mix menos custo do leite, transformação e distribuição. Leite mais barato pode aliviar custo, mas também acompanhar maior oferta e queda do preço do produto final. Queijo imobiliza caixa na maturação, enquanto refrigerado exige giro e execução de validade. O primeiro trimestre de 2026 teve aquisição de leite cru de 6,78 bilhões de litros nos estabelecimentos sob inspeção, segundo o IBGE. A publicação revisada muda variações em relação à divulgação inicial; por isso o estudo usa o nível e explicita o universo, sem misturar taxas das versões. Esse dado não mede produção de queijo nem mercado total de leite. Como funciona. Varejo, distribuidores, indústrias e alimentação fora do lar. Marca própria, fabricação para terceiros e commodity láctea possuem poder de preço distinto; comparar apenas litros recebidos esconde o mix. Leite cru, coleta, energia, embalagens, ingredientes, culturas e cadeia fria. Composição, qualidade e distância de coleta alteram rendimento e custo. A impossibilidade de adiar indefinidamente processamento aumenta dependência da coordenação com fornecedores. Caixa e financiamento. Coleta recorrente e pagamento ao produtor precisam ser financiados até venda. Estoque em maturação é diferente de estoque de produto vencendo; descontar recebíveis sem controlar devoluções e bonificações superestima o valor disponível. Processamento, envase, frio, tratamento de efluentes e laboratório sustentam qualidade. Expandir captação exige rota economicamente viável; comprar equipamento sem suprimento e canal adiciona custo fixo. Cenários. Captação e mix ajustam-se à demanda, com atenção ao ciclo de estoques. Mais rendimento e venda de maior valor por sólidos melhoram margem sem igual aumento da captação. Excesso de oferta derruba preço final ou leite encarece sem repasse; maturação e devoluções pressionam caixa. Na visita, pergunte: Qual produto remunera melhor os sólidos recebidos, após perdas e prazo de caixa? Bonificações e devoluções já foram abatidas do recebível antecipado? A nova rota de captação paga coleta, resfriamento e perda de qualidade? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[2].topicIndex",
+      "text": 2
+    },
+    {
+      "path": "[2].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[2].summary[2]",
+      "text": "O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço."
+    },
+    {
+      "path": "[2].sections[3].paragraphs[0]",
+      "text": "O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço."
+    },
+    {
+      "path": "[2].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[2].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[2].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[2].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[2].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[2].transcript",
+      "text": "Estudo de Moinhos. Transformar grão em farinha e coprodutos com especificação para uso industrial. O foco é moagem de trigo; milho e outros cereais precisam de balanço próprio. Tonelada de trigo, farinha e farelo não são volumes somáveis de mercados separados. A margem resulta da venda de farinha e farelo menos custo do trigo, moagem e logística. Mistura adequada preserva especificação com custo menor; porém substituição excessiva pode causar devolução. Spread de farinha e trigo deve usar períodos e moedas compatíveis. O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço. Como funciona. Panificação, massas, biscoitos, distribuidores e indústria de alimentos. Regularidade de força e qualidade da farinha pode valer mais que menor preço por saco; contratos industriais exigem repetibilidade e assistência técnica. Trigo de qualidades distintas, importação quando houver, energia, sacaria, laboratório, transporte e silo. Qualidade do grão determina possibilidade de mistura e rendimento; não basta comparar preço da tonelada nacional e importada sem frete, câmbio e especificação. Caixa e financiamento. Compra sazonal de grão e importação podem anteceder a venda por longo intervalo. A empresa financia estoque físico, custos portuários e prazo industrial. Proteção cambial deve estar vinculada à obrigação de importação e às receitas, não a aposta independente. Moinhos, peneiras, silos e laboratório aumentam controle e produtividade. A decisão deve separar gargalo de moagem, recebimento, mistura e expedição. Instalação próxima do porto reduz uma perna do custo e pode aumentar distância do cliente. Cenários. Demanda por farinha segue canais atendidos, com ajuste de mistura e estoque. Melhor originação e rendimento protegem margem sem deteriorar qualidade. Câmbio, frete ou trigo de qualidade encarecem antes de reajuste; estoque consome caixa. Na visita, pergunte: Qual é a margem por aplicação da farinha incluindo realização do farelo? Compra física, importação e hedge estão casados por prazo e moeda? A qualidade da safra altera rendimento ou obriga comprar trigo mais caro? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[3].topicIndex",
+      "text": 3
+    },
+    {
+      "path": "[3].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[3].summary[2]",
+      "text": "A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos."
+    },
+    {
+      "path": "[3].sections[3].paragraphs[0]",
+      "text": "A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos."
+    },
+    {
+      "path": "[3].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[3].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[3].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[3].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[3].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[3].transcript",
+      "text": "Estudo de Óleos vegetais. Processar oleaginosas e vender produtos conjuntos. O foco econômico é soja, sem tratar palma, girassol, canola e outros óleos como equivalentes. Esmagamento, refino, envase e biodiesel são elos distintos; uma empresa pode atuar apenas em parte deles. Margem de esmagamento é receita conjunta de óleo e farelo menos custo do grão e conversão. Preço elevado do óleo não comprova margem se a soja e energia sobem ou o farelo enfraquece. Refino e envase adicionam custo, marca e canal diferentes da commodity bruta. A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos. Como funciona. Indústria de alimentos, varejo de óleo envasado, fabricantes de ração e produtores de biodiesel. O preço realizável depende do mix de óleo e farelo e do destino; a venda de um coproduto influencia a viabilidade do outro. Soja ou outra oleaginosa, energia, vapor, químicos de processo, embalagens, armazenagem e logística. Matéria-prima tem referência internacional e prêmio local; custo de originação varia com frete, safra e competição regional. Caixa e financiamento. Compra de grão concentra desembolso na safra e produz estoque e recebíveis em calendários distintos. Exposição cambial é líquida de compras, vendas e dívidas; derivativos devem acompanhar volumes efetivamente expostos. Exportação e venda doméstica não têm o mesmo ciclo documental. Esmagamento, extração, refino, segurança de processo e tratamento ambiental exigem ativos específicos. Ampliação baseada apenas em política de biocombustíveis é vulnerável a mudança de mistura, preço e competição; testar demanda de farelo e disponibilidade do grão. Cenários. Receita conjunta sustenta utilização com gestão prudente de posição. Originação eficiente e demanda por coprodutos permitem melhorar spread realizado. Grão encarece ou um coproduto perde demanda; giro e estoque crescem apesar de venda nominal maior. Na visita, pergunte: A margem comercial foi calculada com os dois produtos conjuntos? Quanto da posição está exposta após casar contratos físicos e proteção financeira? A ampliação tem destino para o farelo além do comprador de óleo? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[4].topicIndex",
+      "text": 4
+    },
+    {
+      "path": "[4].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[4].summary[2]",
+      "text": "A página PIM-PF consultada apresenta referência mensal de agosto de 2026, mas não foi extraído um agregado exclusivo de processados sem frigoríficos, óleos e laticínios. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte."
+    },
+    {
+      "path": "[4].sections[3].paragraphs[0]",
+      "text": "A página PIM-PF consultada apresenta referência mensal de agosto de 2026, mas não foi extraído um agregado exclusivo de processados sem frigoríficos, óleos e laticínios. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte."
+    },
+    {
+      "path": "[4].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[4].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[4].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[4].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[4].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[4].transcript",
+      "text": "Estudo de Alimentos processados. Converter ingredientes em alimentos com padronização, conveniência e vida útil. O recorte é heterogêneo: massas, biscoitos, conservas, refeições e outras formulações não compartilham a mesma margem. Carne processada e lácteos devem ser conciliados com seus estudos para evitar dupla contagem. A margem efetiva depende de preço líquido após descontos, bonificações, promoções e devoluções, menos formulação, embalagem e transformação. Muitos itens com baixo giro podem elevar receita bruta e destruir produtividade por troca de linha e estoque. A página PIM-PF consultada apresenta referência mensal de agosto de 2026, mas não foi extraído um agregado exclusivo de processados sem frigoríficos, óleos e laticínios. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte. Como funciona. Redes de varejo, distribuidores, alimentação fora do lar e indústria. Marca própria de varejista traz volume com menor autonomia de preço; marca do fabricante exige investimento comercial e execução no ponto de venda. Ingredientes agrícolas, aditivos permitidos, embalagens, energia, água, mão de obra e controle de qualidade. Reformulação altera custo, rendimento, rotulagem e aceitação; reduzir ingrediente sem validar produto pode criar risco comercial e sanitário. Caixa e financiamento. Compra de insumos, fabricação e distribuição antecedem prazo de varejistas. Produção promocional concentra capital e pode deixar sobras. Recebível deve refletir verbas comerciais contratadas, devoluções esperadas e aceite, sem tratar faturamento bruto como caixa futuro certo. Automação, rastreio por lote, eficiência energética e controle de qualidade podem reduzir custo e perdas. Nova linha deve ser testada contra volume economicamente viável por formulação e canal, não apenas contra capacidade técnica. Cenários. Mix e preços são ajustados sem expansão indiscriminada do portfólio. Menos perdas, lotes melhores e execução de canal ampliam margem líquida. Ingrediente sobe, promoções aumentam e estoque encalha; faturamento nominal mascara piora de caixa. Na visita, pergunte: Qual item parece rentável antes de descontar toda a verba comercial? Quais lotes têm risco de vencer antes de vender? A nova linha atende demanda comprovada ou apenas adiciona itens ao catálogo? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[5].topicIndex",
+      "text": 5
+    },
+    {
+      "path": "[5].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[5].summary[2]",
+      "text": "O Anuário da Cerveja de 2026 tem referência em 2025 e inclui produção declarada, comércio exterior e registros. Os dados regionais recuperados mostram diferenças entre distribuição de fábricas e volume, o que impede usar contagem de estabelecimentos como medida de capacidade. Não foi extrapolada uma taxa de cerveja para sucos, água ou refrigerantes."
+    },
+    {
+      "path": "[5].sections[3].paragraphs[0]",
+      "text": "O Anuário da Cerveja de 2026 tem referência em 2025 e inclui produção declarada, comércio exterior e registros. Os dados regionais recuperados mostram diferenças entre distribuição de fábricas e volume, o que impede usar contagem de estabelecimentos como medida de capacidade. Não foi extrapolada uma taxa de cerveja para sucos, água ou refrigerantes."
+    },
+    {
+      "path": "[5].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[5].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[5].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[5].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[5].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[5].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[5].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[5].transcript",
+      "text": "Estudo de Bebidas. Produzir e distribuir bebidas com qualidade, marca e disponibilidade. Cerveja, refrigerante, água, destilado e suco têm tecnologias, regras e sazonalidades distintas. A evidência específica de cerveja não é estimativa de todo o mercado de bebidas. Preço de prateleira não é realização do fabricante. Descontos, distribuição, marketing, impostos aplicáveis e perdas devem ser separados. Portfólio amplo ocupa tanques e estoques; capacidade de envase pode sobrar enquanto maturação ou canal é gargalo. O Anuário da Cerveja de 2026 tem referência em 2025 e inclui produção declarada, comércio exterior e registros. Os dados regionais recuperados mostram diferenças entre distribuição de fábricas e volume, o que impede usar contagem de estabelecimentos como medida de capacidade. Não foi extrapolada uma taxa de cerveja para sucos, água ou refrigerantes. Como funciona. Varejo, bares, restaurantes, distribuidores e clientes industriais. Ocasião de consumo e canal afetam embalagem, frequência de entrega e preço líquido; venda em barril ou embalagem retornável exige controle do ativo circulante. Água com qualidade adequada, malte ou outros ingredientes, energia, frio e embalagens. Na cerveja, fermentação e maturação ocupam tanque antes do envase; insumo importado e lata ou vidro podem dominar riscos diferentes em cada porte. Caixa e financiamento. Produção antecede pico de consumo e recebimento. Garrafas retornáveis, barris e equipamentos cedidos a pontos de venda podem consumir caixa mesmo fora do estoque contábil de bebida. Antecipar vendas sem deduzir bonificação e devolução superestima liquidez. Tratamento de água, tanques, frio, envase e eficiência energética devem ser dimensionados ao mix e à comercialização. Uma cervejaria média não deve copiar estrutura financeira ou rede de distribuição de grandes marcas. Cenários. Mix e produção acompanham canal com disciplina de estoque. Melhor distribuição e giro de retornáveis elevam receita por capital empregado. Consumo fraco ou clima desfavorável deixa estoque e capacidade ociosa, com promoções comprimindo margem. Na visita, pergunte: O gargalo real é tanque, envase ou venda no canal? Quem paga por retornáveis e barris que não voltam? Qual é a margem líquida por embalagem depois da distribuição e promoção? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    }
+  ],
+  "atacado": [
+    {
+      "path": "[0].topicIndex",
+      "text": 0
+    },
+    {
+      "path": "[0].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[0].summary[2]",
+      "text": "A PAC consultada apresenta ano-base de 2024 e sinaliza início de nova série. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência."
+    },
+    {
+      "path": "[0].sections[3].paragraphs[0]",
+      "text": "A PAC consultada apresenta ano-base de 2024 e sinaliza início de nova série. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência."
+    },
+    {
+      "path": "[0].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[0].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[0].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[0].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[0].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[0].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[0].transcript",
+      "text": "Estudo de Distribuição de alimentos. Fracionar lotes, manter disponibilidade e entregar um mix que o pequeno varejista ou restaurante não consegue comprar diretamente em condições equivalentes. Separar atacado distribuidor, atacarejo com retirada pelo cliente e operador logístico sem propriedade do estoque. A margem de revenda precisa cobrir armazenagem, separação, entrega, comissão, perdas e crédito. Desconto de compra por lote maior só gera valor se custo financeiro e vencimento forem menores que o ganho. Avaliar margem por cliente e rota, não apenas por categoria. A PAC consultada apresenta ano-base de 2024 e sinaliza início de nova série. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência. Como funciona. Varejo independente, redes regionais, restaurantes e cozinhas. Cada canal tem tamanho de pedido, frequência e crédito diferentes. Crescer em clientes distantes ou pedidos menores pode aumentar receita e reduzir contribuição por rota. Fornecedores de alimentos, estoques secos ou refrigerados, centros de distribuição, frota e equipe comercial. Bonificações e verbas de fabricantes podem condicionar margem a metas de volume que aumentam estoque e risco de vencimento. Caixa e financiamento. Compra em escala e venda fracionada a prazo fazem o distribuidor financiar estoques e clientes. O giro cresce quando fornecedores encurtam prazo ou varejo demora a pagar. Duplicata não elimina risco de devolução, abatimento e concentração do pequeno comércio regional. Automação de separação, sistema de estoque, roteirização e frio devem ser justificadas por produtividade e perdas evitadas. Um novo centro exige densidade de vendas antes de diluir aluguel, equipe e estrutura. Cenários. Reposição segue clientes ativos com estoques e limites ajustados. Densidade da rota e acerto do mix elevam serviço sem igual aumento de capital. Cliente compra menos ou atrasa; estoque perecível e conta a receber pressionam caixa simultaneamente. Na visita, pergunte: Qual cliente dá margem antes do custo de entregar e depois deixa prejuízo? O desconto do fornecedor compensa capital parado e risco de validade? Qual centro de distribuição tem densidade comprovada para pagar custo fixo? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[1].topicIndex",
+      "text": 1
+    },
+    {
+      "path": "[1].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[1].summary[2]",
+      "text": "O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista."
+    },
+    {
+      "path": "[1].sections[3].paragraphs[0]",
+      "text": "O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista."
+    },
+    {
+      "path": "[1].charts[0].years[0]",
+      "text": 2024
+    },
+    {
+      "path": "[1].charts[0].years[1]",
+      "text": 2025
+    },
+    {
+      "path": "[1].charts[0].period",
+      "text": "2024 e 2025"
+    },
+    {
+      "path": "[1].charts[0].series[0].values[0]",
+      "text": 160.7
+    },
+    {
+      "path": "[1].charts[0].series[0].values[1]",
+      "text": 182
+    },
+    {
+      "path": "[1].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[1].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[1].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[1].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[1].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[1].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[1].transcript",
+      "text": "Estudo de Distribuição de medicamentos. Garantir abastecimento com rastreabilidade, integridade e cumprimento das condições de armazenamento e transporte. Distribuição farmacêutica é distinta de fabricação, varejo de farmácia e materiais médicos; o estudo não mistura faturamentos desses elos. A margem líquida depende de desconto comercial, condição de compra, devoluções, perdas por validade e custo de serviço. Medicamento especial pode ter alto valor e baixo giro; item de grande circulação exige disponibilidade sem excesso. Não aplicar margem da indústria à distribuidora. O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista. Como funciona. Farmácias, hospitais, clínicas e compradores institucionais. Canal hospitalar e varejo possuem mix, negociação e prazo diferentes; venda a governo acrescenta exigências documentais e exposição ao recebimento do ente contratante. Fabricantes, produtos regularizados, instalações, farmacêutico responsável quando aplicável, sistemas por lote, equipamentos de temperatura e transportadores qualificados. Produto caro não significa alta margem, especialmente sob acordo comercial e restrição de preço. Caixa e financiamento. Estoques e prazo a farmácias ou hospitais podem exceder prazo do fabricante. Recebível exige entrega comprovada e ausência de disputa; prazo de fornecedor ou bonificação não deve ser presumido recorrente. Concentração em hospital ou ente público precisa de análise própria. Sistemas de lote, segregação, qualificação térmica e redundância são parte da capacidade comercial. Ampliação de armazenagem deve manter qualidade e autorização adequadas, sem assumir que registro de uma unidade cobre toda filial ou atividade. Cenários. Demanda dos clientes permanece com margem dependente de mix e giro. Melhor estoque e menor perda elevam retorno sem exigir crescimento proporcional de venda. Fabricante encurta prazo e comprador atrasa, enquanto validade ou bloqueio reduz valor do estoque. Na visita, pergunte: Qual parte do estoque está bloqueada, próxima do vencimento ou vinculada a devolução? Recebíveis hospitalares têm aceite e documentação completos? A expansão mantém qualificação de temperatura e rastreabilidade por unidade? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito."
+    },
+    {
+      "path": "[2].topicIndex",
+      "text": 2
+    },
+    {
+      "path": "[2].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[2].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[2].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[2].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[2].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[2].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[2].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[3].topicIndex",
+      "text": 3
+    },
+    {
+      "path": "[3].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[3].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[3].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[3].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[3].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[3].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[3].diagram.edges[2].from",
+      "text": "n2"
+    },
+    {
+      "path": "[4].topicIndex",
+      "text": 4
+    },
+    {
+      "path": "[4].reviewedAt",
+      "text": "2026-11-06"
+    },
+    {
+      "path": "[4].method",
+      "text": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão independente pendente."
+    },
+    {
+      "path": "[4].diagram.edges[0].to",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[0].from",
+      "text": "n0"
+    },
+    {
+      "path": "[4].diagram.edges[1].to",
+      "text": "n2"
+    },
+    {
+      "path": "[4].diagram.edges[1].from",
+      "text": "n1"
+    },
+    {
+      "path": "[4].diagram.edges[2].to",
+      "text": "n3"
+    },
+    {
+      "path": "[4].diagram.edges[2].from",
+      "text": "n2"
+    }
+  ]
+}

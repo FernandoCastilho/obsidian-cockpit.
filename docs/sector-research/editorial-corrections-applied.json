@@ -1,0 +1,513 @@
+{
+  "applied": [
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/0/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/1/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/2/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/3/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/4/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/5/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/0/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/1/sections/2/paragraphs/1"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/summary/2"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/sections/2/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/sections/3/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/limitations/3"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/0/transcript"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/summary/2"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/sections/2/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/sections/3/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/limitations/3"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/1/transcript"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/2/sections/1/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/2/sections/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/2/sections/3/paragraphs/2"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/2/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/2/transcript"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/4/sections/1/paragraphs/2"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/4/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/4/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "path": "/4/transcript"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/1/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/2/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/3/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/4/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "path": "/5/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/0/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/sections/2/paragraphs/0"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/sections/2/sources/0/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/charts/0/source/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/1/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/2/sections/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/2/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/2/method"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/3/sections/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/3/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "path": "/3/method"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/0/sections/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/0/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/0/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/0/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sections/0/paragraphs/4"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sections/0/sources/3/label"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sections/0/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sections/2/sources/5/label"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sections/2/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/charts/0/method"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/charts/0/sources/0/label"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sources/5/label"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sources/6/label"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/1/sources/6/purpose"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/3/sections/1/paragraphs/2"
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "path": "/3/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/0/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/0/sources/4/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/0/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/sections/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/sources/2/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/2/sections/1/sources/4/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/2/sections/1/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/2/sources/4/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/2/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/2/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/3/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/3/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/3/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/4/sections/1/sources/3/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/4/sources/5/purpose"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/4/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/5/transcript"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/6/transcript"
+    }
+  ],
+  "skipped": []
+}

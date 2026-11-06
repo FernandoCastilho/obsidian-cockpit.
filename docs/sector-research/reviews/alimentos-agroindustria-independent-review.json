@@ -1,0 +1,202 @@
+{
+  "reviewer": "research_manufacturing_sector_studies",
+  "role": "Revisão independente de precisão",
+  "date": "2026-11-06",
+  "file": "docs/sector-research/alimentos-agroindustria.json",
+  "sha256": "9786ccfc4e7cdb9e0f1f8a3e1f0901c4ced272d7b95cd517382e59dc3cdbb201",
+  "status": "Aprovação individual parcial; ver decisões por estudo",
+  "coverage": "Lidos seis estudos, cadeia, finanças, SWOT, Porter, cenários, perguntas e fontes; hipóteses operacionais distinguem análise de estatística. Fontes históricas não são tratadas como rankings atuais. Versão congelada final: todos os números da prosa/gráficos escaneados; não inclui datas de edição, identificadores e horizontes analíticos como observações estatísticas.",
+  "verifiedQualitative": [
+    {
+      "subject": "Minerva/Marfrig, aprovação condicionada e geografia histórica",
+      "source": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "Lactalis/DPA, lácteos e restrições concorrenciais",
+      "source": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "Bunge/Imcopa, Araucária/Cambé e soja",
+      "source": "https://www.gov.br/cade/pt-br/assuntos/noticias/aquisicao-de-ativos-da-imcopa-pela-bunge-e-autorizada-pelo-cade",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "Seara/Bunge, óleo degomado como insumo de margarinas",
+      "source": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "Conab, setembro2026: umidade e risco à qualidade do trigo, sem inferir moagem",
+      "source": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "MAPA, cerveja: ano referência2025, registros diferentes de produção",
+      "source": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/2026/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado",
+      "method": "Página integral aberta, texto principal conferido",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "subject": "MAPA lista histórica frigoríficos: exemplos JBS, Marfrig, Minerva, BRF e Seara confirmados; não prova habilitação atual",
+      "source": "https://www.gov.br/agricultura/pt-br/arquivos/establishmnt-hkg.pdf",
+      "method": "PDF integral com13páginas e tabela aberta",
+      "accessDate": "2026-11-06"
+    }
+  ],
+  "numericItems": [
+    {
+      "id": "abate-bovino-2015",
+      "value": 30.64,
+      "unit": "milhões de cabeças",
+      "period": "2015",
+      "scope": "Brasil, abate bovino sob inspeção sanitária",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/9568-em-2015-abate-de-suinos-e-de-frangos-bate-recorde-mas-o-abate-de-bovinos-e-as-aquisicoes-de-leite-e-de-couro-recuam",
+      "location": "alimentos-agroindustria[0].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Não conferido na fonte integral; indexação não basta"
+    },
+    {
+      "id": "abate-bovino-2025",
+      "value": 42.94,
+      "unit": "milhões de cabeças",
+      "period": "2025",
+      "scope": "Brasil, abate bovino sob inspeção sanitária",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/46123-em-2025-brasil-registra-a-maior-producao-de-leite-couro-e-ovos-da-historia-abate-de-bovinos-frangos-e-suinos-tambem-e-recorde",
+      "location": "alimentos-agroindustria[0].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Não conferido na fonte integral; indexação não basta"
+    },
+    {
+      "id": "leite-2026t1",
+      "value": 6.78,
+      "unit": "bilhões de litros",
+      "period": "primeiro trimestre de 2026",
+      "scope": "Brasil, aquisição de leite cru por estabelecimentos sob inspeção",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/47166-brasil-registra-alta-no-abate-de-bovinos-frangos-e-suinos-no-1-trimestre-em-comparacao-com-2025",
+      "location": "alimentos-agroindustria[1].sections.conjuntura",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Não conferido na fonte integral; indexação não basta"
+    },
+    {
+      "id": "biodiesel-mistura-2025",
+      "value": 15,
+      "unit": "% em volume",
+      "period": "a partir de agosto de 2025 na fonte consultada",
+      "scope": "Brasil, mistura obrigatória de biodiesel ao diesel",
+      "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+      "location": "alimentos-agroindustria[3].sections.conjuntura",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido em notícia ANP integral09/10/2026; mesma mistura e início agosto2025"
+    }
+  ],
+  "findings": [
+    "PDF histórico de moinhos2018: URL com e sem download retorna404, exemplos não conferidos independentemente. Embrapa p_do126 retornou timeout. Lista frigoríficos MAPA foi aberta e exemplos confirmados.",
+    "Metodologia não deve chamar material integralmente conferido enquanto números IBGE dependem de indexação.",
+    "Notícia ANP anuncia aprovação, não prova início da vigência da restrição: redação foi corrigida pelo autor.",
+    "Financiamento e análise de caixa têm mecanismos setoriais úteis, mas não comprovam taxa, elegibilidade ou margem típica. Ausência declarada corretamente.",
+    "Gráfico abate bovino2015/2025 traz método NÃO CONFERIDO explícito, mas permanece pendente para validação final. Não ligar extremos como série anual contínua."
+  ],
+  "counts": {
+    "numericObservationsIdentified": 4,
+    "numericObservationsVerified": 1,
+    "numericObservationsPending": 3
+  },
+  "studyDecisions": [
+    {
+      "id": "alimentos-agroindustria:0",
+      "topicIndex": 0,
+      "title": "Frigoríficos",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: leitura independente API SIDRA1092, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Vintage única preservada, escopo bovinos sob inspeção e casos Cade/habilitação histórica delimitados.",
+      "studySha256": "319e94cd9e9411facf1bad9d13494ebef8b7be8c610375703ec47dbedda44603",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "alimentos-agroindustria:1",
+      "topicIndex": 1,
+      "title": "Laticínios",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: leitura independente API SIDRA1086, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Unidade mil litros e aquisição sob inspeção preservadas; sem confundir produção nas fazendas ou derivados. Caso Cade histórico delimitado.",
+      "studySha256": "1c7f7e4b66f95c2eb4cdccc225b3e5e337f0ff217a5618cf23bdfa36d3fb2e00",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "alimentos-agroindustria:2",
+      "topicIndex": 2,
+      "title": "Moinhos",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: íntegra MAPA de33 linhas preservada em food-commercial-revalidation.json foi lida e confirma cadastro histórico07/06/2023 e locais citados. Reabertura retornou timeout/404, sem invalidar cópia integral, mas acesso permanece limitado. Bunge FIPAN2026 aberta independentemente confirma anúncio e previsão, não vendas. Fonte Conab e mecanismos delimitados.",
+      "studySha256": "f91b211960b6664db420f306c2895724dfb03e9fe57e91694c1f202737f296a8",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "alimentos-agroindustria:3",
+      "topicIndex": 3,
+      "title": "Óleos vegetais",
+      "reviewStatus": "approved",
+      "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+      "studySha256": "43e5666c3c7827b70373325382029aa1ce0a6d8dc7e9b9b437afb3fc127f5695",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "alimentos-agroindustria:4",
+      "topicIndex": 4,
+      "title": "Alimentos processados",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: ITR M.Dias31/03/2026 aberto independentemente confirma plantas de biscoitos/massas; notícia estadual integral preservada e lida confirma carta de intenções Castrolanda em Castro e canalB2B. Reabertura da notícia indisponível nesta tentativa. Anúncio não tratado como operação. Sem novas métricas extrapoladas.",
+      "studySha256": "33b9161a2e8bff8a1e98df1cce553d68ce960d639dce040e2df7c6d54d530956",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "alimentos-agroindustria:5",
+      "topicIndex": 5,
+      "title": "Bebidas",
+      "reviewStatus": "approved",
+      "reason": "Revisão independente confirmou notícia integral MAPA maio2026/ref2025 para polos SãoPaulo/SantaCatarina e valor exportado versus volume. Comparação regional não validada foi retirada. Sem números novos e sem extrapolar cerveja a todas bebidas. Aprovado individualmente.",
+      "studySha256": "72a9ee30924505c4248db50f08918572ae8c556e163c0b2f26065faa76fa0a76",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    }
+  ],
+  "followupReviews": [
+    {
+      "id": "alimentos-agroindustria:5",
+      "date": "2026-11-06",
+      "result": "Revisão independente confirmou notícia integral MAPA maio2026/ref2025 para polos SãoPaulo/SantaCatarina e valor exportado versus volume. Comparação regional não validada foi retirada. Sem números novos e sem extrapolar cerveja a todas bebidas. Aprovado individualmente."
+    },
+    {
+      "id": "alimentos-agroindustria:0",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: leitura independente API SIDRA1092, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Vintage única preservada, escopo bovinos sob inspeção e casos Cade/habilitação histórica delimitados."
+    },
+    {
+      "id": "alimentos-agroindustria:1",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: leitura independente API SIDRA1086, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Unidade mil litros e aquisição sob inspeção preservadas; sem confundir produção nas fazendas ou derivados. Caso Cade histórico delimitado."
+    },
+    {
+      "id": "alimentos-agroindustria:2",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: íntegra MAPA de33 linhas preservada em food-commercial-revalidation.json foi lida e confirma cadastro histórico07/06/2023 e locais citados. Reabertura retornou timeout/404, sem invalidar cópia integral, mas acesso permanece limitado. Bunge FIPAN2026 aberta independentemente confirma anúncio e previsão, não vendas. Fonte Conab e mecanismos delimitados."
+    },
+    {
+      "id": "alimentos-agroindustria:4",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: ITR M.Dias31/03/2026 aberto independentemente confirma plantas de biscoitos/massas; notícia estadual integral preservada e lida confirma carta de intenções Castrolanda em Castro e canalB2B. Reabertura da notícia indisponível nesta tentativa. Anúncio não tratado como operação. Sem novas métricas extrapoladas."
+    }
+  ],
+  "finalStatus": "approved",
+  "finalScope": "Revisão documental individual concluída. Não inclui QA de interface, reprodução ou escuta de áudio.",
+  "finalRevalidation": "2026-11-06: todas as decisões individuais aprovadas após correções. Achados iniciais devem ser lidos como histórico, resoluções em followupReviews.",
+  "editorialAddendum": "Após aprovação, corrigidos espaços em registro editorial-corrections-applied.json, distinção Porter rivalidade/substitutos na logística portuária e limitação MAPA histórica. Sem alteração numérica; hashes atualizados."
+}

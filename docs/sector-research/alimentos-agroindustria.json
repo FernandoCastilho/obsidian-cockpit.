@@ -1,0 +1,2504 @@
+[
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 0,
+    "title": "Frigoríficos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Converter animal em cortes e coprodutos com rendimento, segurança sanitária e acesso comercial. Separar bovinos de aves e suínos: compra de gado, integração de criação, ração e ciclos biológicos mudam radicalmente a formação da margem.",
+      "Nos bovinos, o spread entre compra do animal e realização dos cortes precisa incorporar rendimento, perdas, subprodutos e despesas de abate. Em aves e suínos integrados, ração e desempenho zootécnico entram antes do abate. Preço exportado maior pode coexistir com custo maior do animal.",
+      "Na extração SIDRA de 06/11/2026, o abate bovino sob inspeção soma 30.651.802 cabeças em 2015 e 42.952.312 em 2025. O primeiro trimestre de 2026 registra 10.311.847 e o segundo 10.721.343 cabeças. São observações da mesma extração, que substituem os arredondamentos de divulgações antigas. Não demonstram melhora de margem: preço do gado, mix de cortes, rendimento e destino das vendas precisam ser examinados separadamente."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo frigoríficos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Converter animal em cortes e coprodutos com rendimento, segurança sanitária e acesso comercial. Separar bovinos de aves e suínos: compra de gado, integração de criação, ração e ciclos biológicos mudam radicalmente a formação da margem.",
+          "Redes varejistas, distribuidores, alimentação fora do lar e compradores externos. A habilitação sanitária é específica da planta, produto e destino; exportar é oportunidade condicionada, não característica automática de um frigorífico médio.",
+          "Animais, ração quando houver criação integrada, energia, água, embalagem, frio e transporte. Rendimento de carcaça, aproveitamento dos cortes e destinação de subprodutos determinam o valor recuperado por animal."
+        ],
+        "sources": [
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Pesquisa Trimestral do Abate: cobertura e últimos resultados disponíveis na página."
+          },
+          {
+            "label": "Cade aprova, com restrições, aquisição pela Minerva de ativos da Marfrig — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+            "purpose": "Operação Minerva/Marfrig como referência histórica de estrutura, não ranking atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A decisão do Cade sobre compra de ativos da Marfrig pela Minerva documenta presença de unidades em estados do Centro-Oeste, Norte, Sudeste e Sul. JBS, Minerva e Marfrig são referências de empresas em fontes oficiais, não pares automáticos de uma empresa média. A estrutura societária e habilitações atuais precisam de conferência individual.",
+          "Oferta de animais tem ciclo biológico; qualidade sanitária e rastreabilidade condicionam acesso. A Pesquisa Trimestral do Abate do IBGE cobre estabelecimentos sob inspeção, não toda produção informal. Números de cabeças e peso de carcaças são conceitos complementares, não substitutos."
+        ],
+        "sources": [
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Pesquisa Trimestral do Abate: cobertura e últimos resultados disponíveis na página."
+          },
+          {
+            "label": "Cade aprova, com restrições, aquisição pela Minerva de ativos da Marfrig — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+            "purpose": "Operação Minerva/Marfrig como referência histórica de estrutura, não ranking atual."
+          },
+          {
+            "label": "lista de 03-07",
+            "url": "https://www.gov.br/agricultura/pt-br/arquivos/establishmnt-hkg.pdf",
+            "purpose": "Lista oficial histórica de estabelecimentos; não presume habilitação atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A série anual apresentada foi reconstruída na API pública do SIDRA, com todos os trimestres de 2015 a 2025 na mesma extração. Os indicadores empresariais abaixo são sugestões de coleta, não médias setoriais. A análise separa fluxo físico de preço, receita e margem."
+        ],
+        "rows": [
+          [
+            "Rendimento e mix",
+            "Cortes vendáveis e coprodutos por animal",
+            "Comparar espécies e padrões de qualidade separadamente"
+          ],
+          [
+            "Compra e realização",
+            "Custo do animal versus receita líquida total",
+            "Não inferir margem do preço da carne"
+          ],
+          [
+            "Capacidade e sanidade",
+            "Abate efetivo, ociosidade, inspeção e rejeições",
+            "Separar interdição temporária de falta estrutural de suprimento"
+          ],
+          [
+            "Giro de frio",
+            "Dias, idade e valor do estoque por corte",
+            "Reavaliar perdas, validade e vendas com desconto"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Pesquisa Trimestral do Abate: cobertura e últimos resultados disponíveis na página."
+          },
+          {
+            "label": "Cade aprova, com restrições, aquisição pela Minerva de ativos da Marfrig — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+            "purpose": "Operação Minerva/Marfrig como referência histórica de estrutura, não ranking atual."
+          },
+          {
+            "label": "lista de 03-07",
+            "url": "https://www.gov.br/agricultura/pt-br/arquivos/establishmnt-hkg.pdf",
+            "purpose": "Lista oficial histórica de estabelecimentos; não presume habilitação atual."
+          },
+          {
+            "label": "IBGE · SIDRA 1092",
+            "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+            "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "Na extração SIDRA de 06/11/2026, o abate bovino sob inspeção soma 30.651.802 cabeças em 2015 e 42.952.312 em 2025. O primeiro trimestre de 2026 registra 10.311.847 e o segundo 10.721.343 cabeças. São observações da mesma extração, que substituem os arredondamentos de divulgações antigas. Não demonstram melhora de margem: preço do gado, mix de cortes, rendimento e destino das vendas precisam ser examinados separadamente.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Resultados completos | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+            "purpose": "Pesquisa Trimestral do Abate: cobertura e últimos resultados disponíveis na página."
+          },
+          {
+            "label": "Cade aprova, com restrições, aquisição pela Minerva de ativos da Marfrig — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+            "purpose": "Operação Minerva/Marfrig como referência histórica de estrutura, não ranking atual."
+          },
+          {
+            "label": "lista de 03-07",
+            "url": "https://www.gov.br/agricultura/pt-br/arquivos/establishmnt-hkg.pdf",
+            "purpose": "Lista oficial histórica de estabelecimentos; não presume habilitação atual."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Nos bovinos, o spread entre compra do animal e realização dos cortes precisa incorporar rendimento, perdas, subprodutos e despesas de abate. Em aves e suínos integrados, ração e desempenho zootécnico entram antes do abate. Preço exportado maior pode coexistir com custo maior do animal.",
+          "Compra de animais ou custeio da integração antecede venda e recebimento. Estoque congelado prolonga o ciclo e expõe preço, energia e validade. Exportação acrescenta prazo de embarque, documentos e recebimento em moeda estrangeira; hedge só faz sentido sobre exposição líquida comprovada.",
+          "Linhas de abate, tratamento de efluentes, frio, rastreabilidade e eficiência energética exigem capital. Expansão deve ser testada contra disponibilidade local de animais e canais habilitados; capacidade industrial sem suprimento não gera caixa.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ],
+        "sources": []
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Controle de rendimento, segurança e relacionamento na originação"
+          ],
+          [
+            "Fraquezas",
+            "Baixa flexibilidade do ativo e necessidade intensa de caixa"
+          ],
+          [
+            "Oportunidades",
+            "Aproveitamento de cortes, coprodutos e canais adequados ao porte"
+          ],
+          [
+            "Ameaças",
+            "Embargo sanitário, falta de animal, aumento de ração e passivo ambiental"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Pecuaristas e fornecedores de grãos ganham poder quando oferta aperta"
+          ],
+          [
+            "Clientes",
+            "Redes e importadores negociam preço, prazo, qualidade e habilitação"
+          ],
+          [
+            "Rivalidade",
+            "Disputa por animal pode ser local mesmo com venda nacional ou externa"
+          ],
+          [
+            "Entrantes",
+            "Inspeção, cadeia fria, suprimento e capital limitam entrada"
+          ],
+          [
+            "Substitutos",
+            "Consumidor troca espécies, cortes e outras proteínas conforme preço e renda"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Volume segue demanda e oferta local, sem expansão de margem presumida",
+            "Rendimento e mix; Giro de frio"
+          ],
+          [
+            "Favorável",
+            "Melhor rendimento e acesso comercial ampliam realização por animal com giro controlado",
+            "Compra e realização; Giro de frio"
+          ],
+          [
+            "Adverso",
+            "Animal ou ração encarece e preço de venda não acompanha; estoque e necessidade de giro sobem",
+            "Capacidade e sanidade; Giro de frio"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ],
+        "sources": []
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual é o resultado por espécie e por planta após atribuir subprodutos e perdas?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Se um destino de exportação fechar, qual canal absorve os cortes e a que condição?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A ampliação tem animal, licença e cliente antes de contrair dívida?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ],
+        "sources": []
+      }
+    ],
+    "charts": [
+      {
+        "id": "sidra-anual-1092",
+        "title": "Abate bovino sob inspeção",
+        "unit": "cabeças",
+        "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+        "years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2015–2025",
+        "source": {
+          "label": "IBGE · SIDRA 1092",
+          "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+          "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+        },
+        "method": "Soma dos quatro totais trimestrais de cada ano na extração SIDRA de 06/11/2026. Nenhuma interpolação. Revisões posteriores podem alterar resultados; não combinar com vintages de notícias antigas.",
+        "series": [
+          {
+            "label": "Bovinos abatidos",
+            "values": [
+              30651802,
+              29702048,
+              30866663,
+              32042688,
+              32445850,
+              29887036,
+              27704853,
+              29947584,
+              34101806,
+              39689184,
+              42952312
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Resultados completos | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9203-pesquisas-trimestrais-do-abate-de-animais.html",
+        "purpose": "Pesquisa Trimestral do Abate: cobertura e últimos resultados disponíveis na página."
+      },
+      {
+        "label": "Cade aprova, com restrições, aquisição pela Minerva de ativos da Marfrig — Conselho Administrativo de Defesa Econômica",
+        "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-com-restricoes-aquisicao-pela-minerva-de-ativos-da-marfrig",
+        "purpose": "Operação Minerva/Marfrig como referência histórica de estrutura, não ranking atual."
+      },
+      {
+        "label": "lista de 03-07",
+        "url": "https://www.gov.br/agricultura/pt-br/arquivos/establishmnt-hkg.pdf",
+        "purpose": "Lista oficial histórica de estabelecimentos; não presume habilitação atual."
+      },
+      {
+        "label": "IBGE · SIDRA 1092",
+        "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+        "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "A série física nacional sob inspeção não mede margem nem representa todas as empresas; resultados pertencem à extração SIDRA de 06/11/2026 e podem ser revisados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual é o resultado por espécie e por planta após atribuir subprodutos e perdas?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A ampliação tem animal, licença e cliente antes de contrair dívida?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Se um destino de exportação fechar, qual canal absorve os cortes e a que condição?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Animal e fornecedor rural",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Abate e inspeção",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Desossa, processamento e frio",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Varejo, alimentação e exportação",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Frigoríficos. Converter animal em cortes e coprodutos com rendimento, segurança sanitária e acesso comercial. Separar bovinos de aves e suínos: compra de gado, integração de criação, ração e ciclos biológicos mudam radicalmente a formação da margem. Nos bovinos, o spread entre compra do animal e realização dos cortes precisa incorporar rendimento, perdas, subprodutos e despesas de abate. Em aves e suínos integrados, ração e desempenho zootécnico entram antes do abate. Preço exportado maior pode coexistir com custo maior do animal. Na extração SIDRA de 06/11/2026, o abate bovino sob inspeção soma 30.651.802 cabeças em 2015 e 42.952.312 em 2025. O primeiro trimestre de 2026 registra 10.311.847 e o segundo 10.721.343 cabeças. São observações da mesma extração, que substituem os arredondamentos de divulgações antigas. Não demonstram melhora de margem: preço do gado, mix de cortes, rendimento e destino das vendas precisam ser examinados separadamente. A decisão do Cade sobre compra de ativos da Marfrig pela Minerva documenta presença de unidades em estados do Centro-Oeste, Norte, Sudeste e Sul. JBS, Minerva e Marfrig são referências de empresas em fontes oficiais, não pares automáticos de uma empresa média. A estrutura societária e habilitações atuais precisam de conferência individual. Oferta de animais tem ciclo biológico; qualidade sanitária e rastreabilidade condicionam acesso. A Pesquisa Trimestral do Abate do IBGE cobre estabelecimentos sob inspeção, não toda produção informal. Números de cabeças e peso de carcaças são conceitos complementares, não substitutos. Nos bovinos, o spread entre compra do animal e realização dos cortes precisa incorporar rendimento, perdas, subprodutos e despesas de abate. Em aves e suínos integrados, ração e desempenho zootécnico entram antes do abate. Preço exportado maior pode coexistir com custo maior do animal. Compra de animais ou custeio da integração antecede venda e recebimento. Estoque congelado prolonga o ciclo e expõe preço, energia e validade. Exportação acrescenta prazo de embarque, documentos e recebimento em moeda estrangeira; hedge só faz sentido sobre exposição líquida comprovada. Linhas de abate, tratamento de efluentes, frio, rastreabilidade e eficiência energética exigem capital. Expansão deve ser testada contra disponibilidade local de animais e canais habilitados; capacidade industrial sem suprimento não gera caixa. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade. As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte fontes e limitações.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Revalidação individual: leitura independente API SIDRA1092, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Vintage única preservada, escopo bovinos sob inspeção e casos Cade/habilitação histórica delimitados."
+  },
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 1,
+    "title": "Laticínios",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Transformar leite cru em produtos de vidas úteis e margens distintas. UHT, queijo, leite em pó e refrigerados têm calendários de fabricação, maturação, estocagem e canais diferentes. Volume captado não é lucro nem receita de derivados.",
+      "Margem é a realização líquida do mix menos custo do leite, transformação e distribuição. Leite mais barato pode aliviar custo, mas também acompanhar maior oferta e queda do preço do produto final. Queijo imobiliza caixa na maturação, enquanto refrigerado exige giro e execução de validade.",
+      "A tabela SIDRA 1086 registra 6.786.539 mil litros adquiridos no primeiro trimestre de 2026 e 6.613.992 mil litros no segundo, conforme extração de 06/11/2026. O dado é aquisição pelos estabelecimentos sob inspeção, não produção total nas fazendas nem volume de queijo. A série anual foi somada dos trimestres na mesma extração; diferenças frente a notícias antigas podem refletir revisão e arredondamento, sem misturar taxas entre versões."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo laticínios. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Transformar leite cru em produtos de vidas úteis e margens distintas. UHT, queijo, leite em pó e refrigerados têm calendários de fabricação, maturação, estocagem e canais diferentes. Volume captado não é lucro nem receita de derivados.",
+          "Varejo, distribuidores, indústrias e alimentação fora do lar. Marca própria, fabricação para terceiros e commodity láctea possuem poder de preço distinto; comparar apenas litros recebidos esconde o mix.",
+          "Leite cru, coleta, energia, embalagens, ingredientes, culturas e cadeia fria. Composição, qualidade e distância de coleta alteram rendimento e custo. A impossibilidade de adiar indefinidamente processamento aumenta dependência da coordenação com fornecedores."
+        ],
+        "sources": [
+          {
+            "label": "Tribunal do Cade aprova compra da DPA Brasil pela Lactalis — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+            "purpose": "Cade: aprovação histórica Lactalis/DPA, com restrições."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial: não substituir volume de derivados por captação de leite."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A aprovação da aquisição da DPA pela Lactalis é evidência histórica de consolidação em refrigerados, não demonstra concentração atual de todos os lácteos. A originação e a distribuição devem ser comparadas por região e produto; não foi construída tabela estadual homogênea para atribuir ranking nesta revisão.",
+          "A aquisição de leite em estabelecimentos sob inspeção medida pelo IBGE difere da produção total de leite nas propriedades. Sazonalidade do campo e elasticidade do consumo afetam simultaneamente originação e venda. Marca e capilaridade comercial são vantagens que uma planta eficiente sozinha não substitui."
+        ],
+        "sources": [
+          {
+            "label": "Tribunal do Cade aprova compra da DPA Brasil pela Lactalis — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+            "purpose": "Cade: aprovação histórica Lactalis/DPA, com restrições."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial: não substituir volume de derivados por captação de leite."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A série anual apresentada foi reconstruída na API pública do SIDRA, com todos os trimestres de 2015 a 2025 na mesma extração. Os indicadores empresariais abaixo são sugestões de coleta, não médias setoriais. A análise separa fluxo físico de preço, receita e margem."
+        ],
+        "rows": [
+          [
+            "Captação e sólidos",
+            "Volume, qualidade e componentes do leite",
+            "Litro não equivale ao mesmo rendimento em queijo ou pó"
+          ],
+          [
+            "Custo de coleta",
+            "Distância, densidade e resfriamento",
+            "Qualidade perdida pode superar economia de frete"
+          ],
+          [
+            "Mix e realização",
+            "Preço líquido por família e canal",
+            "Deduzir bonificação, promoção e devolução"
+          ],
+          [
+            "Validade e maturação",
+            "Idade, permanência e perdas de estoque",
+            "Distinguir estoque necessário de encalhe"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Tribunal do Cade aprova compra da DPA Brasil pela Lactalis — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+            "purpose": "Cade: aprovação histórica Lactalis/DPA, com restrições."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial: não substituir volume de derivados por captação de leite."
+          },
+          {
+            "label": "IBGE · SIDRA 1086",
+            "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+            "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A tabela SIDRA 1086 registra 6.786.539 mil litros adquiridos no primeiro trimestre de 2026 e 6.613.992 mil litros no segundo, conforme extração de 06/11/2026. O dado é aquisição pelos estabelecimentos sob inspeção, não produção total nas fazendas nem volume de queijo. A série anual foi somada dos trimestres na mesma extração; diferenças frente a notícias antigas podem refletir revisão e arredondamento, sem misturar taxas entre versões.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Tribunal do Cade aprova compra da DPA Brasil pela Lactalis — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+            "purpose": "Cade: aprovação histórica Lactalis/DPA, com restrições."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial: não substituir volume de derivados por captação de leite."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Margem é a realização líquida do mix menos custo do leite, transformação e distribuição. Leite mais barato pode aliviar custo, mas também acompanhar maior oferta e queda do preço do produto final. Queijo imobiliza caixa na maturação, enquanto refrigerado exige giro e execução de validade.",
+          "Coleta recorrente e pagamento ao produtor precisam ser financiados até venda. Estoque em maturação é diferente de estoque de produto vencendo; descontar recebíveis sem controlar devoluções e bonificações superestima o valor disponível.",
+          "Processamento, envase, frio, tratamento de efluentes e laboratório sustentam qualidade. Expandir captação exige rota economicamente viável; comprar equipamento sem suprimento e canal adiciona custo fixo.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ],
+        "sources": []
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Relação de confiança com produtores, qualidade e marca regional"
+          ],
+          [
+            "Fraquezas",
+            "Perecibilidade, coleta cara e dependência de embalagem e energia"
+          ],
+          [
+            "Oportunidades",
+            "Melhor uso de sólidos e diferenciação por produto e canal"
+          ],
+          [
+            "Ameaças",
+            "Volatilidade do leite, concorrência importada e perdas de validade"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Produtores podem redirecionar leite; embalagem e energia também afetam custo"
+          ],
+          [
+            "Clientes",
+            "Varejo negocia espaço, promoções e devoluções"
+          ],
+          [
+            "Rivalidade",
+            "Disputa ocorre tanto por captação quanto por espaço de venda"
+          ],
+          [
+            "Entrantes",
+            "Escala de coleta, licença, processo e canal são barreiras combinadas"
+          ],
+          [
+            "Substitutos",
+            "Bebidas vegetais e outros alimentos disputam ocasiões, com diferenças nutricionais e de uso"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Captação e mix ajustam-se à demanda, com atenção ao ciclo de estoques",
+            "Captação e sólidos; Validade e maturação"
+          ],
+          [
+            "Favorável",
+            "Mais rendimento e venda de maior valor por sólidos melhoram margem sem igual aumento da captação",
+            "Custo de coleta; Validade e maturação"
+          ],
+          [
+            "Adverso",
+            "Excesso de oferta derruba preço final ou leite encarece sem repasse; maturação e devoluções pressionam caixa",
+            "Mix e realização; Validade e maturação"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ],
+        "sources": []
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual produto remunera melhor os sólidos recebidos, após perdas e prazo de caixa?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Bonificações e devoluções já foram abatidas do recebível antecipado?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A nova rota de captação paga coleta, resfriamento e perda de qualidade?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ],
+        "sources": []
+      }
+    ],
+    "charts": [
+      {
+        "id": "sidra-anual-1086",
+        "title": "Aquisição de leite cru sob inspeção",
+        "unit": "mil litros",
+        "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+        "years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2015–2025",
+        "source": {
+          "label": "IBGE · SIDRA 1086",
+          "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+          "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+        },
+        "method": "Soma dos quatro totais trimestrais de cada ano na extração SIDRA de 06/11/2026. Nenhuma interpolação. Revisões posteriores podem alterar resultados; não combinar com vintages de notícias antigas.",
+        "series": [
+          {
+            "label": "Leite adquirido",
+            "values": [
+              24062308,
+              23169654,
+              24333511,
+              24457864,
+              25011825,
+              25641262,
+              25121798,
+              23918221,
+              24605600,
+              25366096,
+              27613017
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Tribunal do Cade aprova compra da DPA Brasil pela Lactalis — Conselho Administrativo de Defesa Econômica",
+        "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/tribunal-do-cade-aprova-compra-da-dpa-brasil-pela-lactalis",
+        "purpose": "Cade: aprovação histórica Lactalis/DPA, com restrições."
+      },
+      {
+        "label": "PIM-PF Brasil | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Produção industrial: não substituir volume de derivados por captação de leite."
+      },
+      {
+        "label": "IBGE · SIDRA 1086",
+        "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+        "purpose": "Consulta integral em 06/11/2026; totais trimestrais Brasil, inspeções agregadas. Série anual calculada somando quatro trimestres da mesma extração."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "A série física nacional sob inspeção não mede margem nem representa todas as empresas; resultados pertencem à extração SIDRA de 06/11/2026 e podem ser revisados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual produto remunera melhor os sólidos recebidos, após perdas e prazo de caixa?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A nova rota de captação paga coleta, resfriamento e perda de qualidade?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Bonificações e devoluções já foram abatidas do recebível antecipado?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Produtor e coleta refrigerada",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Recepção e controle do leite",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Processamento e transformação",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Distribuição e consumidor",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Laticínios. Transformar leite cru em produtos de vidas úteis e margens distintas. UHT, queijo, leite em pó e refrigerados têm calendários de fabricação, maturação, estocagem e canais diferentes. Volume captado não é lucro nem receita de derivados. Margem é a realização líquida do mix menos custo do leite, transformação e distribuição. Leite mais barato pode aliviar custo, mas também acompanhar maior oferta e queda do preço do produto final. Queijo imobiliza caixa na maturação, enquanto refrigerado exige giro e execução de validade. A tabela SIDRA 1086 registra 6.786.539 mil litros adquiridos no primeiro trimestre de 2026 e 6.613.992 mil litros no segundo, conforme extração de 06/11/2026. O dado é aquisição pelos estabelecimentos sob inspeção, não produção total nas fazendas nem volume de queijo. A série anual foi somada dos trimestres na mesma extração; diferenças frente a notícias antigas podem refletir revisão e arredondamento, sem misturar taxas entre versões. A aprovação da aquisição da DPA pela Lactalis é evidência histórica de consolidação em refrigerados, não demonstra concentração atual de todos os lácteos. A originação e a distribuição devem ser comparadas por região e produto; não foi construída tabela estadual homogênea para atribuir ranking nesta revisão. A aquisição de leite em estabelecimentos sob inspeção medida pelo IBGE difere da produção total de leite nas propriedades. Sazonalidade do campo e elasticidade do consumo afetam simultaneamente originação e venda. Marca e capilaridade comercial são vantagens que uma planta eficiente sozinha não substitui. Margem é a realização líquida do mix menos custo do leite, transformação e distribuição. Leite mais barato pode aliviar custo, mas também acompanhar maior oferta e queda do preço do produto final. Queijo imobiliza caixa na maturação, enquanto refrigerado exige giro e execução de validade. Coleta recorrente e pagamento ao produtor precisam ser financiados até venda. Estoque em maturação é diferente de estoque de produto vencendo; descontar recebíveis sem controlar devoluções e bonificações superestima o valor disponível. Processamento, envase, frio, tratamento de efluentes e laboratório sustentam qualidade. Expandir captação exige rota economicamente viável; comprar equipamento sem suprimento e canal adiciona custo fixo. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade. As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte fontes e limitações.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Revalidação individual: leitura independente API SIDRA1086, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Unidade mil litros e aquisição sob inspeção preservadas; sem confundir produção nas fazendas ou derivados. Caso Cade histórico delimitado."
+  },
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 2,
+    "title": "Moinhos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Transformar grão em farinha e coprodutos com especificação para uso industrial. O foco é moagem de trigo; milho e outros cereais precisam de balanço próprio. Tonelada de trigo, farinha e farelo não são volumes somáveis de mercados separados.",
+      "A margem resulta da venda de farinha e farelo menos custo do trigo, moagem e logística. Mistura adequada preserva especificação com custo menor; porém substituição excessiva pode causar devolução. Spread de farinha e trigo deve usar períodos e moedas compatíveis.",
+      "O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo moinhos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Transformar grão em farinha e coprodutos com especificação para uso industrial. O foco é moagem de trigo; milho e outros cereais precisam de balanço próprio. Tonelada de trigo, farinha e farelo não são volumes somáveis de mercados separados.",
+          "Panificação, massas, biscoitos, distribuidores e indústria de alimentos. Regularidade de força e qualidade da farinha pode valer mais que menor preço por saco; contratos industriais exigem repetibilidade e assistência técnica.",
+          "Trigo de qualidades distintas, importação quando houver, energia, sacaria, laboratório, transporte e silo. Qualidade do grão determina possibilidade de mistura e rendimento; não basta comparar preço da tonelada nacional e importada sem frete, câmbio e especificação."
+        ],
+        "sources": [
+          {
+            "label": "Trigo — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/trigo",
+            "purpose": "Série histórica de trigo; produção agrícola, não moagem."
+          },
+          {
+            "label": "Safra 2026/2027 começa a avançar com apoio das chuvas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+            "purpose": "Monitoramento agrícola de setembro de 2026."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A lista integral do MAPA, atualizada em 07/06/2023, identifica Bunge em Ipojuca (PE), Moinhos Cruzeiro do Sul em Olinda (PE) e São Luís (MA), e J. Macedo em Salvador (BA). O cadastro refere-se à recepção e processamento de trigo russo. Confirma exemplos e localização naquele documento, sem demonstrar autorização atual, capacidade ou liderança.",
+          "Oferta nacional, importação e preferência por características tecnológicas formam a originação. A Conab dispõe de série histórica do trigo, mas safra doméstica não mede moagem: importações e estoques mudam o balanço. Ausência de série de moagem exclusiva impede dimensionar este mercado nesta versão."
+        ],
+        "sources": [
+          {
+            "label": "Trigo — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/trigo",
+            "purpose": "Série histórica de trigo; produção agrícola, não moagem."
+          },
+          {
+            "label": "Safra 2026/2027 começa a avançar com apoio das chuvas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+            "purpose": "Monitoramento agrícola de setembro de 2026."
+          },
+          {
+            "label": "MAPA · Estabelecimentos cadastrados para trigo russo",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/sanidade-animal-e-vegetal/sanidade-vegetal/importacao/ListamoinhostrigoRussiaatualizada11102022..pdf",
+            "purpose": "Documento integral atualizado em 07/06/2023; apesar do nome do arquivo, usar data interna. Cadastro histórico, não licença vigente ou ranking."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Extração",
+            "Farinha e coprodutos por quantidade de grão",
+            "Separar qualidade, umidade e perdas"
+          ],
+          [
+            "Custo posto",
+            "Grão mais câmbio, frete e desembaraço",
+            "Comparar produto com mesma especificação"
+          ],
+          [
+            "Qualidade",
+            "Consistência de farinha e devolução",
+            "Adequar parâmetro ao cliente industrial"
+          ],
+          [
+            "Estoque e hedge",
+            "Volume, idade, obrigação em moeda e preço contratado",
+            "Evitar descasamento entre posição física e financeira"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Trigo — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/trigo",
+            "purpose": "Série histórica de trigo; produção agrícola, não moagem."
+          },
+          {
+            "label": "Safra 2026/2027 começa a avançar com apoio das chuvas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+            "purpose": "Monitoramento agrícola de setembro de 2026."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual.",
+          "Em julho de 2026, a Bunge anunciou na FIPAN farinha voltada a massas frescas para rotisserias, cozinhas profissionais e fabricantes, com comercialização então prevista para agosto em São Paulo. É fato comercial declarado, não prova de lançamento concluído ou vendas realizadas. Inferência: especificação por aplicação e suporte de panificação podem diferenciar um moinho além do preço da farinha comum."
+        ],
+        "sources": [
+          {
+            "label": "Trigo — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/trigo",
+            "purpose": "Série histórica de trigo; produção agrícola, não moagem."
+          },
+          {
+            "label": "Safra 2026/2027 começa a avançar com apoio das chuvas — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+            "purpose": "Monitoramento agrícola de setembro de 2026."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A margem resulta da venda de farinha e farelo menos custo do trigo, moagem e logística. Mistura adequada preserva especificação com custo menor; porém substituição excessiva pode causar devolução. Spread de farinha e trigo deve usar períodos e moedas compatíveis.",
+          "Compra sazonal de grão e importação podem anteceder a venda por longo intervalo. A empresa financia estoque físico, custos portuários e prazo industrial. Proteção cambial deve estar vinculada à obrigação de importação e às receitas, não a aposta independente.",
+          "Moinhos, peneiras, silos e laboratório aumentam controle e produtividade. A decisão deve separar gargalo de moagem, recebimento, mistura e expedição. Instalação próxima do porto reduz uma perna do custo e pode aumentar distância do cliente.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência comercial: comparar margem e capital de giro da farinha padronizada com formulações por aplicação. Testes, segregação de trigo e assistência ao cliente custam antes da recompra; pedido experimental não deve ser tratado como contrato recorrente. Manter rastreabilidade da mistura reduz risco de devolver um lote que não atende ao desempenho combinado."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ],
+        "sources": []
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento de mistura, qualidade e relacionamento com panificadores"
+          ],
+          [
+            "Fraquezas",
+            "Capital em grãos e exposição a câmbio e frete"
+          ],
+          [
+            "Oportunidades",
+            "Assistência técnica, especificações diferenciadas e redução de perdas"
+          ],
+          [
+            "Ameaças",
+            "Quebra de qualidade da safra e compressão entre grão e farinha"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Originação e qualidade restringem fornecedores substituíveis"
+          ],
+          [
+            "Clientes",
+            "Indústria e redes podem comprar de mais de um moinho"
+          ],
+          [
+            "Rivalidade",
+            "Concorrência combina preço posto, consistência e crédito ao cliente"
+          ],
+          [
+            "Entrantes",
+            "Capital, silos, qualidade e canal dificultam entrada"
+          ],
+          [
+            "Substitutos",
+            "Farinha de outras origens e substituição de formulação disputam usos específicos"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ],
+        "sources": []
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda por farinha segue canais atendidos, com ajuste de mistura e estoque",
+            "Extração; Estoque e hedge"
+          ],
+          [
+            "Favorável",
+            "Melhor originação e rendimento protegem margem sem deteriorar qualidade",
+            "Custo posto; Estoque e hedge"
+          ],
+          [
+            "Adverso",
+            "Câmbio, frete ou trigo de qualidade encarecem antes de reajuste; estoque consome caixa",
+            "Qualidade; Estoque e hedge"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ],
+        "sources": []
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual é a margem por aplicação da farinha incluindo realização do farelo?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Compra física, importação e hedge estão casados por prazo e moeda?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A qualidade da safra altera rendimento ou obriga comprar trigo mais caro?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ],
+        "sources": []
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Trigo — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/trigo",
+        "purpose": "Série histórica de trigo; produção agrícola, não moagem."
+      },
+      {
+        "label": "Safra 2026/2027 começa a avançar com apoio das chuvas — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/assuntos/noticias/safra-2026-2027-comeca-a-avancar-com-apoio-das-chuvas",
+        "purpose": "Monitoramento agrícola de setembro de 2026."
+      },
+      {
+        "label": "MAPA · Estabelecimentos cadastrados para trigo russo",
+        "url": "https://www.gov.br/agricultura/pt-br/assuntos/sanidade-animal-e-vegetal/sanidade-vegetal/importacao/ListamoinhostrigoRussiaatualizada11102022..pdf",
+        "purpose": "Documento integral atualizado em 07/06/2023; apesar do nome do arquivo, usar data interna. Cadastro histórico, não licença vigente ou ranking."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "O cadastro histórico MAPA atualizado em07/06/2023 foi recuperado integralmente e conferido; a reabertura durante a revisão retornou timeout/404. A cópia preservada sustenta os exemplos históricos, mas não comprova habilitação atual. A página Embrapa apresentou timeout."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual é a margem por aplicação da farinha incluindo realização do farelo?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A qualidade da safra altera rendimento ou obriga comprar trigo mais caro?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Compra física, importação e hedge estão casados por prazo e moeda?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Originação doméstica ou importação",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Armazenagem e mistura de grãos",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Limpeza e moagem",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Farinha, farelo e clientes",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Moinhos. Transformar grão em farinha e coprodutos com especificação para uso industrial. O foco é moagem de trigo; milho e outros cereais precisam de balanço próprio. Tonelada de trigo, farinha e farelo não são volumes somáveis de mercados separados. A margem resulta da venda de farinha e farelo menos custo do trigo, moagem e logística. Mistura adequada preserva especificação com custo menor; porém substituição excessiva pode causar devolução. Spread de farinha e trigo deve usar períodos e moedas compatíveis. O monitoramento agrícola da Conab de setembro de 2026 relata efeitos de umidade sobre trigo e início do plantio das culturas de verão. Inferência: risco de qualidade pode alterar mistura, origem e custo dos moinhos, mesmo quando o volume total não cai. Não foi publicada estimativa própria de produção ou preço. A lista integral do MAPA, atualizada em 07/06/2023, identifica Bunge em Ipojuca (PE), Moinhos Cruzeiro do Sul em Olinda (PE) e São Luís (MA), e J. Macedo em Salvador (BA). O cadastro refere-se à recepção e processamento de trigo russo. Confirma exemplos e localização naquele documento, sem demonstrar autorização atual, capacidade ou liderança. Oferta nacional, importação e preferência por características tecnológicas formam a originação. A Conab dispõe de série histórica do trigo, mas safra doméstica não mede moagem: importações e estoques mudam o balanço. Ausência de série de moagem exclusiva impede dimensionar este mercado nesta versão. A margem resulta da venda de farinha e farelo menos custo do trigo, moagem e logística. Mistura adequada preserva especificação com custo menor; porém substituição excessiva pode causar devolução. Spread de farinha e trigo deve usar períodos e moedas compatíveis. Compra sazonal de grão e importação podem anteceder a venda por longo intervalo. A empresa financia estoque físico, custos portuários e prazo industrial. Proteção cambial deve estar vinculada à obrigação de importação e às receitas, não a aposta independente. Moinhos, peneiras, silos e laboratório aumentam controle e produtividade. A decisão deve separar gargalo de moagem, recebimento, mistura e expedição. Instalação próxima do porto reduz uma perna do custo e pode aumentar distância do cliente. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade. Inferência comercial: comparar margem e capital de giro da farinha padronizada com formulações por aplicação. Testes, segregação de trigo e assistência ao cliente custam antes da recompra; pedido experimental não deve ser tratado como contrato recorrente. Manter rastreabilidade da mistura reduz risco de devolver um lote que não atende ao desempenho combinado. As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte fontes e limitações.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Revalidação individual: íntegra MAPA de33 linhas preservada em food-commercial-revalidation.json foi lida e confirma cadastro histórico07/06/2023 e locais citados. Reabertura retornou timeout/404, sem invalidar cópia integral, mas acesso permanece limitado. Bunge FIPAN2026 aberta independentemente confirma anúncio e previsão, não vendas. Fonte Conab e mecanismos delimitados."
+  },
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 3,
+    "title": "Óleos vegetais",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Processar oleaginosas e vender produtos conjuntos. O foco econômico é soja, sem tratar palma, girassol, canola e outros óleos como equivalentes. Esmagamento, refino, envase e biodiesel são elos distintos; uma empresa pode atuar apenas em parte deles.",
+      "Margem de esmagamento é receita conjunta de óleo e farelo menos custo do grão e conversão. Preço elevado do óleo não comprova margem se a soja e energia sobem ou o farelo enfraquece. Refino e envase adicionam custo, marca e canal diferentes da commodity bruta.",
+      "A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo óleos vegetais. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Processar oleaginosas e vender produtos conjuntos. O foco econômico é soja, sem tratar palma, girassol, canola e outros óleos como equivalentes. Esmagamento, refino, envase e biodiesel são elos distintos; uma empresa pode atuar apenas em parte deles.",
+          "Indústria de alimentos, varejo de óleo envasado, fabricantes de ração e produtores de biodiesel. O preço realizável depende do mix de óleo e farelo e do destino; a venda de um coproduto influencia a viabilidade do outro.",
+          "Soja ou outra oleaginosa, energia, vapor, químicos de processo, embalagens, armazenagem e logística. Matéria-prima tem referência internacional e prêmio local; custo de originação varia com frete, safra e competição regional."
+        ],
+        "sources": [
+          {
+            "label": "Biodiesel — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+            "purpose": "Mistura de biodiesel e escopo regulatório."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Alteração recente na comercialização de biodiesel."
+          },
+          {
+            "label": "Soja — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/soja",
+            "purpose": "Série histórica da soja, não esmagamento."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O Cade documenta a atuação da Bunge em originação, armazenamento e processamento e aquisição histórica de plantas em Araucária e Cambé, no Paraná. A mesma autoridade descreve o vínculo entre óleo e margarinas na operação Seara/Bunge. São referências de integração vertical, não ranking atual de capacidade.",
+          "A interdependência dos coprodutos liga alimentação humana, ração e energia. Políticas de biodiesel podem ampliar demanda por óleo, mas óleo vegetal não é sinônimo de biodiesel e nem todo óleo processado segue esse destino. A série de soja da Conab descreve matéria-prima, não volume esmagado."
+        ],
+        "sources": [
+          {
+            "label": "Biodiesel — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+            "purpose": "Mistura de biodiesel e escopo regulatório."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Alteração recente na comercialização de biodiesel."
+          },
+          {
+            "label": "Soja — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/soja",
+            "purpose": "Série histórica da soja, não esmagamento."
+          },
+          {
+            "label": "Aquisição de ativos da Imcopa pela Bunge é autorizada pelo Cade — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/aquisicao-de-ativos-da-imcopa-pela-bunge-e-autorizada-pelo-cade",
+            "purpose": "Cade: atuação da Bunge e plantas históricas no Paraná."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Relação entre óleo degomado e margarinas na análise concorrencial."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Spread de esmagamento",
+            "Receita conjunta de óleo e farelo menos grão e conversão",
+            "Não usar preço do óleo isoladamente"
+          ],
+          [
+            "Rendimento",
+            "Produtos e perdas por quantidade de grão",
+            "Teor de óleo e umidade alteram resultado"
+          ],
+          [
+            "Originação",
+            "Preço posto, frete, qualidade e prazo",
+            "Separar prêmio local de câmbio"
+          ],
+          [
+            "Exposição",
+            "Estoque, contratos físicos e hedge líquido",
+            "Evitar comparar posições sem igual moeda e vencimento"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Biodiesel — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+            "purpose": "Mistura de biodiesel e escopo regulatório."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Alteração recente na comercialização de biodiesel."
+          },
+          {
+            "label": "Soja — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/soja",
+            "purpose": "Série histórica da soja, não esmagamento."
+          },
+          {
+            "label": "Aquisição de ativos da Imcopa pela Bunge é autorizada pelo Cade — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/aquisicao-de-ativos-da-imcopa-pela-bunge-e-autorizada-pelo-cade",
+            "purpose": "Cade: atuação da Bunge e plantas históricas no Paraná."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Relação entre óleo degomado e margarinas na análise concorrencial."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Biodiesel — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+            "purpose": "Mistura de biodiesel e escopo regulatório."
+          },
+          {
+            "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+            "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+            "purpose": "Alteração recente na comercialização de biodiesel."
+          },
+          {
+            "label": "Soja — Companhia Nacional de Abastecimento",
+            "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/soja",
+            "purpose": "Série histórica da soja, não esmagamento."
+          },
+          {
+            "label": "Aquisição de ativos da Imcopa pela Bunge é autorizada pelo Cade — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/aquisicao-de-ativos-da-imcopa-pela-bunge-e-autorizada-pelo-cade",
+            "purpose": "Cade: atuação da Bunge e plantas históricas no Paraná."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Relação entre óleo degomado e margarinas na análise concorrencial."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Margem de esmagamento é receita conjunta de óleo e farelo menos custo do grão e conversão. Preço elevado do óleo não comprova margem se a soja e energia sobem ou o farelo enfraquece. Refino e envase adicionam custo, marca e canal diferentes da commodity bruta.",
+          "Compra de grão concentra desembolso na safra e produz estoque e recebíveis em calendários distintos. Exposição cambial é líquida de compras, vendas e dívidas; derivativos devem acompanhar volumes efetivamente expostos. Exportação e venda doméstica não têm o mesmo ciclo documental.",
+          "Esmagamento, extração, refino, segurança de processo e tratamento ambiental exigem ativos específicos. Ampliação baseada apenas em política de biocombustíveis é vulnerável a mudança de mistura, preço e competição; testar demanda de farelo e disponibilidade do grão.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Integração de originação, processamento e venda de coprodutos"
+          ],
+          [
+            "Fraquezas",
+            "Capital em estoque e exposição a commodities"
+          ],
+          [
+            "Oportunidades",
+            "Eficiência de extração, valorização de farelo e demanda de energia renovável"
+          ],
+          [
+            "Ameaças",
+            "Descasamento de hedge, safra e mudança regulatória ou comercial"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Produtores e tradings disputam grão; logística pode limitar originação"
+          ],
+          [
+            "Clientes",
+            "Clientes industriais e compradores internacionais negociam especificação e preço"
+          ],
+          [
+            "Rivalidade",
+            "Esmagadoras competem por grão e canais de óleo e farelo"
+          ],
+          [
+            "Entrantes",
+            "Escala, segurança, licenciamento e capital em estoque dificultam entrada"
+          ],
+          [
+            "Substitutos",
+            "Outros óleos e matérias-primas substituem aplicações dentro de limites técnicos"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Receita conjunta sustenta utilização com gestão prudente de posição",
+            "Spread de esmagamento; Exposição"
+          ],
+          [
+            "Favorável",
+            "Originação eficiente e demanda por coprodutos permitem melhorar spread realizado",
+            "Rendimento; Exposição"
+          ],
+          [
+            "Adverso",
+            "Grão encarece ou um coproduto perde demanda; giro e estoque crescem apesar de venda nominal maior",
+            "Originação; Exposição"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "A margem comercial foi calculada com os dois produtos conjuntos?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quanto da posição está exposta após casar contratos físicos e proteção financeira?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A ampliação tem destino para o farelo além do comprador de óleo?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Biodiesel — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+        "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+        "purpose": "Mistura de biodiesel e escopo regulatório."
+      },
+      {
+        "label": "ANP retoma restrição à venda de biodiesel entre distribuidores — Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+        "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/anp-retoma-restricao-a-venda-de-biodiesel-entre-distribuidores?shem=aimgspe%2C",
+        "purpose": "Alteração recente na comercialização de biodiesel."
+      },
+      {
+        "label": "Soja — Companhia Nacional de Abastecimento",
+        "url": "https://www.gov.br/conab/pt-br/atuacao/informacoes-agropecuarias/safras/series-historicas/graos/soja",
+        "purpose": "Série histórica da soja, não esmagamento."
+      },
+      {
+        "label": "Aquisição de ativos da Imcopa pela Bunge é autorizada pelo Cade — Conselho Administrativo de Defesa Econômica",
+        "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/aquisicao-de-ativos-da-imcopa-pela-bunge-e-autorizada-pelo-cade",
+        "purpose": "Cade: atuação da Bunge e plantas históricas no Paraná."
+      },
+      {
+        "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+        "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+        "purpose": "Relação entre óleo degomado e margarinas na análise concorrencial."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "A margem comercial foi calculada com os dois produtos conjuntos?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A ampliação tem destino para o farelo além do comprador de óleo?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Quanto da posição está exposta após casar contratos físicos e proteção financeira?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Grão ou oleaginosa",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Originação e esmagamento",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Óleo, farelo e refino",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Alimentação, ração e biocombustível",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Óleos vegetais. Processar oleaginosas e vender produtos conjuntos. O foco econômico é soja, sem tratar palma, girassol, canola e outros óleos como equivalentes. Esmagamento, refino, envase e biodiesel são elos distintos; uma empresa pode atuar apenas em parte deles. Margem de esmagamento é receita conjunta de óleo e farelo menos custo do grão e conversão. Preço elevado do óleo não comprova margem se a soja e energia sobem ou o farelo enfraquece. Refino e envase adicionam custo, marca e canal diferentes da commodity bruta. A ANP informa a elevação da mistura obrigatória de biodiesel para 15% a partir de agosto de 2025. Em comunicação de 2026, anunciou aprovação da retomada de restrição a vendas entre distribuidores, com foco em rastreabilidade. Inferência: demanda regulada e controle de cadeia são relevantes para clientes de óleo, mas não justificam projetar produção de esmagadoras médias sem contratos. Como funciona. Indústria de alimentos, varejo de óleo envasado, fabricantes de ração e produtores de biodiesel. O preço realizável depende do mix de óleo e farelo e do destino; a venda de um coproduto influencia a viabilidade do outro. Soja ou outra oleaginosa, energia, vapor, químicos de processo, embalagens, armazenagem e logística. Matéria-prima tem referência internacional e prêmio local; custo de originação varia com frete, safra e competição regional. Caixa e financiamento. Compra de grão concentra desembolso na safra e produz estoque e recebíveis em calendários distintos. Exposição cambial é líquida de compras, vendas e dívidas; derivativos devem acompanhar volumes efetivamente expostos. Exportação e venda doméstica não têm o mesmo ciclo documental. Esmagamento, extração, refino, segurança de processo e tratamento ambiental exigem ativos específicos. Ampliação baseada apenas em política de biocombustíveis é vulnerável a mudança de mistura, preço e competição; testar demanda de farelo e disponibilidade do grão. Cenários. Receita conjunta sustenta utilização com gestão prudente de posição. Originação eficiente e demanda por coprodutos permitem melhorar spread realizado. Grão encarece ou um coproduto perde demanda; giro e estoque crescem apesar de venda nominal maior. Na visita, pergunte: A margem comercial foi calculada com os dois produtos conjuntos? Quanto da posição está exposta após casar contratos físicos e proteção financeira? A ampliação tem destino para o farelo além do comprador de óleo? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado."
+  },
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 4,
+    "title": "Alimentos processados",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Converter ingredientes em alimentos com padronização, conveniência e vida útil. O recorte é heterogêneo: massas, biscoitos, conservas, refeições e outras formulações não compartilham a mesma margem. Carne processada e lácteos devem ser conciliados com seus estudos para evitar dupla contagem.",
+      "A margem efetiva depende de preço líquido após descontos, bonificações, promoções e devoluções, menos formulação, embalagem e transformação. Muitos itens com baixo giro podem elevar receita bruta e destruir produtividade por troca de linha e estoque.",
+      "Não foi extraído um agregado recente exclusivo de processados que elimine frigoríficos, óleos e laticínios; a taxa de alimentos da PIM não será atribuída a este recorte residual. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo alimentos processados. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Converter ingredientes em alimentos com padronização, conveniência e vida útil. O recorte é heterogêneo: massas, biscoitos, conservas, refeições e outras formulações não compartilham a mesma margem. Carne processada e lácteos devem ser conciliados com seus estudos para evitar dupla contagem.",
+          "Redes de varejo, distribuidores, alimentação fora do lar e indústria. Marca própria de varejista traz volume com menor autonomia de preço; marca do fabricante exige investimento comercial e execução no ponto de venda.",
+          "Ingredientes agrícolas, aditivos permitidos, embalagens, energia, água, mão de obra e controle de qualidade. Reformulação altera custo, rendimento, rotulagem e aceitação; reduzir ingrediente sem validar produto pode criar risco comercial e sanitário."
+        ],
+        "sources": [
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial por atividade; cobertura ampla, não recorte residual."
+          },
+          {
+            "label": "Índice de Preços ao Produtor - Indústrias Extrativas e de Transformação | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços ao produtor, a selecionar por atividade compatível."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Cade: exemplo de análise específica em margarinas e maioneses."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A análise oficial da operação Seara/Bunge em margarinas e maioneses mostra que concentração precisa ser definida por produto. Usar grandes grupos como referência de todos os processados apagaria diferenças. Polos dependem de ingredientes, plantas e acesso a consumidores; não foi fechado ranking de empresas médias nem mapa homogêneo.",
+          "Escala comercial e marca podem pesar tanto quanto eficiência fabril. A PIM-PF de alimentos é indicador agregado com ramos heterogêneos; não deve ser apresentada como crescimento deste recorte residual. Preços ao produtor e custo de ingredientes ajudam a testar repasse, mas exigem seleção da atividade correta.",
+          "As informações trimestrais da M. Dias Branco referentes a março de 2026 identificam plantas de biscoitos e massas em Eusébio (CE), Jaboatão dos Guararapes (PE) e Queimados (RJ). São localizações documentadas pela companhia, não mapa completo do mercado. O projeto de tortilhas da Castrolanda em Castro (PR), anunciado pelo governo estadual em agosto de 2026, ilustra fabricação orientada principalmente a outro comprador empresarial, distinta de construir marca própria no varejo."
+        ],
+        "sources": [
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial por atividade; cobertura ampla, não recorte residual."
+          },
+          {
+            "label": "Índice de Preços ao Produtor - Indústrias Extrativas e de Transformação | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços ao produtor, a selecionar por atividade compatível."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Cade: exemplo de análise específica em margarinas e maioneses."
+          },
+          {
+            "label": "Governo do Paraná · Projeto de tortilhas Castrolanda",
+            "url": "https://www.parana.pr.gov.br/aen/Noticia/Com-apoio-do-Estado-Castrolanda-investira-R-1916-milhoes-em-duas-novas-plantas-0",
+            "purpose": "Carta de intenções de 03/08/2026, projeto em Castro destinado principalmente ao canal B2B; não inauguração, faturamento ou capacidade realizada."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Receita líquida",
+            "Venda menos verbas, descontos e devoluções",
+            "Separar sell-in de venda ao consumidor"
+          ],
+          [
+            "Margem por produto",
+            "Formulação, embalagem, conversão e logística",
+            "Incluir troca de linha e lote mínimo"
+          ],
+          [
+            "Validade",
+            "Estoque por lote e perdas",
+            "Distinguir cobertura necessária de sobreprodução"
+          ],
+          [
+            "Qualidade",
+            "Reclamação, recolhimento e rastreio",
+            "Identificar risco por lote e ingrediente"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial por atividade; cobertura ampla, não recorte residual."
+          },
+          {
+            "label": "Índice de Preços ao Produtor - Indústrias Extrativas e de Transformação | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços ao produtor, a selecionar por atividade compatível."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Cade: exemplo de análise específica em margarinas e maioneses."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "Não foi extraído um agregado recente exclusivo de processados que elimine frigoríficos, óleos e laticínios; a taxa de alimentos da PIM não será atribuída a este recorte residual. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual.",
+          "O governo paranaense registra carta de intenções, não operação concluída, para a fábrica de tortilhas a atender parceiro da Castrolanda. Inferência: diversificação industrial pode acrescentar concorrência por contratos de fornecimento antes de aparecer na gôndola. Confirmar estágio da obra, compromisso do comprador e condições de aceite antes de financiar capacidade; anúncio não prova absorção do produto."
+        ],
+        "sources": [
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Produção industrial por atividade; cobertura ampla, não recorte residual."
+          },
+          {
+            "label": "Índice de Preços ao Produtor - Indústrias Extrativas e de Transformação | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços ao produtor, a selecionar por atividade compatível."
+          },
+          {
+            "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+            "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+            "purpose": "Cade: exemplo de análise específica em margarinas e maioneses."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A margem efetiva depende de preço líquido após descontos, bonificações, promoções e devoluções, menos formulação, embalagem e transformação. Muitos itens com baixo giro podem elevar receita bruta e destruir produtividade por troca de linha e estoque.",
+          "Compra de insumos, fabricação e distribuição antecedem prazo de varejistas. Produção promocional concentra capital e pode deixar sobras. Recebível deve refletir verbas comerciais contratadas, devoluções esperadas e aceite, sem tratar faturamento bruto como caixa futuro certo.",
+          "Automação, rastreio por lote, eficiência energética e controle de qualidade podem reduzir custo e perdas. Nova linha deve ser testada contra volume economicamente viável por formulação e canal, não apenas contra capacidade técnica.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência comercial: em produção B2B, o risco está no contrato, na concentração do comprador e na capacidade de redirecionar a linha; em marca de varejo, envolve verba comercial, distribuição e recompra. A existência de plantas integradas em biscoitos e massas não permite aplicar a margem de um grande grupo a fabricante médio de conservas ou snacks."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Formulação, marca e execução comercial"
+          ],
+          [
+            "Fraquezas",
+            "Complexidade de portfólio e dependência de espaço no varejo"
+          ],
+          [
+            "Oportunidades",
+            "Conveniencia, revisão de mix e fabricação sob contrato rentável"
+          ],
+          [
+            "Ameaças",
+            "Recall, pressão promocional e substituição por marca de menor preço"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Ingredientes específicos e embalagem podem limitar alternativas"
+          ],
+          [
+            "Clientes",
+            "Redes negociam verbas e espaço, além do preço faturado"
+          ],
+          [
+            "Rivalidade",
+            "Marcas, regionais e fabricantes de marca própria disputam ocasiões"
+          ],
+          [
+            "Entrantes",
+            "Instalar linha é diferente de conquistar canal e manter qualidade"
+          ],
+          [
+            "Substitutos",
+            "Alimento fresco, preparo doméstico e outras categorias concorrem pelo consumo"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Mix e preços são ajustados sem expansão indiscriminada do portfólio",
+            "Receita líquida; Qualidade"
+          ],
+          [
+            "Favorável",
+            "Menos perdas, lotes melhores e execução de canal ampliam margem líquida",
+            "Margem por produto; Qualidade"
+          ],
+          [
+            "Adverso",
+            "Ingrediente sobe, promoções aumentam e estoque encalha; faturamento nominal mascara piora de caixa",
+            "Validade; Qualidade"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual item parece rentável antes de descontar toda a verba comercial?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quais lotes têm risco de vencer antes de vender?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A nova linha atende demanda comprovada ou apenas adiciona itens ao catálogo?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "PIM-PF Brasil | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Produção industrial por atividade; cobertura ampla, não recorte residual."
+      },
+      {
+        "label": "Índice de Preços ao Produtor - Indústrias Extrativas e de Transformação | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/todos-os-produtos-estatisticas/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços ao produtor, a selecionar por atividade compatível."
+      },
+      {
+        "label": "Cade aprova sem restrições operação envolvendo Seara e Bunge — Conselho Administrativo de Defesa Econômica",
+        "url": "https://www.gov.br/cade/pt-br/assuntos/noticias/cade-aprova-sem-restricoes-operacao-envolvendo-seara-e-bunge",
+        "purpose": "Cade: exemplo de análise específica em margarinas e maioneses."
+      },
+      {
+        "label": "Governo do Paraná · Projeto de tortilhas Castrolanda",
+        "url": "https://www.parana.pr.gov.br/aen/Noticia/Com-apoio-do-Estado-Castrolanda-investira-R-1916-milhoes-em-duas-novas-plantas-0",
+        "purpose": "Carta de intenções de 03/08/2026, projeto em Castro destinado principalmente ao canal B2B; não inauguração, faturamento ou capacidade realizada."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual item parece rentável antes de descontar toda a verba comercial?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A nova linha atende demanda comprovada ou apenas adiciona itens ao catálogo?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Quais lotes têm risco de vencer antes de vender?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Ingredientes e embalagens",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Formulação e preparo",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Processamento e controle",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Marca, distribuição e consumo",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Alimentos processados. Converter ingredientes em alimentos com padronização, conveniência e vida útil. O recorte é heterogêneo: massas, biscoitos, conservas, refeições e outras formulações não compartilham a mesma margem. Carne processada e lácteos devem ser conciliados com seus estudos para evitar dupla contagem. A margem efetiva depende de preço líquido após descontos, bonificações, promoções e devoluções, menos formulação, embalagem e transformação. Muitos itens com baixo giro podem elevar receita bruta e destruir produtividade por troca de linha e estoque. Não foi extraído um agregado recente exclusivo de processados que elimine frigoríficos, óleos e laticínios; a taxa de alimentos da PIM não será atribuída a este recorte residual. A análise de conjuntura é, portanto, de mecanismos: custo de ingredientes, poder do varejo e composição do consumo, sem taxa inventada para o recorte. A análise oficial da operação Seara/Bunge em margarinas e maioneses mostra que concentração precisa ser definida por produto. Usar grandes grupos como referência de todos os processados apagaria diferenças. Polos dependem de ingredientes, plantas e acesso a consumidores; não foi fechado ranking de empresas médias nem mapa homogêneo. Escala comercial e marca podem pesar tanto quanto eficiência fabril. A PIM-PF de alimentos é indicador agregado com ramos heterogêneos; não deve ser apresentada como crescimento deste recorte residual. Preços ao produtor e custo de ingredientes ajudam a testar repasse, mas exigem seleção da atividade correta. As informações trimestrais da M. Dias Branco referentes a março de 2026 identificam plantas de biscoitos e massas em Eusébio (CE), Jaboatão dos Guararapes (PE) e Queimados (RJ). São localizações documentadas pela companhia, não mapa completo do mercado. O projeto de tortilhas da Castrolanda em Castro (PR), anunciado pelo governo estadual em agosto de 2026, ilustra fabricação orientada principalmente a outro comprador empresarial, distinta de construir marca própria no varejo. A margem efetiva depende de preço líquido após descontos, bonificações, promoções e devoluções, menos formulação, embalagem e transformação. Muitos itens com baixo giro podem elevar receita bruta e destruir produtividade por troca de linha e estoque. Compra de insumos, fabricação e distribuição antecedem prazo de varejistas. Produção promocional concentra capital e pode deixar sobras. Recebível deve refletir verbas comerciais contratadas, devoluções esperadas e aceite, sem tratar faturamento bruto como caixa futuro certo. Automação, rastreio por lote, eficiência energética e controle de qualidade podem reduzir custo e perdas. Nova linha deve ser testada contra volume economicamente viável por formulação e canal, não apenas contra capacidade técnica. Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade. Inferência comercial: em produção B2B, o risco está no contrato, na concentração do comprador e na capacidade de redirecionar a linha; em marca de varejo, envolve verba comercial, distribuição e recompra. A existência de plantas integradas em biscoitos e massas não permite aplicar a margem de um grande grupo a fabricante médio de conservas ou snacks. As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte fontes e limitações.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Revalidação individual: ITR M.Dias31/03/2026 aberto independentemente confirma plantas de biscoitos/massas; notícia estadual integral preservada e lida confirma carta de intenções Castrolanda em Castro e canalB2B. Reabertura da notícia indisponível nesta tentativa. Anúncio não tratado como operação. Sem novas métricas extrapoladas."
+  },
+  {
+    "group": "alimentos-agroindustria",
+    "topicIndex": 5,
+    "title": "Bebidas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Produzir e distribuir bebidas com qualidade, marca e disponibilidade. Cerveja, refrigerante, água, destilado e suco têm tecnologias, regras e sazonalidades distintas. A evidência específica de cerveja não é estimativa de todo o mercado de bebidas.",
+      "Preço de prateleira não é realização do fabricante. Descontos, distribuição, marketing, impostos aplicáveis e perdas devem ser separados. Portfólio amplo ocupa tanques e estoques; capacidade de envase pode sobrar enquanto maturação ou canal é gargalo.",
+      "A publicação do MAPA em maio de 2026, com referência em 2025, registra expansão da base de cervejarias e aumento do valor exportado, embora o volume exportado tenha recuado. São indicadores diferentes de venda doméstica ou rentabilidade. O Sudeste concentra os estabelecimentos registrados, mas essa contagem não mede capacidade. Não extrapolar cerveja para outras bebidas."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo bebidas. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Produzir e distribuir bebidas com qualidade, marca e disponibilidade. Cerveja, refrigerante, água, destilado e suco têm tecnologias, regras e sazonalidades distintas. A evidência específica de cerveja não é estimativa de todo o mercado de bebidas.",
+          "Varejo, bares, restaurantes, distribuidores e clientes industriais. Ocasião de consumo e canal afetam embalagem, frequência de entrega e preço líquido; venda em barril ou embalagem retornável exige controle do ativo circulante.",
+          "Água com qualidade adequada, malte ou outros ingredientes, energia, frio e embalagens. Na cerveja, fermentação e maturação ocupam tanque antes do envase; insumo importado e lata ou vidro podem dominar riscos diferentes em cada porte."
+        ],
+        "sources": [
+          {
+            "label": "Anuário da Cerveja 2026 - ano referência 2025",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado/anuariodacerveja2026.pdf",
+            "purpose": "MAPA, Anuário da Cerveja 2026, ano de referência 2025."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da cerveja 2025 : ano referência 2024",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/6055?locale=en",
+            "purpose": "Edição anterior de cerveja para comparação metodológica."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da Cerveja 2024 : ano de referência 2023",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/2347?locale=pt_BR",
+            "purpose": "Anuário da Cerveja com referência em 2023."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A notícia oficial do MAPA identifica São Paulo como o estado com mais estabelecimentos e Santa Catarina com maior densidade por população, no ano de referência de 2025. São medidas de presença territorial, não participação no volume vendido. Não foi montado ranking empresarial comparável nem referência internacional com mesma definição.",
+          "O MAPA registra estabelecimentos e produtos e publica anuários específicos. Quantidade de rótulos ou cervejarias não mede participação de mercado. A PIM-PF acompanha volume industrial de bebidas de modo mais amplo; séries não devem ser misturadas como se tivessem o mesmo universo."
+        ],
+        "sources": [
+          {
+            "label": "Anuário da Cerveja 2026 - ano referência 2025",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado/anuariodacerveja2026.pdf",
+            "purpose": "MAPA, Anuário da Cerveja 2026, ano de referência 2025."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da cerveja 2025 : ano referência 2024",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/6055?locale=en",
+            "purpose": "Edição anterior de cerveja para comparação metodológica."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da Cerveja 2024 : ano de referência 2023",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/2347?locale=pt_BR",
+            "purpose": "Anuário da Cerveja com referência em 2023."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF de bebidas; universo mais amplo que cerveja."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Produção e venda",
+            "Volume por categoria e canal",
+            "Produção declarada não equivale a consumo"
+          ],
+          [
+            "Capacidade",
+            "Ocupação de fermentação, maturação e envase",
+            "Identificar gargalo por produto"
+          ],
+          [
+            "Realização",
+            "Receita líquida por embalagem e canal",
+            "Deduzir descontos e retornos"
+          ],
+          [
+            "Ativos em clientes",
+            "Barris, retornáveis e equipamentos cedidos",
+            "Conciliar perda, ciclo e responsabilidade"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Anuário da Cerveja 2026 - ano referência 2025",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado/anuariodacerveja2026.pdf",
+            "purpose": "MAPA, Anuário da Cerveja 2026, ano de referência 2025."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da cerveja 2025 : ano referência 2024",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/6055?locale=en",
+            "purpose": "Edição anterior de cerveja para comparação metodológica."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da Cerveja 2024 : ano de referência 2023",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/2347?locale=pt_BR",
+            "purpose": "Anuário da Cerveja com referência em 2023."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF de bebidas; universo mais amplo que cerveja."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A publicação do MAPA em maio de 2026, com referência em 2025, registra expansão da base de cervejarias e aumento do valor exportado, embora o volume exportado tenha recuado. São indicadores diferentes de venda doméstica ou rentabilidade. O Sudeste concentra os estabelecimentos registrados, mas essa contagem não mede capacidade. Não extrapolar cerveja para outras bebidas.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Anuário da Cerveja 2026 - ano referência 2025",
+            "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado/anuariodacerveja2026.pdf",
+            "purpose": "MAPA, Anuário da Cerveja 2026, ano de referência 2025."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da cerveja 2025 : ano referência 2024",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/6055?locale=en",
+            "purpose": "Edição anterior de cerveja para comparação metodológica."
+          },
+          {
+            "label": "Repositório Institucional do MAPA: Anuário da Cerveja 2024 : ano de referência 2023",
+            "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/2347?locale=pt_BR",
+            "purpose": "Anuário da Cerveja com referência em 2023."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF de bebidas; universo mais amplo que cerveja."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Preço de prateleira não é realização do fabricante. Descontos, distribuição, marketing, impostos aplicáveis e perdas devem ser separados. Portfólio amplo ocupa tanques e estoques; capacidade de envase pode sobrar enquanto maturação ou canal é gargalo.",
+          "Produção antecede pico de consumo e recebimento. Garrafas retornáveis, barris e equipamentos cedidos a pontos de venda podem consumir caixa mesmo fora do estoque contábil de bebida. Antecipar vendas sem deduzir bonificação e devolução superestima liquidez.",
+          "Tratamento de água, tanques, frio, envase e eficiência energética devem ser dimensionados ao mix e à comercialização. Uma cervejaria média não deve copiar estrutura financeira ou rede de distribuição de grandes marcas.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Marca, qualidade e acesso a ocasiões de consumo"
+          ],
+          [
+            "Fraquezas",
+            "Sazonalidade, giro de embalagens e capacidade presa em maturação"
+          ],
+          [
+            "Oportunidades",
+            "Eficiência de envase, embalagens e canais locais bem atendidos"
+          ],
+          [
+            "Ameaças",
+            "Custo de embalagem, disputa por ponto de venda e estoque vencido"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Embalagem e ingredientes específicos reduzem flexibilidade"
+          ],
+          [
+            "Clientes",
+            "Varejo e distribuidores controlam acesso e frequência de venda"
+          ],
+          [
+            "Rivalidade",
+            "Grandes marcas e produtores regionais disputam canais diferentes"
+          ],
+          [
+            "Entrantes",
+            "Marca, rota e capital de giro criam barreiras além da fábrica"
+          ],
+          [
+            "Substitutos",
+            "Outras bebidas e mudanças de ocasião de consumo disputam a mesma demanda"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Mix e produção acompanham canal com disciplina de estoque",
+            "Produção e venda; Ativos em clientes"
+          ],
+          [
+            "Favorável",
+            "Melhor distribuição e giro de retornáveis elevam receita por capital empregado",
+            "Capacidade; Ativos em clientes"
+          ],
+          [
+            "Adverso",
+            "Consumo fraco ou clima desfavorável deixa estoque e capacidade ociosa, com promoções comprimindo margem",
+            "Realização; Ativos em clientes"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "O gargalo real é tanque, envase ou venda no canal?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Quem paga por retornáveis e barris que não voltam?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Qual é a margem líquida por embalagem depois da distribuição e promoção?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Anuário da Cerveja 2026 - ano referência 2025",
+        "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado/anuariodacerveja2026.pdf",
+        "purpose": "MAPA, Anuário da Cerveja 2026, ano de referência 2025."
+      },
+      {
+        "label": "Repositório Institucional do MAPA: Anuário da cerveja 2025 : ano referência 2024",
+        "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/6055?locale=en",
+        "purpose": "Edição anterior de cerveja para comparação metodológica."
+      },
+      {
+        "label": "Repositório Institucional do MAPA: Anuário da Cerveja 2024 : ano de referência 2023",
+        "url": "https://repositorio-dspace.agricultura.gov.br/handle/1/2347?locale=pt_BR",
+        "purpose": "Anuário da Cerveja com referência em 2023."
+      },
+      {
+        "label": "PIM-PF Brasil | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "PIM-PF de bebidas; universo mais amplo que cerveja."
+      },
+      {
+        "label": "MAPA · panorama cervejeiro com referência em 2025",
+        "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/2026/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado",
+        "purpose": "Notícia pública integral recuperada na revisão, alternativa ao anuário PDF que apresentou timeout. Não é mercado de todas as bebidas."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado.",
+      "PDF do anuário de cerveja apresentou timeout; a notícia oficial alternativa sustenta o panorama, mas os números regionais não foram usados em gráfico sem conferência integral."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "O gargalo real é tanque, envase ou venda no canal?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual é a margem líquida por embalagem depois da distribuição e promoção?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Quem paga por retornáveis e barris que não voltam?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Água, ingredientes e embalagem",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Preparo, fermentação ou mistura",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Envase e controle",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Distribuição e ocasiões de consumo",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Bebidas. Produzir e distribuir bebidas com qualidade, marca e disponibilidade. Cerveja, refrigerante, água, destilado e suco têm tecnologias, regras e sazonalidades distintas. A evidência específica de cerveja não é estimativa de todo o mercado de bebidas. Preço de prateleira não é realização do fabricante. Descontos, distribuição, marketing, impostos aplicáveis e perdas devem ser separados. Portfólio amplo ocupa tanques e estoques; capacidade de envase pode sobrar enquanto maturação ou canal é gargalo. A publicação do MAPA em maio de 2026, com referência em 2025, registra expansão da base de cervejarias e aumento do valor exportado, embora o volume exportado tenha recuado. São indicadores diferentes de venda doméstica ou rentabilidade. O Sudeste concentra os estabelecimentos registrados, mas essa contagem não mede capacidade. Não extrapolar cerveja para outras bebidas. Como funciona. Varejo, bares, restaurantes, distribuidores e clientes industriais. Ocasião de consumo e canal afetam embalagem, frequência de entrega e preço líquido; venda em barril ou embalagem retornável exige controle do ativo circulante. Água com qualidade adequada, malte ou outros ingredientes, energia, frio e embalagens. Na cerveja, fermentação e maturação ocupam tanque antes do envase; insumo importado e lata ou vidro podem dominar riscos diferentes em cada porte. Caixa e financiamento. Produção antecede pico de consumo e recebimento. Garrafas retornáveis, barris e equipamentos cedidos a pontos de venda podem consumir caixa mesmo fora do estoque contábil de bebida. Antecipar vendas sem deduzir bonificação e devolução superestima liquidez. Tratamento de água, tanques, frio, envase e eficiência energética devem ser dimensionados ao mix e à comercialização. Uma cervejaria média não deve copiar estrutura financeira ou rede de distribuição de grandes marcas. Cenários. Mix e produção acompanham canal com disciplina de estoque. Melhor distribuição e giro de retornáveis elevam receita por capital empregado. Consumo fraco ou clima desfavorável deixa estoque e capacidade ociosa, com promoções comprimindo margem. Na visita, pergunte: O gargalo real é tanque, envase ou venda no canal? Quem paga por retornáveis e barris que não voltam? Qual é a margem líquida por embalagem depois da distribuição e promoção? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/alimentos-agroindustria-independent-review.json",
+    "reviewNotes": "Revisão independente confirmou notícia integral MAPA maio2026/ref2025 para polos SãoPaulo/SantaCatarina e valor exportado versus volume. Comparação regional não validada foi retirada. Sem números novos e sem extrapolar cerveja a todas bebidas. Aprovado individualmente."
+  }
+]

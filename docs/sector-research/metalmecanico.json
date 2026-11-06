@@ -1,0 +1,2584 @@
+[
+  {
+    "group": "metalmecanico",
+    "topicIndex": 0,
+    "title": "Fundição",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fundição: Sucata, ferro-gusa e ligas seguem para fusão; a areia, quando utilizada, compõe o sistema de moldagem. O metal líquido é vazado no molde; após solidificação e resfriamento, a peça é desmoldada, rebarbada e inspecionada.",
+      "Tese operacional: Ferramental específico, qualificação metalúrgica e consistência entre lotes sustentam relacionamento; perda de cliente deixa moldes e capacidade pouco reaproveitáveis.",
+      "Principal vulnerabilidade: O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Moldes, fornos, exaustão e recuperação de areia exigem investimento; estoque de liga e peças em aprovação demanda giro. Separar manutenção de capacidade de ampliação e melhorias ambientais."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Sucata, ferro-gusa e ligas seguem para fusão; a areia, quando utilizada, compõe o sistema de moldagem. O metal líquido é vazado no molde; após solidificação e resfriamento, a peça é desmoldada, rebarbada e inspecionada. A peça pode seguir para tratamento e usinagem externos ou integrados. Separar ferro e aço dos não ferrosos e venda de peça bruta da peça acabada.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Tupy e Joinville são referência histórica documentada de inserção industrial. O registro municipal comprova localização, não liderança atual nem a situação de fundições médias.",
+          "Ferramental específico, qualificação metalúrgica e consistência entre lotes sustentam relacionamento; perda de cliente deixa moldes e capacidade pouco reaproveitáveis.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Exemplo empresarial datado: o BNDES descreveu em sua notícia de dezembro de 2024 a Tupy como fabricante de componentes estruturais de ferro fundido e anunciou aprovação de apoio à digitalização em Betim e Joinville. O caso ilustra investimento em processo e rastreabilidade; não demonstra produtividade já realizada nem média de fundições."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          },
+          {
+            "label": "BNDES · inovação e transformação digital da Tupy",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+            "purpose": "Notícia publicada em 04/12/2024; exemplo de investimento aprovado, não prova de desembolso integral, retorno obtido ou condição atual de crédito."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Metalurgia, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de fundição. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Rendimento metálico, energia por peça boa, refugo interno e devolução do cliente. Peso fundido não equivale a peso faturável: canais, massalotes e retrabalho distorcem a leitura de capacidade.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Mudança de mix de motores e componentes; clientes podem reduzir uma família de peças mesmo quando a produção agregada de veículos aumenta.",
+          "O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Moldes, fornos, exaustão e recuperação de areia exigem investimento; estoque de liga e peças em aprovação demanda giro. Separar manutenção de capacidade de ampliação e melhorias ambientais.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Moldes, fornos, exaustão e recuperação de areia exigem investimento; estoque de liga e peças em aprovação demanda giro. Separar manutenção de capacidade de ampliação e melhorias ambientais.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Reaproveitamento de material, eficiência térmica e peças complexas com engenharia conjunta.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Ferramental específico, qualificação metalúrgica e consistência entre lotes sustentam relacionamento; perda de cliente deixa moldes e capacidade pouco reaproveitáveis."
+          ],
+          [
+            "Fraquezas",
+            "O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade."
+          ],
+          [
+            "Oportunidades",
+            "Reaproveitamento de material, eficiência térmica e peças complexas com engenharia conjunta."
+          ],
+          [
+            "Ameaças",
+            "Mudança de mix de motores e componentes; clientes podem reduzir uma família de peças mesmo quando a produção agregada de veículos aumenta."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é sucata e ligas. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é montadoras e máquinas. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Ferramental específico, qualificação metalúrgica e consistência entre lotes sustentam relacionamento; perda de cliente deixa moldes e capacidade pouco reaproveitáveis. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Forno, laboratório metalúrgico, moldes e controle de defeitos exigem investimento e experiência; homologação de peça crítica e histórico de lotes confiáveis retardam entrada."
+          ],
+          [
+            "Substitutos",
+            "Forjamento, peças soldadas e materiais poliméricos podem substituir fundidos em aplicações específicas. Geometria, fadiga, temperatura e custo de redesenhar/homologar limitam a troca."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Rendimento metálico, energia por peça boa, refugo interno e devolução do cliente. Peso fundido não equivale a peso faturável: canais, massalotes e retrabalho distorcem a leitura de capacidade.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Reaproveitamento de material, eficiência térmica e peças complexas com engenharia conjunta.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade. Mudança de mix de motores e componentes; clientes podem reduzir uma família de peças mesmo quando a produção agregada de veículos aumenta.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Rendimento metálico, energia por peça boa, refugo interno e devolução do cliente. Peso fundido não equivale a peso faturável: canais, massalotes e retrabalho distorcem a leitura de capacidade.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Reaproveitamento de material, eficiência térmica e peças complexas com engenharia conjunta.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Metalurgia",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Metalurgia",
+            "values": [
+              -7.2,
+              15.4,
+              -5.0,
+              -2.8,
+              2.6
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+        "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+      },
+      {
+        "label": "Prefeitura de Joinville · ambiente construído",
+        "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+        "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · inovação e transformação digital da Tupy",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+        "purpose": "Notícia publicada em 04/12/2024; exemplo de investimento aprovado, não prova de desembolso integral, retorno obtido ou condição atual de crédito."
+      },
+      {
+        "label": "Tupy — processo de manufatura e usinagem",
+        "url": "https://ri.tupy.com.br/nossos-processos/manufatura-e-usinagem/",
+        "purpose": "Verificação primária da separação entre fusão do metal, areia para moldagem/macharia, vazamento e acabamento. Fonte empresarial usada na verificação, não exibida como referência na interface."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual requisito da peça faz o cliente escolher esta fundição?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais clientes concentram os pedidos e os moldes dedicados?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como novas peças entram no processo de cotação e homologação?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual etapa limita a produção de peças aprovadas?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem fornece ligas, moldes e ensaios críticos?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual é a margem por peça após refugo, energia e retrabalho?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "sucata e ligas",
+          "detail": "Fluxo físico e financeiro: sucata e ligas"
+        },
+        {
+          "id": "1",
+          "label": "fusão e moldagem",
+          "detail": "Sucata, ferro-gusa e ligas seguem para fusão; a areia, quando utilizada, compõe o sistema de moldagem. O metal líquido é vazado no molde; após solidificação e resfriamento, a peça é desmoldada, rebarbada e inspecionada. A peça pode seguir para tratamento e usinagem externos ou integrados. Separar ferro e aço dos não ferrosos e venda de peça bruta da peça acabada."
+        },
+        {
+          "id": "2",
+          "label": "acabamento e inspeção",
+          "detail": "Fluxo físico e financeiro: acabamento e inspeção"
+        },
+        {
+          "id": "3",
+          "label": "montadoras e máquinas",
+          "detail": "Fluxo físico e financeiro: montadoras e máquinas"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Fundição. Fundição: Sucata, ferro-gusa e ligas seguem para fusão; a areia, quando utilizada, compõe o sistema de moldagem. O metal líquido é vazado no molde; após solidificação e resfriamento, a peça é desmoldada, rebarbada e inspecionada. Tese operacional: Ferramental específico, qualificação metalúrgica e consistência entre lotes sustentam relacionamento; perda de cliente deixa moldes e capacidade pouco reaproveitáveis. Principal vulnerabilidade: O preço do metal pode subir antes da revisão do contrato. Sucata retorna ao processo, mas a reciclagem interna consome energia e não elimina a perda de produtividade. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Moldes, fornos, exaustão e recuperação de areia exigem investimento; estoque de liga e peças em aprovação demanda giro. Separar manutenção de capacidade de ampliação e melhorias ambientais. Sucata, ferro-gusa e ligas seguem para fusão; a areia, quando utilizada, compõe o sistema de moldagem. O metal líquido é vazado no molde; após solidificação e resfriamento, a peça é desmoldada, rebarbada e inspecionada. A peça pode seguir para tratamento e usinagem externos ou integrados. Separar ferro e aço dos não ferrosos e venda de peça bruta da peça acabada. Rendimento metálico, energia por peça boa, refugo interno e devolução do cliente. Peso fundido não equivale a peso faturável: canais, massalotes e retrabalho distorcem a leitura de capacidade. Tupy e Joinville são referência histórica documentada de inserção industrial. O registro municipal comprova localização, não liderança atual nem a situação de fundições médias. Mudança de mix de motores e componentes; clientes podem reduzir uma família de peças mesmo quando a produção agregada de veículos aumenta. Moldes, fornos, exaustão e recuperação de areia exigem investimento; estoque de liga e peças em aprovação demanda giro. Separar manutenção de capacidade de ampliação e melhorias ambientais. Reaproveitamento de material, eficiência térmica e peças complexas com engenharia conjunta. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Exemplo empresarial datado: o BNDES descreveu em sua notícia de dezembro de 2024 a Tupy como fabricante de componentes estruturais de ferro fundido e anunciou aprovação de apoio à digitalização em Betim e Joinville. O caso ilustra investimento em processo e rastreabilidade; não demonstra produtividade já realizada nem média de fundições. Na análise de concorrência: Forjamento, peças soldadas e materiais poliméricos podem substituir fundidos em aplicações específicas. Geometria, fadiga, temperatura e custo de redesenhar/homologar limitam a troca. Para novos entrantes: Forno, laboratório metalúrgico, moldes e controle de defeitos exigem investimento e experiência; homologação de peça crítica e histórico de lotes confiáveis retardam entrada.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Caso Tupy/BNDES integral sustenta fundição e polos; PIM Metalurgia delimitada como contexto, não medida de fundição."
+  },
+  {
+    "group": "metalmecanico",
+    "topicIndex": 1,
+    "title": "Usinagem",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Usinagem: Barras, forjados e fundidos são transformados por torneamento, fresamento e retificação.",
+      "Tese operacional: Programação, metrologia, tolerância e prazo de entrega criam barreiras; lotes padronizados enfrentam pressão de preço e concorrência de fornecedores integrados.",
+      "Principal vulnerabilidade: Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Centros de usinagem, software e metrologia devem ser financiados com vida útil e carteira compatíveis; giro suporta folha, ferramentas e recebimento após inspeção."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Barras, forjados e fundidos são transformados por torneamento, fresamento e retificação. A operação pode ser por encomenda, com material próprio, ou prestação de serviço sobre material do cliente; essa diferença muda faturamento, estoque e responsabilidade.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Não foi recuperado ranking público específico de prestadores de usinagem. Joinville é apenas referência de ecossistema industrial, não prova de concentração desse recorte.",
+          "Programação, metrologia, tolerância e prazo de entrega criam barreiras; lotes padronizados enfrentam pressão de preço e concorrência de fornecedores integrados.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência da cadeia, não concorrente equivalente: a notícia do BNDES identifica a Romi, sediada em Santa Bárbara d’Oeste, como fabricante de máquinas industriais e peças fundidas e usinadas. Para um prestador médio, ela pode ser fornecedor de equipamento ou referência de integração, não base automática para comparação de margem."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          },
+          {
+            "label": "BNDES · Romi e produção para exportação",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+            "purpose": "Notícia publicada em 29/11/2022, atualizada em 17/10/2023. Caso observado de fabricante e crédito à produção exportável; sem extrapolar condições a médias empresas atuais."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos de metal, exceto máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de usinagem. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Horas vendidas por máquina disponível, tempo de preparação, vida de ferramenta e peças conformes. Uma máquina ocupada produzindo refugo não é capacidade rentável.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Automação dos compradores pode internalizar peças repetitivas; exigências de rastreabilidade podem deslocar encomendas para prestadores qualificados.",
+          "Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+            "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+            "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+          },
+          {
+            "label": "Prefeitura de Joinville · ambiente construído",
+            "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+            "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Centros de usinagem, software e metrologia devem ser financiados com vida útil e carteira compatíveis; giro suporta folha, ferramentas e recebimento após inspeção.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Centros de usinagem, software e metrologia devem ser financiados com vida útil e carteira compatíveis; giro suporta folha, ferramentas e recebimento após inspeção.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Reduzir troca de ferramenta e organizar células para famílias de peças, medindo prazo e custo por lote.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Programação, metrologia, tolerância e prazo de entrega criam barreiras; lotes padronizados enfrentam pressão de preço e concorrência de fornecedores integrados."
+          ],
+          [
+            "Fraquezas",
+            "Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização."
+          ],
+          [
+            "Oportunidades",
+            "Reduzir troca de ferramenta e organizar células para famílias de peças, medindo prazo e custo por lote."
+          ],
+          [
+            "Ameaças",
+            "Automação dos compradores pode internalizar peças repetitivas; exigências de rastreabilidade podem deslocar encomendas para prestadores qualificados."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é material próprio ou do cliente. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é cliente industrial. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Programação, metrologia, tolerância e prazo de entrega criam barreiras; lotes padronizados enfrentam pressão de preço e concorrência de fornecedores integrados. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Máquinas adequadas à tolerância, programação, dispositivos e metrologia precisam operar como sistema. Acesso a técnicos e histórico de entrega de lotes homologados limitam competir em peças críticas."
+          ],
+          [
+            "Substitutos",
+            "Peça próxima da forma final por fundição, forjamento ou manufatura aditiva pode reduzir etapas de usinagem. Tolerância, acabamento e volume determinam se a alternativa é viável; internalização no cliente substitui o serviço contratado."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Horas vendidas por máquina disponível, tempo de preparação, vida de ferramenta e peças conformes. Uma máquina ocupada produzindo refugo não é capacidade rentável.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Reduzir troca de ferramenta e organizar células para famílias de peças, medindo prazo e custo por lote.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização. Automação dos compradores pode internalizar peças repetitivas; exigências de rastreabilidade podem deslocar encomendas para prestadores qualificados.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Horas vendidas por máquina disponível, tempo de preparação, vida de ferramenta e peças conformes. Uma máquina ocupada produzindo refugo não é capacidade rentável.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Reduzir troca de ferramenta e organizar células para famílias de peças, medindo prazo e custo por lote.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos de metal, exceto máquinas e equipamentos",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos de metal, exceto máquinas e equipamentos",
+            "values": [
+              0.1,
+              5.2,
+              -9.0,
+              -3.4,
+              5.0
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · fronteiras de usinagem e fundição",
+        "url": "https://cnae.ibge.gov.br/?chave=domestico&subclasse=2539002&tipo=cnae&versao=9.1.0%2F1000&view=subclasse",
+        "purpose": "Notas classificatórias distinguem fundição, usinagem e tratamento. Confirmar cadastro e mix antes do enquadramento."
+      },
+      {
+        "label": "Prefeitura de Joinville · ambiente construído",
+        "url": "https://www.joinville.sc.gov.br/wp-content/uploads/2018/09/Joinville-Cidade-em-Dados-2018-Ambiente-Constru%C3%ADdo.pdf",
+        "purpose": "Referência histórica de localização industrial da Tupy; não mede capacidade atual."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · Romi e produção para exportação",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+        "purpose": "Notícia publicada em 29/11/2022, atualizada em 17/10/2023. Caso observado de fabricante e crédito à produção exportável; sem extrapolar condições a médias empresas atuais."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual tolerância ou prazo o cliente paga para obter?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais clientes geram lotes repetidos e previsíveis?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como chegam os desenhos e as solicitações de orçamento?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quais máquinas e instrumentos limitam a capacidade vendável?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais parceiros executam tratamento térmico e acabamento?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço do lote cobre preparação, ferramenta e inspeção?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "material próprio ou do cliente",
+          "detail": "Fluxo físico e financeiro: material próprio ou do cliente"
+        },
+        {
+          "id": "1",
+          "label": "programação e preparação",
+          "detail": "Barras, forjados e fundidos são transformados por torneamento, fresamento e retificação. A operação pode ser por encomenda, com material próprio, ou prestação de serviço sobre material do cliente; essa diferença muda faturamento, estoque e responsabilidade."
+        },
+        {
+          "id": "2",
+          "label": "usinagem e metrologia",
+          "detail": "Fluxo físico e financeiro: usinagem e metrologia"
+        },
+        {
+          "id": "3",
+          "label": "cliente industrial",
+          "detail": "Fluxo físico e financeiro: cliente industrial"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Usinagem. Usinagem: Barras, forjados e fundidos são transformados por torneamento, fresamento e retificação. Tese operacional: Programação, metrologia, tolerância e prazo de entrega criam barreiras; lotes padronizados enfrentam pressão de preço e concorrência de fornecedores integrados. Principal vulnerabilidade: Pequenos lotes elevam preparação; material do cliente reduz compra de metal mas não elimina risco de perda, atraso e indenização. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Centros de usinagem, software e metrologia devem ser financiados com vida útil e carteira compatíveis; giro suporta folha, ferramentas e recebimento após inspeção. Barras, forjados e fundidos são transformados por torneamento, fresamento e retificação. A operação pode ser por encomenda, com material próprio, ou prestação de serviço sobre material do cliente; essa diferença muda faturamento, estoque e responsabilidade. Horas vendidas por máquina disponível, tempo de preparação, vida de ferramenta e peças conformes. Uma máquina ocupada produzindo refugo não é capacidade rentável. Não foi recuperado ranking público específico de prestadores de usinagem. Joinville é apenas referência de ecossistema industrial, não prova de concentração desse recorte. Automação dos compradores pode internalizar peças repetitivas; exigências de rastreabilidade podem deslocar encomendas para prestadores qualificados. Centros de usinagem, software e metrologia devem ser financiados com vida útil e carteira compatíveis; giro suporta folha, ferramentas e recebimento após inspeção. Reduzir troca de ferramenta e organizar células para famílias de peças, medindo prazo e custo por lote. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Referência da cadeia, não concorrente equivalente: a notícia do BNDES identifica a Romi, sediada em Santa Bárbara d’Oeste, como fabricante de máquinas industriais e peças fundidas e usinadas. Para um prestador médio, ela pode ser fornecedor de equipamento ou referência de integração, não base automática para comparação de margem. Na análise de concorrência: Peça próxima da forma final por fundição, forjamento ou manufatura aditiva pode reduzir etapas de usinagem. Tolerância, acabamento e volume determinam se a alternativa é viável; internalização no cliente substitui o serviço contratado. Para novos entrantes: Máquinas adequadas à tolerância, programação, dispositivos e metrologia precisam operar como sistema. Acesso a técnicos e histórico de entrega de lotes homologados limitam competir em peças críticas.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Caso Romi/BNDES integral sustenta peças usinadas e equipamento; falta de ranking dos prestadores expressa, sem extrapolação."
+  },
+  {
+    "group": "metalmecanico",
+    "topicIndex": 2,
+    "title": "Estruturas metálicas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Estruturas metálicas: Engenharia de detalhamento converte projeto em listas de aço; corte, furação e soldagem precedem proteção anticorrosiva, transporte e montagem.",
+      "Tese operacional: Capacidade de engenharia, rastreabilidade de solda, logística e montagem segura diferenciam o fornecedor; concorrência local cresce em estruturas simples.",
+      "Principal vulnerabilidade: Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro por obra e por marco de aceite, com adiantamento e retenções separados. Equipamentos de corte e solda requerem prazo de investimento; garantia contratual não substitui caixa."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Engenharia de detalhamento converte projeto em listas de aço; corte, furação e soldagem precedem proteção anticorrosiva, transporte e montagem. Distinguir fabricação em oficina, montagem em campo e contrato integrado de obra.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+            "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura."
+          },
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Não se demonstrou ranking atual de fabricantes ou polos exclusivos. O mercado relevante é delimitado por raio logístico, projeto e capacidade de montagem, não apenas endereço da fábrica.",
+          "Capacidade de engenharia, rastreabilidade de solda, logística e montagem segura diferenciam o fornecedor; concorrência local cresce em estruturas simples.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Como exemplo de oferta, a Medabil descreve sistemas para construções horizontais que combinam estrutura metálica, cobertura, fechamentos e ventilação. É portfólio do fornecedor, não comprovação de contrato, participação ou desempenho realizado. A integração de engenharia e componentes mostra por que comparar só o preço do aço não compara propostas equivalentes."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+            "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura."
+          },
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos de metal, exceto máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de estruturas metálicas. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Tonelada entregue por projeto, horas de solda/retrabalho, avanço físico aceito e material já comprado. A margem por tonelada não compara projetos com complexidades distintas.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Carteira ligada a galpões e investimentos industriais pode ter adiamentos mesmo com contratos assinados.",
+          "Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+            "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura."
+          },
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro por obra e por marco de aceite, com adiantamento e retenções separados. Equipamentos de corte e solda requerem prazo de investimento; garantia contratual não substitui caixa.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro por obra e por marco de aceite, com adiantamento e retenções separados. Equipamentos de corte e solda requerem prazo de investimento; garantia contratual não substitui caixa.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Pré-fabricação e coordenação digital podem reduzir perdas; oportunidade exige evitar que economia do cliente seja absorvida por preço fixo mal orçado.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Capacidade de engenharia, rastreabilidade de solda, logística e montagem segura diferenciam o fornecedor; concorrência local cresce em estruturas simples."
+          ],
+          [
+            "Fraquezas",
+            "Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição."
+          ],
+          [
+            "Oportunidades",
+            "Pré-fabricação e coordenação digital podem reduzir perdas; oportunidade exige evitar que economia do cliente seja absorvida por preço fixo mal orçado."
+          ],
+          [
+            "Ameaças",
+            "Carteira ligada a galpões e investimentos industriais pode ter adiamentos mesmo com contratos assinados."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é aço e projeto. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "Construtoras, montadoras de estruturas e contratantes industriais negociam projeto, prazo e aceite. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Capacidade de engenharia, rastreabilidade de solda, logística e montagem segura diferenciam o fornecedor; concorrência local cresce em estruturas simples. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Engenharia de detalhamento, soldadores qualificados, rastreabilidade e capacidade de içamento/montagem segura dificultam executar grandes contratos; fabricar estrutura simples não comprova essa capacidade."
+          ],
+          [
+            "Substitutos",
+            "Concreto moldado, pré-moldados e madeira engenheirada podem cumprir funções estruturais semelhantes. Vão, peso, fogo, cronograma e disponibilidade de montagem condicionam a escolha; mudar sistema após projeto gera custo."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Tonelada entregue por projeto, horas de solda/retrabalho, avanço físico aceito e material já comprado. A margem por tonelada não compara projetos com complexidades distintas.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Pré-fabricação e coordenação digital podem reduzir perdas; oportunidade exige evitar que economia do cliente seja absorvida por preço fixo mal orçado.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição. Carteira ligada a galpões e investimentos industriais pode ter adiamentos mesmo com contratos assinados.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Tonelada entregue por projeto, horas de solda/retrabalho, avanço físico aceito e material já comprado. A margem por tonelada não compara projetos com complexidades distintas.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Pré-fabricação e coordenação digital podem reduzir perdas; oportunidade exige evitar que economia do cliente seja absorvida por preço fixo mal orçado.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos de metal, exceto máquinas e equipamentos",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos de metal, exceto máquinas e equipamentos",
+            "values": [
+              0.1,
+              5.2,
+              -9.0,
+              -3.4,
+              5.0
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE · Pesquisa Anual da Indústria da Construção",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9018-pesquisa-anual-da-industria-da-construcao.html",
+        "purpose": "Resultados estruturais de 2024; metodologia distingue atividades e universos por porte. Não se extraiu série específica de residencial, galpões ou infraestrutura."
+      },
+      {
+        "label": "BNDES · investimento em máquinas e MPMEs",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual vantagem a solução oferece frente a outro sistema estrutural?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quem decide a compra: construtora, projetista ou dono da obra?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como a empresa entra na lista de fornecedores de uma obra?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quem controla detalhamento, solda e montagem em campo?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais parceiros assumem içamento, transporte e interfaces de projeto?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O contrato remunera mudanças e cobre aço, montagem e retenções?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "aço e projeto",
+          "detail": "Fluxo físico e financeiro: aço e projeto"
+        },
+        {
+          "id": "1",
+          "label": "detalhamento e fabricação",
+          "detail": "Engenharia de detalhamento converte projeto em listas de aço; corte, furação e soldagem precedem proteção anticorrosiva, transporte e montagem. Distinguir fabricação em oficina, montagem em campo e contrato integrado de obra."
+        },
+        {
+          "id": "2",
+          "label": "proteção e transporte",
+          "detail": "Fluxo físico e financeiro: proteção e transporte"
+        },
+        {
+          "id": "3",
+          "label": "montagem e aceite",
+          "detail": "Fluxo físico e financeiro: montagem e aceite"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estruturas metálicas. Estruturas metálicas: Engenharia de detalhamento converte projeto em listas de aço; corte, furação e soldagem precedem proteção anticorrosiva, transporte e montagem. Tese operacional: Capacidade de engenharia, rastreabilidade de solda, logística e montagem segura diferenciam o fornecedor; concorrência local cresce em estruturas simples. Principal vulnerabilidade: Aço comprado antes da aprovação final e alteração de projeto após fabricação geram sobra específica. Atraso de fundações impede montagem e posterga medição. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro por obra e por marco de aceite, com adiantamento e retenções separados. Equipamentos de corte e solda requerem prazo de investimento; garantia contratual não substitui caixa. Engenharia de detalhamento converte projeto em listas de aço; corte, furação e soldagem precedem proteção anticorrosiva, transporte e montagem. Distinguir fabricação em oficina, montagem em campo e contrato integrado de obra. Tonelada entregue por projeto, horas de solda/retrabalho, avanço físico aceito e material já comprado. A margem por tonelada não compara projetos com complexidades distintas. Não se demonstrou ranking atual de fabricantes ou polos exclusivos. O mercado relevante é delimitado por raio logístico, projeto e capacidade de montagem, não apenas endereço da fábrica. Carteira ligada a galpões e investimentos industriais pode ter adiamentos mesmo com contratos assinados. Giro por obra e por marco de aceite, com adiantamento e retenções separados. Equipamentos de corte e solda requerem prazo de investimento; garantia contratual não substitui caixa. Pré-fabricação e coordenação digital podem reduzir perdas; oportunidade exige evitar que economia do cliente seja absorvida por preço fixo mal orçado. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Na análise de concorrência: Concreto moldado, pré-moldados e madeira engenheirada podem cumprir funções estruturais semelhantes. Vão, peso, fogo, cronograma e disponibilidade de montagem condicionam a escolha; mudar sistema após projeto gera custo. Para novos entrantes: Engenharia de detalhamento, soldadores qualificados, rastreabilidade e capacidade de içamento/montagem segura dificultam executar grandes contratos; fabricar estrutura simples não comprova essa capacidade. Como exemplo de oferta, a Medabil descreve sistemas para construções horizontais que combinam estrutura metálica, cobertura, fechamentos e ventilação. É portfólio do fornecedor, não comprovação de contrato, participação ou desempenho realizado. A integração de engenharia e componentes mostra por que comparar só o preço do aço não compara propostas equivalentes.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Página primária Medabil integral confirma oferta de estruturas, cobertura e fechamentos; sem alegação de ranking, desempenho ou contrato."
+  },
+  {
+    "group": "metalmecanico",
+    "topicIndex": 3,
+    "title": "Máquinas industriais",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Máquinas industriais: Componentes mecânicos, elétricos e automação convergem para montagem, testes e instalação.",
+      "Tese operacional: Engenharia aplicada e assistência local competem com fabricantes globais e importação. O comprador compara produtividade, disponibilidade e custo total, não só preço da máquina.",
+      "Principal vulnerabilidade: Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiamento da compra pelo cliente não resolve automaticamente o giro do fabricante. Planejar desembolso de componentes, sinal, testes, embarque e recebimento final."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Componentes mecânicos, elétricos e automação convergem para montagem, testes e instalação. Fabricantes seriados diferem dos integradores sob encomenda; assistência, peças e modernização podem formar receitas separadas da venda inicial.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A pesquisa do BNDES diferencia investimento em máquinas por atividade compradora; não foi obtido ranking atual que separasse fabricantes industriais e integradores.",
+          "Engenharia aplicada e assistência local competem com fabricantes globais e importação. O comprador compara produtividade, disponibilidade e custo total, não só preço da máquina.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Caso observado: o BNDES anunciou em novembro de 2022 financiamento à produção exportável de máquinas de usinagem da Romi. O exemplo separa crédito de pré-embarque ao fabricante do financiamento da máquina comprada pelo cliente. Não confirma oferta, custo ou elegibilidade atuais."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          },
+          {
+            "label": "BNDES · Romi e produção para exportação",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+            "purpose": "Notícia publicada em 29/11/2022, atualizada em 17/10/2023. Caso observado de fabricante e crédito à produção exportável; sem extrapolar condições a médias empresas atuais."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de máquinas industriais. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Pedidos firmes, cancelamentos, carteira por marco, horas de engenharia, aprovação em fábrica e no cliente; separar entrega física de aceite final.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Decisão de investimento do comprador responde a utilização de capacidade e retorno esperado; manutenção pode ser mais resiliente que ampliação de planta.",
+          "Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Financiamento da compra pelo cliente não resolve automaticamente o giro do fabricante. Planejar desembolso de componentes, sinal, testes, embarque e recebimento final.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Financiamento da compra pelo cliente não resolve automaticamente o giro do fabricante. Planejar desembolso de componentes, sinal, testes, embarque e recebimento final.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Retrofit, eficiência energética e automação de gargalos oferecem projetos menores e verificáveis.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Engenharia aplicada e assistência local competem com fabricantes globais e importação. O comprador compara produtividade, disponibilidade e custo total, não só preço da máquina."
+          ],
+          [
+            "Fraquezas",
+            "Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar."
+          ],
+          [
+            "Oportunidades",
+            "Retrofit, eficiência energética e automação de gargalos oferecem projetos menores e verificáveis."
+          ],
+          [
+            "Ameaças",
+            "Decisão de investimento do comprador responde a utilização de capacidade e retorno esperado; manutenção pode ser mais resiliente que ampliação de planta."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é componentes e engenharia. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "Indústrias e integradores compram máquinas para produção e manutenção, avaliando desempenho, suporte e custo total. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Engenharia aplicada e assistência local competem com fabricantes globais e importação. O comprador compara produtividade, disponibilidade e custo total, não só preço da máquina. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Projeto confiável, segurança, integração de controles, testes de desempenho e assistência exigem engenharia e base técnica; aceitar responsabilidade por disponibilidade requer capacidade financeira."
+          ],
+          [
+            "Substitutos",
+            "Retrofit e reparo prolongam a vida da máquina; locação ou contratação externa da operação podem substituir comprar equipamento novo. Disponibilidade, sigilo do processo e custo por peça limitam essas opções."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Pedidos firmes, cancelamentos, carteira por marco, horas de engenharia, aprovação em fábrica e no cliente; separar entrega física de aceite final.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Retrofit, eficiência energética e automação de gargalos oferecem projetos menores e verificáveis.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar. Decisão de investimento do comprador responde a utilização de capacidade e retorno esperado; manutenção pode ser mais resiliente que ampliação de planta.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Pedidos firmes, cancelamentos, carteira por marco, horas de engenharia, aprovação em fábrica e no cliente; separar entrega física de aceite final.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Retrofit, eficiência energética e automação de gargalos oferecem projetos menores e verificáveis.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Máquinas e equipamentos",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Máquinas e equipamentos",
+            "values": [
+              -4.2,
+              24.0,
+              -2.3,
+              -7.2,
+              2.6
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "BNDES · investimento em máquinas e MPMEs",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · Romi e produção para exportação",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+        "purpose": "Notícia publicada em 29/11/2022, atualizada em 17/10/2023. Caso observado de fabricante e crédito à produção exportável; sem extrapolar condições a médias empresas atuais."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual ganho operacional justifica a compra da máquina?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais clientes compram expansão e quais compram reposição?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como projeto, demonstração e assistência ajudam a fechar vendas?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual etapa limita fabricação, testes e comissionamento?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais componentes dependem de um único fornecedor?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "A margem inclui instalação, garantia e prazo até o aceite?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "componentes e engenharia",
+          "detail": "Fluxo físico e financeiro: componentes e engenharia"
+        },
+        {
+          "id": "1",
+          "label": "montagem e automação",
+          "detail": "Componentes mecânicos, elétricos e automação convergem para montagem, testes e instalação. Fabricantes seriados diferem dos integradores sob encomenda; assistência, peças e modernização podem formar receitas separadas da venda inicial."
+        },
+        {
+          "id": "2",
+          "label": "teste e instalação",
+          "detail": "Fluxo físico e financeiro: teste e instalação"
+        },
+        {
+          "id": "3",
+          "label": "produção e manutenção do cliente",
+          "detail": "Fluxo físico e financeiro: produção e manutenção do cliente"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Máquinas industriais. Máquinas industriais: Componentes mecânicos, elétricos e automação convergem para montagem, testes e instalação. Tese operacional: Engenharia aplicada e assistência local competem com fabricantes globais e importação. O comprador compara produtividade, disponibilidade e custo total, não só preço da máquina. Principal vulnerabilidade: Componentes importados e modificações de escopo podem elevar custo antes do reajuste. Garantia e comissionamento mal provisionados consomem resultado após faturar. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiamento da compra pelo cliente não resolve automaticamente o giro do fabricante. Planejar desembolso de componentes, sinal, testes, embarque e recebimento final. Componentes mecânicos, elétricos e automação convergem para montagem, testes e instalação. Fabricantes seriados diferem dos integradores sob encomenda; assistência, peças e modernização podem formar receitas separadas da venda inicial. Pedidos firmes, cancelamentos, carteira por marco, horas de engenharia, aprovação em fábrica e no cliente; separar entrega física de aceite final. A pesquisa do BNDES diferencia investimento em máquinas por atividade compradora; não foi obtido ranking atual que separasse fabricantes industriais e integradores. Decisão de investimento do comprador responde a utilização de capacidade e retorno esperado; manutenção pode ser mais resiliente que ampliação de planta. Financiamento da compra pelo cliente não resolve automaticamente o giro do fabricante. Planejar desembolso de componentes, sinal, testes, embarque e recebimento final. Retrofit, eficiência energética e automação de gargalos oferecem projetos menores e verificáveis. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Caso observado: o BNDES anunciou em novembro de 2022 financiamento à produção exportável de máquinas de usinagem da Romi. O exemplo separa crédito de pré-embarque ao fabricante do financiamento da máquina comprada pelo cliente. Não confirma oferta, custo ou elegibilidade atuais. Na análise de concorrência: Retrofit e reparo prolongam a vida da máquina; locação ou contratação externa da operação podem substituir comprar equipamento novo. Disponibilidade, sigilo do processo e custo por peça limitam essas opções. Para novos entrantes: Projeto confiável, segurança, integração de controles, testes de desempenho e assistência exigem engenharia e base técnica; aceitar responsabilidade por disponibilidade requer capacidade financeira.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Romi/BNDES integral e estudo de investimento distinguem fabricante, exportação e comprador; números amplos identificados."
+  },
+  {
+    "group": "metalmecanico",
+    "topicIndex": 4,
+    "title": "Máquinas agrícolas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Máquinas agrícolas: Fabricantes integram motores, transmissão, hidráulica e eletrônica; concessionários fazem venda, preparação, peças e assistência.",
+      "Tese operacional: Rede de assistência e disponibilidade na safra criam diferenciação. O equipamento compete também com máquina usada, terceirização e manutenção da frota existente.",
+      "Principal vulnerabilidade: Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Separar crédito do produtor da necessidade industrial de financiar componentes e revendedores. O estudo de efetividade do BNDES documenta apoio à aquisição, sem confirmar condições abertas hoje."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Fabricantes integram motores, transmissão, hidráulica e eletrônica; concessionários fazem venda, preparação, peças e assistência. Separar tratores e colheitadeiras de implementos não autopropelidos e da renda de revenda.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · avaliação do financiamento a máquinas agrícolas",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+            "purpose": "Estudo publicado em janeiro/2022; evidência de financiamento observado, não promessa de condições atuais."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A Jacto apresenta catálogo de plantadeiras, pulverizadores, adubadoras e colhedoras e identifica sua matriz em Pompeia, São Paulo. É evidência de portfólio declarado pelo fabricante, não ranking, venda realizada ou elegibilidade de financiamento.",
+          "Rede de assistência e disponibilidade na safra criam diferenciação. O equipamento compete também com máquina usada, terceirização e manutenção da frota existente.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · avaliação do financiamento a máquinas agrícolas",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+            "purpose": "Estudo publicado em janeiro/2022; evidência de financiamento observado, não promessa de condições atuais."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de máquinas agrícolas. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Pedidos com crédito aprovado, estoque de concessionário, entrega antes da janela agronômica, horas de máquina e disponibilidade de peças. Venda ao canal não é necessariamente venda ao produtor.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Renda agrícola, clima e investimento rural podem divergir: boa safra não garante caixa livre quando preços ou custos se deterioram.",
+          "Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "BNDES · avaliação do financiamento a máquinas agrícolas",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+            "purpose": "Estudo publicado em janeiro/2022; evidência de financiamento observado, não promessa de condições atuais."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Separar crédito do produtor da necessidade industrial de financiar componentes e revendedores. O estudo de efetividade do BNDES documenta apoio à aquisição, sem confirmar condições abertas hoje.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Separar crédito do produtor da necessidade industrial de financiar componentes e revendedores. O estudo de efetividade do BNDES documenta apoio à aquisição, sem confirmar condições abertas hoje.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Precisão, redução de consumo e adaptação a culturas específicas devem ter retorno medido no campo.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Rede de assistência e disponibilidade na safra criam diferenciação. O equipamento compete também com máquina usada, terceirização e manutenção da frota existente."
+          ],
+          [
+            "Fraquezas",
+            "Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica."
+          ],
+          [
+            "Oportunidades",
+            "Precisão, redução de consumo e adaptação a culturas específicas devem ter retorno medido no campo."
+          ],
+          [
+            "Ameaças",
+            "Renda agrícola, clima e investimento rural podem divergir: boa safra não garante caixa livre quando preços ou custos se deterioram."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é componentes e tecnologia. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é produtor e prestador rural. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Rede de assistência e disponibilidade na safra criam diferenciação. O equipamento compete também com máquina usada, terceirização e manutenção da frota existente. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Testes em campo, adaptação à cultura, estoque de peças e rede de assistência na safra exigem conhecimento e capital; falha no período crítico cria barreira reputacional."
+          ],
+          [
+            "Substitutos",
+            "Máquina usada, prolongamento da vida da frota e contratação de serviços mecanizados podem substituir compra nova. Janela de safra, disponibilidade local, área e qualidade da operação definem o custo de troca."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Pedidos com crédito aprovado, estoque de concessionário, entrega antes da janela agronômica, horas de máquina e disponibilidade de peças. Venda ao canal não é necessariamente venda ao produtor.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Precisão, redução de consumo e adaptação a culturas específicas devem ter retorno medido no campo.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica. Renda agrícola, clima e investimento rural podem divergir: boa safra não garante caixa livre quando preços ou custos se deterioram.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Pedidos com crédito aprovado, estoque de concessionário, entrega antes da janela agronômica, horas de máquina e disponibilidade de peças. Venda ao canal não é necessariamente venda ao produtor.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Precisão, redução de consumo e adaptação a culturas específicas devem ter retorno medido no campo.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Máquinas e equipamentos",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Máquinas e equipamentos",
+            "values": [
+              -4.2,
+              24.0,
+              -2.3,
+              -7.2,
+              2.6
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "BNDES · avaliação do financiamento a máquinas agrícolas",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/21844",
+        "purpose": "Estudo publicado em janeiro/2022; evidência de financiamento observado, não promessa de condições atuais."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual tarefa agrícola a máquina executa melhor para o cliente?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "O comprador é produtor, cooperativa ou prestador de serviço?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como revendas e assistência participam da decisão de compra?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Há equipe e peças disponíveis durante a janela de safra?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais parceiros sustentam componentes, assistência e financiamento?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço cobre garantia, sazonalidade e estoque nas revendas?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "componentes e tecnologia",
+          "detail": "Fluxo físico e financeiro: componentes e tecnologia"
+        },
+        {
+          "id": "1",
+          "label": "fabricação e montagem",
+          "detail": "Fabricantes integram motores, transmissão, hidráulica e eletrônica; concessionários fazem venda, preparação, peças e assistência. Separar tratores e colheitadeiras de implementos não autopropelidos e da renda de revenda."
+        },
+        {
+          "id": "2",
+          "label": "concessionário e assistência",
+          "detail": "Fluxo físico e financeiro: concessionário e assistência"
+        },
+        {
+          "id": "3",
+          "label": "produtor e prestador rural",
+          "detail": "Fluxo físico e financeiro: produtor e prestador rural"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Máquinas agrícolas. Máquinas agrícolas: Fabricantes integram motores, transmissão, hidráulica e eletrônica; concessionários fazem venda, preparação, peças e assistência. Tese operacional: Rede de assistência e disponibilidade na safra criam diferenciação. O equipamento compete também com máquina usada, terceirização e manutenção da frota existente. Principal vulnerabilidade: Atraso de entrega pode perder a janela de plantio ou colheita. Estoque do canal e financiamento do produtor deslocam o risco ao fabricante mesmo com demanda agronômica. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Separar crédito do produtor da necessidade industrial de financiar componentes e revendedores. O estudo de efetividade do BNDES documenta apoio à aquisição, sem confirmar condições abertas hoje. Fabricantes integram motores, transmissão, hidráulica e eletrônica; concessionários fazem venda, preparação, peças e assistência. Separar tratores e colheitadeiras de implementos não autopropelidos e da renda de revenda. Pedidos com crédito aprovado, estoque de concessionário, entrega antes da janela agronômica, horas de máquina e disponibilidade de peças. Venda ao canal não é necessariamente venda ao produtor. A Jacto apresenta catálogo de plantadeiras, pulverizadores, adubadoras e colhedoras e identifica sua matriz em Pompeia, São Paulo. É evidência de portfólio declarado pelo fabricante, não ranking, venda realizada ou elegibilidade de financiamento. Renda agrícola, clima e investimento rural podem divergir: boa safra não garante caixa livre quando preços ou custos se deterioram. Separar crédito do produtor da necessidade industrial de financiar componentes e revendedores. O estudo de efetividade do BNDES documenta apoio à aquisição, sem confirmar condições abertas hoje. Precisão, redução de consumo e adaptação a culturas específicas devem ter retorno medido no campo. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Na análise de concorrência: Máquina usada, prolongamento da vida da frota e contratação de serviços mecanizados podem substituir compra nova. Janela de safra, disponibilidade local, área e qualidade da operação definem o custo de troca. Para novos entrantes: Testes em campo, adaptação à cultura, estoque de peças e rede de assistência na safra exigem conhecimento e capital; falha no período crítico cria barreira reputacional.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Página primária Jacto integral confirma famílias de máquinas e matriz Pompeia; cadastroMDA indisponível foi retirado. Sem inferência de vendas ou elegibilidade."
+  },
+  {
+    "group": "metalmecanico",
+    "topicIndex": 5,
+    "title": "Equipamentos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Equipamentos: Recorte operacional delimitado a equipamentos mecânicos de uso industrial, como bombeamento, movimentação e utilidades.",
+      "Tese operacional: Confiabilidade e compatibilidade com a instalação do cliente favorecem fornecedores homologados; produtos padronizados enfrentam importados e marcas de baixo preço.",
+      "Principal vulnerabilidade: Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Investimento em teste e capacidade produtiva; giro por componentes, assistência e estoque crítico. Leasing ou locação são alternativas analíticas apenas quando houver mercado e contrato adequados."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Recorte operacional delimitado a equipamentos mecânicos de uso industrial, como bombeamento, movimentação e utilidades. Equipamentos médicos, telecomunicações e eletroeletrônicos especializados ficam fora até definição própria; não somar mercados incompatíveis.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Categoria ampla não comporta ranking único nem um polo exclusivo. O estudo BNDES sobre investimento industrial ajuda a separar máquinas por mercado comprador.",
+          "Confiabilidade e compatibilidade com a instalação do cliente favorecem fornecedores homologados; produtos padronizados enfrentam importados e marcas de baixo preço.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência de equipamento: a mesma notícia do BNDES descreve a MWM, subsidiária da Tupy, com motores, geradores e motobombas. É exemplo de portfólio do grupo na data da publicação, não de toda a categoria nem de condição atual de cada produto."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          },
+          {
+            "label": "BNDES · inovação e transformação digital da Tupy",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+            "purpose": "Notícia publicada em 04/12/2024; exemplo de investimento aprovado, não prova de desembolso integral, retorno obtido ou condição atual de crédito."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Máquinas e equipamentos, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de equipamentos. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Unidades por família, eficiência, falhas em campo, prazo de assistência e margem de peça/serviço. Receita de contrato e receita de reposição devem ser segregadas.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Reposição de utilidades depende de horas operadas e idade da base instalada, diferente da demanda de equipamentos para novas plantas.",
+          "Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "BNDES · investimento em máquinas e MPMEs",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+            "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Investimento em teste e capacidade produtiva; giro por componentes, assistência e estoque crítico. Leasing ou locação são alternativas analíticas apenas quando houver mercado e contrato adequados.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Investimento em teste e capacidade produtiva; giro por componentes, assistência e estoque crítico. Leasing ou locação são alternativas analíticas apenas quando houver mercado e contrato adequados.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Eficiência, manutenção preditiva e serviço de ciclo de vida permitem ampliar receita se o contrato remunerar disponibilidade e risco.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Confiabilidade e compatibilidade com a instalação do cliente favorecem fornecedores homologados; produtos padronizados enfrentam importados e marcas de baixo preço."
+          ],
+          [
+            "Fraquezas",
+            "Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia."
+          ],
+          [
+            "Oportunidades",
+            "Eficiência, manutenção preditiva e serviço de ciclo de vida permitem ampliar receita se o contrato remunerar disponibilidade e risco."
+          ],
+          [
+            "Ameaças",
+            "Reposição de utilidades depende de horas operadas e idade da base instalada, diferente da demanda de equipamentos para novas plantas."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é componentes e especificação. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "Empresas operadoras, integradores e distribuidores de reposição compram conforme a aplicação e a base instalada. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Confiabilidade e compatibilidade com a instalação do cliente favorecem fornecedores homologados; produtos padronizados enfrentam importados e marcas de baixo preço. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Barreiras variam pelo equipamento: certificação aplicável, projeto de aplicação, peças de reposição e suporte. Exigir especificação antes de atribuir barreira homogênea ao recorte."
+          ],
+          [
+            "Substitutos",
+            "Reparo, recondicionamento, locação e redesenho do processo podem substituir aquisição nova conforme a aplicação. Equipamento de segurança ou processo crítico limita substituição sem ensaio e aprovação."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Unidades por família, eficiência, falhas em campo, prazo de assistência e margem de peça/serviço. Receita de contrato e receita de reposição devem ser segregadas.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Eficiência, manutenção preditiva e serviço de ciclo de vida permitem ampliar receita se o contrato remunerar disponibilidade e risco.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia. Reposição de utilidades depende de horas operadas e idade da base instalada, diferente da demanda de equipamentos para novas plantas.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Unidades por família, eficiência, falhas em campo, prazo de assistência e margem de peça/serviço. Receita de contrato e receita de reposição devem ser segregadas.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Eficiência, manutenção preditiva e serviço de ciclo de vida permitem ampliar receita se o contrato remunerar disponibilidade e risco.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Máquinas e equipamentos",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Máquinas e equipamentos",
+            "values": [
+              -4.2,
+              24.0,
+              -2.3,
+              -7.2,
+              2.6
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "BNDES · investimento em máquinas e MPMEs",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/23066",
+        "purpose": "Estudo de estrutura e diferenças entre investimento em máquinas e desembolsos; não usar como conjuntura atual."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · inovação e transformação digital da Tupy",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+        "purpose": "Notícia publicada em 04/12/2024; exemplo de investimento aprovado, não prova de desembolso integral, retorno obtido ou condição atual de crédito."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual problema operacional o equipamento resolve?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra e quem utiliza o equipamento?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "A venda ocorre por projeto, revenda ou reposição recorrente?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quais competências garantem desempenho e suporte?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Que fornecedores ou integradores são críticos para entregar?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual é a margem após instalação, peças e garantia?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "componentes e especificação",
+          "detail": "Fluxo físico e financeiro: componentes e especificação"
+        },
+        {
+          "id": "1",
+          "label": "fabricação e ensaio",
+          "detail": "Recorte operacional delimitado a equipamentos mecânicos de uso industrial, como bombeamento, movimentação e utilidades. Equipamentos médicos, telecomunicações e eletroeletrônicos especializados ficam fora até definição própria; não somar mercados incompatíveis."
+        },
+        {
+          "id": "2",
+          "label": "instalação e integração",
+          "detail": "Fluxo físico e financeiro: instalação e integração"
+        },
+        {
+          "id": "3",
+          "label": "operação e reposição",
+          "detail": "Fluxo físico e financeiro: operação e reposição"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Equipamentos. Equipamentos: Recorte operacional delimitado a equipamentos mecânicos de uso industrial, como bombeamento, movimentação e utilidades. Tese operacional: Confiabilidade e compatibilidade com a instalação do cliente favorecem fornecedores homologados; produtos padronizados enfrentam importados e marcas de baixo preço. Principal vulnerabilidade: Projeto mal especificado pode atender vazão ou carga nominal, mas falhar em operação; devolução e parada do cliente aumentam custo de garantia. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Investimento em teste e capacidade produtiva; giro por componentes, assistência e estoque crítico. Leasing ou locação são alternativas analíticas apenas quando houver mercado e contrato adequados. Recorte operacional delimitado a equipamentos mecânicos de uso industrial, como bombeamento, movimentação e utilidades. Equipamentos médicos, telecomunicações e eletroeletrônicos especializados ficam fora até definição própria; não somar mercados incompatíveis. Unidades por família, eficiência, falhas em campo, prazo de assistência e margem de peça/serviço. Receita de contrato e receita de reposição devem ser segregadas. Categoria ampla não comporta ranking único nem um polo exclusivo. O estudo BNDES sobre investimento industrial ajuda a separar máquinas por mercado comprador. Reposição de utilidades depende de horas operadas e idade da base instalada, diferente da demanda de equipamentos para novas plantas. Investimento em teste e capacidade produtiva; giro por componentes, assistência e estoque crítico. Leasing ou locação são alternativas analíticas apenas quando houver mercado e contrato adequados. Eficiência, manutenção preditiva e serviço de ciclo de vida permitem ampliar receita se o contrato remunerar disponibilidade e risco. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Referência de equipamento: a mesma notícia do BNDES descreve a MWM, subsidiária da Tupy, com motores, geradores e motobombas. É exemplo de portfólio do grupo na data da publicação, não de toda a categoria nem de condição atual de cada produto. Na análise de concorrência: Reparo, recondicionamento, locação e redesenho do processo podem substituir aquisição nova conforme a aplicação. Equipamento de segurança ou processo crítico limita substituição sem ensaio e aprovação. Para novos entrantes: Barreiras variam pelo equipamento: certificação aplicável, projeto de aplicação, peças de reposição e suporte. Exigir especificação antes de atribuir barreira homogênea ao recorte.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "MWM na notícia Tupy/BNDES integral confirma motores, geradores e motobombas; categoria ampla e ausência de ranking explicitadas."
+  }
+]

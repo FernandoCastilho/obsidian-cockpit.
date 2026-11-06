@@ -1,0 +1,24 @@
+# Downloaded source documents are verification copies, not redistributable assets.
+evidence/*.pdf
+
+# Full-text verification snapshots stay local; publish only authored analysis and numerical ledgers.
+/review-manufacturing-public-pages.json
+/evidence-logistics-agro-1.json
+/industrial-commercial-evidence.json
+/industrial-search-evidence-supplement.json
+/wholesale-commercial-evidence.json
+/evidence-food-numbers.json
+/industrial-search-evidence.json
+/food-commercial-revalidation.json
+/logistics-agro-source-register.json
+/evidence-logistics-agro-2.json
+/evidence-logistics-agro-3.json
+/evidence-storage-pdfs.json
+/evidence-logistics-agro-0.json
+/review-public-supplements.json
+
+/construction-commercial-revalidation.json
+/review-metal-commercial-primary.json
+
+
+*.local.json

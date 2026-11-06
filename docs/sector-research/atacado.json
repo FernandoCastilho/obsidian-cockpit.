@@ -1,0 +1,2063 @@
+[
+  {
+    "group": "atacado",
+    "topicIndex": 0,
+    "title": "Distribuição de alimentos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fracionar lotes, manter disponibilidade e entregar um mix que o pequeno varejista ou restaurante não consegue comprar diretamente em condições equivalentes. Separar atacado distribuidor, atacarejo com retirada pelo cliente e operador logístico sem propriedade do estoque.",
+      "A margem de revenda precisa cobrir armazenagem, separação, entrega, comissão, perdas e crédito. Desconto de compra por lote maior só gera valor se custo financeiro e vencimento forem menores que o ganho. Avaliar margem por cliente e rota, não apenas por categoria.",
+      "A nota metodológica recente da PAC não foi confirmada em texto integral nesta revisão; não se presume comparabilidade automática entre edições. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo distribuição de alimentos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Fracionar lotes, manter disponibilidade e entregar um mix que o pequeno varejista ou restaurante não consegue comprar diretamente em condições equivalentes. Separar atacado distribuidor, atacarejo com retirada pelo cliente e operador logístico sem propriedade do estoque.",
+          "Varejo independente, redes regionais, restaurantes e cozinhas. Cada canal tem tamanho de pedido, frequência e crédito diferentes. Crescer em clientes distantes ou pedidos menores pode aumentar receita e reduzir contribuição por rota.",
+          "Fornecedores de alimentos, estoques secos ou refrigerados, centros de distribuição, frota e equipe comercial. Bonificações e verbas de fabricantes podem condicionar margem a metas de volume que aumentam estoque e risco de vencimento."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio e cobertura."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: metodologia e recortes; nenhum número do varejo é atribuído à distribuição."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A análise deve começar pela área de entrega economicamente viável e densidade do varejo, não por ranking nacional do atacado amplo. Grandes distribuidores de mix geral podem servir de referência operacional, mas não comprovam liderança em alimentos; não foi recuperado ranking oficial específico do recorte.",
+          "O distribuidor compete com venda direta, atacarejo e plataformas, mas pode defender posição pela capilaridade e pelo crédito controlado. A PAC mede o comércio atacadista; a PMC inclui recorte de atacado alimentar no comércio ampliado, com histórico e metodologia específicos. Não misturar venda industrial e receita de revenda.",
+          "A InvestSP registrou em junho de 2021 a inauguração do centro da Delly’s na Grande São Paulo, descrevendo atendimento a restaurantes, hotéis, bares e pequeno varejo. A Prefeitura de Ivoti confirmou outro centro inaugurado em julho de 2026 no município gaúcho. Os casos demonstram rede de distribuição alimentar e expansão física em locais identificados; não são ranking nem medição de demanda nacional."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio e cobertura."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: metodologia e recortes; nenhum número do varejo é atribuído à distribuição."
+          },
+          {
+            "label": "Prefeitura de Ivoti · Novo centro da Delly’s",
+            "url": "https://www.ivoti.rs.gov.br/noticia/dellys-inaugura-novo-centro-de-distribuicao-em-ivoti",
+            "purpose": "Notícia de 10/07/2026 confirma inauguração; não mede vendas realizadas."
+          },
+          {
+            "label": "InvestSP · Distribuição alimentar na Grande São Paulo",
+            "url": "https://investsp.org.br/noticias/dellys-food-service-inaugura-centro-de-distribuicao-na-grande-sao-paulo/",
+            "purpose": "Caso histórico de 10/06/2021: instalação e perfis compradores, não capacidade atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Serviço e ruptura",
+            "Disponibilidade e pedidos completos",
+            "Estoque elevado pode coexistir com falta dos itens certos"
+          ],
+          [
+            "Margem por rota",
+            "Contribuição após separação, entrega e crédito",
+            "Pedido pequeno custa mais por unidade entregue"
+          ],
+          [
+            "Validade",
+            "Perdas, devolução e dias por lote",
+            "Separar seco, refrigerado e congelado"
+          ],
+          [
+            "Ciclo financeiro",
+            "Estoque mais prazo de cliente menos fornecedor",
+            "Usar dados reais por carteira e fabricante"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio e cobertura."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: metodologia e recortes; nenhum número do varejo é atribuído à distribuição."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A nota metodológica recente da PAC não foi confirmada em texto integral nesta revisão; não se presume comparabilidade automática entre edições. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual.",
+          "O caso de Ivoti é evidência recente de investimento logístico efetivado, não apenas projeto anunciado. Inferência: expansão de capacidade pode elevar pressão sobre prazos e densidade de entrega no mercado atendido, mas capacidade inaugurada não prova utilização, ganho de participação ou aumento de vendas. Verificar clientes ativos, recompra e ocupação por faixa térmica na empresa analisada."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio e cobertura."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: metodologia e recortes; nenhum número do varejo é atribuído à distribuição."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A margem de revenda precisa cobrir armazenagem, separação, entrega, comissão, perdas e crédito. Desconto de compra por lote maior só gera valor se custo financeiro e vencimento forem menores que o ganho. Avaliar margem por cliente e rota, não apenas por categoria.",
+          "Compra em escala e venda fracionada a prazo fazem o distribuidor financiar estoques e clientes. O giro cresce quando fornecedores encurtam prazo ou varejo demora a pagar. Duplicata não elimina risco de devolução, abatimento e concentração do pequeno comércio regional.",
+          "Automação de separação, sistema de estoque, roteirização e frio devem ser justificadas por produtividade e perdas evitadas. Um novo centro exige densidade de vendas antes de diluir aluguel, equipe e estrutura.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Capilaridade, informação do cliente e disponibilidade de mix"
+          ],
+          [
+            "Fraquezas",
+            "Estoques perecíveis, crédito pulverizado e custo de entregas pequenas"
+          ],
+          [
+            "Oportunidades",
+            "Reposição mais frequente e catálogo alinhado ao giro real"
+          ],
+          [
+            "Ameaças",
+            "Venda direta, atacarejo, inadimplência e vencimento"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Marcas fortes podem condicionar preço, prazo e território"
+          ],
+          [
+            "Clientes",
+            "Varejista compara preço com atacarejo, mas valoriza entrega e crédito"
+          ],
+          [
+            "Rivalidade",
+            "Rivalidade é por rota, disponibilidade e condição comercial"
+          ],
+          [
+            "Entrantes",
+            "Capital de giro e densidade de carteira são barreiras além do galpão"
+          ],
+          [
+            "Substitutos",
+            "Compra direta, retirada no atacarejo e plataformas substituem parte do serviço"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Reposição segue clientes ativos com estoques e limites ajustados",
+            "Serviço e ruptura; Ciclo financeiro"
+          ],
+          [
+            "Favorável",
+            "Densidade da rota e acerto do mix elevam serviço sem igual aumento de capital",
+            "Margem por rota; Ciclo financeiro"
+          ],
+          [
+            "Adverso",
+            "Cliente compra menos ou atrasa; estoque perecível e conta a receber pressionam caixa simultaneamente",
+            "Validade; Ciclo financeiro"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual cliente dá margem antes do custo de entregar e depois deixa prejuízo?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "O desconto do fornecedor compensa capital parado e risco de validade?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Qual centro de distribuição tem densidade comprovada para pagar custo fixo?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Pesquisa Anual de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+        "purpose": "PAC: estrutura do comércio e cobertura."
+      },
+      {
+        "label": "Pesquisa Mensal de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+        "purpose": "PMC: metodologia e recortes; nenhum número do varejo é atribuído à distribuição."
+      },
+      {
+        "label": "Prefeitura de Ivoti · Novo centro da Delly’s",
+        "url": "https://www.ivoti.rs.gov.br/noticia/dellys-inaugura-novo-centro-de-distribuicao-em-ivoti",
+        "purpose": "Notícia de 10/07/2026 confirma inauguração; não mede vendas realizadas."
+      },
+      {
+        "label": "InvestSP · Distribuição alimentar na Grande São Paulo",
+        "url": "https://investsp.org.br/noticias/dellys-food-service-inaugura-centro-de-distribuicao-na-grande-sao-paulo/",
+        "purpose": "Caso histórico de 10/06/2021: instalação e perfis compradores, não capacidade atual."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual cliente dá margem antes do custo de entregar e depois deixa prejuízo?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual centro de distribuição tem densidade comprovada para pagar custo fixo?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O desconto do fornecedor compensa capital parado e risco de validade?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Fabricante ou produtor",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Compra e estoque do distribuidor",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Separação e rota de entrega",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Varejo e alimentação fora do lar",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Distribuição de alimentos. Fracionar lotes, manter disponibilidade e entregar um mix que o pequeno varejista ou restaurante não consegue comprar diretamente em condições equivalentes. Separar atacado distribuidor, atacarejo com retirada pelo cliente e operador logístico sem propriedade do estoque. A margem de revenda precisa cobrir armazenagem, separação, entrega, comissão, perdas e crédito. Desconto de compra por lote maior só gera valor se custo financeiro e vencimento forem menores que o ganho. Avaliar margem por cliente e rota, não apenas por categoria. A nota metodológica recente da PAC não foi confirmada em texto integral nesta revisão; não se presume comparabilidade automática entre edições. Não foi recuperada nesta pesquisa a série mensal exclusiva de distribuição alimentar de 2026, nem foram encadeadas automaticamente séries antigas. Conjuntura da empresa deve separar volume físico, inflação de alimentos, mudança de mix e inadimplência. Como funciona. Varejo independente, redes regionais, restaurantes e cozinhas. Cada canal tem tamanho de pedido, frequência e crédito diferentes. Crescer em clientes distantes ou pedidos menores pode aumentar receita e reduzir contribuição por rota. Fornecedores de alimentos, estoques secos ou refrigerados, centros de distribuição, frota e equipe comercial. Bonificações e verbas de fabricantes podem condicionar margem a metas de volume que aumentam estoque e risco de vencimento. Caixa e financiamento. Compra em escala e venda fracionada a prazo fazem o distribuidor financiar estoques e clientes. O giro cresce quando fornecedores encurtam prazo ou varejo demora a pagar. Duplicata não elimina risco de devolução, abatimento e concentração do pequeno comércio regional. Automação de separação, sistema de estoque, roteirização e frio devem ser justificadas por produtividade e perdas evitadas. Um novo centro exige densidade de vendas antes de diluir aluguel, equipe e estrutura. Cenários. Reposição segue clientes ativos com estoques e limites ajustados. Densidade da rota e acerto do mix elevam serviço sem igual aumento de capital. Cliente compra menos ou atrasa; estoque perecível e conta a receber pressionam caixa simultaneamente. Na visita, pergunte: Qual cliente dá margem antes do custo de entregar e depois deixa prejuízo? O desconto do fornecedor compensa capital parado e risco de validade? Qual centro de distribuição tem densidade comprovada para pagar custo fixo? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito. Complemento da pesquisa. A InvestSP registrou em junho de 2021 a inauguração do centro da Delly’s na Grande São Paulo, descrevendo atendimento a restaurantes, hotéis, bares e pequeno varejo. A Prefeitura de Ivoti confirmou outro centro inaugurado em julho de 2026 no município gaúcho. Os casos demonstram rede de distribuição alimentar e expansão física em locais identificados; não são ranking nem medição de demanda nacional.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/atacado-independent-review.json",
+    "reviewNotes": "Revalidação individual: InvestSP 10/06/2021 e Prefeitura Ivoti 10/07/2026 abertas integralmente confirmam centros Dellys e canais atendidos. Expansão física não confundida com demanda ou market share. Alegação metodológica PAC não confirmada retirada; limites preservados."
+  },
+  {
+    "group": "atacado",
+    "topicIndex": 1,
+    "title": "Distribuição de medicamentos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Garantir abastecimento com rastreabilidade, integridade e cumprimento das condições de armazenamento e transporte. Distribuição farmacêutica é distinta de fabricação, varejo de farmácia e materiais médicos; o estudo não mistura faturamentos desses elos.",
+      "A margem líquida depende de desconto comercial, condição de compra, devoluções, perdas por validade e custo de serviço. Medicamento especial pode ter alto valor e baixo giro; item de grande circulação exige disponibilidade sem excesso. Não aplicar margem da indústria à distribuidora.",
+      "O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo distribuição de medicamentos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Garantir abastecimento com rastreabilidade, integridade e cumprimento das condições de armazenamento e transporte. Distribuição farmacêutica é distinta de fabricação, varejo de farmácia e materiais médicos; o estudo não mistura faturamentos desses elos.",
+          "Farmácias, hospitais, clínicas e compradores institucionais. Canal hospitalar e varejo possuem mix, negociação e prazo diferentes; venda a governo acrescenta exigências documentais e exposição ao recebimento do ente contratante.",
+          "Fabricantes, produtos regularizados, instalações, farmacêutico responsável quando aplicável, sistemas por lote, equipamentos de temperatura e transportadores qualificados. Produto caro não significa alta margem, especialmente sob acordo comercial e restrição de preço.",
+          "A RDC 430 consolidada determina fornecimento pelas distribuidoras a empresas licenciadas e autorizadas; a terceirização requer qualificação do prestador e responsabilidades contratuais. Para transporte, as alterações da RDC 653 admitem hipóteses de controle e monitoramento baseadas em rotas qualificadas e análise de risco. Não se presume dispensa geral de monitoramento nem se aplica regra de medicamento indistintamente a todo produto de saúde."
+        ],
+        "sources": [
+          {
+            "label": "CMED divulga 9° edição do Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2025: vendas industriais e embalagens, não receita atacadista."
+          },
+          {
+            "label": "CMED divulga Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2024: base de comparação nominal."
+          },
+          {
+            "label": "Anuário Estatístico do Mercado Farmacêutico - Final V1",
+            "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/medicamentos/cmed/anuario-estatistico-do-mercado-farmaceutico-2024.pdf/%40%40download/file",
+            "purpose": "Canais de comercialização da indústria em 2024."
+          },
+          {
+            "label": "Anvisa · RDC 430 consolidada",
+            "url": "https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=8542&cod_modulo=310&link=S&numeroAto=00000430&orgao=RDC%2FDC%2FANVISA%2FMS&seqAto=000&tipo=RDC&valorAno=2020",
+            "purpose": "Texto consolidado com alterações da RDC 653; arts.6,64 e 72–79."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A fonte CMED distingue distribuidores, farmácias, estabelecimentos de saúde e governo. A concentração deve ser medida por mercado e canal, não por somar toda a cadeia. Não foi recuperado ranking oficial atual de distribuidores nem polos com receita comparável; a rede logística precisa ser avaliada por demanda e exigência térmica.",
+          "A Anvisa mantém regras de boas práticas de distribuição, armazenagem e transporte e procedimentos de certificação. Cumprimento sanitário é fundamento, não diferencial opcional. Dados CMED descrevem vendas industriais por canal e não equivalem à receita posterior dos distribuidores."
+        ],
+        "sources": [
+          {
+            "label": "CMED divulga 9° edição do Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2025: vendas industriais e embalagens, não receita atacadista."
+          },
+          {
+            "label": "CMED divulga Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2024: base de comparação nominal."
+          },
+          {
+            "label": "Anuário Estatístico do Mercado Farmacêutico - Final V1",
+            "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/medicamentos/cmed/anuario-estatistico-do-mercado-farmaceutico-2024.pdf/%40%40download/file",
+            "purpose": "Canais de comercialização da indústria em 2024."
+          },
+          {
+            "label": "Anvisa esclarece sobre distribuição, armazenagem e transporte de fármacos",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2021/anvisa-esclarece-sobre-distribuicao-armazenagem-e-transporte-de-farmacos",
+            "purpose": "Anvisa: interpretação das boas práticas de medicamentos."
+          },
+          {
+            "label": "Obter Certificação de Boas Práticas de Distribuição e Armazenagem (CPBDA) de Medicamentos",
+            "url": "https://www.gov.br/pt-br/servicos/obter-certificacao-de-boas-praticas-de-distribuicao-e-armazenagem-de-medicamentos",
+            "purpose": "Procedimento público de certificação, sem presumir aprovação individual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Nível de serviço",
+            "Pedido completo e prazo por canal",
+            "Não sacrificar qualidade para cumprir rota"
+          ],
+          [
+            "Validade e lote",
+            "Idade do estoque, bloqueios e devoluções",
+            "Separar produto vendável de quarentena"
+          ],
+          [
+            "Temperatura",
+            "Condição validada e rastreabilidade do transporte",
+            "Requisitos são por produto"
+          ],
+          [
+            "Caixa por canal",
+            "Recebimento, desconto e concentração",
+            "Hospital, governo e farmácia têm riscos diferentes"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "CMED divulga 9° edição do Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2025: vendas industriais e embalagens, não receita atacadista."
+          },
+          {
+            "label": "CMED divulga Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2024: base de comparação nominal."
+          },
+          {
+            "label": "Anuário Estatístico do Mercado Farmacêutico - Final V1",
+            "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/medicamentos/cmed/anuario-estatistico-do-mercado-farmaceutico-2024.pdf/%40%40download/file",
+            "purpose": "Canais de comercialização da indústria em 2024."
+          },
+          {
+            "label": "Anvisa esclarece sobre distribuição, armazenagem e transporte de fármacos",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2021/anvisa-esclarece-sobre-distribuicao-armazenagem-e-transporte-de-farmacos",
+            "purpose": "Anvisa: interpretação das boas práticas de medicamentos."
+          },
+          {
+            "label": "Obter Certificação de Boas Práticas de Distribuição e Armazenagem (CPBDA) de Medicamentos",
+            "url": "https://www.gov.br/pt-br/servicos/obter-certificacao-de-boas-praticas-de-distribuicao-e-armazenagem-de-medicamentos",
+            "purpose": "Procedimento público de certificação, sem presumir aprovação individual."
+          },
+          {
+            "label": "CFF · Reprodução dos resultados CMED 2024",
+            "url": "https://site.cff.org.br/noticia/Noticias-gerais/01/09/2025/mercado-farmaceutico-brasileiro-alcanca-faturamento-de-r-160-7-bilhoes-em-2024",
+            "purpose": "Texto integral reproduz faturamento industrial aproximado de R$160,7 bilhões em 2024; fonte pública secundária à Anvisa."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "CMED divulga 9° edição do Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2025: vendas industriais e embalagens, não receita atacadista."
+          },
+          {
+            "label": "CMED divulga Anuário Estatístico do Mercado Farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "CMED 2024: base de comparação nominal."
+          },
+          {
+            "label": "Anuário Estatístico do Mercado Farmacêutico - Final V1",
+            "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/medicamentos/cmed/anuario-estatistico-do-mercado-farmaceutico-2024.pdf/%40%40download/file",
+            "purpose": "Canais de comercialização da indústria em 2024."
+          },
+          {
+            "label": "Anvisa esclarece sobre distribuição, armazenagem e transporte de fármacos",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2021/anvisa-esclarece-sobre-distribuicao-armazenagem-e-transporte-de-farmacos",
+            "purpose": "Anvisa: interpretação das boas práticas de medicamentos."
+          },
+          {
+            "label": "Obter Certificação de Boas Práticas de Distribuição e Armazenagem (CPBDA) de Medicamentos",
+            "url": "https://www.gov.br/pt-br/servicos/obter-certificacao-de-boas-praticas-de-distribuicao-e-armazenagem-de-medicamentos",
+            "purpose": "Procedimento público de certificação, sem presumir aprovação individual."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A margem líquida depende de desconto comercial, condição de compra, devoluções, perdas por validade e custo de serviço. Medicamento especial pode ter alto valor e baixo giro; item de grande circulação exige disponibilidade sem excesso. Não aplicar margem da indústria à distribuidora.",
+          "Estoques e prazo a farmácias ou hospitais podem exceder prazo do fabricante. Recebível exige entrega comprovada e ausência de disputa; prazo de fornecedor ou bonificação não deve ser presumido recorrente. Concentração em hospital ou ente público precisa de análise própria.",
+          "Sistemas de lote, segregação, qualificação térmica e redundância são parte da capacidade comercial. Ampliação de armazenagem deve manter qualidade e autorização adequadas, sem assumir que registro de uma unidade cobre toda filial ou atividade.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência normativa: qualidade e documentação condicionam a realização do estoque. Termolábeis exigem armazenagem termicamente qualificável e fonte alternativa de energia; na análise de crédito, confrontar estoque físico com lotes liberados, registros térmicos, devoluções e responsabilidades do operador contratado. A garantia comercial não torna vendável um lote cuja conservação não esteja comprovada."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Disponibilidade, rastreabilidade e relacionamento com compradores"
+          ],
+          [
+            "Fraquezas",
+            "Capital em produto caro e dependência de fabricantes"
+          ],
+          [
+            "Oportunidades",
+            "Melhor previsão, redução de perda e serviço especializado"
+          ],
+          [
+            "Ameaças",
+            "Falha de qualidade, vencimento, fraude e atraso de compradores"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Fabricantes detêm marcas, portfólio e condições comerciais"
+          ],
+          [
+            "Clientes",
+            "Redes de farmácias e hospitais negociam volume e podem comprar direto"
+          ],
+          [
+            "Rivalidade",
+            "Serviço, preço e disponibilidade disputam cada canal"
+          ],
+          [
+            "Entrantes",
+            "Autorização, qualidade e capital de giro dificultam entrada"
+          ],
+          [
+            "Substitutos",
+            "Venda direta industrial e centrais de compra reduzem intermediação em parte do mercado"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda dos clientes permanece com margem dependente de mix e giro",
+            "Nível de serviço; Caixa por canal"
+          ],
+          [
+            "Favorável",
+            "Melhor estoque e menor perda elevam retorno sem exigir crescimento proporcional de venda",
+            "Validade e lote; Caixa por canal"
+          ],
+          [
+            "Adverso",
+            "Fabricante encurta prazo e comprador atrasa, enquanto validade ou bloqueio reduz valor do estoque",
+            "Temperatura; Caixa por canal"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual parte do estoque está bloqueada, próxima do vencimento ou vinculada a devolução?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Recebíveis hospitalares têm aceite e documentação completos?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A expansão mantém qualificação de temperatura e rastreabilidade por unidade?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "industria-farmaceutica-contexto",
+        "title": "Indústria farmacêutica: contexto a montante",
+        "unit": "R$ bilhões nominais",
+        "scope": "Brasil, vendas industriais de medicamentos declaradas ao Sammed. Não é faturamento dos distribuidores.",
+        "years": [
+          2024,
+          2025
+        ],
+        "period": "2024 e 2025",
+        "source": {
+          "label": "Anvisa/CMED · faturamento industrial farmacêutico",
+          "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+          "purpose": "Receita industrial nominal; indicador a montante, não receita da distribuição."
+        },
+        "method": "Totais aproximados divulgados nas notícias oficiais. Não recalcular taxa exata a partir dos valores arredondados, não somar com revenda atacadista. O ponto 2024 foi reconfirmado em reprodução integral pelo CFF; o ponto 2025 provém da divulgação Anvisa de outra edição. Não recalcular crescimento entre vintages sem conferir revisões.",
+        "series": [
+          {
+            "label": "Faturamento industrial aproximado",
+            "values": [
+              160.7,
+              182
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "label": "CFF · CMED 2024",
+            "url": "https://site.cff.org.br/noticia/Noticias-gerais/01/09/2025/mercado-farmaceutico-brasileiro-alcanca-faturamento-de-r-160-7-bilhoes-em-2024"
+          },
+          {
+            "label": "Anvisa/CMED · faturamento industrial farmacêutico",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+            "purpose": "Receita industrial nominal; indicador a montante, não receita da distribuição."
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "CMED divulga 9° edição do Anuário Estatístico do Mercado Farmacêutico",
+        "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+        "purpose": "CMED 2025: vendas industriais e embalagens, não receita atacadista."
+      },
+      {
+        "label": "CMED divulga Anuário Estatístico do Mercado Farmacêutico",
+        "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+        "purpose": "CMED 2024: base de comparação nominal."
+      },
+      {
+        "label": "Anuário Estatístico do Mercado Farmacêutico - Final V1",
+        "url": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/medicamentos/cmed/anuario-estatistico-do-mercado-farmaceutico-2024.pdf/%40%40download/file",
+        "purpose": "Canais de comercialização da indústria em 2024."
+      },
+      {
+        "label": "Anvisa esclarece sobre distribuição, armazenagem e transporte de fármacos",
+        "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2021/anvisa-esclarece-sobre-distribuicao-armazenagem-e-transporte-de-farmacos",
+        "purpose": "Anvisa: interpretação das boas práticas de medicamentos."
+      },
+      {
+        "label": "Obter Certificação de Boas Práticas de Distribuição e Armazenagem (CPBDA) de Medicamentos",
+        "url": "https://www.gov.br/pt-br/servicos/obter-certificacao-de-boas-praticas-de-distribuicao-e-armazenagem-de-medicamentos",
+        "purpose": "Procedimento público de certificação, sem presumir aprovação individual."
+      },
+      {
+        "label": "CFF · Reprodução dos resultados CMED 2024",
+        "url": "https://site.cff.org.br/noticia/Noticias-gerais/01/09/2025/mercado-farmaceutico-brasileiro-alcanca-faturamento-de-r-160-7-bilhoes-em-2024",
+        "purpose": "Texto integral reproduz faturamento industrial aproximado de R$160,7 bilhões em 2024; fonte pública secundária à Anvisa."
+      },
+      {
+        "label": "Anvisa · RDC 430 consolidada",
+        "url": "https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=8542&cod_modulo=310&link=S&numeroAto=00000430&orgao=RDC%2FDC%2FANVISA%2FMS&seqAto=000&tipo=RDC&valorAno=2020",
+        "purpose": "Texto consolidado com alterações da RDC 653; arts.6,64 e 72–79."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual parte do estoque está bloqueada, próxima do vencimento ou vinculada a devolução?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "A expansão mantém qualificação de temperatura e rastreabilidade por unidade?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Recebíveis hospitalares têm aceite e documentação completos?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Indústria e importador autorizado",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Recepção, lote e controle",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Armazenagem e transporte qualificado",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Farmácia, hospital ou serviço de saúde",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Distribuição de medicamentos. Garantir abastecimento com rastreabilidade, integridade e cumprimento das condições de armazenamento e transporte. Distribuição farmacêutica é distinta de fabricação, varejo de farmácia e materiais médicos; o estudo não mistura faturamentos desses elos. A margem líquida depende de desconto comercial, condição de compra, devoluções, perdas por validade e custo de serviço. Medicamento especial pode ter alto valor e baixo giro; item de grande circulação exige disponibilidade sem excesso. Não aplicar margem da indústria à distribuidora. O Anuário CMED mais recente recuperado tem referência em 2025 e foi divulgado em setembro de 2026. A receita industrial nominal avançou frente a 2024, mas não permite concluir aumento equivalente de volume ou margem da distribuição. O recorte por canal de 2024 evidencia vendas da indústria a distribuidores; não é tamanho da revenda atacadista. Como funciona. Farmácias, hospitais, clínicas e compradores institucionais. Canal hospitalar e varejo possuem mix, negociação e prazo diferentes; venda a governo acrescenta exigências documentais e exposição ao recebimento do ente contratante. Fabricantes, produtos regularizados, instalações, farmacêutico responsável quando aplicável, sistemas por lote, equipamentos de temperatura e transportadores qualificados. Produto caro não significa alta margem, especialmente sob acordo comercial e restrição de preço. Caixa e financiamento. Estoques e prazo a farmácias ou hospitais podem exceder prazo do fabricante. Recebível exige entrega comprovada e ausência de disputa; prazo de fornecedor ou bonificação não deve ser presumido recorrente. Concentração em hospital ou ente público precisa de análise própria. Sistemas de lote, segregação, qualificação térmica e redundância são parte da capacidade comercial. Ampliação de armazenagem deve manter qualidade e autorização adequadas, sem assumir que registro de uma unidade cobre toda filial ou atividade. Cenários. Demanda dos clientes permanece com margem dependente de mix e giro. Melhor estoque e menor perda elevam retorno sem exigir crescimento proporcional de venda. Fabricante encurta prazo e comprador atrasa, enquanto validade ou bloqueio reduz valor do estoque. Na visita, pergunte: Qual parte do estoque está bloqueada, próxima do vencimento ou vinculada a devolução? Recebíveis hospitalares têm aceite e documentação completos? A expansão mantém qualificação de temperatura e rastreabilidade por unidade? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito. Complemento da pesquisa. A Anvisa mantém regras de boas práticas de distribuição, armazenagem e transporte e procedimentos de certificação. Cumprimento sanitário é fundamento, não diferencial opcional. Dados CMED descrevem vendas industriais por canal e não equivalem à receita posterior dos distribuidores.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/atacado-independent-review.json",
+    "reviewNotes": "Revalidação individual: CFF integral confirma R$160,7 bilhões nominais de 2024; R$182 bilhões de 2025 já confirmado Anvisa. São vendas industriais, não receita da distribuição. RDC430 consolidada, artigos6,64 e72–79 conferidos incluindo alterações653 e hipóteses condicionadas de monitoramento."
+  },
+  {
+    "group": "atacado",
+    "topicIndex": 2,
+    "title": "Distribuição de materiais de construção",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Reunir marcas, fracionar lotes e entregar materiais no momento de uso. Separar materiais básicos de alto peso e baixo valor por volume de acabamentos de maior variedade; vender para obra contratada é diferente de repor loja.",
+      "O frete limita o raio econômico de materiais pesados. Acabamentos exigem mix e capital em itens lentos. Ganho de estoque na alta de preço não é margem operacional recorrente; queda de preço pode exigir desconto para realizar estoque antigo.",
+      "A comparação de longo prazo da PAC exige conferir cobertura e metodologia de cada edição. Não foi extraída taxa recente exclusiva deste recorte. Os mecanismos a monitorar são avanço físico das obras, reposição do varejo, custo do material e disponibilidade de crédito do comprador; não se presume expansão só porque preço nominal subiu."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo distribuição de materiais de construção. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Reunir marcas, fracionar lotes e entregar materiais no momento de uso. Separar materiais básicos de alto peso e baixo valor por volume de acabamentos de maior variedade; vender para obra contratada é diferente de repor loja.",
+          "Lojas de material, construtoras, instaladores e clientes industriais. Reforma e obra nova têm ritmos diferentes. Vendas para construtora podem concentrar volume, mas cronograma, medição e risco de obra alteram cobrança.",
+          "Cimento, aço, cerâmica, hidráulica, elétrica e outros materiais conforme portfólio. Quebra no manuseio, frete, armazenagem, lote e tonalidade importam em acabamentos; um item sem reposição pode impedir fechar o pedido completo.",
+          "Para fios e cabos abrangidos, a orientação do Inmetro distingue certificado ativo de registro apto à comercialização. Conferir ambos no cadastro do produto, além de marcação e embalagem. A referência é específica dessa família: não se afirma que todo material de construção exige a mesma certificação."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio por atividade, com cuidados de série."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: material de construção não é sinônimo de distribuição exclusiva."
+          },
+          {
+            "label": "Inmetro · Certificação e registro de fios e cabos",
+            "url": "https://www.gov.br/inmetro/pt-br/acesso-a-informacao/perguntas-frequentes/avaliacao-da-conformidade/fios-e-cabos-eletricos/como-saber-se-alguma-empresa-ou-marca-de-fios-e-cabos-eletricos-esta-certificada-e-se-ela-esta-regular-para-a-comercializacao",
+            "purpose": "Orientação pública integral: conferir certificado e registro do produto. Não generalizar a todos os materiais."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Polos de distribuição dependem de proximidade de fabricantes, corredores rodoviários e concentração de obras. Não há ranking oficial fechado neste estudo; atacadista de mix amplo não deve ser chamado de líder em construção sem segmentação de receita.",
+          "A geografia do custo de entrega condiciona concorrência. Estatística de material de construção na PMC pode misturar ramos e não representa automaticamente distribuidores médios; PAC é a fonte estrutural a selecionar por atividade. Produção de cimento ou cerâmica mede fornecedores, não venda atacadista.",
+          "A Tambasa, sediada em Contagem (MG), apresenta no canal empresarial linhas elétrica, hidráulica, ferragens, pintura e acabamento, com compra on-line e atendimento comercial. Sua página logística descreve recebimento por código de barras, separação de pedidos e roteirização. Trata-se de portfólio e operação declarados pelo fornecedor, não prova de volume vendido, liderança ou crescimento recente."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio por atividade, com cuidados de série."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: material de construção não é sinônimo de distribuição exclusiva."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Margem entregue",
+            "Contribuição depois de frete e quebra",
+            "Calcular por rota e família"
+          ],
+          [
+            "Mix e estoque",
+            "Giro por item, lote e aplicação",
+            "Não confundir estoque de segurança com obsoleto"
+          ],
+          [
+            "Demanda",
+            "Pedidos firmes, reposição e cronograma de obra",
+            "Orçamento não representa receita contratada"
+          ],
+          [
+            "Crédito",
+            "Prazo, atraso e concentração por construtora",
+            "Obra e empresa compradora não são o mesmo risco"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio por atividade, com cuidados de série."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: material de construção não é sinônimo de distribuição exclusiva."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A comparação de longo prazo da PAC exige conferir cobertura e metodologia de cada edição. Não foi extraída taxa recente exclusiva deste recorte. Os mecanismos a monitorar são avanço físico das obras, reposição do varejo, custo do material e disponibilidade de crédito do comprador; não se presume expansão só porque preço nominal subiu.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio por atividade, com cuidados de série."
+          },
+          {
+            "label": "Pesquisa Mensal de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+            "purpose": "PMC: material de construção não é sinônimo de distribuição exclusiva."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "O frete limita o raio econômico de materiais pesados. Acabamentos exigem mix e capital em itens lentos. Ganho de estoque na alta de preço não é margem operacional recorrente; queda de preço pode exigir desconto para realizar estoque antigo.",
+          "Distribuidor financia estoque e crédito comercial até pagamento do lojista ou obra. Orçamento aprovado não é pedido irrevogável, e entrega programada pode ser postergada. Separar carteira de construção nova, reforma e varejo evita atribuir o mesmo risco a todas.",
+          "Pátio, cobertura, movimentação, frota e sistema de lote devem refletir perfil do material. Expandir área para acomodar estoque lento não corrige erro de mix; automação deve reduzir ruptura, quebra e tempo de separação.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência do modelo observado: consolidar um pedido com famílias diferentes pode diluir frete, mas exige disponibilidade coordenada. Separar materiais pesados dos acessórios de maior variedade; aferir contribuição por pedido entregue e nível de atendimento, em vez de interpretar amplitude do catálogo como venda efetiva."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Disponibilidade local, mix e entrega coordenada"
+          ],
+          [
+            "Fraquezas",
+            "Peso logístico, avaria e capital em itens de baixo giro"
+          ],
+          [
+            "Oportunidades",
+            "Reduzir ruptura do lojista e consolidar compras por obra"
+          ],
+          [
+            "Ameaças",
+            "Paralisação de obra, venda direta e desvalorização do estoque"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Marcas e fabricantes concentrados por produto influenciam prazo e preço"
+          ],
+          [
+            "Clientes",
+            "Construtoras e redes negociam escala; pequeno lojista valoriza disponibilidade"
+          ],
+          [
+            "Rivalidade",
+            "Rivalidade depende de preço entregue e variedade no raio local"
+          ],
+          [
+            "Entrantes",
+            "Galpão é acessível, mas mix, capital e carteira confiável custam"
+          ],
+          [
+            "Substitutos",
+            "Fábrica direta, comércio eletrônico e compra centralizada substituem o distribuidor em alguns itens"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Reposição e obras em andamento sustentam pedidos com crédito seletivo",
+            "Margem entregue; Crédito"
+          ],
+          [
+            "Favorável",
+            "Melhor mix e consolidação de entrega elevam margem sem excesso de estoque",
+            "Mix e estoque; Crédito"
+          ],
+          [
+            "Adverso",
+            "Obra atrasa, cliente posterga compra e estoque antigo precisa de desconto",
+            "Demanda; Crédito"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual família perde a margem quando se inclui frete e quebra?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Pedidos de obra podem ser cancelados ou adiados sem ressarcimento?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "O estoque por lote tem venda provável ou depende de desconto?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Pesquisa Anual de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+        "purpose": "PAC: comércio por atividade, com cuidados de série."
+      },
+      {
+        "label": "Pesquisa Mensal de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9227-pesquisa-mensal-de-comercio.html",
+        "purpose": "PMC: material de construção não é sinônimo de distribuição exclusiva."
+      },
+      {
+        "label": "Inmetro · Certificação e registro de fios e cabos",
+        "url": "https://www.gov.br/inmetro/pt-br/acesso-a-informacao/perguntas-frequentes/avaliacao-da-conformidade/fios-e-cabos-eletricos/como-saber-se-alguma-empresa-ou-marca-de-fios-e-cabos-eletricos-esta-certificada-e-se-ela-esta-regular-para-a-comercializacao",
+        "purpose": "Orientação pública integral: conferir certificado e registro do produto. Não generalizar a todos os materiais."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual família perde a margem quando se inclui frete e quebra?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "O estoque por lote tem venda provável ou depende de desconto?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Pedidos de obra podem ser cancelados ou adiados sem ressarcimento?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Fabricante nacional ou importador",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Estoque e consolidação",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Entrega ao revendedor ou obra",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Aplicação na construção",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Distribuição de materiais de construção. Reunir marcas, fracionar lotes e entregar materiais no momento de uso. Separar materiais básicos de alto peso e baixo valor por volume de acabamentos de maior variedade; vender para obra contratada é diferente de repor loja. O frete limita o raio econômico de materiais pesados. Acabamentos exigem mix e capital em itens lentos. Ganho de estoque na alta de preço não é margem operacional recorrente; queda de preço pode exigir desconto para realizar estoque antigo. A comparação de longo prazo da PAC exige conferir cobertura e metodologia de cada edição. Não foi extraída taxa recente exclusiva deste recorte. Os mecanismos a monitorar são avanço físico das obras, reposição do varejo, custo do material e disponibilidade de crédito do comprador; não se presume expansão só porque preço nominal subiu. Como funciona. Lojas de material, construtoras, instaladores e clientes industriais. Reforma e obra nova têm ritmos diferentes. Vendas para construtora podem concentrar volume, mas cronograma, medição e risco de obra alteram cobrança. Cimento, aço, cerâmica, hidráulica, elétrica e outros materiais conforme portfólio. Quebra no manuseio, frete, armazenagem, lote e tonalidade importam em acabamentos; um item sem reposição pode impedir fechar o pedido completo. Caixa e financiamento. Distribuidor financia estoque e crédito comercial até pagamento do lojista ou obra. Orçamento aprovado não é pedido irrevogável, e entrega programada pode ser postergada. Separar carteira de construção nova, reforma e varejo evita atribuir o mesmo risco a todas. Pátio, cobertura, movimentação, frota e sistema de lote devem refletir perfil do material. Expandir área para acomodar estoque lento não corrige erro de mix; automação deve reduzir ruptura, quebra e tempo de separação. Cenários. Reposição e obras em andamento sustentam pedidos com crédito seletivo. Melhor mix e consolidação de entrega elevam margem sem excesso de estoque. Obra atrasa, cliente posterga compra e estoque antigo precisa de desconto. Na visita, pergunte: Qual família perde a margem quando se inclui frete e quebra? Pedidos de obra podem ser cancelados ou adiados sem ressarcimento? O estoque por lote tem venda provável ou depende de desconto? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito. Complemento da pesquisa. A Tambasa, sediada em Contagem (MG), apresenta no canal empresarial linhas elétrica, hidráulica, ferragens, pintura e acabamento, com compra on-line e atendimento comercial. Sua página logística descreve recebimento por código de barras, separação de pedidos e roteirização. Trata-se de portfólio e operação declarados pelo fornecedor, não prova de volume vendido, liderança ou crescimento recente.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/atacado-independent-review.json",
+    "reviewNotes": "Revalidação individual: portfólio e logística Tambasa abertos integralmente confirmam categorias, canal e mecanismos declarados, sem validar métricas promocionais. Inmetro confirma certificado e registro distintos para fios e cabos, sem extrapolar obrigação para todo material. Análise comercial específica suficiente."
+  },
+  {
+    "group": "atacado",
+    "topicIndex": 3,
+    "title": "Distribuição de insumos industriais",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fornecer material de processo ou manutenção com disponibilidade, especificação e rastreabilidade. Químicos, abrasivos, fixadores e consumíveis têm exigências diferentes; o recorte exclui máquinas de investimento e não converte toda importação industrial em mercado de distribuição.",
+      "Margem depende de serviço técnico, fracionamento e disponibilidade efetivamente pagos pelo cliente. Muitos itens de baixa demanda podem elevar custo de estoque e perda por validade ou obsolescência. Desconto em compra importada pode desaparecer com câmbio, frete e demora.",
+      "Não foi recuperado índice mensal exclusivo de distribuição de insumos industriais. O painel de comércio exterior do MDIC e a PIM-PF permitem acompanhar produtos e compradores quando o mix for definido. Sem CNAE e famílias de produtos específicos, uma taxa nacional única criaria precisão falsa."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo distribuição de insumos industriais. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Fornecer material de processo ou manutenção com disponibilidade, especificação e rastreabilidade. Químicos, abrasivos, fixadores e consumíveis têm exigências diferentes; o recorte exclui máquinas de investimento e não converte toda importação industrial em mercado de distribuição.",
+          "Fábricas, prestadores de manutenção e integradores. A demanda recorrente de consumo e reposição é distinta de projeto de expansão. Uma falta barata pode parar processo caro; a proposta de valor pode ser disponibilidade e assistência, não menor preço unitário.",
+          "Fabricantes homologados, importação, estoque por especificação, documentação técnica e transporte adequado. Para químicos perigosos, embalagem, segregação e armazenamento precisam ser compatíveis; nem todo insumo industrial é produto perigoso."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio atacadista e seleção de atividade."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF: demanda industrial indireta, não receita de distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: comércio exterior por produto; não mercado doméstico do distribuidor."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Os polos devem acompanhar fábricas atendidas e centros de manutenção, distinguindo estoque de processo de manutenção. Não foi fechado ranking oficial de distribuidores técnicos. Comparar intermediário generalista com especialista químico requer separar licenças, especificações e serviço.",
+          "Homologação cria custos de troca, mas exclusividade com fabricante pode também concentrar risco do distribuidor. PIM-PF dos setores clientes ajuda a ler demanda indireta; não mede receita deste canal. Comex Stat mede passagem de mercadoria na fronteira, não margem de intermediário.",
+          "Um caso concreto de distribuição técnica é a parceria anunciada pela Brenntag com a Symrise em 28/09/2026 para ingredientes cosméticos no Brasil. O comunicado empresarial associa acesso ao portfólio a apoio técnico. É evidência de relação fornecedor-distribuidor e segmento comprador, não prova de exclusividade, receita incremental ou abrangência de todo o atacado industrial."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio atacadista e seleção de atividade."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF: demanda industrial indireta, não receita de distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: comércio exterior por produto; não mercado doméstico do distribuidor."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Transporte de perigosos quando o insumo se enquadrar, sem universalizar."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Disponibilidade técnica",
+            "Atendimento do item correto e homologado",
+            "Equivalência deve ser validada, não presumida"
+          ],
+          [
+            "Estoque lento",
+            "Giro, validade e obsolescência por item",
+            "Separar estoque crítico de item sem demanda"
+          ],
+          [
+            "Custo posto",
+            "Compra, importação, câmbio e transporte",
+            "Avaliar exposição líquida e prazo de reposição"
+          ],
+          [
+            "Consignação",
+            "Consumo, saldo e faturamento no cliente",
+            "Conferir propriedade e conciliação física"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio atacadista e seleção de atividade."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF: demanda industrial indireta, não receita de distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: comércio exterior por produto; não mercado doméstico do distribuidor."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Transporte de perigosos quando o insumo se enquadrar, sem universalizar."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "Não foi recuperado índice mensal exclusivo de distribuição de insumos industriais. O painel de comércio exterior do MDIC e a PIM-PF permitem acompanhar produtos e compradores quando o mix for definido. Sem CNAE e famílias de produtos específicos, uma taxa nacional única criaria precisão falsa.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual.",
+          "A parceria em ingredientes mostra competição também por acesso ao fabricante e aplicação, além de preço e prazo. Inferência: uma distribuidora média precisa avaliar se o insumo é homologado na formulação do cliente, se há fabricante alternativo e quanto tempo leva a substituição. O novo acordo não comprova que o setor cresceu; pode redistribuir canais existentes."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: comércio atacadista e seleção de atividade."
+          },
+          {
+            "label": "PIM-PF Brasil | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "PIM-PF: demanda industrial indireta, não receita de distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: comércio exterior por produto; não mercado doméstico do distribuidor."
+          },
+          {
+            "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+            "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+            "purpose": "Transporte de perigosos quando o insumo se enquadrar, sem universalizar."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Margem depende de serviço técnico, fracionamento e disponibilidade efetivamente pagos pelo cliente. Muitos itens de baixa demanda podem elevar custo de estoque e perda por validade ou obsolescência. Desconto em compra importada pode desaparecer com câmbio, frete e demora.",
+          "Lead time de reposição e estoque de segurança podem ser longos frente ao prazo do fornecedor. Consignação e estoque dentro do cliente exigem regra clara de titularidade, consumo e faturamento. Crédito deve considerar a fábrica compradora e concentração por setor econômico.",
+          "Sistemas de rastreio, gestão de especificação, laboratórios quando pertinentes e estruturas de armazenamento sustentam qualidade. Capital em estoque deve ser tratado separadamente do investimento físico; não é financiável com mesma lógica e prazo sem testar renovação do mix.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência comercial: estoque de especialidade ligado a formulação aprovada pode perder liquidez quando o cliente muda o produto. Separar receita de intermediação, revenda com propriedade do estoque e assistência técnica. Examinar cláusulas de devolução e duração do acordo de distribuição antes de financiar estoque apoiado em uma única representada."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Homologação, conhecimento técnico e disponibilidade"
+          ],
+          [
+            "Fraquezas",
+            "Capital em cauda longa de itens e dependência de fabricante"
+          ],
+          [
+            "Oportunidades",
+            "Gestão de estoque do cliente e serviço técnico remunerado"
+          ],
+          [
+            "Ameaças",
+            "Desintermediação, obsolescência e parada do setor comprador"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Fabricante homologado pode restringir marca, território e condição"
+          ],
+          [
+            "Clientes",
+            "Grandes fábricas exigem disponibilidade e pressionam preço e prazo"
+          ],
+          [
+            "Rivalidade",
+            "Rivalidade combina equivalência técnica, serviço e estoque"
+          ],
+          [
+            "Entrantes",
+            "Conhecimento e homologação são barreiras além do capital"
+          ],
+          [
+            "Substitutos",
+            "Compra direta e fabricação interna de alguns consumíveis reduzem intermediação"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Consumo de manutenção e processo acompanha clientes, com estoque seletivo",
+            "Disponibilidade técnica; Consignação"
+          ],
+          [
+            "Favorável",
+            "Contratos de reposição e gestão reduzem ruptura e melhoram previsibilidade",
+            "Estoque lento; Consignação"
+          ],
+          [
+            "Adverso",
+            "Cliente industrial reduz atividade e deixa estoque técnico sem saída alternativa",
+            "Custo posto; Consignação"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "O item parado é crítico para contrato ou apenas compra mal planejada?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Estoque consignado está conciliado e pode ser recuperado?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Se o fabricante retirar a distribuição, quanto da carteira e do estoque é substituível?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Pesquisa Anual de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+        "purpose": "PAC: comércio atacadista e seleção de atividade."
+      },
+      {
+        "label": "PIM-PF Brasil | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "PIM-PF: demanda industrial indireta, não receita de distribuição."
+      },
+      {
+        "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+        "purpose": "MDIC: comércio exterior por produto; não mercado doméstico do distribuidor."
+      },
+      {
+        "label": "O transporte de cargas — Agência Nacional de Transportes Terrestres - ANTT",
+        "url": "https://www.gov.br/antt/pt-br/a-antt/o-transporte-de-cargas",
+        "purpose": "Transporte de perigosos quando o insumo se enquadrar, sem universalizar."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "O item parado é crítico para contrato ou apenas compra mal planejada?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Se o fabricante retirar a distribuição, quanto da carteira e do estoque é substituível?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Estoque consignado está conciliado e pode ser recuperado?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Fabricante nacional ou importador",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Estoque técnico e homologação",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Fracionamento e assistência",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Fábrica consumidora e manutenção",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Distribuição de insumos industriais. Fornecer material de processo ou manutenção com disponibilidade, especificação e rastreabilidade. Químicos, abrasivos, fixadores e consumíveis têm exigências diferentes; o recorte exclui máquinas de investimento e não converte toda importação industrial em mercado de distribuição. Margem depende de serviço técnico, fracionamento e disponibilidade efetivamente pagos pelo cliente. Muitos itens de baixa demanda podem elevar custo de estoque e perda por validade ou obsolescência. Desconto em compra importada pode desaparecer com câmbio, frete e demora. Não foi recuperado índice mensal exclusivo de distribuição de insumos industriais. O painel de comércio exterior do MDIC e a PIM-PF permitem acompanhar produtos e compradores quando o mix for definido. Sem CNAE e famílias de produtos específicos, uma taxa nacional única criaria precisão falsa. Como funciona. Fábricas, prestadores de manutenção e integradores. A demanda recorrente de consumo e reposição é distinta de projeto de expansão. Uma falta barata pode parar processo caro; a proposta de valor pode ser disponibilidade e assistência, não menor preço unitário. Fabricantes homologados, importação, estoque por especificação, documentação técnica e transporte adequado. Para químicos perigosos, embalagem, segregação e armazenamento precisam ser compatíveis; nem todo insumo industrial é produto perigoso. Caixa e financiamento. Lead time de reposição e estoque de segurança podem ser longos frente ao prazo do fornecedor. Consignação e estoque dentro do cliente exigem regra clara de titularidade, consumo e faturamento. Crédito deve considerar a fábrica compradora e concentração por setor econômico. Sistemas de rastreio, gestão de especificação, laboratórios quando pertinentes e estruturas de armazenamento sustentam qualidade. Capital em estoque deve ser tratado separadamente do investimento físico; não é financiável com mesma lógica e prazo sem testar renovação do mix. Cenários. Consumo de manutenção e processo acompanha clientes, com estoque seletivo. Contratos de reposição e gestão reduzem ruptura e melhoram previsibilidade. Cliente industrial reduz atividade e deixa estoque técnico sem saída alternativa. Na visita, pergunte: O item parado é crítico para contrato ou apenas compra mal planejada? Estoque consignado está conciliado e pode ser recuperado? Se o fabricante retirar a distribuição, quanto da carteira e do estoque é substituível? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito. Complemento da pesquisa. Um caso concreto de distribuição técnica é a parceria anunciada pela Brenntag com a Symrise em 28/09/2026 para ingredientes cosméticos no Brasil. O comunicado empresarial associa acesso ao portfólio a apoio técnico. É evidência de relação fornecedor-distribuidor e segmento comprador, não prova de exclusividade, receita incremental ou abrangência de todo o atacado industrial.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/atacado-independent-review.json",
+    "reviewNotes": "Revalidação individual: comunicado primário Brenntag de 28/09/2026 aberto integralmente confirma parceria Symrise para ingredientes cosméticos no Brasil e apoio técnico. Texto atribui declaração e não presume exclusividade, crescimento, vendas ou abrangência nacional do atacado. Mecanismos, cenários e limites suficientes."
+  },
+  {
+    "group": "atacado",
+    "topicIndex": 4,
+    "title": "Distribuição de equipamentos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Revender equipamento com seleção técnica, disponibilidade, instalação e suporte quando contratado. Separar revenda pura de integração, locação e fabricação; equipamento hospitalar, agrícola e industrial exige recorte próprio antes de aplicar norma ou indicador.",
+      "Margem aparente da máquina precisa descontar instalação, treinamento, comissão, garantia e suporte. Venda com preço fechado e compra futura em moeda estrangeira cria risco. Receita de manutenção pode estabilizar fluxo, mas só após formação e retenção da base instalada.",
+      "A PIM-PF e as grandes categorias econômicas do IBGE são sinais de oferta de equipamentos, não uma previsão de vendas do distribuidor. A PAC disponibiliza estrutura do comércio; a comparabilidade entre edições deve ser conferida antes de encadear dados. Não foi recuperada medida recente exclusiva deste recorte heterogêneo, e a análise não atribui crescimento agregado da indústria à carteira."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Brasil; foco em empresa média e no elo distribuição de equipamentos. Descrição econômica e mecanismos são análise própria; estatísticas e regras são atribuídas às fontes indicadas. Não soma produção, comercialização e transporte como se fossem mercados independentes.",
+          "Revender equipamento com seleção técnica, disponibilidade, instalação e suporte quando contratado. Separar revenda pura de integração, locação e fabricação; equipamento hospitalar, agrícola e industrial exige recorte próprio antes de aplicar norma ou indicador.",
+          "Indústrias, serviços, hospitais e revendedores, conforme portfólio. Compra de investimento é sensível a orçamento, retorno e capacidade do comprador de financiar aquisição. Reposição urgente e expansão planejada não devem ser tratadas como mesma demanda.",
+          "Fabricantes, peças, importação, técnicos, garantia e logística. A dependência de marca pode ser comercial e tecnológica; prazo de entrega do fabricante e disponibilidade de peça afetam reputação mesmo quando falha ocorre fora do distribuidor."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio por atividade."
+          },
+          {
+            "label": "Grandes Categorias Econômicas por Atividade | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9321-indices-especiais-de-grandes-categorias-economicas-por-atividade.html",
+            "purpose": "Bens de capital na PIM-PF; indicador de fabricação, não distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: equipamentos importados devem ser selecionados por classificação."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Polos precisam ser definidos por fabricante, importação, assistência e base instalada. Uma distribuição hospitalar não compete no mesmo mercado de máquinas industriais. Não foi demonstrado ranking público homogêneo; o estudo prefere explicitar essa lacuna a listar marcas como se fossem distribuidores.",
+          "A barreira competitiva pode estar no suporte e acesso ao fabricante, não no estoque. Custo de troca depende de compatibilidade técnica e manutenção. Indicadores de bens de capital medem produção industrial; distribuidores também revendem importados e usados, impedindo equivalência direta.",
+          "A página da filial Sotreq de Macaé (RJ) identifica venda de máquinas e peças, aluguel e manutenção de motores e componentes. É exemplo verificável de oferta combinada de equipamento e pós-venda, não ranking, carteira realizada ou evidência de crescimento. A localização da filial não demonstra concentração nacional do mercado."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio por atividade."
+          },
+          {
+            "label": "Grandes Categorias Econômicas por Atividade | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9321-indices-especiais-de-grandes-categorias-economicas-por-atividade.html",
+            "purpose": "Bens de capital na PIM-PF; indicador de fabricação, não distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: equipamentos importados devem ser selecionados por classificação."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e leitura correta",
+        "paragraphs": [
+          "A busca procurou histórico longo e conjuntura recente. As séries citadas são fontes rastreáveis, mas somente valores efetivamente recuperados aparecem nos gráficos. Métricas abaixo orientam coleta na empresa e não representam médias observadas do setor."
+        ],
+        "rows": [
+          [
+            "Carteira firme",
+            "Pedidos, cancelamentos e condição de aceite",
+            "Pipeline comercial não é recebível"
+          ],
+          [
+            "Margem completa",
+            "Revenda menos instalação e garantia",
+            "Separar serviço já executado do prometido"
+          ],
+          [
+            "Exposição cambial",
+            "Compromissos de compra e venda por moeda e prazo",
+            "A proteção deve acompanhar fluxo real"
+          ],
+          [
+            "Base instalada",
+            "Assistência, peças e recorrência de serviço",
+            "Equipamento vendido não garante manutenção futura"
+          ]
+        ],
+        "columns": [
+          "Indicador",
+          "O que acompanhar",
+          "Cuidado de interpretação"
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio por atividade."
+          },
+          {
+            "label": "Grandes Categorias Econômicas por Atividade | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9321-indices-especiais-de-grandes-categorias-economicas-por-atividade.html",
+            "purpose": "Bens de capital na PIM-PF; indicador de fabricação, não distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: equipamentos importados devem ser selecionados por classificação."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura: estrutura, ciclo e transmissão",
+        "paragraphs": [
+          "A PIM-PF e as grandes categorias econômicas do IBGE são sinais de oferta de equipamentos, não uma previsão de vendas do distribuidor. A PAC disponibiliza estrutura do comércio; a comparabilidade entre edições deve ser conferida antes de encadear dados. Não foi recuperada medida recente exclusiva deste recorte heterogêneo, e a análise não atribui crescimento agregado da indústria à carteira.",
+          "Inferência: o efeito sobre a empresa depende de posição na cadeia, contrato, concentração e repasse. A evidência agregada indica pressão ou oportunidade, não comprova resultado individual.",
+          "Inferência do modelo observado: compra de máquina nova, locação e reforma podem atender a mesma necessidade operacional sob restrições diferentes de caixa e prazo. Uma desaceleração de novas vendas pode deslocar procura para manutenção, mas isso precisa ser confirmado nas ordens de serviço; não se presume compensação automática na receita do distribuidor."
+        ],
+        "sources": [
+          {
+            "label": "Pesquisa Anual de Comércio | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+            "purpose": "PAC: estrutura do comércio por atividade."
+          },
+          {
+            "label": "Grandes Categorias Econômicas por Atividade | IBGE",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9321-indices-especiais-de-grandes-categorias-economicas-por-atividade.html",
+            "purpose": "Bens de capital na PIM-PF; indicador de fabricação, não distribuição."
+          },
+          {
+            "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+            "purpose": "MDIC: equipamentos importados devem ser selecionados por classificação."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Margem aparente da máquina precisa descontar instalação, treinamento, comissão, garantia e suporte. Venda com preço fechado e compra futura em moeda estrangeira cria risco. Receita de manutenção pode estabilizar fluxo, mas só após formação e retenção da base instalada.",
+          "Adiantamento ao fornecedor, importação e estoque de demonstração antecedem aceite do comprador. Projeto atrasado posterga recebível, enquanto equipamento pode ser específico e difícil de revender. Garantia de execução e retenção comercial são diferentes de pagamento realizado.",
+          "Centro técnico, peças e demonstração apoiam vendas, mas consomem capital. Financiamento ao comprador e financiamento do distribuidor são necessidades distintas: não presumir que linha de máquinas financia estoque de revenda ou qualquer equipamento importado.",
+          "Encaixes financeiros propostos: giro bancário ou cessão de recebíveis podem atender descasamento operacional documentado. Cessão exige entrega, exigibilidade, ausência de disputa e avaliação de concentração; FIDC ou securitização acrescentam custo de estrutura e não são automaticamente acessíveis à empresa média. Investimento requer prazo coerente com vida útil e geração de caixa. Não foram confirmadas linhas abertas, taxas, garantias ou elegibilidade.",
+          "Inferência comercial: decompor orçamento em equipamento, instalação, peça e serviço evita atribuir margem de assistência à máquina. O pós-venda depende da base instalada atendida e da capacidade de execução, enquanto locação acrescenta ativo próprio e risco de utilização. Comparar giro de peças e prazo de entrega do fabricante com compromissos assumidos na venda."
+        ],
+        "rows": [
+          [
+            "Operação",
+            "Mapear pagamento de insumos, execução, faturamento e recebimento",
+            "Separar necessidade sazonal de prejuízo recorrente"
+          ],
+          [
+            "Recebíveis",
+            "Avaliar desconto ou cessão somente de crédito comprovado",
+            "Glosas, cessões prévias, concentração e prestação futura"
+          ],
+          [
+            "Investimento",
+            "Testar capacidade de pagamento sem usar o melhor mês como padrão",
+            "Ociosidade, manutenção, vida útil e mercado secundário"
+          ],
+          [
+            "Alternativas de mercado",
+            "Comparar custo total e obrigações com crédito bancário",
+            "Escala mínima, governança e documentação podem inviabilizar"
+          ]
+        ],
+        "columns": [
+          "Uso",
+          "Encaixe analítico",
+          "Ponto de atenção"
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: diagnóstico do modelo, não da empresa",
+        "paragraphs": [
+          "Hipóteses analíticas a validar na visita."
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Acesso a fabricante, aplicação técnica e assistência"
+          ],
+          [
+            "Fraquezas",
+            "Câmbio, estoque caro e receita concentrada em poucos pedidos"
+          ],
+          [
+            "Oportunidades",
+            "Serviço, peças e melhoria da conversão comercial"
+          ],
+          [
+            "Ameaças",
+            "Adiamento de investimento, retirada da representação e obsolescência"
+          ]
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: forças de Porter",
+        "paragraphs": [
+          "Avaliação qualitativa própria, sem notas de intensidade inventadas."
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Fabricante controla tecnologia, preço e credenciamento"
+          ],
+          [
+            "Clientes",
+            "Compradores de investimento negociam desempenho e prazo de aceite"
+          ],
+          [
+            "Rivalidade",
+            "Rivalidade envolve marca, entrega e custo total de operação"
+          ],
+          [
+            "Entrantes",
+            "Equipe técnica e relação com fabricante limitam entrada qualificada"
+          ],
+          [
+            "Substitutos",
+            "Compra direta, usado, locação e reparo substituem aquisição nova"
+          ]
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo"
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de um a dois anos após a pesquisa. Não são projeções publicadas, não têm probabilidades atribuídas e não pressupõem crescimento linear."
+        ],
+        "rows": [
+          [
+            "Base",
+            "Reposição e projetos selecionados sustentam vendas com disciplina de antecipação",
+            "Carteira firme; Base instalada"
+          ],
+          [
+            "Favorável",
+            "Conversão de carteira e serviços pós-venda melhoram geração de caixa",
+            "Margem completa; Base instalada"
+          ],
+          [
+            "Adverso",
+            "Projetos são cancelados após compra do equipamento, criando estoque específico e dívida",
+            "Exposição cambial; Base instalada"
+          ]
+        ],
+        "columns": [
+          "Cenário",
+          "Premissas e efeito sobre caixa",
+          "Sinais a acompanhar"
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: validar antes de propor",
+        "paragraphs": [
+          "Começar pelo fluxo físico e comparar com o financeiro. Solicitar dados somente no canal autorizado e não registrar informação identificável de clientes neste dossiê."
+        ],
+        "rows": [
+          [
+            "Qual pedido pode ser cancelado depois de você pagar o fabricante?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "A margem inclui toda instalação, treinamento e garantia assumida?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ],
+          [
+            "Se perder a representação, quem mantém a base e quais peças ainda podem ser vendidas?",
+            "Buscar contrato, medição ou reconciliação que permita testar a resposta."
+          ]
+        ],
+        "columns": [
+          "Pergunta",
+          "Evidência a pedir"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Pesquisa Anual de Comércio | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/comercio/9075-pesquisa-anual-de-comercio.html",
+        "purpose": "PAC: estrutura do comércio por atividade."
+      },
+      {
+        "label": "Grandes Categorias Econômicas por Atividade | IBGE",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9321-indices-especiais-de-grandes-categorias-economicas-por-atividade.html",
+        "purpose": "Bens de capital na PIM-PF; indicador de fabricação, não distribuição."
+      },
+      {
+        "label": "Estatísticas — Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/comercio-e-servicos/setor-de-comercio/estatisticas",
+        "purpose": "MDIC: equipamentos importados devem ser selecionados por classificação."
+      }
+    ],
+    "limitations": [
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Não há margem, prazo de caixa ou taxa de financiamento típica comprovada para empresas médias. Os encaixes financeiros são hipóteses de análise, não oferta ou recomendação de crédito.",
+      "Não foi reconstruída uma série completa comparável de cinco a dez anos exclusiva deste recorte; consultar histórico e metodologias nas fontes antes de usar tendências longas.",
+      "Ranking por receita e concentração deste recorte não foram demonstrados. Exemplos e polos não são participação de mercado."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026. Fontes oficiais e regulatórias priorizadas, com dados de outros elos usados apenas como contexto explicitamente delimitado. Sínteses de modelo de negócio, SWOT, Porter, cenários e financiamento são inferências analíticas. As publicações e trechos recuperados estão no registro separado; não houve acesso a informações privadas de empresas. Não há atualização automática. Revisão documental independente concluída; não inclui QA de interface nem escuta de áudio.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Qual pedido pode ser cancelado depois de você pagar o fabricante?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que o cliente paga pela sua solução em vez de escolher a alternativa mais barata?"
+      },
+      {
+        "dimension": "Canais e relacionamento",
+        "question": "Em qual etapa entre pedido, entrega e aceite ocorre a maior perda de valor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Se perder a representação, quem mantém a base e quais peças ainda podem ser vendidas?"
+      },
+      {
+        "dimension": "Parceiros",
+        "question": "Qual fornecedor ou parceiro interromperia a operação se falhasse?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "A margem inclui toda instalação, treinamento e garantia assumida?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Fabricante ou importador",
+          "detail": "Origem da demanda ou do insumo"
+        },
+        {
+          "id": "n1",
+          "label": "Estoque, projeto e demonstração",
+          "detail": "Transformação ou preparação do serviço"
+        },
+        {
+          "id": "n2",
+          "label": "Venda, instalação e aceite",
+          "detail": "Capacidade, controle e execução"
+        },
+        {
+          "id": "n3",
+          "label": "Usuário, assistência e reposição",
+          "detail": "Entrega, aceite e recebimento"
+        }
+      ],
+      "edges": [
+        {
+          "to": "n1",
+          "label": "Fluxo contratado",
+          "from": "n0"
+        },
+        {
+          "to": "n2",
+          "label": "Execução e controle",
+          "from": "n1"
+        },
+        {
+          "to": "n3",
+          "label": "Entrega e aceite",
+          "from": "n2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Distribuição de equipamentos. Revender equipamento com seleção técnica, disponibilidade, instalação e suporte quando contratado. Separar revenda pura de integração, locação e fabricação; equipamento hospitalar, agrícola e industrial exige recorte próprio antes de aplicar norma ou indicador. Margem aparente da máquina precisa descontar instalação, treinamento, comissão, garantia e suporte. Venda com preço fechado e compra futura em moeda estrangeira cria risco. Receita de manutenção pode estabilizar fluxo, mas só após formação e retenção da base instalada. A PIM-PF e as grandes categorias econômicas do IBGE são sinais de oferta de equipamentos, não uma previsão de vendas do distribuidor. A PAC disponibiliza estrutura do comércio; a comparabilidade entre edições deve ser conferida antes de encadear dados. Não foi recuperada medida recente exclusiva deste recorte heterogêneo, e a análise não atribui crescimento agregado da indústria à carteira. Como funciona. Indústrias, serviços, hospitais e revendedores, conforme portfólio. Compra de investimento é sensível a orçamento, retorno e capacidade do comprador de financiar aquisição. Reposição urgente e expansão planejada não devem ser tratadas como mesma demanda. Fabricantes, peças, importação, técnicos, garantia e logística. A dependência de marca pode ser comercial e tecnológica; prazo de entrega do fabricante e disponibilidade de peça afetam reputação mesmo quando falha ocorre fora do distribuidor. Caixa e financiamento. Adiantamento ao fornecedor, importação e estoque de demonstração antecedem aceite do comprador. Projeto atrasado posterga recebível, enquanto equipamento pode ser específico e difícil de revender. Garantia de execução e retenção comercial são diferentes de pagamento realizado. Centro técnico, peças e demonstração apoiam vendas, mas consomem capital. Financiamento ao comprador e financiamento do distribuidor são necessidades distintas: não presumir que linha de máquinas financia estoque de revenda ou qualquer equipamento importado. Cenários. Reposição e projetos selecionados sustentam vendas com disciplina de antecipação. Conversão de carteira e serviços pós-venda melhoram geração de caixa. Projetos são cancelados após compra do equipamento, criando estoque específico e dívida. Na visita, pergunte: Qual pedido pode ser cancelado depois de você pagar o fabricante? A margem inclui toda instalação, treinamento e garantia assumida? Se perder a representação, quem mantém a base e quais peças ainda podem ser vendidas? As conclusões são setoriais, não avaliação de crédito de uma empresa. Consulte as fontes e limitações do estudo escrito. Complemento da pesquisa. A página da filial Sotreq de Macaé (RJ) identifica venda de máquinas e peças, aluguel e manutenção de motores e componentes. É exemplo verificável de oferta combinada de equipamento e pós-venda, não ranking, carteira realizada ou evidência de crescimento. A localização da filial não demonstra concentração nacional do mercado.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/reviews/atacado-independent-review.json",
+    "reviewNotes": "Revalidação individual: página primária Sotreq Macaé aberta integralmente confirma máquinas, peças, aluguel e manutenção. Portfólio não é tratado como vendas realizadas ou liderança. Análise de canais, substituição, financiamento e limites específicos suficiente."
+  }
+]
