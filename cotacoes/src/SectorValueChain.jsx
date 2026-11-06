@@ -18,7 +18,10 @@ export default function SectorValueChain({ diagram, title }) {
     if (!expanded) return
     const fit = () => {
       const figure = figureRef.current
-      if (figure) setScale(Math.min((window.innerWidth - 24) / figure.offsetWidth, (window.innerHeight - 72) / figure.offsetHeight, 1.5))
+      if (figure) {
+        if (window.innerWidth > 600) figure.parentElement.scrollTop = 0
+        setScale(Math.min((window.innerWidth - 24) / figure.offsetWidth, (window.innerHeight - 72) / figure.offsetHeight, 1.5))
+      }
     }
     fit()
     const observer = new ResizeObserver(fit)
@@ -56,7 +59,7 @@ export default function SectorValueChain({ diagram, title }) {
       if (window.history.state?.sectorDiagramFullscreen) window.history.back()
     }
   }, [expanded])
-  const figure = <figure ref={figureRef} className="tic-flow researched-flow"  data-paused={paused} style={expanded ? { transform: `translate(-50%, -50%) scale(${scale})` } : undefined} aria-labelledby="sector-flow-title" aria-describedby="sector-flow-note">
+  const figure = <figure ref={figureRef} className="tic-flow researched-flow"  data-paused={paused} style={expanded ? { '--sector-flow-transform': `translate(-50%, -50%) scale(${scale})` } : undefined} aria-labelledby="sector-flow-title" aria-describedby="sector-flow-note">
     <h4 id="sector-flow-title">Como funciona: <span>{title}</span></h4>
     <div className="tic-flow-controls">
       <p>O destaque percorre os participantes da cadeia. As relações estão descritas abaixo.</p>
@@ -69,7 +72,7 @@ export default function SectorValueChain({ diagram, title }) {
     <figcaption id="sector-flow-note">Mapa conceitual do subsetor. As relações representam fluxos de produtos, serviços ou recursos; a ordem dos blocos não estabelece uma sequência obrigatória.</figcaption>
   </figure>
   if (!expanded) return figure
-  return createPortal(<div className="tic-flow-fullscreen" role="dialog" aria-modal="true" aria-label="Diagrama em tela cheia" aria-describedby="sector-flow-fullscreen-help" onPointerMove={event => {
+  return createPortal(<div className="tic-flow-fullscreen researched-flow-fullscreen" role="dialog" aria-modal="true" aria-label="Diagrama em tela cheia" aria-describedby="sector-flow-fullscreen-help" onPointerMove={event => {
     if (pointerRef.current) {
       pointerRef.current.style.left = `${event.clientX}px`
       pointerRef.current.style.top = `${event.clientY}px`

@@ -6,7 +6,65 @@ const path = require('node:path')
 const studies = require('../src/sectorStudies/studies.json')
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768'
 const out = process.env.RESEARCHED_SECTORS_QA_OUTPUT || 'workspace-qa/researched-sectors'
-const report = { studies: studies.length, results: [], errors: [] }
+const report = { studies: studies.length, results: [], errors: [], audioPlayback: { expected: studies.filter(study => study.audio?.src).length, results: [], scope: 'Browser playback, pause, seek, ending, speed and displayed duration. Not full-length listening or speech/content audit.' } }
+// Component-only captures must not be obscured by the app's fixed navigation.
+const captureComponent = (locator, filename) => locator.screenshot({ path: path.join(out, filename), style: '.nav-top, .term-head { visibility: hidden !important; }' })
+
+async function verifyAudioPlayback(page, article, audio, study, key) {
+  const duration = await audio.evaluate(element => element.duration)
+  assert.ok(duration > 1, `gravação deve permitir teste real de reprodução: ${key}`)
+  const play = async () => {
+    const error = await audio.evaluate(async element => {
+      let timer
+      try {
+        await Promise.race([element.play(), new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('play() timed out')), 10000) })])
+        return null
+      } catch (error) { return error.message } finally { clearTimeout(timer) }
+    })
+    assert.equal(error, null, `reprodução real: ${key}`)
+  }
+  await play()
+  await page.waitForFunction(() => {
+    const audio = document.querySelector('.sector-study audio')
+    return audio && !audio.error && !audio.paused && audio.currentTime >= 0.08
+  }, null, { timeout: 10000 })
+  const playedTo = await audio.evaluate(element => { element.pause(); return element.currentTime })
+  await page.waitForTimeout(150)
+  assert.equal(await audio.evaluate(element => element.paused), true, key)
+  assert.ok(Math.abs(await audio.evaluate(element => element.currentTime) - playedTo) < 0.03, `pausa interrompe o relógio: ${key}`)
+  const rates = [0.75, 1, 1.25, 1.5, 2]
+  for (const rate of rates) {
+    await article.getByLabel('Velocidade').selectOption(String(rate))
+    const media = await audio.evaluate(element => ({ rate: element.playbackRate, defaultRate: element.defaultPlaybackRate, preservesPitch: element.preservesPitch, duration: element.duration, error: element.error }))
+    assert.deepEqual(media, { rate, defaultRate: rate, preservesPitch: true, duration, error: null }, `${key} velocidade ${rate}`)
+    const seconds = Math.round(duration / rate)
+    const expectedLabel = `Tempo total nesta velocidade: ${Math.floor(seconds / 60)} min ${String(seconds % 60).padStart(2, '0')} s.`
+    await article.getByText(expectedLabel, { exact: true }).waitFor()
+    const before = await audio.evaluate(element => element.currentTime)
+    await play()
+    await page.waitForFunction(({ before, rate }) => {
+      const audio = document.querySelector('.sector-study audio')
+      return audio && !audio.error && !audio.paused && audio.playbackRate === rate && audio.preservesPitch && audio.currentTime > before + 0.05
+    }, { before, rate }, { timeout: 10000 })
+    await audio.evaluate(element => element.pause())
+  }
+  await audio.evaluate(element => { element.currentTime = element.duration - 0.25 })
+  await page.waitForFunction(() => {
+    const audio = document.querySelector('.sector-study audio')
+    return audio && !audio.error && !audio.seeking && audio.currentTime >= audio.duration - 0.5
+  }, null, { timeout: 10000 })
+  const seekedTo = await audio.evaluate(element => element.currentTime)
+  await play()
+  await page.waitForFunction(() => {
+    const audio = document.querySelector('.sector-study audio')
+    return audio && !audio.error && audio.ended && audio.paused
+  }, null, { timeout: 10000 })
+  assert.ok(Math.abs(await audio.evaluate(element => element.currentTime) - duration) < 0.05, `fim real da gravação: ${key}`)
+  report.audioPlayback.results.push({ study: key, src: study.audio.src, status: 'passed', durationSeconds: duration, playedTo, seekedTo, rates, paused: true, ended: true, preservesPitch: true, durationLabels: true })
+  await audio.evaluate(element => { element.currentTime = 0 })
+  await article.getByLabel('Velocidade').selectOption('1.25')
+}
+
 ;(async () => {
   const { CATALOGO_SETORIAL } = await import('../src/centralSetorial.js')
   const catalog = CATALOGO_SETORIAL.flatMap(group => group.topics.map((title, topicIndex) => ({ group: group.id, topicIndex, title })))
@@ -17,7 +75,10 @@ const report = { studies: studies.length, results: [], errors: [] }
   const pending = catalog.filter(study => `${study.group}/${study.topicIndex}` !== 'tic/0' && !included.has(`${study.group}/${study.topicIndex}`))
   report.pending = pending.length
   fs.mkdirSync(out, { recursive: true })
-  const browser = await chromium.launch(require('./smoke-launch.cjs')())
+  const launchOptions = require('./smoke-launch.cjs')()
+  // Permit deterministic media QA only in the existing Chrome CI job.
+  if (process.env.GITHUB_ACTIONS === 'true' && process.env.SMOKE_CHANNEL === 'chrome') launchOptions.args = ['--autoplay-policy=no-user-gesture-required']
+  const browser = await chromium.launch(launchOptions)
   let activePage
   try {
     for (const width of [1440, 390]) {
@@ -66,19 +127,21 @@ const report = { studies: studies.length, results: [], errors: [] }
             assert.match(await article.innerText(), /Voz sintética/)
             await article.getByLabel('Velocidade').selectOption('1.5')
             assert.equal(await audio.evaluate(element => element.playbackRate), 1.5, key)
+            // Exercise every recording once; both widths still verify metadata and controls.
+            if (width === 1440) await verifyAudioPlayback(page, article, audio, study, key)
             await article.getByText('Ler transcrição', { exact: true }).click()
           } else {
             assert.equal(await audio.count(), 0, key)
-            assert.match(await article.innerText(), /Áudio produzido ainda não disponível/)
+            assert.match(await article.innerText(), /Áudio ainda não disponível para este estudo\./)
             await article.getByText('Ler síntese em texto', { exact: true }).click()
           }
           if (!capturedGroups.has(study.group)) {
             capturedGroups.add(study.group)
-            await article.locator('.study-canvas-callout').screenshot({ path: path.join(out, `${key}-${width}-canvas.png`) })
-            await article.locator('.researched-flow').screenshot({ path: path.join(out, `${key}-${width}-cadeia.png`) })
+            await captureComponent(article.locator('.study-canvas-callout'), `${key}-${width}-canvas.png`)
+            await captureComponent(article.locator('.researched-flow'), `${key}-${width}-cadeia.png`)
           }
-          if (study.group === 'tic' && study.topicIndex === 6) await article.locator('section.study-chart').last().screenshot({ path: path.join(out, `${key}-${width}-mercados.png`) })
-          if (study.charts.some(chart => chart.series.some(series => series.values.some(value => value < 0))) && !fs.existsSync(path.join(out, `bipolar-${width}.png`))) await article.locator('section.study-chart').last().screenshot({ path: path.join(out, `bipolar-${width}.png`) })
+          if (study.group === 'tic' && study.topicIndex === 6) await captureComponent(article.locator('section.study-chart').last(), `${key}-${width}-mercados.png`)
+          if (study.charts.some(chart => chart.series.some(series => series.values.some(value => value < 0))) && !fs.existsSync(path.join(out, `bipolar-${width}.png`))) await captureComponent(article.locator('section.study-chart').last(), `bipolar-${width}.png`)
           report.results.push({ width, study: key, status: 'passed' })
         } catch (error) {
           report.results.push({ width, study: key, status: 'failed', message: error.message })
@@ -119,8 +182,34 @@ const report = { studies: studies.length, results: [], errors: [] }
       const modal = page.getByRole('dialog', { name: 'Diagrama em tela cheia' })
       await modal.waitFor()
       assert.equal(await modal.locator('button:visible').count(), 1)
-      const bounds = await modal.locator('.researched-flow').boundingBox()
-      assert.ok(bounds.x >= -1 && bounds.y >= -1 && bounds.x + bounds.width <= width + 1 && bounds.y + bounds.height <= 1001, JSON.stringify(bounds))
+      const expandedDiagram = modal.locator('.researched-flow')
+      const bounds = await expandedDiagram.boundingBox()
+      assert.ok(bounds.x >= -1 && bounds.y >= -1 && bounds.x + bounds.width <= width + 1, JSON.stringify(bounds))
+      if (width <= 600) {
+        assert.ok(bounds.width >= width - 26, 'diagrama ocupa a largura disponível no celular')
+        assert.equal(await expandedDiagram.evaluate(element => getComputedStyle(element).transform), 'none', 'texto não pode ser reduzido por escala')
+        assert.ok(await modal.locator('.sector-chain-node strong').first().evaluate(element => parseFloat(getComputedStyle(element).fontSize) >= 16), 'texto legível no celular')
+        assert.equal(await modal.evaluate(element => element.scrollWidth <= element.clientWidth + 1), true, 'sem rolagem horizontal')
+        assert.equal(await modal.evaluate(element => element.scrollHeight > element.clientHeight), true, 'diagrama completo usa rolagem vertical')
+        await modal.evaluate(element => { element.scrollTop = element.scrollHeight })
+        const last = await expandedDiagram.locator('figcaption').boundingBox()
+        assert.ok(last.y >= 0 && last.y + last.height <= 1001, 'fim do diagrama acessível por rolagem')
+        const laserBounds = await modal.getByRole('button', { name: 'Ativar laser' }).boundingBox()
+        assert.ok(laserBounds.y >= 0 && laserBounds.y + laserBounds.height <= 1001, 'laser permanece acessível ao rolar')
+        await modal.screenshot({ path: path.join(out, `fullscreen-${width}-bottom.png`) })
+        await page.setViewportSize({ width: 1440, height: 1000 })
+        await page.waitForFunction(() => {
+          const figure = document.querySelector('.researched-flow-fullscreen > .researched-flow')
+          const box = figure.getBoundingClientRect()
+          return getComputedStyle(figure).transform !== 'none' && figure.parentElement.scrollTop === 0 && box.x >= -1 && box.y >= -1 && box.right <= innerWidth + 1 && box.bottom <= innerHeight + 1
+        })
+        assert.equal(await modal.locator('button:visible').count(), 1, 'redimensionamento preserva botão único')
+        await page.setViewportSize({ width, height: 1000 })
+        await page.waitForFunction(() => getComputedStyle(document.querySelector('.researched-flow-fullscreen > .researched-flow')).transform === 'none')
+        await modal.evaluate(element => { element.scrollTop = 0 })
+      } else {
+        assert.ok(bounds.y + bounds.height <= 1001, 'desktop preserva auto-fit')
+      }
       await modal.getByRole('button', { name: 'Ativar laser' }).click()
       await page.mouse.move(width / 2, 400)
       assert.equal(await modal.locator('.tic-flow-laser').isVisible(), true)
@@ -133,6 +222,7 @@ const report = { studies: studies.length, results: [], errors: [] }
       await modal.waitFor({ state: 'hidden' })
       await page.waitForFunction(() => !history.state?.sectorDiagramFullscreen)
       assert.equal(await page.locator('#root').evaluate(element => element.inert), false)
+      assert.equal(await diagram.getByRole('button', { name: 'Maximizar diagrama' }).evaluate(element => element === document.activeElement), true, 'devolve foco ao botão de maximizar')
       await diagram.getByRole('button', { name: 'Maximizar diagrama' }).click()
       await modal.waitFor()
       await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -154,7 +244,9 @@ const report = { studies: studies.length, results: [], errors: [] }
       await context.close()
     }
     assert.deepEqual(report.errors, [], 'erros JavaScript no navegador')
+    assert.equal(report.audioPlayback.results.length, report.audioPlayback.expected, 'todas as gravações incluídas passam por reprodução, pausa, busca, fim e velocidades')
     console.log(`PASS: ${studies.length} estudos e ${pending.length} placeholders em desktop/mobile; piloto TIC preservado; dados, áudio, apresentação e navegação`)
+    console.log(`Browser audio playback: ${report.audioPlayback.results.length}/${report.audioPlayback.expected}; full-length decoding and speech fidelity are separate audits.`)
   } catch (error) {
     report.failure = error.message
     if (activePage && !activePage.isClosed()) await activePage.screenshot({ path: path.join(out, 'interaction-failure.png'), fullPage: true }).catch(() => {})

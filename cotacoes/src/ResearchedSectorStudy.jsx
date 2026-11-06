@@ -62,7 +62,7 @@ function ResearchAudio({ study }) {
       <audio ref={audioRef} controls preload="metadata" src={study.audio.src} aria-label={`Síntese em áudio: ${study.title}`} onError={() => setFailed(true)} onLoadedMetadata={() => { applyRate(); if (Number.isFinite(audioRef.current.duration)) setDuration(audioRef.current.duration) }} onPlay={() => applyRate()} onRateChange={() => { if ([0.75, 1, 1.25, 1.5, 2].includes(audioRef.current.playbackRate)) setRate(audioRef.current.playbackRate) }} />
       <label>Velocidade<select value={rate} onChange={event => { const next = Number(event.target.value); setRate(next); applyRate(next) }}>{[0.75, 1, 1.25, 1.5, 2].map(value => <option key={value} value={value}>{String(value).replace('.', ',')}×{value === 1.25 ? ' · padrão' : ''}</option>)}</select></label>
       <p aria-live="polite">Tempo total nesta velocidade: {durationLabel(duration, rate)}.</p>
-    </> : <p className="central-note">{failed ? 'Não foi possível carregar o arquivo de áudio.' : 'Áudio produzido ainda não disponível para este estudo.'} A síntese em texto está disponível abaixo.</p>}
+    </> : <p className="central-note">{failed ? 'Não foi possível carregar o arquivo de áudio.' : 'Áudio ainda não disponível para este estudo.'} A síntese em texto está disponível abaixo.</p>}
     <details><summary>{study.audio?.src ? 'Ler transcrição' : 'Ler síntese em texto'}</summary>{transcriptParagraphs(study.transcript).map((text, index) => <p key={index}>{text}</p>)}</details>
   </section>
 }

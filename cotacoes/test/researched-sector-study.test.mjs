@@ -27,7 +27,7 @@ test('gráficos categóricos exibem Mercado; séries históricas mantêm Ano', a
 test('renderer mostra pesquisa específica, Canvas, cadeia, tabela, fontes públicas e ausência honesta de áudio', async () => {
   const Component = await component('src/ResearchedSectorStudy.jsx')
   const html = renderToStaticMarkup(createElement(Component,{study:fixture}))
-  for (const text of ['Resumo verificado','Qual aplicação domina as vendas?','Toras','Painéis','Transformação','Laminação','Volume observado','Limite específico','Método específico','Síntese textual do estudo','Áudio produzido ainda não disponível']) assert.ok(html.includes(text),text)
+  for (const text of ['Resumo verificado','Qual aplicação domina as vendas?','Toras','Painéis','Transformação','Laminação','Volume observado','Limite específico','Método específico','Síntese textual do estudo','Áudio ainda não disponível para este estudo.']) assert.ok(html.includes(text),text)
   assert.doesNotMatch(html,/Fonte privada|example\.com|speechSynthesis/)
   assert.match(html,/Maximizar diagrama/)
   assert.match(html,/Pausar animação/)
@@ -48,6 +48,16 @@ test('apresentação conserva saída, foco, pausa e movimento reduzido', async (
   for (const token of ["event.key === 'Escape'","'popstate'","event.key === 'Tab'","event.key.toLowerCase() === 'p'",'appRoot.inert = previousInert','maximizeRef.current?.focus()','diagram.edges.map','createPortal']) assert.ok(code.includes(token),token)
   assert.match(css,/prefers-reduced-motion:reduce/)
   assert.match(css,/animation-play-state:paused/)
+})
+test('apresentação móvel mantém tamanho do texto e rolagem sem alterar o piloto TIC', async () => {
+  const code = await readFile('src/SectorValueChain.jsx', 'utf8')
+  const css = await readFile('src/ResearchedSectorStudy.css', 'utf8')
+  assert.match(code, /className="tic-flow-fullscreen researched-flow-fullscreen"/)
+  assert.match(code, /'--sector-flow-transform'/)
+  assert.match(css, /\.researched-flow-fullscreen > \.researched-flow\s*\{\s*transform:var\(--sector-flow-transform\)/)
+  assert.match(css, /@media \(max-width:600px\)[\s\S]*\.researched-flow-fullscreen\s*\{[^}]*overflow-y:auto/)
+  assert.match(css, /\.researched-flow-fullscreen > \.researched-flow\s*\{[^}]*position:relative;[^}]*width:100%;[^}]*transform:none/)
+  assert.match(css, /\.researched-flow-fullscreen > \.tic-flow-laser-toggle\s*\{\s*position:fixed/)
 })
 test('todos os estudos integrados renderizam sem erros e mantêm sua identidade', async () => {
   const studies=JSON.parse(await readFile('src/sectorStudies/studies.json','utf8'))
@@ -83,7 +93,7 @@ test('transcrição preserva parágrafos e duração é calculada, não estimada
 })
 test('geração de áudio é opt-in, somente revisados, valida hashes e decodificação', async () => {
   const code=await readFile('scripts/generate-sector-audio.mjs','utf8')
-  for(const token of ["process.argv.includes('--generate')", "study.reviewStatus !== 'approved'", "'pt-BR-AntonioNeural'", 'textSha256', 'fileSha256', "execute('ffprobe'", "execute('ffmpeg'", "'-xerror'"]) assert.ok(code.includes(token),token)
+  for(const token of ["args.includes('--generate')", "study.reviewStatus !== 'approved'", "'pt-BR-AntonioNeural'", 'textSha256', 'fileSha256', "execute('ffprobe'", "execute('ffmpeg'", "'-xerror'"]) assert.ok(code.includes(token),token)
   const sync=await readFile('scripts/sync-sector-studies.mjs','utf8')
   assert.ok(sync.includes('audio.textSha256 === digest(transcriptText(study.transcript))'))
   assert.ok(sync.includes('=== audio.fileSha256'))

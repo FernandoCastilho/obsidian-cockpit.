@@ -2,3 +2,11 @@
 .research-bar-row{grid-template-columns:72px minmax(0,1fr) 76px}.research-bar-track{position:relative;overflow:visible}.research-bar{position:absolute;top:0;border:0;max-width:100%}.research-bar-negative{background:#b34500}.research-bar-zero{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--fg);z-index:1}.research-bar-track:has(.research-bar-negative){background:var(--surface)}
 
 .research-bar-axis{display:flex;justify-content:space-between;margin:16px 86px 0 82px;font-size:.8rem;font-weight:650}@media(max-width:600px){.research-bar-axis{margin-left:78px;margin-right:82px}}
+
+/* Keep desktop presentation fitted, but preserve readable text on narrow screens. */
+.researched-flow-fullscreen > .researched-flow { transform:var(--sector-flow-transform); }
+@media (max-width:600px) {
+  .researched-flow-fullscreen { overflow-y:auto; overscroll-behavior:contain; padding:76px 12px 12px; }
+  .researched-flow-fullscreen > .researched-flow { position:relative; left:auto; top:auto; width:100%; max-width:100%; transform:none; }
+  .researched-flow-fullscreen > .tic-flow-laser-toggle { position:fixed; }
+}
