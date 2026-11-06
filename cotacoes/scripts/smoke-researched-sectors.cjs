@@ -3,16 +3,31 @@ const { chromium } = require('playwright')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const { createHash } = require('node:crypto')
+const sha256 = value => createHash('sha256').update(value).digest('hex')
+let transcriptText
 const studies = require('../src/sectorStudies/studies.json')
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768'
 const out = process.env.RESEARCHED_SECTORS_QA_OUTPUT || 'workspace-qa/researched-sectors'
-const report = { studies: studies.length, results: [], errors: [], audioPlayback: { expected: studies.filter(study => study.audio?.src).length, results: [], scope: 'Browser playback, pause, seek, ending, speed and displayed duration. Not full-length listening or speech/content audit.' } }
+const report = { studies: studies.length, results: [], errors: [], audioPlayback: { schemaVersion: 1, humanOrNativeListeningPerformed: false, expected: studies.filter(study => study.audio?.src).length, results: [], scope: 'Browser playback, pause, seek, ending, speed and displayed duration. Not full-length listening or speech/content audit.' } }
 // Component-only captures must not be obscured by the app's fixed navigation.
 const captureComponent = (locator, filename) => locator.screenshot({ path: path.join(out, filename), style: '.nav-top, .term-head { visibility: hidden !important; }' })
 
 async function verifyAudioPlayback(page, article, audio, study, key) {
   const duration = await audio.evaluate(element => element.duration)
   assert.ok(duration > 1, `gravação deve permitir teste real de reprodução: ${key}`)
+  // Hash the exact URL used by the player, not an unchecked copy of manifest metadata.
+  const currentSrc = await audio.evaluate(element => element.currentSrc)
+  assert.equal(currentSrc, new URL(study.audio.src, page.url()).href, `origem do áudio: ${key}`)
+  const mediaResponse = await page.request.get(currentSrc)
+  assert.equal(mediaResponse.status(), 200, `bytes completos do áudio servido: ${key}`)
+  const servedBytes = await mediaResponse.body()
+  const fileSha256 = sha256(servedBytes)
+  const textSha256 = sha256(transcriptText(study.transcript))
+  assert.equal(fileSha256, study.audio.fileSha256, `hash do áudio servido: ${key}`)
+  assert.equal(textSha256, study.audio.textSha256, `hash da transcrição atual: ${key}`)
+  assert.equal(servedBytes.length, study.audio.bytes, `tamanho do áudio servido: ${key}`)
+  assert.ok(Math.abs(duration - study.audio.durationSeconds) <= 0.1, `duração do áudio atual: ${key}`)
   const play = async () => {
     const error = await audio.evaluate(async element => {
       let timer
@@ -31,8 +46,10 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
   const playedTo = await audio.evaluate(element => { element.pause(); return element.currentTime })
   await page.waitForTimeout(150)
   assert.equal(await audio.evaluate(element => element.paused), true, key)
-  assert.ok(Math.abs(await audio.evaluate(element => element.currentTime) - playedTo) < 0.03, `pausa interrompe o relógio: ${key}`)
+  const pausedAt = await audio.evaluate(element => element.currentTime)
+  assert.ok(Math.abs(pausedAt - playedTo) < 0.03, `pausa interrompe o relógio: ${key}`)
   const rates = [0.75, 1, 1.25, 1.5, 2]
+  const rateChecks = []
   for (const rate of rates) {
     await article.getByLabel('Velocidade').selectOption(String(rate))
     const media = await audio.evaluate(element => ({ rate: element.playbackRate, defaultRate: element.defaultPlaybackRate, preservesPitch: element.preservesPitch, duration: element.duration, error: element.error }))
@@ -46,7 +63,8 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       const audio = document.querySelector('.sector-study audio')
       return audio && !audio.error && !audio.paused && audio.playbackRate === rate && audio.preservesPitch && audio.currentTime > before + 0.05
     }, { before, rate }, { timeout: 10000 })
-    await audio.evaluate(element => element.pause())
+    const after = await audio.evaluate(element => { element.pause(); return element.currentTime })
+    rateChecks.push({ rate, observedRate: media.rate, before, after })
   }
   await audio.evaluate(element => { element.currentTime = element.duration - 0.25 })
   await page.waitForFunction(() => {
@@ -59,13 +77,24 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
     const audio = document.querySelector('.sector-study audio')
     return audio && !audio.error && audio.ended && audio.paused
   }, null, { timeout: 10000 })
-  assert.ok(Math.abs(await audio.evaluate(element => element.currentTime) - duration) < 0.05, `fim real da gravação: ${key}`)
-  report.audioPlayback.results.push({ study: key, src: study.audio.src, status: 'passed', durationSeconds: duration, playedTo, seekedTo, rates, paused: true, ended: true, preservesPitch: true, durationLabels: true })
+  const endedAt = await audio.evaluate(element => element.currentTime)
+  assert.ok(Math.abs(endedAt - duration) < 0.05, `fim real da gravação: ${key}`)
+  report.audioPlayback.results.push({ study: key, studyKey: `${study.group}/${study.topicIndex}`, src: study.audio.src, fileSha256, textSha256, status: 'passed', durationSeconds: duration, playedTo, seekedTo, endedAt, rates, rateChecks, pauseObservation: { before: playedTo, after: pausedAt, waitedMs: 150 }, paused: true, ended: true, preservesPitch: true, durationLabels: true })
   await audio.evaluate(element => { element.currentTime = 0 })
   await article.getByLabel('Velocidade').selectOption('1.25')
 }
 
 ;(async () => {
+  ;({ transcriptText } = await import('../src/sectorStudies/presentation.js'))
+  const { PLAYER_FILES } = await import('./sector-audio-release-lib.mjs')
+  const repoRoot = path.resolve(__dirname, '../..')
+  const manifestPath = path.resolve(__dirname, '../public/audio/sectors/manifest.json')
+  report.audioPlayback.sources = {
+    canonicalStudiesSha256: sha256(fs.readFileSync(path.resolve(__dirname, '../src/sectorStudies/studies.json'))),
+    manifestSha256: fs.existsSync(manifestPath) ? sha256(fs.readFileSync(manifestPath)) : null,
+    playerFiles: Object.fromEntries(PLAYER_FILES.map(filename => [filename, sha256(fs.readFileSync(path.join(repoRoot, filename)))])),
+  }
+  report.audioPlayback.generatedAt = new Date().toISOString()
   const { CATALOGO_SETORIAL } = await import('../src/centralSetorial.js')
   const catalog = CATALOGO_SETORIAL.flatMap(group => group.topics.map((title, topicIndex) => ({ group: group.id, topicIndex, title })))
   assert.equal(catalog.length, 67, 'catálogo completo, incluindo o piloto TIC')

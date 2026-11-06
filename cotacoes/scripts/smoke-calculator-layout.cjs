@@ -70,6 +70,11 @@ async function assertWorkspace(page, section, label) {
   }))
   assert.ok(controls.length > 0)
   assert.deepEqual(controls.filter(control => control.height < 43.9 || control.width < 43.9), [], `${label}: campos e ? com pelo menos 44px`)
+  const currencyOverlaps = await section.locator('.money-wrap').evaluateAll(elements => elements.filter(element => element.getClientRects().length).filter(element => {
+    const input = element.querySelector('input'), prefix = element.querySelector('i')
+    return input && prefix && prefix.getBoundingClientRect().right + 4 > input.getBoundingClientRect().left + parseFloat(getComputedStyle(input).paddingLeft)
+  }).map(element => element.closest('label')?.textContent.trim() || element.querySelector('input')?.id))
+  assert.deepEqual(currencyOverlaps, [], `${label}: prefixo monetário não sobrepõe o valor`)
   const checkboxes = await section.locator('input[type=checkbox]').evaluateAll(elements => elements.filter(element => element.getClientRects().length).map(element => ({ label: element.closest('label')?.textContent.trim(), height: element.closest('label')?.getBoundingClientRect().height || 0 })))
   assert.deepEqual(checkboxes.filter(control => control.height < 43.9), [], `${label}: checkbox possui rótulo com área de toque acessível`)
 
@@ -176,7 +181,11 @@ async function fillScenario(page, section, route) {
     assert.equal(await page.locator('#ad-iofAdditional, #ad-iofPaid, #ad-interest').count(), 0)
     await page.locator('#ad-date').fill('2026-11-05')
     await section.getByLabel('Vencimento contratual', { exact: true }).fill('2026-12-05')
-    await section.getByLabel('Valor nominal total do grupo', { exact: true }).fill('225.600,43')
+    // The nested MoneyInput adds the currency prefix to the label's text.
+    const nominal = section.getByLabel(/^Valor nominal total do grupo/)
+    assert.equal(await nominal.count(), 1, 'um grupo de títulos no cenário fixo')
+    await nominal.fill('225.600,43')
+    assert.equal(await nominal.inputValue(), '225.600,43')
     await page.locator('#ad-operationRate').fill('1,83')
     await page.locator('#ad-taxProfile').selectOption('pj')
     await page.locator('#ad-convention').selectOption('commercial30')

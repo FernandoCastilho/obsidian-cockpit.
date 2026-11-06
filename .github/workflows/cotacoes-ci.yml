@@ -59,6 +59,16 @@ jobs:
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
+      - name: Conferir estudo histórico de controle de juros em três larguras
+        run: JUROS_QA_OUTPUT="$RUNNER_TEMP/qa-juros" node scripts/smoke-aprender-juros.cjs
+      - name: Capturas e relatório do estudo de juros
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-juros-design
+          path: ${{ runner.temp }}/qa-juros
+          if-no-files-found: error
+          retention-days: 7
       - name: Conferir largura, ajudas e fluxos das seis calculadoras
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
       - name: Conferir estudos incluídos, recortes pendentes, apresentação e áudio
@@ -100,6 +110,17 @@ jobs:
             echo "::error::Cenários corrigidos com falha: ${failures[*]}"
             exit 1
           fi
+      - name: Conferir história dos juros, busca e navegação em Aprender
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: INTEREST_HISTORY_QA_OUTPUT="$RUNNER_TEMP/qa-universal/interest-history" node scripts/smoke-interest-history.cjs
+      - name: Capturas da história dos juros em Aprender
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-historia-juros
+          path: ${{ runner.temp }}/qa-universal/interest-history
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Conferir os fluxos alterados de busca, calculadoras e BNDES
         if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         env:

@@ -1,5 +1,6 @@
 import { nf } from './format.js'
 import { CONCEITO_MAQUILA } from './maquila.js'
+import { CONCEITO_JUROS_FORCADOS } from './jurosForcados.js'
 // Aba "Aprender": conceitos explicados em linguagem simples. Os números dos exemplos saem das funções abaixo (testadas),
 // nunca digitados no texto, para a tela não mostrar uma conta errada. Exemplos são didáticos, não cotações de mercado.
 
@@ -92,6 +93,7 @@ const pct = (f, d = 2) => `${nf(f * 100, d)}%`
 
 export const feeEstruturacao = (base, taxaFlat) => base * taxaFlat
 export const CONCEITOS = [
+  CONCEITO_JUROS_FORCADOS,
   {
     id: 'diferencial-de-juros',
     topico: 'Juros e câmbio',
@@ -1047,7 +1049,7 @@ export const TOPICOS = ['Juros e câmbio', 'Funding e risco', 'Operações de cr
 
 // Busca por palavras (todas precisam aparecer), sem diferenciar acento nem maiúscula, no conteúdo inteiro do conceito.
 const plain = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-export const textoDeBusca = (c) => plain([c.nome, c.topico, c.frase, c.analogia, ...c.crianca, ...c.lacunas, c.preciso.texto, c.preciso.formula, c.exemplo.titulo, ...c.exemplo.passos, c.teste.pergunta, c.teste.resposta].join(' '))
+export const textoDeBusca = (c) => plain([c.nome, c.topico, c.frase, c.analogia, ...c.crianca, ...c.lacunas, c.preciso.texto, c.preciso.formula, c.exemplo.titulo, ...c.exemplo.passos, c.teste.pergunta, c.teste.resposta, c.estudoHistorico ? JSON.stringify(c.estudoHistorico) : ''].join(' '))
 export function buscarConceitos(termo, lista = CONCEITOS) {
   const palavras = plain(String(termo ?? '')).split(/\s+/).filter(Boolean)
   return palavras.length ? lista.filter((c) => { const t = textoDeBusca(c); return palavras.every((w) => t.includes(w)) }) : lista
@@ -1059,6 +1061,9 @@ export const porTopico = (lista) => TOPICOS.map((topico) => ({ topico, itens: li
 // outros conceitos (LIGACOES). Os testes recusam conceito sem papel, sem ligação ou com ligação para conceito que não existe.
 // LIGACOES é a fonte única: cada par vale nos dois sentidos e aparece em "Conecta com" de ambos os conceitos e no quadro geral.
 export const LIGACOES = [
+  ['juros-forcados', 'inflacao', 'A taxa real depende da inflação; manter juros baixos pode ser coerente com desinflação ou entrar em conflito com inflação elevada.'],
+  ['juros-forcados', 'diferencial-de-juros', 'O diferencial de rendimento é um dos canais de pressão cambial, mas não explica sozinho a movimentação das moedas.'],
+  ['juros-forcados', 'custo-de-funding', 'Taxa básica menor não garante captação mais barata se o risco, o juro longo ou o spread subirem.'],
   ['cet', 'fee-de-estruturacao', 'Uma comissão vinculada ao crédito altera o líquido recebido ou os pagamentos; o CET considera o valor e a data dessa cobrança, quando aplicável.'],
   ['cet', 'custo-de-funding', 'O funding ajuda a explicar a taxa cobrada pela instituição; o CET mede o custo do fluxo para o tomador, incluindo os demais encargos aplicáveis.'],
   ['escala-6x1', 'custo-de-funding', 'Reorganizar turnos pode mudar o fluxo de caixa e a necessidade de giro; a decisão de financiar depende da produtividade e da operação de cada empresa.'],
@@ -1114,6 +1119,7 @@ export const LIGACOES = [
 export const CONEXAO = {
   titulo: 'Como as peças se encaixam',
   itens: [
+    { id: 'juros-forcados', texto: 'compara seis histórias de juros baixos, controle da curva e repressão financeira, com benefícios, custos e limites de causalidade.' },
     { id: 'cet', texto: 'reúne o custo do crédito para o tomador, com o líquido recebido, os encargos aplicáveis e as datas dos pagamentos.' },
     { id: 'escala-6x1', texto: 'liga organização dos turnos, produtividade e planejamento do caixa, com transição e enquadramento trabalhista a conferir.' },
     { id: 'reforma-tributaria', texto: 'muda a apuração dos tributos sobre consumo e exige revisar preços, créditos e fluxo de caixa durante a transição.' },

@@ -19,6 +19,29 @@ function Concept({ c, goto }) {
           {c.crianca.map((t) => <p key={t}>{t}</p>)}
           <p className="learn-analogy"><span className="learn-tag">Analogia</span>{c.analogia}</p>
 
+          {c.estudoHistorico && <section className="learn-history" aria-label={c.estudoHistorico.titulo}>
+            <h3>{c.estudoHistorico.titulo}</h3>
+            <p className="learn-history-scope">{c.estudoHistorico.escopo}</p>
+            {c.estudoHistorico.casos.map((caso) => <details className="learn-history-case" key={caso.id}>
+              <summary><strong>{caso.pais}</strong><span>{caso.periodo} · {caso.tipo}</span></summary>
+              <p className="learn-history-takeaway">{caso.chamada}</p>
+              <ol className="learn-history-timeline">{caso.marcos.map(marco => <li key={marco}>{marco}</li>)}</ol>
+              <h4>O contexto</h4><p>{caso.contexto}</p>
+              <h4>Como seguraram os juros</h4><p>{caso.mecanismo}</p>
+              <h4>O que aconteceu</h4><p>{caso.resultado}</p>
+              <h4>O que a história não prova</h4><p>{caso.limite}</p>
+              <ul className="learn-history-sources">{caso.fontes.map(id => {
+                const fonte = c.fontes.find(f => f.id === id)
+                return fonte && <li key={id}><a href={fonte.url} target="_blank" rel="noopener noreferrer">{fonte.nome}</a></li>
+              })}</ul>
+            </details>)}
+            <h3>Por que os resultados foram diferentes</h3>
+            <div className="learn-history-comparison">{c.estudoHistorico.comparacao.map(item => <section key={item.titulo}><h4>{item.titulo}</h4><p>{item.texto}</p></section>)}</div>
+            <h3>Como usar essa história numa análise de crédito</h3>
+            <ul>{c.estudoHistorico.checklist.map(item => <li key={item}>{item}</li>)}</ul>
+            <p className="learn-history-conclusion">{c.estudoHistorico.conclusao}</p>
+          </section>}
+
           <details open>
             <summary>Onde você pode travar</summary>
             <ul>{c.lacunas.map((t) => <li key={t}>{t}</li>)}</ul>

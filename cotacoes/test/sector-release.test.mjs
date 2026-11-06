@@ -12,10 +12,13 @@ test('release gate blocks unreviewed research while allowing reviewed datasets',
 test('audio completion gate does not report success when recordings are missing', () => {
   const run = spawnSync(process.execPath, ['scripts/validate-sector-release.mjs', '--require-audio'], { encoding: 'utf8' })
   if (studies.some(study => !study.audio?.src)) { assert.notEqual(run.status, 0); assert.match(run.stderr, /audio missing/) }
-  else assert.equal(run.status, 0, run.stderr)
+  else if (run.status === 0) assert.match(run.stdout, /automated release evidence passed/)
+  else assert.match(run.stderr, /Sector publication blocked:/)
 })
 test('Pages validates research before publication without changing isolated CI', () => {
   const pages = readFileSync('../.github/workflows/pages.yml', 'utf8')
-  assert.ok(pages.indexOf('node scripts/validate-sector-release.mjs') < pages.indexOf('uses: actions/upload-pages-artifact'))
+  const gate = 'node scripts/validate-sector-release.mjs --require-audio --allow-no-audio'
+  assert.ok(pages.includes(gate), 'Pages exige o modo documental explicitamente sem áudio; qualquer áudio exige evidências completas')
+  assert.ok(pages.indexOf(gate) < pages.indexOf('uses: actions/upload-pages-artifact'))
   assert.doesNotMatch(readFileSync('../.github/workflows/cotacoes-ci.yml', 'utf8'), /run: node scripts\/validate-sector-release/)
 })

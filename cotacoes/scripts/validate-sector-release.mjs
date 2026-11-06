@@ -1,22 +1,11 @@
-import { readFile } from 'node:fs/promises'
-import { createHash } from 'node:crypto'
-import { transcriptText } from '../src/sectorStudies/presentation.js'
-const studies = JSON.parse(await readFile(new URL('../src/sectorStudies/studies.json', import.meta.url), 'utf8'))
-const requireAudio = process.argv.includes('--require-audio')
-const hash = value => createHash('sha256').update(value).digest('hex')
-const issues = []
-for (const study of studies) {
-  const key = `${study.group}/${study.topicIndex}`
-  if (study.reviewStatus !== 'approved') issues.push(`${key}: documentary review not approved`)
-  if (requireAudio && !study.audio?.src) issues.push(`${key}: audio missing`)
-  if (study.audio?.src) {
-    const expected = `./audio/sectors/${study.group}-${study.topicIndex}.mp3`
-    if (study.audio.src !== expected || study.audio.textSha256 !== hash(transcriptText(study.transcript))) issues.push(`${key}: audio/transcript mismatch`)
-    else {
-      try { if (hash(await readFile(new URL(`../public/${expected.slice(2)}`, import.meta.url))) !== study.audio.fileSha256) issues.push(`${key}: audio file hash mismatch`) }
-      catch { issues.push(`${key}: audio file unavailable`) }
-    }
-  }
-}
-if (issues.length) throw new Error(`Sector publication blocked:\n${issues.join('\n')}`)
-console.log(`Sector release gate passed: ${studies.length} approved studies; original TIC unchanged.`)
+import { fileURLToPath } from 'node:url'
+import { validateSectorRelease } from './sector-audio-release-lib.mjs'
+
+const args = process.argv.slice(2)
+if (args.some(arg => !['--require-audio', '--allow-no-audio'].includes(arg)) || (args.includes('--allow-no-audio') && !args.includes('--require-audio'))) throw new Error('Usage: node scripts/validate-sector-release.mjs [--require-audio [--allow-no-audio]]')
+const result = await validateSectorRelease({ appRoot: fileURLToPath(new URL('..', import.meta.url)), requireAudio: args.includes('--require-audio'), allowNoAudio: args.includes('--allow-no-audio') })
+if (result.issues.length) throw new Error(`Sector publication blocked:\n${result.issues.join('\n')}`)
+if (!result.studies) console.log('Sector release gate: no sector batch present; unrelated release may continue. Original TIC unchanged.')
+else if (result.audioDeferred) console.log(`Sector documentary-only release passed: ${result.studies}/66 approved studies; no sector MP3, manifest or audio associations. Audio explicitly deferred, NOT approved.`)
+else if (args.includes('--require-audio')) console.log(`Sector automated release evidence passed: ${result.studies}/66 current recordings, full decode/ASR, discrepancy review and browser controls. No human/native perceptual listening or absolute audio-quality approval.`)
+else console.log(`Sector documentary gate passed: ${result.studies} approved studies. Audio release evidence was NOT evaluated; this is not publication approval.`)
