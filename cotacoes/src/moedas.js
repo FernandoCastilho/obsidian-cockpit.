@@ -13,7 +13,8 @@ export const TFC_SERIES = [
 ]
 export const MOEDAS_SERIES = [
   { id: '604', name: 'US$', kind: 'level', unit: 'R$', note: 'Dólar norte-americano' },
-  { id: '143', name: 'SELIC ACUM. D-2', kind: 'level', unit: 'índice', note: 'Fator acumulado da Selic, defasado em dois dias' },
+  { id: '143', name: 'SELIC ACUM. D-2', kind: 'level', unit: 'índice', note: 'Índice acumulado do BNDES, com Selic defasada em dois dias úteis. Não é taxa anual nem código de série SGS/BCB.' },
+  { id: 'LD1', name: 'SOBRETAXA LCD', kind: 'rate', unit: '% a.a.', note: 'Sobretaxa LCD para operações indiretas, fixa na contratação; referências para novas contratações atualizadas trimestralmente. Pode ser negativa.' },
   { id: '024', name: 'SOBRETAXA FIXA SELIC', kind: 'rate', unit: '% a.a.', note: 'Sobretaxa fixa para contratos indexados à Selic' },
   { id: '236', name: 'TLP-IPCA', kind: 'pct', unit: '% no mês', note: 'Componente IPCA da TLP' },
   { id: 'TR1', name: 'TFBTR60.90', kind: 'rate', unit: '% a.a.', note: 'TFB baseada em TR, 60 meses, liberação em 90 dias' },
@@ -24,7 +25,7 @@ export const GROUPS = {
   moedas: MOEDAS_SERIES,
 }
 export const TFC_DEFINICAO = 'Séries TFC publicadas pelo BNDES em Moedas Contratuais, uma por produto, porte e prazo (siglas e códigos C01 a C26 como na tabela do BNDES; o banco não detalha a sigla na consulta). Em % ao ano; valor diário em dia útil.'
-export const MOEDAS_DEFINICAO = 'Moedas e indicadores contratuais usados em contratos do BNDES, com o código da tabela de Moedas Contratuais: dólar (604), Selic acumulada (143), sobretaxa fixa Selic (024), TLP-IPCA (236) e as TFB baseadas em TR (TR1 e TR2). Valores como publicados pelo BNDES.'
+export const MOEDAS_DEFINICAO = 'Moedas e indicadores contratuais usados em contratos do BNDES, com o código da tabela de Moedas Contratuais: dólar (604), índice Selic acumulada D-2 úteis (143), sobretaxa LCD para operações indiretas (LD1), sobretaxa fixa Selic (024), TLP-IPCA (236) e as TFB baseadas em TR (TR1 e TR2). LD1 é uma taxa anual fixa na contratação, não o custo total; a série acompanha as referências trimestrais para novas contratações. A sobretaxa pode ser negativa.'
 
 // Variação percentual com seta (níveis: dólar, índice da Selic); null quando falta a referência.
 // id: código da série quando a variação é a de um dia (só ela leva o selo de salto).
@@ -38,16 +39,29 @@ export function changePct(value, ref, id = null) {
 // e o valor vigente hoje é o último com data até hoje.
 const today = (now) => new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' })
 export const pointsOf = (data, id, now = Date.now()) => (Array.isArray(data?.series?.[id]?.points) ? data.series[id].points.filter((p) => p[0] <= today(now)) : [])
-const decimals = (s) => (s.kind === 'level' ? (s.id === '143' ? 6 : 4) : 2)
+const decimals = (s) => (s.id === 'LD1' ? 6 : s.kind === 'level' ? (s.id === '143' ? 6 : 4) : 2)
 
-// Linhas de um grupo: último valor, data e variações no dia, no mês e no ano; série ausente fica marcada.
+// LD1 publica vigências, não observações diárias. Preserve a última mudança
+// efetiva entre duas vigências, sem rotulá-la como variação de dia/mês/ano.
+function lastLcdChange(points) {
+  for (let i = points.length - 1; i > 0; i--) {
+    const [date, value] = points[i], [ref, previous] = points[i - 1]
+    if (value === previous) continue
+    const diff = value - previous
+    return { diff, ref, date, dir: diff > 0 ? 'up' : 'down', text: `${diff > 0 ? '▲ +' : '▼ −'}${nf(Math.abs(diff), 6)} p.p.`, jump: false }
+  }
+  return null
+}
+
+// Linhas de um grupo: último valor, data e variações periódicas quando aplicáveis; série ausente fica marcada.
 export function groupRows(data, group, now = Date.now()) {
   return GROUPS[group].map((s) => {
     const points = pointsOf(data, s.id, now)
     if (!points.length) return { ...s, missing: true }
     const [date, value] = points.at(-1)
+    const lcd = s.id === 'LD1'
     const delta = s.kind === 'level' ? (v, r, day) => changePct(v, r, day ? s.id : null) : (v, r, day) => change(v, r, day ? s.kind : null)
-    return { ...s, date, value, text: s.kind === 'rate' ? `${nf(value, 2)}% a.a.` : s.kind === 'pct' ? `${nf(value, 2)}%` : `${s.unit === 'R$' ? 'R$ ' : ''}${nf(value, decimals(s))}`, day: delta(value, points.length > 1 ? points.at(-2) : null, true), month: delta(value, atOrBefore(points, shiftMonths(date, -1))), year: delta(value, atOrBefore(points, shiftMonths(date, -12))), stale: data?.stale?.[s.id] ?? null, points: points.length }
+    return { ...s, date, value, text: s.kind === 'rate' ? `${nf(value, decimals(s))}% a.a.` : s.kind === 'pct' ? `${nf(value, 2)}%` : `${s.unit === 'R$' ? 'R$ ' : ''}${nf(value, decimals(s))}`, day: lcd ? null : delta(value, points.length > 1 ? points.at(-2) : null, true), month: lcd ? null : delta(value, atOrBefore(points, shiftMonths(date, -1))), year: lcd ? null : delta(value, atOrBefore(points, shiftMonths(date, -12))), ...(lcd ? { lastChange: lastLcdChange(points) } : {}), stale: data?.stale?.[s.id] ?? null, points: points.length }
   })
 }
 export { dmy }

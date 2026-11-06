@@ -1,3 +1,5 @@
+import { NEWS_WINDOW_DAYS, recentNews, newsCollectionStale } from './newsWindow.js'
+import { useNewsClock } from './useNewsClock.js'
 import { useMemo, useState } from 'react'
 import { dayOf, groupByDay, searchItems } from './reforma.js'
 import Estado from './Estado.jsx'
@@ -12,33 +14,38 @@ const dayLabel = (key, today) => {
 const short = (key) => new Date(`${key}T12:00:00Z`).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'UTC' }).replace('.', '')
 const hm = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: TZ })
 
-// Matérias da semana por dia, com filtro de dia e busca. data = { items, windowDays, stale }. Usada por Reforma tributária, Setores e Insumos.
-// `simples` (abas de Notícias do Mercado): só a linha do tempo da semana, de hoje para trás, com a quebra por dia na própria lista,
+// Matérias dos últimos cinco dias por dia, com filtro de dia e busca. data = { items, windowDays, stale }. Usada por Reforma tributária, Setores e Insumos.
+// `simples` (abas de Notícias do Mercado): só a linha do tempo dos últimos cinco dias, de hoje para trás, com a quebra por dia na própria lista,
 // sem filtros, busca nem legenda. `prefixo(item)`: marca opcional antes do título (ex.: bandeiras das moedas).
-export default function NoticiasPorDia({ data, label = 'matérias', ariaLabel = 'Matérias da semana', simples = false, prefixo }) {
+export default function NoticiasPorDia({ data, label = 'matérias', ariaLabel = 'Matérias dos últimos cinco dias', simples = false, prefixo }) {
   const [day, setDay] = useState('all')
   const [q, setQ] = useState('')
-  const today = dayOf(Date.now())
-  const found = useMemo(() => searchItems(data?.items ?? [], q), [data, q])
+  const now = useNewsClock()
+  const today = dayOf(now)
+  const items = useMemo(() => recentNews(data?.items, now), [data, now])
+  const stale = newsCollectionStale(data, now)
+  const found = useMemo(() => searchItems(items, q), [items, q])
   const days = useMemo(() => groupByDay(found), [found])
-  const allDays = useMemo(() => groupByDay(data?.items ?? []), [data])
-  const shown = day === 'all' ? days : days.filter((d) => d.key === day)
+  const allDays = useMemo(() => groupByDay(items), [items])
+  const activeDay = allDays.some(d => d.key === day) ? day : 'all'
+  const shown = activeDay === 'all' ? days : days.filter((d) => d.key === activeDay)
   const total = shown.reduce((n, d) => n + d.count, 0)
   return (
     <div className="reforma" aria-label={ariaLabel}>
-      {data?.stale && <Estado tipo="aviso">Atualização indisponível na última coleta; mantidas as matérias anteriores.</Estado>}
+      <p className="muted reforma-count">Publicações dos últimos 5 dias (120 horas), agrupadas pelo dia de publicação em Brasília.</p>
+      {stale && <Estado tipo="aviso">Atualização incompleta, atrasada ou não confirmada. Só são exibidas publicações ainda dentro das últimas 120 horas.</Estado>}
       {!simples && <div className="reforma-controls">
-        <div className="seg reforma-days" role="group" aria-label="Dia da semana">
-          <button type="button" aria-pressed={day === 'all'} onClick={() => setDay('all')}>Semana · {found.length}</button>
-          {allDays.map((d) => <button key={d.key} type="button" aria-pressed={day === d.key} onClick={() => setDay(d.key)}>{d.key === today ? 'Hoje' : short(d.key)} · {days.find((x) => x.key === d.key)?.count ?? 0}</button>)}
+        <div className="seg reforma-days" role="group" aria-label="Dia dos últimos cinco dias">
+          <button type="button" aria-pressed={activeDay === 'all'} onClick={() => setDay('all')}>5 dias · {found.length}</button>
+          {allDays.map((d) => <button key={d.key} type="button" aria-pressed={activeDay === d.key} onClick={() => setDay(d.key)}>{d.key === today ? 'Hoje' : short(d.key)} · {days.find((x) => x.key === d.key)?.count ?? 0}</button>)}
         </div>
         <label className="reforma-busca">Buscar nas matérias
           <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ex.: preço, China, tarifa" />
         </label>
       </div>}
-      {shown.length === 0 ? <Estado>{data.items.length && !simples ? 'Nenhuma matéria para esse filtro.' : 'Nenhuma matéria sobre o tema nos últimos 7 dias.'}</Estado> : (
+      {shown.length === 0 ? <Estado>{items.length && !simples ? 'Nenhuma matéria para esse filtro.' : stale ? 'Nenhuma publicação válida nas últimas 120 horas no arquivo disponível. Não foi possível confirmar a cobertura atual.' : 'Nenhuma publicação válida nas últimas 120 horas nas fontes consultadas. Isso não significa ausência de notícias sobre o tema.'}</Estado> : (
         <div className="reforma-list">
-          {!simples && <p className="muted reforma-count" role="status">{total} {total === 1 ? 'matéria' : 'matérias'} · últimos {data.windowDays} dias · horário de Brasília. Títulos da imprensa agrupados por dia; não são resumo nem análise do conteúdo.</p>}
+          {!simples && <p className="muted reforma-count" role="status">{total} {total === 1 ? 'matéria' : 'matérias'} · últimos {NEWS_WINDOW_DAYS} dias (120 horas de publicação) · horário de Brasília. Títulos da imprensa agrupados por dia; não são resumo nem análise do conteúdo.</p>}
           {shown.map((d) => (
             <section key={d.key} aria-label={dayLabel(d.key, today)}>
               <h3 className="reforma-day">{dayLabel(d.key, today)} <small>{d.count} {d.count === 1 ? 'matéria' : 'matérias'}{simples ? '' : ` · ${d.sources.slice(0, 3).map(([s, n]) => `${s} (${n})`).join(', ')}`}</small></h3>

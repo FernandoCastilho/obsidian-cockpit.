@@ -1,12 +1,13 @@
+import { NEWS_WINDOW_DAYS, recentNews, newsCollectionStale } from './newsWindow.js'
 // Reforma tributária: leitura do arquivo coletado e agrupamento por dia (Brasília).
 const TZ = 'America/Sao_Paulo'
 export const dayOf = (t) => new Date(t).toLocaleDateString('en-CA', { timeZone: TZ })
 const plain = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
-export function normalizeReforma(data) {
+export function normalizeReforma(data, now = Date.now()) {
   if (!data || data.topic !== 'reforma-tributaria' || !Array.isArray(data.items)) throw new Error('Arquivo de reforma tributária inválido')
-  const items = data.items.filter((i) => i && typeof i.title === 'string' && i.title && /^https?:\/\//.test(i.link ?? '') && Number.isFinite(i.t)).sort((a, b) => b.t - a.t)
-  return { generatedAt: data.generatedAt, stale: !!data.stale, error: data.error ?? null, windowDays: data.windowDays ?? 7, items }
+  const items = recentNews(data.items, now).filter((i) => i && typeof i.title === 'string' && i.title && /^https?:\/\//.test(i.link ?? '') && Number.isFinite(i.t)).sort((a, b) => b.t - a.t)
+  return { generatedAt: data.generatedAt, stale: newsCollectionStale(data, now), error: data.error ?? null, windowDays: NEWS_WINDOW_DAYS, items }
 }
 
 // Dias com matéria, do mais recente ao mais antigo: { key, count, items, sources: [[veículo, n]...] }.
@@ -31,21 +32,21 @@ export function searchItems(items, term) {
 }
 
 // Arquivo de temas (setores e insumos): { temas: { id: { label, grupo, items } } } -> dados de um tema no mesmo formato da reforma tributária.
-export function normalizeTemas(data) {
+export function normalizeTemas(data, now = Date.now()) {
   if (!data || typeof data !== 'object' || !data.temas || typeof data.temas !== 'object') throw new Error('Arquivo de temas inválido')
   const out = {}
   for (const [id, t] of Object.entries(data.temas)) {
     if (!t || !Array.isArray(t.items)) continue
-    out[id] = { label: t.label, grupo: t.grupo, generatedAt: data.generatedAt, stale: !!data.stale, windowDays: data.windowDays ?? 7, items: t.items.filter((i) => i && typeof i.title === 'string' && i.title && /^https?:\/\//.test(i.link ?? '') && Number.isFinite(i.t)).sort((a, b) => b.t - a.t) }
+    out[id] = { label: t.label, grupo: t.grupo, generatedAt: data.generatedAt, stale: newsCollectionStale(data, now), windowDays: NEWS_WINDOW_DAYS, items: recentNews(t.items, now).filter((i) => i && typeof i.title === 'string' && i.title && /^https?:\/\//.test(i.link ?? '') && Number.isFinite(i.t)).sort((a, b) => b.t - a.t) }
   }
   return out
 }
 
 // Notícias › Moedas: junta as matérias de dólar, euro, iene e yuan (temas moeda-*) numa linha do tempo, com as moedas de cada uma.
 export const MOEDAS_TEMAS = [['USD', 'moeda-usd'], ['EUR', 'moeda-eur'], ['JPY', 'moeda-jpy'], ['CNH', 'moeda-cnh']]
-export function juntarMoedas(temas) {
+export function juntarMoedas(temas, now = Date.now()) {
   const porLink = new Map()
-  for (const [code, id] of MOEDAS_TEMAS) for (const it of temas?.[id]?.items ?? []) {
+  for (const [code, id] of MOEDAS_TEMAS) for (const it of recentNews(temas?.[id]?.items, now)) {
     const cur = porLink.get(it.link)
     if (cur) { if (!cur.codes.includes(code)) cur.codes.push(code) } else porLink.set(it.link, { ...it, codes: [code] })
   }

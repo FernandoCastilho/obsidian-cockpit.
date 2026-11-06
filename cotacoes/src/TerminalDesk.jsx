@@ -1,5 +1,5 @@
 import RefreshButton from './RefreshButton.jsx'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useId, useLayoutEffect, useRef, useState } from 'react'
 import { fromInput, useIntraday } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
 import { mergeTicks } from './parity.js'
@@ -90,7 +90,7 @@ export function KpiRow({ quotes, rates, ipca, ibov, macro, colors, onOpen, onRat
     <div className="kpis" role="group" aria-label="Indicadores principais">
       {items.map((i) => {
         const points = i.key === 'EURUSD' && i.change == null ? [] : series[i.code] ?? sparks[i.key]
-        const note = !series[i.code] && sparks[i.key]?.length ? `${i.label.replace(/ 12m$/, '')}: ${SPARK_NOTE[i.key]}` : null
+        const note = !series[i.code] && sparks[i.key]?.length && SPARK_NOTE[i.key] ? `${i.label.replace(/ 12m$/, '')}: ${SPARK_NOTE[i.key]}` : null
         const card = (
           <button key={i.key} type="button" className={`kpi${i.rate ? ' kpi-taxa' : ''}`} style={{ '--series': i.rate || i.key === 'IPCA' || i.key === 'IBOV' ? 'var(--amber)' : colors?.[i.code] || 'var(--amber)' }} onClick={() => (i.rate ? onRate(i.key) : i.key === 'IPCA' ? goto('cenarios', 'inflacao') : i.key === 'IBOV' ? goto('noticias') : onOpen(i.code))} aria-label={`${i.label} ${i.value}${i.text ? `, ${i.text}` : ''}: ${i.key === 'IBOV' ? 'abrir notícias' : 'abrir gráfico'}`}>
             <span className="kpi-label"><span className="kpi-name"><Flag code={i.rate || i.key === 'IPCA' || i.key === 'IBOV' ? 'BRL' : i.code} width={16} height={11} />{i.label}</span>{i.rate && <small>{i.key === 'di1' ? 'B3' : i.key === 'selic' ? 'meta a.a.' : 'a.a.'}</small>}{i.key === 'IPCA' && <small>IBGE{i.note ? ` · ${i.note}` : ''}</small>}{i.key === 'IBOV' && <small>pontos · fech.{i.note ? ` ${i.note}` : ''}{i.stale ? ' · sem atualização' : ''}</small>}</span>
@@ -153,7 +153,20 @@ function FinimpHelp({ fin, at, comparable, direct }) {
 
 // `tabs` ([{ id, label, note, refresh }], com `tab` e `onTab`): vários assuntos no mesmo quadro, lado a lado no cabeçalho.
 export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, semAtualizar = false, children }) {
+  const id = useId()
+  const tabRefs = useRef([])
   const active = tabs?.find((t) => t.id === tab) ?? tabs?.[0]
+  const selectTab = (e, index) => {
+    let next
+    if (e.key === 'ArrowRight') next = (index + 1) % tabs.length
+    else if (e.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length
+    else if (e.key === 'Home') next = 0
+    else if (e.key === 'End') next = tabs.length - 1
+    else return
+    e.preventDefault()
+    onTab(tabs[next].id)
+    tabRefs.current[next]?.focus()
+  }
   return (
     <section className={`desk-panel ${className}`}>
       <header>
@@ -163,7 +176,7 @@ export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, 
             <div className="desk-tabs" role="tablist" aria-label={title}>
               {tabs.map((t, i) => [
                 t.grupo && t.grupo !== tabs[i - 1]?.grupo ? <span key={`g-${t.grupo}`} className="desk-tabs-grupo" aria-hidden="true">{t.icone && <span className="desk-tabs-icone">{t.icone}</span>}{t.grupo}</span> : null,
-                <button key={t.id} type="button" role="tab" aria-selected={t.id === active.id} title={t.grupo ? `${t.grupo}: ${t.label}` : undefined} onClick={() => onTab(t.id)}>{t.label}</button>,
+                <button key={t.id} ref={el => { tabRefs.current[i] = el }} id={`${id}-tab-${t.id}`} type="button" role="tab" aria-selected={t.id === active.id} aria-controls={`${id}-panel`} tabIndex={t.id === active.id ? 0 : -1} title={t.grupo ? `${t.grupo}: ${t.label}` : undefined} onKeyDown={e => selectTab(e, i)} onClick={() => onTab(t.id)}>{t.label}</button>,
               ])}
             </div>
             {(active.note ?? note) && <small>{active.note ?? note}</small>}
@@ -177,7 +190,7 @@ export function Panel({ title, note, className = '', refresh, tabs, tab, onTab, 
           </>
         )}
       </header>
-      <div className="desk-panel-body">{children}</div>
+      <div className="desk-panel-body" {...(tabs ? { id: `${id}-panel`, role: 'tabpanel', 'aria-labelledby': `${id}-tab-${active.id}`, tabIndex: 0 } : {})}>{children}</div>
     </section>
   )
 }

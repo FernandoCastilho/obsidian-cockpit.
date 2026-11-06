@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './Feriados.css'
 import { groupHolidayRows } from './holidayView.js'
-import { calFlag, cnMissingYears, holidayMap } from './holidays.js'
+import { calFlag, calendarYearCovered, holidayMap, HOLIDAY_SOURCES } from './holidays.js'
 import Flag from './Flag.jsx'
 
 // Aba Feriados: próximos 12 meses, em ordem de data, com o local e quantos dias faltam.
 const LIST = [
-  { id: 'BR', where: 'Nacional' },
+  { id: 'CIVBR', where: 'Brasil · feriados nacionais por lei' },
+  { id: 'B3', where: 'B3 · sessões de negociação' },
   { id: 'SPE', where: 'Estado de SP' },
   { id: 'SPC', where: 'São Paulo (capital)' },
   { id: 'PRE', where: 'Estado do Paraná' },
@@ -50,28 +51,32 @@ export default function Feriados({ hol }) {
     }
   }
   const groups = groupHolidayRows([...map.values()], place)
-  const cnMissing = (place === 'all' || place === 'CN') && hol?.loaded ? cnMissingYears([y, y + 1], hol.ctx) : []
+  const selected = LIST.filter(c => place === 'all' || c.id === place)
+  const missing = selected.map(c => ({ ...c, years: [y, y + 1].filter(year => !calendarYearCovered(c.id, year, hol?.ctx)) })).filter(c => c.years.length)
+  const count = groups.reduce((total, group) => total + group.rows.length, 0)
+  const financial = ['B3', 'NY', 'UK', 'JP', 'CN'].includes(place)
   return (
     <section className="macro feriados" aria-labelledby="feriados-title">
       <div className="history-head">
         <div>
-          <h1 id="feriados-title">Próximos feriados</h1>
-          <p className="fer-caption">Próximos 12 meses · datas e praças de referência</p>
+          <h1 id="feriados-title">Feriados e funcionamento</h1>
+          <p className="fer-caption">Próximos 12 meses · calendários com escopos distintos</p>
         </div>
-        <label className="fer-filter">Praça
+        <label className="fer-filter">Calendário
           <select value={place} onChange={(event) => setPlace(event.target.value)}>
-            <option value="all">Todas as praças</option>
+            <option value="all">Todos os calendários</option>
             {LIST.map((item) => <option key={item.id} value={item.id}>{item.where}</option>)}
           </select>
         </label>
       </div>
-      {cnMissing.length > 0 && <p className="status stale" role="status">China: o calendário oficial de {cnMissing.join(' e ')} ainda não foi publicado pelo governo (costuma sair em novembro); esses anos aparecem sem feriados chineses.</p>}
+      <p className="status">{place === 'all' ? 'A lista reúne feriados previstos em lei e datas sem funcionamento em calendários financeiros. Uma data pode valer apenas para o calendário indicado.' : financial ? place === 'B3' ? 'Suspensão de sessões de negociação da B3; não indica feriado civil, expediente bancário ou todas as regras de registro e liquidação. Em 24/12/2026 há exceção para alocação de registros de Balcão sem contraparte central.' : 'Calendário financeiro de referência da praça; não representa todas as bolsas ou modalidades de liquidação.' : place === 'CIVBR' ? 'Feriados nacionais de data fixa previstos em lei. Feriados religiosos, como Sexta-feira Santa e Corpus Christi, dependem da legislação municipal. Pontos facultativos e recessos administrativos não estão incluídos.' : 'Somente registros específicos desta cidade, estado ou região. Não inclui automaticamente os feriados nacionais nem os demais calendários aplicáveis; consulte também Brasil · feriados nacionais por lei.'}</p>
+      {missing.length > 0 && <p className="status stale" role="status">Cobertura parcial: {missing.map(c => `${c.where} (${c.years.join(', ')})`).join('; ')} sem calendário completo verificado nesta base. A ausência de registros não permite afirmar que não haverá feriados ou suspensões.</p>}
       <div aria-live="polite" aria-atomic="true" className="fer-count">
-        {groups.reduce((count, group) => count + group.rows.length, 0)} feriados nesta seleção
+        {count} {count === 1 ? 'data cadastrada' : 'datas cadastradas'} nesta seleção{missing.length > 0 ? ' · cobertura parcial' : ''}
       </div>
       {groups.length ? <div className="fer-months">{groups.map((group) => (
         <section className="fer-month" key={group.month} aria-labelledby={`month-${group.month}`}>
-          <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })} <span className="fer-month-count">· {group.rows.length} {group.rows.length === 1 ? 'feriado' : 'feriados'}</span></h2>
+          <h2 id={`month-${group.month}`}>{new Date(`${group.month}-01T12:00:00`).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })} <span className="fer-month-count">· {group.rows.length} {group.rows.length === 1 ? 'data' : 'datas'}</span></h2>
           <ul className="fer-list">
           {group.rows.map((r) => {
             const f = fmt(r.d)
@@ -86,7 +91,8 @@ export default function Feriados({ hol }) {
           })}
           </ul>
         </section>
-      ))}</div> : <p className="status">Nenhum feriado nesta praça nos próximos 12 meses.</p>}
+      ))}</div> : <p className="status">{missing.length ? 'Não há datas cadastradas nesta seleção. Consulte a fonte oficial: a cobertura incompleta não indica ausência de feriados.' : 'Não há datas cadastradas neste recorte e período. Confira o escopo do calendário selecionado.'}</p>}
+      <details><summary>Escopo e fontes conferidas em 05/11/2026</summary><p>Feriados previstos em lei, pontos facultativos e sessões de mercado não são equivalentes. Calendários anuais de mercado não são extrapolados para anos sem conferência; regras locais dependem da legislação aplicável.</p><ul>{HOLIDAY_SOURCES.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>)}</ul></details>
     </section>
   )
 }

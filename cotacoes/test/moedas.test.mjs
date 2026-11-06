@@ -6,7 +6,7 @@ import { GROUPS, MOEDAS_SERIES, TFC_SERIES, changePct, groupRows, pointsOf } fro
 test('catálogo da tela espelha o da coleta (códigos, nomes, tipo e unidade)', () => {
   assert.deepEqual(TFC_SERIES, LIB_TFC)
   assert.deepEqual(MOEDAS_SERIES.map(({ id, name, kind, unit }) => ({ id, name, kind, unit })), LIB_MOEDAS)
-  assert.equal(MOEDAS_CATALOG.length, 24 + 6)
+  assert.equal(MOEDAS_CATALOG.length, 24 + 7)
   assert.equal(moedaUrl('C02'), 'https://www.bndes.gov.br/Moedas/umC02.txt')
   assert.ok(!TFC_SERIES.some(([id]) => id === 'C19' || id === 'C21'))
 })

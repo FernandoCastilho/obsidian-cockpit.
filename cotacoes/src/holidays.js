@@ -59,17 +59,30 @@ function brazil(y) {
   ])
 }
 
+// Feriados nacionais de data fixa previstos em lei (leis federais 662/1949, 6.802/1980,
+// 10.607/2002 e 14.759/2023). Feriados religiosos dependem da legislação municipal.
+const brazilCivil = y => sortMap([...brazil(y)].filter(([, name]) => !['Carnaval (segunda)', 'Carnaval (terça)', 'Sexta-feira Santa', 'Corpus Christi'].includes(name)))
+// Calendário anual de negociação, conferido na publicação oficial da B3 de 09/01/2026.
+// Não extrapola vésperas/expediente para anos sem calendário conferido; não é calendário de liquidação de todos os segmentos.
+const b3Trading = y => y === 2026 ? sortMap([
+  ...[...brazil(y)].filter(([d]) => !isWeekend(d)),
+  [iso(y, 12, 24), 'B3 · sem sessão de negociação (véspera de Natal)'],
+  [iso(y, 12, 31), 'B3 · sem sessão de negociação (véspera de Ano Novo)'],
+]) : new Map()
+
 const saoPaulo = (y) => sortMap([[iso(y, 1, 25), 'Aniversário da cidade de São Paulo'], [iso(y, 7, 9), 'Revolução Constitucionalista (estadual SP)']])
 // Minas Gerais: o feriado estadual (21/04) já é nacional; entram os municipais de Belo Horizonte.
 const minasGerais = (y) => sortMap([[iso(y, 8, 15), 'Assunção de Nossa Senhora (Belo Horizonte)'], [iso(y, 12, 8), 'Imaculada Conceição (Belo Horizonte)']])
-// Feriados municipais (aniversários e padroeiros fixos). Datas móveis como Corpus Christi já estão no calendário nacional (B3).
+// Regras locais são separadas do calendário financeiro BR; feriado religioso municipal não vira feriado nacional.
 const fixed = (list) => (y) => sortMap(list.map(([m, d, n]) => [iso(y, m, d), n]))
 const spEstado = fixed([[7, 9, 'Revolução Constitucionalista']])
 const spCidade = fixed([[1, 25, 'Aniversário de São Paulo']])
-// Curitiba: aniversário da cidade (29/03) e padroeira Nossa Senhora da Luz dos Pinhais (08/09); estado do Paraná: Emancipação Política (19/12).
-// Corpus Christi (móvel) já está no calendário nacional.
-const paEstado = fixed([[12, 19, 'Emancipação Política do Paraná']])
-const curitibaCidade = fixed([[3, 29, 'Aniversário de Curitiba'], [9, 8, 'Nossa Senhora da Luz dos Pinhais (padroeira)']])
+// 19/12 não é feriado civil estadual (Lei PR 18.384/2014; TRT9, Súmula 37).
+// Não há aqui inventário completo de feriados estaduais do PR: a visão sinaliza essa cobertura.
+const paEstado = () => new Map()
+// Lei municipal 3.015/1967, referida no Decreto Curitiba 2.385/2025: três feriados religiosos.
+// 29/03 é aniversário da cidade, não uma regra de feriado municipal.
+const curitibaCidade = y => sortMap([[addDays(easter(y), -2), 'Sexta-feira Santa'], [addDays(easter(y), 60), 'Corpus Christi'], [iso(y, 9, 8), 'Nossa Senhora da Luz dos Pinhais (padroeira)']])
 const curitiba = (y) => sortMap([...curitibaCidade(y), ...paEstado(y)])
 const sorocaba = fixed([[8, 15, 'Aniversário de Sorocaba']])
 const barueri = fixed([[3, 26, 'Aniversário de Barueri'], [6, 24, 'São João Batista (padroeiro)']])
@@ -78,8 +91,8 @@ const londrina = (y) => sortMap([[addDays(easter(y), 68), 'Sagrado Coração de 
 const maringa = fixed([[5, 10, 'Aniversário de Maringá']])
 // Campinas: Dia do Evangélico (12/08, Lei municipal 16.785/2025, a partir de 2026) e Nossa Senhora da Conceição (08/12, padroeira).
 const campinas = (y) => sortMap([...(y >= 2026 ? [[iso(y, 8, 12), 'Dia do Evangélico']] : []), [iso(y, 12, 8), 'Nossa Senhora da Conceição (padroeira)']])
-// Região de Campinas: feriados municipais da lista do TJ-SP (CSM, sessão de 24/11/2025). Corpus Christi, Finados e 20/11 já são
-// nacionais e 09/07 é estadual. Paulínia: Sagrado Coração de Jesus é móvel (Páscoa + 68 dias).
+// Região de Campinas: registros municipais da lista do TJ-SP (CSM, sessão de 24/11/2025).
+// O recorte é específico; não compõe automaticamente feriados nacionais/estaduais. Paulínia: Páscoa + 68 dias.
 const regiaoCampinas = (y) => sortMap([
   [iso(y, 1, 20), 'São Sebastião, padroeiro (Valinhos)'],
   [iso(y, 2, 2), 'Nossa Senhora da Candelária, padroeira (Indaiatuba)'],
@@ -176,7 +189,9 @@ function japan(y) {
 }
 
 export const CALENDARS = [
-  { id: 'BR', label: 'Brasil (B3/ANBIMA)', short: 'Brasil', rule: brazil },
+  { id: 'BR', label: 'Brasil (referência de dias úteis financeiros)', short: 'Brasil financeiro', rule: brazil },
+  { id: 'CIVBR', label: 'Brasil (feriados nacionais por lei)', short: 'Brasil · nacionais', rule: brazilCivil, hidden: true },
+  { id: 'B3', label: 'B3 (sessões de negociação)', short: 'B3', rule: b3Trading, hidden: true },
   { id: 'SP', label: 'São Paulo (cidade e estado)', short: 'São Paulo', rule: saoPaulo },
   { id: 'MG', label: 'Minas Gerais (Belo Horizonte)', short: 'Minas Gerais', rule: minasGerais },
   { id: 'PR', label: 'Curitiba (cidade e estado)', short: 'Curitiba', rule: curitiba },
@@ -224,6 +239,23 @@ const nameOf = (cal, s, ctx) => holidayMap(cal, Number(s.slice(0, 4)), ctx).get(
 
 // A China só tem dado quando o ato do ano foi publicado: devolve os anos sem dado, para avisar o usuário.
 export const cnMissingYears = (years, ctx = {}) => [...new Set(years)].filter((y) => !ctx.cn?.[y])
+
+export function calendarYearCovered(cal, year, ctx = {}) {
+  if (cal === 'CN') return !!ctx.cn?.[year]
+  if (cal === 'B3') return year === 2026
+  if (cal === 'PRE') return false // ausência de inventário estadual completo não é ausência de feriado
+  return CALENDARS.some(c => c.id === cal)
+}
+
+export const HOLIDAY_SOURCES = [
+  { label: 'Feriados nacionais · Lei 10.607/2002', url: 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10607.htm' },
+  { label: 'Nossa Senhora Aparecida · Lei 6.802/1980', url: 'https://www.planalto.gov.br/ccivil_03/leis/l6802.htm' },
+  { label: 'Âmbito civil e religioso dos feriados · Lei 9.093/1995', url: 'https://www.planalto.gov.br/ccivil_03/leis/l9093.htm' },
+  { label: 'Consciência Negra · Lei 14.759/2023', url: 'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14759.htm' },
+  { label: 'Curitiba · Decreto 2.385/2025 e Lei Municipal 3.015/1967', url: 'https://legisladocexterno.curitiba.pr.gov.br/VisualizarHTML.aspx?id=458542' },
+  { label: 'Paraná · 19 de dezembro não é feriado civil (TRT9)', url: 'https://www.trt9.jus.br/portal/noticias.xhtml?id=5243491' },
+  { label: 'B3 · calendário de negociação de 2026', url: 'https://www.b3.com.br/pt_br/noticias/calendario-de-negociacao-da-b3-confira-o-funcionamento-da-bolsa-em-2026.htm' },
+]
 
 export function isBusinessDay(s, cal, ctx = {}) {
   if (cal === 'CN' && ctx.cn?.[s.slice(0, 4)]?.work.has(s)) return true // sábado/domingo de compensação trabalha

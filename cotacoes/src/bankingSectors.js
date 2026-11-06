@@ -12,11 +12,12 @@ export const BANKING_GROUPS = [
   {label:'Saúde e cuidados',topics:[['saude-assistencial','Hospitais, clínicas e cuidados'],['diagnosticos','Diagnósticos e laboratórios'],['produtos-saude','Produtos e equipamentos de saúde']]},
   {label:'Educação e serviços empresariais',topics:[['servicos','Serviços'],['educacao','Educação privada'],['servicos-profissionais','Serviços profissionais'],['terceirizacao','Terceirização e facilities']]},
   {label:'Turismo, lazer e alimentação',topics:[['turismo-hospedagem','Turismo e hospedagem'],['alimentacao-servicos','Restaurantes e alimentação'],['lazer-entretenimento','Lazer e entretenimento']]},
-  {label:'Energia e saneamento',topics:[['energia','Energia elétrica e renováveis'],['saneamento','Água, saneamento e resíduos']]},
+  {label:'Energia e saneamento',topics:[['energia','Energia elétrica e renováveis'],['saneamento','Água, saneamento e resíduos'],['reciclagem','Reciclagem','papel papelão aparas plástico PET PEAD PEBD PELBD PP metais ferrosos não ferrosos sucata cobre alumínio vidro triagem reprocessamento recuperação materiais economia circular']]},
   {label:'Financeiro e seguros',topics:[['servicos-financeiros','Serviços financeiros e cooperativas de crédito'],['seguros','Seguros e intermediação']]},
   {label:'Extrativismo e materiais básicos',topics:[['mineracao','Mineração e materiais básicos'],['oleo-gas','Petróleo, gás e biocombustíveis']]},
 ]
-export const BANKING_TOPICS = BANKING_GROUPS.flatMap(group=>group.topics.map(([id,label])=>({id,label,grupo:group.label,editorial:true,available:SETORES.some(topic=>topic.id===id)})))
+// Reciclagem usa a camada setorial nova; não entra no coletor legado de SETORES.
+export const BANKING_TOPICS = BANKING_GROUPS.flatMap(group=>group.topics.map(([id,label,keywords=''])=>({id,label,keywords,grupo:group.label,editorial:true,available:id==='reciclagem'||SETORES.some(topic=>topic.id===id)})))
 export const bankingTopic = id => BANKING_TOPICS.find(topic=>topic.id===id)
 export const resolveBankingTopic = route => bankingTopic(String(route??'').split('?')[0])?.id || null
 export const BANKING_VISIT_QUESTIONS = [

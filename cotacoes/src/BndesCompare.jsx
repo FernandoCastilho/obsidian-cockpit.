@@ -21,7 +21,7 @@ export default function ComparaSeries({ items, loading, period }) {
   const bad = range && range.start > range.end
   const series = useMemo(() => items.map((it, i) => {
     const raw = toPoints(clip(it.list, bad ? null : range))
-    return { key: it.id, name: it.name, short: it.short, unit: it.unit, color: colorOf(i), level: raw, points: pct ? normalize(raw) : raw, decimals: it.decimals }
+    return { key: it.id, name: it.name, short: it.short, unit: it.unit, stepped: it.stepped, color: colorOf(i), level: raw, points: pct ? normalize(raw) : raw, decimals: it.decimals }
   }), [items, range, bad, pct])
   const shown = series.filter((s) => s.points.length > 0)
   const unit = same ? items[0].unit : null

@@ -6,7 +6,7 @@ const raw=JSON.parse(await readFile(new URL('../public/indicator-history.json',i
 const all=normalizeIndicatorHistory(raw)
 test('three official real series preserve units and verified latest values, ISM remains unlicensed',()=>{
  assert.equal(all.length,5)
- for(const [id,count,value] of [['unemployment-br',24,5.3],['payroll-us',32,29000],['caged',13,165827]]) {
+ for(const [id,count,value] of [['unemployment-br',25,5.2],['payroll-us',32,29000],['caged',14,121305]]) {
   const s=all.find(s=>s.id===id);assert.equal(s.points.length,count);assert.equal(s.points.at(-1).value,value);assert.ok(s.sourceUrl.startsWith('https://'));assert.ok(s.revisionNote)
  }
  assert.equal(all.find(s=>s.id==='unemployment-br').frequency,'rolling-quarter')
@@ -15,9 +15,9 @@ test('three official real series preserve units and verified latest values, ISM 
 })
 test('monthly ranges are inclusive, support short/long/single/empty and reject invalid order',()=>{
  const p=all.find(s=>s.id==='caged').points
- assert.deepEqual(indicatorWindow(p,6),{start:'2026-03',end:'2026-08'})
+ assert.deepEqual(indicatorWindow(p,6),{start:'2026-04',end:'2026-09'})
  assert.equal(filterIndicatorPoints(p,indicatorWindow(p,6)).points.length,6)
- assert.equal(filterIndicatorPoints(p,indicatorWindow(p,24)).points.length,13)
+ assert.equal(filterIndicatorPoints(p,indicatorWindow(p,24)).points.length,14)
  assert.equal(filterIndicatorPoints(p,{start:'2026-08',end:'2026-08'}).points.length,1)
  assert.equal(filterIndicatorPoints(p,{start:'2020-01',end:'2020-02'}).points.length,0)
  assert.ok(filterIndicatorPoints(p,{start:'2026-09',end:'2026-08'}).error)

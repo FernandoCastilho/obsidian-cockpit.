@@ -1,7 +1,7 @@
 // BNDES Finame Materiais (Materiais Industrializados): regras do produto, base legal e a conta da operação indireta.
 // Regras conforme a página do produto e as circulares do BNDES vigentes em novembro de 2026 (ver FONTES); o agente financeiro
 // confirma as condições de cada operação. A tela mostra a data da regra e avisa o que precisa de conferência.
-import { IOF_PJ, monthlyRate } from './emprestimo.js'
+import { IOF_PJ, monthlyRate, parseDecimal } from './emprestimo.js'
 
 export const REGRAS = {
   conferidoEm: '2026-11-04',
@@ -15,7 +15,7 @@ export const REGRAS = {
   taxaBndes: { 'mpme-nne': 0.95, mpme: 1.25, grande: 1.25 }, // % a.a. (página do produto, lida em 04/11/2026); 1,25% desde 22/01/2026 segundo a Abimaq
   selicSuspensa: 'Circular SUP/ADIG nº 09/2026, de 22/01/2026 (altera a Circular SUP/ADIG nº 13/2022)',
   reembolsoMeses: 12, // notas fiscais emitidas até 12 meses antes do protocolo
-  itens: 'bens industrializados novos, de fabricação nacional e credenciados no BNDES (lista por NCM na página do produto), usados na atividade do cliente',
+  itens: 'bens industrializados novos, de fabricação nacional, enquadrados na lista NCM do Finame Materiais Industrializados e nos critérios de origem CST/CSOSN, usados na atividade do cliente; o produto não exige credenciamento dos materiais no CFI',
   foraDoProduto: 'alimentos, bebidas, combustíveis, lubrificantes e máquinas ou equipamentos credenciáveis no CFI (esses vão para o Finame tradicional)',
   nacionalizacao: 'conteúdo importado de até 40% ou cumprimento do Processo Produtivo Básico (PPB), verificado pelo CST ou CSOSN da nota (códigos iniciados em 0, 4 e 5)',
   // IOF: alíquota zero. O Finame Materiais é operação "efetuada com recursos da Agência Especial de Financiamento Industrial - FINAME"
@@ -153,13 +153,19 @@ export function vencimento(liberacao, mes) {
 // Resumo da operação. Entradas em % a.a. e R$. Na TFB e na TFC, custoFinanceiro é a taxa fixa e a taxa é nominal. Na TLP, custoFinanceiro é a
 // TLP (parcela prefixada, real) e `ipca` é a projeção anual: a taxa de juros composta é real e o saldo é corrigido pelo IPCA.
 export const IOF_ZERO = { fixed: 0, daily: 0 }
+export const validIpcaProjection = ipca => Number.isFinite(ipca) && ipca >= -50 && ipca <= 100
+export function parseIpcaProjection(text) {
+  const value = String(text).trim(), negative = value.startsWith('-')
+  const parsed = parseDecimal(negative ? value.slice(1) : value)
+  return parsed === null ? null : negative ? -parsed : parsed
+}
 export function simular({ valor, participacao = 100, prazo, carencia = 0, custo, custoFinanceiro, ipca = 0, taxaBndes, taxaAgente, sistema = 'sac', periodicidade = 1, composicao = 'capitalizada', iof = IOF_ZERO }) {
   const check = conferir({ valor, participacao, prazo, carencia, custo })
   const iofOk = iof && [iof.fixed, iof.daily].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
-  const ipcaOk = custo !== 'tlp' || (Number.isFinite(ipca) && ipca >= -50 && ipca <= 100)
+  const ipcaOk = custo !== 'tlp' || validIpcaProjection(ipca)
   const taxasOk = [custoFinanceiro, taxaBndes, taxaAgente].every((v) => Number.isFinite(v) && v >= 0 && v <= 100)
   if (!taxasOk) check.erros.push('Informe o custo financeiro, a taxa do BNDES e o spread da instituição em % a.a.')
-  if (!ipcaOk) check.erros.push('Informe o IPCA esperado em % a.a.')
+  if (!ipcaOk) check.erros.push('Informe o IPCA esperado de -50 a 100% a.a., limite deste modelo.')
   if (!iofOk) check.erros.push('Informe as alíquotas do IOF em % (0 e 0 se o agente confirmar alíquota zero).')
   if (check.erros.length) return { ok: false, ...check }
   const financiado = check.financiado

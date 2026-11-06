@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 // Explicit routes prevent indexing hidden prototypes and private/transient forms.
 export const SEARCH_PAGES = {
+  'ContaGarantida.jsx':['calculadora/conta-garantida','Conta Garantida: utilização, amortização, juros e IOF'],
+  'AnaliseDesconto.jsx':['calculadora/analise-desconto','Análise de desconto: títulos e capital de giro Price'],
   'SetoresB3.jsx':['setores/b3','Classificação setorial B3: fonte e cobertura'],
   'finimpHelpContent.js':['calculadora/finimp','FINIMP: fórmulas e explicações'],
   'FinimpComparacao.jsx':['calculadora/finimp','FINIMP: comparação de propostas e atingir meta'],
@@ -14,7 +16,7 @@ export const SEARCH_PAGES = {
   'RecuperacaoJudicial.jsx':['cenarios/recuperacao','Recuperação judicial'], 'Inadimplencia.jsx':['cenarios/inadimplencia','Inadimplência PF e PJ'], 'MarketContext.jsx':['cenarios/commodities','Commodities e atividade'],
   'Outros.jsx':['cenarios/inflacao','Inflação e fiscal'], 'Indexadores.jsx':['cenarios/indexadores','Indexadores'],
   'InflacaoPesos.jsx':['cenarios/inflacao','Inflação: o que pesa'], 'Bndes.jsx':['bndes','BNDES'], 'Setores.jsx':['setores','Setores e insumos'],
-  'Calculadora.jsx':['calculadora/giro','Capital de Giro'], 'Feriados.jsx':['feriados','Feriados'], 'News.jsx':['noticias','Notícias'],
+  'BndesLcdCap.jsx':['calculadora/bndes-selic-lcd','BNDES Selic capitalizada + LCD'], 'Calculadora.jsx':['calculadora/giro','Capital de Giro'], 'Feriados.jsx':['feriados','Feriados'], 'News.jsx':['noticias','Notícias'],
   'ReformaTributaria.jsx':['resumo','Notícias do Mercado'], 'Aprender.jsx':['aprender','Aprender'],
   'ConceitoDiario.jsx':['aprender','Conceito do dia'],
   'AlertaVariacao.jsx':['resumo','Alerta de variação'], 'IpcaGrupoChart.jsx':['cenarios/inflacao','IPCA por grupos'],

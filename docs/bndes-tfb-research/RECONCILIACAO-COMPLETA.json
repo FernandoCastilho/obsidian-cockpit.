@@ -1,0 +1,1474 @@
+{
+  "report": {
+    "validation": "arithmetic-reconciliation-not-contract-certification",
+    "rowsMatched": 34,
+    "matchedFields": 204,
+    "observedTotals": {
+      "interestCents": 84297058,
+      "principalCents": 300000000,
+      "paymentCents": 384297058
+    },
+    "printedTotals": {
+      "interestCents": 84517058,
+      "principalCents": 300000000,
+      "paymentCents": 384517058
+    },
+    "printedExcessCents": 220000,
+    "iofCents": 9418273,
+    "netReceivedCents": 290581727,
+    "postReleasePaymentsIncludingFeeCents": 384517058,
+    "economicFinanceCostCents": 93935331,
+    "datedReturn": {
+      "annualRate": 0.20156889928931132,
+      "residualCents": 5.21540641784668e-8,
+      "dayCount": "actual-365-fixed",
+      "interval": "elapsed-days",
+      "regulatoryCetValidated": false
+    },
+    "reportedAnnualCet": 0.2001,
+    "annualDifferencePercentagePoints": 0.14688992893113206,
+    "monthly30DayEquivalent": 0.01520719239968107,
+    "evidenceOrigin": "user-authored-test",
+    "cetPending": "Original formula and inputs of the user-generated test scenario, not a bank calculation."
+  },
+  "calculation": {
+    "ok": true,
+    "validationStatus": "estimate-not-contract-validated",
+    "numericalPolicy": "exact-rational-integer-years-otherwise-binary-with-half-cent-guard",
+    "productId": "bndes-credito-pequenas-empresas",
+    "principalRoundingPolicy": "remaining-balance-each-event",
+    "profile": {
+      "productId": "bndes-credito-pequenas-empresas",
+      "lenderProfileId": "cenario-usuario-tfb-2026-10",
+      "version": "0.2.1-research",
+      "status": "inferred",
+      "scope": "Reconciliação de cenário de teste montado pelo usuário. Não é proposta emitida por banco nem regra geral de Finame/TFC.",
+      "evidenceOrigin": {
+        "kind": "user-authored-test",
+        "source": "Esclarecimento explícito do usuário em 05/11/2026: ele montou as imagens para testar com base em cálculos oficiais."
+      },
+      "asOf": "2026-11-05",
+      "dayCount": "actual-actual-calendar-year",
+      "intervalBoundaries": "exclude-start-include-end",
+      "businessDayAdjustment": "following",
+      "rules": [
+        {
+          "rule": "grace-backwards",
+          "status": "confirmed-source-applicability-unverified",
+          "source": "https://www.bndes.gov.br/sbn/BNDES_online/Arquivos/01-22Cir13-Anexo-I-Procedimentos-Operacionais.pdf",
+          "section": "5.3",
+          "scope": "Aplicabilidade depende da operação."
+        },
+        {
+          "rule": "following",
+          "status": "observed",
+          "source": "Foto do cenário de teste e Anexo I, item 5.",
+          "scope": "Somente datas verificadas."
+        },
+        {
+          "rule": "interest-day-count",
+          "status": "inferred",
+          "source": "Reconciliação das 34 linhas nas três fotos completas.",
+          "scope": "Cenário de teste fotografado."
+        },
+        {
+          "rule": "iof-settlement",
+          "status": "observed",
+          "source": "Nota do IOF na foto.",
+          "scope": "Retido na liberação deste cenário de teste."
+        },
+        {
+          "rule": "fee-settlement",
+          "status": "observed",
+          "source": "Nota da tarifa na foto.",
+          "scope": "Primeira cobrança deste cenário de teste."
+        }
+      ]
+    },
+    "annualRate": {
+      "decimal": "0.175402",
+      "asOf": "2026-11-05",
+      "status": "inferred",
+      "source": "Taxa candidata que reproduz as 34 linhas do cenário montado pelo usuário; precisão original das células não confirmada. Data da análise, não data-base presumida da cotação."
+    },
+    "calendar": {
+      "id": "observed-dates-only",
+      "version": "2026-11-05",
+      "completeness": "partial",
+      "source": "Dias não úteis observados nos deslocamentos das 34 linhas. Não representa calendário bancário integral."
+    },
+    "horizon": {
+      "lastNominalDate": "2029-11-15",
+      "observedRowCount": 34,
+      "source": "Três fotos completas entregues em 05/11/2026, com todos os 34 pagamentos e total impresso.",
+      "completeContractFlow": false,
+      "unshownEventCount": 0
+    },
+    "paymentEventCoverage": {
+      "covered": 34,
+      "expected": 34,
+      "allExpectedEventsCovered": true
+    },
+    "rows": [
+      {
+        "number": 1,
+        "nominalDate": "2027-02-15",
+        "date": "2027-02-15",
+        "openingCents": 300000000,
+        "interestCents": 15252044,
+        "principalCents": 0,
+        "paymentCents": 15252044,
+        "closingCents": 300000000,
+        "inGrace": true,
+        "periodStart": "2026-10-26",
+        "days": 112,
+        "yearSegments": [
+          {
+            "year": 2026,
+            "days": 66,
+            "denominator": 365
+          },
+          {
+            "year": 2027,
+            "days": 46,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "nominalDate": "2027-03-15",
+        "date": "2027-03-15",
+        "openingCents": 300000000,
+        "interestCents": 3742399,
+        "principalCents": 9090909,
+        "paymentCents": 12833308,
+        "closingCents": 290909091,
+        "inGrace": false,
+        "periodStart": "2027-02-15",
+        "days": 28,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 28,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "nominalDate": "2027-04-15",
+        "date": "2027-04-15",
+        "openingCents": 290909091,
+        "interestCents": 4020489,
+        "principalCents": 9090909,
+        "paymentCents": 13111398,
+        "closingCents": 281818182,
+        "inGrace": false,
+        "periodStart": "2027-03-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 31,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "nominalDate": "2027-05-15",
+        "date": "2027-05-17",
+        "openingCents": 281818182,
+        "interestCents": 4021381,
+        "principalCents": 9090909,
+        "paymentCents": 13112290,
+        "closingCents": 272727273,
+        "inGrace": false,
+        "periodStart": "2027-04-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 32,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "nominalDate": "2027-06-15",
+        "date": "2027-06-15",
+        "openingCents": 272727273,
+        "interestCents": 3524469,
+        "principalCents": 9090909,
+        "paymentCents": 12615378,
+        "closingCents": 263636364,
+        "inGrace": false,
+        "periodStart": "2027-05-17",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 29,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "nominalDate": "2027-07-15",
+        "date": "2027-07-15",
+        "openingCents": 263636364,
+        "interestCents": 3525251,
+        "principalCents": 9090909,
+        "paymentCents": 12616160,
+        "closingCents": 254545455,
+        "inGrace": false,
+        "periodStart": "2027-06-15",
+        "days": 30,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 30,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "nominalDate": "2027-08-15",
+        "date": "2027-08-16",
+        "openingCents": 254545455,
+        "interestCents": 3632215,
+        "principalCents": 9090909,
+        "paymentCents": 12723124,
+        "closingCents": 245454546,
+        "inGrace": false,
+        "periodStart": "2027-07-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 32,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "nominalDate": "2027-09-15",
+        "date": "2027-09-15",
+        "openingCents": 245454546,
+        "interestCents": 3282131,
+        "principalCents": 9090909,
+        "paymentCents": 12373040,
+        "closingCents": 236363637,
+        "inGrace": false,
+        "periodStart": "2027-08-16",
+        "days": 30,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 30,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "nominalDate": "2027-10-15",
+        "date": "2027-10-15",
+        "openingCents": 236363637,
+        "interestCents": 3160570,
+        "principalCents": 9090909,
+        "paymentCents": 12251479,
+        "closingCents": 227272728,
+        "inGrace": false,
+        "periodStart": "2027-09-15",
+        "days": 30,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 30,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "nominalDate": "2027-11-15",
+        "date": "2027-11-16",
+        "openingCents": 227272728,
+        "interestCents": 3243049,
+        "principalCents": 9090909,
+        "paymentCents": 12333958,
+        "closingCents": 218181819,
+        "inGrace": false,
+        "periodStart": "2027-10-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 32,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "nominalDate": "2027-12-15",
+        "date": "2027-12-15",
+        "openingCents": 218181819,
+        "interestCents": 2819575,
+        "principalCents": 9090909,
+        "paymentCents": 11910484,
+        "closingCents": 209090910,
+        "inGrace": false,
+        "periodStart": "2027-11-16",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 29,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "nominalDate": "2028-01-15",
+        "date": "2028-01-17",
+        "openingCents": 209090910,
+        "interestCents": 3073163,
+        "principalCents": 9090909,
+        "paymentCents": 12164072,
+        "closingCents": 200000001,
+        "inGrace": false,
+        "periodStart": "2027-12-15",
+        "days": 33,
+        "yearSegments": [
+          {
+            "year": 2027,
+            "days": 16,
+            "denominator": 365
+          },
+          {
+            "year": 2028,
+            "days": 17,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "nominalDate": "2028-02-15",
+        "date": "2028-02-15",
+        "openingCents": 200000001,
+        "interestCents": 2577504,
+        "principalCents": 9090909,
+        "paymentCents": 11668413,
+        "closingCents": 190909092,
+        "inGrace": false,
+        "periodStart": "2028-01-17",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 29,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "nominalDate": "2028-03-15",
+        "date": "2028-03-15",
+        "openingCents": 190909092,
+        "interestCents": 2460344,
+        "principalCents": 9090909,
+        "paymentCents": 11551253,
+        "closingCents": 181818183,
+        "inGrace": false,
+        "periodStart": "2028-02-15",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 29,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "nominalDate": "2028-04-15",
+        "date": "2028-04-17",
+        "openingCents": 181818183,
+        "interestCents": 2668744,
+        "principalCents": 9090909,
+        "paymentCents": 11759653,
+        "closingCents": 172727274,
+        "inGrace": false,
+        "periodStart": "2028-03-15",
+        "days": 33,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 33,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "nominalDate": "2028-05-15",
+        "date": "2028-05-15",
+        "openingCents": 172727274,
+        "interestCents": 2148791,
+        "principalCents": 9090909,
+        "paymentCents": 11239700,
+        "closingCents": 163636365,
+        "inGrace": false,
+        "periodStart": "2028-04-17",
+        "days": 28,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 28,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 17,
+        "nominalDate": "2028-06-15",
+        "date": "2028-06-16",
+        "openingCents": 163636365,
+        "interestCents": 2328571,
+        "principalCents": 9090909,
+        "paymentCents": 11419480,
+        "closingCents": 154545456,
+        "inGrace": false,
+        "periodStart": "2028-05-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 32,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 18,
+        "nominalDate": "2028-07-15",
+        "date": "2028-07-17",
+        "openingCents": 154545456,
+        "interestCents": 2130009,
+        "principalCents": 9090909,
+        "paymentCents": 11220918,
+        "closingCents": 145454547,
+        "inGrace": false,
+        "periodStart": "2028-06-16",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 31,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 19,
+        "nominalDate": "2028-08-15",
+        "date": "2028-08-15",
+        "openingCents": 145454547,
+        "interestCents": 1874548,
+        "principalCents": 9090909,
+        "paymentCents": 10965457,
+        "closingCents": 136363638,
+        "inGrace": false,
+        "periodStart": "2028-07-17",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 29,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 20,
+        "nominalDate": "2028-09-15",
+        "date": "2028-09-15",
+        "openingCents": 136363638,
+        "interestCents": 1879420,
+        "principalCents": 9090909,
+        "paymentCents": 10970329,
+        "closingCents": 127272729,
+        "inGrace": false,
+        "periodStart": "2028-08-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 31,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 21,
+        "nominalDate": "2028-10-15",
+        "date": "2028-10-16",
+        "openingCents": 127272729,
+        "interestCents": 1754125,
+        "principalCents": 9090909,
+        "paymentCents": 10845034,
+        "closingCents": 118181820,
+        "inGrace": false,
+        "periodStart": "2028-09-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 31,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 22,
+        "nominalDate": "2028-11-15",
+        "date": "2028-11-16",
+        "openingCents": 118181820,
+        "interestCents": 1628830,
+        "principalCents": 9090909,
+        "paymentCents": 10719739,
+        "closingCents": 109090911,
+        "inGrace": false,
+        "periodStart": "2028-10-16",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 31,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 23,
+        "nominalDate": "2028-12-15",
+        "date": "2028-12-15",
+        "openingCents": 109090911,
+        "interestCents": 1405911,
+        "principalCents": 9090909,
+        "paymentCents": 10496820,
+        "closingCents": 100000002,
+        "inGrace": false,
+        "periodStart": "2028-11-16",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 29,
+            "denominator": 366
+          }
+        ]
+      },
+      {
+        "number": 24,
+        "nominalDate": "2029-01-15",
+        "date": "2029-01-15",
+        "openingCents": 100000002,
+        "interestCents": 1380081,
+        "principalCents": 9090909,
+        "paymentCents": 10470990,
+        "closingCents": 90909093,
+        "inGrace": false,
+        "periodStart": "2028-12-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2028,
+            "days": 16,
+            "denominator": 366
+          },
+          {
+            "year": 2029,
+            "days": 15,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 25,
+        "nominalDate": "2029-02-15",
+        "date": "2029-02-15",
+        "openingCents": 90909093,
+        "interestCents": 1256403,
+        "principalCents": 9090909,
+        "paymentCents": 10347312,
+        "closingCents": 81818184,
+        "inGrace": false,
+        "periodStart": "2029-01-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 31,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 26,
+        "nominalDate": "2029-03-15",
+        "date": "2029-03-15",
+        "openingCents": 81818184,
+        "interestCents": 1020654,
+        "principalCents": 9090909,
+        "paymentCents": 10111563,
+        "closingCents": 72727275,
+        "inGrace": false,
+        "periodStart": "2029-02-15",
+        "days": 28,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 28,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 27,
+        "nominalDate": "2029-04-15",
+        "date": "2029-04-16",
+        "openingCents": 72727275,
+        "interestCents": 1037776,
+        "principalCents": 9090909,
+        "paymentCents": 10128685,
+        "closingCents": 63636366,
+        "inGrace": false,
+        "periodStart": "2029-03-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 32,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 28,
+        "nominalDate": "2029-05-15",
+        "date": "2029-05-15",
+        "openingCents": 63636366,
+        "interestCents": 822376,
+        "principalCents": 9090909,
+        "paymentCents": 9913285,
+        "closingCents": 54545457,
+        "inGrace": false,
+        "periodStart": "2029-04-16",
+        "days": 29,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 29,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 29,
+        "nominalDate": "2029-06-15",
+        "date": "2029-06-15",
+        "openingCents": 54545457,
+        "interestCents": 753842,
+        "principalCents": 9090910,
+        "paymentCents": 9844752,
+        "closingCents": 45454547,
+        "inGrace": false,
+        "periodStart": "2029-05-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 31,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 30,
+        "nominalDate": "2029-07-15",
+        "date": "2029-07-16",
+        "openingCents": 45454547,
+        "interestCents": 628201,
+        "principalCents": 9090909,
+        "paymentCents": 9719110,
+        "closingCents": 36363638,
+        "inGrace": false,
+        "periodStart": "2029-06-15",
+        "days": 31,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 31,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 31,
+        "nominalDate": "2029-08-15",
+        "date": "2029-08-15",
+        "openingCents": 36363638,
+        "interestCents": 486242,
+        "principalCents": 9090910,
+        "paymentCents": 9577152,
+        "closingCents": 27272728,
+        "inGrace": false,
+        "periodStart": "2029-07-16",
+        "days": 30,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 30,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 32,
+        "nominalDate": "2029-09-15",
+        "date": "2029-09-17",
+        "openingCents": 27272728,
+        "interestCents": 401416,
+        "principalCents": 9090909,
+        "paymentCents": 9492325,
+        "closingCents": 18181819,
+        "inGrace": false,
+        "periodStart": "2029-08-15",
+        "days": 33,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 33,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 33,
+        "nominalDate": "2029-10-15",
+        "date": "2029-10-15",
+        "openingCents": 18181819,
+        "interestCents": 226812,
+        "principalCents": 9090910,
+        "paymentCents": 9317722,
+        "closingCents": 9090909,
+        "inGrace": false,
+        "periodStart": "2029-09-17",
+        "days": 28,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 28,
+            "denominator": 365
+          }
+        ]
+      },
+      {
+        "number": 34,
+        "nominalDate": "2029-11-15",
+        "date": "2029-11-16",
+        "openingCents": 9090909,
+        "interestCents": 129722,
+        "principalCents": 9090909,
+        "paymentCents": 9220631,
+        "closingCents": 0,
+        "inGrace": false,
+        "periodStart": "2029-10-15",
+        "days": 32,
+        "yearSegments": [
+          {
+            "year": 2029,
+            "days": 32,
+            "denominator": 365
+          }
+        ]
+      }
+    ],
+    "iof": {
+      "settlement": "withheld-at-release",
+      "status": "calculated-under-explicit-assumptions",
+      "additionalCents": 1140000,
+      "dailyCents": 8278273,
+      "totalCents": 9418273,
+      "calculationBases": [
+        {
+          "date": "2027-03-15",
+          "principalCents": 9090909,
+          "elapsedDays": 140,
+          "cappedDays": 140
+        },
+        {
+          "date": "2027-04-15",
+          "principalCents": 9090909,
+          "elapsedDays": 171,
+          "cappedDays": 171
+        },
+        {
+          "date": "2027-05-17",
+          "principalCents": 9090909,
+          "elapsedDays": 203,
+          "cappedDays": 203
+        },
+        {
+          "date": "2027-06-15",
+          "principalCents": 9090909,
+          "elapsedDays": 232,
+          "cappedDays": 232
+        },
+        {
+          "date": "2027-07-15",
+          "principalCents": 9090909,
+          "elapsedDays": 262,
+          "cappedDays": 262
+        },
+        {
+          "date": "2027-08-16",
+          "principalCents": 9090909,
+          "elapsedDays": 294,
+          "cappedDays": 294
+        },
+        {
+          "date": "2027-09-15",
+          "principalCents": 9090909,
+          "elapsedDays": 324,
+          "cappedDays": 324
+        },
+        {
+          "date": "2027-10-15",
+          "principalCents": 9090909,
+          "elapsedDays": 354,
+          "cappedDays": 354
+        },
+        {
+          "date": "2027-11-16",
+          "principalCents": 9090909,
+          "elapsedDays": 386,
+          "cappedDays": 365
+        },
+        {
+          "date": "2027-12-15",
+          "principalCents": 9090909,
+          "elapsedDays": 415,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-01-17",
+          "principalCents": 9090909,
+          "elapsedDays": 448,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-02-15",
+          "principalCents": 9090909,
+          "elapsedDays": 477,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-03-15",
+          "principalCents": 9090909,
+          "elapsedDays": 506,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-04-17",
+          "principalCents": 9090909,
+          "elapsedDays": 539,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-05-15",
+          "principalCents": 9090909,
+          "elapsedDays": 567,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-06-16",
+          "principalCents": 9090909,
+          "elapsedDays": 599,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-07-17",
+          "principalCents": 9090909,
+          "elapsedDays": 630,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-08-15",
+          "principalCents": 9090909,
+          "elapsedDays": 659,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-09-15",
+          "principalCents": 9090909,
+          "elapsedDays": 690,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-10-16",
+          "principalCents": 9090909,
+          "elapsedDays": 721,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-11-16",
+          "principalCents": 9090909,
+          "elapsedDays": 752,
+          "cappedDays": 365
+        },
+        {
+          "date": "2028-12-15",
+          "principalCents": 9090909,
+          "elapsedDays": 781,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-01-15",
+          "principalCents": 9090909,
+          "elapsedDays": 812,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-02-15",
+          "principalCents": 9090909,
+          "elapsedDays": 843,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-03-15",
+          "principalCents": 9090909,
+          "elapsedDays": 871,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-04-16",
+          "principalCents": 9090909,
+          "elapsedDays": 903,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-05-15",
+          "principalCents": 9090909,
+          "elapsedDays": 932,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-06-15",
+          "principalCents": 9090910,
+          "elapsedDays": 963,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-07-16",
+          "principalCents": 9090909,
+          "elapsedDays": 994,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-08-15",
+          "principalCents": 9090910,
+          "elapsedDays": 1024,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-09-17",
+          "principalCents": 9090909,
+          "elapsedDays": 1057,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-10-15",
+          "principalCents": 9090910,
+          "elapsedDays": 1085,
+          "cappedDays": 365
+        },
+        {
+          "date": "2029-11-16",
+          "principalCents": 9090909,
+          "elapsedDays": 1117,
+          "cappedDays": 365
+        }
+      ],
+      "unshownPrincipalAtCapCents": 0,
+      "unshownPaymentDates": null,
+      "rounding": "half-up-on-total"
+    },
+    "cashFlows": [
+      {
+        "kind": "release",
+        "date": "2026-10-26",
+        "creditCents": 300000000,
+        "principalCents": 0,
+        "interestCents": 0,
+        "iofPaidCents": 9418273,
+        "feeCents": 0,
+        "cashOutCents": 0,
+        "netCashCents": 290581727
+      },
+      {
+        "kind": "payment",
+        "date": "2027-02-15",
+        "creditCents": 0,
+        "principalCents": 0,
+        "interestCents": 15252044,
+        "iofPaidCents": 0,
+        "feeCents": 220000,
+        "cashOutCents": 15472044,
+        "netCashCents": -15472044
+      },
+      {
+        "kind": "payment",
+        "date": "2027-03-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3742399,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12833308,
+        "netCashCents": -12833308
+      },
+      {
+        "kind": "payment",
+        "date": "2027-04-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 4020489,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 13111398,
+        "netCashCents": -13111398
+      },
+      {
+        "kind": "payment",
+        "date": "2027-05-17",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 4021381,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 13112290,
+        "netCashCents": -13112290
+      },
+      {
+        "kind": "payment",
+        "date": "2027-06-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3524469,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12615378,
+        "netCashCents": -12615378
+      },
+      {
+        "kind": "payment",
+        "date": "2027-07-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3525251,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12616160,
+        "netCashCents": -12616160
+      },
+      {
+        "kind": "payment",
+        "date": "2027-08-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3632215,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12723124,
+        "netCashCents": -12723124
+      },
+      {
+        "kind": "payment",
+        "date": "2027-09-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3282131,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12373040,
+        "netCashCents": -12373040
+      },
+      {
+        "kind": "payment",
+        "date": "2027-10-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3160570,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12251479,
+        "netCashCents": -12251479
+      },
+      {
+        "kind": "payment",
+        "date": "2027-11-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3243049,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12333958,
+        "netCashCents": -12333958
+      },
+      {
+        "kind": "payment",
+        "date": "2027-12-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2819575,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11910484,
+        "netCashCents": -11910484
+      },
+      {
+        "kind": "payment",
+        "date": "2028-01-17",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 3073163,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 12164072,
+        "netCashCents": -12164072
+      },
+      {
+        "kind": "payment",
+        "date": "2028-02-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2577504,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11668413,
+        "netCashCents": -11668413
+      },
+      {
+        "kind": "payment",
+        "date": "2028-03-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2460344,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11551253,
+        "netCashCents": -11551253
+      },
+      {
+        "kind": "payment",
+        "date": "2028-04-17",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2668744,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11759653,
+        "netCashCents": -11759653
+      },
+      {
+        "kind": "payment",
+        "date": "2028-05-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2148791,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11239700,
+        "netCashCents": -11239700
+      },
+      {
+        "kind": "payment",
+        "date": "2028-06-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2328571,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11419480,
+        "netCashCents": -11419480
+      },
+      {
+        "kind": "payment",
+        "date": "2028-07-17",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 2130009,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 11220918,
+        "netCashCents": -11220918
+      },
+      {
+        "kind": "payment",
+        "date": "2028-08-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1874548,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10965457,
+        "netCashCents": -10965457
+      },
+      {
+        "kind": "payment",
+        "date": "2028-09-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1879420,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10970329,
+        "netCashCents": -10970329
+      },
+      {
+        "kind": "payment",
+        "date": "2028-10-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1754125,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10845034,
+        "netCashCents": -10845034
+      },
+      {
+        "kind": "payment",
+        "date": "2028-11-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1628830,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10719739,
+        "netCashCents": -10719739
+      },
+      {
+        "kind": "payment",
+        "date": "2028-12-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1405911,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10496820,
+        "netCashCents": -10496820
+      },
+      {
+        "kind": "payment",
+        "date": "2029-01-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1380081,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10470990,
+        "netCashCents": -10470990
+      },
+      {
+        "kind": "payment",
+        "date": "2029-02-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1256403,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10347312,
+        "netCashCents": -10347312
+      },
+      {
+        "kind": "payment",
+        "date": "2029-03-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1020654,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10111563,
+        "netCashCents": -10111563
+      },
+      {
+        "kind": "payment",
+        "date": "2029-04-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 1037776,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 10128685,
+        "netCashCents": -10128685
+      },
+      {
+        "kind": "payment",
+        "date": "2029-05-15",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 822376,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9913285,
+        "netCashCents": -9913285
+      },
+      {
+        "kind": "payment",
+        "date": "2029-06-15",
+        "creditCents": 0,
+        "principalCents": 9090910,
+        "interestCents": 753842,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9844752,
+        "netCashCents": -9844752
+      },
+      {
+        "kind": "payment",
+        "date": "2029-07-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 628201,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9719110,
+        "netCashCents": -9719110
+      },
+      {
+        "kind": "payment",
+        "date": "2029-08-15",
+        "creditCents": 0,
+        "principalCents": 9090910,
+        "interestCents": 486242,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9577152,
+        "netCashCents": -9577152
+      },
+      {
+        "kind": "payment",
+        "date": "2029-09-17",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 401416,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9492325,
+        "netCashCents": -9492325
+      },
+      {
+        "kind": "payment",
+        "date": "2029-10-15",
+        "creditCents": 0,
+        "principalCents": 9090910,
+        "interestCents": 226812,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9317722,
+        "netCashCents": -9317722
+      },
+      {
+        "kind": "payment",
+        "date": "2029-11-16",
+        "creditCents": 0,
+        "principalCents": 9090909,
+        "interestCents": 129722,
+        "iofPaidCents": 0,
+        "feeCents": 0,
+        "cashOutCents": 9220631,
+        "netCashCents": -9220631
+      }
+    ],
+    "cashFlowComplete": false,
+    "netDisbursementCents": 290581727,
+    "firstInterestPayment": {
+      "number": 1,
+      "nominalDate": "2027-02-15",
+      "date": "2027-02-15",
+      "openingCents": 300000000,
+      "interestCents": 15252044,
+      "principalCents": 0,
+      "paymentCents": 15252044,
+      "closingCents": 300000000,
+      "inGrace": true,
+      "periodStart": "2026-10-26",
+      "days": 112,
+      "yearSegments": [
+        {
+          "year": 2026,
+          "days": 66,
+          "denominator": 365
+        },
+        {
+          "year": 2027,
+          "days": 46,
+          "denominator": 365
+        }
+      ]
+    },
+    "firstPrincipalPayment": {
+      "number": 2,
+      "nominalDate": "2027-03-15",
+      "date": "2027-03-15",
+      "openingCents": 300000000,
+      "interestCents": 3742399,
+      "principalCents": 9090909,
+      "paymentCents": 12833308,
+      "closingCents": 290909091,
+      "inGrace": false,
+      "periodStart": "2027-02-15",
+      "days": 28,
+      "yearSegments": [
+        {
+          "year": 2027,
+          "days": 28,
+          "denominator": 365
+        }
+      ]
+    },
+    "firstCashOutCents": 15472044,
+    "totalContractCostCents": null,
+    "finalPayment": null,
+    "cet": {
+      "reportedAnnualRateDecimal": "0.2001",
+      "calculatedAnnualRateDecimal": null,
+      "validated": false,
+      "status": "not-validated-scenario-formula-unconfirmed"
+    },
+    "warnings": [
+      "Estimativa não validada contratualmente. Reconciliação limitada ao horizonte documentado.",
+      "Nenhuma regra deste perfil deve ser transferida automaticamente para Finame/TFC.",
+      "CET não calculado nem validado. Mesmo com todos os eventos visíveis, despesas, precisão e convenção regulatória precisam de confirmação.",
+      "Aplicabilidade das alíquotas e da base de IOF precisa de confirmação fiscal para a operação.",
+      "Liberação no mês de cobrança (item 5.6), múltiplas liberações e IOF financiado não são suportados.",
+      "Expoentes fracionários usam aritmética binária com bloqueio próximo de meio centavo; a reprodução não certifica arredondamento contratual em todos os casos.",
+      "A taxa precisa foi inferida do cenário, não fornecida com a precisão original das células. Não confundir com taxa oficial ou cotação atual.",
+      "Âncora de carência inferida; assinatura não foi substituída pela data de liberação.",
+      "Calendário parcial informado: as datas calculadas são hipóteses dentro da cobertura, não calendário bancário validado."
+    ]
+  }
+}

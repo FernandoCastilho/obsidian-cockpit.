@@ -1,6 +1,8 @@
+import { newsCollectionStale } from './newsWindow.js'
+import { useNewsClock } from './useNewsClock.js'
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { SEARCH_SECTIONS, SEARCH_SOURCES, highlightParts, indexSearchData, isSearchShortcut, searchDocuments, searchSnippet } from './globalSearch.js'
+import { SEARCH_SECTIONS, SEARCH_SOURCES, currentSearchDocument, highlightParts, indexSearchData, isNewsSearchFile, isSearchShortcut, searchDocuments, searchSnippet } from './globalSearch.js'
 import { DATA_BASE } from './useQuotes.js'
 import { loadDataFile } from './useDataFile.js'
 import './GlobalSearch.css'
@@ -10,6 +12,8 @@ export function SearchHighlight({ text, query }) {
 const stamp = t => t ? new Date(t).toLocaleString('pt-BR', {timeZone:'America/Sao_Paulo'}) : 'referência não informada'
 export default function GlobalSearch({ onNavigate }) {
   const [open,setOpen]=useState(false), [query,setQuery]=useState(''), [docs,setDocs]=useState([]), [sources,setSources]=useState([]), [pending,setPending]=useState(false), [attempt,setAttempt]=useState(0), [limit,setLimit]=useState(60), [staticError,setStaticError]=useState(false)
+  const now = useNewsClock()
+  const [newsSnapshots, setNewsSnapshots] = useState([])
   const dialog=useRef(null), input=useRef(null), previousFocus=useRef(null)
   const deferred=useDeferredValue(query)
   const close=()=>setOpen(false)
@@ -27,7 +31,7 @@ export default function GlobalSearch({ onNavigate }) {
   useEffect(()=>{
     if(!open)return
     let active=true, cursor=0
-    setDocs([]);setSources([]);setStaticError(false);setPending(true)
+    setDocs([]);setNewsSnapshots([]);setSources([]);setStaticError(false);setPending(true)
     const loadStatic=import('./searchCatalog.js').then(m=>{if(active)setDocs(d=>[...d,...m.staticSearchDocuments()])}).catch(()=>{if(active)setStaticError(true)})
     const work=async()=>{
       while(cursor<SEARCH_SOURCES.length){
@@ -37,17 +41,23 @@ export default function GlobalSearch({ onNavigate }) {
           const result = external ? await fetch(`${DATA_BASE}/${file}`, {signal:AbortSignal.timeout(20000)}).then(async response=>{if(!response.ok)throw new Error('Indisponível');return {data:await response.json()}}) : await loadDataFile(file,Date.now(),attempt>0)
           if(!result.data)throw new Error('Dados indisponíveis')
           const indexed=indexSearchData(file,result.data,route,label)
-          if(active){setDocs(d=>[...d,...indexed.docs]);setSources(s=>[...s,{label,limited:indexed.limited,stale:!!result.stale,ok:true,stamp:result.data.generatedAt || result.data.updatedAt}])}
+          if(active){if(isNewsSearchFile(file))setNewsSnapshots(s=>[...s,{file,data:result.data,route,label}]);else setDocs(d=>[...d,...indexed.docs]);setSources(s=>[...s,{file,label,limited:indexed.limited,stale:!!result.stale,ok:true,stamp:result.data.generatedAt || result.data.updatedAt}])}
         }catch{if(active)setSources(s=>[...s,{label,ok:false}])}
       }
     }
     Promise.allSettled([loadStatic,...Array.from({length:4},work)]).then(()=>{if(active)setPending(false)})
     return()=>{active=false}
   },[open,attempt])
-  const results=useMemo(()=>searchDocuments(docs,deferred),[docs,deferred])
+  // Reindex cached news on the clock tick without refetching any source.
+  const currentDocs = useMemo(() => [...docs, ...newsSnapshots.flatMap(({ file, data, route, label }) => indexSearchData(file, data, route, label, now).docs)], [docs, newsSnapshots, now])
+  const results=useMemo(()=>searchDocuments(currentDocs,deferred),[currentDocs,deferred])
   const shown=results.slice(0,limit)
   const groups=Object.values(SEARCH_SECTIONS).map(section=>({section,items:shown.filter(d=>d.section===section)})).filter(g=>g.items.length)
-  const failed=sources.filter(s=>!s.ok), stale=sources.filter(s=>s.stale), limited=sources.filter(s=>s.limited)
+  const currentSources = sources.map(source => {
+    const snapshot = newsSnapshots.find(snapshot => snapshot.file === source.file)
+    return snapshot ? { ...source, stale: source.stale || newsCollectionStale(snapshot.data, now) } : source
+  })
+  const failed=currentSources.filter(s=>!s.ok), stale=currentSources.filter(s=>s.stale), limited=currentSources.filter(s=>s.limited)
   const choose=d=>{setOpen(false);onNavigate(d,query)}
   return <>
 
@@ -65,9 +75,15 @@ export default function GlobalSearch({ onNavigate }) {
 }
 export function SearchDestination({ selection, onClose }) {
   const ref=useRef(null)
+  const now = useNewsClock()
   useEffect(()=>{if(!selection)return;const id=requestAnimationFrame(()=>{ref.current?.focus({preventScroll:true});ref.current?.scrollIntoView({block:'start'})});return()=>cancelAnimationFrame(id)},[selection])
   if(!selection)return null
-  const {doc,query}=selection
+  const {query}=selection
+  const doc = currentSearchDocument(selection.doc, now)
+  if (!doc) return <aside ref={ref} tabIndex={-1} className="search-destination" aria-label="Resultado aberto pela busca">
+    <div><strong>Resultado de notícias indisponível nesta janela</strong><button type="button" className="btn" onClick={onClose} aria-label="Fechar resultado da busca">Fechar resultado</button></div>
+    <p role="status">Nenhuma publicação válida nas últimas 120 horas neste resultado salvo. O conteúdo anterior foi ocultado; consulte a área abaixo ou faça uma nova busca. Isso não significa ausência de notícias sobre o tema.</p>
+  </aside>
   return <aside ref={ref} tabIndex={-1} className="search-destination" aria-label="Resultado aberto pela busca">
     <div><strong>Resultado da busca: <SearchHighlight text={doc.title} query={query}/></strong><button type="button" className="btn" onClick={onClose} aria-label="Fechar resultado da busca">Fechar resultado</button></div>
     <p><SearchHighlight text={searchSnippet(doc.body,query,400)} query={query}/></p>

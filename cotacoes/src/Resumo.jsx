@@ -1,4 +1,7 @@
+import { useNewsClock } from './useNewsClock.js'
+import { NEWS_WINDOW_DAYS, newsCollectionStale } from './newsWindow.js'
 import HeavyVehicles from './HeavyVehicles.jsx'
+import SectorNews from './SectorNews.jsx'
 import ChartComparison from './ChartComparison.jsx'
 import { Aviso } from './Avisos.jsx'
 import { buildFeed } from './feed.js'
@@ -428,7 +431,7 @@ function MoedasPanel({ quotes, ptax, onOpen, colors, quoteRefresh, searchTarget 
         </div>
         </div>
         <div className="terminal-chart terminal-news">
-        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><TemaNoticias id="veiculos-pesados" simples /></> : <MarketNews bare />}</Panel>
+        <Panel title="Notícias" tabs={NEWS_TABS} tab={newsTab} onTab={setNewsTab} semAtualizar>{newsTab === 'moedas' ? <MoedasNoticias /> : newsTab === 'reforma' ? <ReformaTributaria simples /> : newsTab === 'eleicoes' ? <TemaNoticias id="eleicoes-eua" simples /> : newsTab === 'veiculos-pesados' ? <><HeavyVehicles compact/><SectorNews id="veiculos-pesados" label="Veículos pesados" /></> : <MarketNews bare />}</Panel>
         </div>
         </div>
 
@@ -495,7 +498,7 @@ const NEWS_TABS = [
   { id: 'manchetes', label: 'Manchetes', refresh: ['news.json'] },
   { id: 'reforma', label: 'Reforma tributária', refresh: ['reforma-tributaria.json'] },
   { id: 'eleicoes', label: 'Eleições EUA', refresh: ['temas.json'] },
-  { id: 'veiculos-pesados', label: 'Veículos pesados', refresh: ['temas.json','heavy-vehicles.json'] },
+  { id: 'veiculos-pesados', label: 'Veículos pesados', refresh: ['sector-news.json','heavy-vehicles.json'] },
 ]
 // Bandeira das moedas de que a manchete provavelmente fala (as da busca e as citadas no título).
 function MoedasCitadas({ item }) {
@@ -506,12 +509,13 @@ function MoedasCitadas({ item }) {
 // Manchetes: a semana de hoje para trás, com a quebra por dia na própria lista e a bandeira das moedas citadas.
 function MarketNews({ bare = false }) {
   const news = useNews()
-  const desde = Date.now() - 7 * 864e5
-  const headlines = buildFeed(news.data?.news, 'ALL', 200).filter((n) => Number.isFinite(Number(n.t)) && Number(n.t) >= desde).map((n) => ({ ...n, t: Number(n.t) }))
+  const now = useNewsClock()
+  const headlines = buildFeed(news.data?.news, 'ALL', 200, now)
+  const stale = news.error || news.stale || newsCollectionStale(news.data, now)
   return <aside className="market-news" aria-labelledby="market-news-title"><h2 id="market-news-title" className={bare ? 'sr-only' : undefined}>Notícia</h2>
-    {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Últimos títulos preservados.' : ''}</p>}
-    {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes; títulos anteriores preservados.</p>}
-    {!headlines.length ? <p>{news.status === 'loading' ? 'Carregando notícias.' : 'Sem notícias na semana.'}</p> : <NoticiasPorDia data={{ items: headlines, windowDays: 7 }} simples ariaLabel="Manchetes da semana" prefixo={(n) => <MoedasCitadas item={n} />} />}
+    {news.error && <p role="status">Não foi possível atualizar as notícias. {headlines.length ? 'Só são mantidas publicações ainda dentro das últimas 120 horas.' : ''}</p>}
+    {news.data && Object.keys(news.data.stale || {}).length > 0 && <p role="status">Há fontes sem novas manchetes válidas; só permanecem as publicadas nas últimas 120 horas.</p>}
+    {!news.data && news.status === 'loading' ? <p>Carregando notícias.</p> : <NoticiasPorDia data={{ items: headlines, generatedAt: news.data?.generatedAt, stale, windowDays: NEWS_WINDOW_DAYS }} simples ariaLabel="Manchetes dos últimos cinco dias" prefixo={(n) => <MoedasCitadas item={n} />} />}
   </aside>
 }
 // Mercado: cards de câmbio e juros, tabela de pares com manchetes e referência do Brent. Juros, curvas e agenda ficam nas próprias abas.

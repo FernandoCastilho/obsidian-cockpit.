@@ -5,9 +5,9 @@
       "unit": "%",
       "frequency": "rolling-quarter",
       "sourceName": "IBGE — PNAD Contínua, SIDRA 6381/4099",
-      "sourceUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2024?formato=json",
-      "checkedAt": "2026-10-23T14:57:00Z",
-      "revisionNote": "Taxa de desocupação das pessoas de 14 anos ou mais, Brasil, sem ajuste sazonal. Cada ponto representa trimestre móvel, identificado pelo mês final. Série retornada pelo SIDRA na consulta, sujeita a revisões do IBGE.",
+      "sourceUrl": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/48409-30-10-release",
+      "checkedAt": "2026-11-05T01:52:37.795Z",
+      "revisionNote": "Taxa de desocupação das pessoas de 14 anos ou mais, Brasil, sem ajuste sazonal. Cada ponto representa trimestre móvel, identificado pelo mês final. Série retornada pelo SIDRA na consulta, sujeita a revisões do IBGE. Ponta de setembro/2026 conferida no comunicado oficial em 05/11/2026; observações anteriores preservadas, sem revisão retroativa nesta entrega.",
       "points": [
         {
           "period": "2024-09",
@@ -41,7 +41,7 @@
         },
         {
           "period": "2025-03",
-          "value": 7.0,
+          "value": 7,
           "periodLabel": "jan–mar/2025"
         },
         {
@@ -128,6 +128,11 @@
           "period": "2026-08",
           "value": 5.3,
           "periodLabel": "jun–ago/2026"
+        },
+        {
+          "period": "2026-09",
+          "value": 5.2,
+          "periodLabel": "jul–set/2026"
         }
       ],
       "seasonallyAdjusted": false
@@ -137,8 +142,8 @@
       "unit": "postos de trabalho",
       "frequency": "monthly",
       "sourceName": "U.S. Bureau of Labor Statistics — CES0000000001",
-      "sourceUrl": "https://api.bls.gov/publicAPI/v2/timeseries/data/CES0000000001?startyear=2024&endyear=2026",
-      "checkedAt": "2026-10-23T14:57:00Z",
+      "sourceUrl": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "checkedAt": "2026-11-05T01:52:37.795Z",
       "revisionNote": "Variação mensal calculada por diferença entre níveis mensais da mesma consulta BLS, convertidos de milhares para postos. Total nonfarm, ajuste sazonal. Agosto e setembro de 2026 preliminares; meses anteriores refletem as revisões vigentes, não a primeira divulgação.",
       "points": [
         {
@@ -309,9 +314,9 @@
       "unit": "postos de trabalho",
       "frequency": "monthly",
       "sourceName": "Ministério do Trabalho e Emprego — Novo Caged",
-      "sourceUrl": "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/acoes-e-programas/programas-projetos-acoes-obras-e-atividades/estatisticas-trabalho/novo-caged/2026/agosto/apresentacao-agosto-de-2026.pdf/@@download/file",
-      "checkedAt": "2026-10-23T14:57:00Z",
-      "revisionNote": "Saldo mensal de empregos formais. Série da página 5 da apresentação de agosto/2026, publicada em 29/09/2026: ajustes de declarações até agosto/2026. Esses ajustes são revisões administrativas, NÃO dessazonalização. Extração conferida visualmente contra o gráfico oficial. Não misturar com primeiras divulgações.",
+      "sourceUrl": "https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/novembro/pais-gerou-1-248-mil-empregos-formais-ate-setembro-de-2026",
+      "checkedAt": "2026-11-05T01:52:37.795Z",
+      "revisionNote": "Saldo mensal de empregos formais. Série da página 5 da apresentação de agosto/2026, publicada em 29/09/2026: ajustes de declarações até agosto/2026. Esses ajustes são revisões administrativas, NÃO dessazonalização. Extração conferida visualmente contra o gráfico oficial. Não misturar com primeiras divulgações. Ponta de setembro/2026 conferida no comunicado oficial em 05/11/2026; observações anteriores preservadas, sem revisão retroativa nesta entrega.",
       "points": [
         {
           "period": "2025-08",
@@ -364,6 +369,10 @@
         {
           "period": "2026-08",
           "value": 165827
+        },
+        {
+          "period": "2026-09",
+          "value": 121305
         }
       ],
       "seasonallyAdjusted": false
@@ -373,8 +382,8 @@
       "unit": "pontos",
       "frequency": "monthly",
       "sourceName": "Institute for Supply Management",
-      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/september/",
-      "checkedAt": "2026-10-23T14:57:00Z",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/october/",
+      "checkedAt": "2026-11-05T01:52:37.795Z",
       "revisionNote": "Histórico público de 12 meses existe no relatório, mas os termos proíbem gráficos/séries derivados sem autorização escrita. Não fornecido para publicação como dataset livre; requer licença/autorização.",
       "points": [],
       "status": "license-required",
@@ -385,8 +394,8 @@
       "unit": "pontos",
       "frequency": "monthly",
       "sourceName": "Institute for Supply Management",
-      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/services/september/",
-      "checkedAt": "2026-10-23T14:57:00Z",
+      "sourceUrl": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/services/october/",
+      "checkedAt": "2026-11-05T01:52:37.795Z",
       "revisionNote": "Histórico público de 12 meses existe no relatório, mas os termos proíbem gráficos/séries derivados sem autorização escrita. Não fornecido para publicação como dataset livre; requer licença/autorização.",
       "points": [],
       "status": "license-required",

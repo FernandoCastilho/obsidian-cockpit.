@@ -27,6 +27,6 @@ test('temas de moedas: título precisa citar a moeda e trazer contexto de câmbi
 test('Moedas: junta as matérias das quatro moedas, sem repetir link, mais recente primeiro', async () => {
   const { juntarMoedas } = await import('../src/reforma.js')
   const it = (link, t) => ({ title: link, link, source: 'X', t })
-  const r = juntarMoedas({ 'moeda-usd': { items: [it('a', 3), it('b', 1)] }, 'moeda-eur': { items: [it('b', 1), it('c', 2)] }, 'moeda-jpy': { items: [] } })
+  const r = juntarMoedas({ 'moeda-usd': { items: [it('a', 3), it('b', 1)] }, 'moeda-eur': { items: [it('b', 1), it('c', 2)] }, 'moeda-jpy': { items: [] } }, 10)
   assert.deepEqual(r.map((x) => [x.link, x.codes.join('+')]), [['a', 'USD'], ['c', 'EUR'], ['b', 'USD+EUR']])
 })

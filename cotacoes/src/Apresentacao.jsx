@@ -1,3 +1,5 @@
+import { recentNews, newsCollectionStale } from './newsWindow.js'
+import { useNewsClock } from './useNewsClock.js'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './Apresentacao.css'
 import { Panel } from './TerminalDesk.jsx'
@@ -61,7 +63,8 @@ export default function Apresentacao({ quotes, macro }) {
   const indicadores = useDataFile('indicator-history.json')
   const ecb = useEcbLongo(itens.map((id) => ITENS[id]?.code).filter(Boolean))
   const inadimplencia = useDataFile('inadimplencia.json')
-  const temas = useMemo(() => { try { return temasFile.data ? normalizeTemas(temasFile.data) : {} } catch { return {} } }, [temasFile.data])
+  const newsNow = useNewsClock()
+  const temas = useMemo(() => { try { return temasFile.data ? normalizeTemas({ ...temasFile.data, stale: temasFile.data.stale || temasFile.stale || temasFile.status === 'error' }, newsNow) : {} } catch { return {} } }, [temasFile.data, temasFile.stale, temasFile.status, newsNow])
   const setor = setorPorId(setorId)
   const lista = itensDaMontagem(setorId)
   const escolherSetor = (id) => { setSetorId(id); setItens(itensPadrao(id)) }
@@ -151,10 +154,15 @@ function Player({ roteiro, onClose }) {
   const ir = (k) => setI((cur) => Math.max(0, Math.min(n - 1, typeof k === 'function' ? k(cur) : k)))
   useEffect(() => {
     const el = ref.current
+    const trigger = document.activeElement
     el?.focus()
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previous; if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}) }
+    return () => {
+      document.body.style.overflow = previous
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {})
+      if (trigger?.isConnected) trigger.focus()
+    }
   }, [])
   useLayoutEffect(() => { anim.current = fadeIn(slideRef.current, anim.current) }, [i])
   // Teclado na janela inteira: o foco pode ter ficado num gráfico que saiu com o slide. Na apresentação, as setas sempre
@@ -162,7 +170,15 @@ function Player({ roteiro, onClose }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') { e.preventDefault(); onClose(); return }
-      if (e.target.closest?.('input, select, textarea')) return
+      if (e.key === 'Tab') {
+        const controls = [...ref.current.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')].filter(el => el.getClientRects().length && !el.closest('[inert]'))
+        const first = controls[0], last = controls.at(-1)
+        if (!first) { e.preventDefault(); ref.current.focus(); return }
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === ref.current || !ref.current.contains(document.activeElement))) { e.preventDefault(); last.focus() }
+        else if (!e.shiftKey && (document.activeElement === last || !ref.current.contains(document.activeElement))) { e.preventDefault(); first.focus() }
+        return
+      }
+      if (e.defaultPrevented || e.target.closest?.('input, select, textarea, button, a[href], [contenteditable="true"]')) return
       if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); ir((c) => c + 1) }
       else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); ir((c) => c - 1) }
       else if (e.key === 'Home') ir(0)
@@ -183,7 +199,7 @@ function Player({ roteiro, onClose }) {
   const telaCheia = () => { const el = ref.current; if (!el) return; if (document.fullscreenElement) document.exitFullscreen?.(); else el.requestFullscreen?.().catch(() => {}) }
   const s = roteiro[i]
   return (
-    <div className="apr-player" role="dialog" aria-modal="true" aria-label="Apresentação" tabIndex={-1} ref={ref} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+    <div className="apr-player" role="dialog" aria-modal="true" aria-label="Apresentação" tabIndex={-1} ref={ref} onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { touch.current = null }} onLostPointerCapture={() => { touch.current = null }}>
       <div className={`apr-slide apr-s-${s.kind}`} ref={slideRef} key={i} aria-live="polite" aria-atomic="true">
         <Slide s={s} />
       </div>
@@ -266,7 +282,7 @@ function Capa({ s }) {
         <p {...anim(3, 'apr-capa-setor')}>{s.setor.label}{s.capa?.dominio ? ` · ${s.capa.dominio}` : ''}</p>
       </div>
       {s.capa?.logo && <img className="apr-capa-logo apr-anim" style={cascade(2, 90, 720)} src={s.capa.logo} alt={`Logotipo de ${s.nome}`} onError={(e) => { e.currentTarget.hidden = true }} />}
-      <Rodape>Dados de {dataHora(s.agora)} · comparações de {s.periodo.label} · fontes públicas, conferir antes de decidir</Rodape>
+      <Rodape>Apresentação montada em {dataHora(s.agora)} · comparações de {s.periodo.label} · fontes públicas, conferir antes de decidir. Datas de referência nos indicadores e snapshots.</Rodape>
     </div>
   )
 }
@@ -294,7 +310,7 @@ function Cenario({ s }) {
           {inadSeries.length ? <><p className="apr-cen-mini">{['PF', 'PJ'].filter((k) => inadimplencia.ultimo[k]).map((k) => <span key={k}><b>{k}</b> {nf(inadimplencia.ultimo[k].v, 2)}%{inadimplencia[k].length > 1 ? ` (${pp(inadimplencia.ultimo[k].v - inadimplencia[k][0].v)} em 12 meses)` : ''}</span>)}</p><MultiLinhas series={inadSeries} width={wInad} fmt={(v) => `${nf(v, 2)}%`} ariaLabel="Inadimplência PF e PJ, percentual do saldo com atraso acima de 90 dias, últimos 12 meses" /><p className="apr-cen-leitura">Risco de crédito ao cliente e apetite dos bancos para emprestar.</p></> : <p className="apr-vazio">Série de inadimplência indisponível.</p>}
         </section>
       </div>
-      <Rodape>Juros, inflação, câmbio, Focus, CAGED e inadimplência · dados de {dataHora(s.agora)}</Rodape>
+      <Rodape>Juros, inflação, câmbio, Focus, CAGED e inadimplência · Apresentação montada em {dataHora(s.agora)}. Datas de referência nos indicadores e snapshots.</Rodape>
     </>
   )
 }
@@ -321,7 +337,11 @@ function Cadeia({ s }) {
 }
 
 function Item({ s }) {
-  const { item, dado, move, manchetes, periodo } = s
+  const { item, dado, move, periodo } = s
+  const now = useNewsClock()
+  const manchetes = recentNews(s.manchetes, now)
+  const hasNewsCoverage = Boolean(item.tema)
+  const newsStale = hasNewsCoverage && newsCollectionStale(s.newsState, now)
   const per = dado.periodo
   return (
     <>
@@ -340,14 +360,15 @@ function Item({ s }) {
               </ul>
             </>
           )}
-          <p className="apr-frase">{dado.frase}</p>
+          {dado.frase && dado.frase !== dado.semSerie && <p className="apr-frase">{dado.frase}</p>}
           {dado.grafico && <Grafico g={dado.grafico} rotulo={item.label} />}
           {dado.grafico && <small className="apr-grafico-nota">{dado.grafico.mensal ? 'média mensal' : dado.pontosNota ?? 'cotação diária'}{dado.grafico.mensal && periodo.dias < 365 ? ' · gráfico de 12 meses; a variação acima é do período escolhido' : ''}{dado.grafico.bce ? ' · ano anterior pela referência diária do BCE' : ''}</small>}
         </div>
         <div className="apr-item-texto">
           {move.length > 0 && <section {...anim(2)}><h3>O que mexe no preço</h3><ul>{move.slice(0, 4).map((m) => <li key={m}>{m}</li>)}</ul></section>}
-          <section {...anim(3)}><h3>Na imprensa esta semana</h3>
-            {manchetes.length ? <ul className="apr-manchetes">{manchetes.map((m) => <li key={m.link}><time dateTime={new Date(m.t).toISOString()}>{dia(m.t)} {hora(m.t)}</time> {m.title} <small>{m.source}</small></li>)}</ul> : <p className="apr-vazio">Sem matérias coletadas para este item nos últimos dias.</p>}
+          <section {...anim(3)}><h3>Na imprensa · últimos 5 dias</h3>
+            {newsStale && <p className="apr-vazio">Atualização das notícias incompleta, atrasada ou não confirmada.</p>}
+            {!hasNewsCoverage ? <p className="apr-vazio">Cobertura de notícias não configurada para este item.</p> : manchetes.length ? <ul className="apr-manchetes">{manchetes.map((m) => <li key={m.link}><time dateTime={new Date(m.t).toISOString()}>{dia(m.t)} {hora(m.t)}</time> {m.title} <small>{m.source}</small></li>)}</ul> : <p className="apr-vazio">Nenhuma publicação válida nas últimas 120 horas no arquivo disponível.</p>}
           </section>
         </div>
       </div>
@@ -388,7 +409,7 @@ function Fim({ s }) {
         </div>
       )}
       <p className="apr-capa-setor apr-anim" style={cascade((s.minis?.length ?? 0) + 2, 90, 720)}>Próximo passo: medir o que o cenário muda no caixa de {s.nome}.</p>
-      <Rodape>Conteúdo informativo, com fontes públicas; não é recomendação. Dados de {dataHora(s.agora)}.</Rodape>
+      <Rodape>Conteúdo informativo, com fontes públicas; não é recomendação. Apresentação montada em {dataHora(s.agora)}. Datas de referência nos indicadores e snapshots.</Rodape>
     </div>
   )
 }

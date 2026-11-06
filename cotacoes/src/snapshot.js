@@ -1,3 +1,4 @@
+import { recentNews } from './newsWindow.js'
 // Números do resumo: juros (Selic, CDI, SOFR, DI 1 ano, Treasury 10 anos) a partir de macro.json e curves.json.
 const last = (a) => (a?.length ? a[a.length - 1] : null)
 const before = (a) => (a?.length > 1 ? a[a.length - 2] : null) // publicação anterior
@@ -33,11 +34,11 @@ export function rateTiles(macro, curves) {
 }
 
 // Manchetes do mercado hoje (as `market` mais recentes) e, depois, a mais recente de cada moeda (já traduzidas), uma por moeda.
-export function topHeadlines(news, codes = ['USD', 'EUR', 'JPY', 'CNH'], market = 3) {
-  const hot = [...(news?.news?.MERCADO ?? [])].sort((a, b) => (b.t ?? 0) - (a.t ?? 0)).slice(0, market).map((n) => ({ code: 'MERCADO', ...n }))
+export function topHeadlines(news, codes = ['USD', 'EUR', 'JPY', 'CNH'], market = 3, now = Date.now()) {
+  const hot = recentNews(news?.news?.MERCADO, now).sort((a, b) => b.t - a.t).slice(0, market).map((n) => ({ code: 'MERCADO', ...n }))
   return [...hot, ...codes
     .map((code) => {
-      const items = news?.news?.[code] ?? []
+      const items = recentNews(news?.news?.[code], now)
       const best = items.reduce((b, n) => (!b || (n.t ?? 0) > (b.t ?? 0) ? n : b), null)
       return best ? { code, ...best } : null
     })

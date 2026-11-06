@@ -1,4 +1,5 @@
 import { compareWindow } from './chartComparison.js'
+import { chartLinePath } from './chartLinePath.js'
 import ChartComparison from './ChartComparison.jsx'
 import { useMemo, useState } from 'react'
 import { nextChartIndex } from './chartNavigation.js'
@@ -58,7 +59,7 @@ export default function MultiLinhas({ series: baseSeries, width, fmt, ariaLabel,
           </g>
         ))}
         {xTicks.map((t, i) => <text key={i} x={x(t)} y={H - 8} textAnchor={i === 0 ? 'start' : i === nx - 1 ? 'end' : 'middle'} fontSize="11" fill="var(--mut)">{dmy(t)}</text>)}
-        {series.map((s) => s.points.length > 0 && <path key={s.key} className="ml-line" data-key={s.key} d={s.points.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join('')} fill="none" stroke={s.color} strokeWidth={series.length > 10 ? 1.4 : 2} strokeLinejoin="round" />)}
+        {series.map((s) => s.points.length > 0 && <path key={s.key} className="ml-line" data-key={s.key} d={chartLinePath(s.points, x, y, 'v', s.stepped)} fill="none" stroke={s.color} strokeWidth={series.length > 10 ? 1.4 : 2} strokeLinejoin="round" />)}
         {hoverAt != null && (
           <g pointerEvents="none">
             <line x1={hx} x2={hx} y1={M.t} y2={H - M.b} stroke="var(--mut)" />

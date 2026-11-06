@@ -629,3 +629,7 @@ section[aria-labelledby="r-moedas"] .img-share, .img-share { width:44px; height:
 .alerta-var-item p { margin: 0; }
 .alerta-var-item .btn { min-height: 44px; min-width: 44px; }
 .alerta-var-perm { justify-self: start; min-height: 44px; }
+
+.alerta-var-permissao { padding: 10px 12px; border: 1px solid var(--line); background: var(--surface-2); font-size: .88rem; }
+.alerta-var-permissao p { margin: 0 0 6px; }
+.alerta-var-metodo { margin: 0; font-size: .8rem; }

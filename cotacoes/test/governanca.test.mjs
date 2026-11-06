@@ -44,3 +44,7 @@ test('resumo: o câmbio é o único de 5 em 5 minutos e coletar não é o dado m
   // o resumo cita o que a tabela diz: o câmbio é a única fonte de 5 em 5 minutos
   assert.deepEqual(FONTES.filter((f) => /5 min/.test(f.coleta)).map((f) => f.id), ['cambio'])
 })
+
+test('Configurações mantém limites dos alertas visíveis mesmo após autorizar notificações', () => {
+  assert.match(NAVEGADOR.join(' '), /Alertas de câmbio: mais de ±0,30%.*9h de Brasília.*exige autorização.*Não há monitoramento contínuo em segundo plano nem com o app fechado.*consulta já iniciada pode terminar/)
+})

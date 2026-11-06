@@ -1,7 +1,8 @@
+import { useNewsClock } from './useNewsClock.js'
+import { newsCollectionStale } from './newsWindow.js'
 import RefreshButton from './RefreshButton.jsx'
 import { Aviso } from './Avisos.jsx'
 import { useMemo, useState } from 'react'
-import { isWeekendBR } from './market.js'
 import Explain from './Explain.jsx'
 import { CURRENCIES } from './useQuotes.js'
 import { useNews } from './useNews.js'
@@ -25,19 +26,20 @@ const Tickers = ({ codes, colors }) =>
 export default function News({ colors }) {
   const { data, error } = useNews()
   const [filter, setFilter] = useState('ALL')
-  const feed = useMemo(() => buildFeed(data?.news, filter, 60), [data, filter])
+  const now = useNewsClock()
+  const feed = useMemo(() => buildFeed(data?.news, filter, 60, now), [data, filter, now])
   const generated = data?.generatedAt && new Date(data.generatedAt)
 
   return (
     <section className="news">
       <div className="history-head">
-        <h2>Notícias <Explain id="noticias" /></h2>
+        <h2>Notícias · últimos 5 dias <Explain id="noticias" /></h2>
         <RefreshButton files={['news.json']} label="Notícias" />
       </div>
       {!data && !error && <p className="status">Carregando notícias…</p>}
       {error && <Estado tipo="erro" erro={error}>Notícias indisponíveis no momento.</Estado>}
       {data && Object.keys(data.stale ?? {}).length > 0 && (
-        <p className="status stale">Sem manchetes novas para {Object.keys(data.stale).join(', ')}; mantidas as da última coleta bem-sucedida.</p>
+        <p className="status stale">Sem novas manchetes válidas para {Object.keys(data.stale).join(', ')}; só permanecem as publicadas nas últimas 120 horas.</p>
       )}
       {data && (
         <>
@@ -69,16 +71,16 @@ export default function News({ colors }) {
               ))}
             </ul>
           ) : (
-            <p className="status">Nenhuma manchete encontrada.</p>
+            <p className="status">Nenhuma publicação válida nas últimas 120 horas no arquivo disponível. Isso não significa ausência de notícias.</p>
           )}
         </>
       )}
-      {generated && (Date.now() - generated.getTime() > 3 * 3600e3) && !isWeekendBR() && (
-        <p className="status stale">Atenção: as notícias foram coletadas há mais de 3 horas; a atualização automática pode ter parado.</p>
+      {data && newsCollectionStale(data, now) && (
+        <p className="status stale">Atualização incompleta, atrasada ou não confirmada. A data do arquivo não renova a data de publicação das notícias.</p>
       )}
       {generated && (<Aviso title="Notícias · como ler">
         <p className="status">
-          Atualizado às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}. O ticker indica a moeda que a notícia tende a afetar. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem aos veículos citados.
+          Arquivo gerado em {generated.toLocaleDateString('pt-BR')} às {generated.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}. Janela móvel de 5 dias (120 horas), contada pela publicação. O ticker indica a moeda que a notícia tende a afetar. Manchetes em inglês são traduzidas automaticamente. As matérias pertencem aos veículos citados.
         </p></Aviso>
       )}
     </section>

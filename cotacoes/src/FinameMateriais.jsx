@@ -5,7 +5,7 @@ import { parseDecimal } from './emprestimo.js'
 import { useDataFile } from './useDataFile.js'
 import { useMacro } from './useMacro.js'
 import { keyOf, pointsOf, tlpView } from './bndes.js'
-import { COMPOSICOES, CUSTOS, CUSTOS_FIXOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, TFC_NOMES, codigoTfc, faixaTfb, faixaTfc, ipcaEsperado, simular, spreadSobreCdi, tlpNominal, vencimento } from './finameMateriais.js'
+import { COMPOSICOES, CUSTOS, CUSTOS_FIXOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, TFC_NOMES, codigoTfc, faixaTfb, faixaTfc, ipcaEsperado, parseIpcaProjection, simular, spreadSobreCdi, tlpNominal, validIpcaProjection, vencimento } from './finameMateriais.js'
 import { nf } from './format.js'
 import Estado from './Estado.jsx'
 import Help from './Help.jsx'
@@ -67,20 +67,20 @@ export default function FinameMateriais({ onBack }) {
   const fixa = CUSTOS_FIXOS.has(custo)
   const focusIpca = ipcaEsperado(macro.data?.focus)
   const ipcaFocus = focusIpca?.valor ?? null
-  const ipca = ipcaText.trim() ? parseDecimal(ipcaText) : ipcaFocus
+  const ipca = ipcaText.trim() ? parseIpcaProjection(ipcaText) : ipcaFocus
   const cdi = Array.isArray(macro.data?.cdi) && macro.data.cdi.length ? macro.data.cdi.at(-1)[1] : null
   // Na TFB, o custo financeiro é a própria TFB (nominal). Na TLP, é a TLP (real); o IPCA corrige o saldo no cronograma.
   const custoFinanceiro = custo === 'tfb' ? tfb?.valor ?? null : custo === 'tfc' ? tfc?.valor ?? null : tlp?.value ?? null
   const nominalTlp = custo === 'tlp' && Number.isFinite(custoFinanceiro) && Number.isFinite(ipca) ? tlpNominal(custoFinanceiro, ipca) : null
 
   const erros = {
-    valor: money.ok ? null : money.error,
+    valor: money.ok && money.value > 0 ? null : money.error || 'Informe um valor maior que zero.',
     part: participacao !== null && participacao >= REGRAS.participacaoMinPct && participacao <= 100 ? null : 'Participação de 1 a 100%.',
     prazo: prazo !== null && prazo >= 1 && prazo <= REGRAS.prazoMaxMeses ? null : `Prazo de 1 a ${REGRAS.prazoMaxMeses} meses (7 anos).`,
     car: carencia !== null && carencia >= 0 && carencia <= (fixa ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses) && (prazo === null || carencia < prazo) ? null : `Carência de 0 a ${fixa ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses} meses${fixa ? ` com ${custo.toUpperCase()}` : ''}, menor que o prazo.`,
     bndes: taxaBndes !== null && taxaBndes <= 100 ? null : 'Informe a taxa do BNDES em % a.a.',
     agente: taxaAgente !== null && taxaAgente <= 100 ? null : 'Informe o spread da instituição em % a.a.',
-    ipca: custo === 'tlp' && !Number.isFinite(ipca) ? 'Informe o IPCA esperado em % a.a.' : null,
+    ipca: custo === 'tlp' && !validIpcaProjection(ipca) ? 'Informe o IPCA esperado de -50 a 100% a.a., limite deste modelo.' : null,
     iof: iofFixo !== null && iofFixo <= 100 && iofDiario !== null && iofDiario <= 100 ? null : 'Informe as alíquotas do IOF em %: 0 e 0 na alíquota zero (padrão), ou 0,38 e 0,0082 se o agente cobrar.',
   }
   const pronto = !Object.values(erros).some(Boolean) && Number.isFinite(custoFinanceiro)
@@ -114,7 +114,7 @@ export default function FinameMateriais({ onBack }) {
       <article className="desk-panel cx-panel">
         <header><h3>Condições gerais</h3><small>Regras do produto conferidas em {dmy(REGRAS.conferidoEm)}</small></header>
         <div className="cx-form">
-          {field('valor', 'Valor dos materiais', <MoneyInput id="fm-valor" aria-invalid={!!erros.valor} aria-describedby="fm-valor-err" value={valorText} onChange={setValorText} />, 'Bens industrializados novos, nacionais e credenciados no BNDES; notas de até 12 meses antes do protocolo.')}
+          {field('valor', 'Valor dos materiais', <MoneyInput id="fm-valor" aria-invalid={!!erros.valor} aria-describedby="fm-valor-err" value={valorText} onChange={setValorText} />, 'Bens industrializados novos, nacionais, enquadrados na lista NCM e nos critérios CST/CSOSN do Finame Materiais; não se trata do credenciamento CFI do Finame tradicional. Notas de até 12 meses antes do protocolo.')}
           {field('part', 'Participação do BNDES (%)', input('part', partText, setPartText), 'Até 100% dos itens financiáveis.')}
           {field('prazo', 'Prazo total (meses)', input('prazo', prazoText, setPrazoText, { inputMode: 'numeric' }), 'Até 84 meses (7 anos).')}
           {field('car', 'Carência (meses)', input('car', carText, setCarText, { inputMode: 'numeric' }), fixa ? `Até 12 meses com ${custo.toUpperCase()}; juros exigíveis durante a carência.` : 'Até 24 meses; juros exigíveis durante a carência.')}
@@ -215,7 +215,7 @@ export default function FinameMateriais({ onBack }) {
           <li>O que ainda depende de conferência com o agente: valor mínimo, aceitação de Price no produto, periodicidade padrão dos juros na carência e a alíquota de IOF aplicável ao funding da operação. A conta aqui é estimativa; a proposta do agente prevalece.</li>
         </ul>
         <p className="fm-fontes-titulo">Base legal e onde cada regra foi conferida</p>
-        <ul>{FONTES.map((f) => <li key={f.regra}><b>{f.regra}.</b> {f.fonte}.</li>)}</ul>
+        <ul>{FONTES.map((f) => <li key={f.regra}><b>{f.regra}.</b> <a href={f.url} target="_blank" rel="noopener noreferrer">{f.fonte}</a>.</li>)}</ul>
       </details>
       <p className="status">Estimativa com as regras vigentes em {dmy(REGRAS.conferidoEm)} e os custos financeiros do painel (TFC, TFB e TLP da aba BNDES, IPCA esperado do Focus). Sem tarifas, seguros nem garantias. Origem dos dados em Configurações › Base de dados.</p>
     </section>

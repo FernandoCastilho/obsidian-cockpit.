@@ -1,4 +1,5 @@
 import { dataTimestamp } from './dataTimestamp.js'
+import { chartLinePath } from './chartLinePath.js'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useFilterSlot } from './ChartFilters.jsx'
@@ -63,7 +64,7 @@ export function Plot({ points, scales = true, ...props }) {
 }
 
 // `history`: série completa para achar o mesmo trecho um ano antes (padrão: os próprios pontos). `step`: série em degraus.
-function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, rate = nice, labels, light, dateLabel, history, step = false, compare = !intraday, compareReason = 'esta visão intradiária não contém histórico comparável.' }) {
+function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label, nice, rate = nice, labels, light, dateLabel, history, step = false, steppedLine = false, compare = !intraday, compareReason = 'esta visão intradiária não contém histórico comparável.' }) {
   const [hover, setHover] = useState(null)
   const [sel, setSel] = useState(null)
   const [dragging, setDragging] = useState(false)
@@ -119,11 +120,11 @@ function PlotView({ points: base, width, color, code, intraday, fmt, vfmt, label
     const yTicks = nice ? Array.from({ length: Math.round((hi - lo) / stepNice) + 1 }, (_, i) => lo + i * stepNice) : Array.from({ length: 5 }, (_, i) => lo + ((hi - lo) * i) / 4)
     const nx = width < 420 ? 3 : 5
     const xTicks = t0 === t1 ? [t0] : Array.from({ length: nx }, (_, i) => t0 + ((t1 - t0) * i) / (nx - 1))
-    const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.bid).toFixed(1)}`).join('')
+    const line = chartLinePath(points, x, y, 'bid', steppedLine)
     const base = H - M.b
     const area = `${line}L${x(t1).toFixed(1)},${base}L${x(t0).toFixed(1)},${base}Z`
     return { t0, t1, x, y, dec, yTicks, xTicks, line, area, base, long: t1 - t0 > 200 * 864e5, years: t1 - t0 > 3 * 365 * 864e5 }
-  }, [points, width])
+  }, [points, width, steppedLine, nice])
 
   const pointAt = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()

@@ -20,12 +20,14 @@ test('holiday view filters exact plaza and preserves multi-plaza events', () => 
   assert.deepEqual(groupHolidayRows(rows, 'SOR'), [])
 })
 
-test('Curitiba: aniversário (29/03), padroeira (08/09) e Emancipação do Paraná (19/12), sem duplicar o calendário nacional', async () => {
+test('Curitiba: feriados religiosos municipais; aniversário e 19/12 não viram feriado civil', async () => {
   const { holidayMap, isBusinessDay, calFlag, calLabel, CALENDARS } = await import('../src/holidays.js')
   const cwb = holidayMap('CWB', 2026), pr = holidayMap('PR', 2026), est = holidayMap('PRE', 2026)
-  assert.equal(cwb.get('2026-03-29'), 'Aniversário de Curitiba'); assert.match(cwb.get('2026-09-08'), /Nossa Senhora da Luz dos Pinhais/)
-  assert.equal(cwb.size, 2); assert.equal(est.get('2026-12-19'), 'Emancipação Política do Paraná')
-  assert.deepEqual([...pr.keys()], ['2026-03-29', '2026-09-08', '2026-12-19'], 'praça Curitiba = cidade + estado, em ordem de data')
+  assert.equal(cwb.has('2026-03-29'), false); assert.match(cwb.get('2026-09-08'), /Nossa Senhora da Luz dos Pinhais/)
+  assert.equal(cwb.size, 3); assert.equal(est.has('2026-12-19'), false)
+  assert.deepEqual([...pr.keys()], ['2026-04-03', '2026-06-04', '2026-09-08'], 'Lei municipal 3.015: Sexta-feira Santa, Corpus Christi e padroeira')
+  assert.equal(isBusinessDay('2027-03-29', 'CWB'), true)
+  assert.equal(isBusinessDay('2025-12-19', 'PR'), true)
   assert.equal(isBusinessDay('2026-09-08', 'PR'), false); assert.equal(isBusinessDay('2026-09-08', 'BR'), true, 'só vale na praça de Curitiba')
   assert.equal(isBusinessDay('2026-09-09', 'PR'), true)
   assert.equal(calFlag('PR'), 'BRL'); assert.equal(calLabel('PR'), 'Curitiba')

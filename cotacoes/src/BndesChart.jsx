@@ -11,7 +11,7 @@ const startFor = (last, months) => { const d = new Date(tOf(last)); d.setUTCMont
 // Gráfico de uma série [{period: AAAA-MM-DD, value}] com período (atalhos e intervalo, controlados por quem usa, para valer para todas as séries),
 // resumo do trecho e tabela de observações recolhida.
 // unit: '% a.a.' (taxa, variação em p.p.), '% no mês', 'R$' ou 'índice' (nível, variação em %).
-export default function SeriesChart({ list, name, code, label, kind, loading, period, decimals = 2, unit = '% a.a.' }) {
+export default function SeriesChart({ list, name, code, label, kind, loading, period, decimals = 2, unit = '% a.a.', stepped = false }) {
   const nf = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
   const level = unit === 'R$' || unit === 'índice'
   const show = (v) => (unit === 'R$' ? `R$ ${nf(v)}` : level ? nf(v) : `${nf(v)}${unit === '% no mês' ? '% no mês' : '% a.a.'}`)
@@ -19,9 +19,9 @@ export default function SeriesChart({ list, name, code, label, kind, loading, pe
   const { preset, setPreset, custom, setCustom } = period
   const [ref, width] = useWidth()
   // intervalo escolhido nas datas fica dentro da cobertura da série (as séries começam em anos diferentes)
-  const range = list.length ? (custom ? { start: custom.start < list[0].period ? list[0].period : custom.start, end: custom.end > list.at(-1).period ? list.at(-1).period : custom.end } : { start: preset === 'all' ? list[0].period : startFor(list.at(-1).period, preset), end: list.at(-1).period }) : null
+  const range = useMemo(() => list.length ? (custom ? { start: custom.start < list[0].period ? list[0].period : custom.start, end: custom.end > list.at(-1).period ? list.at(-1).period : custom.end } : { start: preset === 'all' ? list[0].period : startFor(list.at(-1).period, preset), end: list.at(-1).period }) : null, [list, custom, preset])
   const bad = range && range.start > range.end
-  const shown = useMemo(() => (range && !bad ? list.filter((p) => p.period >= range.start && p.period <= range.end) : []), [list, range?.start, range?.end, bad])
+  const shown = useMemo(() => (range && !bad ? list.filter((p) => p.period >= range.start && p.period <= range.end) : []), [list, range, bad])
   const plot = useMemo(() => shown.map((p) => ({ t: tOf(p.period), bid: p.value })), [shown])
   const history = useMemo(() => list.map((p) => ({ t: tOf(p.period), bid: p.value })), [list])
   const first = shown[0], last = shown.at(-1)
@@ -39,7 +39,7 @@ export default function SeriesChart({ list, name, code, label, kind, loading, pe
       {plot.length > 1
         ? <>
           <p className="bn-range">No período: {dmy(first.period)} {show(first.value)} → {dmy(last.period)} {show(last.value)} ({delta(first.value, last.value)}).</p>
-          <div ref={ref}><Plot points={plot} history={history} width={width} color="#ca9c49" code={code} intraday={false} fmt={show} vfmt={(v) => nf(v)} label={name} rate={!level} labels /></div>
+          <div ref={ref}><Plot steppedLine={stepped} scales={!stepped} points={plot} history={history} width={width} color="#ca9c49" code={code} intraday={false} fmt={show} vfmt={(v) => nf(v)} label={name} rate={!level} labels /></div>
         </>
         : <p role="status">{bad ? 'Ajuste o período.' : 'Poucas observações no período; escolha um intervalo maior.'}</p>}
       <details className="bn-obs-d">

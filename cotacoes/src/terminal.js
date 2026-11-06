@@ -38,10 +38,11 @@ const TAB = {
   FRETE: ['cenarios', 'frete'],
   BNDES: ['bndes'], TFB: ['bndes'],
   SETORES: ['setores'], COBRE: ['setores', 'cobre'], ALUMINIO: ['setores', 'aluminio'], ACO: ['setores', 'aco'], TELECOM: ['setores', 'telecom'], INDUSTRIA: ['setores', 'industria'], VAREJO: ['setores', 'comercio'],
-  CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'], GIRO: ['calculadora', 'giro'], FINIMP: ['calculadora', 'finimp'], FINAME: ['calculadora', 'finame-materiais'], FINAMEMATERIAIS: ['calculadora', 'finame-materiais'],
+  CALC: ['calculadora'], CALCULADORA: ['calculadora'], CALCULADORAS: ['calculadora'], GIRO: ['calculadora', 'giro'], DESCONTO: ['calculadora', 'analise-desconto'], ANALISEDEDESCONTO: ['calculadora', 'analise-desconto'], FINIMP: ['calculadora', 'finimp'], FINAME: ['calculadora', 'finame-materiais'], FINAMEMATERIAIS: ['calculadora', 'finame-materiais'],
   NEWS: ['noticias'], NOTICIAS: ['noticias'], AGENDA: ['noticias'],
   FERIADOS: ['feriados'], APRESENTAR: ['apresentar'], APRESENTACAO: ['apresentar'], CONFIG: ['config'], AJUDA: ['config'], HELP: ['config'],
   APRENDER: ['aprender'], EDU: ['aprender'], EDUCACAO: ['aprender'], ESTUDAR: ['aprender'], CUPOM: ['aprender', 'cupom-cambial'], CUPOMCAMBIAL: ['aprender', 'cupom-cambial'], EURIBOR: ['aprender', 'euribor'], FUNDING: ['aprender', 'custo-de-funding'], CUSTODEFUNDING: ['aprender', 'custo-de-funding'], CDS: ['aprender', 'cds'],
+  MAQUILA: ['aprender', 'lei-de-maquila'], LEIDEMAQUILA: ['aprender', 'lei-de-maquila'], MAQUILAPARAGUAI: ['aprender', 'lei-de-maquila'], LEIDEMAQUILANOPARAGUAI: ['aprender', 'lei-de-maquila'],
 }
 
 // "USDBRL Curncy", "usd/brl", "dólar", "juros <GO>" → destino, ou null se o comando não existe.
@@ -219,7 +220,7 @@ export const sparkTone = (points) => {
   const d = points.at(-1).bid - points[0].bid
   return Math.abs(d) < 0.005 ? 'flat' : d > 0 ? 'up' : 'down'
 }
-export const SPARK_NOTE = { cdi: 'fechamento mensal, 12 meses', selic: 'fechamento mensal, 12 meses', IPCA: 'últimos 12 meses divulgados' }
+export const SPARK_NOTE = { cdi: 'fechamento mensal, 12 meses', selic: 'fechamento mensal, 12 meses', IPCA: 'últimos 12 meses divulgados', IBOV: 'fechamentos disponíveis no histórico carregado' }
 
 // Estado do indicador "dados" da barra superior, a partir do que App.jsx já sabe sobre as cotações.
 export function feedState({ error, aged, hasQuotes }) {

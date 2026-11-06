@@ -10,7 +10,8 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   const id = useId()
   // foco dentro do balão (ex.: campo da calculadora da Finimp) o mantém aberto, mesmo se o mouse sair dele
   const [focusIn, setFocusIn] = useState(false)
-  const show = pinned || hover || focusIn
+  const [dismissed, setDismissed] = useState(false)
+  const show = !dismissed && (pinned || hover || focusIn)
   const popRef = useRef(null)
   const mobile = typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 560px)').matches
   const [shift, setShift] = useState(0)
@@ -19,7 +20,7 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   const floating = (fixed || wide) && !mobile
   // O balão flutuante fica fora do "?": um intervalo curto deixa o mouse atravessar até ele sem fechar.
   const leaveTimer = useRef(null)
-  const enter = () => { clearTimeout(leaveTimer.current); setHover(true) }
+  const enter = () => { clearTimeout(leaveTimer.current); setDismissed(false); setHover(true) }
   const leave = () => { clearTimeout(leaveTimer.current); leaveTimer.current = setTimeout(() => setHover(false), floating ? 220 : 0) }
   useEffect(() => () => clearTimeout(leaveTimer.current), [])
   // um balão aberto por vez: abrir outro "?" fecha este na hora (sem esperar o intervalo de saída)
@@ -79,14 +80,27 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
   useEffect(() => {
     if (!pinned) return
     const onDown = (e) => !ref.current?.contains(e.target) && !popRef.current?.contains(e.target) && setPinned(false)
-    const onKey = (e) => { if (e.key === 'Escape') { setPinned(false); setFocusIn(false) } }
     document.addEventListener('pointerdown', onDown)
-    document.addEventListener('keydown', onKey)
     return () => {
       document.removeEventListener('pointerdown', onDown)
-      document.removeEventListener('keydown', onKey)
     }
   }, [pinned])
+
+  useEffect(() => {
+    if (!show) return
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      e.preventDefault()
+      e.stopPropagation()
+      clearTimeout(leaveTimer.current)
+      setDismissed(true)
+      setPinned(false)
+      setHover(false)
+      setFocusIn(false)
+    }
+    document.addEventListener('keydown', onKey, true)
+    return () => document.removeEventListener('keydown', onKey, true)
+  }, [show])
 
   const pop = (
         <span role="tooltip" id={id} ref={popRef} className={`pop ${align}${wide ? ' wide' : ''}`} style={floating ? { position: 'fixed', zIndex: 70, top: pos?.top ?? -9999, left: pos?.left ?? 0, right: 'auto', maxWidth: 'none', ...(pos?.width ? { width: pos.width } : {}) } : shift ? { transform: `translateX(${shift}px)` } : undefined}
@@ -109,8 +123,8 @@ export default function Help({ label, align = 'left', wide = false, fixed = fals
         aria-label={label}
         aria-expanded={show}
         aria-describedby={show ? id : undefined}
-        onClick={() => setPinned((p) => !p)}
-        onFocus={() => setHover(true)}
+        onClick={() => { setDismissed(false); setPinned((p) => !p) }}
+        onFocus={() => { setDismissed(false); setHover(true) }}
         onBlur={() => setHover(false)}
       >
         ?

@@ -11,6 +11,7 @@ export const TFC_SERIES = [
 export const MOEDAS_SERIES = [
   { id: '604', name: 'US$', kind: 'level', unit: 'R$' },
   { id: '143', name: 'SELIC ACUM. D-2', kind: 'level', unit: 'índice' },
+  { id: 'LD1', name: 'SOBRETAXA LCD', kind: 'rate', unit: '% a.a.' },
   { id: '024', name: 'SOBRETAXA FIXA SELIC', kind: 'rate', unit: '% a.a.' },
   { id: '236', name: 'TLP-IPCA', kind: 'pct', unit: '% no mês' },
   { id: 'TR1', name: 'TFBTR60.90', kind: 'rate', unit: '% a.a.' },
@@ -20,7 +21,9 @@ export const MOEDAS_CATALOG = [
   ...TFC_SERIES.map(([id, name]) => ({ id, name, group: 'tfc', kind: 'rate', unit: '% a.a.' })),
   ...MOEDAS_SERIES.map((s) => ({ ...s, group: 'moedas' })),
 ]
-export const moedaUrl = (id) => `https://www.bndes.gov.br/Moedas/um${id}.txt`
+// Endpoint LD1 exposto pela consulta oficial e histórico verificado em 05/11/2026.
+export const SOURCE_STATUS = Object.freeze({ LD1: Object.freeze({ endpointConfirmed: true, automaticCollectionEnabled: false, reason: 'coleta automática LD1 pendente de revisão de segurança e termos', verifiedAt: '2026-11-05T14:52:00Z', source: 'https://www.bndes.gov.br/Moedas/umLD1.txt' }) })
+export const moedaUrl = (id) => SOURCE_STATUS[id]?.endpointConfirmed === false ? null : `https://www.bndes.gov.br/Moedas/um${id}.txt`
 
 const DATE = /^(\d{2})\/(\d{2})\/(\d{4})$/
 // Texto do arquivo -> [[AAAA-MM-DD, valor]] em ordem crescente, sem datas repetidas, sem linhas inválidas.
@@ -45,7 +48,7 @@ export function buildMoedas(results, errors = [], now = Date.now()) {
   const series = {}
   for (const { id } of MOEDAS_CATALOG) {
     const points = parseMoeda(results?.[id])
-    if (points.length) series[id] = { points: points.map(([d, v]) => [d, Math.round(v * 1e6) / 1e6]) }
+    if (points.length) series[id] = { points: points.map(([d, v]) => [d, Math.round(v * 1e6) / 1e6]), ...(id === 'LD1' && SOURCE_STATUS.LD1.endpointConfirmed ? { sourceValidated: true, source: moedaUrl(id) } : {}) }
   }
   return { schemaVersion: 1, generatedAt: now, series, errors }
 }
@@ -54,6 +57,8 @@ export function buildMoedas(results, errors = [], now = Date.now()) {
 export function fillSeriesFromPrevious(out, prev) {
   const stale = {}
   for (const { id } of MOEDAS_CATALOG) {
+    if (SOURCE_STATUS[id]?.endpointConfirmed === false) continue
+    if (id === 'LD1' && !(prev?.series?.LD1?.sourceValidated === true && prev.series.LD1.source === moedaUrl('LD1'))) continue
     if (!out.series[id] && prev?.series?.[id]) {
       out.series[id] = prev.series[id]
       stale[id] = prev.stale?.[id] ?? prev.generatedAt ?? null

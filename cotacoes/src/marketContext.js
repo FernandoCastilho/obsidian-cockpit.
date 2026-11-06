@@ -1,4 +1,12 @@
 export const MARKET_IDS = ['ism-manufacturing', 'ism-services', 'caged', 'unemployment-br', 'payroll-us']
+export const ACTIVITY_REVIEW_DAYS = 7
+export function activityNeedsReview(item, now = Date.now()) {
+  const checked = typeof item?.checkedAt === 'number' ? item.checkedAt : Date.parse(item?.checkedAt)
+  const deadline = Date.parse(item?.nextReviewAt)
+  const nextRelease = Date.parse(item?.nextReleaseAt)
+  const reviewAt = Math.min(checked + ACTIVITY_REVIEW_DAYS * 864e5, Number.isFinite(deadline) ? deadline : Infinity, Number.isFinite(nextRelease) ? nextRelease : Infinity)
+  return !!item?.stale || !Number.isFinite(checked) || checked > now || now >= reviewAt
+}
 export const BRL_IDS = ['ic-br', 'ic-br-agro', 'ic-br-metal', 'ic-br-energia', 'soja-saca']
 export const FUEL_IDS = ['anp-gasolina', 'anp-etanol', 'anp-diesel', 'anp-glp']
 export const COMMODITY_IDS = ['wti', 'henry-hub', 'ny-diesel', 'ny-gasoline', 'gold', 'copper', 'aluminum', 'iron-ore', 'soybeans', 'corn', 'sugar', 'coffee', 'urea', 'dap', 'wheat', 'beef', 'cotton', 'coal', 'cocoa']

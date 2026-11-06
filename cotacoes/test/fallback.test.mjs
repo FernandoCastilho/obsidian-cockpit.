@@ -29,8 +29,8 @@ test('último dado válido: sem arquivo anterior nada muda', () => {
 })
 
 test('notícias: moeda sem manchetes novas mantém as anteriores', () => {
-  const news = { USD: [], EUR: [{ title: 'novo' }] }
-  const stale = fillNewsFromPrevious(news, { generatedAt: 7, news: { USD: [{ title: 'velho' }], EUR: [{ title: 'antigo' }] } })
+  const news = { USD: [], EUR: [{ title: 'novo', t: 9 }] }
+  const stale = fillNewsFromPrevious(news, { generatedAt: 7, news: { USD: [{ title: 'velho', t: 6 }], EUR: [{ title: 'antigo', t: 5 }] } }, 10)
   assert.equal(news.USD[0].title, 'velho')
   assert.equal(news.EUR[0].title, 'novo')
   assert.deepEqual(stale, { USD: 7 })

@@ -27,7 +27,7 @@ test('highlight preserves original Unicode and treats markup as plain text',()=>
  assert.equal(normalizeSearch('AÇÃo'),'acao')
 })
 test('published data maps sectors, focus and headlines; ignores URLs and secrets',()=>{
- const {docs}=indexSearchData('temas.json',{generatedAt:1,temas:{cobre:{items:[{title:'Cobre recua com estoques',description:'China',link:'https://external.test/private',shareToken:'sensitive'}]}}},'resumo','Temas')
+ const {docs}=indexSearchData('temas.json',{generatedAt:1,temas:{cobre:{items:[{title:'Cobre recua com estoques',t:Date.now(),description:'China',link:'https://external.test/private',shareToken:'sensitive'}]}}},'resumo','Temas')
  const item=docs.find(d=>d.title.startsWith('Cobre'))
  assert.equal(item.route,'setores/cobre');assert.ok(item.body.includes('China'));assert.ok(!item.body.includes('external'));assert.ok(!item.body.includes('sensitive'))
  assert.throws(()=>indexSearchData('x',[], 'resumo','x'))

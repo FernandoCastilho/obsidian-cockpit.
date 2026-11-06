@@ -1,10 +1,11 @@
-// Fila única de manchetes (estilo terminal): junta as moedas, une a mesma matéria em vários tickers e ordena por horário.
-export function buildFeed(news, filter = 'ALL', limit = 60) {
+import { recentNews } from './newsWindow.js'
+// Fila única de manchetes publicadas nas últimas 120 horas.
+export function buildFeed(news, filter = 'ALL', limit = 60, now = Date.now()) {
   // A mesma matéria pode chegar com links diferentes (cada busca do Google Notícias gera o seu): une também pelo título + veículo.
   const byLink = new Map(), byTitle = new Map()
   const titleKey = (n) => `${String(n.title).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim()}|${String(n.source ?? '').toLowerCase()}`
   for (const [code, items] of Object.entries(news ?? {})) {
-    for (const n of items ?? []) {
+    for (const n of recentNews(items, now)) {
       if (!n?.link || !n.title) continue
       const cur = byLink.get(n.link) ?? byTitle.get(titleKey(n))
       if (cur) { if (!cur.codes.includes(code)) cur.codes.push(code) }

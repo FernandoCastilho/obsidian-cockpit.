@@ -1,0 +1,20 @@
+.cx-lcd { max-width:1180px; }
+.cx-lcd > .status { max-width:880px; margin:0; }
+.lcd-full { grid-column:1/-1; }
+.lcd-check { display:flex; align-items:flex-start; gap:8px; font-size:.8rem; line-height:1.45; color:var(--mut); }
+.lcd-check input { flex:none; width:18px; height:18px; margin:2px 0; }
+.cx-lcd textarea { background:var(--bg); color:var(--fg); border:1px solid var(--line); padding:10px; font:inherit; font-size:.85rem; resize:vertical; width:100%; box-sizing:border-box; }
+.cx-lcd textarea:focus-visible { outline:2px solid var(--amber, #ffb000); }
+.cx-lcd .cx-field button { min-height:44px; background:var(--surface-2); color:var(--fg); border:1px solid var(--line); font:inherit; font-size:.8rem; padding:8px; }
+.cx-lcd .cx-field button:disabled { opacity:.5; }
+.cx-lcd .cx-field a { font-size:.8rem; }
+.lcd-chart { margin:16px; }
+.lcd-chart figcaption { font-size:.9rem; margin-bottom:14px; }
+.lcd-chart svg { width:100%; min-height:130px; color:var(--fg); }
+.lcd-chart text { fill:currentColor; font-size:14px; }
+.lcd-table caption { text-align:left; font-size:.8rem; color:var(--mut); padding:10px 0; }
+.lcd-table th, .lcd-table td { font-size:.78rem !important; font-weight:400; }
+.lcd-table tbody th { white-space:nowrap; text-transform:none; letter-spacing:normal; }
+.lcd-warnings { font-size:.78rem; color:var(--mut); line-height:1.5; padding:12px 30px; }
+.lcd-method { font-size:.85rem; line-height:1.5; color:var(--mut); }
+.lcd-method summary { cursor:pointer; min-height:44px; display:flex; align-items:center; }

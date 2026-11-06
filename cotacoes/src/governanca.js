@@ -25,8 +25,8 @@ export const FONTES = [
   { id: 'macro', chaves: ['macro'], nome: 'CDI, Selic, PTAX, SOFR e Focus', origem: 'Banco Central, NY Fed', coleta: HORA, muda: 'CDI, PTAX e SOFR a cada dia útil; Selic a cada reunião do Copom (cerca de 6 semanas); Focus toda segunda às 8h30; se ainda não saiu, nova tentativa de 30 em 30 min até 13h (10 tentativas); o mesmo na terça, para quando segunda é feriado', atraso: `${ATRASO_H.macro} h` },
   { id: 'curves', chaves: ['curves'], nome: 'Curvas DI x pré, cupom cambial e Treasuries', origem: 'B3, Tesouro dos EUA', coleta: HORA, muda: 'Uma vez por dia útil, com o ajuste do dia', atraso: `${ATRASO_H.curves} h` },
   { id: 'news', chaves: ['news'], nome: 'Notícias', origem: 'Fontes públicas de notícias', coleta: HORA, muda: 'Ao longo do dia', atraso: `${ATRASO_H.news} h` },
-  { id: 'reforma', chaves: ['reforma-tributaria'], nome: 'Reforma tributária (matérias da semana)', origem: 'Google Notícias', coleta: HORA, muda: 'Ao longo do dia; o histórico acumula os últimos 7 dias', atraso: `${ATRASO_H['reforma-tributaria']} h` },
-  { id: 'temas', chaves: ['temas'], nome: 'Setores, insumos, moedas e eleições nos EUA (matérias da semana)', origem: 'Google Notícias', coleta: HORA, muda: 'Ao longo do dia; o histórico acumula os últimos 7 dias', atraso: `${ATRASO_H.temas} h` },
+  { id: 'reforma', chaves: ['reforma-tributaria'], nome: 'Reforma tributária (matérias dos últimos cinco dias)', origem: 'Google Notícias', coleta: HORA, muda: 'Ao longo do dia; o arquivo retém as últimas 120 horas de publicação', atraso: `${ATRASO_H['reforma-tributaria']} h` },
+  { id: 'temas', chaves: ['temas'], nome: 'Setores, insumos, moedas e eleições nos EUA (matérias dos últimos cinco dias)', origem: 'Google Notícias', coleta: HORA, muda: 'Ao longo do dia; o arquivo retém as últimas 120 horas de publicação', atraso: `${ATRASO_H.temas} h` },
   { id: 'insumos-precos', chaves: ['insumos-precos'], nome: 'Cobre: preço diário aproximado (COMEX)', origem: 'Yahoo Finance', coleta: HORA, muda: 'A cada dia útil, com o fechamento do contrato (atrasado e não oficial)', atraso: `${ATRASO_H['insumos-precos']} h` },
   { id: 'indices', chaves: ['indices'], nome: 'Ibovespa (fechamento diário)', origem: 'Yahoo Finance', coleta: HORA, muda: 'A cada dia útil, com o fechamento da B3 (atrasado e não oficial)', atraso: `${ATRASO_H.indices} h` },
   { id: 'policy', chaves: ['policy'], nome: 'Juros de política monetária (Fed, BCE, BoJ)', origem: 'Bancos centrais e BIS', coleta: HORA, muda: 'A cada decisão do banco central', atraso: `${ATRASO_H.policy} h` },
@@ -56,6 +56,7 @@ export const NAVEGADOR = [
   `Relê os arquivos publicados a cada ${min(DATA_POLL_MS)} min, só enquanto a aba está visível; ao voltar para a aba, atualiza na hora.`,
   `Atualização automática das cotações a cada ${min(AUTO_REFRESH_MS)} min.`,
   `Botão Atualizar: consulta direta à fonte, no máximo 1 a cada ${REFRESH_COOLDOWN_S} s e ${REFRESH_DAILY_MAX} por dia neste navegador.`,
+  'Alertas de câmbio: mais de ±0,30% desde a primeira amostra após 9h de Brasília, não o Δ dia da tabela. A faixa no painel não exige permissão; a notificação do sistema exige autorização deste navegador. Não há monitoramento contínuo em segundo plano nem com o app fechado, mesmo instalado como aplicativo. Uma consulta já iniciada pode terminar e gerar um aviso após ocultar a aba.',
 ]
 
 export const REGRAS = [

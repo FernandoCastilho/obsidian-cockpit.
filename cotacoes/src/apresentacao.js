@@ -1,3 +1,4 @@
+import { recentNews } from './newsWindow.js'
 // Apresentação para o cliente: catálogo de setores e itens de mercado, leitura dos dados que o painel já coleta e o roteiro dos slides.
 // Só formata o que já existe nos arquivos do painel; não consulta fontes novas nem inventa números: sem dado, o slide diz que falta.
 import { INSUMOS } from './insumos.js'
@@ -18,7 +19,7 @@ export const ITENS = {
   petroleo: { id: 'petroleo', label: 'Petróleo (Brent)', tipo: 'petroleo', tema: 'petroleo', insumo: 'petroleo', unidade: 'barril' },
   cobre: { id: 'cobre', label: 'Cobre', tipo: 'commodity', commodity: 'copper', diario: 'cobre', tema: 'cobre', insumo: 'cobre', unidade: 't' },
   aluminio: { id: 'aluminio', label: 'Alumínio', tipo: 'commodity', commodity: 'aluminum', tema: 'aluminio', insumo: 'aluminio', unidade: 't' },
-  aco: { id: 'aco', label: 'Aço', tipo: 'noticia', tema: 'aco', insumo: 'aco', semSerie: 'O aço não tem série de preço pública diária neste painel: a leitura é pelas matérias da semana e pelo custo do minério de ferro.' },
+  aco: { id: 'aco', label: 'Aço', tipo: 'noticia', tema: 'aco', insumo: 'aco', semSerie: 'O aço não tem série de preço pública diária neste painel: a leitura é pelas matérias dos últimos cinco dias e pelo custo do minério de ferro.' },
   soja: { id: 'soja', label: 'Soja', tipo: 'commodity', commodity: 'soybeans', unidade: 't', move: ['Safra e clima no Brasil, na Argentina e nos EUA.', 'Compras da China e política de biocombustíveis (óleo de soja).', 'Dólar: a soja é cotada em US$; real fraco melhora a receita do produtor em reais.'] },
   milho: { id: 'milho', label: 'Milho', tipo: 'commodity', commodity: 'corn', unidade: 't', move: ['Safra e clima (EUA, Brasil, Argentina) e estoques finais do USDA.', 'Demanda por ração (proteína animal) e por etanol de milho.', 'Dólar e frete interno; a segunda safra brasileira pesa no preço local.'] },
   ouro: { id: 'ouro', label: 'Ouro', tipo: 'commodity', commodity: 'gold', unidade: 'oz', move: ['Juros reais nos EUA e dólar: juro baixo e dólar fraco favorecem o ouro.', 'Compras de bancos centrais e busca por proteção em crises.'] },
@@ -256,9 +257,9 @@ export function dadoItem(item, dados, periodo) {
   return { indisponivel: 'Coleta ainda não existe para este item.' }
 }
 
-// Manchetes da semana do tema do item (as mais recentes), sem alterar o título.
-export function manchetes(temas, temaId, n = 3) {
-  return (temas?.[temaId]?.items ?? []).slice(0, n).map((i) => ({ t: i.t, title: i.title, source: i.source, link: i.link }))
+// Manchetes dos últimos cinco dias do tema do item (as mais recentes), sem alterar o título.
+export function manchetes(temas, temaId, n = 3, now = Date.now()) {
+  return recentNews(temas?.[temaId]?.items, now).sort((a, b) => b.t - a.t).slice(0, n).map((i) => ({ t: i.t, title: i.title, source: i.source, link: i.link }))
 }
 
 // Cenário em uma linha: Selic, CDI, IPCA 12 meses, dólar e o que o Focus espera para o ano.
@@ -346,7 +347,7 @@ export function montarRoteiro(cfg, dados) {
   const itens = (cfg.itens ?? []).map((id) => ITENS[id]).filter((i) => i && i.tipo !== 'planejado')
   const slidesItens = itens.map((item) => {
     const insumo = item.insumo ? INSUMOS.find((i) => i.id === item.insumo) : null
-    return { kind: 'item', item, dado: dadoItem(item, dados, periodo), move: insumo?.move ?? item.move ?? [], manchetes: item.tema ? manchetes(dados.temas, item.tema) : [], periodo }
+    return { kind: 'item', item, dado: dadoItem(item, dados, periodo), move: insumo?.move ?? item.move ?? [], manchetes: item.tema ? manchetes(dados.temas, item.tema, 3, agora) : [], newsState: item.tema ? { generatedAt: dados.temas?.[item.tema]?.generatedAt, stale: dados.temas?.[item.tema]?.stale } : null, periodo }
   })
   const perguntas = [...setor.perguntas, ...itens.flatMap((i) => (i.insumo ? INSUMOS.find((x) => x.id === i.insumo)?.visita ?? [] : []))].filter((p, i, a) => a.indexOf(p) === i).slice(0, 8)
   const nome = cfg.capa?.titulo || cfg.nome || ''

@@ -5,6 +5,9 @@ import { parseMoneyInput } from './moneyInput.js'
 import { IOF_PJ, SYSTEMS, compareSystems, parseDecimal } from './emprestimo.js'
 import FinimpComparacao, { FinimpIcon } from './FinimpComparacao.jsx'
 import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
+import ContaGarantida, { ContaGarantidaIcon } from './ContaGarantida.jsx'
+import AnaliseDesconto, { DescontoIcon } from './AnaliseDesconto.jsx'
+import BndesLcdCap, { LcdIcon } from './BndesLcdCap.jsx'
 
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -22,8 +25,11 @@ function GiroIcon() {
 }
 
 const CALCS = [
+  { id: 'conta-garantida', title: 'Conta Garantida', sub: 'Utilização por prazo ou lançamentos diários, juros e IOF sobre saldos e acréscimos', Icon: ContaGarantidaIcon },
+  { id: 'bndes-selic-lcd', title: 'BNDES Selic + LCD', sub: 'Selic capitalizada, LD1 fixada e remunerações exigíveis, com cenário explícito', Icon: LcdIcon },
   { id: 'finimp', title: 'FINIMP', sub: 'Instituição 1 × Instituição 2, prazos fixos e atingir meta de custo', Icon: FinimpIcon },
   { id: 'giro', title: 'Capital de Giro', sub: 'Parcela, juros totais e pagamento final', Icon: GiroIcon },
+  { id: 'analise-desconto', title: 'Análise de desconto', sub: 'Desconto de títulos × giro Price, custos mensais e comparação por prazo', Icon: DescontoIcon },
   { id: 'finame-materiais', title: 'BNDES Finame Materiais', sub: 'Taxa final, carência, SAC ou Price e cronograma, com TFB ou TLP do painel', Icon: FinameIcon },
 ]
 
@@ -40,7 +46,7 @@ function CapitalDeGiro({ onBack }) {
   const rate = parseDecimal(rateText)
   const iofFixed = parseDecimal(iofFixedText), iofDaily = parseDecimal(iofDailyText)
   const errors = {
-    value: money.ok ? null : money.error,
+    value: money.ok && money.value > 0 ? null : money.error || 'Informe um valor maior que zero.',
     n: n !== null && n >= 1 && n <= 600 ? null : 'Informe o prazo em meses, número inteiro de 1 a 600.',
     rate: rate !== null && rate <= 1000 ? null : 'Informe a taxa em %, por exemplo 2,00.',
     iof: iofFixed !== null && iofFixed <= 100 && iofDaily !== null && iofDaily <= 100 ? null : 'Informe as alíquotas do IOF em %, por exemplo 0,38 e 0,0082.',
@@ -137,7 +143,7 @@ function CapitalDeGiro({ onBack }) {
             </tbody>
           </table>
         </div>
-        {!result && <p className="cx-hint cx-pad">Preencha as condições gerais.</p>}
+        {!result && <p className="cx-hint cx-pad" role={compared?.selected.error ? 'alert' : undefined}>{compared?.selected.error || 'Preencha as condições gerais.'}</p>}
         {result && compared.others.length > 0 && (
           <ul className="cx-diff">
             {compared.others.map((o) => (
@@ -157,8 +163,11 @@ function CapitalDeGiro({ onBack }) {
 
 // Aba Calculadoras: lista de calculadoras (ícones) e a calculadora aberta, com endereço próprio (#calculadora/giro).
 export default function Calculadora({ view, onView }) {
+  if (view === 'bndes-selic-lcd') return <BndesLcdCap onBack={() => onView('')} />
   if (view === 'finimp') return <FinimpComparacao onBack={() => onView('')} />
+  if (view === 'conta-garantida') return <ContaGarantida onBack={() => onView('')} />
   if (view === 'giro') return <CapitalDeGiro onBack={() => onView('')} />
+  if (view === 'analise-desconto') return <AnaliseDesconto onBack={() => onView('')} />
   if (view === 'finame-materiais') return <FinameMateriais onBack={() => onView('')} />
   return (
     <section className="cx" aria-labelledby="calc-title">

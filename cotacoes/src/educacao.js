@@ -1,4 +1,5 @@
 import { nf } from './format.js'
+import { CONCEITO_MAQUILA } from './maquila.js'
 // Aba "Aprender": conceitos explicados em linguagem simples. Os números dos exemplos saem das funções abaixo (testadas),
 // nunca digitados no texto, para a tela não mostrar uma conta errada. Exemplos são didáticos, não cotações de mercado.
 
@@ -200,6 +201,8 @@ export const CONCEITOS = [
   },
   {
     id: 'euribor',
+    revisadoEm: '2026-11-05',
+    fontes: [{ nome: 'EMMI — definição e metodologia da Euribor', url: 'https://www.emmi-benchmarks.eu/benchmarks/euribor/' }],
     topico: 'Juros e câmbio',
     nome: 'Euribor',
     frase: 'É o juro de referência em euros para empréstimos entre bancos europeus, em prazos de uma semana a 12 meses.',
@@ -210,6 +213,7 @@ export const CONCEITOS = [
     analogia: 'É a “tabela de preço” do dinheiro em euros entre bancos; os contratos se penduram nela.',
     lacunas: [
       'Não é a taxa do Banco Central Europeu (BCE). O BCE fixa a taxa de depósito; a Euribor reage a ela e às expectativas sobre ela.',
+      'É uma referência não garantida a prazo, com componente de risco bancário. Não equivale à SOFR, garantida e overnight, nem à €STR, referência overnight não garantida em euros.',
       'Não existe uma Euribor só: há uma por prazo (1 semana, 1, 3, 6 e 12 meses).',
       'Administrada pelo EMMI. Desde 2019 usa uma metodologia “híbrida”, que prioriza transações reais em vez de só cotações informadas.',
     ],
@@ -416,22 +420,24 @@ export const CONCEITOS = [
   },
   {
     id: 'nota-comercial',
+    revisadoEm: '2026-11-05',
+    fontes: [{ nome: 'B3 — Nota Comercial', url: 'https://www.b3.com.br/pt_br/produtos-e-servicos/negociacao/renda-fixa/nota-comercial.htm' }, { nome: 'Lei 14.195/2021 — arts. 45 a 51', url: 'https://www2.camara.leg.br/legin/fed/lei/2021/lei-14195-26-agosto-2021-791684-normaatualizada-pl.html' }],
     topico: 'Operações de crédito',
     nome: 'Nota comercial',
-    frase: 'É um título de dívida de curto prazo que a empresa emite para captar dinheiro de investidores, mais simples e rápido de montar que a debênture.',
+    frase: 'É um título de dívida escritural que a empresa emite para captar recursos; prazo e remuneração são definidos na emissão.',
     crianca: [
-      'Se a debênture é o empréstimo coletivo de prazo longo e formal, a nota comercial é a versão curta e enxuta: a empresa precisa de capital de giro por alguns meses, emite notas e investidores as compram.',
-      'Como na debênture, há valor, prazo, data de pagamento e remuneração definidos (muitas vezes CDI + spread). Em geral há menos exigências e custo de emissão menor, o que a torna comum para capital de giro e para “pontes” até uma captação maior.',
+      'A empresa pode emitir notas comerciais para obter recursos de investidores, inclusive para capital de giro ou uma ponte até outra captação. Esses usos não tornam o curto prazo obrigatório.',
+      'Como na debênture, há valor, prazo, data de pagamento e remuneração definidos, que podem incluir CDI + spread. A estrutura, as exigências e o custo dependem da emissão e da forma de oferta; não são sempre menores.',
     ],
-    analogia: 'É um empréstimo-ponte com recibo: valor, prazo e juros no papel, mas sem toda a estrutura de uma debênture.',
+    analogia: 'É uma promessa de pagamento registrada eletronicamente: a empresa recebe recursos e combina valor, vencimento e remuneração com os investidores.',
     lacunas: [
-      'Prazo curto não é segurança: o risco continua sendo o de crédito do emissor, e não há garantia do FGC.',
-      'Prazo curto obriga a empresa a refinanciar logo: se o mercado fechar na hora do vencimento, o risco é o de refinanciamento.',
-      'Na prática, as diferenças para a debênture são prazo (mais curto), formalização (mais enxuta) e uso (capital de giro, ponte). Ambas são dívida da empresa com remuneração definida.',
+      'Um prazo menor não elimina o risco de crédito do emissor; nota comercial não tem garantia do FGC.',
+      'Quando a emissão financia uma necessidade mais longa que seu vencimento, há risco de refinanciamento se o mercado fechar.',
+      'Nota comercial e debênture são instrumentos distintos de dívida. Compare as condições da emissão, as garantias, a oferta e os custos; não apenas a duração.',
       'Quem pode emitir, prazos e forma de oferta vêm da lei e da regulamentação da CVM, e já mudaram: confira a norma vigente antes de decidir.',
     ],
     preciso: {
-      texto: 'Título de crédito que representa promessa de pagamento em dinheiro, emitido por empresa, em geral com prazo curto e remuneração em taxa (prefixada ou pós-fixada). Os juros do prazo seguem o cálculo da debênture, com t em fração do ano (convenção do CDI: dias úteis ÷ 252):',
+      texto: 'Título de crédito escritural que representa promessa de pagamento em dinheiro, conforme os arts. 45 a 51 da Lei 14.195/2021. Prazo e remuneração constam das condições da emissão. Neste exemplo pós-fixado simplificado, t é uma fração do ano pela convenção CDI de dias úteis ÷ 252:',
       formula: 'juros = principal × [(1 + taxa)^t − 1]   ·   t = dias úteis ÷ 252',
     },
     exemplo: (() => {
@@ -657,6 +663,7 @@ export const CONCEITOS = [
       resposta: 'Ficam devidos: sem exportação comprovada, a empresa paga os tributos suspensos com os acréscimos legais (juros e, conforme o caso, multa).',
     },
   },
+  CONCEITO_MAQUILA,
   {
     id: 'inflacao',
     topico: 'Inflação',
@@ -779,15 +786,17 @@ export const CONCEITOS = [
   },
   {
     id: 'ic-br',
+    revisadoEm: '2026-11-05',
+    fontes: [{ nome: 'BCB — Revisão metodológica do IC-Br, dezembro de 2017', url: 'https://www.bcb.gov.br/content/ri/relatorioinflacao/201712/RELINF201712-ri201712b3p.pdf' }],
     topico: 'Commodities',
     nome: 'IC-Br (índice de commodities)',
     frase: 'É o índice do Banco Central que resume, em reais, o preço das commodities que mais pesam na economia brasileira.',
     crianca: [
-      'Em vez de olhar soja, minério e petróleo um a um, o IC-Br junta tudo numa cesta com pesos que refletem o que o Brasil exporta, e acompanha o valor dessa cesta mês a mês.',
+      'Em vez de olhar soja, minério e petróleo um a um, o IC-Br acompanha uma cesta de commodities em reais. A ponderação considera a relevância para a inflação doméstica; não é uma carteira do que o Brasil exporta.',
       'Ele vem em quatro partes: o índice geral, e as cestas de agropecuária, de metais e de energia. Assim dá para ver qual setor puxa o movimento.',
       'Como é calculado em reais, o índice mexe com dois fatores: o preço internacional das commodities e o câmbio. Dólar mais forte empurra o IC-Br para cima, ainda que o mundo esteja estável.',
     ],
-    analogia: 'É o termômetro de uma cesta de compras do Brasil exportador: não diz o preço de cada produto, mas se a cesta inteira ficou mais cara ou mais barata.',
+    analogia: 'É um termômetro de commodities relevantes para os preços no Brasil: não informa o preço de cada produto, mas a evolução de uma cesta em reais.',
     lacunas: [
       'O IC-Br é um número-índice: o nível em si (por exemplo, 460) só tem sentido em comparação com meses anteriores. Olhe a variação.',
       'Ele é medido em reais; por isso reflete o câmbio. Para isolar o efeito do mundo, compare com as mesmas commodities em dólar.',
@@ -882,7 +891,7 @@ export const LIGACOES = [
   ['focus', 'commodities-e-cambio', 'O câmbio projetado no Focus (média de dezembro) é a referência de mercado para converter preços em dólar nos cenários do cliente.'],
   ['cupom-cambial', 'sofr', 'O cupom cambial é o juro em dólar embutido no mercado brasileiro; a diferença dele para a SOFR mostra o prêmio de estar no país.'],
   ['cupom-cambial', 'custo-de-funding', 'O cupom cambial converte o custo de captar em dólar para reais (swap): é a ponte que fecha a conta do funding externo.'],
-  ['sofr', 'euribor', 'São os benchmarks “sem risco” de cada moeda, dólar e euro, a base sobre a qual se soma o spread.'],
+  ['sofr', 'euribor', 'São referências de juros de mercados diferentes: SOFR é overnight e garantida por títulos do Tesouro dos EUA; Euribor mede funding em euros não garantido, a prazo, com componente de risco de crédito bancário.'],
   ['sofr', 'custo-de-funding', 'Captar em dólar custa SOFR mais o spread de crédito de quem capta.'],
   ['euribor', 'custo-de-funding', 'Captar em euro custa Euribor mais o spread de crédito de quem capta.'],
   ['custo-de-funding', 'cds', 'O CDS mede o risco percebido: quando sobe, o spread exigido e o custo de funding sobem junto.'],
@@ -891,7 +900,7 @@ export const LIGACOES = [
   ['cds', 'debenture', 'O CDS é um seguro contra calote; o risco de crédito que ele precifica é o mesmo que define o spread da debênture.'],
   ['liquidacao-antecipada', 'debenture', 'Quitar ou resgatar uma debênture antes do vencimento pode ser na curva ou a mercado, e os contratos costumam prever uma cobrança de quebra.'],
   ['liquidacao-antecipada', 'fidc', 'Vender recebíveis ao FIDC com desconto é trazer valor futuro a valor presente, a mesma conta da liquidação a mercado.'],
-  ['debenture', 'nota-comercial', 'Ambas são dívida da empresa com remuneração definida: a debênture é mais longa e formal, a nota comercial é curta e enxuta.'],
+  ['debenture', 'nota-comercial', 'São instrumentos distintos de dívida da empresa; prazo, garantias, remuneração e exigências dependem das condições e da forma de oferta de cada emissão.'],
   ['debenture', 'fidc', 'Duas formas de captar no mercado: a debênture é dívida da empresa; o FIDC compra os recebíveis dela, e o investidor depende da carteira.'],
   ['debenture', 'inflacao', 'Debêntures indexadas ao IPCA pagam a inflação mais uma taxa real: quem compra se protege do aumento dos preços.'],
   ['commodities-e-cambio', 'ic-br', 'O IC-Br é o preço das commodities já passado pelo câmbio: o índice em reais é o índice em dólar multiplicado pelo dólar.'],
@@ -911,7 +920,10 @@ export const LIGACOES = [
   ['facil', 'custo-de-funding', 'Ao abrir o mercado de capitais para empresas médias, o FÁCIL dá uma alternativa ao banco: o custo é CDI mais o spread que os investidores pedirem.'],
   ['drawback', 'commodities-e-cambio', 'Os insumos do drawback costumam ser cotados em dólar: o câmbio define quanto vale, em reais, o insumo e o tributo suspenso.'],
   ['drawback', 'custo-de-funding', 'O drawback libera caixa ao não adiantar tributos sobre insumos, o que reduz o capital de giro a financiar e o custo de funding da exportação.'],
-  ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: tomar dinheiro por pouco tempo (nota comercial) ou antecipar o que a empresa tem a receber (FIDC).'],
+  ['lei-de-maquila', 'drawback', 'Ambos apoiam operações de exportação, mas a maquila é um regime do Paraguai e o drawback é um regime aduaneiro brasileiro: requisitos e tributos são diferentes.'],
+  ['lei-de-maquila', 'custo-de-funding', 'O benefício tributário precisa ser comparado com capital de giro, logística e custo de financiar a operação; a alíquota de 1% não resume o custo total.'],
+  ['lei-de-maquila', 'commodities-e-cambio', 'Insumos, contrato de maquila e exportação podem envolver moedas diferentes; preço internacional e câmbio mudam o custo da cadeia.'],
+  ['nota-comercial', 'fidc', 'Duas saídas para capital de giro: captar por nota comercial, no prazo definido na emissão, ou antecipar o que a empresa tem a receber por um FIDC.'],
 ]
 
 export const CONEXAO = {
@@ -921,17 +933,18 @@ export const CONEXAO = {
     { id: 'diferencial-de-juros', texto: 'é a distância entre o juro de duas moedas: a origem da conta que liga o real ao dólar.' },
     { id: 'cupom-cambial', texto: 'é a ponte entre o juro em reais e o juro em dólar.' },
     { id: 'sofr', texto: 'é o benchmark do dólar: o preço “sem risco” do dinheiro em dólar.' },
-    { id: 'euribor', texto: 'é o benchmark do euro, o equivalente europeu da SOFR.' },
+    { id: 'euribor', texto: 'é uma referência de funding bancário não garantido em euros, a prazo; não é uma taxa sem risco equivalente à SOFR. Para uma referência overnight em euros, consulte também €STR, cuja metodologia é diferente da SOFR.' },
     { id: 'custo-de-funding', texto: 'é o resultado: benchmark + spread de risco, convertido na moeda em que a instituição empresta.' },
     { id: 'cds', texto: 'é o prêmio pelo risco de crédito: quanto mais alto, mais caro captar.' },
     { id: 'liquidacao-antecipada', texto: 'mostra quanto vale pagar antes do vencimento: o saldo do contrato (na curva), o preço de hoje (a mercado) e a indenização pelo funding quebrado (break funding).' },
     { id: 'debenture', texto: 'é a dívida longa e formal da empresa com investidores: CDI ou IPCA mais um spread.' },
-    { id: 'nota-comercial', texto: 'é a dívida curta e enxuta da empresa, comum para capital de giro e ponte.' },
+    { id: 'nota-comercial', texto: 'é um título de dívida escritural; pode financiar giro ou ponte, com prazo definido na emissão.' },
     { id: 'fidc', texto: 'é o fundo que compra recebíveis; a subordinação protege quem tem a cota sênior.' },
     { id: 'cri', texto: 'transforma recebíveis imobiliários em título para o investidor, com patrimônio separado e, para pessoa física, isenção de IR.' },
     { id: 'cra', texto: 'é o CRI do agronegócio: lastro em safra, insumos e contratos do agro, com risco ligado a clima, commodities e câmbio.' },
     { id: 'facil', texto: 'é a porta simplificada da CVM para companhias de menor porte (receita abaixo de R$ 500 milhões) captarem com investidores.' },
     { id: 'drawback', texto: 'suspende ou isenta os tributos dos insumos de quem exporta, liberando caixa do exportador.' },
+    { id: 'lei-de-maquila', texto: 'organiza produção ou serviços no Paraguai para o exterior, sob programa aprovado, com tributação própria e obrigações de exportação.' },
     { id: 'inflacao', texto: 'é o que desconta o juro nominal para chegar ao juro real, e o que o Banco Central tenta controlar com a Selic.' },
     { id: 'focus', texto: 'é a pesquisa semanal do Banco Central com o que o mercado espera de Selic, inflação, PIB e câmbio: antecipa o custo do dinheiro.' },
     { id: 'commodities-e-cambio', texto: 'é a regra de conversão: o preço mundial em dólar vira preço em reais pelo câmbio.' },
@@ -939,7 +952,7 @@ export const CONEXAO = {
     { id: 'combustiveis', texto: 'é o caminho do derivado em dólar até a bomba, onde entram câmbio, impostos, etanol e margens, e de onde parte da inflação.' },
   ],
   // O caminho que une tudo, de ponta a ponta.
-  cadeia: 'Expectativas (Focus) → Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA (com o FÁCIL abrindo esse caminho às empresas menores) → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. No comércio exterior, o drawback alivia o caixa do exportador. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
+  cadeia: 'Expectativas (Focus) → Inflação → Selic e curva DI → CDI → remuneração de debêntures, notas comerciais, CRI e CRA (com o FÁCIL abrindo esse caminho às empresas menores) → custo de funding (somando o risco, medido pelo CDS) → liquidação antecipada e break funding. No comércio exterior, o drawback alivia o caixa do exportador e a maquila organiza operações no Paraguai para o exterior, com regras próprias e custos no destino a avaliar. Na ponta externa, SOFR, Euribor, diferencial de juros e cupom cambial ligam o juro em reais ao juro em dólar e em euro. Nas commodities, o preço em dólar passa pelo câmbio e vira IC-Br, soja em reais e combustível na bomba, e daí volta à inflação.',
 }
 
 // Ligações de um conceito: [{ id, porque }] nos dois sentidos, na ordem de LIGACOES.

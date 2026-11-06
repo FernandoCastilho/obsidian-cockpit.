@@ -146,7 +146,7 @@ test('resumo: tiles de juros e manchetes mais recentes', async () => {
   assert.ok(Math.abs(v.find((x) => x.key === 'selic').delta - -0.25) < 1e-9) // variação sobre a publicação anterior
   assert.equal(v.find((x) => x.key === 'cdi').delta, 0)
   assert.ok(Math.abs(v.find((x) => x.key === 'sofr').delta - 0.02) < 1e-9)
-  const h = topHeadlines({ news: { USD: [{ title: 'a', t: 1 }, { title: 'b', t: 5 }], EUR: [], JPY: [{ title: 'c', t: 2 }] } })
+  const h = topHeadlines({ news: { USD: [{ title: 'a', t: 1 }, { title: 'b', t: 5 }], EUR: [], JPY: [{ title: 'c', t: 2 }] } }, undefined, 3, 10)
   assert.deepEqual(h.map((x) => `${x.code}:${x.title}`), ['USD:b', 'JPY:c'])
   assert.ok(periodChange([{ bid: 5 }, { bid: 5.5 }]) > 9.9)
   assert.equal(periodChange([{ bid: 5 }]), null)
@@ -183,11 +183,11 @@ test('fila de notícias: une a mesma matéria em vários tickers, ordena por hor
     USD: [{ link: 'a', title: 'A', t: 100 }, { link: 'b', title: 'B', t: 300 }],
     EUR: [{ link: 'a', title: 'A', t: 100 }, { link: 'c', title: 'C', t: 200 }],
   }
-  const all = buildFeed(news)
+  const all = buildFeed(news, 'ALL', 60, 1000)
   assert.deepEqual(all.map((n) => n.link), ['b', 'c', 'a'])
   assert.deepEqual(all[2].codes, ['USD', 'EUR'])
-  assert.deepEqual(buildFeed(news, 'EUR').map((n) => n.link), ['c', 'a'])
-  assert.equal(buildFeed(news, 'ALL', 1).length, 1)
+  assert.deepEqual(buildFeed(news, 'EUR', 60, 1000).map((n) => n.link), ['c', 'a'])
+  assert.equal(buildFeed(news, 'ALL', 1, 1000).length, 1)
   assert.deepEqual(buildFeed(undefined), [])
 })
 
@@ -326,7 +326,7 @@ test('curvas de juros: cada gráfico explica a seleção de períodos (último d
 
 test('manchetes: a mesma matéria com links diferentes (mesmo título e veículo) aparece uma vez, com as duas etiquetas', () => {
   const news = { USD: [{ title: 'Itaú corta projeção de PIB de 2027 para 0,5%', link: 'https://n/1', source: 'Valor Econômico', t: 2 }], MKT: [{ title: 'Itaú corta projeção de PIB de 2027 para 0,5%', link: 'https://n/2', source: 'Valor Econômico', t: 2 }, { title: 'Outra', link: 'https://n/3', source: 'Valor Econômico', t: 1 }] }
-  const feed = buildFeed(news)
+  const feed = buildFeed(news, 'ALL', 60, 1000)
   assert.equal(feed.length, 2); assert.deepEqual(feed[0].codes, ['USD', 'MKT'])
 })
 test('feriados: Campinas (Dia do Evangélico desde 2026, padroeira) e região (lista do TJ-SP, Paulínia móvel)', () => {

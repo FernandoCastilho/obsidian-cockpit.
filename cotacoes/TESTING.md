@@ -37,3 +37,19 @@ Nas coletas de dias úteis, o relógio de atraso exclui sábado e domingo de Bra
 Para indicadores periódicos ou taxas em vigor (por exemplo, Selic e IPCA), o estado da coleta considera os metadados do arquivo e suas falhas, sem inferir atraso apenas porque a última observação é antiga. “Sem alerta” significa ausência de falha informada e arquivo dentro do prazo; a referência permanece indicada no painel correspondente.
 
 Regressão: `node --test test/data-health.test.mjs test/terminal.test.mjs`; testes de leitura em `test/health-refresh.test.mjs`. O smoke `smoke-data-health.cjs` confere os estados e as datas no build, com dados sintéticos.
+
+## Alertas de câmbio e permissão
+
+`node --test test/alerta-variacao.test.mjs test/alerta-notificacao.test.mjs test/quote-freshness.test.mjs` verifica, sem navegador ou rede, o cálculo e o componente React com APIs de notificação simuladas. Cobre convite mesmo sem alerta, clique explícito, escolha adiada, bloqueio, liberação externa ao retornar ao app, ausência de suporte, falha e nova tentativa, envio pendente, cliques repetidos, dispensa concorrente, deduplicação por moeda/sentido/dia e migração do estado antigo. Não abre prompts nem envia notificações reais.
+
+O limiar permanece estritamente maior que ±0,30% sobre a primeira amostra disponível a partir das 9h de Brasília, não R$ 0,30 nem o Δ dia da tabela. Sem essa base, não há alerta. Dados com mais de dez minutos, retidos ou de reserva não disparam alertas atuais. O navegador lê os dados enquanto o app está visível; não existe push de servidor para segundo plano/app fechado e movimentos revertidos durante a ausência não são reconstruídos.
+
+`notificado` do formato anterior não comprovava envio e não bloqueia uma nova tentativa. `sistemaEnviadoEm` só é gravado após a API do navegador aceitar o envio; isso não comprova exibição pelo sistema operacional nem leitura. Dispensas existentes são mantidas. A primeira abertura após esta correção pode reenviar uma vez um alerta antigo ainda ativo e não dispensado. Sem armazenamento, a deduplicação vale só para a montagem atual; outras abas/perfis não possuem garantia de exclusão mútua.
+
+O roteiro `scripts/smoke-alerta.cjs` preserva a verificação de dispensa separada do convite de permissão. Ele não foi executado nesta revisão: servidor local, socket, preview e fixture Python não foram usados. Layout e entrega real em dispositivos permanecem sem validação de navegador.
+
+## Conta Garantida
+
+`node --test test/conta-garantida*.test.mjs` verifica utilização única e lançamentos por data, amortização, reutilização, dias reais e úteis, feriados informados, meses, IOF sobre saldos e acréscimos, referências e bloqueios tributários, erros e fluxo React sem navegador. Juros e IOF são pagos à parte, nunca capitalizados; o motor rejeita encargos incorporados. O caso R$ 100 mil, dez dias, 3% a.m. proporcional/30 e IOF padrão resulta em R$ 1.000 de juros + R$ 462 de IOF.
+
+Os testes de interface cobrem troca de modos, repetição de edição/adição/remoção, resultado inválido sem dados antigos, Simples, feriados, paginação, labels/IDs e rota de busca. São testes React em memória, não smoke visual. Não foi usado servidor/socket/preview/fixture Python nem feita publicação. Convenções e limites: `../docs/conta-garantida.md`.

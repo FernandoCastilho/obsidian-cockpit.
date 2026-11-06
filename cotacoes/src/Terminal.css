@@ -43,7 +43,7 @@ body { background: var(--bg); }
   .topbar button:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
   .topbar-tabs { display: flex; flex: 1; min-width: 0; }
   .topbar-tabs button { display: flex; align-items: center; gap: 7px; padding: 0 12px; background: transparent; border: 0; border-right: 1px solid #1a1813; color: var(--mut); font: 600 .72rem/1 system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
-  .topbar-tabs button i { font: normal .62rem var(--mono); color: #5d5a50; }
+  .topbar-tabs button i { font: normal .62rem var(--mono); color: var(--mut); }
   .topbar-tabs button:hover { color: var(--fg); background: #0f0e0b; }
   .topbar-tabs button.on { background: var(--amber); color: #000; }
   .topbar-tabs button.on i { color: #0009; }
@@ -84,7 +84,7 @@ body { background: var(--bg); }
 .kpi:hover { background: #121112; }
 .kpi:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
 .kpi-label { grid-column: 1 / -1; display: flex; justify-content: space-between; color: var(--mut); font: 700 .66rem/1.2 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
-.kpi-label small { font-weight: 500; letter-spacing: .02em; text-transform: none; color: #5d5a50; }
+.kpi-label small { font-weight: 500; letter-spacing: .02em; text-transform: none; color: var(--mut); font-size:.75rem; }
 .kpi-value { grid-column: 1 / -1; margin: 3px 0 1px; font: 700 1.5rem/1.1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
 .kpi-change { font: .74rem var(--mono); }
 .kpi-spark { grid-column: 2; grid-row: 3; align-self: end; width: 84px; height: 30px; }
@@ -95,7 +95,7 @@ body { background: var(--bg); }
 .desk-panel { min-width: 0; background: var(--card); border: 1px solid var(--line); }
 .desk-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 28px; padding: 0 10px; background: linear-gradient(#17150f, #100f0b); border-bottom: 1px solid var(--line); }
 .desk-panel > header h2 { margin: 0; color: var(--amber); font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
-.desk-panel > header small { color: #5d5a50; font-size: .68rem; }
+.desk-panel > header small { color: var(--mut); font-size: .75rem; }
 .desk-panel-body { min-width: 0; }
 .desk-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
 .desk-side { display: grid; gap: 6px; align-content: start; min-width: 0; }
@@ -358,7 +358,7 @@ main.app .fer-month h2 { text-transform: uppercase; }
 .learn-answer { border-top: 0; margin-left: 12px; }
 .learn-formula { padding: 8px 12px; background: #0a0a0a; border: 1px solid var(--line); color: var(--amber); font: .85rem/1.5 var(--mono); overflow-wrap: anywhere; }
 .learn-result { padding: 8px 12px; border-left: 3px solid var(--amber); background: #14110a; }
-.learn-note { color: #5d5a50; font-size: .72rem; }
+.learn-note { color: var(--mut); font-size: .75rem; }
 .learn-app { margin-top: 6px; padding-top: 8px; border-top: 1px solid #1a1813; color: var(--mut); }
 .learn-go { min-height: 44px; min-width: 44px; padding: 0 10px; background: none; border: 1px solid #4a3a12; border-radius: 2px; color: var(--amber); font: inherit; font-size: .8rem; cursor: pointer; }
 .learn-nav { display: flex; flex-wrap: wrap; gap: 4px; }
@@ -437,7 +437,7 @@ main.app .scenario-table caption { white-space: normal; text-align: left; positi
 .terminal-news > .desk-panel { flex: 1; border: 0; border-radius: 0; background: transparent; }
 .terminal-news .desk-panel-body { padding: 0; }
 .desk-tabs { display: flex; gap: 2px; flex: 1; min-width: 0; align-self: stretch; }
-.desk-tabs button { white-space: nowrap; min-height: 28px; padding: 0 10px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: #5d5a50; font: 700 .72rem/1 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.desk-tabs button { white-space: nowrap; min-height: 28px; padding: 0 10px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: var(--mut); font: 700 .75rem/1.3 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
 .desk-tabs button[aria-selected="true"] { color: var(--amber); border-bottom-color: var(--amber); }
 .desk-tabs button:hover, .desk-tabs button:focus-visible { color: var(--fg); }
 @media (max-width: 560px) { .desk-tabs button { min-height: 44px; padding: 0 8px; letter-spacing: .06em; } .desk-panel > header { flex-wrap: wrap; } .desk-tabs { flex-wrap: wrap; } } /* abas quebram linha no celular em vez de sair da tela */

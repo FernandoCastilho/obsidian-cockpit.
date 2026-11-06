@@ -127,6 +127,7 @@ test('weekly inventory covers all collector outputs skipped by the special Pages
   }
   assert.deepEqual([...outputs].sort(), [...RETAIN_JSON_FILES].sort())
   assert.equal(RETAIN_FILES.length, new Set(RETAIN_FILES).size)
+  assert.ok(RETAIN_JSON_FILES.includes('sector-news.json'), 'a atualização semanal de Focus preserva a cobertura setorial')
   for (const name of ['tfb', 'tlp', 'tfc', 'moedas']) assert.ok(RETAIN_FILES.includes('csv/' + name + '.csv'))
 })
 

@@ -7,7 +7,7 @@ const byId = (id) => CONCEITOS.find((c) => c.id === id)
 const text = (c) => JSON.stringify(c)
 
 test('os conceitos pedidos existem, com ids únicos', () => {
-  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
+  assert.deepEqual(CONCEITOS.map((c) => c.id), ['diferencial-de-juros', 'cupom-cambial', 'sofr', 'euribor', 'custo-de-funding', 'fee-de-estruturacao', 'liquidacao-antecipada', 'cds', 'debenture', 'nota-comercial', 'fidc', 'cri', 'cra', 'facil', 'drawback', 'lei-de-maquila', 'inflacao', 'focus', 'commodities-e-cambio', 'ic-br', 'combustiveis'])
   assert.equal(new Set(CONCEITOS.map((c) => c.id)).size, CONCEITOS.length)
 })
 

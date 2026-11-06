@@ -1,3 +1,4 @@
+import { inNewsWindow, recentNews } from './newsWindow.js'
 import { GROUPS } from './moedas.js'
 import { creditStats } from './inadimplencia.js'
 // Pesquisa local: não lê campos, armazenamento pessoal ou páginas de terceiros.
@@ -31,10 +32,38 @@ export function plainContent(value, key = '') {
 export function makeSearchDoc({ id, title, body, route, ...rest }) {
   return { id, title, body, route, section:SEARCH_SECTIONS[route.split('/')[0]] || 'Painel', ...rest, normalized:normalizeSearch(title + ' ' + body), titleNormalized:normalizeSearch(title) }
 }
+export const isNewsSearchFile = file => ['news.json', 'temas.json', 'reforma-tributaria.json'].includes(file)
+// Keep structured publication data with each selected result, not only a frozen
+// text snippet. A topic/currency body can contain several independently expiring items.
+function currentNewsNode(node, now) {
+  if (Array.isArray(node)) {
+    const items = recentNews(node, now)
+    return items.length ? items : null
+  }
+  if (Array.isArray(node?.items)) {
+    const items = recentNews(node.items, now)
+    return items.length ? { ...node, items } : null
+  }
+  return inNewsWindow(node?.t, now) ? node : null
+}
+export function currentSearchDocument(doc, now = Date.now()) {
+  if (!doc || !isNewsSearchFile(doc.file)) return doc
+  const newsNode = currentNewsNode(doc.newsNode, now)
+  // Legacy selected news without publication metadata fail closed. stamp is a
+  // file-generation time and must never be used as the article's publication.
+  return newsNode ? makeSearchDoc({ ...doc, body: plainContent(newsNode), newsNode }) : null
+}
+// Prune before recursive indexing: parent bodies must not retain expired headlines.
+function currentSearchNews(file, data, now) {
+  if (file === 'news.json') return { generatedAt: data.generatedAt, news: Object.fromEntries(Object.entries(data.news ?? {}).map(([code, items]) => [code, recentNews(items, now)])) }
+  if (file === 'temas.json') return { generatedAt: data.generatedAt, temas: Object.fromEntries(Object.entries(data.temas ?? {}).filter(([, topic]) => topic && typeof topic === 'object').map(([id, topic]) => [id, { label: topic.label, grupo: topic.grupo, items: recentNews(topic.items, now) }])) }
+  return { generatedAt: data.generatedAt, items: recentNews(data.items, now) }
+}
 // Named records retain their own context, route and snapshot. No HTML is interpreted.
-export function indexSearchData(file, data, route, label) {
+export function indexSearchData(file, data, route, label, now = Date.now()) {
   if (!SEARCH_SECTIONS[route.split('/')[0]]) return {docs:[],limited:false}
   if (!data || Array.isArray(data) || typeof data !== 'object') throw new Error('Formato indisponível')
+  if (isNewsSearchFile(file)) data = currentSearchNews(file, data, now)
   const docs = [], stamp = data.generatedAt || data.updatedAt || null
   if(file==='focus-history.json' && data.series) {
     for(const [indicator,byYear] of Object.entries(data.series))for(const [year,points] of Object.entries(byYear))docs.push(makeSearchDoc({id:`${file}:${indicator}:${year}`,title:`Focus · ${indicator} · referência ${year}`,context:{year},body:`Histórico semanal da mediana do Focus para ${indicator}, ano de referência ${year}. `+plainContent(points.slice().reverse()),route,file,stamp,kind:'Dado publicado'}))
@@ -65,15 +94,16 @@ export function indexSearchData(file, data, route, label) {
     if (file === 'bndes.json' && seriesId) target = `bndes/tfb/${encodeURIComponent(seriesId)}`
     if (file==='bndes.json' && path.join('/')==='tlp')target='bndes/tlp/TLP'
     if (typeof title === 'string' && title.trim()) {
-      const body = plainContent(node)
-      if (body) docs.push(makeSearchDoc({ id:file+':'+path.join('/'), title:title.slice(0,200), body, route:target, file, stamp, kind:'Dado publicado', context:file==='reforma-tributaria.json'?{newsTab:'reforma'}:file==='temas.json' && target==='resumo'?{newsTab:path.includes('eleicoes-eua')?'eleicoes':'moedas'}:undefined }))
+      const newsNode = isNewsSearchFile(file) ? currentNewsNode(node, now) : null
+      const body = isNewsSearchFile(file) ? (newsNode ? plainContent(newsNode) : '') : plainContent(node)
+      if (body) docs.push(makeSearchDoc({ id:file+':'+path.join('/'), title:title.slice(0,200), body, route:target, file, stamp, kind:'Dado publicado', ...(newsNode ? { newsNode } : {}), context:file==='reforma-tributaria.json'?{newsTab:'reforma'}:file==='temas.json' && target==='resumo'?{newsTab:path.includes('eleicoes-eua')?'eleicoes':'moedas'}:undefined }))
       if(Array.isArray(node.points))return
     }
     const entries = Array.isArray(node) ? node.map((v,i)=>[String(i),v]) : Object.entries(node)
     for (const [k,v] of entries) if (!OMIT.test(k) && v && typeof v === 'object') walk(v,[...path,k], typeof title === 'string' ? title : inherited)
   }
   walk(data)
-  if (!docs.length) { const body=plainContent(data); if(body) docs.push(makeSearchDoc({id:file,title:label,body,route,file,stamp,kind:'Dado publicado'})); else throw new Error('Sem conteúdo pesquisável disponível') }
+  if (!docs.length && !isNewsSearchFile(file)) { const body=plainContent(data); if(body) docs.push(makeSearchDoc({id:file,title:label,body,route,file,stamp,kind:'Dado publicado'})); else throw new Error('Sem conteúdo pesquisável disponível') }
   return { docs, limited }
 }
 export function searchDocuments(docs, query) {

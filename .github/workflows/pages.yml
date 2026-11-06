@@ -125,6 +125,11 @@ jobs:
         run: node scripts/fetch-temas.mjs
         timeout-minutes: 4
         continue-on-error: true
+      - name: Revalidar janela setorial sem coleta externa
+        if: github.event.schedule != '30 11 * * 1,2'
+        run: node scripts/fetch-sector-news.mjs --offline
+        timeout-minutes: 12
+        continue-on-error: true
       - name: Coletar acessos ao app (Umami, link de compartilhamento)
         if: github.event.schedule != '30 11 * * 1,2'
         run: node scripts/fetch-acessos.mjs

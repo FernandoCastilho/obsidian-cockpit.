@@ -1,3 +1,4 @@
+import { recentNews } from '../src/newsWindow.js'
 // Último dado válido: quando uma fonte falha na coleta horária, o arquivo publicado antes é reaproveitado
 // e a parte reaproveitada fica registrada em `stale` ({ chave: instante da coleta original }), para a tela avisar.
 
@@ -40,11 +41,12 @@ export function fillFromPrevious(out, prev, keys) {
 }
 
 // Notícias: por moeda, mantém as manchetes anteriores quando a nova coleta veio vazia.
-export function fillNewsFromPrevious(news, prev) {
+export function fillNewsFromPrevious(news, prev, now = Date.now()) {
   const stale = {}
   for (const code of Object.keys(news)) {
+    news[code] = recentNews(news[code], now)
     if (!news[code]?.length && prev?.news?.[code]?.length) {
-      news[code] = prev.news[code]
+      news[code] = recentNews(prev.news[code], now)
       stale[code] = prev.stale?.[code] ?? prev.generatedAt ?? null
     }
   }

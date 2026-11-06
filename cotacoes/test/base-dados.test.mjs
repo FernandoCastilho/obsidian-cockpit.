@@ -32,10 +32,14 @@ test('base de dados: todas as fontes da governança aparecem na Base de dados', 
   assert.ok(['macro.json', 'curves.json', 'oil.json', 'fuels.json', 'commodities-brl.json', 'estr.json', 'euro-curve.json'].every((a) => arquivos.has(a)))
   assert.ok(ATRIBUICOES.some((a) => /BLS/.test(a.fonte)) && ATRIBUICOES.every((a) => a.texto.length > 30))
 })
-test('painéis não mostram origem do dado: fonte, API e links ficam só em Configurações › Base de dados', () => {
-  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx'])
+test('fontes detalhadas ficam na Base de dados, com exceções contextuais de Atividade e conteúdo setorial', () => {
+  // Preserva a conferência contextual C04 e as atribuições editoriais setoriais.
+  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'SectorProfile.jsx', 'SectorNews.jsx'])
   for (const f of readdirSync(new URL('../src/', import.meta.url)).filter((x) => x.endsWith('.jsx') && !permitidos.has(x))) {
-    const t = src(f)
+    const raw = src(f)
+    // C04 exige fonte e data da conferência perto do indicador. Mantém a regra
+    // anterior no restante da tela e evita transformar todo painel em referências.
+    const t = f === 'MarketContext.jsx' ? raw.replace(/<details><summary>Fontes e conferência dos indicadores<\/summary>[\s\S]*?<\/details>/, '') : raw
     assert.doesNotMatch(t, /Fontes?: /, `${f}: texto "Fonte:" em painel`)
     assert.doesNotMatch(t, /href="https?:\/\/(?!wa\.me)/, `${f}: link externo fixo em painel`)
     assert.doesNotMatch(t, /\{[^}]*sourceName[^}]*\}\s*[·<]/, `${f}: nome da fonte exibido`)

@@ -23,3 +23,25 @@ test('alerta de variação: a base é a primeira cotação a partir das 9h de Br
   assert.deepEqual(baseDoDia(pts), { t: Date.parse('2026-11-03T12:05:00Z'), v: 6.12 }) // 03:29 fica de fora; 09:05 é a base
   assert.equal(baseDoDia(pts.slice(0, 1)), null) // antes da abertura: sem base, sem alerta
 })
+
+test('limite percentual estrito em ambos os sentidos, sem confundir com delta absoluto ou Δ dia', () => {
+  const now = Date.parse('2026-11-05T15:00:00Z'), firsts = { USD: { t: now - 3600000, v: 5 } }
+  const alerts = (bid, pct = 0) => alertasDoDia({ quotes: { USD: { bid, pct, timestamp: now } }, firsts, now })
+  assert.equal(alerts(5.015).length, 0) // +0,30% exato
+  assert.equal(alerts(4.985).length, 0) // -0,30% exato, mesmo com ruído binário
+  assert.equal(alerts(5.01501, -2).length, 1) // delta de R$ 0,01501, não R$ 0,30; pct da fonte não decide
+  assert.equal(alerts(4.98499, 2).length, 1)
+  assert.equal(alerts(5, 2).length, 0) // +2% na fonte não basta: base do alerta é a amostra após 9h
+})
+
+test('cotação antiga, futura inválida, sem base ou de outro dia não gera alerta atual', () => {
+  const now = Date.parse('2026-11-05T15:00:00Z'), firsts = { USD: { t: now - 3600000, v: 5 } }
+  const q = (timestamp, extra = {}) => ({ USD: { bid: 5.1, timestamp, ...extra } })
+  assert.equal(alertasDoDia({ quotes: q(now - 600001), firsts, now }).length, 0)
+  assert.equal(alertasDoDia({ quotes: q(now - 600000), firsts, now }).length, 1)
+  assert.equal(alertasDoDia({ quotes: q(now + 60001), firsts, now }).length, 0)
+  assert.equal(alertasDoDia({ quotes: q(now), firsts: {}, now }).length, 0)
+  assert.equal(alertasDoDia({ quotes: q(now), firsts: { USD: { t: Infinity, v: 5 } }, now }).length, 0)
+  assert.equal(alertasDoDia({ quotes: q(now, { bid: Infinity }), firsts, now }).length, 0)
+  assert.equal(baseDoDia([{ t: 1e30, bid: 5 }, { t: now, bid: Infinity }]), null)
+})

@@ -97,7 +97,7 @@ export function validateIntraday(file, now = Date.now()) {
 
 // TFB, TFC e moedas contratuais do BNDES: série ausente, sem dado novo, valor implausível ou salto recente (últimas observações).
 // `stale` (coleta falhou e o arquivo reaproveitou o dado anterior) vai pelo relatório de dados desatualizados.
-const MAX_AGE_DAYS = { default: 6, '024': 120, 236: 50, TR1: 40, TR2: 40, TLP: 40 }
+const MAX_AGE_DAYS = { default: 6, '024': 120, LD1: 120, 236: 50, TR1: 40, TR2: 40, TLP: 40 }
 const RECENT = 3 // variações das últimas observações que entram na checagem de salto (o alerta se resolve sozinho quando saem da janela)
 const ptNum = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
 const brDay = (iso) => iso.split('-').reverse().join('/')
@@ -112,7 +112,7 @@ function checkBndesSeries(area, code, points, { kind, id }, now) {
   const age = Math.floor((Date.parse(`${today}T12:00:00Z`) - Date.parse(`${lastDay}T12:00:00Z`)) / 864e5)
   const max = MAX_AGE_DAYS[id] ?? MAX_AGE_DAYS.default
   if (age > max) out.push({ area, message: `${code}: último dado de ${brDay(lastDay)}, há ${age} dias (limite ${max})` })
-  if (kind === 'rate' && !(lastValue > 0 && lastValue <= 100)) out.push({ area, message: `${code}: valor fora do plausível (${lastValue})` })
+  if (kind === 'rate' && !((id === 'LD1' ? lastValue > -100 : lastValue > 0) && lastValue <= 100)) out.push({ area, message: `${code}: valor fora do plausível (${lastValue})` })
   if (kind === 'level' && !(lastValue > 0)) out.push({ area, message: `${code}: valor fora do plausível (${lastValue})` })
   for (let i = Math.max(1, pts.length - RECENT); i < pts.length; i++) {
     const [d, v] = pts[i], [, prev] = pts[i - 1]

@@ -1,6 +1,7 @@
 import { Aviso } from './Avisos.jsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CONCEITOS, CONEXAO, LIGACOES, buscarConceitos, conexoesDe, porTopico } from './educacao.js'
+import Help from './Help.jsx'
 
 const nomeCurto = (id) => CONCEITOS.find((c) => c.id === id)?.nome.replace(/ \(.*\)/, '') ?? id
 import { Panel } from './TerminalDesk.jsx'
@@ -9,7 +10,7 @@ import { Panel } from './TerminalDesk.jsx'
 function Concept({ c, goto }) {
   return (
     <div className="learn-card is-focus">
-      <Panel title={c.nome}>
+      <Panel title={c.nome} note={c.ajuda && <Help label={`Sobre ${c.nome}`} wide>{c.ajuda.map((t) => <p key={t}>{t}</p>)}</Help>}>
         <div className="learn-body">
           <p className="learn-sentence"><span className="learn-tag">Em uma frase</span>{c.frase}</p>
 
@@ -52,7 +53,7 @@ function Concept({ c, goto }) {
             </ul>
           </details>
 
-          {c.fontes?.length > 0 && <details><summary>Fontes</summary><ul>{c.fontes.map(f=><li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer">{f.nome}</a></li>)}</ul></details>}
+          {c.fontes?.length > 0 && <details><summary>Fontes</summary>{c.revisadoEm && <p>Revisão do conteúdo: {c.revisadoEm.split('-').reverse().join('/')}.</p>}<ul>{c.fontes.map(f=><li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer">{f.nome}</a></li>)}</ul></details>}
           <p className="learn-app">
             <span className="learn-tag">No app</span>{c.noApp.texto}{' '}
             <button type="button" className="learn-go" onClick={() => goto(c.noApp.tab, c.noApp.view)}>Abrir ›</button>

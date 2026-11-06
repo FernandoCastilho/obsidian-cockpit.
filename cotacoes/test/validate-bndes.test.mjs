@@ -29,6 +29,14 @@ test('dado parado: limite de 6 dias nas diárias; mensais e trimestral têm limi
   assert.match(msgs(okBndes(), m).join('|'), /TFBTR60\.90 \(TR1\): último dado de 01\/08\/2026, há 89 dias \(limite 40\)/)
   const trim = okMoedas(); trim.series['024'].points = [['2026-07-01', 0.05]]
   assert.deepEqual(msgs(okBndes(), trim), [], 'trimestral: 120 dias de folga')
+  const lcd = okMoedas(); lcd.series.LD1.points = [['2026-07-01', 0]]
+  assert.deepEqual(msgs(okBndes(), lcd), [], 'LD1 trimestral e valor zero válido não são ausência')
+  lcd.series.LD1.points = [['2026-10-01', -0.11]]
+  assert.deepEqual(msgs(okBndes(), lcd), [], 'sobretaxa negativa é válida, sem piso zero')
+  lcd.series.LD1.points = [['2026-10-01', -100]]
+  assert.match(msgs(okBndes(), lcd).join('|'), /SOBRETAXA LCD \(LD1\): valor fora do plausível/)
+  lcd.series.LD1.points = [['2026-06-01', 0]]
+  assert.match(msgs(okBndes(), lcd).join('|'), /SOBRETAXA LCD \(LD1\): último dado.*limite 120/)
 })
 
 test('salto de taxa e de nível nas últimas observações; salto antigo não alerta; futuro é ignorado', () => {

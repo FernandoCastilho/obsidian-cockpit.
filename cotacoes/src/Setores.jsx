@@ -1,15 +1,15 @@
 import HeavyVehicles from './HeavyVehicles.jsx'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Panel } from './TerminalDesk.jsx'
-import NoticiasPorDia from './NoticiasPorDia.jsx'
+import SectorProfile from './SectorProfile.jsx'
+import SectorNews from './SectorNews.jsx'
 import Estado from './Estado.jsx'
 import { useDataFile } from './useDataFile.js'
-import { normalizeTemas } from './reforma.js'
 import { INSUMOS, parseSetor } from './insumos.js'
 import { dataTimestamp } from './dataTimestamp.js'
 import { readSectorMemory, writeSectorMemory, sectorItems, sectorGroups, sectorSection, rememberSector, rememberedSector } from './setoresNavigation.js'
 import SetoresB3 from './SetoresB3.jsx'
-import { resolveBankingTopic, BANKING_VISIT_QUESTIONS } from './bankingSectors.js'
+import { resolveBankingTopic } from './bankingSectors.js'
 import { b3SectorFromRoute } from './b3Classification.js'
 import './Setores.css'
 
@@ -45,12 +45,9 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const isB3 = route === 'b3' || route.startsWith('b3/')
   const b3Sector = b3SectorFromRoute(route)
   const id = resolveBankingTopic(route) || parseSetor(route)
-  const temas = useDataFile('temas.json')
   const comm = useDataFile('commodities.json')
   const diario = useDataFile('insumos-precos.json')
-  const todos = useMemo(() => { try { return temas.data ? normalizeTemas(temas.data) : {} } catch { return {} } }, [temas.data])
   const insumo = INSUMOS.find((i) => i.id === id)
-  const tema = todos[id]
   const q = quotes?.USD, usd = q?.bid
   // O dólar da conversão pode ser a referência de reserva (BCE, dia anterior) ou a última cotação mantida quando a fonte falha: o texto diz qual é.
   const usdLabel = q?.fallback ? 'dólar de referência (dia anterior)' : q?.stale ? 'última cotação do dólar disponível' : 'dólar de hoje'
@@ -75,22 +72,15 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
       <nav className="setores-path" aria-label="Caminho selecionado"><ol>{path.map((label,index)=><li key={index} aria-current={index===path.length-1?'page':undefined}>{label}</li>)}</ol></nav>
       {isB3 ? <SetoresB3 selected={b3Sector} onSelect={sector=>onView('b3/'+sector)}/> : <>
       {secao==='setores'&&<p className="setores-note">Proposta editorial para atendimento a empresas brasileiras, inclusive não listadas. Grupos e atividades não constituem uma classificação oficial nem uma cobertura completa da economia. A B3 é uma referência, sem correspondência automática entre categorias.</p>}
-      <Panel title={secao === 'insumos' ? 'Insumos: '+group : 'Temas: '+group} tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={secao==='setores'&&current?.available===false ? undefined : id==='veiculos-pesados' ? ['temas.json','heavy-vehicles.json'] : secao === 'insumos' ? ['temas.json', 'commodities.json', 'insumos-precos.json'] : ['temas.json']}>
-        {secao==='setores' && current?.available===false && <section className="setores-coverage" aria-label="Cobertura deste tema"><Estado tipo="aviso">Indicadores e notícias específicos deste tema ainda não estão integrados. Esta categoria organiza a navegação; não representa uma série estatística disponível.</Estado><h3>Perguntas para preparar a visita</h3><p className="setores-note">Roteiro geral de atendimento PJ; precisa ser adaptado à atividade e ao caso da empresa.</p><ul>{BANKING_VISIT_QUESTIONS.map(question=><li key={question}>{question}</li>)}</ul></section>}
-        {id==='veiculos-pesados' && <><HeavyVehicles/><div className="setor-cols"><section aria-label="O que move o setor"><h3>O que move o setor</h3><ul><li>Frete, utilização da frota, safra, infraestrutura e atividade econômica.</li><li>Juros, prazo de financiamento, diesel, manutenção e câmbio dos componentes.</li><li>Renovação da frota, encomendas de ônibus e regras de emissões.</li></ul></section><section aria-label="Ficha da visita"><h3>Ficha da visita</h3><ul><li>A compra amplia a frota ou substitui veículos? Qual a utilização e a receita por veículo?</li><li>Qual a necessidade de entrada, carência, prazo e capital de giro até o veículo gerar caixa?</li><li>Como diesel, manutenção, seguro e reajustes do frete afetam a margem?</li></ul></section></div></>}
+      <Panel title={secao === 'insumos' ? 'Insumos: '+group : 'Temas: '+group} tabs={tabs} tab={id} onTab={(t) => onView(t)} refresh={id==='veiculos-pesados' ? ['sector-news.json','heavy-vehicles.json'] : secao === 'insumos' ? ['sector-news.json', 'commodities.json', 'insumos-precos.json'] : ['sector-news.json']}>
+        {id==='veiculos-pesados' && <HeavyVehicles/>}
         {insumo && (
           <div className="setor-insumo">
             {itens.length > 0 ? itens.map((c) => <Preco key={c.id} item={c} usd={usd} usdLabel={usdLabel} diario={serie} />) : comm.status === 'loading' ? <Estado>Carregando o preço…</Estado> : <Estado tipo="aviso">{insumo.id === 'aco' ? 'O aço não tem série de preço pública diária neste painel; acompanhe pelas matérias e pelo minério de ferro.' : 'Preço indisponível no momento.'}</Estado>}
-            <div className="setor-cols">
-              <section aria-label="O que mexe no preço"><h3>O que mexe no preço</h3><ul>{insumo.move.map((m) => <li key={m}>{m}</li>)}</ul></section>
-              <section aria-label="Ficha da visita"><h3>Ficha da visita</h3><ul>{insumo.visita.map((m) => <li key={m}>{m}</li>)}</ul></section>
-            </div>
           </div>
         )}
-        {current?.available!==false && temas.status === 'loading' && <Estado>Carregando as matérias…</Estado>}
-        {current?.available!==false && temas.status === 'error' && !tema && <Estado tipo="erro" erro={temas.error}>Matérias indisponíveis no momento.</Estado>}
-        {tema && <NoticiasPorDia key={id} data={tema} ariaLabel={`${tema.label}: matérias da semana`} />}
-        {current?.available!==false && temas.data && !tema && temas.status !== 'loading' && <Estado>Ainda não há matérias coletadas para este assunto.</Estado>}
+        <SectorProfile key={`profile-${id}`} id={id} label={current?.label ?? insumo?.label ?? id} />
+        <SectorNews key={`news-${id}`} id={id} label={current?.label ?? insumo?.label ?? id} />
       </Panel>
       </>}
     </div>

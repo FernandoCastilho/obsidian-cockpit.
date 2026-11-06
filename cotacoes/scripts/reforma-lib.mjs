@@ -1,6 +1,7 @@
-// Reforma tributária: tudo o que saiu na imprensa na semana (Google Notícias, RSS), acumulado por dia.
+import { NEWS_WINDOW_DAYS, inNewsWindow } from '../src/newsWindow.js'
+// Reforma tributária: manchetes na janela móvel de publicação, acumuladas por dia.
 export const TOPIC = 'reforma-tributaria'
-export const WINDOW_DAYS = 7
+export const WINDOW_DAYS = NEWS_WINDOW_DAYS
 export const MAX_ITEMS = 400
 export const SITE_VALOR = 'site:valor.globo.com'
 // Várias buscas para cobrir o tema: o RSS devolve só parte das matérias de cada consulta.
@@ -26,10 +27,9 @@ const validItem = (it) => it && typeof it.title === 'string' && it.title.trim() 
 // Junta as matérias novas às já publicadas, tira repetidas (mesmo link ou mesmo título), descarta o que passou da janela e ordena da mais recente.
 export function mergeItems(fresh, previous, now = Date.now(), windowDays = WINDOW_DAYS, keep = relevante) {
   const seenLink = new Set(), seenTitle = new Set(), out = []
-  const limit = now - windowDays * 864e5
   for (const it of [...fresh, ...previous].filter(validItem).filter((x) => keep(x.title)).sort((a, b) => b.t - a.t)) {
     const k = norm(it.title)
-    if (it.t < limit || it.t > now + 36e5 || seenLink.has(it.link) || seenTitle.has(k)) continue
+    if (!inNewsWindow(it.t, now, windowDays * 864e5) || seenLink.has(it.link) || seenTitle.has(k)) continue
     seenLink.add(it.link); seenTitle.add(k)
     out.push({ title: it.title.trim(), link: it.link, source: it.source || 'Google Notícias', t: it.t })
     if (out.length >= MAX_ITEMS) break
@@ -37,6 +37,6 @@ export function mergeItems(fresh, previous, now = Date.now(), windowDays = WINDO
   return out
 }
 
-export function reformaFile(items, now, { stale = false, error = null } = {}) {
-  return { schemaVersion: 1, generatedAt: now, topic: TOPIC, windowDays: WINDOW_DAYS, stale, error, items }
+export function reformaFile(items, now, { stale = false, error = null, errors = [] } = {}) {
+  return { schemaVersion: 1, generatedAt: now, topic: TOPIC, windowDays: WINDOW_DAYS, stale, error, errors, items }
 }

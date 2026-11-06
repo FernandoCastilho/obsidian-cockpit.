@@ -11,6 +11,7 @@ import { dmy } from './format.js'
 import { FAMILIES, familyRows, seriesFor } from './bndesView.js'
 import { buildRoute, parseRoute } from './bndesRoute.js'
 import { TLP_LABEL, TLP_NOTE } from './tlp.js'
+import { LCD_SNAPSHOT_AS_OF, withOfficialLcdSnapshot } from './lcdOfficialSnapshot.js'
 import './Bndes.css'
 
 const stamp = (t) => new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
@@ -31,19 +32,22 @@ const CARDS = [['tfb', 'TFB_60_90', 'TFB 60 meses · 90 dias', 'day'], ['tlp', '
 export default function Bndes({ view = '', onView = () => {} }) {
   const bndes = useDataFile('bndes.json')
   const moedas = useDataFile('moedas.json')
+  const moedasData = useMemo(() => withOfficialLcdSnapshot(moedas.data), [moedas.data])
   const curves = useCurves()
   const br = curves.data?.br ?? null
-  const rowsByFamily = useMemo(() => Object.fromEntries(FAMILIES.map((f) => [f.id, familyRows(f.id, bndes.data, moedas.data, Date.now(), br)])), [bndes.data, moedas.data, br])
+  const rowsByFamily = useMemo(() => Object.fromEntries(FAMILIES.map((f) => [f.id, familyRows(f.id, bndes.data, moedasData, Date.now(), br)])), [bndes.data, moedasData, br])
   const ids = useMemo(() => Object.fromEntries(FAMILIES.map((f) => [f.id, rowsByFamily[f.id].map((r) => r.id)])), [rowsByFamily])
   const route = parseRoute(view, ids)
   const { family, id, preset, custom, compare } = route
   const go = (patch, replace = false) => onView(buildRoute({ ...route, ...patch }), replace)
   const fam = FAMILIES.find((f) => f.id === family)
   const rows = rowsByFamily[family]
-  const series = useMemo(() => seriesFor(family, id, bndes.data, moedas.data), [family, id, bndes.data, moedas.data])
+  const series = useMemo(() => seriesFor(family, id, bndes.data, moedasData), [family, id, bndes.data, moedasData])
   const own = family === 'tfb' || family === 'tlp' ? bndes : moedas
   const loading = own.status === 'loading'
-  const error = own.status === 'error' && !own.data ? own.error : null
+  // O snapshot LD1 sustenta somente Moedas; não é dado disponível de TFC.
+  const ownData = family === 'moedas' ? moedasData : own.data
+  const error = own.status === 'error' && !ownData ? own.error : null
   const next = rows[0]?.nextRelease
   const hasSpread = !!rows[0]?.hasSpread
   const spreadDate = rows.find((r) => r.spread)?.spread.curveDate
@@ -52,12 +56,15 @@ export default function Bndes({ view = '', onView = () => {} }) {
   const familyOf = useMemo(() => Object.fromEntries(FAMILIES.flatMap((f) => ids[f.id].map((cid) => [cid, f.id]))), [ids])
   const compareItems = useMemo(() => compare.filter((cid) => familyOf[cid]).map((cid) => {
     const f = familyOf[cid], label = FAMILIES.find((x) => x.id === f).label
-    const s = seriesFor(f, cid, bndes.data, moedas.data), r = rowsByFamily[f].find((x) => x.id === cid)
+    const s = seriesFor(f, cid, bndes.data, moedasData), r = rowsByFamily[f].find((x) => x.id === cid)
     const nome = r?.name ?? s.name, name = nome.toUpperCase().startsWith(label) ? nome : `${label} · ${nome}`
-    return { id: cid, name, short: f === 'tlp' ? 'TLP · prefixada' : name, unit: s.unit, decimals: s.decimals, list: s.list }
-  }), [compare, familyOf, rowsByFamily, bndes.data, moedas.data])
+    return { id: cid, name, short: f === 'tlp' ? 'TLP · prefixada' : name, unit: s.unit, decimals: s.decimals, stepped: s.stepped, list: s.list }
+  }), [compare, familyOf, rowsByFamily, bndes.data, moedasData])
   const toggleCompare = (cid) => go({ compare: compare.includes(cid) ? compare.filter((x) => x !== cid) : [...compare, cid] }, true)
   const noCompare = compare.filter((cid) => familyOf[cid] === family).length
+  const lcdComparisonAvailable = ['143', 'LD1'].every((cid) => rowsByFamily.moedas.some((r) => r.id === cid && !r.missing))
+  const showLcdNote = family === 'moedas' || ['143', 'LD1'].includes(id) || compare.some((cid) => ['143', 'LD1'].includes(cid))
+  const lcdLastChange = rowsByFamily.moedas.find((row) => row.id === 'LD1')?.lastChange
   const period = { preset, custom, setPreset: (v) => go({ preset: v, custom: null }, true), setCustom: (c) => go({ custom: c }, true) }
 
   return (
@@ -78,10 +85,18 @@ export default function Bndes({ view = '', onView = () => {} }) {
       </div>
 
       <Panel title="BNDES · taxas e moedas contratuais" note="BNDES" refresh={['bndes.json', 'moedas.json']}>
+        <div className="seg bn-quick" role="group" aria-label="Históricos Selic e LCD">
+          <span className="bn-quick-label">Selic / LCD:</span>
+          <button type="button" aria-pressed={family === 'moedas' && id === '143' && compare.length < 2} onClick={() => go({ family: 'moedas', id: '143', compare: [] })}>Selic D-2 · 143</button>
+          <button type="button" aria-pressed={family === 'moedas' && id === 'LD1' && compare.length < 2} onClick={() => go({ family: 'moedas', id: 'LD1', compare: [] })}>Sobretaxa LCD · LD1</button>
+          <button type="button" disabled={!lcdComparisonAvailable} onClick={() => go({ family: 'moedas', id: '143', compare: ['143', 'LD1'] })}>Comparar os históricos</button>
+        </div>
         <div className="seg bn-fam" role="group" aria-label="Família de séries">
           {FAMILIES.map((f) => <button key={f.id} type="button" aria-pressed={family === f.id} onClick={() => go({ family: f.id, id: undefined })}>{f.label}</button>)}
         </div>
         <h3 className="bn-sub">{fam.title}</h3>
+        {family === 'moedas' && (moedas.status === 'error' || moedas.stale) && <p className="status stale" role="status">Não foi possível atualizar as moedas contratuais. LD1 permanece no snapshot oficial datado; demais dados anteriores, quando disponíveis, podem estar desatualizados.</p>}
+        {family === 'tfc' && moedas.stale && <p className="status stale" role="status">Não foi possível atualizar as séries TFC. Os dados anteriores exibidos podem estar desatualizados.</p>}
         {!error && rows.length > 0 && (
           <div className="bn-cmp-bar" role="group" aria-label="Comparar séries no mesmo gráfico">
             <span>Comparar no mesmo gráfico (vale entre famílias, ex.: TFB com TFC):</span>
@@ -116,6 +131,8 @@ export default function Bndes({ view = '', onView = () => {} }) {
         )}
         {next && <p className="bn-def">Próxima divulgação da TLP: {dmy(next)}.</p>}
         {(family === 'tlp' || (compareItems.length >= 2 && compare.includes('TLP'))) && <p className="bn-def bn-tlp-note">{family === 'tlp' ? TLP_NOTE : `${TLP_LABEL}: ${TLP_NOTE}`}</p>}
+        {showLcdNote && <p className="bn-def">LD1: as colunas Dia, Mês e Ano não se aplicam a esta série de vigências.{lcdLastChange && <> Última mudança: <Delta c={lcdLastChange} /> entre as vigências de {dmy(lcdLastChange.ref)} e {dmy(lcdLastChange.date)}.</>}</p>}
+        {showLcdNote && <p className="bn-def">143 é o código do índice acumulado do BNDES, com Selic defasada em dois dias úteis, e não uma taxa anual nem série SGS do Banco Central. LD1 é a sobretaxa LCD para operações indiretas, em % a.a., fixada na contratação; seu histórico mostra as referências para novas contratações, atualizadas trimestralmente. A sobretaxa pode ser negativa; seu histórico é apresentado em degraus. LD1 usa snapshot oficial consultado em {dmy(LCD_SNAPSHOT_AS_OF)}, sem atualização automática; valores após essa cobertura não estão confirmados. A comparação tem unidades diferentes e não representa o custo total do financiamento. Não some o índice 143 à sobretaxa. Em comparação percentual, base negativa pode inverter o sinal da variação; isso não indica rentabilidade. Uma referência zero não permite normalização percentual. Dados ausentes não são substituídos por zero.</p>}
         {hasSpread && <p className="bn-def">{spreadDate ? `Spread DI: TFB de ${dmy(spreadDate)} menos a taxa DI x pré do mesmo dia, no vértice de mesmo prazo (36, 60, 84 e 120 meses ≈ 21 dias úteis por mês). Aproximação: o prazo médio do financiamento é menor que o prazo final.` : 'Spread DI indisponível: sem curva DI x pré ou sem TFB no dia da curva.'}</p>}
 
         {!error && (
@@ -139,7 +156,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
           ) : (
             <>
               <h3 className="bn-sub">Histórico · {series.name}</h3>
-              <SeriesChart list={series.list} name={series.name} code={series.code} label="série" kind={series.kind} loading={loading} decimals={series.decimals} unit={series.unit} period={period} />
+              <SeriesChart list={series.list} name={series.name} code={series.code} label="série" kind={series.kind} loading={loading} decimals={series.decimals} unit={series.unit} stepped={series.stepped} period={period} />
             </>
           )}
         </FilterScope>
@@ -159,7 +176,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
 
         <details className="bn-src">
           <summary>Dados para o Excel (CSV)</summary>
-          <p className="bn-def">Arquivos com endereço fixo, atualizados a cada coleta horária, com as mesmas séries da tela. Colunas: serie, nome, data (AAAA-MM-DD), valor (ponto decimal) e unidade. No Excel: Dados &gt; Obter Dados &gt; Da Web, cole o endereço; se o valor vier como texto, mude a localidade da coluna para Inglês (EUA).</p>
+          <p className="bn-def">Arquivos com endereço fixo, atualizados a cada coleta horária, com as séries coletadas e o mesmo snapshot datado LD1 usado na tela. LD1 não recebe atualização automática. Colunas: serie, nome, data (AAAA-MM-DD), valor (ponto decimal) e unidade. No Excel: Dados &gt; Obter Dados &gt; Da Web, cole o endereço; se o valor vier como texto, mude a localidade da coluna para Inglês (EUA).</p>
           <ul className="bn-csv">
             {CSV.map(([file, label]) => { const url = new URL(`./csv/${file}`, window.location.href).href; return <li key={file}><a href={`./csv/${file}`} download>{label}</a> <code>{url}</code></li> })}
           </ul>
@@ -167,7 +184,7 @@ export default function Bndes({ view = '', onView = () => {} }) {
         <details className="bn-src">
           <summary>Definição · {fam.label}</summary>
           <p className="bn-def">{fam.definition}</p>
-          <p className="bn-def">Variações em pontos percentuais (dólar e Selic acumulada, em %) contra o dia útil anterior e as datas de um mês e um ano antes, ou a mais próxima anterior; sem histórico suficiente, a coluna fica vazia.</p>
+          <p className="bn-def">Variações em pontos percentuais (dólar e Selic acumulada, em %) contra o dia útil anterior e as datas de um mês e um ano antes, ou a mais próxima anterior; sem histórico suficiente, a coluna fica vazia. LD1 não usa essas colunas: sua última mudança é informada entre datas de vigência.</p>
         </details>
         <Aviso title="BNDES · taxas e moedas"><p className="bn-def">O BNDES não detalha a sigla TFC na consulta de Moedas Contratuais; os nomes e códigos seguem a tabela do banco. A TFB (taxa fixa) e a TFC são séries diferentes. O período escolhido vale para todas as séries; séries que começam depois do início do período mostram só o que existe. O endereço da página guarda a série e o período: copie-o para compartilhar{sel ? ` (${sel.name})` : ''}.</p></Aviso>
       </Panel>

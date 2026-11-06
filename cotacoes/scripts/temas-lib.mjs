@@ -1,6 +1,6 @@
 // Notícias por setor (indústria, comércio, serviços) e por insumo (cobre, alumínio, aço, minério de ferro, petróleo e diesel),
 // e as eleições nos EUA (aba de Notícias do Mercado).
-// Mesma coleta da reforma tributária: buscas no Google Notícias, só títulos que tratam do tema, histórico de 7 dias.
+// Mesma coleta da reforma tributária: buscas no Google Notícias, só títulos que tratam do tema, histórico de 5 dias.
 import { mergeItems, WINDOW_DAYS } from './reforma-lib.mjs'
 export { WINDOW_DAYS }
 

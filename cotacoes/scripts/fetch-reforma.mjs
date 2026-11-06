@@ -1,4 +1,4 @@
-// Coleta o que foi publicado sobre a reforma tributária nos últimos 7 dias e grava public/reforma-tributaria.json. Rodado a cada hora no deploy.
+// Coleta o que foi publicado sobre a reforma tributária nos últimos 5 dias e grava public/reforma-tributaria.json. Rodado a cada hora no deploy.
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
 import { canonicalSource, googleUrl, parseRss } from './news-lib.mjs'
@@ -27,7 +27,7 @@ const items = mergeItems(fresh, previous, now)
 const failed = errors.length === QUERIES.length
 if (failed && !previous.length) console.warn('Reforma tributária: nenhuma busca respondeu e não há histórico para preservar.')
 if (errors.length) console.warn('Falhas:', errors.join(' | '))
-const file = reformaFile(items, now, failed ? { stale: true, error: errors[0] } : {})
+const file = reformaFile(items, now, { stale: failed, error: failed ? errors[0] : null, errors })
 await mkdir(new URL('../public/', import.meta.url), { recursive: true })
 await writeFile(output, `${JSON.stringify(file)}\n`)
 console.log(`Reforma tributária: ${items.length} matérias na janela de ${WINDOW_DAYS} dias (${fresh.length} lidas agora, ${previous.length} no histórico); stale=${file.stale}`)

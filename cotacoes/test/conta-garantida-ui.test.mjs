@@ -1,0 +1,149 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { createRequire } from 'node:module'
+import { runInNewContext } from 'node:vm'
+import { transform } from 'esbuild'
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { hookRenderer } from './helpers/hooks.mjs'
+import * as model from '../src/contaGarantida.js'
+
+const require = createRequire(import.meta.url)
+const nodes = el => Array.isArray(el) ? el.flatMap(nodes) : el && typeof el === 'object' ? [el, ...nodes(el.props?.children)] : []
+const textOf = el => Array.isArray(el) ? el.map(textOf).join('') : el && typeof el === 'object' ? textOf(el.props?.children) : typeof el === 'string' || typeof el === 'number' ? String(el) : ''
+async function setup(t) {
+  const deps = { react: React, './contaGarantida.js': { ...model, cgInitialForm: () => model.cgInitialForm('2026-11-05') }, './ContaGarantida.css': {} }
+  for (const file of ['MoneyInput.jsx', 'ContaGarantida.jsx']) {
+    const source = await readFile(new URL('../src/' + file, import.meta.url), 'utf8')
+    const { code } = await transform(source, { loader: 'jsx', format: 'cjs', jsx: 'automatic' })
+    const module = { exports: {} }
+    runInNewContext(code, { module, exports: module.exports, require: name => deps[name] ?? (name === './moneyInput.js' ? { formatMoneyText: value => value } : require(name)) })
+    deps['./' + file] = module.exports
+  }
+  let back = 0
+  const render = hookRenderer(() => deps['./ContaGarantida.jsx'].default({ onBack: () => back++ }))
+  t.after(() => render.close())
+  await render.settle()
+  return {
+    render,
+    text: () => textOf(render.value),
+    get back() { return back },
+    fields: () => nodes(render.value).filter(node => node.props?.id),
+    field: id => nodes(render.value).find(node => node.props?.id === 'cg-' + id),
+    button: text => nodes(render.value).find(node => node.type === 'button' && (node.props['aria-label'] || textOf(node)) === text),
+    async change(id, value) { const node = this.field(id); assert.ok(node, id); node.props.onChange(typeof node.type === 'function' ? value : { target: { value, checked: value } }); await render.settle() },
+    async click(text) { const node = this.button(text); assert.ok(node, text); assert.notEqual(node.props.disabled, true); node.props.onClick(); await render.settle() },
+  }
+}
+
+test('inicia sem valores presumidos, taxa vazia impede resultado e não oferece capitalização', async t => {
+  const h = await setup(t)
+  assert.equal(h.field('rate').props.value, '')
+  assert.equal(h.field('amount').props.value, '')
+  assert.equal(h.field('capitalization'), undefined)
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  assert.match(h.text(), /Juros e IOF são pagos à parte, nunca incorporados ao saldo/)
+  assert.equal(h.button('Utilização única').props['aria-pressed'], true)
+  await h.change('amount', '100.000')
+  await h.change('rate', '3')
+  assert.match(h.text(), /Resultado estimado do período/)
+  assert.match(h.text(), /1\.462,00/)
+  await h.change('rate', '')
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+})
+
+test('trocar modos, editar, adicionar/remover repetidamente e voltar sem efeitos externos', async t => {
+  const h = await setup(t)
+  await h.change('amount', '100.000')
+  await h.change('rate', '3')
+  await h.click('Lançamentos por dia')
+  assert.equal(h.field('amount'), undefined)
+  await h.change('row-first-draw', '10.000')
+  await h.click('+ Adicionar lançamento')
+  await h.change('row-entry-1-draw', '5.000')
+  await h.click('+ Adicionar lançamento')
+  await h.change('row-entry-2-payment', '15.000')
+  assert.match(h.text(), /Resultado estimado do período/)
+  await h.click('Remover lançamento 2')
+  assert.match(h.text(), /supera o saldo utilizado/)
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  await h.click('Remover lançamento 2')
+  assert.equal(h.button('Remover lançamento 1').props.disabled, true)
+  await h.click('Utilização única')
+  assert.equal(h.field('amount').props.value, '100.000')
+  assert.match(h.text(), /1\.462,00/)
+  await h.click('‹ Calculadoras')
+  assert.equal(h.back, 1)
+})
+
+test('prazo por data, erros inline, feriados e IOF manual operam sem resultados antigos', async t => {
+  const h = await setup(t)
+  await h.change('amount', '1000')
+  await h.change('rate', '3')
+  await h.change('dateMode', 'end')
+  await h.change('end', '2026-11-04')
+  assert.equal(h.field('end').props['aria-invalid'], true)
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  await h.change('end', '2026-11-15')
+  await h.change('dayCount', 'business')
+  assert.ok(h.field('holidays'))
+  await h.change('holidays', '2026-02-30')
+  assert.equal(h.field('holidays').props['aria-invalid'], true)
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  await h.change('holidays', '2026-11-09')
+  await h.change('taxProfile', 'manual')
+  assert.ok(h.field('iofDaily'))
+  await h.change('iofDaily', '')
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  await h.change('iofDaily', '0')
+  await h.change('iofAdditional', '0')
+  assert.match(h.text(), /Resultado estimado do período/)
+})
+
+test('Simples exige confirmação e operação inválida não recebe cálculo', async t => {
+  const h = await setup(t)
+  await h.change('amount', '1000')
+  await h.change('rate', '0')
+  await h.change('taxProfile', 'simples')
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  await h.change('operationValue', '30000')
+  await h.change('eligible', true)
+  assert.match(h.text(), /Resultado estimado do período/)
+  await h.change('status', 'unsupported')
+  assert.doesNotMatch(h.text(), /Resultado estimado do período/)
+  assert.match(h.text(), /regras próprias/)
+})
+
+test('paginação diária e estrutura acessível renderizada sem navegador', async t => {
+  const h = await setup(t)
+  await h.change('amount', '1000')
+  await h.change('rate', '1')
+  await h.change('duration', '70')
+  assert.match(h.text(), /Página 1 de 3/)
+  assert.equal(h.button('Anterior').props.disabled, true)
+  await h.click('Próxima')
+  await h.click('Próxima')
+  assert.match(h.text(), /Página 3 de 3/)
+  assert.equal(h.button('Próxima').props.disabled, true)
+  await h.change('duration', '10')
+  assert.match(h.text(), /Página 1 de 1/)
+  const html = renderToStaticMarkup(h.render.value)
+  assert.match(html, /aria-label="Tabela diária, role horizontalmente/)
+  assert.match(html, /scope="col"/)
+  assert.match(html, /scope="row"/)
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1])
+  assert.equal(ids.length, new Set(ids).size)
+  for (const id of [...html.matchAll(/\bfor="([^"]+)"/g)].map(m => m[1])) assert.ok(ids.includes(id), `label ${id} deve apontar para controle`)
+})
+
+test('rota e documento de busca apontam à calculadora certa', async () => {
+  const source = await readFile(new URL('../src/Calculadora.jsx', import.meta.url), 'utf8')
+  assert.match(source, /id: 'conta-garantida', title: 'Conta Garantida'/)
+  assert.match(source, /view === 'conta-garantida'.*<ContaGarantida/)
+  const { buildSearchIndex } = await import('../scripts/build-search-index.mjs')
+  const index = await buildSearchIndex()
+  const entry = index.documents.find(d => d.id === 'page:ContaGarantida.jsx')
+  assert.equal(entry.route, 'calculadora/conta-garantida')
+  assert.match(entry.body, /amortiza/i)
+})

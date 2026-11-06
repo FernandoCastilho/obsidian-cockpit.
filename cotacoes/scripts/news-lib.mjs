@@ -1,3 +1,4 @@
+import { NEWS_WINDOW_DAYS, recentNews } from '../src/newsWindow.js'
 // Utilitários da coleta de notícias (sem dependências).
 
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' }
@@ -51,8 +52,8 @@ export function pick(items, limit) {
   return out
 }
 
-// when: janela da busca do Google Notícias ('7d' por moeda; '2d' para "o que move o mercado hoje").
-export const googleUrl = (q, lang, when = '7d') => {
+// Search hints do not replace the exact publication filter.
+export const googleUrl = (q, lang, when = `${NEWS_WINDOW_DAYS}d`) => {
   const p = lang === 'en' ? 'hl=en-US&gl=US&ceid=US:en' : 'hl=pt-BR&gl=BR&ceid=BR:pt-419'
   return `https://news.google.com/rss/search?q=${encodeURIComponent(`${q} when:${when}`)}&${p}`
 }
@@ -61,7 +62,7 @@ export const googleUrl = (q, lang, when = '7d') => {
 export const MARKET_QUERIES = ['mercado financeiro Ibovespa dólar juros', 'bolsa petróleo Fed dólar Treasuries', 'juros futuros Selic inflação Copom']
 
 // Descarta o que é mais velho que maxAgeMs (a busca do Google às vezes devolve matérias antigas quando há pouco assunto novo).
-export const freshOnly = (items, now = Date.now(), maxAgeMs = 3 * 864e5) => items.filter((it) => it.t > 0 && now - it.t <= maxAgeMs)
+export const freshOnly = recentNews
 
 // ---- Tradução para português (Brasil) ----
 

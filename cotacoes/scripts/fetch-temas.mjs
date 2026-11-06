@@ -1,4 +1,4 @@
-// Notícias por setor e por insumo (últimos 7 dias, por dia) e grava public/temas.json. Rodado a cada hora no deploy.
+// Notícias por setor e por insumo (últimos 5 dias, por dia) e grava public/temas.json. Rodado a cada hora no deploy.
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { loadPrevious } from './prev-lib.mjs'
 import { canonicalSource, googleUrl, parseRss } from './news-lib.mjs'

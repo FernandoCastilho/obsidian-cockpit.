@@ -60,6 +60,14 @@ Cobertura automatizada: 24 cenários diretos (12 prazos × dois bancos), três s
 
 As linhas não são editáveis. Cabeçalho agrupa Instituição 1, Instituição 2 e Comparação; cada banco mostra juros, flat, TAC opcional, custo e percentual no período. A comparação mostra diferença monetária e delta em p.p. A tabela mantém todas as colunas e linhas em qualquer largura, com rolagem, cabeçalhos e prazo fixos durante a leitura. O seletor da meta usa os mesmos doze prazos. Nenhuma fórmula financeira foi alterada.
 
+As linhas têm espaçamento vertical compacto e podem ser destacadas por clique em qualquer célula. Pelo teclado, Tab alcança o botão do prazo; Enter ou Espaço selecionam a linha. O destaque cobre também a coluna fixa de prazo, é único e independe da meta escolhida. Alterar condições, moeda ou TAC conserva o prazo destacado; “Nova simulação” limpa a seleção. Os rótulos automáticos de maior/menor custo e igualdade foram removidos da célula de diferença, mantendo o valor monetário e seu sinal.
+
+Valores numéricos não quebram linha, incluindo símbolo da moeda, sinal e centavos. A tabela usa layout automático: quantias longas ampliam a largura das colunas, e a região já rotulada e alcançável pelo teclado oferece rolagem horizontal, sem comprimir ou ocultar os valores. Células de erro continuam permitindo quebra de texto.
+
+Taxas, percentuais no período e delta exibem duas casas decimais. Delta não nulo que arredondaria para zero aparece como +/− < 0,01 p.p. Campos de taxa e flat apresentam duas casas quando desfocados, mas recuperam o texto completo ao receber foco para edição. Essa formatação não grava de volta no rascunho, não arredonda cálculos e não altera a taxa integral aplicada pela meta.
+
+Regressão sem navegador: `node --test test/finimp-presentation.test.mjs test/finimp-comparison.test.mjs test/audit-regressions.test.mjs`. O roteiro `smoke-finimp.cjs` também contempla clique, Enter/Espaço, destaque de todas as células, altura compacta e preservação de precisão ao desfocar; sua atualização não constitui execução nem revisão visual.
+
 ## Explicações em ajudas
 
 A interface concentra as explicações nos botões “?” de simulação, moeda, prazo/base, taxa, flat, TAC, custo total, diferença/delta e atingir meta. Os textos continuam pesquisáveis no índice estático. Valores, unidades, erro de entrada/meta e o estado curto TAC incluída/excluída permanecem visíveis.
