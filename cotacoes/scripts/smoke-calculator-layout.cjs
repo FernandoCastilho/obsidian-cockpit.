@@ -260,6 +260,7 @@ async function fillScenario(page, section, route) {
           await assertWorkspace(page, section, `${route} preenchida ${width}`)
           await page.screenshot({ path: path.join(directory, `${route}-filled.png`), fullPage: true })
           await assertHelp(page, section, route, directory)
+          if (route === 'conta-garantida') await require('./smoke-alongamento.cjs')(page, section, directory, width, assertWorkspace, settleLayout)
           assert.deepEqual(errors, [], `${route} ${width}: erros do navegador`)
           report.push({ route, width, status: 'pass' })
           console.log(`PASS calculator layout ${route} ${width}`)
