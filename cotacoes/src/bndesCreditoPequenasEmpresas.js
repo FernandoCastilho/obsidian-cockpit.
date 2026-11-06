@@ -1,5 +1,6 @@
 // Protótipo isolado. Não conectado à interface nem ao motor Finame.
-// Reconcilia somente o horizonte documentado; não certifica contrato, tributo ou CET.
+// Reconcilia o horizonte documentado e calcula o CET do fluxo declarado quando há
+// todos os pagamentos. A apuração matemática não certifica contrato ou tributo.
 const DAY = 86_400_000
 const MAX_CENTS = 1_000_000_000_000 // limite técnico, não limite de crédito do produto
 const OFFICIAL_SOURCE = 'https://www.bndes.gov.br/sbn/BNDES_online/Arquivos/01-22Cir13-Anexo-I-Procedimentos-Operacionais.pdf'
@@ -7,7 +8,7 @@ const OFFICIAL_SOURCE = 'https://www.bndes.gov.br/sbn/BNDES_online/Arquivos/01-2
 export const CREDIT_PROFILE = Object.freeze({
   productId: 'bndes-credito-pequenas-empresas',
   lenderProfileId: 'cenario-usuario-tfb-2026-10',
-  version: '0.2.1-research',
+  version: '0.2.2-research',
   status: 'inferred',
   scope: 'Reconciliação de cenário de teste montado pelo usuário. Não é proposta emitida por banco nem regra geral de Finame/TFC.',
   evidenceOrigin: Object.freeze({ kind: 'user-authored-test', source: 'Esclarecimento explícito do usuário em 05/11/2026: ele montou as imagens para testar com base em cálculos oficiais.' }),
@@ -251,6 +252,66 @@ function validateInput(input) {
   }
 }
 
+// Fluxo convencional gerado acima: recebimento líquido positivo e cobranças não
+// negativas. O CET usa dias corridos/365 (Resolução CMN 4.881, art. 4º), enquanto
+// a geração dos juros deste perfil continua com sua própria base ACT/ACT.
+// Resolver em log(1 + taxa) evita um teto arbitrário para a taxa anual.
+function declaredFlowCet(cashFlows, reportedAnnualRateDecimal) {
+  const received = cashFlows[0].netCashCents
+  const terms = cashFlows.slice(1).map(flow => ({
+    amountCents: -flow.netCashCents,
+    years: civilDaysBetween(cashFlows[0].date, flow.date) / 365,
+  }))
+  const npv = logRate => {
+    let presentValue = 0, compensation = 0
+    for (const term of terms) {
+      const discounted = term.amountCents * Math.exp(-term.years * logRate) - compensation
+      const next = presentValue + discounted
+      compensation = (next - presentValue) - discounted
+      presentValue = next
+    }
+    return received - presentValue
+  }
+  const atZero = npv(0)
+  requireValue(atZero <= 0, 'INVALID_CET_FLOW', 'Fluxo declarado incompatível com os encargos não negativos deste perfil.')
+  let lo = 0, hi = 0
+  if (atZero < 0) {
+    const maxLogRate = Math.log(Number.MAX_VALUE)
+    hi = 1
+    while (npv(hi) < 0 && hi < maxLogRate) hi = Math.min(2 * hi, maxLogRate)
+    requireValue(npv(hi) >= 0, 'CET_NUMERICAL_LIMIT', 'CET do fluxo declarado fora do limite numérico.')
+    for (let iteration = 0; iteration < 200; iteration++) {
+      const mid = (lo + hi) / 2
+      if (mid === lo || mid === hi) break
+      if (npv(mid) > 0) hi = mid
+      else lo = mid
+    }
+  }
+  const calculatedAnnualRateDecimal = Math.expm1((lo + hi) / 2)
+  const residualCents = npv(Math.log1p(calculatedAnnualRateDecimal))
+  requireValue(Number.isFinite(calculatedAnnualRateDecimal) && Math.abs(residualCents) < 0.001, 'CET_NUMERICAL_LIMIT', 'Não foi possível reconciliar o valor presente do fluxo a menos de 0,001 centavo.')
+  const reported = reportedAnnualRateDecimal === null ? null : Number(reportedAnnualRateDecimal)
+  const annualDifferencePercentagePoints = reported === null ? null : 100 * (calculatedAnnualRateDecimal - reported)
+  // Uma referência anual apresentada com duas casas admite meio incremento de
+  // apresentação. Isso não confirma a fórmula original nem certifica o contrato.
+  const referenceTolerancePercentagePoints = 0.005
+  const status = reported === null ? 'calculated-no-reference'
+    : Math.abs(annualDifferencePercentagePoints) <= referenceTolerancePercentagePoints ? 'reference-consistent-at-display-precision' : 'reference-mismatch'
+  return {
+    reportedAnnualRateDecimal,
+    calculatedAnnualRateDecimal,
+    annualDifferencePercentagePoints,
+    residualCents,
+    referenceResidualCents: reported === null ? null : npv(Math.log1p(reported)),
+    referenceTolerancePercentagePoints,
+    dayCount: 'actual-365-fixed',
+    interval: 'elapsed-days',
+    calculationStatus: 'calculated-declared-cash-flow',
+    validated: false,
+    status,
+  }
+}
+
 /**
  * Retorna somente o horizonte documental e fluxos correspondentes, nunca o fluxo completo
  * por extrapolação. `ok` significa cálculo executado, não validação contratual.
@@ -303,14 +364,21 @@ export function reconcileCreditoPequenasEmpresas(input) {
       { kind: 'release', date: input.releaseDate, creditCents: input.principalCents, principalCents: 0, interestCents: 0, iofPaidCents: iof.totalCents, feeCents: 0, cashOutCents: 0, netCashCents: input.principalCents - iof.totalCents },
       ...rows.map((row, index) => ({ kind: 'payment', date: row.date, creditCents: 0, principalCents: row.principalCents, interestCents: row.interestCents, iofPaidCents: 0, feeCents: index === 0 ? feesCents : 0, cashOutCents: row.paymentCents + (index === 0 ? feesCents : 0), netCashCents: -row.paymentCents - (index === 0 ? feesCents : 0) })),
     ]
+    const allExpectedEventsCovered = rows.length === nominalEvents.length
+    const reportedAnnualRateDecimal = input.reportedCet?.annualRateDecimal ?? null
+    const cet = allExpectedEventsCovered ? declaredFlowCet(cashFlows, reportedAnnualRateDecimal)
+      : { reportedAnnualRateDecimal, calculatedAnnualRateDecimal: null, validated: false, status: 'not-validated-incomplete-evidence' }
     const warnings = [
       'Estimativa não validada contratualmente. Reconciliação limitada ao horizonte documentado.',
       'Nenhuma regra deste perfil deve ser transferida automaticamente para Finame/TFC.',
-      'CET não calculado nem validado. Mesmo com todos os eventos visíveis, despesas, precisão e convenção regulatória precisam de confirmação.',
+      allExpectedEventsCovered
+        ? 'CET calculado em ACT/365 somente para o fluxo declarado. A apuração matemática não certifica o gerador de parcelas, a completude dos encargos nem o enquadramento contratual e regulatório.'
+        : 'CET não calculado: faltam eventos do cronograma documentado. Nenhum pagamento foi extrapolado para completar o fluxo.',
       'Aplicabilidade das alíquotas e da base de IOF precisa de confirmação fiscal para a operação.',
       'Liberação no mês de cobrança (item 5.6), múltiplas liberações e IOF financiado não são suportados.',
       'Expoentes fracionários usam aritmética binária com bloqueio próximo de meio centavo; a reprodução não certifica arredondamento contratual em todos os casos.',
     ]
+    if (cet.status === 'reference-mismatch') warnings.push('O CET calculado do fluxo declarado diverge da referência informada. A referência foi preservada; sua fórmula e suas entradas originais ainda não foram conciliadas.')
     if (input.annualRate.status === 'inferred') warnings.push('A taxa precisa foi inferida do cenário, não fornecida com a precisão original das células. Não confundir com taxa oficial ou cotação atual.')
     if (input.nominalGraceStart.status === 'inferred') warnings.push('Âncora de carência inferida; assinatura não foi substituída pela data de liberação.')
     if (input.calendar.completeness === 'partial') warnings.push('Calendário parcial informado: as datas calculadas são hipóteses dentro da cobertura, não calendário bancário validado.')
@@ -324,7 +392,7 @@ export function reconcileCreditoPequenasEmpresas(input) {
       annualRate: { ...input.annualRate },
       calendar: { id: input.calendar.id, version: input.calendar.version, completeness: input.calendar.completeness, source: input.calendar.source },
       horizon: { ...input.horizon, completeContractFlow: false, unshownEventCount: nominalEvents.length - rows.length },
-      paymentEventCoverage: { covered: rows.length, expected: nominalEvents.length, allExpectedEventsCovered: rows.length === nominalEvents.length },
+      paymentEventCoverage: { covered: rows.length, expected: nominalEvents.length, allExpectedEventsCovered },
       rows,
       iof,
       cashFlows,
@@ -335,7 +403,7 @@ export function reconcileCreditoPequenasEmpresas(input) {
       firstCashOutCents: cashFlows[1].cashOutCents,
       totalContractCostCents: null,
       finalPayment: null,
-      cet: { reportedAnnualRateDecimal: input.reportedCet?.annualRateDecimal ?? null, calculatedAnnualRateDecimal: null, validated: false, status: rows.length === nominalEvents.length ? 'not-validated-scenario-formula-unconfirmed' : 'not-validated-incomplete-evidence' },
+      cet,
       warnings,
     }
   } catch (error) {

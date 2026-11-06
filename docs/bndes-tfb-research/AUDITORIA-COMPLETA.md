@@ -6,6 +6,22 @@ Data: 05/11/2026. Escopo: fotografias das três páginas, transcrição, candida
 
 Fernando esclareceu que montou as imagens e os cenários para testes baseados em cálculos oficiais. O material não foi emitido pelo Itaú. As conclusões aritméticas abaixo permanecem, mas a autoria e a pendência de CET referem-se ao cenário do usuário. Esta retificação não é nova validação de fórmulas oficiais.
 
+## Ajuste do cálculo em 06/11/2026 — v0.2.2
+
+O motor agora calcula o CET quando todos os eventos esperados do fluxo informado estão cobertos. A fórmula geral não era uma informação ausente: o método de dias corridos/365 consta do [art. 4º da Resolução CMN 4.881](https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf). O denominador permanece 365 no ano bissexto. A base dos juros do gerador continua ACT/ACT e não foi alterada.
+
+O cenário completo resulta em **20,1568899289% a.a. → 20,16%**, conferido por solucionadores independentes. O motor devolve o cálculo, a referência preservada e sua diferença de **0,14688993 ponto percentual**. Em **20,01%**, o residual é **−R$ 5.214,24**: não é erro de arredondamento nem falta de páginas.
+
+O campo `calculatedAnnualRateDecimal` deixa de ser nulo nesse horizonte, com `calculationStatus = calculated-declared-cash-flow` e `status = reference-mismatch`. Não foram modificados IOF, tarifa, parcelas, datas ou taxa contratual para forçar concordância. Horizonte parcial continua sem CET.
+
+A pendência passa a ser descrita com precisão:
+1. **CET do fluxo informado:** apurado matematicamente em 20,16%.
+2. **Referência de 20,01%:** não conciliada; exige fórmula original, referências das células/intervalos, data inicial e encargos usados para explicar a origem.
+3. **Gerador de parcelas:** precisão da taxa, regra da âncora e calendário continuam inferidos.
+4. **Certificação contratual/regulatória:** composição integral dos encargos e enquadramento da operação continuam não confirmados, inclusive o alcance dos arts. 1º e 9º.
+
+`cet.validated = false`, `cashFlowComplete = false` e `validationStatus = estimate-not-contract-validated` são preservados. As ressalvas seguintes registram a revisão anterior e não devem ser lidas como ausência do cálculo introduzido nesta versão.
+
 ## Revalidação em 06/11/2026
 
 **Estado: reconciliação aritmética aprovada; certificação contratual e CET pendentes.** A conferência atual executou os cinco arquivos de teste do perfil: **81 testes aprovados**, sem alterar taxas, datas, fórmula ou convenção para ajustar o resultado ao cabeçalho.
