@@ -30,8 +30,9 @@ const base=process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5220';
  const learn=dialog.getByRole('region',{name:'Resultados em Aprender'}); // sections with labels have region semantics
  for(const name of ['FIDC','CRI','Custo de funding'])assert.ok(await learn.getByRole('button').filter({hasText:name}).count()>0,name);
  const news=dialog.getByRole('region',{name:'Resultados em Notícias'});
- await news.getByRole('button').filter({hasText:headline}).waitFor();
- assert.equal(await news.getByRole('button').filter({hasText:headline}).count(),1,'a busca inclui a manchete publicada dentro das 120 horas');
+ const headlineTitle=news.locator('.global-search-result > strong').filter({hasText:new RegExp(`^${headline}$`)});
+ await headlineTitle.waitFor();
+ assert.equal(await headlineTitle.count(),1,'a busca inclui uma manchete com o título exato publicado dentro das 120 horas');
  for(const title of newsFixture.news.USD.slice(1).map(item=>item.title))assert.equal(await dialog.getByText(title,{exact:true}).count(),0,`${title}: publicação inválida não aparece pela data de geração do arquivo`);
  await dialog.screenshot({path:path.join(output,`search-dialog-${width}.png`)});assert.ok(await dialog.locator('mark').count()>0);
  await dialog.locator('.search-coverage summary').click();assert.match(await dialog.locator('.search-coverage').innerText(),/Calendário econômico/);

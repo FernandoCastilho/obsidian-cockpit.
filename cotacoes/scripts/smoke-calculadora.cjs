@@ -151,7 +151,7 @@ const { chromium } = require('playwright'), assert = require('node:assert/strict
       await p.screenshot({ path: `${out}/finame-${width}.png`, fullPage: width > 700 })
       assert.deepEqual(await fm.locator('#fm-custo option').evaluateAll(options => options.map(option => option.value)), ['tfc', 'tfb', 'tlp', 'lcd', 'tfbd'])
       await fm.locator('#fm-custo').selectOption('tfbd')
-      await fm.getByText('TFBD indisponível: faltam a taxa fixada e a trajetória cambial contratual.', { exact: true }).waitFor()
+      await fm.locator('.cx-field').getByRole('status').filter({ hasText: /^TFBD indisponível: faltam a taxa fixada e a trajetória cambial contratual\.$/ }).waitFor()
       assert.equal(await fm.locator('.fm-grade, .fm-fluxo-panel').count(), 0, 'TFBD não mantém resultado de outra moeda')
       await p.screenshot({ path: `${out}/finame-tfbd-${width}.png`, fullPage: true })
       const retainedValue = await fm.locator('#fm-valor').inputValue()
