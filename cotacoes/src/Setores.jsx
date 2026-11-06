@@ -12,7 +12,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const routeGroup = parts[0] === 'topico' ? CATALOGO_SETORIAL.find(group => group.id === parts[1]) : null
   const routeTopic = routeGroup?.topics[Number(parts[2])]
   const selected = routeTopic ? {group: routeGroup.id, groupLabel: routeGroup.label, topic: routeTopic} : null
-  useEffect(() => { if (routeTopic) detailRef.current?.focus() }, [routeTopic])
+  useEffect(() => { if (routeTopic && detailRef.current) { detailRef.current.focus({ preventScroll: true }); detailRef.current.scrollIntoView({ block: 'start', behavior: 'auto' }) } }, [routeTopic])
   // Preserve deep links and existing information without presenting it as a completed study.
   if (view && view !== 'central' && !routeGroup && view !== 'b3' && !view.startsWith('b3/')) return <><button className="central-voltar" onClick={() => onView('central')}>← Central de setores</button><SetoresLegado view={view} onView={onView} quotes={quotes}/></>
   const term = normalizeSector(query.trim())
