@@ -1,6 +1,7 @@
 // Runs inside the existing calculator smoke, using synthetic values only.
 const assert = require('node:assert/strict')
 const path = require('node:path')
+const fs = require('node:fs')
 const normalize = text => text.replace(/\s+/g, ' ').trim()
 
 module.exports = async function checkAlongamento(page, section, directory, width, assertWorkspace, settleLayout) {
@@ -29,13 +30,21 @@ module.exports = async function checkAlongamento(page, section, directory, width
   assert.equal(await help.evaluate(node => node === document.activeElement), true)
   await settleLayout(page)
   await assertWorkspace(page, section, `alongamento preenchido ${width}`)
-  const clippedSelections = await component.locator('select').evaluateAll(elements => elements.filter(element => {
-    const style = getComputedStyle(element), canvas = document.createElement('canvas'), context = canvas.getContext('2d')
-    context.font = style.font
-    const required = context.measureText(element.selectedOptions[0].text).width + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 24
-    return element.getBoundingClientRect().width < required
-  }).map(element => element.id))
-  assert.deepEqual(clippedSelections, [], `alongamento ${width}: seleção financeira aparece inteira`)
+  const selectionGeometry = []
+  const assertSelections = async state => {
+    const controls = await component.locator('select').evaluateAll(elements => elements.map(element => {
+      const style = getComputedStyle(element), canvas = document.createElement('canvas'), context = canvas.getContext('2d')
+      context.font = style.font
+      const required = context.measureText(element.selectedOptions[0].text).width + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 24
+      const box = element.getBoundingClientRect()
+      return { id: element.id, text: element.selectedOptions[0].text, required, width: box.width, height: box.height }
+    }))
+    selectionGeometry.push({ state, width, controls })
+    fs.writeFileSync(path.join(directory, 'alongamento-selections.json'), JSON.stringify(selectionGeometry, null, 2))
+    assert.deepEqual(controls.filter(control => control.width < control.required).map(control => control.id), [], `alongamento ${state} ${width}: seleção financeira aparece inteira`)
+    assert.ok(controls.every(control => control.height >= 43.9), 'selects retain 44px targets')
+  }
+  await assertSelections('price')
   await page.screenshot({ path: path.join(directory, 'alongamento-filled.png'), fullPage: true })
 
   await component.locator('#along-amount').fill('400000')
@@ -61,6 +70,7 @@ module.exports = async function checkAlongamento(page, section, directory, width
   await component.locator('.along-results').waitFor()
   await settleLayout(page)
   await assertWorkspace(page, section, `alongamento NCG ${width}`)
+  await assertSelections('sac')
   await page.screenshot({ path: path.join(directory, 'alongamento-ncg.png'), fullPage: true })
   await section.getByRole('button', { name: 'Lançamentos por dia', exact: true }).click()
   await section.getByRole('button', { name: 'Comparar com parcelado', exact: true }).click()

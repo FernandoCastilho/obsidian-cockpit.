@@ -9,7 +9,12 @@ export const FINAME_FUNDING_SOURCES = Object.freeze([
 ])
 
 export const FINAME_FUNDING_OPTIONS = Object.freeze([
-  ...CUSTOS.map(option => Object.freeze({ ...option, mode: 'inline' })),
+  ...CUSTOS.filter(option => option.id !== 'tlp').map(option => Object.freeze({ ...option, mode: 'inline' })),
+  Object.freeze({
+    id: 'tlp', label: 'TLP exigível', mode: 'dedicated', calculatorId: 'bndes-tlp-exigivel',
+    hint: 'TLP exigível: IPCA e remunerações compõem juros cobrados nos vencimentos. IPCA positivo não aumenta o principal. Use a projeção própria com J aplicável, hipótese explícita de IPCA e cronograma confirmado.',
+    notice: 'TLP exigível utiliza projeção própria. O cronograma mensal com correção capitalizada foi retirado desta opção.',
+  }),
   Object.freeze({
     id: 'lcd', label: 'Taxa LCD', mode: 'dedicated', calculatorId: 'bndes-selic-lcd',
     hint: 'Selic acumulada mais sobretaxa LCD. A referência LD1 é somente a sobretaxa das operações indiretas, não o custo financeiro completo. A série 143 é um índice Selic acumulado D-2, não uma taxa anual. Abra a projeção própria, com Selic, LD1, datas e cronograma confirmados; as condições do Finame não são transferidas nem presumidas.',
@@ -25,8 +30,8 @@ export const FINAME_FUNDING_OPTIONS = Object.freeze([
 
 export const finameFundingOption = id => FINAME_FUNDING_OPTIONS.find(option => option.id === id) ?? null
 
-// Somente os três perfis já suportados pelo cronograma mensal podem fornecer
-// custoFinanceiro. LCD/TFBD e códigos isolados nunca herdam a taxa da TLP.
+// Somente os dois perfis já suportados pelo cronograma mensal podem fornecer
+// custoFinanceiro. TLP/LCD/TFBD e códigos isolados nunca herdam a taxa da TLP.
 export function finameFundingAnnualRate(id, quotes) {
   if (finameFundingOption(id)?.mode !== 'inline') return null
   const value = quotes?.[id]

@@ -111,7 +111,7 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
   let activePage
   try {
     for (const width of [1440, 390]) {
-      const context = await browser.newContext({ viewport: { width, height: 1000 }, serviceWorkers: 'block', reducedMotion: 'no-preference' })
+      const context = await browser.newContext({ viewport: { width, height: 1000 }, serviceWorkers: 'block', reducedMotion: 'no-preference', hasTouch: width <= 600 })
       await context.route('**/*', route => route.request().url().startsWith(base) ? route.continue() : route.abort())
       await context.route('**/recado.json*', route => route.fulfill({ json: { ativo: false } }))
       const page = await context.newPage()
@@ -206,9 +206,11 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       await diagram.waitFor()
       const stage = diagram.locator('.sector-chain-node').first()
       assert.equal(await stage.evaluate(element => getComputedStyle(element).animationName), 'sector-chain-step')
-      await diagram.getByRole('button', { name: 'Pausar animação do diagrama' }).click()
+      assert.equal(await diagram.getByRole('button', { name: /Pausar|Retomar/ }).count(), 0)
+      await diagram.focus()
+      await page.keyboard.press('p')
       assert.equal(await stage.evaluate(element => getComputedStyle(element).animationPlayState), 'paused')
-      await diagram.getByRole('button', { name: 'Retomar animação do diagrama' }).click()
+      await page.keyboard.press('p')
       assert.equal(await stage.evaluate(element => getComputedStyle(element).animationPlayState), 'running')
       await page.emulateMedia({ reducedMotion: 'reduce' })
       assert.equal(await stage.evaluate(element => getComputedStyle(element).animationName), 'none')
@@ -217,6 +219,8 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       await diagram.getByRole('button', { name: 'Maximizar diagrama' }).click()
       const modal = page.getByRole('dialog', { name: 'Diagrama em tela cheia' })
       await modal.waitFor()
+      // The shared laser portal follows the newly visible host on the next frame.
+      await modal.getByRole('button', { name: 'Laser pointer: riscar a tela', exact: true }).waitFor()
       assert.equal(await modal.locator('button:visible').count(), 1)
       const expandedDiagram = modal.locator('.researched-flow')
       const bounds = await expandedDiagram.boundingBox()
@@ -230,7 +234,7 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
         await modal.evaluate(element => { element.scrollTop = element.scrollHeight })
         const last = await expandedDiagram.locator('figcaption').boundingBox()
         assert.ok(last.y >= 0 && last.y + last.height <= 1001, 'fim do diagrama acessível por rolagem')
-        const laserBounds = await modal.getByRole('button', { name: 'Ativar laser' }).boundingBox()
+        const laserBounds = await modal.getByRole('button', { name: 'Laser pointer: riscar a tela' }).boundingBox()
         assert.ok(laserBounds.y >= 0 && laserBounds.y + laserBounds.height <= 1001, 'laser permanece acessível ao rolar')
         await modal.screenshot({ path: path.join(out, `fullscreen-${width}-bottom.png`) })
         await page.setViewportSize({ width: 1440, height: 1000 })
@@ -246,11 +250,7 @@ async function verifyAudioPlayback(page, article, audio, study, key) {
       } else {
         assert.ok(bounds.y + bounds.height <= 1001, 'desktop preserva auto-fit')
       }
-      await modal.getByRole('button', { name: 'Ativar laser' }).click()
-      await page.mouse.move(width / 2, 400)
-      assert.equal(await modal.locator('.tic-flow-laser').isVisible(), true)
-      await page.keyboard.press('Tab')
-      assert.equal(await modal.getByRole('button', { name: 'Desativar laser' }).evaluate(element => element === document.activeElement), true)
+      await require('./helpers/verify-diagram-laser.cjs')(page, modal, width)
       await page.keyboard.press('p')
       assert.equal(await modal.locator('.sector-chain-node').first().evaluate(element => getComputedStyle(element).animationPlayState), 'paused')
       await modal.screenshot({ path: path.join(out, `fullscreen-${width}.png`) })

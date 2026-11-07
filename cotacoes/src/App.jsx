@@ -1,6 +1,7 @@
 import GlobalSearch, { SearchDestination } from './GlobalSearch.jsx'
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { dataTimestamp } from './dataTimestamp.js'
+import ThemeControl from './ThemeControl.jsx'
 import { connectSystemTheme } from './systemTheme.js'
 import { AvisosButton, AvisosProvider } from './Avisos.jsx'
 import { marketDate } from './marketReturns.js'
@@ -271,7 +272,7 @@ export default function App() {
     {tab === 'resumo' && (
       <div className="clocks-top">
         <Clock codes={['BRL', 'USD', 'GBP', 'JPY', 'CNH']} />
-        <OnlineBadge /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
+        <OnlineBadge /><AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" /><ThemeControl className="theme-mobile" />
       </div>
     )}
     <main className={`app${tab === 'calculadora' ? ' app-calculators' : ''}`} ref={mainRef}>
@@ -288,7 +289,7 @@ export default function App() {
       {tab !== 'resumo' && (
         <header className={`top${['calculadora', 'noticias', 'feriados'].includes(tab) ? ' top-min' : ''}`}>
           {!['calculadora', 'noticias', 'feriados'].includes(tab) && <h1>{tab === 'setores' ? 'Central de setores' : TABS.find((t) => t.id === tab).label}</h1>}
-          <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" />
+          <AvisosButton className="clocks-info" /><span className="laser-slot laser-slot-m" /><ThemeControl className="theme-mobile" />
         </header>
       )}
 

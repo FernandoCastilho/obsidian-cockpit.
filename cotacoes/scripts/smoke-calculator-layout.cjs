@@ -6,7 +6,7 @@ const path = require('node:path')
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:8768'
 const out = process.env.CALCULATOR_QA_OUTPUT || 'workspace-qa/calculator-layout'
-const routes = ['conta-garantida', 'bndes-selic-lcd', 'finimp', 'giro', 'analise-desconto', 'finame-materiais']
+const { widths, layoutRoutes: routes } = require('./smoke-calculator-matrix.cjs')
 const normalize = text => text.replace(/\s+/g, ' ').trim()
 
 // Fixed release 06/11/2026 and first due 06/12/2026. Civil-calendar offsets,
@@ -240,7 +240,7 @@ async function fillScenario(page, section, route) {
   const browser = await chromium.launch(require('./smoke-launch.cjs')())
   const report = [], failures = []
   try {
-    for (const width of [1440, 768, 390]) {
+    for (const width of widths) {
       const directory = path.join(out, String(width)); fs.mkdirSync(directory, { recursive: true })
       for (const route of routes) {
         const page = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce', serviceWorkers: 'block' })
@@ -273,7 +273,7 @@ async function fillScenario(page, section, route) {
         }
       }
     }
-    assert.deepEqual(failures, [], 'conformidade das seis calculadoras nas três larguras')
+    assert.deepEqual(failures, [], 'conformidade das seis calculadoras nas cinco larguras')
   } finally {
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2))
     await browser.close()

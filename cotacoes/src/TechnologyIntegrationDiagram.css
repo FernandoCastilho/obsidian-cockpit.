@@ -32,8 +32,6 @@
 .tic-flow-fullscreen{position:fixed;inset:0;z-index:2147483000;background:#eaf2fe;overflow:hidden;isolation:isolate}
 .tic-flow-fullscreen>.tic-flow{position:absolute;left:50%;top:calc(50% + 24px);width:1320px;max-width:none;box-sizing:border-box;margin:0;transform-origin:center}
 .tic-flow-fullscreen .tic-flow-controls{display:none}
-.tic-flow-laser-toggle{position:absolute;top:12px;right:12px;z-index:2;font:inherit;font-weight:650;border:1px solid #627ea9;background:white;color:#000d3c;border-radius:8px;padding:10px 14px;min-height:44px;cursor:pointer}
-.tic-flow-laser-toggle:focus-visible{outline:3px solid #0131ff;outline-offset:2px}
-.tic-flow-laser-toggle[aria-pressed="true"]{background:#000d3c;color:white}
-.tic-flow-laser{position:fixed;left:-40px;top:-40px;width:14px;height:14px;border:2px solid white;border-radius:50%;background:#ec163a;box-shadow:0 0 0 2px #b60023,0 0 18px #ec163a;transform:translate(-50%,-50%);pointer-events:none;z-index:3}
+.tic-flow-fullscreen>.tic-flow-laser-slot{position:fixed;top:12px;right:12px;z-index:2147483000;display:flex;background:#fff;border:1px solid #627ea9;border-radius:8px}
+.tic-flow:focus-visible{outline:3px solid #0131ff;outline-offset:3px}
 .tic-flow-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}

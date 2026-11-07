@@ -60,7 +60,7 @@ export default function ComparativoAlongamento() {
           {money('amount', 'Valor para substituir a conta garantida (R$)', 'Valor líquido aplicado na quitação, limitado ao saldo médio informado. IOF e tarifa são pagos à parte, no início.')}
           {input('loanRate', 'Taxa do giro parcelado (% a.m.)', 'Taxa efetiva mensal da proposta. Informe zero apenas se houver operação sem juros. Campo vazio não equivale a zero.')}
           {input('n', 'Quantidade de parcelas', 'Quantidade de parcelas mensais após a carência. O prazo total soma carência e amortização.')}
-          {select('system', 'Sistema de amortização', [['price', 'Price — parcelas fixas'], ['sac', 'SAC — parcelas decrescentes']], 'A parcela contém juros e devolução do principal. Amortização não é custo financeiro.')}
+          {select('system', 'Sistema de amortização', [['price', 'Price — fixas'], ['sac', 'SAC — decrescentes']], 'A parcela contém juros e devolução do principal. Amortização não é custo financeiro.')}
           {input('graceMonths', 'Carência (meses)', 'Zero significa primeira parcela após um mês. Com carência, não há parcela do giro nos meses de carência e os juros são incorporados ao seu saldo. Os encargos da conta garantida residual continuam pagos à parte.')}
           {money('fee', 'Tarifa da nova operação (R$)', 'Tarifa paga com recursos próprios na contratação. Zero significa ausência de tarifa. Não é financiada; confira outros custos da proposta antes de contratar.')}
         </div>

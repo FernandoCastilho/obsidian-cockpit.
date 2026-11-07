@@ -11,6 +11,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Painel Especialista" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script>
+      // Apply before styles paint. Keep the key and palette aligned with systemTheme.js.
+      (() => {
+        let choice
+        try { choice = localStorage.getItem('painel-theme') } catch { /* Automatic without storage. */ }
+        const theme = choice === 'light' || choice === 'dark' ? choice : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+        document.documentElement.dataset.theme = theme
+        document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f5f4f0' : '#050505'
+      })()
+    </script>
     <title>Painel Especialista</title>
   </head>
   <body>

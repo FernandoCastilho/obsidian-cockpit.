@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react'
-import { readSystemTheme, subscribeSystemTheme } from './systemTheme.js'
+import { readTheme, subscribeTheme } from './systemTheme.js'
 
+// Existing embeds also follow a manual choice, not only the OS preference.
 export function useSystemTheme() {
-  return useSyncExternalStore(subscribeSystemTheme, readSystemTheme, () => 'dark')
+  return useSyncExternalStore(subscribeTheme, readTheme, () => 'dark')
 }

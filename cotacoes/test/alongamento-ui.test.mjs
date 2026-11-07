@@ -42,6 +42,15 @@ async function setup(t) {
   }
 }
 
+test('amortization choices fit compact labels and preserve the complete accessible explanation', async t => {
+  const h = await setup(t)
+  const options = nodes(h.field('system')).filter(node => node.type === 'option')
+  assert.deepEqual(options.map(node => [node.props.value, textOf(node)]), [['price', 'Price — fixas'], ['sac', 'SAC — decrescentes']])
+  for (const value of ['sac', 'price']) { await h.change('system', value); assert.equal(h.field('system').props.value, value) }
+  const help = nodes(h.render.value).find(node => node.type === Help && node.props.title === 'Giro parcelado')
+  assert.match(renderToStaticMarkup(help.props.children), /Price tem parcelas fixas; SAC tem amortização constante e parcelas decrescentes/)
+})
+
 test('comparativo inicia sem ofertas fictícias, sem resultado e com NCG opcional fechada', async t => {
   const h = await setup(t)
   for (const key of ['balance', 'cgRate', 'amount', 'loanRate', 'n', 'cashAvailable']) assert.equal(h.field(key).props.value, '', key)

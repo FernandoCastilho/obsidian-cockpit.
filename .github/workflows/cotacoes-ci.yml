@@ -31,7 +31,7 @@ jobs:
   smoke:
     runs-on: ubuntu-24.04
     needs: test-build
-    timeout-minutes: 15
+    timeout-minutes: 25
     defaults:
       run:
         working-directory: cotacoes
@@ -69,7 +69,8 @@ jobs:
           path: ${{ runner.temp }}/qa-juros
           if-no-files-found: error
           retention-days: 7
-      - name: Conferir largura, ajudas e fluxos das seis calculadoras
+      - name: Conferir seis calculadoras e alongamento em cinco larguras
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
       - name: Conferir estudos incluídos, recortes pendentes, apresentação e áudio
         if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
@@ -128,9 +129,11 @@ jobs:
           CALCULATOR_QA_OUTPUT: ${{ runner.temp }}/qa-universal/calculators
           FINIMP_QA_OUTPUT: ${{ runner.temp }}/qa-universal/finimp
           BNDES_QA_OUTPUT: ${{ runner.temp }}/qa-universal/bndes
+          BNDES_PROFILES_QA_OUTPUT: ${{ runner.temp }}/qa-universal/bndes-profiles
+          TIC_QA_OUTPUT: ${{ runner.temp }}/qa-universal/tic-laser
         run: |
           failures=()
-          for s in smoke-global-search smoke-calculadora smoke-finimp smoke-bndes; do
+          for s in smoke-global-search smoke-calculadora smoke-finimp smoke-bndes smoke-bndes-profiles smoke-tic-animation; do
             echo "::group::$s"
             if ! node scripts/$s.cjs; then
               failures+=("$s")
@@ -162,6 +165,9 @@ jobs:
           npm run dev -- --host 127.0.0.1 --port 8770 > "$RUNNER_TEMP/comparison-vite.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8770/test/fixtures/chart-comparison.html > /dev/null && break; sleep 1; done
           SMOKE_BASE_URL=http://127.0.0.1:8770 COMPARISON_QA_OUTPUT="$RUNNER_TEMP/qa-universal" node scripts/smoke-chart-comparison.cjs
+      - name: Verificar matriz de oito calculadoras e cabeçalho Setores320
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: node scripts/verify-smoke-matrix.cjs "$RUNNER_TEMP/qa-universal"
       - name: Capturas de tela dos smokes
         if: always()
         uses: actions/upload-artifact@v4

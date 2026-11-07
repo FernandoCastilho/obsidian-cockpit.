@@ -252,10 +252,11 @@ test('Ibovespa: último fechamento, variação sobre o anterior e minigráfico d
   assert.equal(ibovSpark({ series: { ibov: { points: Array.from({ length: 40 }, (_, i) => [i, 100 + i]) } } }).length, 30)
   assert.deepEqual(toIndexPoints([[1, 127400.6], [2, 0], [3, NaN], [NaN, 5]]), [[1, 127401]])
 })
-test('Paridade para a Finimp: paridade ± 0,01, sem resíduo de ponto flutuante', async () => {
-  const { finimpParidade } = await import('../src/terminal.js')
-  assert.deepEqual(finimpParidade(1.1172), { base: 1.1172, eurUsd: 1.1272, usdEur: 1.1072 })
-  assert.equal(finimpParidade(1.08999).eurUsd, 1.1)
+test('Paridade para a Finimp: paridade ± 0,02, sem resíduo de ponto flutuante', async () => {
+  const { FINIMP_MARGEM, finimpParidade } = await import('../src/terminal.js')
+  assert.equal(FINIMP_MARGEM, 0.02)
+  assert.deepEqual(finimpParidade(1.1172), { base: 1.1172, eurUsd: 1.1372, usdEur: 1.0972 })
+  assert.deepEqual(finimpParidade(1.08999), { base: 1.09, eurUsd: 1.11, usdEur: 1.07 })
   assert.equal(finimpParidade(null), null)
 })
 test('paridade EUR/USD: direta quando existe e recente; cruzada como reserva', async () => {
@@ -269,11 +270,27 @@ test('paridade EUR/USD: direta quando existe e recente; cruzada como reserva', a
   const items = kpiItems({ EUR, USD, EURUSD: { bid: 1.1181, pct: 0.1, timestamp: t } }, [], null, null)
   assert.equal(items.find((i) => i.key === 'EURUSD').value, '1,1181')
 })
-test('calculadora da Finimp: EUR × (paridade + 0,01) vira USD; USD ÷ (paridade − 0,01) vira EUR', async () => {
+test('calculadora da Finimp: EUR × (paridade + 0,02) vira USD; USD ÷ (paridade − 0,02) vira EUR', async () => {
   const { finimpParidade, finimpConverte } = await import('../src/terminal.js')
   const fin = finimpParidade(1.1172)
-  assert.deepEqual(finimpConverte(100000, 'eur-usd', fin), { taxa: 1.1272, valor: 112720, moeda: 'USD' })
-  assert.deepEqual(finimpConverte(110720, 'usd-eur', fin), { taxa: 1.1072, valor: 100000, moeda: 'EUR' })
+  assert.deepEqual(finimpConverte(100000, 'eur-usd', fin), { taxa: 1.1372, valor: 113720, moeda: 'USD' })
+  assert.deepEqual(finimpConverte(109720, 'usd-eur', fin), { taxa: 1.0972, valor: 100000, moeda: 'EUR' })
   assert.equal(finimpConverte(0, 'eur-usd', fin), null)
   assert.equal(finimpConverte(100, 'x', fin), null)
+})
+
+test('FINIMP: ajuste absoluto de dois centavos, aplicado uma vez e sem alterar a cotação de mercado', async () => {
+  const { finimpParidade, finimpConverte } = await import('../src/terminal.js')
+  const t = Date.parse('2026-11-06T18:00:00Z')
+  const quotes = { EUR: { bid: 6, timestamp: t }, USD: { bid: 5, timestamp: t }, EURUSD: { bid: 1.1172, pct: 0.1, timestamp: t } }
+  const before = structuredClone(quotes)
+  const market = () => kpiItems(quotes, [], null, null).find(i => i.key === 'EURUSD')
+  const fin = finimpParidade(market().raw)
+  assert.deepEqual(finimpConverte(100000, 'eur-usd', fin), { taxa: 1.1372, valor: 113720, moeda: 'USD' })
+  assert.deepEqual(finimpConverte(100000, 'usd-eur', fin), { taxa: 1.0972, valor: 91141.09, moeda: 'EUR' })
+  assert.equal(market().value, '1,1172')
+  assert.equal(market().raw, 1.1172)
+  assert.deepEqual(quotes, before)
+  assert.equal(finimpConverte(100, 'usd-eur', finimpParidade(0.02)), null, 'não divide por zero')
+  assert.equal(finimpConverte(100, 'usd-eur', finimpParidade(0.01)), null, 'não usa denominador negativo')
 })

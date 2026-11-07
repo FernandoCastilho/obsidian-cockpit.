@@ -4,6 +4,9 @@ import { parseMoneyInput } from './moneyInput.js'
 
 const DAY = 86400000
 const MAX_MONEY = 1e12
+// Below 2^45, adjacent binary64 values remain less than half a cent apart.
+// Larger totals cannot retain a useful cent-level error budget.
+export const ALONGAMENTO_MAX_PRECISE_TOTAL = 2 ** 45
 const MAX_TOTAL = Number.MAX_SAFE_INTEGER / 100
 export const ALONGAMENTO_SOURCES = [
   { label: 'Decreto 6.306/2007, art. 7º', url: IOF_SOURCE },
@@ -11,6 +14,17 @@ export const ALONGAMENTO_SOURCES = [
 ]
 const finiteMoney = n => Number.isFinite(n) && n >= 0 && n <= MAX_MONEY
 const fail = error => ({ ok: false, error })
+// Compensated sums preserve cents across long schedules; normalize exact zero.
+const sum = values => {
+  let total = 0, correction = 0
+  for (const value of values) {
+    const adjusted = value - correction
+    const next = total + adjusted
+    correction = (next - total) - adjusted
+    total = next
+  }
+  return total === 0 ? 0 : total
+}
 
 // Never remove punctuation from inside a financial entry. A percentage symbol
 // is accepted only as an optional suffix in fields explicitly marked percent.
@@ -56,14 +70,18 @@ export function simulateAlongamento(input) {
   const cgTax = resolveCreditIof({ date: start, profile, eligible, operationValue: cgOperationValue })
   const loanTax = resolveCreditIof({ date: start, profile, eligible, operationValue: amount })
   if (!cgTax.ok || !loanTax.ok) return fail(cgTax.error || loanTax.error)
-  const i = loanRate / 100
-  const financed = amount * Math.exp(graceMonths * Math.log1p(i))
-  if (!Number.isFinite(financed) || financed > MAX_TOTAL) return fail('O saldo com carência excede o limite de cálculo. Reduza valor, taxa ou prazo.')
-  const fixedPayment = i === 0 ? financed / n : financed * i / -Math.expm1(-n * Math.log1p(i))
+  const i = loanRate === 0 ? 0 : loanRate / 100, logRate = Math.log1p(i)
+  const financed = amount * Math.exp(graceMonths * logRate)
+  const graceInterest = amount * Math.expm1(graceMonths * logRate)
+  if (!Number.isFinite(financed) || financed > ALONGAMENTO_MAX_PRECISE_TOTAL) return fail('O saldo com carência excede o limite técnico de precisão monetária (R$ 35.184.372.088.832). Reduza valor, taxa ou prazo.')
+  const denominator = -Math.expm1(-n * logRate)
+  // Outstanding principal is evaluated from remaining periods, never by
+  // subtracting hundreds of rounded floating-point amortizations.
+  const remainingFraction = k => system === 'sac' || i === 0 ? (n - k) / n : -Math.expm1(-(n - k) * logRate) / denominator
   const residual = balance - amount
   const months = [], rows = []
-  let remaining = financed, previous = start, originalAllocated = 0, dailyBase = 0, paid = 0
-  let baselineInterest = 0, baselineIof = 0, residualInterest = 0, residualIof = 0
+  let previous = start
+  const dailyBases = [], baselineInterests = [], baselineIofs = [], residualInterests = [], residualIofs = []
   for (let month = 1; month <= graceMonths + n; month++) {
     const date = anniversary(start, month)
     const days = (cgDate(date) - cgDate(previous)) / DAY
@@ -72,39 +90,43 @@ export function simulateAlongamento(input) {
     const baseIof = balance * cgTax.daily / 100 * days
     const cgInterest = residual * cgRate / 100 / 30 * days
     const cgIof = residual * cgTax.daily / 100 * days
-    baselineInterest += baseInterest; baselineIof += baseIof
-    residualInterest += cgInterest; residualIof += cgIof
+    baselineInterests.push(baseInterest); baselineIofs.push(baseIof)
+    residualInterests.push(cgInterest); residualIofs.push(cgIof)
     const grace = month <= graceMonths
     // During grace this is accrued/capitalized interest, not a cash payment.
-    let loanInterest = grace ? amount * Math.exp((month - 1) * Math.log1p(i)) * i : 0
-    let amortization = 0, installment = 0, originalPrincipal = 0
+    let loanInterest = grace ? amount * Math.exp((month - 1) * logRate) * i : 0
+    let amortization = 0, installment = 0, originalPrincipal = 0, remaining = 0
     if (!grace) {
       const k = month - graceMonths
-      loanInterest = remaining * i
-      // Formula rather than subtraction protects tiny-rate principal allocations.
-      amortization = system === 'sac' || i === 0 ? financed / n : fixedPayment * Math.exp((k - 1 - n) * Math.log1p(i))
-      if (k === n) amortization = remaining
-      amortization = Math.min(remaining, amortization)
+      const opening = financed * remainingFraction(k - 1)
+      loanInterest = opening * i
+      // Direct principal fractions avoid both tiny-rate cancellation and
+      // accumulated allocation error; the final fraction closes the balance.
+      const fraction = k === n ? remainingFraction(k - 1) : system === 'sac' || i === 0 ? 1 / n : i * Math.exp((k - 1 - n) * logRate) / denominator
+      amortization = financed * fraction
       installment = amortization + loanInterest
-      originalPrincipal = k === n ? amount - originalAllocated : amount * amortization / financed
-      originalAllocated += originalPrincipal
-      dailyBase += originalPrincipal * Math.min(elapsedDays, loanTax.maxDays)
-      remaining = Math.max(0, remaining - amortization)
-      paid += installment
+      originalPrincipal = amount * fraction
+      dailyBases.push(originalPrincipal * Math.min(elapsedDays, loanTax.maxDays))
+      remaining = financed * remainingFraction(k)
       rows.push({ number: k, date, days: elapsedDays, installment, interest: loanInterest, amortization, originalPrincipal, balance: remaining })
     }
-    const remainingLoan = grace ? amount * Math.exp(month * Math.log1p(i)) : remaining
+    const remainingLoan = grace ? amount * Math.exp(month * logRate) : remaining
     const baselineCost = baseInterest + baseIof, residualCost = cgInterest + cgIof
     months.push({ number: month, date, days, grace, baselineCost, residualCost, installment, loanInterest, amortization, cashOut: residualCost + installment, cashDifference: residualCost + installment - baselineCost, remainingLoan, remainingCG: residual })
     previous = date
   }
-  const iofDaily = dailyBase * loanTax.daily / 100, iofFixed = amount * loanTax.additional / 100
+  const baselineInterest = sum(baselineInterests), baselineIof = sum(baselineIofs)
+  const residualInterest = sum(residualInterests), residualIof = sum(residualIofs)
+  const iofDaily = sum(dailyBases) * loanTax.daily / 100, iofFixed = amount * loanTax.additional / 100
   const iof = iofDaily + iofFixed, upfront = iof + fee
-  const loanInterest = paid - amount
-  const loan = { system, financed, graceInterest: financed - amount, installment: rows[0].installment, firstInstallment: rows[0].installment, lastInstallment: rows.at(-1).installment, interest: loanInterest, iof, iofDaily, iofFixed, fee, upfront, total: paid + upfront, rows, tax: loanTax }
+  // Never recover interest as payments minus principal: tiny positive interest
+  // can disappear (or become negative) in that subtraction.
+  const loanInterest = sum([graceInterest, ...rows.map(row => row.interest)])
+  const paid = sum([amount, loanInterest])
+  const loan = { system, financed, graceInterest, installment: rows[0].installment, firstInstallment: rows[0].installment, lastInstallment: rows.at(-1).installment, interest: loanInterest, iof, iofDaily, iofFixed, fee, upfront, total: sum([paid, upfront]), rows, tax: loanTax }
   const baseline = { interest: baselineInterest, iof: baselineIof, fees: 0, cost: baselineInterest + baselineIof, cashOut: baselineInterest + baselineIof, finalDebt: balance }
-  const alternative = { interest: residualInterest + loanInterest, iof: residualIof + iof, fees: fee, cost: residualInterest + loanInterest + residualIof + iof + fee, cashOut: residualInterest + residualIof + paid + upfront, finalDebt: residual }
-  if (![baseline.cost, alternative.cost, alternative.cashOut, loan.total, loan.interest].every(x => Number.isFinite(x) && x >= -0.000001 && x <= MAX_TOTAL)) return fail('O resultado excede o limite numérico. Reduza valor, taxa ou prazo.')
+  const alternative = { interest: sum([residualInterest, loanInterest]), iof: residualIof + iof, fees: fee, cost: sum([residualInterest, loanInterest, residualIof, iof, fee]), cashOut: sum([residualInterest, residualIof, paid, upfront]), finalDebt: residual }
+  if (![baseline.cost, alternative.cost, alternative.cashOut, loan.total, loan.interest].every(x => Number.isFinite(x) && x >= -0.000001 && x <= ALONGAMENTO_MAX_PRECISE_TOTAL)) return fail('O resultado excede o limite técnico de precisão monetária (R$ 35.184.372.088.832). Reduza valor, taxa ou prazo.')
   const maxCash = Math.max(...months.map(m => m.cashOut))
   const cashAssessment = cashAvailable === null ? null : { available: cashAvailable, minSurplus: cashAvailable - maxCash, fits: cashAvailable >= maxCash, upfrontGap: null }
   return { ok: true, start, end: previous, horizonDays: (cgDate(previous) - cgDate(start)) / DAY, months, baseline, alternative, loan, cgTax, residual, savings: baseline.cost - alternative.cost, monthlyDelta: months[graceMonths].cashDifference, maxMonthlyDelta: Math.max(...months.map(m => m.cashDifference)), cashAssessment }
