@@ -40,6 +40,11 @@ const fixture = mode => ({ schemaVersion: 1, windowDays: 7, generatedAt: now, to
         assert.equal(await tab.getAttribute('aria-selected'), 'true')
         const box = await tab.boundingBox(); assert.ok(box.height >= 44)
         await tab.focus(); assert.equal(await tab.evaluate(node => document.activeElement === node), true)
+        // A barra inferior fixa não pode impedir a leitura ou o clique após rolar.
+        const article = list.getByRole('link', { name: titles[id], exact: true })
+        await article.scrollIntoViewIfNeeded()
+        await article.click({ trial: true })
+        await page.screenshot({ path: path.join(out, `curadoria-${id}-${width}-article.png`) })
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       await panel.screenshot({ path: path.join(out, `curadoria-${width}.png`) })
