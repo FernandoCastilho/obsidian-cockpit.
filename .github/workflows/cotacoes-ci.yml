@@ -59,6 +59,10 @@ jobs:
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
+      - name: Conferir curadorias de tributos e escala 6x1
+        run: CURADORIA_QA_OUTPUT="$RUNNER_TEMP/qa-universal/curadoria" node scripts/smoke-curadoria.cjs
+      - name: Conferir panorama horário em celular, tablet e desktop nos dois temas
+        run: POPUP_QA_OUTPUT="$RUNNER_TEMP/qa-universal/market-popup" node scripts/smoke-market-popup.cjs
       - name: Conferir estudo histórico de controle de juros em três larguras
         run: JUROS_QA_OUTPUT="$RUNNER_TEMP/qa-juros" node scripts/smoke-aprender-juros.cjs
       - name: Capturas e relatório do estudo de juros

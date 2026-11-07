@@ -158,7 +158,7 @@ async function assertSectorHeader(page, initial) {
         if (url.hostname === 'economia.awesomeapi.com.br') return route.fulfill({json:quotes})
         if (url.hostname === 'widgets.tradingview-widget.com') return route.fulfill({contentType:'text/javascript',body:''})
         // Conteúdo externo simulado; o teste de tema cobre o painel e seu arquivo local.
-        if (url.origin === 'https://trends.google.com' && url.pathname === '/trends/embed/explore/TIMESERIES') return route.fulfill({contentType:'text/html',body:'<!doctype html><html lang="pt-BR"><body><p>Gráfico simulado somente para teste de integração.</p></body></html>'})
+        if (url.origin === 'https://trends.google.com' && url.pathname === '/trends/embed/explore/TIMESERIES') return route.fulfill({contentType:'text/html; charset=utf-8',body:'<!doctype html><html lang="pt-BR"><body><p>Gráfico simulado somente para teste de integração.</p></body></html>'})
         return url.origin === new URL(base).origin ? route.continue() : route.abort()
       })
       const page = await context.newPage(), errors = []

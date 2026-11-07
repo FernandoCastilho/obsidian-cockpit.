@@ -181,11 +181,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // Navegador e fixture compartilham o mesmo instante; timers/RAF continuam funcionando.
       const agora = Date.parse(clockCase.iso), min = 60e3
       await p.clock.setFixedTime(agora)
-      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * min })
+      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, sourceUrl: 'https://www.gov.br', t: agora - atras * min })
       const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
         mat('Imposto seletivo entra em debate na Câmara', 30 * 60, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55 * 60, 'Valor Econômico')] }
-      await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
+      await p.route('**/curadoria-noticias.json*', (r) => r.fulfill({ json: { schemaVersion: 1, generatedAt: agora, windowDays: 7, topics: { reforma: { label: 'Reforma tributária', checkedAt: agora, lastSuccessAt: agora, status: 'ok', items: reforma.items } } } }))
       // Um minuto antes pode ser o dia anterior em Brasília: o rótulo esperado muda no caso após meia-noite.
       const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
       await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
@@ -207,11 +207,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await lista.locator('li').count(), 5, 'todas as matérias da semana')
       assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
       // linha do tempo enxuta: só a semana, de hoje para trás, quebrada por dia; sem filtro de dia, busca nem legenda
-      assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
+      assert.match(await painel.innerText(), /Última consulta:\s+\d{2}\/\d{2}\/\d{4}/)
       assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Reforma: só a data, sem botão de atualizar')
       assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
       assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
-      assert.doesNotMatch(await lista.innerText(), /últimos 7 dias/)
+      assert.match(await lista.innerText(), /últimos 7 dias \(168 horas\)/)
       assert.match(await lista.locator('.reforma-day').first().innerText(), clockCase.day, `reforma: ${clockCase.name} de Brasília`)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()

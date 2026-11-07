@@ -17,7 +17,7 @@ const assert = require('node:assert/strict')
       await page.route('**/*', route => {
         const url = new URL(route.request().url())
         if (url.pathname.endsWith('/trends.json')) return route.fulfill({ json: payload })
-        if (url.origin === 'https://trends.google.com' && url.pathname === '/trends/embed/explore/TIMESERIES') return route.fulfill({ contentType: 'text/html', body: '<html lang="pt-BR"><body><p>Gráfico simulado somente para teste de integração.</p></body></html>' })
+        if (url.origin === 'https://trends.google.com' && url.pathname === '/trends/embed/explore/TIMESERIES') return route.fulfill({ contentType: 'text/html; charset=utf-8', body: '<html lang="pt-BR"><body><p>Gráfico simulado somente para teste de integração.</p></body></html>' })
         return url.origin === origin ? route.continue() : route.abort()
       })
       await page.goto(base)
