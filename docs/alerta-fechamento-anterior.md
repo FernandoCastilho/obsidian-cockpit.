@@ -43,3 +43,7 @@ O Auditor reproduziu uma cotação inicialmente válida com 9m59s enviada após 
 Regressões adicionadas: autorização posterior, diálogo de permissão demorado, liberação externa, retry, espera pelo registro com e sem service worker, atualização/reversão/dispensa durante a espera e virada de Brasília. O smoke de 390/1280 px também atravessa o limite de dez minutos antes de autorizar e antes de retry.
 
 Validação local da correção: 1.288 testes passaram, lint sem erros (cinco avisos preexistentes), build e preservação dos 37 arquivos semanais aprovados. CI e parecer formal precisam ser renovados para o novo SHA; os resultados anteriores não liberam este candidato.
+
+## Sincronização após #318
+
+Base publicada `5ef302b84fcb4f0f752696dd02832d328cf63d6f`. Incorpora a correção de notificações da curadoria, sem alterar os arquivos de lógica, entrega, testes e smoke do alerta já aprovados no head `2ba1b61`. O candidato combinado passou 1.300 testes, lint sem erros (cinco avisos preexistentes), build e preservação dos 37 arquivos semanais. Exige CI integral e revisão do delta pelo Auditor para o novo SHA antes da integração.

@@ -207,8 +207,8 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await lista.locator('li').count(), 5, 'todas as matérias da semana')
       assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
       // linha do tempo enxuta: só a semana, de hoje para trás, quebrada por dia; sem filtro de dia, busca nem legenda
-      assert.match(await painel.innerText(), /Última consulta:\s+\d{2}\/\d{2}\/\d{4}/)
-      assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Reforma: só a data, sem botão de atualizar')
+      assert.doesNotMatch(await painel.innerText(), /Curadoria automática|Última consulta|Última coleta completa/)
+      assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Reforma: atualização automática, sem botão de atualizar')
       assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
       assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
       assert.match(await lista.innerText(), /últimos 7 dias \(168 horas\)/)
