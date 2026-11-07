@@ -10,9 +10,9 @@ import * as regras from '../src/alertaVariacao.js'
 import * as datas from '../src/marketReturns.js'
 
 const require = createRequire(import.meta.url)
-const NOW = Date.parse('2026-11-05T15:00:00Z'), BASE = Date.parse('2026-11-05T12:05:00Z')
+const NOW = Date.parse('2026-11-05T15:00:00Z')
 const ID = '2026-11-05:USD:alta', KEY = 'alerta-variacao'
-const quote = (bid) => ({ bid, timestamp: NOW - 60000 })
+const quote = (bid) => { const base = bid < 5.6 ? 5.5 : 6; return { bid, delta: bid - base, pct: (bid / base - 1) * 100, timestamp: NOW - 60000 } }
 const quotesAlerta = () => ({ USD: quote(5.52), EUR: quote(6) })
 const nodes = (el) => Array.isArray(el) ? el.flatMap(nodes) : el && typeof el === 'object' ? [el, ...nodes(el.props?.children)] : []
 const textOf = (el) => Array.isArray(el) ? el.map(textOf).join('') : el && typeof el === 'object' ? textOf(el.props?.children) : typeof el === 'string' || typeof el === 'number' ? String(el) : ''
@@ -41,7 +41,6 @@ async function setup(t, { permission = 'default', quotes = quotesAlerta(), saved
       deliveries.push({ title, options, via: 'service-worker' })
     },
   } : null } }
-  const intraday = { USD: { status: 'ok', data: { points: [{ t: BASE, bid: 5.5 }] } }, EUR: { status: 'ok', data: { points: [{ t: BASE, bid: 6 }] } } }
   const sandbox = {
     Date: class extends Date { static now() { return NOW } },
     navigator: navegador,
@@ -54,7 +53,7 @@ async function setup(t, { permission = 'default', quotes = quotesAlerta(), saved
     react: { ...React, useMemo: (fn, deps) => React.useCallback(fn(), deps) },
     './alertaVariacao.js': { ...regras, alertasDoDia: (args) => regras.alertasDoDia({ ...args, now: NOW }) },
     './marketReturns.js': datas,
-    './useHistory.js': { fromInput: (s) => new Date(s + 'T12:00:00Z'), useIntraday: (code) => intraday[code] },
+    './useHistory.js': { useIntraday: () => { throw new Error('Alerta não depende mais de intraday') } },
   }
   for (const file of ['alertaNotificacao.js', 'AlertaVariacao.jsx']) {
     const source = await readFile(new URL('../src/' + file, import.meta.url), 'utf8')
@@ -80,7 +79,7 @@ async function setup(t, { permission = 'default', quotes = quotesAlerta(), saved
 test('sem alerta nem permissão, oferece ativação sem abrir prompt automaticamente', async t => {
   const h = await setup(t, { quotes: { USD: quote(5.5), EUR: quote(6) } })
   assert.ok(h.button('Permitir notificações de câmbio'))
-  assert.match(h.text(), /mais de ±0,30%.*9h de Brasília.*difere do Δ dia.*aberto e visível.*monitoramento contínuo em segundo plano nem com o app fechado/)
+  assert.match(h.text(), /mais de ±0,30%.*fechamento anterior.*mesmo Δ dia.*último fechamento disponível.*9h de Brasília.*aberto e visível.*monitoramento contínuo em segundo plano nem com o app fechado/)
   assert.equal(h.requests.length, 0)
   assert.equal(h.deliveries.length, 0)
   assert.deepEqual(h.state(), {})

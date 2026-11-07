@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useIntraday, fromInput } from './useHistory.js'
 import { marketDate } from './marketReturns.js'
-import { LIMITE_PCT, alertasDoDia, baseDoDia, textoAlerta } from './alertaVariacao.js'
+import { LIMITE_PCT, alertasDoDia, textoAlerta } from './alertaVariacao.js'
 import { notificarAlerta, permissaoNotificacao } from './alertaNotificacao.js'
 
 // Um alerta por moeda/sentido/dia. A faixa não depende da permissão do sistema.
@@ -13,14 +12,10 @@ const ler = () => {
   } catch { return {} }
 }
 const gravar = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)) } catch { /* deduplicação apenas nesta sessão */ } }
-const firstOf = (s) => (s.status === 'ok' ? baseDoDia(s.data?.points) : null)
 const entregue = (entry) => Number.isFinite(entry?.sistemaEnviadoEm) && entry.sistemaEnviadoEm > 0
 
 export default function AlertaVariacao({ quotes }) {
   const testing = typeof navigator !== 'undefined' && navigator.webdriver // o smoke próprio desliga isso
-  const today = fromInput(marketDate(Date.now()))
-  const usd = useIntraday('USD', today, testing)
-  const eur = useIntraday('EUR', today, testing)
   const [estado, setEstado] = useState(ler)
   const estadoRef = useRef(estado)
   const ativo = useRef(true)
@@ -31,7 +26,7 @@ export default function AlertaVariacao({ quotes }) {
   const [pedidoErro, setPedidoErro] = useState('')
   const [falhas, setFalhas] = useState({})
   const [tentativa, setTentativa] = useState(0)
-  const alertas = useMemo(() => (testing ? [] : alertasDoDia({ quotes, firsts: { USD: firstOf(usd), EUR: firstOf(eur) } })), [quotes, usd, eur, testing])
+  const alertas = useMemo(() => (testing ? [] : alertasDoDia({ quotes })), [quotes, testing])
   const salvar = useCallback((change) => {
     const hoje = marketDate(Date.now())
     const next = change(Object.fromEntries(Object.entries(estadoRef.current).filter(([k]) => k.startsWith(hoje + ':'))))
@@ -104,7 +99,7 @@ export default function AlertaVariacao({ quotes }) {
         {pedidoErro && <p>{pedidoErro}</p>}
       </div>}
       {falhou && perm === 'granted' && <p>Não foi possível enviar a notificação do sistema. O alerta permanece no painel. <button type="button" className="linklike alerta-var-perm" onClick={() => setTentativa((n) => n + 1)}>Tentar enviar novamente</button></p>}
-      <p className="muted alerta-var-metodo">Dólar e euro: mais de ±0,30% desde a primeira cotação disponível a partir das 9h de Brasília. Esta referência difere do Δ dia da tabela. Verificação enquanto o app está aberto e visível; não há monitoramento contínuo em segundo plano nem com o app fechado.</p>
+      <p className="muted alerta-var-metodo">Dólar e euro: mais de ±0,30% em relação ao fechamento anterior da fonte, usando o mesmo Δ dia da tabela. Sem fechamento no dia anterior, vale o último fechamento disponível na fonte. Alertas a partir das 9h de Brasília. Verificação enquanto o app está aberto e visível; não há monitoramento contínuo em segundo plano nem com o app fechado.</p>
     </section>
   )
 }
