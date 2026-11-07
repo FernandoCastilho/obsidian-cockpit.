@@ -17,5 +17,5 @@ test('More destinations and dismissal remain available', () => {
   for (const id of ['cenarios', 'noticias', 'config']) assert.ok(source.includes(`id: '${id}'`))
   assert.match(source, /aria-expanded=\{more\}/)
   assert.match(source, /e\.key === 'Escape'/)
-  assert.match(source, /setMore\(false\), onTab\(t\.id\)/)
+  assert.match(source, /setMore\(false\), trigger\.current\?\.focus\(\), onTab\(t\.id\)/)
 })
