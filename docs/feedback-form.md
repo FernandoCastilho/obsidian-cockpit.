@@ -26,8 +26,10 @@ Mascote vetorial discreto, aberto somente por clique. O formulário contém tipo
 
 ## Testes
 
-`node --test test/feedback*.test.mjs`: 11 cenários sintéticos de validação, configuração desativada, privacidade, quota/erro, aborto, honeypot, cliques repetidos, foco, fechamento, reabertura e navegação. Nenhum envia e-mail real.
+`node --test test/feedback*.test.mjs`: 12 cenários sintéticos de validação, configuração desativada, privacidade, quota/erro, aborto, honeypot, cliques repetidos, foco, fechamento, reabertura e navegação. Nenhum envia e-mail real.
 
 `test/fixtures/feedback-responsive.html`: prévia de desenvolvimento do componente real em 320/390/768/1100 px com temas claro/escuro. Não é emulação de dispositivo físico e não entra no build.
 
-Em 7/11/2026, a suíte local completa passou (1.257 testes), o build passou e o lint não apresentou erros (cinco avisos existentes em outros componentes). A prévia não foi alcançável pelo navegador de revisão deste executor; a validação visual não foi concluída. A entrega real também não foi testada porque o cadastro permanece pendente.
+Em 7/11/2026, a suíte local completa passou (1.258 testes), o build passou e o lint não apresentou erros (cinco avisos existentes em outros componentes). A prévia não foi alcançável pelo navegador de revisão deste executor; a validação visual não foi concluída. A entrega real também não foi testada porque o cadastro permanece pendente.
+
+No CI inicial, o botão flutuante cobria a ação final do CET em 390 px. Em telas estreitas, ele agora ocupa espaço próprio ao fim do conteúdo, alinhado à direita, em vez de se sobrepor às calculadoras. O mascote permanece no canto fixo no desktop. A correção deve passar novamente pelo CI.

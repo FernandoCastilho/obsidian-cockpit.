@@ -38,3 +38,9 @@ test('feedback: optional fields omitted and abort is forwarded', async () => {
   const signal=new AbortController().signal
   await sendFeedback(config,values,{signal,fetcher:async (_url,options)=>{assert.equal(options.signal,signal);assert.equal('email' in JSON.parse(options.body),false);assert.equal('name' in JSON.parse(options.body),false);return {ok:true,json:async()=>({ok:true})}}})
 })
+
+test('feedback: mobile mascot takes its own space instead of covering content', async () => {
+  const css = await readFile(new URL('../src/FeedbackMascot.css', import.meta.url), 'utf8')
+  assert.match(css, /@media\(max-width:999px\)\{\.feedback-trigger\{position:static;/)
+  assert.match(css, /env\(safe-area-inset-bottom\)/)
+})
