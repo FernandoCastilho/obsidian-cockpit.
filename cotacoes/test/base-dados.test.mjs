@@ -46,6 +46,8 @@ test('fontes detalhadas ficam na Base de dados, com exceções contextuais de At
     // As duas conferências de crédito mantêm somente as normas do próprio cálculo
     // no bloco recolhido de limites; não liberam links avulsos no resto do painel.
     if (['BndesCreditoTfb.jsx', 'BndesTlpExigivel.jsx'].includes(f)) t = t.replace(/<details className="bndes-limits">[\s\S]*?<\/details>/, '')
+    // Política do processador de sugestões precisa estar junto do ato de envio.
+    if (f === 'FeedbackMascot.jsx') t = t.replace(/<p className="feedback-provider">[\s\S]*?<\/p>/, '')
     assert.doesNotMatch(t, /Fontes?: /, `${f}: texto "Fonte:" em painel`)
     assert.doesNotMatch(t, /href="https?:\/\/(?!wa\.me)/, `${f}: link externo fixo em painel`)
     assert.doesNotMatch(t, /\{[^}]*sourceName[^}]*\}\s*[·<]/, `${f}: nome da fonte exibido`)
