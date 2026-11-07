@@ -30,3 +30,7 @@ O smoke existente usa fixtures sintéticas e mantém a primeira amostra intraday
 Validação local: 1.268 testes passaram, lint sem erros (cinco avisos preexistentes) e build aprovado. Tentativa de smoke local bloqueada no lançamento do Chromium por restrição de sockets, sem acesso a página e sem capturas. O smoke do CI e a revisão de suas capturas permanecem pendentes.
 
 Merge/deploy dependem da sequência coordenada e do CI do candidato integrado final.
+
+## Candidato integrado após #300 e #312
+
+Base `eedf6005e7c43c780ba2a9a5715fee238ea709dc`. Sincronização sem alteração adicional da lógica do alerta; índice de busca regenerado a partir de todos os fontes integrados. Passaram 1.281 testes, lint sem erros (cinco avisos preexistentes), build e preservação dos 37 arquivos semanais. O CI inicial do head `0ed2095` passou integralmente: https://github.com/FernandoCastilho/painel-especialista/actions/runs/42369143538. Esse resultado anterior não substitui CI, capturas e aprovação do Auditor no novo candidato integrado.

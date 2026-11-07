@@ -11,7 +11,7 @@ export const RETAIN_JSON_FILES = [
   'macro.json', 'focus-history.json', 'curves.json', 'curves-history.json', 'news.json',
   'feriados.json', 'oil.json', 'commodities.json', 'freight.json', 'policy-rates.json',
   'estr.json', 'euro-curve.json', 'indexadores.json', 'bndes.json', 'moedas.json',
-  'reforma-tributaria.json', 'temas.json', 'sector-news.json', 'insumos-precos.json', 'indices.json',
+  'reforma-tributaria.json', 'curadoria-noticias.json', 'temas.json', 'sector-news.json', 'insumos-precos.json', 'indices.json',
   'commodities-brl.json', 'fuels.json', 'freight-jp.json', 'ipca.json', 'divida.json',
   'ipca-groups.json', 'calendar.json', 'acessos.json', 'inadimplencia.json', 'recuperacao.json', 'heavy-vehicles.json',
 ]
