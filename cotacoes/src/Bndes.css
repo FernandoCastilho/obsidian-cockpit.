@@ -67,7 +67,9 @@
   .bn-main thead th:nth-child(2) { width:26%; }
   .bn-main thead th:nth-child(3) { width:26%; }
   .bn-main tbody td, .bn-main tbody th { overflow-wrap:anywhere; }
+  .bn-main tbody td.num { white-space:normal; }
   .bn-main .bn-pick { max-width:none; }
+  .bn-main td.num .old { display:block; margin-top:4px; white-space:normal; overflow-wrap:anywhere; max-width:min(100%,24ch); }
 }
 
 /* Comparar séries no mesmo gráfico */

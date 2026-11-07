@@ -60,23 +60,23 @@ test('totais impressos são exatamente soma das linhas mais R$ 2.200,00', () => 
   assert.equal(printedTotals.paymentCents + result().iof.totalCents, 393935331)
 })
 
-test('taxa do fluxo ACT/365 não coincide com o CET anual informado', () => {
+test('taxa do fluxo completo ACT/365 fecha o valor presente sem usar CET informado', () => {
   const flows = result().cashFlows.map(flow => ({ date: flow.date, amountCents: flow.netCashCents }))
   const measured = datedReturnActual365(flows)
   assert.ok(Math.abs(measured.annualRate - 0.201568899289) < 1e-10)
   assert.ok(Math.abs(measured.residualCents) < 0.001)
-  assert.notEqual((100 * measured.annualRate).toFixed(2), '20.01')
+  assert.equal((100 * measured.annualRate).toFixed(2), '20.16')
   assert.equal(measured.regulatoryCetValidated, false)
   assert.equal(result().cet.validated, false)
-  const baseDate = Date.parse('2026-10-26T00:00:00Z')
-  const residualAtReportedRate = flows.reduce((total, flow) => total + flow.amountCents / (1.2001 ** ((Date.parse(`${flow.date}T00:00:00Z`) - baseDate) / 86400000 / 365)), 0)
-  assert.ok(Math.abs(residualAtReportedRate + 521424.4105166) < 0.001)
+  assert.equal(result().cet.reportedAnnualRateDecimal, null)
+  assert.equal(result().cet.status, 'calculated-no-reference')
 })
 
-test('1,51% mensal é compatível com anual informado20,01 usando30/365, não prova erro', () => {
-  const monthlyThirtyDays = Math.expm1(Math.log1p(0.2001) * 30 / 365)
-  assert.equal((100 * monthlyThirtyDays).toFixed(2), '1.51')
-  assert.equal((100 * Math.expm1(Math.log1p(0.2001) / 12)).toFixed(2), '1.53')
+test('equivalentes mensais do CET calculado identificam a convenção sem reutilizar o cabeçalho', () => {
+  const annual = result().cet.calculatedAnnualRateDecimal
+  const monthlyThirtyDays = Math.expm1(Math.log1p(annual) * 30 / 365)
+  assert.equal((100 * monthlyThirtyDays).toFixed(2), '1.52')
+  assert.equal((100 * Math.expm1(Math.log1p(annual) / 12)).toFixed(2), '1.54')
 })
 
 test('XIRR independente confere fluxo sintético de um ano e rejeita não convencional', () => {

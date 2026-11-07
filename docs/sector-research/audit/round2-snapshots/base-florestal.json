@@ -1,0 +1,2292 @@
+[
+  {
+    "group": "base-florestal",
+    "topicIndex": 0,
+    "title": "Florestas plantadas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Cultivo comercial de árvores e venda de madeira em pé ou entregue; separar silvicultura de extrativismo nativo e de transformação industrial.",
+      "Tese analítica: A unidade econômica é o talhão e sua destinação, não apenas hectares. Diâmetro, espécie, distância ao comprador e custo de colheita podem tornar florestas com volumes semelhantes economicamente distintas. Valorização contábil do ativo biológico não é entrada de caixa.",
+      "Prioridade na visita: Solicitar mapa de talhões, inventário, documentos fundiários e ambientais, contratos de venda e calendário de desembolsos. Comparar uma área pronta para corte com uma em formação para testar descasamento."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Cultivo comercial de árvores e venda de madeira em pé ou entregue; separar silvicultura de extrativismo nativo e de transformação industrial.",
+          "Síntese técnica e analítica: A empresa imobiliza recursos no plantio, tratos e proteção antes de colher. Genética, adequação ao sítio e distribuição etária influenciam produtividade e continuidade. Madeira em pé transfere responsabilidades diferentes de madeira entregue na fábrica.",
+          "A unidade econômica é o talhão e sua destinação, não apenas hectares. Diâmetro, espécie, distância ao comprador e custo de colheita podem tornar florestas com volumes semelhantes economicamente distintas. Valorização contábil do ativo biológico não é entrada de caixa."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · dados florestais",
+            "url": "https://snif.florestal.gov.br/pt-br/paineis-interativos",
+            "purpose": "Séries históricas e distribuição geográfica; os pontos não foram integralmente extraídos."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O SNIF permite distinguir bases plantadas de extração nativa por território. O entorno de consumidores industriais é relevante pela logística, mas não foi extraído ranking municipal atualizado. Florestas próprias de grandes fábricas não são um mercado livre integralmente acessível ao produtor independente.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · dados florestais",
+            "url": "https://snif.florestal.gov.br/pt-br/paineis-interativos",
+            "purpose": "Séries históricas e distribuição geográfica; os pontos não foram integralmente extraídos."
+          },
+          {
+            "label": "IBGE · Produção florestal em 2021",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/35056-valor-de-producao-da-silvicultura-e-da-extracao-vegetal-cresce-27-1-e-chega-ao-recorde-de-r-30-1-bilhoes",
+            "purpose": "Valor nominal da silvicultura na divulgação original. Não recalcular variações contra outras edições sem conciliação."
+          },
+          {
+            "label": "Agência Gov · PEVS 2024",
+            "url": "https://agenciagov.ebc.com.br/noticias/202509/plantar-arvores-rende-mais-retorno-financeiro-do-que-abate-las-diz-ibge",
+            "purpose": "Reprodução pública dos resultados do IBGE; valor da produção não significa retorno financeiro ou lucro."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Indicadores físicos e mercadológicos devem ser interpretados com os limites de cobertura abaixo.",
+          "Série recuperada no gráfico: Brasil, produção de madeira da silvicultura para outras finalidades; exclui toras destinadas a papel e celulose.. Indicador de oferta a jusante; não cobre toda silvicultura nem preço da madeira em pé. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · dados florestais",
+            "url": "https://snif.florestal.gov.br/pt-br/paineis-interativos",
+            "purpose": "Séries históricas e distribuição geográfica; os pontos não foram integralmente extraídos."
+          },
+          {
+            "label": "IBGE · Produção florestal em 2021",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/35056-valor-de-producao-da-silvicultura-e-da-extracao-vegetal-cresce-27-1-e-chega-ao-recorde-de-r-30-1-bilhoes",
+            "purpose": "Valor nominal da silvicultura na divulgação original. Não recalcular variações contra outras edições sem conciliação."
+          },
+          {
+            "label": "Agência Gov · PEVS 2024",
+            "url": "https://agenciagov.ebc.com.br/noticias/202509/plantar-arvores-rende-mais-retorno-financeiro-do-que-abate-las-diz-ibge",
+            "purpose": "Reprodução pública dos resultados do IBGE; valor da produção não significa retorno financeiro ou lucro."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série: a oferta para usos não papeleiros aumenta no último ano observado. Inferência: o benefício depende de espécie, diâmetro e raio de transporte; mais madeira nacional pode conviver com escassez de toras apropriadas no entorno de uma fábrica.",
+          "A PEVS divulga produção primária anual e não preço diário. Foram recuperados pontos históricos nominais; o aumento de valor pode combinar quantidade, preço e composição. A edição mais nova foi localizada, mas não reconciliada integralmente com divulgações anteriores.",
+          "Inferência: Incêndio, seca, praga ou restrição fundiária podem interromper vários anos de formação do ativo. A concentração num comprador eleva o risco de renegociação na colheita.",
+          "Inferência: Contratos de fornecimento com especificação clara, manejo e destinações alternativas podem reduzir risco de escoamento; diversificação não elimina limite físico de transporte."
+        ],
+        "sources": [
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · dados florestais",
+            "url": "https://snif.florestal.gov.br/pt-br/paineis-interativos",
+            "purpose": "Séries históricas e distribuição geográfica; os pontos não foram integralmente extraídos."
+          },
+          {
+            "label": "IBGE · Produção florestal em 2021",
+            "url": "https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/35056-valor-de-producao-da-silvicultura-e-da-extracao-vegetal-cresce-27-1-e-chega-ao-recorde-de-r-30-1-bilhoes",
+            "purpose": "Valor nominal da silvicultura na divulgação original. Não recalcular variações contra outras edições sem conciliação."
+          },
+          {
+            "label": "Agência Gov · PEVS 2024",
+            "url": "https://agenciagov.ebc.com.br/noticias/202509/plantar-arvores-rende-mais-retorno-financeiro-do-que-abate-las-diz-ibge",
+            "purpose": "Reprodução pública dos resultados do IBGE; valor da produção não significa retorno financeiro ou lucro."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Financiamento do estabelecimento e manutenção precisa respeitar a geração futura do talhão. Giro curto renovado continuamente para financiar formação florestal cria descasamento. Antecipação da venda em pé reduz flexibilidade e exige comparar o valor presente líquido das alternativas.",
+          "Estradas internas, prevenção de incêndio e equipamentos de manejo devem ser avaliados junto ao custo contratado de colheita; terra valorizada não substitui capacidade de pagamento.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Inventário por idade e espécie; volume comercial recuperável; custo entregue por destino; concentração de compradores; cronograma de corte e incidência de incêndios.",
+          "Estradas internas, prevenção de incêndio e equipamentos de manejo devem ser avaliados junto ao custo contratado de colheita; terra valorizada não substitui capacidade de pagamento."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Contratos de fornecimento com especificação clara, manejo e destinações alternativas podem reduzir risco de escoamento; diversificação não elimina limite físico de transporte."
+          ],
+          [
+            "Fragilidade a testar",
+            "A unidade econômica é o talhão e sua destinação, não apenas hectares. Diâmetro, espécie, distância ao comprador e custo de colheita podem tornar florestas com volumes semelhantes economicamente distintas. Valorização contábil do ativo biológico não é entrada de caixa."
+          ],
+          [
+            "Oportunidade",
+            "Demanda industrial contratada absorve colheitas com custo logístico estável; observar contratos firmes e preço líquido na fazenda."
+          ],
+          [
+            "Ameaça",
+            "Incêndio, seca, praga ou restrição fundiária podem interromper vários anos de formação do ativo. A concentração num comprador eleva o risco de renegociação na colheita."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Mudas, terra e manejo: verificar alternativas homologadas, prazo e custo de mudança. A unidade econômica é o talhão e sua destinação, não apenas hectares. Diâmetro, espécie, distância ao comprador e custo de colheita podem tornar florestas com volumes semelhantes economicamente distintas. Valorização contábil do ativo biológico não é entrada de caixa."
+          ],
+          [
+            "Compradores",
+            "Celulose, painéis e energia: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Contratos de fornecimento com especificação clara, manejo e destinações alternativas podem reduzir risco de escoamento; diversificação não elimina limite físico de transporte."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Estradas internas, prevenção de incêndio e equipamentos de manejo devem ser avaliados junto ao custo contratado de colheita; terra valorizada não substitui capacidade de pagamento."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Cultivo comercial de árvores e venda de madeira em pé ou entregue; separar silvicultura de extrativismo nativo e de transformação industrial."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Inventário por idade e espécie; volume comercial recuperável; custo entregue por destino; concentração de compradores; cronograma de corte e incidência de incêndios.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Demanda industrial contratada absorve colheitas com custo logístico estável; observar contratos firmes e preço líquido na fazenda.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Choque climático reduz volume e comprador posterga recebimento; observar inventário afetado, incêndios, corte antecipado e obrigações de manutenção.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Solicitar mapa de talhões, inventário, documentos fundiários e ambientais, contratos de venda e calendário de desembolsos. Comparar uma área pronta para corte com uma em formação para testar descasamento.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "floresta-volume",
+        "title": "Madeira plantada para usos não papeleiros no Brasil",
+        "unit": "mil m³",
+        "scope": "Brasil, produção de madeira da silvicultura para outras finalidades; exclui toras destinadas a papel e celulose.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 10, página impressa 183; origem IBGE/PEVS, dezembro de 2025. Indicador de oferta a jusante; não cobre toda silvicultura nem preço da madeira em pé. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Madeira plantada para usos não papeleiros no Brasil",
+            "values": [
+              55597,
+              59443,
+              58517,
+              59277,
+              65647
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+        "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+      },
+      {
+        "label": "Serviço Florestal Brasileiro · dados florestais",
+        "url": "https://snif.florestal.gov.br/pt-br/paineis-interativos",
+        "purpose": "Séries históricas e distribuição geográfica; os pontos não foram integralmente extraídos."
+      },
+      {
+        "label": "IBGE · Produção florestal em 2021",
+        "url": "https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/35056-valor-de-producao-da-silvicultura-e-da-extracao-vegetal-cresce-27-1-e-chega-ao-recorde-de-r-30-1-bilhoes",
+        "purpose": "Valor nominal da silvicultura na divulgação original. Não recalcular variações contra outras edições sem conciliação."
+      },
+      {
+        "label": "Agência Gov · PEVS 2024",
+        "url": "https://agenciagov.ebc.com.br/noticias/202509/plantar-arvores-rende-mais-retorno-financeiro-do-que-abate-las-diz-ibge",
+        "purpose": "Reprodução pública dos resultados do IBGE; valor da produção não significa retorno financeiro ou lucro."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra florestas plantadas e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Contratos de fornecimento com especificação clara, manejo e destinações alternativas podem reduzir risco de escoamento; diversificação não elimina limite físico de transporte."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre mudas, terra e manejo e celulose, painéis e energia?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Inventário por idade e espécie; volume comercial recuperável; custo entregue por destino; concentração de compradores; cronograma de corte e incidência de incêndios."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Mudas, terra e manejo",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Floresta em crescimento",
+          "detail": "A empresa imobiliza recursos no plantio, tratos e proteção antes de colher. Genética, adequação ao sítio e distribuição etária influenciam produtividade e continuidade. Madeira em pé transfere responsabilidades diferentes de madeira entregue na fábrica."
+        },
+        {
+          "id": "2",
+          "label": "Colheita e transporte",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Celulose, painéis e energia",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Florestas plantadas. Cultivo comercial de árvores e venda de madeira em pé ou entregue; separar silvicultura de extrativismo nativo e de transformação industrial. A empresa imobiliza recursos no plantio, tratos e proteção antes de colher. Genética, adequação ao sítio e distribuição etária influenciam produtividade e continuidade. Madeira em pé transfere responsabilidades diferentes de madeira entregue na fábrica. O ponto econômico central é: A unidade econômica é o talhão e sua destinação, não apenas hectares. Diâmetro, espécie, distância ao comprador e custo de colheita podem tornar florestas com volumes semelhantes economicamente distintas. Valorização contábil do ativo biológico não é entrada de caixa. Para uma empresa média: Financiamento do estabelecimento e manutenção precisa respeitar a geração futura do talhão. Giro curto renovado continuamente para financiar formação florestal cria descasamento. Antecipação da venda em pé reduz flexibilidade e exige comparar o valor presente líquido das alternativas. No cenário favorável: Demanda industrial contratada absorve colheitas com custo logístico estável; observar contratos firmes e preço líquido na fazenda. No adverso: Choque climático reduz volume e comprador posterga recebimento; observar inventário afetado, incêndios, corte antecipado e obrigações de manutenção. Na visita: Solicitar mapa de talhões, inventário, documentos fundiários e ambientais, contratos de venda e calendário de desembolsos. Comparar uma área pronta para corte com uma em formação para testar descasamento. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  },
+  {
+    "group": "base-florestal",
+    "topicIndex": 1,
+    "title": "Serrarias",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Desdobramento de toras em madeira serrada, com secagem e classificação quando contratadas. Não inclui fabricação de painéis reconstituídos.",
+      "Tese analítica: A margem depende do aproveitamento efetivo e da composição das classes. Somar receita de serrados, cavacos e serragem evita ignorar coprodutos, mas pressupor comprador para todo resíduo infla a rentabilidade.",
+      "Prioridade na visita: Acompanhar uma tora até a expedição, reconciliando volume de entrada, produtos e resíduos. Conferir origem e destino de resíduos, amostrar umidade e revisar reclamações."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Desdobramento de toras em madeira serrada, com secagem e classificação quando contratadas. Não inclui fabricação de painéis reconstituídos.",
+          "Síntese técnica e analítica: O corte transforma toras de geometrias variáveis em peças comercializáveis. A secagem é uma etapa econômica própria: reduz umidade, ocupa espaço e pode gerar empenamento e perdas. Vender verde e vender seco não são negócios equivalentes.",
+          "A margem depende do aproveitamento efetivo e da composição das classes. Somar receita de serrados, cavacos e serragem evita ignorar coprodutos, mas pressupor comprador para todo resíduo infla a rentabilidade."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · resíduos de concessão",
+            "url": "https://www.gov.br/florestal/pt-br/assuntos/noticias/2021/residuos-da-concessao-florestal-geram-energia-sustentavel-e-renda",
+            "purpose": "Caso Madeflona: uso de resíduos da serraria; não representa todo o setor."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O caso Madeflona divulgado pelo Serviço Florestal Brasileiro ilustra aproveitamento energético de resíduos na cadeia de concessão. É exemplo operacional, não ranking nem modelo automaticamente replicável para madeira plantada. A cadeia do Sul e a de espécies nativas exigem análises separadas.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Referência internacional: a FAO identifica Canadá e Suécia entre exportadores relevantes de serrados. A aplicação à empresa brasileira é comparar custo entregue, especificação e regularidade, não copiar escala ou custo florestal estrangeiro."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · resíduos de concessão",
+            "url": "https://www.gov.br/florestal/pt-br/assuntos/noticias/2021/residuos-da-concessao-florestal-geram-energia-sustentavel-e-renda",
+            "purpose": "Caso Madeflona: uso de resíduos da serraria; não representa todo o setor."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Rendimento de tora em produto vendável; umidade por lote; quebra e refugo; tempo no secador; frete por carga; receita líquida dos coprodutos.",
+          "Série recuperada no gráfico: Santa Catarina; madeira serrada; vendas externas, não mercado brasileiro total.. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · resíduos de concessão",
+            "url": "https://www.gov.br/florestal/pt-br/assuntos/noticias/2021/residuos-da-concessao-florestal-geram-energia-sustentavel-e-renda",
+            "purpose": "Caso Madeflona: uso de resíduos da serraria; não representa todo o setor."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série regional: serrados terminam o período acima do ano imediatamente anterior, enquanto outros produtos de madeira recuam. Inferência: não é adequado usar a direção dos compensados como proxy da serraria; composição, compradores e condições comerciais diferem.",
+          "A conjuntura deve separar demanda de construção, pallets e exportação. Não foi recuperado indicador mensal exclusivo de serrarias; o agregado de produtos de madeira não comprova desempenho de uma espécie ou destino.",
+          "Inferência: Compra de tora sem origem comprovável bloqueia mercado e pode gerar apreensão. Qualidade variável, secagem insuficiente e dependência de cliente de pallet ou construção pressionam o retorno.",
+          "Inferência: Classificação confiável, secagem controlada e entrega regular podem diferenciar a serraria da venda indiferenciada de madeira verde."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "Serviço Florestal Brasileiro · resíduos de concessão",
+            "url": "https://www.gov.br/florestal/pt-br/assuntos/noticias/2021/residuos-da-concessao-florestal-geram-energia-sustentavel-e-renda",
+            "purpose": "Caso Madeflona: uso de resíduos da serraria; não representa todo o setor."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "O estoque cresce entre compra da tora, secagem e venda. Recebíveis só devem ser avaliados após entrega e aceite; antecipar faturamento não elimina devoluções por umidade ou medidas.",
+          "Serras, afiação, secadores e exaustão: avaliar gargalo real antes de aumentar capacidade. Uma serra mais rápida pode apenas transferir estoque para secagem.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Rendimento de tora em produto vendável; umidade por lote; quebra e refugo; tempo no secador; frete por carga; receita líquida dos coprodutos.",
+          "Serras, afiação, secadores e exaustão: avaliar gargalo real antes de aumentar capacidade. Uma serra mais rápida pode apenas transferir estoque para secagem."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Classificação confiável, secagem controlada e entrega regular podem diferenciar a serraria da venda indiferenciada de madeira verde."
+          ],
+          [
+            "Fragilidade a testar",
+            "A margem depende do aproveitamento efetivo e da composição das classes. Somar receita de serrados, cavacos e serragem evita ignorar coprodutos, mas pressupor comprador para todo resíduo infla a rentabilidade."
+          ],
+          [
+            "Oportunidade",
+            "Clientes valorizam madeira seca e especificada; monitorar prêmio líquido depois de energia, refugo e prazo adicional."
+          ],
+          [
+            "Ameaça",
+            "Compra de tora sem origem comprovável bloqueia mercado e pode gerar apreensão. Qualidade variável, secagem insuficiente e dependência de cliente de pallet ou construção pressionam o retorno."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Toras documentadas: verificar alternativas homologadas, prazo e custo de mudança. A margem depende do aproveitamento efetivo e da composição das classes. Somar receita de serrados, cavacos e serragem evita ignorar coprodutos, mas pressupor comprador para todo resíduo infla a rentabilidade."
+          ],
+          [
+            "Compradores",
+            "Construção, pallets e móveis: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Classificação confiável, secagem controlada e entrega regular podem diferenciar a serraria da venda indiferenciada de madeira verde."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Serras, afiação, secadores e exaustão: avaliar gargalo real antes de aumentar capacidade. Uma serra mais rápida pode apenas transferir estoque para secagem."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Desdobramento de toras em madeira serrada, com secagem e classificação quando contratadas. Não inclui fabricação de painéis reconstituídos."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Rendimento de tora em produto vendável; umidade por lote; quebra e refugo; tempo no secador; frete por carga; receita líquida dos coprodutos.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Clientes valorizam madeira seca e especificada; monitorar prêmio líquido depois de energia, refugo e prazo adicional.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Tora encarece e demanda de construção recua; observar estoques verdes, preço por classe e tempo de secagem.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Acompanhar uma tora até a expedição, reconciliando volume de entrada, produtos e resíduos. Conferir origem e destino de resíduos, amostrar umidade e revisar reclamações.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "serrados-exportacao",
+        "title": "Madeira serrada: exportações catarinenses",
+        "unit": "US$ mil FOB correntes",
+        "scope": "Santa Catarina; madeira serrada; vendas externas, não mercado brasileiro total.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2020–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 16, página impressa 193; origem Comex Stat. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Madeira serrada: exportações catarinenses",
+            "values": [
+              253169,
+              353378,
+              374583,
+              311292,
+              340657,
+              367778.76
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BRDE · Produção e consumo de produtos florestais",
+        "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+        "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+      },
+      {
+        "label": "Serviço Florestal Brasileiro · resíduos de concessão",
+        "url": "https://www.gov.br/florestal/pt-br/assuntos/noticias/2021/residuos-da-concessao-florestal-geram-energia-sustentavel-e-renda",
+        "purpose": "Caso Madeflona: uso de resíduos da serraria; não representa todo o setor."
+      },
+      {
+        "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+        "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra serrarias e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Classificação confiável, secagem controlada e entrega regular podem diferenciar a serraria da venda indiferenciada de madeira verde."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre toras documentadas e construção, pallets e móveis?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Rendimento de tora em produto vendável; umidade por lote; quebra e refugo; tempo no secador; frete por carga; receita líquida dos coprodutos."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Toras documentadas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Desdobro e seleção",
+          "detail": "O corte transforma toras de geometrias variáveis em peças comercializáveis. A secagem é uma etapa econômica própria: reduz umidade, ocupa espaço e pode gerar empenamento e perdas. Vender verde e vender seco não são negócios equivalentes."
+        },
+        {
+          "id": "2",
+          "label": "Secagem e beneficiamento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Construção, pallets e móveis",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Serrarias. Desdobramento de toras em madeira serrada, com secagem e classificação quando contratadas. Não inclui fabricação de painéis reconstituídos. O corte transforma toras de geometrias variáveis em peças comercializáveis. A secagem é uma etapa econômica própria: reduz umidade, ocupa espaço e pode gerar empenamento e perdas. Vender verde e vender seco não são negócios equivalentes. O ponto econômico central é: A margem depende do aproveitamento efetivo e da composição das classes. Somar receita de serrados, cavacos e serragem evita ignorar coprodutos, mas pressupor comprador para todo resíduo infla a rentabilidade. Para uma empresa média: O estoque cresce entre compra da tora, secagem e venda. Recebíveis só devem ser avaliados após entrega e aceite; antecipar faturamento não elimina devoluções por umidade ou medidas. No cenário favorável: Clientes valorizam madeira seca e especificada; monitorar prêmio líquido depois de energia, refugo e prazo adicional. No adverso: Tora encarece e demanda de construção recua; observar estoques verdes, preço por classe e tempo de secagem. Na visita: Acompanhar uma tora até a expedição, reconciliando volume de entrada, produtos e resíduos. Conferir origem e destino de resíduos, amostrar umidade e revisar reclamações. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  },
+  {
+    "group": "base-florestal",
+    "topicIndex": 2,
+    "title": "Lâminas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Lâminas torneadas ou faqueadas vendidas para compensados e revestimentos; não confundir a folha de madeira com painel pronto.",
+      "Tese analítica: A lâmina de face não tem o mesmo preço ou taxa de aproveitamento da lâmina de miolo. Medir área útil após secagem e classificação é mais informativo que apenas volume processado. Estocagem ruim pode destruir valor depois de concluída a etapa mais cara.",
+      "Prioridade na visita: Pedir ficha técnica por comprador, classificação de lotes e histórico de rejeição. Reconciliar rendimento bruto com a área que efetivamente foi faturada e recebida."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Lâminas torneadas ou faqueadas vendidas para compensados e revestimentos; não confundir a folha de madeira com painel pronto.",
+          "Síntese técnica e analítica: No torneamento a tora fornece folhas para uso industrial; no faqueamento a aparência pode ser central ao valor. Espécie, diâmetro, defeitos e padrão visual alteram rendimento e mercado.",
+          "A lâmina de face não tem o mesmo preço ou taxa de aproveitamento da lâmina de miolo. Medir área útil após secagem e classificação é mais informativo que apenas volume processado. Estocagem ruim pode destruir valor depois de concluída a etapa mais cara."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O estudo histórico do BRDE diferencia lâminas e compensados dos painéis de partículas e fibras. Não foi localizado ranking oficial atual de laminadoras independentes; não foram atribuídas posições a empresas de painéis integradas.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Referência internacional específica de lâminas: a FAO identifica Vietnã entre exportadores e China entre importadores relevantes. Isso orienta prospecção e análise de concorrência, sem presumir mercado acessível ou homologação para uma laminadora brasileira."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Área útil por volume de tora; proporção de face e miolo; espessura e umidade; remendos; perdas no secador; prazo de homologação por cliente.",
+          "Série recuperada no gráfico: Santa Catarina; madeira laminada; vendas externas, não mercado brasileiro total.. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série regional: laminados recuam após o pico intermediário e recuperam parte do valor exportado depois. Inferência: é necessário separar preço, mix e volume para saber se a retomada gera mais utilização e caixa; dólar FOB não revela área útil vendida.",
+          "Não foi encontrada série oficial isolada de lâminas em tempo hábil. A oferta de matéria-prima e o ciclo do comprador de compensados são mecanismos a testar, não evidência de crescimento ocorrido.",
+          "Inferência: Qualidade da tora afeta diretamente o mix; poucos compradores de especificações muito particulares limitam alternativas quando o contrato cai.",
+          "Inferência: Fornecimento de lotes uniformes e rastreáveis pode reduzir perdas do cliente na prensagem e sustentar relacionamento técnico."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Toras selecionadas exigem estoque e capital antes da classificação definitiva. Recebível tem risco de glosa por tonalidade, espessura ou umidade; financiamento precisa se apoiar no produto aceito.",
+          "Torno ou faqueadeira, secagem e controles dimensionais devem ser analisados como linha. A troca de máquina exige compatibilidade com a tora disponível.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Área útil por volume de tora; proporção de face e miolo; espessura e umidade; remendos; perdas no secador; prazo de homologação por cliente.",
+          "Torno ou faqueadeira, secagem e controles dimensionais devem ser analisados como linha. A troca de máquina exige compatibilidade com a tora disponível."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Fornecimento de lotes uniformes e rastreáveis pode reduzir perdas do cliente na prensagem e sustentar relacionamento técnico."
+          ],
+          [
+            "Fragilidade a testar",
+            "A lâmina de face não tem o mesmo preço ou taxa de aproveitamento da lâmina de miolo. Medir área útil após secagem e classificação é mais informativo que apenas volume processado. Estocagem ruim pode destruir valor depois de concluída a etapa mais cara."
+          ],
+          [
+            "Oportunidade",
+            "Homologação e estabilidade dimensional aumentam pedidos repetidos e reduzem rejeição; acompanhar mix e rendimento."
+          ],
+          [
+            "Ameaça",
+            "Qualidade da tora afeta diretamente o mix; poucos compradores de especificações muito particulares limitam alternativas quando o contrato cai."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Toras selecionadas: verificar alternativas homologadas, prazo e custo de mudança. A lâmina de face não tem o mesmo preço ou taxa de aproveitamento da lâmina de miolo. Medir área útil após secagem e classificação é mais informativo que apenas volume processado. Estocagem ruim pode destruir valor depois de concluída a etapa mais cara."
+          ],
+          [
+            "Compradores",
+            "Compensados e revestimentos: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Fornecimento de lotes uniformes e rastreáveis pode reduzir perdas do cliente na prensagem e sustentar relacionamento técnico."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Torno ou faqueadeira, secagem e controles dimensionais devem ser analisados como linha. A troca de máquina exige compatibilidade com a tora disponível."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Lâminas torneadas ou faqueadas vendidas para compensados e revestimentos; não confundir a folha de madeira com painel pronto."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Área útil por volume de tora; proporção de face e miolo; espessura e umidade; remendos; perdas no secador; prazo de homologação por cliente.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Homologação e estabilidade dimensional aumentam pedidos repetidos e reduzem rejeição; acompanhar mix e rendimento.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Perda de comprador especializado deixa lotes sem destino equivalente; monitorar estoque por espécie, acabamento e idade.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Pedir ficha técnica por comprador, classificação de lotes e histórico de rejeição. Reconciliar rendimento bruto com a área que efetivamente foi faturada e recebida.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "laminas-exportacao",
+        "title": "Madeira laminada: exportações catarinenses",
+        "unit": "US$ mil FOB correntes",
+        "scope": "Santa Catarina; madeira laminada; vendas externas, não mercado brasileiro total.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2020–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 16, página impressa 193; origem Comex Stat. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Madeira laminada: exportações catarinenses",
+            "values": [
+              19586,
+              19988,
+              31173,
+              16944,
+              24397,
+              26241.25
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BRDE · Produção e consumo de produtos florestais",
+        "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+        "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+      },
+      {
+        "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+        "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra lâminas e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Fornecimento de lotes uniformes e rastreáveis pode reduzir perdas do cliente na prensagem e sustentar relacionamento técnico."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre toras selecionadas e compensados e revestimentos?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Área útil por volume de tora; proporção de face e miolo; espessura e umidade; remendos; perdas no secador; prazo de homologação por cliente."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Toras selecionadas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Preparação e laminação",
+          "detail": "No torneamento a tora fornece folhas para uso industrial; no faqueamento a aparência pode ser central ao valor. Espécie, diâmetro, defeitos e padrão visual alteram rendimento e mercado."
+        },
+        {
+          "id": "2",
+          "label": "Secagem e classificação",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Compensados e revestimentos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Lâminas. Lâminas torneadas ou faqueadas vendidas para compensados e revestimentos; não confundir a folha de madeira com painel pronto. No torneamento a tora fornece folhas para uso industrial; no faqueamento a aparência pode ser central ao valor. Espécie, diâmetro, defeitos e padrão visual alteram rendimento e mercado. O ponto econômico central é: A lâmina de face não tem o mesmo preço ou taxa de aproveitamento da lâmina de miolo. Medir área útil após secagem e classificação é mais informativo que apenas volume processado. Estocagem ruim pode destruir valor depois de concluída a etapa mais cara. Para uma empresa média: Toras selecionadas exigem estoque e capital antes da classificação definitiva. Recebível tem risco de glosa por tonalidade, espessura ou umidade; financiamento precisa se apoiar no produto aceito. No cenário favorável: Homologação e estabilidade dimensional aumentam pedidos repetidos e reduzem rejeição; acompanhar mix e rendimento. No adverso: Perda de comprador especializado deixa lotes sem destino equivalente; monitorar estoque por espécie, acabamento e idade. Na visita: Pedir ficha técnica por comprador, classificação de lotes e histórico de rejeição. Reconciliar rendimento bruto com a área que efetivamente foi faturada e recebida. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  },
+  {
+    "group": "base-florestal",
+    "topicIndex": 3,
+    "title": "Compensados",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Painéis construídos por colagem e prensagem de lâminas, com aplicações e requisitos diferentes para uso interior, construção e embalagens.",
+      "Tese analítica: O painel depende de rendimento das lâminas, tempo de prensa, consumo de adesivo e perdas na classificação. Um contrato exportador pode ampliar receita e ainda reduzir caixa se exigir estoque, ensaios e prazo de embarque maiores.",
+      "Prioridade na visita: Revisar contrato de maior comprador, ensaios de colagem e processo de reclamação. Conferir se cada certificação cobre produto, unidade e validade exigidos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Painéis construídos por colagem e prensagem de lâminas, com aplicações e requisitos diferentes para uso interior, construção e embalagens.",
+          "Síntese técnica e analítica: A orientação das lâminas, adesivo e cura determinam desempenho. Espessura uniforme, colagem e resistência precisam corresponder à aplicação contratada; aparência de superfície não substitui ensaio estrutural.",
+          "O painel depende de rendimento das lâminas, tempo de prensa, consumo de adesivo e perdas na classificação. Um contrato exportador pode ampliar receita e ainda reduzir caixa se exigir estoque, ensaios e prazo de embarque maiores."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O BRDE posiciona compensados como painéis de madeira sólida, distintos de MDF e MDP. Não foi verificada participação atual por fabricante ou polo exportador; comparação internacional requer produto e destino aduaneiro específicos.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Referência internacional: a FAO separa compensados e LVL de outros painéis. Como o agrupamento inclui LVL, seu total não deve ser comparado diretamente ao recorte brasileiro de compensados comuns."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Volume por classe; consumo de adesivo; falhas de colagem; ciclo de prensa; rejeição; custo por embarque e concentração por país.",
+          "Série recuperada no gráfico: Santa Catarina; madeira compensada; vendas externas, não mercado brasileiro total.. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série regional: compensados apresentam pico seguido de queda e recuperação incompleta, com novo recuo no último ponto. Inferência: diversificação comercial deve considerar especificação homologada, e não apenas substituir o país na planilha de vendas.",
+          "Não foram confirmadas tarifas de destino ou série recente exclusiva do produto. Assim, o estudo não quantifica impacto comercial nem atribui variações do agregado madeira ao compensado.",
+          "Inferência: Reclamações em destino, mudança de especificação e interrupção de comprador geram devolução cara. Tarifas não são uniformes: origem, produto e país devem ser verificados antes de precificar.",
+          "Inferência: Qualificação por aplicação e rastreabilidade favorecem fornecimento técnico; ciclos curtos de entrega doméstica podem diversificar a exposição exportadora."
+        ],
+        "sources": [
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Compras de lâminas e resina antecedem fabricação e embarque. Trade finance é encaixe possível quando existe exportação comprovada; não presumir hedge natural se dívida e recebimentos tiverem datas distintas.",
+          "Prensas e secadores aumentam produção apenas se houver lâmina adequada e mercado homologado. Avaliar energia, emissões e licenciamento do conjunto.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Volume por classe; consumo de adesivo; falhas de colagem; ciclo de prensa; rejeição; custo por embarque e concentração por país.",
+          "Prensas e secadores aumentam produção apenas se houver lâmina adequada e mercado homologado. Avaliar energia, emissões e licenciamento do conjunto."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Qualificação por aplicação e rastreabilidade favorecem fornecimento técnico; ciclos curtos de entrega doméstica podem diversificar a exposição exportadora."
+          ],
+          [
+            "Fragilidade a testar",
+            "O painel depende de rendimento das lâminas, tempo de prensa, consumo de adesivo e perdas na classificação. Um contrato exportador pode ampliar receita e ainda reduzir caixa se exigir estoque, ensaios e prazo de embarque maiores."
+          ],
+          [
+            "Oportunidade",
+            "Carteira diversificada aceita reajuste e maior participação de painéis especificados; acompanhar margem líquida por destino."
+          ],
+          [
+            "Ameaça",
+            "Reclamações em destino, mudança de especificação e interrupção de comprador geram devolução cara. Tarifas não são uniformes: origem, produto e país devem ser verificados antes de precificar."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Lâminas e adesivos: verificar alternativas homologadas, prazo e custo de mudança. O painel depende de rendimento das lâminas, tempo de prensa, consumo de adesivo e perdas na classificação. Um contrato exportador pode ampliar receita e ainda reduzir caixa se exigir estoque, ensaios e prazo de embarque maiores."
+          ],
+          [
+            "Compradores",
+            "Distribuição e uso industrial: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Qualificação por aplicação e rastreabilidade favorecem fornecimento técnico; ciclos curtos de entrega doméstica podem diversificar a exposição exportadora."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Prensas e secadores aumentam produção apenas se houver lâmina adequada e mercado homologado. Avaliar energia, emissões e licenciamento do conjunto."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Painéis construídos por colagem e prensagem de lâminas, com aplicações e requisitos diferentes para uso interior, construção e embalagens."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Volume por classe; consumo de adesivo; falhas de colagem; ciclo de prensa; rejeição; custo por embarque e concentração por país.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Carteira diversificada aceita reajuste e maior participação de painéis especificados; acompanhar margem líquida por destino.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Comprador externo corta pedido com estoque pronto e adesivo já comprado; monitorar pedidos firmes versus projeções e prazo no porto.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Revisar contrato de maior comprador, ensaios de colagem e processo de reclamação. Conferir se cada certificação cobre produto, unidade e validade exigidos.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "compensados-exportacao",
+        "title": "Madeira compensada: exportações catarinenses",
+        "unit": "US$ mil FOB correntes",
+        "scope": "Santa Catarina; madeira compensada; vendas externas, não mercado brasileiro total.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2020–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 16, página impressa 193; origem Comex Stat. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Madeira compensada: exportações catarinenses",
+            "values": [
+              208118,
+              383382,
+              279418,
+              213077,
+              253477,
+              240007.3
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BRDE · Produção e consumo de produtos florestais",
+        "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+        "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+      },
+      {
+        "label": "BNDES · Panorama de mercado: painéis de madeira",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+        "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra compensados e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Qualificação por aplicação e rastreabilidade favorecem fornecimento técnico; ciclos curtos de entrega doméstica podem diversificar a exposição exportadora."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre lâminas e adesivos e distribuição e uso industrial?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Volume por classe; consumo de adesivo; falhas de colagem; ciclo de prensa; rejeição; custo por embarque e concentração por país."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Lâminas e adesivos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Montagem e prensagem",
+          "detail": "A orientação das lâminas, adesivo e cura determinam desempenho. Espessura uniforme, colagem e resistência precisam corresponder à aplicação contratada; aparência de superfície não substitui ensaio estrutural."
+        },
+        {
+          "id": "2",
+          "label": "Acabamento e ensaio",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Distribuição e uso industrial",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Compensados. Painéis construídos por colagem e prensagem de lâminas, com aplicações e requisitos diferentes para uso interior, construção e embalagens. A orientação das lâminas, adesivo e cura determinam desempenho. Espessura uniforme, colagem e resistência precisam corresponder à aplicação contratada; aparência de superfície não substitui ensaio estrutural. O ponto econômico central é: O painel depende de rendimento das lâminas, tempo de prensa, consumo de adesivo e perdas na classificação. Um contrato exportador pode ampliar receita e ainda reduzir caixa se exigir estoque, ensaios e prazo de embarque maiores. Para uma empresa média: Compras de lâminas e resina antecedem fabricação e embarque. Trade finance é encaixe possível quando existe exportação comprovada; não presumir hedge natural se dívida e recebimentos tiverem datas distintas. No cenário favorável: Carteira diversificada aceita reajuste e maior participação de painéis especificados; acompanhar margem líquida por destino. No adverso: Comprador externo corta pedido com estoque pronto e adesivo já comprado; monitorar pedidos firmes versus projeções e prazo no porto. Na visita: Revisar contrato de maior comprador, ensaios de colagem e processo de reclamação. Conferir se cada certificação cobre produto, unidade e validade exigidos. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  },
+  {
+    "group": "base-florestal",
+    "topicIndex": 4,
+    "title": "MDF e MDP",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Painéis reconstituídos: MDF utiliza fibras e MDP partículas; diferenciar fabricantes de painéis, revestidores e revendedores.",
+      "Tese analítica: A escala e a utilização da linha diluem custos fixos, mas produção sem demanda gera estoque pesado. Revestimentos e padrões ampliam valor e complexidade; medir margem após perdas e descontos por padrão.",
+      "Prioridade na visita: Identificar se a empresa fabrica, reveste ou distribui. Pedir utilização por linha, custo específico, mapa de paradas e estoque por padrão antes de comparar com fabricantes integrados."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Painéis reconstituídos: MDF utiliza fibras e MDP partículas; diferenciar fabricantes de painéis, revestidores e revendedores.",
+          "Síntese técnica e analítica: A fábrica combina matéria-prima uniforme, resina, energia e processo contínuo. A escolha do painel depende do uso, acabamento e resistência requerida; não se presume que MDF seja superior em todas as aplicações.",
+          "A escala e a utilização da linha diluem custos fixos, mas produção sem demanda gera estoque pesado. Revestimentos e padrões ampliam valor e complexidade; medir margem após perdas e descontos por padrão."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O BNDES descreve historicamente uma indústria de painéis mais concentrada que a moveleira e custos logísticos limitando alcance. Não se atribui essa economia a uma distribuidora média.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Referência internacional: o agrupamento de partículas, OSB e fibras da FAO é mais amplo que MDF e MDP. Comparação de escala internacional precisa separar tecnologia e aplicação; não usar o agregado como demanda endereçável exclusiva."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Utilização e paradas; consumo específico de madeira, resina e energia; rendimento; mix revestido; estoque por espessura e padrão; devoluções.",
+          "Série recuperada no gráfico: Santa Catarina; painéis de fibras e partículas; vendas externas, não mercado brasileiro total.. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série regional: exportações de painéis oscilam e recuam depois do maior ponto observado. O agregado contém fibras e partículas, portanto não permite atribuir essa oscilação só a MDF ou MDP. Inferência: a produção voltada ao mercado interno precisa de indicador adicional antes de diagnosticar o fabricante.",
+          "O panorama do BNDES é referência estrutural antiga, não mensuração presente de poder de mercado. Não foi reconciliada série longa de produção e consumo de painéis; notícias de uma companhia não foram convertidas em crescimento do setor.",
+          "Inferência: Imobilização elevada e dependência de demanda moveleira podem aumentar pressão em períodos de ociosidade. Linha cheia não garante geração de caixa quando estoque acabado sobe.",
+          "Inferência: Revestimento, qualidade estável e serviços de distribuição podem ampliar diferenciação. Para uma empresa média, acabamento e especialização são possibilidades distintas de construir uma fábrica integrada."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "BRDE · Produção e consumo de produtos florestais",
+            "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+            "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Separar dívida do parque industrial, formação florestal e giro. Cessão de recebíveis não financia de maneira estável a expansão de linha sem geração operacional compatível.",
+          "Expansão deve demonstrar disponibilidade de madeira, energia, mercado e manutenção. O custo da parada para modernizar integra a avaliação, não apenas o preço da máquina.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Utilização e paradas; consumo específico de madeira, resina e energia; rendimento; mix revestido; estoque por espessura e padrão; devoluções.",
+          "Expansão deve demonstrar disponibilidade de madeira, energia, mercado e manutenção. O custo da parada para modernizar integra a avaliação, não apenas o preço da máquina."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Revestimento, qualidade estável e serviços de distribuição podem ampliar diferenciação. Para uma empresa média, acabamento e especialização são possibilidades distintas de construir uma fábrica integrada."
+          ],
+          [
+            "Fragilidade a testar",
+            "A escala e a utilização da linha diluem custos fixos, mas produção sem demanda gera estoque pesado. Revestimentos e padrões ampliam valor e complexidade; medir margem após perdas e descontos por padrão."
+          ],
+          [
+            "Oportunidade",
+            "Pedidos de móveis e reforma absorvem capacidade com mix rentável; acompanhar expedição real e estoque do canal."
+          ],
+          [
+            "Ameaça",
+            "Imobilização elevada e dependência de demanda moveleira podem aumentar pressão em períodos de ociosidade. Linha cheia não garante geração de caixa quando estoque acabado sobe."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Madeira, resina e energia: verificar alternativas homologadas, prazo e custo de mudança. A escala e a utilização da linha diluem custos fixos, mas produção sem demanda gera estoque pesado. Revestimentos e padrões ampliam valor e complexidade; medir margem após perdas e descontos por padrão."
+          ],
+          [
+            "Compradores",
+            "Móveis, marcenaria e construção: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Revestimento, qualidade estável e serviços de distribuição podem ampliar diferenciação. Para uma empresa média, acabamento e especialização são possibilidades distintas de construir uma fábrica integrada."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Expansão deve demonstrar disponibilidade de madeira, energia, mercado e manutenção. O custo da parada para modernizar integra a avaliação, não apenas o preço da máquina."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Painéis reconstituídos: MDF utiliza fibras e MDP partículas; diferenciar fabricantes de painéis, revestidores e revendedores."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Utilização e paradas; consumo específico de madeira, resina e energia; rendimento; mix revestido; estoque por espessura e padrão; devoluções.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Pedidos de móveis e reforma absorvem capacidade com mix rentável; acompanhar expedição real e estoque do canal.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Ociosidade e descontos crescem junto com resina e frete; monitorar contribuição por padrão e caixa após manutenção.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Identificar se a empresa fabrica, reveste ou distribui. Pedir utilização por linha, custo específico, mapa de paradas e estoque por padrão antes de comparar com fabricantes integrados.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "paineis-exportacao",
+        "title": "Painéis de fibras e partículas: exportações catarinenses",
+        "unit": "US$ mil FOB correntes",
+        "scope": "Santa Catarina; painéis de fibras e partículas; vendas externas, não mercado brasileiro total.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2020–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 16, página impressa 193; origem Comex Stat. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Painéis de fibras e partículas: exportações catarinenses",
+            "values": [
+              73293,
+              70557,
+              115452,
+              88484,
+              137375,
+              118829.27
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BNDES · Panorama de mercado: painéis de madeira",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+        "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+      },
+      {
+        "label": "BRDE · Produção e consumo de produtos florestais",
+        "url": "https://www.brde.com.br/media/brde.com.br/doc/estudos_e_pub/Producao%20e%20Consumo%20de%20Produtos%20Florestais.pdf",
+        "purpose": "Referência estrutural histórica da cadeia, sem utilizar suas estimativas como conjuntura atual."
+      },
+      {
+        "label": "IBGE · Índice de Preços ao Produtor",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra mdf e mdp e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Revestimento, qualidade estável e serviços de distribuição podem ampliar diferenciação. Para uma empresa média, acabamento e especialização são possibilidades distintas de construir uma fábrica integrada."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre madeira, resina e energia e móveis, marcenaria e construção?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Utilização e paradas; consumo específico de madeira, resina e energia; rendimento; mix revestido; estoque por espessura e padrão; devoluções."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Madeira, resina e energia",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Preparação de fibras ou partículas",
+          "detail": "A fábrica combina matéria-prima uniforme, resina, energia e processo contínuo. A escolha do painel depende do uso, acabamento e resistência requerida; não se presume que MDF seja superior em todas as aplicações."
+        },
+        {
+          "id": "2",
+          "label": "Prensagem e revestimento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Móveis, marcenaria e construção",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de MDF e MDP. Painéis reconstituídos: MDF utiliza fibras e MDP partículas; diferenciar fabricantes de painéis, revestidores e revendedores. A fábrica combina matéria-prima uniforme, resina, energia e processo contínuo. A escolha do painel depende do uso, acabamento e resistência requerida; não se presume que MDF seja superior em todas as aplicações. O ponto econômico central é: A escala e a utilização da linha diluem custos fixos, mas produção sem demanda gera estoque pesado. Revestimentos e padrões ampliam valor e complexidade; medir margem após perdas e descontos por padrão. Para uma empresa média: Separar dívida do parque industrial, formação florestal e giro. Cessão de recebíveis não financia de maneira estável a expansão de linha sem geração operacional compatível. No cenário favorável: Pedidos de móveis e reforma absorvem capacidade com mix rentável; acompanhar expedição real e estoque do canal. No adverso: Ociosidade e descontos crescem junto com resina e frete; monitorar contribuição por padrão e caixa após manutenção. Na visita: Identificar se a empresa fabrica, reveste ou distribui. Pedir utilização por linha, custo específico, mapa de paradas e estoque por padrão antes de comparar com fabricantes integrados. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  },
+  {
+    "group": "base-florestal",
+    "topicIndex": 5,
+    "title": "Móveis",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fabricação de móveis seriados ou sob encomenda, distinguindo madeira, painéis, estofados e outros materiais. Varejo não é fabricação.",
+      "Tese analítica: Uma coleção pode vender bem e consumir caixa por estoque, assistência e prazo ao varejo. Em planejados, alterações de projeto, instalação e retrabalho podem absorver o sinal recebido.",
+      "Prioridade na visita: Escolher uma venda seriada e uma encomenda e acompanhar orçamento, compra, fabricação, entrega, montagem e recebimento. Verificar quem suporta avarias e trocas."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Fabricação de móveis seriados ou sob encomenda, distinguindo madeira, painéis, estofados e outros materiais. Varejo não é fabricação.",
+          "Síntese técnica e analítica: O fabricante combina design, materiais e processos com diferentes canais. No seriado, padronização e escala importam; no planejado, medição, projeto e instalação tornam o aceite parte da entrega.",
+          "Uma coleção pode vender bem e consumir caixa por estoque, assistência e prazo ao varejo. Em planejados, alterações de projeto, instalação e retrabalho podem absorver o sinal recebido."
+        ],
+        "sources": [
+          {
+            "label": "Senado Federal · Arapongas e a indústria moveleira",
+            "url": "https://www12.senado.leg.br/noticias/materias/2023/11/24/municipio-de-arapongas-e-reconhecido-como-capital-moveleira-nacional",
+            "purpose": "Referência territorial institucional; não usar números políticos como ranking estatístico."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Arapongas possui reconhecimento institucional como polo moveleiro pelo Senado. Isso não prova que toda empresa local exporta ou tenha produtividade superior. A relação com fornecedores de painéis é relevante, mas seu poder deve ser medido na carteira concreta.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades."
+        ],
+        "sources": [
+          {
+            "label": "Senado Federal · Arapongas e a indústria moveleira",
+            "url": "https://www12.senado.leg.br/noticias/materias/2023/11/24/municipio-de-arapongas-e-reconhecido-como-capital-moveleira-nacional",
+            "purpose": "Referência territorial institucional; não usar números políticos como ranking estatístico."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Margem por coleção e canal; ruptura e estoque lento; devolução e montagem; prazo de recebimento do varejo; carteira instalada e assistência.",
+          "Série recuperada no gráfico: Santa Catarina; móveis de madeira; vendas externas, não mercado brasileiro total.. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "Senado Federal · Arapongas e a indústria moveleira",
+            "url": "https://www12.senado.leg.br/noticias/materias/2023/11/24/municipio-de-arapongas-e-reconhecido-como-capital-moveleira-nacional",
+            "purpose": "Referência territorial institucional; não usar números políticos como ranking estatístico."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura da série regional: móveis de madeira não retornam ao pico intermediário, embora o último ponto seja maior que o anterior. Inferência: nível de exportação inferior não prova queda de todas as empresas, e pode coexistir com mudança de coleções e canal doméstico.",
+          "Não foi recuperada série recente específica por tipo de móvel ou canal. O estudo não usa produção de madeira ou expansão da silvicultura como evidência de demanda final de móveis.",
+          "Inferência: Dependência de grande rede, devoluções, promoções financiadas pelo fabricante e falha de instalação afetam caixa. Marca própria e terceirização criam responsabilidades distintas.",
+          "Inferência: Projeto modular, entrega previsível e assistência eficiente podem reduzir custo total para o cliente; personalização excessiva pode destruir essa vantagem."
+        ],
+        "sources": [
+          {
+            "label": "Senado Federal · Arapongas e a indústria moveleira",
+            "url": "https://www12.senado.leg.br/noticias/materias/2023/11/24/municipio-de-arapongas-e-reconhecido-como-capital-moveleira-nacional",
+            "purpose": "Referência territorial institucional; não usar números políticos como ranking estatístico."
+          },
+          {
+            "label": "BNDES · Panorama de mercado: painéis de madeira",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+            "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+            "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+            "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Sinais de encomendas precisam estar vinculados ao custo restante da entrega. Antecipar cartão ou duplicata transfere prazo financeiro, não elimina obrigação de montar e reparar.",
+          "Corte automatizado, usinagem e borda devem reduzir perdas ou prazo comprovadamente. Automação de uma operação isolada não compensa desenho ruim e variedade descontrolada.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Margem por coleção e canal; ruptura e estoque lento; devolução e montagem; prazo de recebimento do varejo; carteira instalada e assistência.",
+          "Corte automatizado, usinagem e borda devem reduzir perdas ou prazo comprovadamente. Automação de uma operação isolada não compensa desenho ruim e variedade descontrolada."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Projeto modular, entrega previsível e assistência eficiente podem reduzir custo total para o cliente; personalização excessiva pode destruir essa vantagem."
+          ],
+          [
+            "Fragilidade a testar",
+            "Uma coleção pode vender bem e consumir caixa por estoque, assistência e prazo ao varejo. Em planejados, alterações de projeto, instalação e retrabalho podem absorver o sinal recebido."
+          ],
+          [
+            "Oportunidade",
+            "Renovação da casa e novos pedidos se convertem em entrega com baixa assistência; acompanhar conversão e margem depois de montagem."
+          ],
+          [
+            "Ameaça",
+            "Dependência de grande rede, devoluções, promoções financiadas pelo fabricante e falha de instalação afetam caixa. Marca própria e terceirização criam responsabilidades distintas."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Análise qualitativa, sem notas de intensidade ou participação inventadas."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Painéis, ferragens e tecidos: verificar alternativas homologadas, prazo e custo de mudança. Uma coleção pode vender bem e consumir caixa por estoque, assistência e prazo ao varejo. Em planejados, alterações de projeto, instalação e retrabalho podem absorver o sinal recebido."
+          ],
+          [
+            "Compradores",
+            "Varejo, projetos e consumidor: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Projeto modular, entrega previsível e assistência eficiente podem reduzir custo total para o cliente; personalização excessiva pode destruir essa vantagem."
+          ],
+          [
+            "Entrantes",
+            "Investimento físico não basta: Corte automatizado, usinagem e borda devem reduzir perdas ou prazo comprovadamente. Automação de uma operação isolada não compensa desenho ruim e variedade descontrolada."
+          ],
+          [
+            "Substitutos",
+            "Verificar materiais e processos alternativos para a mesma função do produto, com custo entregue e desempenho comparáveis. Fabricação de móveis seriados ou sob encomenda, distinguindo madeira, painéis, estofados e outros materiais. Varejo não é fabricação."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Margem por coleção e canal; ruptura e estoque lento; devolução e montagem; prazo de recebimento do varejo; carteira instalada e assistência.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Renovação da casa e novos pedidos se convertem em entrega com baixa assistência; acompanhar conversão e margem depois de montagem.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Varejo alonga pagamentos e devolve coleções enquanto painéis já foram comprados; observar concentração e estoque envelhecido.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Escolher uma venda seriada e uma encomenda e acompanhar orçamento, compra, fabricação, entrega, montagem e recebimento. Verificar quem suporta avarias e trocas.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "moveis-exportacao",
+        "title": "Móveis de madeira: exportações catarinenses",
+        "unit": "US$ mil FOB correntes",
+        "scope": "Santa Catarina; móveis de madeira; vendas externas, não mercado brasileiro total.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2020–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 16, página impressa 193; origem Comex Stat. Cabeçalhos abrangem 2020–2025. O rodapé cita janeiro de 2025, incompatível com o ano final, enquanto o capítulo informa janeiro de 2026; data de extração original permanece incerta. A série regional não mede produção nacional. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Móveis de madeira: exportações catarinenses",
+            "values": [
+              266205,
+              359115,
+              332941,
+              245208,
+              243854,
+              247784
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Senado Federal · Arapongas e a indústria moveleira",
+        "url": "https://www12.senado.leg.br/noticias/materias/2023/11/24/municipio-de-arapongas-e-reconhecido-como-capital-moveleira-nacional",
+        "purpose": "Referência territorial institucional; não usar números políticos como ranking estatístico."
+      },
+      {
+        "label": "BNDES · Panorama de mercado: painéis de madeira",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/3023",
+        "purpose": "Referência histórica de escala, concorrência e relação com móveis; não comprova participação atual."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      }
+    ],
+    "limitations": [
+      "NÃO CONFERIDO — revisão independente integral ainda pendente; não tratar como dossiê final aprovado.",
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão independente pendente.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra móveis e qual especificação decide a compra: preço, prazo ou desempenho?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como a empresa comprova a vantagem descrita: Projeto modular, entrega previsível e assistência eficiente podem reduzir custo total para o cliente; personalização excessiva pode destruir essa vantagem."
+      },
+      {
+        "dimension": "Operação",
+        "question": "Onde ocorre a principal perda entre painéis, ferragens e tecidos e varejo, projetos e consumidor?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual venda gera caixa depois de perdas, frete, qualidade e custo financeiro? Margem por coleção e canal; ruptura e estoque lento; devolução e montagem; prazo de recebimento do varejo; carteira instalada e assistência."
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Painéis, ferragens e tecidos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Projeto e corte",
+          "detail": "O fabricante combina design, materiais e processos com diferentes canais. No seriado, padronização e escala importam; no planejado, medição, projeto e instalação tornam o aceite parte da entrega."
+        },
+        {
+          "id": "2",
+          "label": "Montagem e acabamento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Varejo, projetos e consumidor",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Móveis. Fabricação de móveis seriados ou sob encomenda, distinguindo madeira, painéis, estofados e outros materiais. Varejo não é fabricação. O fabricante combina design, materiais e processos com diferentes canais. No seriado, padronização e escala importam; no planejado, medição, projeto e instalação tornam o aceite parte da entrega. O ponto econômico central é: Uma coleção pode vender bem e consumir caixa por estoque, assistência e prazo ao varejo. Em planejados, alterações de projeto, instalação e retrabalho podem absorver o sinal recebido. Para uma empresa média: Sinais de encomendas precisam estar vinculados ao custo restante da entrega. Antecipar cartão ou duplicata transfere prazo financeiro, não elimina obrigação de montar e reparar. No cenário favorável: Renovação da casa e novos pedidos se convertem em entrega com baixa assistência; acompanhar conversão e margem depois de montagem. No adverso: Varejo alonga pagamentos e devolve coleções enquanto painéis já foram comprados; observar concentração e estoque envelhecido. Na visita: Escolher uma venda seriada e uma encomenda e acompanhar orçamento, compra, fabricação, entrega, montagem e recebimento. Verificar quem suporta avarias e trocas. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados e revisão independente pendente. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média."
+  }
+]

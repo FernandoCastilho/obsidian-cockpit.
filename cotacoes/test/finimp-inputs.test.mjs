@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { newFinimpDraft } from '../src/calculatorDraft.js'
-import { validateFinimpInputs } from '../src/finimpInputs.js'
+import { FINIMP_CURRENCIES, validateFinimpInputs } from '../src/finimpInputs.js'
 import { compareFinimp, finimpCost, solveFinimpRate } from '../src/finimpComparison.js'
 
 const fixture = (patch = {}) => ({
@@ -12,7 +12,7 @@ const fixture = (patch = {}) => ({
 })
 
 test('TAC em reais é convertida para a moeda do principal antes dos custos e da comparação', () => {
-  for (const currency of ['USD', 'EUR']) {
+  for (const currency of FINIMP_CURRENCIES.filter(code => code !== 'BRL')) {
     const parsed = validateFinimpInputs(fixture({ currency }))
     assert.equal(parsed.conditionsReady, true)
     assert.deepEqual(parsed.errors, {})
@@ -29,6 +29,26 @@ test('TAC em reais é convertida para a moeda do principal antes dos custos e da
     assert.equal(result.itau.cost, 4600)
     assert.equal(result.difference, 400)
   }
+})
+
+test('iene e yuan offshore mantêm a TAC em reais e a meta na moeda selecionada', () => {
+  assert.deepEqual(FINIMP_CURRENCIES, ['USD', 'EUR', 'JPY', 'CNH', 'BRL'])
+  for (const [currency, tacFxText] of [['JPY', '0,03488'], ['CNH', '0,8258']]) {
+    const parsed = validateFinimpInputs(fixture({ currency, tacFxText }))
+    assert.equal(parsed.conditionsReady, true)
+    assert.equal(parsed.competitor.tacBrl, 1200)
+    assert.equal(parsed.competitor.tac, 1200 / Number(tacFxText.replace(',', '.')))
+    const targetCost = finimpCost({ ...parsed.competitor, principal: parsed.principal, days: 180 }).cost
+    const solved = solveFinimpRate({ principal: parsed.principal, days: 180, flatRate: parsed.itau.flatRate, tac: parsed.itau.tac, targetCost })
+    assert.equal(solved.ok, true)
+    assert.ok(Math.abs(solved.result.cost - targetCost) < 1e-8)
+  }
+})
+
+test('moeda não suportada impede comparar uma proposta com unidade desconhecida', () => {
+  const parsed = validateFinimpInputs(fixture({ currency: 'CNY' }))
+  assert.equal(parsed.conditionsReady, false)
+  assert.ok(parsed.errors['fi-currency'])
 })
 
 test('câmbio da TAC conserva precisão plena antes da formatação monetária', () => {

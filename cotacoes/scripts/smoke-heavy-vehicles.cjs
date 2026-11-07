@@ -28,7 +28,7 @@ const sectorNewsFixture = now => {
       assert.match(await panel.innerText(), /setembro de 2026/)
       assert.match(await panel.innerText(), /OUT\/2026/)
       assert.match(await panel.locator('article').nth(2).innerText(), /-1,3%[\s\S]*\+15,0%/)
-      assert.equal(await page.getByRole('tab', { name: 'Veículos pesados', exact: true }).count(), 1)
+      assert.equal(await page.getByRole('heading', { name: 'Veículos pesados', exact: true }).count(), 1)
       const publications = page.locator('.setores .sector-news-list > li')
       await publications.first().waitFor()
       assert.equal(await publications.count(), 1, 'somente notícia de caminhões nas últimas 120h')

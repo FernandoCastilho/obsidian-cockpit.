@@ -1,0 +1,2039 @@
+[
+  {
+    "group": "quimicos",
+    "topicIndex": 0,
+    "title": "Resinas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Produção de resinas petroquímicas e especialidades; distinguir commodities termoplásticas, termofixas e compostos. Transformação de plástico é elo cliente, não sinônimo.",
+      "Tese analítica: O diferencial entre preço de resina e matéria-prima precisa cobrir energia, logística e operação. Comparar preço de venda em dólar com custo em reais sem casar períodos pode produzir leitura enganosa da margem.",
+      "Prioridade na visita: Mapear grades, aplicações e homologações, confrontar compras e vendas por moeda e data, e verificar estoque sem cliente alternativo. Validar tratamento aduaneiro de cada produto antes de simular margem."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Produção de resinas petroquímicas e especialidades; distinguir commodities termoplásticas, termofixas e compostos. Transformação de plástico é elo cliente, não sinônimo.",
+          "Síntese técnica e analítica: A rota química e a especificação determinam propriedades e aplicações. Grades não são plenamente substituíveis sem testes; fornecedor de composto especializado não tem a escala ou economia de uma central petroquímica.",
+          "O diferencial entre preço de resina e matéria-prima precisa cobrir energia, logística e operação. Comparar preço de venda em dólar com custo em reais sem casar períodos pode produzir leitura enganosa da margem."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Processo de defesa comercial: PVC-S",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/defesa-comercial-e-interesse-publico/investigacoes/investigacoes-de-defesa-comercial/resina-policloreto-vinila-rev",
+            "purpose": "Peticionárias e delimitação de produto/origem; nenhuma alíquota presumida vigente."
+          },
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Braskem e Unipar são identificadas em processo público do MDIC relativo a PVC-S. Essa evidência confirma atuação naquele produto, não participação atual em todas as resinas. Competição com importado depende do grade, origem, frete e regime comercial.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Nos catálogos empresariais consultados, a Unipar apresenta PVC para perfis, pisos, forros e cabos; a Braskem relaciona resinas a filmes, frascos e outras embalagens, além de aplicações industriais. A Unipar oferece portal comercial; a Braskem disponibiliza caminhos para distribuidores e suporte técnico. Isso evidencia segmentação e canais de venda, não tamanho ou crescimento da demanda."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Processo de defesa comercial: PVC-S",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/defesa-comercial-e-interesse-publico/investigacoes/investigacoes-de-defesa-comercial/resina-policloreto-vinila-rev",
+            "purpose": "Peticionárias e delimitação de produto/origem; nenhuma alíquota presumida vigente."
+          },
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Preço líquido por grade; custo da matéria-prima; utilização; prazo de importação; estoque por homologação; concentração de contratos de fornecimento.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Processo de defesa comercial: PVC-S",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/defesa-comercial-e-interesse-publico/investigacoes/investigacoes-de-defesa-comercial/resina-policloreto-vinila-rev",
+            "purpose": "Peticionárias e delimitação de produto/origem; nenhuma alíquota presumida vigente."
+          },
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "O processo público do MDIC deve ser lido por produto e origem. Não foi incorporada conclusão tributária baseada no link da Câmara que não pôde ser integralmente revisado, nem presumido benefício fiscal aplicável à empresa.",
+          "Inferência: Oferta global e mudanças no custo petroquímico podem reduzir diferencial industrial. Uma proteção comercial de um produto e origem não se estende automaticamente a todos os polímeros.",
+          "Inferência: Especialidades e suporte à homologação podem reduzir concorrência apenas por preço. Conteúdo renovável ou reciclado exige comprovação de desempenho e aplicação.",
+          "Inferência a partir dos usos documentados: a carteira ligada a perfis e pisos responde à execução de obras, enquanto filmes e frascos dependem do giro dos bens embalados. Um portfólio misto pode ter ciclos divergentes. Os catálogos confirmam aplicações, não taxas atuais de utilização; pedir pedidos firmes e cancelamentos por cliente antes de concluir expansão."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Processo de defesa comercial: PVC-S",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/defesa-comercial-e-interesse-publico/investigacoes/investigacoes-de-defesa-comercial/resina-policloreto-vinila-rev",
+            "purpose": "Peticionárias e delimitação de produto/origem; nenhuma alíquota presumida vigente."
+          },
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Estoques e contratos de matéria-prima exigem giro; importações criam exposição cambial antes da venda. Derivativos ou dívida em moeda estrangeira devem corresponder a exposição real, não aposta sobre câmbio.",
+          "Plantas químicas exigem manutenção, controle de processo, segurança e licenças. Para empresa média, composto ou distribuição técnica têm necessidades diferentes de expansão petroquímica.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo.",
+          "Inferência comercial: o distribuidor pode competir por fracionamento e pronta entrega, enquanto a relação técnica com o produtor ajuda a qualificar grades. Na empresa média, separar margem de revenda de remuneração por formulação e assistência; comparar custo entregue, estoque mínimo e prazo de homologação, sem pressupor exclusividade contratual."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Preço líquido por grade; custo da matéria-prima; utilização; prazo de importação; estoque por homologação; concentração de contratos de fornecimento.",
+          "Plantas químicas exigem manutenção, controle de processo, segurança e licenças. Para empresa média, composto ou distribuição técnica têm necessidades diferentes de expansão petroquímica."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Especialidades e suporte à homologação podem reduzir concorrência apenas por preço. Conteúdo renovável ou reciclado exige comprovação de desempenho e aplicação."
+          ],
+          [
+            "Fragilidade a testar",
+            "O diferencial entre preço de resina e matéria-prima precisa cobrir energia, logística e operação. Comparar preço de venda em dólar com custo em reais sem casar períodos pode produzir leitura enganosa da margem."
+          ],
+          [
+            "Oportunidade",
+            "Demanda homologada melhora utilização e diferencial frente à matéria-prima; acompanhar preço realizado e custo de reposição."
+          ],
+          [
+            "Ameaça",
+            "Oferta global e mudanças no custo petroquímico podem reduzir diferencial industrial. Uma proteção comercial de um produto e origem não se estende automaticamente a todos os polímeros."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Matérias-primas petroquímicas: verificar alternativas homologadas, prazo e custo de mudança. O diferencial entre preço de resina e matéria-prima precisa cobrir energia, logística e operação. Comparar preço de venda em dólar com custo em reais sem casar períodos pode produzir leitura enganosa da margem."
+          ],
+          [
+            "Compradores",
+            "Transformadores e formuladores: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Especialidades e suporte à homologação podem reduzir concorrência apenas por preço. Conteúdo renovável ou reciclado exige comprovação de desempenho e aplicação."
+          ],
+          [
+            "Entrantes",
+            "Polimerização de commodities exige acesso à matéria-prima, integração de utilidades, segurança de processo e escala. Resinas especiais dependem também de formulação, propriedade intelectual e homologação. Produzir compostos a partir de resina comprada é outra posição na cadeia e não supera essas barreiras por si só."
+          ],
+          [
+            "Substitutos",
+            "Metal, vidro, papel ou madeira podem substituir o plástico em determinadas funções, mas normalmente por redesenho do produto do cliente. Resinas de origem renovável ou reciclada são alternativas quando propriedades e regra de uso permitem. Trocar de fabricante mantendo o mesmo polímero e grade é rivalidade, não substituição material."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Preço líquido por grade; custo da matéria-prima; utilização; prazo de importação; estoque por homologação; concentração de contratos de fornecimento.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Demanda homologada melhora utilização e diferencial frente à matéria-prima; acompanhar preço realizado e custo de reposição.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Oferta importada reduz preço enquanto estoque foi comprado caro; observar perda a valor realizável, prazo de repasse e limites de exposição.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Mapear grades, aplicações e homologações, confrontar compras e vendas por moeda e data, e verificar estoque sem cliente alternativo. Validar tratamento aduaneiro de cada produto antes de simular margem.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "MDIC · Processo de defesa comercial: PVC-S",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/defesa-comercial-e-interesse-publico/investigacoes/investigacoes-de-defesa-comercial/resina-policloreto-vinila-rev",
+        "purpose": "Peticionárias e delimitação de produto/origem; nenhuma alíquota presumida vigente."
+      },
+      {
+        "label": "BNDES · Diversificação da indústria química",
+        "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+        "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+      },
+      {
+        "label": "IBGE · Índice de Preços ao Produtor",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "A pesquisa comercial utiliza catálogos e comunicados empresariais identificados como declarações dos emissores; não substitui auditoria de capacidade, carteira ou demanda realizada. As referências privadas foram preservadas no registro de evidências, sem exibição na lista pública de fontes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as resinas e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Que desempenho da resina o cliente homologa e o que torna sua formulação difícil de substituir?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: recebimento da matéria-prima, produção, controle de especificação, armazenagem ou distribuição da resina?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual é a margem por aplicação após matérias-primas, energia, câmbio, assistência e prazo de recebimento?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Matérias-primas petroquímicas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Polimerização",
+          "detail": "A rota química e a especificação determinam propriedades e aplicações. Grades não são plenamente substituíveis sem testes; fornecedor de composto especializado não tem a escala ou economia de uma central petroquímica."
+        },
+        {
+          "id": "2",
+          "label": "Grades e distribuição",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Transformadores e formuladores",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Resinas. Produção de resinas petroquímicas e especialidades; distinguir commodities termoplásticas, termofixas e compostos. Transformação de plástico é elo cliente, não sinônimo. A rota química e a especificação determinam propriedades e aplicações. Grades não são plenamente substituíveis sem testes; fornecedor de composto especializado não tem a escala ou economia de uma central petroquímica. O ponto econômico central é: O diferencial entre preço de resina e matéria-prima precisa cobrir energia, logística e operação. Comparar preço de venda em dólar com custo em reais sem casar períodos pode produzir leitura enganosa da margem. Para uma empresa média: Estoques e contratos de matéria-prima exigem giro; importações criam exposição cambial antes da venda. Derivativos ou dívida em moeda estrangeira devem corresponder a exposição real, não aposta sobre câmbio. No cenário favorável: Demanda homologada melhora utilização e diferencial frente à matéria-prima; acompanhar preço realizado e custo de reposição. No adverso: Oferta importada reduz preço enquanto estoque foi comprado caro; observar perda a valor realizável, prazo de repasse e limites de exposição. Na visita: Mapear grades, aplicações e homologações, confrontar compras e vendas por moeda e data, e verificar estoque sem cliente alternativo. Validar tratamento aduaneiro de cada produto antes de simular margem. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Pesquisa comercial complementar. Braskem e Unipar são identificadas em processo público do MDIC relativo a PVC-S. Essa evidência confirma atuação naquele produto, não participação atual em todas as resinas. Competição com importado depende do grade, origem, frete e regime comercial. Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades. Nos catálogos empresariais consultados, a Unipar apresenta PVC para perfis, pisos, forros e cabos; a Braskem relaciona resinas a filmes, frascos e outras embalagens, além de aplicações industriais. A Unipar oferece portal comercial; a Braskem disponibiliza caminhos para distribuidores e suporte técnico. Isso evidencia segmentação e canais de venda, não tamanho ou crescimento da demanda.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/adendo-quatro-recortes.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "9bb8b142187a0aee6c4f6d43a8a048c623c04bc4ed4f449d727fbe1625e4bca0"
+    }
+  },
+  {
+    "group": "quimicos",
+    "topicIndex": 1,
+    "title": "Transformação plástica",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Injeção, extrusão, sopro e outras rotas que convertem resina em peças e produtos. Separar embalagem, construção e bens duráveis para interpretar demanda.",
+      "Tese analítica: Medir contribuição por hora e por molde, não só por quilo. Refugo, ciclo, troca de cor e cavidades não utilizadas podem ocultar perda; crédito pela venda de sucata não deve compensar defeito sem avaliar custo total.",
+      "Prioridade na visita: Cronometrar lote representativo, medir refugo e comparar custo orçado com efetivo. Identificar proprietário do molde, manutenção contratada e direito de retirada."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Injeção, extrusão, sopro e outras rotas que convertem resina em peças e produtos. Separar embalagem, construção e bens duráveis para interpretar demanda.",
+          "Síntese técnica e analítica: Máquina, molde e matéria-prima precisam ser compatíveis. A troca de grade ou uso de reciclado muda janela operacional e qualidade; uma prensa disponível não significa capacidade livre para qualquer produto.",
+          "Medir contribuição por hora e por molde, não só por quilo. Refugo, ciclo, troca de cor e cavidades não utilizadas podem ocultar perda; crédito pela venda de sucata não deve compensar defeito sem avaliar custo total."
+        ],
+        "sources": [
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O BNB descreve cadeia dispersa de transformadores e concentração territorial do emprego em São Paulo e estados do Sul. Referência territorial não é ranking de eficiência. Fabricantes de tubos e peças técnicas concorrem em mercados diferentes de embalagens.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades."
+        ],
+        "sources": [
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "A série do BNB/ETENE cobre 2021 a 2025 e evidencia oscilação seguida de recuperação no agregado. Não demonstra trajetória idêntica por processo ou aplicação. A nota da fonte informa base 2019 = 100; o título omite o último ano apesar de o corpo incluí-lo. Não houve recalculação nem preenchimento de anos ausentes.",
+          "Produção aprovada por hora; tempo de ciclo; cavidades ativas; refugo; energia por produto; disponibilidade do molde; margem por contrato.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "O estudo recente do BNB mostra desaceleração da produção de transformados e diferenças entre embalagens, laminados e tubos. A série histórica é reproduzida com identificação de fonte e ressalva editorial, sem tratá-la como desempenho de cada transformadora.",
+          "Inferência: Molde dedicado e poucas homologações criam dependência do cliente. Reajuste atrasado de resina, avaria de ferramental ou devolução podem consumir o resultado do pedido.",
+          "Inferência: Eficiência de máquina, redução de perdas e especificações compatíveis com circularidade podem gerar retorno antes de expandir capacidade."
+        ],
+        "sources": [
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "A empresa paga resina e trabalho antes do recebimento da peça. Molde pertencente ao cliente não é garantia livre; separar adiantamento de ferramental de receita de fabricação.",
+          "Investimento deve provar economia de ciclo, energia ou refugo para o mix real. Financiamento de máquina precisa considerar instalação, treinamento e homologação antes da receita.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Produção aprovada por hora; tempo de ciclo; cavidades ativas; refugo; energia por produto; disponibilidade do molde; margem por contrato.",
+          "Investimento deve provar economia de ciclo, energia ou refugo para o mix real. Financiamento de máquina precisa considerar instalação, treinamento e homologação antes da receita."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Eficiência de máquina, redução de perdas e especificações compatíveis com circularidade podem gerar retorno antes de expandir capacidade."
+          ],
+          [
+            "Fragilidade a testar",
+            "Medir contribuição por hora e por molde, não só por quilo. Refugo, ciclo, troca de cor e cavidades não utilizadas podem ocultar perda; crédito pela venda de sucata não deve compensar defeito sem avaliar custo total."
+          ],
+          [
+            "Oportunidade",
+            "Pedidos recorrentes ocupam moldes homologados e ganhos de processo reduzem perdas; acompanhar margem por hora útil."
+          ],
+          [
+            "Ameaça",
+            "Molde dedicado e poucas homologações criam dependência do cliente. Reajuste atrasado de resina, avaria de ferramental ou devolução podem consumir o resultado do pedido."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Resinas, aditivos e moldes: verificar alternativas homologadas, prazo e custo de mudança. Medir contribuição por hora e por molde, não só por quilo. Refugo, ciclo, troca de cor e cavidades não utilizadas podem ocultar perda; crédito pela venda de sucata não deve compensar defeito sem avaliar custo total."
+          ],
+          [
+            "Compradores",
+            "Indústrias e consumo final: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Eficiência de máquina, redução de perdas e especificações compatíveis com circularidade podem gerar retorno antes de expandir capacidade."
+          ],
+          [
+            "Entrantes",
+            "Ferramental, conhecimento de processo e homologação de peças limitam entrada em contratos técnicos. Produtos simples têm barreiras menores; componentes de segurança, precisão ou contato com alimentos exigem validação adicional. A propriedade dos moldes pelo cliente pode impedir reaproveitamento por um novo fornecedor."
+          ],
+          [
+            "Substitutos",
+            "Peças metálicas, cerâmicas, de vidro, papel ou madeira podem substituir produtos plásticos conforme função. A mudança exige comparar peso, corrosão, resistência e ciclo de vida; frequentemente altera desenho e montagem. Reciclar a própria resina ou trocar de transformador não substitui a função do produto final."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Produção aprovada por hora; tempo de ciclo; cavidades ativas; refugo; energia por produto; disponibilidade do molde; margem por contrato.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Pedidos recorrentes ocupam moldes homologados e ganhos de processo reduzem perdas; acompanhar margem por hora útil.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Cliente reduz produção e o molde fica ocioso enquanto a resina perde valor; monitorar carteira firme e estoque por grade.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Cronometrar lote representativo, medir refugo e comparar custo orçado com efetivo. Identificar proprietário do molde, manutenção contratada e direito de retirada.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "plasticos-producao",
+        "title": "Produção de transformados plásticos: série reproduzida pelo BNB",
+        "unit": "Índice, base 2019 = 100 conforme nota da fonte",
+        "scope": "Brasil; fabricação de produtos de material plástico, agregado. Não é receita e não mede resinas nem borracha.",
+        "years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2021–2025",
+        "source": {
+          "label": "Banco do Nordeste · Indústria de produtos plásticos",
+          "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+          "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+        },
+        "method": "Transcrição da tabela de produção do BNB/ETENE, com origem declarada IBGE. O título da tabela termina em 2024, mas o corpo inclui 2025. Mantidos os cinco cabeçalhos efetivos; a base informada é a nota da fonte, não recalculada. Revisão primária do SIDRA não concluída.",
+        "series": [
+          {
+            "label": "Produção física, conforme publicação",
+            "values": [
+              101.7,
+              95.5,
+              100,
+              106.3,
+              107.6
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Banco do Nordeste · Indústria de produtos plásticos",
+        "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+        "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+      },
+      {
+        "label": "Senado Federal · Logística reversa de embalagens plásticas",
+        "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+        "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      }
+    ],
+    "limitations": [
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Série de produção conferida contra tabela do BNB, não diretamente contra SIDRA. A fonte tem inconsistência entre título e colunas; a tabela de emprego também apresenta sinais de troca de rótulos territoriais, motivo pelo qual seus números não foram publicados.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as peças e os produtos plásticos e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como vocês comprovam estabilidade dimensional e funcional da peça em cada lote?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: preparação da resina, troca de molde ou cor, conversão, acabamento ou controle de qualidade?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual peça paga resina, ciclo de máquina, molde, refugo e capital de giro depois do preço negociado?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Resinas, aditivos e moldes",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Conversão industrial",
+          "detail": "Máquina, molde e matéria-prima precisam ser compatíveis. A troca de grade ou uso de reciclado muda janela operacional e qualidade; uma prensa disponível não significa capacidade livre para qualquer produto."
+        },
+        {
+          "id": "2",
+          "label": "Acabamento e controle",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Indústrias e consumo final",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Transformação plástica. Injeção, extrusão, sopro e outras rotas que convertem resina em peças e produtos. Separar embalagem, construção e bens duráveis para interpretar demanda. Máquina, molde e matéria-prima precisam ser compatíveis. A troca de grade ou uso de reciclado muda janela operacional e qualidade; uma prensa disponível não significa capacidade livre para qualquer produto. O ponto econômico central é: Medir contribuição por hora e por molde, não só por quilo. Refugo, ciclo, troca de cor e cavidades não utilizadas podem ocultar perda; crédito pela venda de sucata não deve compensar defeito sem avaliar custo total. Para uma empresa média: A empresa paga resina e trabalho antes do recebimento da peça. Molde pertencente ao cliente não é garantia livre; separar adiantamento de ferramental de receita de fabricação. No cenário favorável: Pedidos recorrentes ocupam moldes homologados e ganhos de processo reduzem perdas; acompanhar margem por hora útil. No adverso: Cliente reduz produção e o molde fica ocioso enquanto a resina perde valor; monitorar carteira firme e estoque por grade. Na visita: Cronometrar lote representativo, medir refugo e comparar custo orçado com efetivo. Identificar proprietário do molde, manutenção contratada e direito de retirada. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "6e120d727c30bbad294c406cf82bece9f953717676274de4bfc9fd4188178794"
+    }
+  },
+  {
+    "group": "quimicos",
+    "topicIndex": 2,
+    "title": "Embalagens flexíveis",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Filmes, laminados, sacos e estruturas flexíveis para proteção e acondicionamento. Não usar toda embalagem plástica, que também inclui rígidos, como mercado exclusivo.",
+      "Tese analítica: Rendimento de filme, perdas de impressão, cura e aparas influenciam custo. Material mais fino só cria valor se não elevar ruptura ou perdas do alimento; estoque impresso é específico do cliente.",
+      "Prioridade na visita: Selecionar uma embalagem alimentar e rastrear matérias-primas, ensaios, arte, cura e aprovação. Perguntar como a alegação ambiental foi demonstrada e quem assume lotes obsoletos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Filmes, laminados, sacos e estruturas flexíveis para proteção e acondicionamento. Não usar toda embalagem plástica, que também inclui rígidos, como mercado exclusivo.",
+          "Síntese técnica e analítica: A estrutura combina barreira, resistência, selagem e impressão. Camadas podem atender funções diferentes; migrar para monomaterial exige manter proteção, velocidade de envase e vida útil do produto.",
+          "Rendimento de filme, perdas de impressão, cura e aparas influenciam custo. Material mais fino só cria valor se não elevar ruptura ou perdas do alimento; estoque impresso é específico do cliente."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O BNB apresenta dados de laminados e embalagens em categorias diferentes e sobrepostas ao recorte comercial de flexíveis. Nenhuma delas mede isoladamente esse mercado. Anvisa é referência para contato com alimentos; exigência de reciclagem não elimina a sanitária.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Espessura e variação; consumo por área; defeitos de impressão; resistência de selagem; perdas por estrutura; estoque por arte; prazo de cura e aprovação.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "O sistema federal de logística reversa de embalagens plásticas exige analisar responsabilidades e exceções da cadeia. A fonte regulatória foi localizada; não foi calculada meta individual nem custo de conformidade para qualquer empresa.",
+          "Inferência: Mudança de arte, migração de substâncias, delaminação ou falha de selagem pode gerar descarte e reclamação em escala. Alegação de reciclabilidade precisa corresponder ao material e à cadeia real de recuperação.",
+          "Inferência: Redesenho com menor massa, melhor reciclabilidade e desempenho comprovado cria oportunidade técnica, condicionado a ensaios e viabilidade de coleta."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "Senado Federal · Logística reversa de embalagens plásticas",
+            "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+            "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+          },
+          {
+            "label": "Banco do Nordeste · Indústria de produtos plásticos",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+            "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Filmes, tinta, cilindros e adesivos antecedem produção e cura. Negociar obrigação de retirada dos lotes impressos e cobrança do ferramental reduz risco; antecipação do recebível não elimina reclamações.",
+          "Impressão, laminação e inspeção são conjunto integrado. Avaliar segurança de solventes, controle de migração e descarte antes de automatizar velocidade.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Espessura e variação; consumo por área; defeitos de impressão; resistência de selagem; perdas por estrutura; estoque por arte; prazo de cura e aprovação.",
+          "Impressão, laminação e inspeção são conjunto integrado. Avaliar segurança de solventes, controle de migração e descarte antes de automatizar velocidade."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Redesenho com menor massa, melhor reciclabilidade e desempenho comprovado cria oportunidade técnica, condicionado a ensaios e viabilidade de coleta."
+          ],
+          [
+            "Fragilidade a testar",
+            "Rendimento de filme, perdas de impressão, cura e aparas influenciam custo. Material mais fino só cria valor se não elevar ruptura ou perdas do alimento; estoque impresso é específico do cliente."
+          ],
+          [
+            "Oportunidade",
+            "Cliente paga por menor perda no envase e solução validada para recuperação; acompanhar homologação e recorrência das estruturas."
+          ],
+          [
+            "Ameaça",
+            "Mudança de arte, migração de substâncias, delaminação ou falha de selagem pode gerar descarte e reclamação em escala. Alegação de reciclabilidade precisa corresponder ao material e à cadeia real de recuperação."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Resinas, filmes, tintas e adesivos: verificar alternativas homologadas, prazo e custo de mudança. Rendimento de filme, perdas de impressão, cura e aparas influenciam custo. Material mais fino só cria valor se não elevar ruptura ou perdas do alimento; estoque impresso é específico do cliente."
+          ],
+          [
+            "Compradores",
+            "Envasadores e marcas: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Redesenho com menor massa, melhor reciclabilidade e desempenho comprovado cria oportunidade técnica, condicionado a ensaios e viabilidade de coleta."
+          ],
+          [
+            "Entrantes",
+            "Domínio de barreira, selagem, impressão e adesão precisa ser comprovado no envase. Migração e contato com alimentos, controle de solventes e repetibilidade dos lotes criam barreiras. A aprovação de arte e estrutura vincula o cliente a uma especificação, mas não garante fidelidade permanente."
+          ],
+          [
+            "Substitutos",
+            "Potes e frascos rígidos, latas, vidro, papel revestido e sistemas de refil ou granel disputam aplicações de flexíveis. Equipamento de envase, validade do produto e transporte condicionam a troca. Monomaterial pode substituir multicamada, mas exige validar barreira e selagem; não é solução universal."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Espessura e variação; consumo por área; defeitos de impressão; resistência de selagem; perdas por estrutura; estoque por arte; prazo de cura e aprovação.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Cliente paga por menor perda no envase e solução validada para recuperação; acompanhar homologação e recorrência das estruturas.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Reformulação obrigatória ou cancelamento de arte inutiliza estoque, enquanto insumo sobe; monitorar pedidos aprovados e material ainda não consumido.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Selecionar uma embalagem alimentar e rastrear matérias-primas, ensaios, arte, cura e aprovação. Perguntar como a alegação ambiental foi demonstrada e quem assume lotes obsoletos.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Anvisa · Embalagens para alimentos",
+        "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+        "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+      },
+      {
+        "label": "Senado Federal · Logística reversa de embalagens plásticas",
+        "url": "https://legis.senado.leg.br/norma/41593001/publicacao/41593550",
+        "purpose": "Texto normativo, responsabilidades e exceções; enquadramento depende da embalagem e cadeia."
+      },
+      {
+        "label": "Banco do Nordeste · Indústria de produtos plásticos",
+        "url": "https://www.bnb.gov.br/revista/cse/article/download/3464/2395/12666",
+        "purpose": "Estudo ETENE publicado em outubro de 2026, edição setembro; série de produção atribuída ao IBGE. Há inconsistências editoriais nas tabelas, documentadas nas limitações."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as embalagens flexíveis e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como vocês validam barreira, selagem e impressão da embalagem na linha de envase do cliente?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: extrusão, impressão, laminação, cura, corte ou envase no cliente?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual estrutura gera margem após filmes, tintas, adesivos, aparas, preparação e prazo de recebimento?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Resinas, filmes, tintas e adesivos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Extrusão e impressão",
+          "detail": "A estrutura combina barreira, resistência, selagem e impressão. Camadas podem atender funções diferentes; migrar para monomaterial exige manter proteção, velocidade de envase e vida útil do produto."
+        },
+        {
+          "id": "2",
+          "label": "Laminação e corte",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Envasadores e marcas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Embalagens flexíveis. Filmes, laminados, sacos e estruturas flexíveis para proteção e acondicionamento. Não usar toda embalagem plástica, que também inclui rígidos, como mercado exclusivo. A estrutura combina barreira, resistência, selagem e impressão. Camadas podem atender funções diferentes; migrar para monomaterial exige manter proteção, velocidade de envase e vida útil do produto. O ponto econômico central é: Rendimento de filme, perdas de impressão, cura e aparas influenciam custo. Material mais fino só cria valor se não elevar ruptura ou perdas do alimento; estoque impresso é específico do cliente. Para uma empresa média: Filmes, tinta, cilindros e adesivos antecedem produção e cura. Negociar obrigação de retirada dos lotes impressos e cobrança do ferramental reduz risco; antecipação do recebível não elimina reclamações. No cenário favorável: Cliente paga por menor perda no envase e solução validada para recuperação; acompanhar homologação e recorrência das estruturas. No adverso: Reformulação obrigatória ou cancelamento de arte inutiliza estoque, enquanto insumo sobe; monitorar pedidos aprovados e material ainda não consumido. Na visita: Selecionar uma embalagem alimentar e rastrear matérias-primas, ensaios, arte, cura e aprovação. Perguntar como a alegação ambiental foi demonstrada e quem assume lotes obsoletos. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "da80b7578667882fa96dd7d9022198d36df3767a1494a6b1dd1526617926db6f"
+    }
+  },
+  {
+    "group": "quimicos",
+    "topicIndex": 3,
+    "title": "Tintas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Formulação de tintas, vernizes e revestimentos; separar imobiliária, industrial, repintura e impressão, pois homologação e canal de venda diferem.",
+      "Tese analítica: Matéria-prima, embalagem, mix e canais determinam margem. Vender tinta por volume sem controlar cobertura e rendimento confunde comparação; sistema tintométrico pode reduzir variedade pronta, mas traz investimento e obrigações no canal.",
+      "Prioridade na visita: Escolher uma fórmula e reconciliar custo com compras recentes, rendimento prometido e reclamações. Identificar cessões de máquinas e obrigações de exclusividade ou recompra no canal."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Formulação de tintas, vernizes e revestimentos; separar imobiliária, industrial, repintura e impressão, pois homologação e canal de venda diferem.",
+          "Síntese técnica e analítica: A formulação combina ligante, pigmentos, cargas, veículo e aditivos para desempenho específico. Cor é apenas uma dimensão; cobertura, aderência e durabilidade precisam corresponder ao substrato e à aplicação.",
+          "Matéria-prima, embalagem, mix e canais determinam margem. Vender tinta por volume sem controlar cobertura e rendimento confunde comparação; sistema tintométrico pode reduzir variedade pronta, mas traz investimento e obrigações no canal."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O relatório municipal de Jundiaí, emitido em 20/02/2026 e contendo processos históricos, relaciona marcas como Coral, Sherwin-Williams, Lukscolor, Eucatex e Suvinil para tintas de piso. É evidência de um canal institucional e de especificações de produto, não de compras realizadas, participação nacional ou independência societária das marcas.",
+          "Em comunicado empresarial de 01/10/2025, a BASF informou a conclusão da venda do negócio brasileiro de tintas decorativas à Sherwin-Williams, incluindo Suvinil e Glasu e instalações em Demarchi e Jaboatão. A conclusão foi conferida no comunicado posterior ao anúncio inicial. Não se somam essas marcas como concorrentes societariamente independentes, nem se extrapola a operação para todo o mercado de revestimentos."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "Prefeitura de Jundiaí · Materiais e marcas homologadas",
+            "url": "https://compraaberta.jundiai.sp.gov.br/wp-content/uploads/Materiais_Marcas_Homologadas.pdf",
+            "purpose": "Relatório emitido em 20/02/2026, com processos históricos: evidência de especificações e marcas cadastradas, não de compra realizada, volume demandado ou habilitação nacional."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Custo por fórmula; estabilidade do lote; devolução; cobertura; concentração de revendas; equipamento cedido ao canal; prazo comercial e descontos.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "A mudança de controle documentada altera o mapa de grupos em tintas decorativas; não foi estimado efeito sobre preços, descontos ou participação. O relatório de homologações municipal demonstra requisitos de compra, mas não mede demanda realizada. Não foi recuperada série recente comparável por família de tinta.",
+          "Inferência: Exposição cambial de pigmentos e aditivos pode ocorrer mesmo em compra nacional. Falha de aderência ou incompatibilidade com substrato traz assistência e reputação, além de reposição.",
+          "Inferência: Suporte de aplicação e desempenho demonstrável podem diferenciar fabricantes médios em nichos, sem assumir que disputa nacional de marca seja economicamente viável."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Diversificação da indústria química",
+            "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+            "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Compras de insumos, variedade de fórmulas e estoque no canal consomem giro. Equipamento cedido à revenda precisa de contrato de propriedade e retorno; não é recebível comum.",
+          "Mistura, dispersão, laboratório e controle ambiental devem acompanhar o portfólio. Substituição de insumo exige validação e pode comprometer lotes já prometidos.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo.",
+          "Inferência comercial: no canal institucional, o fornecedor precisa compatibilizar desempenho, embalagem e documentação com a especificação do comprador. Na revenda, variedade de cores e acabamentos imobiliza estoque; em aplicação industrial, ensaio e assistência pesam na escolha. Testar economicamente esses canais separadamente, sem converter cadastro de marca em contrato ou faturamento."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Custo por fórmula; estabilidade do lote; devolução; cobertura; concentração de revendas; equipamento cedido ao canal; prazo comercial e descontos.",
+          "Mistura, dispersão, laboratório e controle ambiental devem acompanhar o portfólio. Substituição de insumo exige validação e pode comprometer lotes já prometidos."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Suporte de aplicação e desempenho demonstrável podem diferenciar fabricantes médios em nichos, sem assumir que disputa nacional de marca seja economicamente viável."
+          ],
+          [
+            "Fragilidade a testar",
+            "Matéria-prima, embalagem, mix e canais determinam margem. Vender tinta por volume sem controlar cobertura e rendimento confunde comparação; sistema tintométrico pode reduzir variedade pronta, mas traz investimento e obrigações no canal."
+          ],
+          [
+            "Oportunidade",
+            "Reforma e nichos técnicos valorizam desempenho e assistência; acompanhar recompra e margem líquida do canal."
+          ],
+          [
+            "Ameaça",
+            "Exposição cambial de pigmentos e aditivos pode ocorrer mesmo em compra nacional. Falha de aderência ou incompatibilidade com substrato traz assistência e reputação, além de reposição."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Resinas, pigmentos e aditivos: verificar alternativas homologadas, prazo e custo de mudança. Matéria-prima, embalagem, mix e canais determinam margem. Vender tinta por volume sem controlar cobertura e rendimento confunde comparação; sistema tintométrico pode reduzir variedade pronta, mas traz investimento e obrigações no canal."
+          ],
+          [
+            "Compradores",
+            "Revendas e aplicação industrial: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Suporte de aplicação e desempenho demonstrável podem diferenciar fabricantes médios em nichos, sem assumir que disputa nacional de marca seja economicamente viável."
+          ],
+          [
+            "Entrantes",
+            "Formulação estável, laboratório e suporte de aplicação são requisitos técnicos; marca, acesso às revendas e equipamentos tintométricos são barreiras comerciais em tintas imobiliárias. Revestimentos industriais exigem homologação por substrato e processo, tornando o histórico de desempenho relevante."
+          ],
+          [
+            "Substitutos",
+            "Revestimentos cerâmicos, papel de parede, laminados, filmes decorativos e materiais com acabamento incorporado podem evitar pintura em certas superfícies. A troca depende de preparo, durabilidade, estética e reparação. Tinta aquosa e solvente podem competir dentro da mesma função, mas não são intercambiáveis sem validar aplicação e cura."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Custo por fórmula; estabilidade do lote; devolução; cobertura; concentração de revendas; equipamento cedido ao canal; prazo comercial e descontos.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Reforma e nichos técnicos valorizam desempenho e assistência; acompanhar recompra e margem líquida do canal.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Insumos sobem, revendas alongam prazo e descontos crescem; observar estoque de cores lentas e custo da assistência.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Escolher uma fórmula e reconciliar custo com compras recentes, rendimento prometido e reclamações. Identificar cessões de máquinas e obrigações de exclusividade ou recompra no canal.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "BNDES · Diversificação da indústria química",
+        "url": "https://web.bndes.gov.br/bib/jspui/bitstream/1408/15322/1/Diversifica%C3%A7%C3%A3o%20da%20ind%C3%BAstria%20qu%C3%ADmica%20brasileira%20-%20sum%C3%A1rio%20do%20estudo.pdf",
+        "purpose": "Estudo estrutural histórico de especialidades. Exclui plásticos commodities do próprio escopo."
+      },
+      {
+        "label": "IBGE · Índice de Preços ao Produtor",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+      },
+      {
+        "label": "Prefeitura de Jundiaí · Materiais e marcas homologadas",
+        "url": "https://compraaberta.jundiai.sp.gov.br/wp-content/uploads/Materiais_Marcas_Homologadas.pdf",
+        "purpose": "Relatório emitido em 20/02/2026, com processos históricos: evidência de especificações e marcas cadastradas, não de compra realizada, volume demandado ou habilitação nacional."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "A pesquisa comercial utiliza catálogos e comunicados empresariais identificados como declarações dos emissores; não substitui auditoria de capacidade, carteira ou demanda realizada. As referências privadas foram preservadas no registro de evidências, sem exibição na lista pública de fontes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as tintas e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como cobertura, durabilidade e rendimento da tinta são comprovados na aplicação do cliente?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: dispersão, formulação, envase, controle do lote ou aplicação no cliente?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual linha e canal geram caixa após pigmentos, resinas, solventes, descontos, devoluções e frete?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Resinas, pigmentos e aditivos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Dispersão e formulação",
+          "detail": "A formulação combina ligante, pigmentos, cargas, veículo e aditivos para desempenho específico. Cor é apenas uma dimensão; cobertura, aderência e durabilidade precisam corresponder ao substrato e à aplicação."
+        },
+        {
+          "id": "2",
+          "label": "Envase e controle",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Revendas e aplicação industrial",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Tintas. Formulação de tintas, vernizes e revestimentos; separar imobiliária, industrial, repintura e impressão, pois homologação e canal de venda diferem. A formulação combina ligante, pigmentos, cargas, veículo e aditivos para desempenho específico. Cor é apenas uma dimensão; cobertura, aderência e durabilidade precisam corresponder ao substrato e à aplicação. O ponto econômico central é: Matéria-prima, embalagem, mix e canais determinam margem. Vender tinta por volume sem controlar cobertura e rendimento confunde comparação; sistema tintométrico pode reduzir variedade pronta, mas traz investimento e obrigações no canal. Para uma empresa média: Compras de insumos, variedade de fórmulas e estoque no canal consomem giro. Equipamento cedido à revenda precisa de contrato de propriedade e retorno; não é recebível comum. No cenário favorável: Reforma e nichos técnicos valorizam desempenho e assistência; acompanhar recompra e margem líquida do canal. No adverso: Insumos sobem, revendas alongam prazo e descontos crescem; observar estoque de cores lentas e custo da assistência. Na visita: Escolher uma fórmula e reconciliar custo com compras recentes, rendimento prometido e reclamações. Identificar cessões de máquinas e obrigações de exclusividade ou recompra no canal. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Pesquisa comercial complementar. O relatório municipal de Jundiaí, emitido em 20/02/2026 e contendo processos históricos, relaciona marcas como Coral, Sherwin-Williams, Lukscolor, Eucatex e Suvinil para tintas de piso. É evidência de um canal institucional e de especificações de produto, não de compras realizadas, participação nacional ou independência societária das marcas. Em comunicado empresarial de 01/10/2025, a BASF informou a conclusão da venda do negócio brasileiro de tintas decorativas à Sherwin-Williams, incluindo Suvinil e Glasu e instalações em Demarchi e Jaboatão. A conclusão foi conferida no comunicado posterior ao anúncio inicial. Não se somam essas marcas como concorrentes societariamente independentes, nem se extrapola a operação para todo o mercado de revestimentos.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/adendo-quatro-recortes.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "6208565ed1cafa5e26f3a5f64f3c97e023feeaf9fbe2189a1118c7f46ac2b118"
+    }
+  },
+  {
+    "group": "quimicos",
+    "topicIndex": 4,
+    "title": "Limpeza",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fabricação de produtos saneantes para limpeza e aplicações profissionais. Não inclui serviços terceirizados de limpeza nem confunde detergente com produto de ação desinfetante.",
+      "Tese analítica: A margem por embalagem difere da margem por aplicação. Frete de produtos diluídos, bonificações do varejo e frascos podem ser relevantes; no profissional, assistência e dosadores alteram o contrato.",
+      "Prioridade na visita: Conferir situação da empresa e de uma amostra de produtos, rótulo versus finalidade, laudos de lote e rastreabilidade. Revisar dosadores e custo real do contrato profissional."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Fabricação de produtos saneantes para limpeza e aplicações profissionais. Não inclui serviços terceirizados de limpeza nem confunde detergente com produto de ação desinfetante.",
+          "Síntese técnica e analítica: A formulação deve manter concentração, estabilidade, compatibilidade de embalagem e finalidade autorizada. Produto concentrado pode reduzir frete por uso, mas precisa de dosagem e treinamento adequados.",
+          "A margem por embalagem difere da margem por aplicação. Frete de produtos diluídos, bonificações do varejo e frascos podem ser relevantes; no profissional, assistência e dosadores alteram o contrato."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Classificação de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/saneantes/classificacao-de-saneantes/",
+            "purpose": "Separar finalidade de limpeza, desinfecção e outras ações; regras variam segundo risco."
+          },
+          {
+            "label": "Anvisa · Atualização da regularização de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-aprova-correcoes-na-rdc-989-2025-e-aprimora-procedimentos-para-produtos-saneantes",
+            "purpose": "Alterações recentes de procedimentos, classificação e rotulagem; verificar texto consolidado para decisões individuais."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O relatório municipal de Jundiaí emitido em 20/02/2026 lista, entre as marcas cadastradas de detergentes, Audax e Spartan em apresentações profissionais e Ypê, Minuano e Limpol em outra apresentação. São exemplos concretos de alternativas em um comprador institucional; processos históricos e cadastro não comprovam compra recente ou participação nacional.",
+          "Em comunicação de 2026, a Unilever PRO dirige seu portfólio a alimentação fora do lar, hospedagem, lavanderias e prestadores de serviços, com marcas como OMO e Cif e soluções de diluição. Trata-se de posicionamento comercial declarado. Não foram adotadas promessas promocionais de economia como resultado independente."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Classificação de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/saneantes/classificacao-de-saneantes/",
+            "purpose": "Separar finalidade de limpeza, desinfecção e outras ações; regras variam segundo risco."
+          },
+          {
+            "label": "Anvisa · Atualização da regularização de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-aprova-correcoes-na-rdc-989-2025-e-aprimora-procedimentos-para-produtos-saneantes",
+            "purpose": "Alterações recentes de procedimentos, classificação e rotulagem; verificar texto consolidado para decisões individuais."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "Prefeitura de Jundiaí · Materiais e marcas homologadas",
+            "url": "https://compraaberta.jundiai.sp.gov.br/wp-content/uploads/Materiais_Marcas_Homologadas.pdf",
+            "purpose": "Relatório emitido em 20/02/2026, com processos históricos: evidência de especificações e marcas cadastradas, não de compra realizada, volume demandado ou habilitação nacional."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Concentração e estabilidade por lote; custo por dose; validade; devoluções; estoque por fórmula e embalagem; prazo de redes e contratos institucionais.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Classificação de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/saneantes/classificacao-de-saneantes/",
+            "purpose": "Separar finalidade de limpeza, desinfecção e outras ações; regras variam segundo risco."
+          },
+          {
+            "label": "Anvisa · Atualização da regularização de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-aprova-correcoes-na-rdc-989-2025-e-aprimora-procedimentos-para-produtos-saneantes",
+            "purpose": "Alterações recentes de procedimentos, classificação e rotulagem; verificar texto consolidado para decisões individuais."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Anvisa publicou ajustes recentes de procedimentos de saneantes. A regra aplicável depende da finalidade e risco; dispensa de registro não significa ausência de regularização. Não foi publicado prazo legal sem revisar o texto consolidado.",
+          "Inferência: Irregularidade, alegação não sustentada ou incompatibilidade de embalagem pode suspender venda e destruir estoque. Diluição incorreta pelo cliente também exige instrução e delimitação de responsabilidade.",
+          "Inferência: Produtos concentrados e suporte técnico podem gerar economia verificável por aplicação; alegações de desinfecção precisam de suporte compatível com a categoria.",
+          "Fato recente: em 04/11/2026, a Anvisa divulgou apreensão e restrições a produtos de limpeza sem regularização. Não é diagnóstico de toda a indústria. Inferência financeira: a visita deve conferir situação de produtos e rastreabilidade antes de aceitar estoque como realização líquida ou recebíveis como livres de contestação.",
+          "Em 01/09/2026, a Ypê anunciou contratações ligadas à expansão industrial em Salto (SP), mencionando nova fábrica de líquidos para atender Sul e Sudeste. É sinal empresarial de investimento em oferta, não prova de fábrica concluída, utilização ou crescimento de todo o mercado. Situação sanitária deve ser verificada por produto e lote, separadamente do anúncio comercial."
+        ],
+        "sources": [
+          {
+            "label": "Anvisa · Classificação de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/saneantes/classificacao-de-saneantes/",
+            "purpose": "Separar finalidade de limpeza, desinfecção e outras ações; regras variam segundo risco."
+          },
+          {
+            "label": "Anvisa · Atualização da regularização de saneantes",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-aprova-correcoes-na-rdc-989-2025-e-aprimora-procedimentos-para-produtos-saneantes",
+            "purpose": "Alterações recentes de procedimentos, classificação e rotulagem; verificar texto consolidado para decisões individuais."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "Anvisa · Apreensão de saneantes sem regularização",
+            "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-determina-apreensao-de-produtos-de-limpeza-sem-registro",
+            "purpose": "Publicado em 04/11/2026; ação pontual, não estimativa da incidência de irregularidades no setor."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Matérias-primas e embalagem são pagas antes do varejo ou cliente profissional. Contrato recorrente não garante margem se inclui dosadores, manutenção e consumo mínimo não respeitado.",
+          "Mistura, envase, laboratório e segregação precisam atender às fórmulas fabricadas. Expansão comercial não deve anteceder regularização e validação do produto.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo.",
+          "Inferência comercial: limpeza profissional exige comparar custo por aplicação, treinamento e reposição do concentrado; o varejo depende do giro de apresentações e negociação com o canal. O cadastro municipal confirma que formulação, uso e apresentação entram na especificação. Uma empresa média deve separar rentabilidade de contratos com suporte e dos produtos vendidos sem serviço, incluindo frete, diluidores e assistência."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Concentração e estabilidade por lote; custo por dose; validade; devoluções; estoque por fórmula e embalagem; prazo de redes e contratos institucionais.",
+          "Mistura, envase, laboratório e segregação precisam atender às fórmulas fabricadas. Expansão comercial não deve anteceder regularização e validação do produto."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Produtos concentrados e suporte técnico podem gerar economia verificável por aplicação; alegações de desinfecção precisam de suporte compatível com a categoria."
+          ],
+          [
+            "Fragilidade a testar",
+            "A margem por embalagem difere da margem por aplicação. Frete de produtos diluídos, bonificações do varejo e frascos podem ser relevantes; no profissional, assistência e dosadores alteram o contrato."
+          ],
+          [
+            "Oportunidade",
+            "Carteira profissional renovada e dosagem eficiente aumentam recorrência com menos assistência; acompanhar custo por aplicação e retenção."
+          ],
+          [
+            "Ameaça",
+            "Irregularidade, alegação não sustentada ou incompatibilidade de embalagem pode suspender venda e destruir estoque. Diluição incorreta pelo cliente também exige instrução e delimitação de responsabilidade."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Tensoativos e ativos: verificar alternativas homologadas, prazo e custo de mudança. A margem por embalagem difere da margem por aplicação. Frete de produtos diluídos, bonificações do varejo e frascos podem ser relevantes; no profissional, assistência e dosadores alteram o contrato."
+          ],
+          [
+            "Compradores",
+            "Varejo e uso profissional: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Produtos concentrados e suporte técnico podem gerar economia verificável por aplicação; alegações de desinfecção precisam de suporte compatível com a categoria."
+          ],
+          [
+            "Entrantes",
+            "Regularização da empresa e dos produtos, estabilidade da fórmula, rastreabilidade e comprovação de alegações sanitárias restringem entrada formal. No canal profissional, dosadores, treinamento e rotina de abastecimento adicionam barreiras. Marca própria de varejo exige qualificação do fabricante, não apenas rótulo novo."
+          ],
+          [
+            "Substitutos",
+            "Limpeza mecânica, vapor ou tecnologias sem o mesmo agente químico podem substituir certas etapas, desde que atendam ao risco e ao protocolo da aplicação. Terceirizar a limpeza substitui a forma de contratação, não necessariamente o consumo de saneantes. Concentrados mudam dosagem e logística, mas precisam preservar eficácia e segurança."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Concentração e estabilidade por lote; custo por dose; validade; devoluções; estoque por fórmula e embalagem; prazo de redes e contratos institucionais.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Carteira profissional renovada e dosagem eficiente aumentam recorrência com menos assistência; acompanhar custo por aplicação e retenção.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Lote irregular ou produto instável gera retirada e perda de contratos; acompanhar rastreabilidade, reclamações e validade.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Conferir situação da empresa e de uma amostra de produtos, rótulo versus finalidade, laudos de lote e rastreabilidade. Revisar dosadores e custo real do contrato profissional.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Anvisa · Classificação de saneantes",
+        "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/saneantes/classificacao-de-saneantes/",
+        "purpose": "Separar finalidade de limpeza, desinfecção e outras ações; regras variam segundo risco."
+      },
+      {
+        "label": "Anvisa · Atualização da regularização de saneantes",
+        "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-aprova-correcoes-na-rdc-989-2025-e-aprimora-procedimentos-para-produtos-saneantes",
+        "purpose": "Alterações recentes de procedimentos, classificação e rotulagem; verificar texto consolidado para decisões individuais."
+      },
+      {
+        "label": "IBGE · Índice de Preços ao Produtor",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+      },
+      {
+        "label": "Anvisa · Apreensão de saneantes sem regularização",
+        "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/anvisa-determina-apreensao-de-produtos-de-limpeza-sem-registro",
+        "purpose": "Publicado em 04/11/2026; ação pontual, não estimativa da incidência de irregularidades no setor."
+      },
+      {
+        "label": "Prefeitura de Jundiaí · Materiais e marcas homologadas",
+        "url": "https://compraaberta.jundiai.sp.gov.br/wp-content/uploads/Materiais_Marcas_Homologadas.pdf",
+        "purpose": "Relatório emitido em 20/02/2026, com processos históricos: evidência de especificações e marcas cadastradas, não de compra realizada, volume demandado ou habilitação nacional."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "A pesquisa comercial utiliza catálogos e comunicados empresariais identificados como declarações dos emissores; não substitui auditoria de capacidade, carteira ou demanda realizada. As referências privadas foram preservadas no registro de evidências, sem exibição na lista pública de fontes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra os produtos saneantes e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Que resultado de limpeza e segurança de uso o cliente exige e como vocês o demonstram?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: formulação, envase, armazenagem, transporte ou dosagem no cliente?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual contrato remunera formulação, embalagem, logística e suporte depois de diluição, descontos e prazo de pagamento?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Tensoativos e ativos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Formulação controlada",
+          "detail": "A formulação deve manter concentração, estabilidade, compatibilidade de embalagem e finalidade autorizada. Produto concentrado pode reduzir frete por uso, mas precisa de dosagem e treinamento adequados."
+        },
+        {
+          "id": "2",
+          "label": "Envase e regularização",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Varejo e uso profissional",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Limpeza. Fabricação de produtos saneantes para limpeza e aplicações profissionais. Não inclui serviços terceirizados de limpeza nem confunde detergente com produto de ação desinfetante. A formulação deve manter concentração, estabilidade, compatibilidade de embalagem e finalidade autorizada. Produto concentrado pode reduzir frete por uso, mas precisa de dosagem e treinamento adequados. O ponto econômico central é: A margem por embalagem difere da margem por aplicação. Frete de produtos diluídos, bonificações do varejo e frascos podem ser relevantes; no profissional, assistência e dosadores alteram o contrato. Para uma empresa média: Matérias-primas e embalagem são pagas antes do varejo ou cliente profissional. Contrato recorrente não garante margem se inclui dosadores, manutenção e consumo mínimo não respeitado. No cenário favorável: Carteira profissional renovada e dosagem eficiente aumentam recorrência com menos assistência; acompanhar custo por aplicação e retenção. No adverso: Lote irregular ou produto instável gera retirada e perda de contratos; acompanhar rastreabilidade, reclamações e validade. Na visita: Conferir situação da empresa e de uma amostra de produtos, rótulo versus finalidade, laudos de lote e rastreabilidade. Revisar dosadores e custo real do contrato profissional. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Pesquisa comercial complementar. O relatório municipal de Jundiaí emitido em 20/02/2026 lista, entre as marcas cadastradas de detergentes, Audax e Spartan em apresentações profissionais e Ypê, Minuano e Limpol em outra apresentação. São exemplos concretos de alternativas em um comprador institucional; processos históricos e cadastro não comprovam compra recente ou participação nacional. Em comunicação de 2026, a Unilever PRO dirige seu portfólio a alimentação fora do lar, hospedagem, lavanderias e prestadores de serviços, com marcas como OMO e Cif e soluções de diluição. Trata-se de posicionamento comercial declarado. Não foram adotadas promessas promocionais de economia como resultado independente.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/adendo-quatro-recortes.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "3797b6ba7aa283df047631bd32a4d752f60c0388fb5519599e7b18a6ac3aa8ed"
+    }
+  },
+  {
+    "group": "quimicos",
+    "topicIndex": 5,
+    "title": "Borracha",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Compostos e artefatos de borracha natural ou sintética; separar beneficiamento do látex, pneumáticos, peças técnicas e reforma de pneus.",
+      "Tese analítica: O custo inclui composto, energia, moldes, ciclo de cura e peças rejeitadas. Uma peça barata pode ter responsabilidade elevada em equipamento crítico; o lote só é econômico se cumpre especificação.",
+      "Prioridade na visita: Rastrear um lote desde o composto até ensaio e entrega. Examinar homologação, condições de aplicação, garantia e alternativa de fornecimento de insumos."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Compostos e artefatos de borracha natural ou sintética; separar beneficiamento do látex, pneumáticos, peças técnicas e reforma de pneus.",
+          "Síntese técnica e analítica: Formulação e vulcanização definem elasticidade, resistência e estabilidade. Troca entre borracha natural e sintética não é automática: depende de aplicação, ensaio e homologação.",
+          "O custo inclui composto, energia, moldes, ciclo de cura e peças rejeitadas. Uma peça barata pode ter responsabilidade elevada em equipamento crítico; o lote só é econômico se cumpre especificação."
+        ],
+        "sources": [
+          {
+            "label": "IEA · Custo de produção da borracha natural",
+            "url": "https://iea.agricultura.sp.gov.br/OUT/TerTexto.php?codTexto=16293",
+            "purpose": "Relação entre heveicultura, importações e indústria consumidora; custos rurais não são custos do transformador."
+          },
+          {
+            "label": "Governo de São Paulo · Referência de importação de borracha",
+            "url": "https://agricultura.sp.gov.br/arquivos/21502",
+            "purpose": "Indicador mensal de insumo publicado em setembro de 2026; não é preço de venda de artefato."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "O IEA descreve ligação entre heveicultura, pneus e artefatos. São Paulo é referência documentada na produção e no beneficiamento da borracha natural; isso não constitui ranking de fabricantes de artefatos. Pneumáticos de grande escala não representam a economia de uma fábrica média de vedações.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades."
+        ],
+        "sources": [
+          {
+            "label": "IEA · Custo de produção da borracha natural",
+            "url": "https://iea.agricultura.sp.gov.br/OUT/TerTexto.php?codTexto=16293",
+            "purpose": "Relação entre heveicultura, importações e indústria consumidora; custos rurais não são custos do transformador."
+          },
+          {
+            "label": "Governo de São Paulo · Referência de importação de borracha",
+            "url": "https://agricultura.sp.gov.br/arquivos/21502",
+            "purpose": "Indicador mensal de insumo publicado em setembro de 2026; não é preço de venda de artefato."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Custo do composto; dureza e propriedades por lote; tempo de cura; refugo; vida em serviço; prazo de homologação; concentração por montadora ou cliente industrial.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas estão explicitadas. Há séries numéricas somente nos recortes com pontos efetivamente recuperados; nenhum ponto foi interpolado."
+        ],
+        "sources": [
+          {
+            "label": "IEA · Custo de produção da borracha natural",
+            "url": "https://iea.agricultura.sp.gov.br/OUT/TerTexto.php?codTexto=16293",
+            "purpose": "Relação entre heveicultura, importações e indústria consumidora; custos rurais não são custos do transformador."
+          },
+          {
+            "label": "Governo de São Paulo · Referência de importação de borracha",
+            "url": "https://agricultura.sp.gov.br/arquivos/21502",
+            "purpose": "Indicador mensal de insumo publicado em setembro de 2026; não é preço de venda de artefato."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Referência observada de insumo: o Governo de São Paulo publicou preço de importação de borracha natural de R$ 16,37 por quilograma para agosto de 2026, divulgado em setembro. Não é preço de borracha sintética, nem preço de venda de peças, nem cotação ao vivo.",
+          "O Governo de São Paulo publicou uma referência recente de importação de borracha natural, útil como insumo e não preço de artefato. Não se presume que essa referência seja o custo efetivo do fabricante ou a cotação mais recente disponível no dia.",
+          "Inferência: Preço de insumo importado combina referência externa, câmbio e frete. Demanda de reposição, montadora e indústria pode divergir; falha em serviço pode gerar indenização superior ao preço da peça.",
+          "Inferência: Peças técnicas, recuperação e manutenção industrial podem valorizar engenharia de aplicação e rastreabilidade, desde que requisitos e responsabilidades estejam demonstrados."
+        ],
+        "sources": [
+          {
+            "label": "IEA · Custo de produção da borracha natural",
+            "url": "https://iea.agricultura.sp.gov.br/OUT/TerTexto.php?codTexto=16293",
+            "purpose": "Relação entre heveicultura, importações e indústria consumidora; custos rurais não são custos do transformador."
+          },
+          {
+            "label": "Governo de São Paulo · Referência de importação de borracha",
+            "url": "https://agricultura.sp.gov.br/arquivos/21502",
+            "purpose": "Indicador mensal de insumo publicado em setembro de 2026; não é preço de venda de artefato."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Compra de borracha e cargas precede mistura, cura e recebimento. Produtos homologados e moldes dedicados elevam concentração; recebível deve ser avaliado com histórico de glosa e garantia.",
+          "Misturadores, prensas e laboratório devem ser dimensionados ao composto e à cura, incluindo segurança ocupacional. Redução do tempo de ciclo precisa preservar qualidade.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Custo do composto; dureza e propriedades por lote; tempo de cura; refugo; vida em serviço; prazo de homologação; concentração por montadora ou cliente industrial.",
+          "Misturadores, prensas e laboratório devem ser dimensionados ao composto e à cura, incluindo segurança ocupacional. Redução do tempo de ciclo precisa preservar qualidade."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Peças técnicas, recuperação e manutenção industrial podem valorizar engenharia de aplicação e rastreabilidade, desde que requisitos e responsabilidades estejam demonstrados."
+          ],
+          [
+            "Fragilidade a testar",
+            "O custo inclui composto, energia, moldes, ciclo de cura e peças rejeitadas. Uma peça barata pode ter responsabilidade elevada em equipamento crítico; o lote só é econômico se cumpre especificação."
+          ],
+          [
+            "Oportunidade",
+            "Demanda industrial recorrente e qualidade consistente sustentam margem após manutenção; acompanhar devolução e custo do composto."
+          ],
+          [
+            "Ameaça",
+            "Preço de insumo importado combina referência externa, câmbio e frete. Demanda de reposição, montadora e indústria pode divergir; falha em serviço pode gerar indenização superior ao preço da peça."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Borracha e cargas: verificar alternativas homologadas, prazo e custo de mudança. O custo inclui composto, energia, moldes, ciclo de cura e peças rejeitadas. Uma peça barata pode ter responsabilidade elevada em equipamento crítico; o lote só é econômico se cumpre especificação."
+          ],
+          [
+            "Compradores",
+            "Autopeças e usos industriais: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Peças técnicas, recuperação e manutenção industrial podem valorizar engenharia de aplicação e rastreabilidade, desde que requisitos e responsabilidades estejam demonstrados."
+          ],
+          [
+            "Entrantes",
+            "Domínio da formulação e cura, controle de propriedades e homologação são barreiras para artefatos técnicos. Peças críticas exigem histórico de durabilidade e rastreabilidade. Pneus têm requisitos industriais e comerciais distintos de vedações sob encomenda; não se deve inferir barreiras iguais."
+          ],
+          [
+            "Substitutos",
+            "Elastômeros termoplásticos, silicone, poliuretano e soluções mecânicas ou metálicas podem substituir certos artefatos de borracha. Temperatura, fluido, fadiga e vedação limitam equivalência e exigem ensaio. Trocar borracha natural por sintética dentro do composto é substituição de insumo, nem sempre de produto concorrente."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Custo do composto; dureza e propriedades por lote; tempo de cura; refugo; vida em serviço; prazo de homologação; concentração por montadora ou cliente industrial.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Demanda industrial recorrente e qualidade consistente sustentam margem após manutenção; acompanhar devolução e custo do composto.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Insumos e frete sobem antes do repasse, ou cliente interrompe produção; monitorar estoque por composto e homologação, além de reclamações em uso.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Rastrear um lote desde o composto até ensaio e entrega. Examinar homologação, condições de aplicação, garantia e alternativa de fornecimento de insumos.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "IEA · Custo de produção da borracha natural",
+        "url": "https://iea.agricultura.sp.gov.br/OUT/TerTexto.php?codTexto=16293",
+        "purpose": "Relação entre heveicultura, importações e indústria consumidora; custos rurais não são custos do transformador."
+      },
+      {
+        "label": "Governo de São Paulo · Referência de importação de borracha",
+        "url": "https://agricultura.sp.gov.br/arquivos/21502",
+        "purpose": "Indicador mensal de insumo publicado em setembro de 2026; não é preço de venda de artefato."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra os compostos e componentes de borracha e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como vocês comprovam dureza, resistência e vida útil do componente para a aplicação contratada?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: mistura do composto, moldagem, vulcanização, ensaio ou uso do componente?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual componente gera margem após composto, molde, vulcanização, refugo e custo das devoluções?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Borracha e cargas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Mistura de compostos",
+          "detail": "Formulação e vulcanização definem elasticidade, resistência e estabilidade. Troca entre borracha natural e sintética não é automática: depende de aplicação, ensaio e homologação."
+        },
+        {
+          "id": "2",
+          "label": "Moldagem e vulcanização",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Autopeças e usos industriais",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Borracha. Compostos e artefatos de borracha natural ou sintética; separar beneficiamento do látex, pneumáticos, peças técnicas e reforma de pneus. Formulação e vulcanização definem elasticidade, resistência e estabilidade. Troca entre borracha natural e sintética não é automática: depende de aplicação, ensaio e homologação. O ponto econômico central é: O custo inclui composto, energia, moldes, ciclo de cura e peças rejeitadas. Uma peça barata pode ter responsabilidade elevada em equipamento crítico; o lote só é econômico se cumpre especificação. Para uma empresa média: Compra de borracha e cargas precede mistura, cura e recebimento. Produtos homologados e moldes dedicados elevam concentração; recebível deve ser avaliado com histórico de glosa e garantia. No cenário favorável: Demanda industrial recorrente e qualidade consistente sustentam margem após manutenção; acompanhar devolução e custo do composto. No adverso: Insumos e frete sobem antes do repasse, ou cliente interrompe produção; monitorar estoque por composto e homologação, além de reclamações em uso. Na visita: Rastrear um lote desde o composto até ensaio e entrega. Examinar homologação, condições de aplicação, garantia e alternativa de fornecimento de insumos. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "20676b88f6328b7c73b4a9a0cbef45633a7568e01d1db24cec018ddd7595ad5f"
+    }
+  }
+]

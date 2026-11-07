@@ -14,7 +14,7 @@ const CalculatorHelp = ({ title, label }) => React.createElement('button', { typ
 const nodes = el => Array.isArray(el) ? el.flatMap(nodes) : el && typeof el === 'object' ? [el, ...nodes(el.props?.children)] : []
 const textOf = el => Array.isArray(el) ? el.map(textOf).join('') : el && typeof el === 'object' ? el.type === CalculatorHelp || String(el.props?.className ?? '').split(/\s+/).includes('sr-only') ? '' : textOf(el.props?.children) : typeof el === 'string' || typeof el === 'number' ? String(el) : ''
 async function setup(t) {
-  const deps = { react: React, './contaGarantida.js': { ...model, cgInitialForm: () => model.cgInitialForm('2026-11-05') }, './ContaGarantida.css': {}, './CalculatorHelp.jsx': CalculatorHelp }
+  const deps = { react: React, './ComparativoAlongamento.jsx': () => null, './contaGarantida.js': { ...model, cgInitialForm: () => model.cgInitialForm('2026-11-05') }, './ContaGarantida.css': {}, './CalculatorHelp.jsx': CalculatorHelp }
   for (const file of ['MoneyInput.jsx', 'ContaGarantida.jsx']) {
     const source = await readFile(new URL('../src/' + file, import.meta.url), 'utf8')
     const { code } = await transform(source, { loader: 'jsx', format: 'cjs', jsx: 'automatic' })
@@ -82,7 +82,7 @@ test('trocar modos, editar, adicionar/remover repetidamente e voltar sem efeitos
   assert.equal(h.back, 1)
 })
 
-test('prazo por data, erros inline, feriados e IOF manual operam sem resultados antigos', async t => {
+test('prazo por data, erros inline, feriados e IOF automático operam sem resultados antigos', async t => {
   const h = await setup(t)
   await h.change('amount', '1000')
   await h.change('rate', '3')
@@ -98,11 +98,10 @@ test('prazo por data, erros inline, feriados e IOF manual operam sem resultados 
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
   await h.change('holidays', '2026-11-09')
   await h.change('taxProfile', 'manual')
-  assert.ok(h.field('iofDaily'))
-  await h.change('iofDaily', '')
+  assert.equal(h.field('iofDaily'), undefined)
+  assert.equal(h.field('iofAdditional'), undefined)
   assert.doesNotMatch(h.text(), /Resultado estimado do período/)
-  await h.change('iofDaily', '0')
-  await h.change('iofAdditional', '0')
+  await h.change('taxProfile', 'pj')
   assert.match(h.text(), /Resultado estimado do período/)
 })
 

@@ -1,0 +1,606 @@
+[
+  {
+    "id": "armazenagem-2015",
+    "value": 166.1,
+    "unit": "milhões de toneladas",
+    "period": "segundo semestre de 2015",
+    "scope": "Brasil, capacidade útil de estabelecimentos ativos da Pesquisa de Estoques",
+    "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/01_Comentarios/2015/estoque_201502comentarios.pdf",
+    "label": "Capacidade útil agrícola",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Conferido em PDF integral oficial pela autoria; aguarda revisão independente",
+    "location": "Página 1, comentários"
+  },
+  {
+    "id": "armazenagem-2025",
+    "value": 233.8,
+    "unit": "milhões de toneladas",
+    "period": "segundo semestre de 2025",
+    "scope": "Brasil, capacidade útil de estabelecimentos ativos da Pesquisa de Estoques",
+    "url": "https://ftp.ibge.gov.br/Estoque/Pesquisa_de_Estoques_%5Bsemestral%5D/2025_2_semestre/BR_2_semestre_2025.pdf",
+    "label": "Capacidade útil agrícola",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Conferido em PDF integral oficial pela autoria; aguarda revisão independente",
+    "location": "Página XI, capacidade instalada"
+  },
+  {
+    "id": "portos-2024",
+    "value": 1.32,
+    "unit": "bilhões de toneladas",
+    "period": "2024",
+    "scope": "Brasil, movimentação aquaviária reportada pela ANTAQ",
+    "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+    "label": "Movimentação anual",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Recuperado na fonte oficial; revisão independente pendente"
+  },
+  {
+    "id": "portos-2025",
+    "value": 1.4,
+    "unit": "bilhões de toneladas",
+    "period": "2025",
+    "scope": "Brasil, movimentação aquaviária reportada pela ANTAQ",
+    "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/noticias/2026/setor-aquaviario-brasileiro-movimentou-em-2025-1-4-bi-de-toneladas",
+    "label": "Movimentação anual",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Recuperado na fonte oficial; revisão independente pendente"
+  },
+  {
+    "id": "pms-cargas-2023",
+    "value": 10.1,
+    "unit": "% variação acumulada no ano",
+    "period": "2023",
+    "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+    "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+    "location": "transporte-logistica[0].charts[0]",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "API oficial diretamente recuperada; revisão independente pendente"
+  },
+  {
+    "id": "pms-cargas-2024",
+    "value": -4.5,
+    "unit": "% variação acumulada no ano",
+    "period": "2024",
+    "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+    "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+    "location": "transporte-logistica[0].charts[0]",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "API oficial diretamente recuperada; revisão independente pendente"
+  },
+  {
+    "id": "pms-cargas-2025",
+    "value": 2.0,
+    "unit": "% variação acumulada no ano",
+    "period": "2025",
+    "scope": "Brasil, volume serviços rodoviários de cargas, PMS",
+    "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/201612,201712,201812,201912,202012,202112,202212,202312,202412,202512/c12355/56696/c11046/56726",
+    "location": "transporte-logistica[0].charts[0]",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "API oficial diretamente recuperada; revisão independente pendente"
+  },
+  {
+    "id": "pms-cargas-202608",
+    "value": 0.5,
+    "unit": "% variação acumulada no ano",
+    "period": "janeiro–agosto de 2026 contra igual período de 2025",
+    "scope": "Brasil, volume rodoviário de cargas, PMS",
+    "url": "https://apisidra.ibge.gov.br/values/t/8688/n1/all/v/11625/p/202608/c12355/56696/c11046/56726",
+    "location": "transporte-logistica[0].sections.conjuntura",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Fonte oficial recuperada; revisão independente pendente"
+  },
+  {
+    "id": "biodiesel-mistura-2025",
+    "value": 15,
+    "unit": "% em volume",
+    "period": "a partir de agosto de 2025 na fonte consultada",
+    "scope": "Brasil, mistura obrigatória de biodiesel ao diesel",
+    "url": "https://www.gov.br/anp/pt-br/assuntos/producao-e-fornecimento-de-biocombustiveis/biodiesel/apresentacao",
+    "location": "alimentos-agroindustria[3].sections.conjuntura",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Fonte oficial recuperada; revisão independente pendente"
+  },
+  {
+    "id": "cmed-industria-2024",
+    "value": 160.7,
+    "unit": "R$ bilhões nominais",
+    "period": "2024",
+    "scope": "Brasil, faturamento industrial farmacêutico Sammed, total aproximado",
+    "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+    "location": "atacado[1].charts[0]",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Fonte oficial recuperada; revisão independente pendente"
+  },
+  {
+    "id": "cmed-industria-2025",
+    "value": 182,
+    "unit": "R$ bilhões nominais",
+    "period": "2025",
+    "scope": "Brasil, faturamento industrial farmacêutico Sammed, total aproximado",
+    "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+    "location": "atacado[1].charts[0]",
+    "accessedAt": "2026-11-06",
+    "publicationDate": null,
+    "status": "Fonte oficial recuperada; revisão independente pendente"
+  },
+  {
+    "topicIndex": 0,
+    "value": 30651802,
+    "unit": "cabeças",
+    "period": "2015",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7739650,
+      7633038,
+      7585455,
+      7693659
+    ],
+    "id": "food-sidra-0-0",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 29702048,
+    "unit": "cabeças",
+    "period": "2016",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7319737,
+      7654362,
+      7321596,
+      7406353
+    ],
+    "id": "food-sidra-0-1",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 30866663,
+    "unit": "cabeças",
+    "period": "2017",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7398120,
+      7423406,
+      7986421,
+      8058716
+    ],
+    "id": "food-sidra-0-2",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 32042688,
+    "unit": "cabeças",
+    "period": "2018",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7773005,
+      7767877,
+      8316874,
+      8184932
+    ],
+    "id": "food-sidra-0-3",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 32445850,
+    "unit": "cabeças",
+    "period": "2019",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7927343,
+      7938871,
+      8498729,
+      8080907
+    ],
+    "id": "food-sidra-0-4",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 29887036,
+    "unit": "cabeças",
+    "period": "2020",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7336730,
+      7403577,
+      7773780,
+      7372949
+    ],
+    "id": "food-sidra-0-5",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 27704853,
+    "unit": "cabeças",
+    "period": "2021",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6597323,
+      7126495,
+      7019544,
+      6961491
+    ],
+    "id": "food-sidra-0-6",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 29947584,
+    "unit": "cabeças",
+    "period": "2022",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7011231,
+      7428815,
+      7963127,
+      7544411
+    ],
+    "id": "food-sidra-0-7",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 34101806,
+    "unit": "cabeças",
+    "period": "2023",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      7466521,
+      8478163,
+      8997920,
+      9159202
+    ],
+    "id": "food-sidra-0-8",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 39689184,
+    "unit": "cabeças",
+    "period": "2024",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      9433520,
+      10067712,
+      10500586,
+      9687366
+    ],
+    "id": "food-sidra-0-9",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 42952312,
+    "unit": "cabeças",
+    "period": "2025",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      9962917,
+      10585635,
+      11347487,
+      11056273
+    ],
+    "id": "food-sidra-0-10",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 10311847,
+    "unit": "cabeças",
+    "period": "1º trimestre 2026",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Observação direta",
+    "id": "food-sidra-0-11",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 0,
+    "value": 10721343,
+    "unit": "cabeças",
+    "period": "2º trimestre 2026",
+    "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Observação direta",
+    "id": "food-sidra-0-12",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[0]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 24062308,
+    "unit": "mil litros",
+    "period": "2015",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6135395,
+      5645460,
+      5990688,
+      6290765
+    ],
+    "id": "food-sidra-1-13",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 23169654,
+    "unit": "mil litros",
+    "period": "2016",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      5861377,
+      5219521,
+      5848661,
+      6240095
+    ],
+    "id": "food-sidra-1-14",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 24333511,
+    "unit": "mil litros",
+    "period": "2017",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      5861576,
+      5647942,
+      6279291,
+      6544702
+    ],
+    "id": "food-sidra-1-15",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 24457864,
+    "unit": "mil litros",
+    "period": "2018",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6019432,
+      5478583,
+      6256214,
+      6703635
+    ],
+    "id": "food-sidra-1-16",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 25011825,
+    "unit": "mil litros",
+    "period": "2019",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6195154,
+      5860992,
+      6283741,
+      6671938
+    ],
+    "id": "food-sidra-1-17",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 25641262,
+    "unit": "mil litros",
+    "period": "2020",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6447161,
+      5874522,
+      6516870,
+      6802709
+    ],
+    "id": "food-sidra-1-18",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 25121798,
+    "unit": "mil litros",
+    "period": "2021",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6576168,
+      5839306,
+      6206647,
+      6499677
+    ],
+    "id": "food-sidra-1-19",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 23918221,
+    "unit": "mil litros",
+    "period": "2022",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      5954427,
+      5499132,
+      6148420,
+      6316242
+    ],
+    "id": "food-sidra-1-20",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 24605600,
+    "unit": "mil litros",
+    "period": "2023",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6006785,
+      5789617,
+      6318682,
+      6490516
+    ],
+    "id": "food-sidra-1-21",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 25366096,
+    "unit": "mil litros",
+    "period": "2024",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6280522,
+      5943220,
+      6358355,
+      6783999
+    ],
+    "id": "food-sidra-1-22",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 27613017,
+    "unit": "mil litros",
+    "period": "2025",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Soma4 trimestres",
+    "inputs": [
+      6608360,
+      6549388,
+      7087761,
+      7367508
+    ],
+    "id": "food-sidra-1-23",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 6786539,
+    "unit": "mil litros",
+    "period": "1º trimestre 2026",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Observação direta",
+    "id": "food-sidra-1-24",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  },
+  {
+    "topicIndex": 1,
+    "value": 6613992,
+    "unit": "mil litros",
+    "period": "2º trimestre 2026",
+    "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+    "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+    "accessedAt": "2026-11-06",
+    "method": "Observação direta",
+    "id": "food-sidra-1-25",
+    "status": "API integral conferida pela autoria; revisão independente pendente",
+    "location": "alimentos-agroindustria[1]"
+  }
+]

@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-06",
+  "scope": "Documental parcial. Revisão em andamento; nenhuma aprovação nesta rodada.",
+  "numericAudit": "96 ocorrências nos quatro grupos conferidas por revisor independente de logística; manufacturing-independent-review-logistics.json. Não reextraídas por este revisor.",
+  "studies": [
+    {
+      "id": "textil:0",
+      "title": "Fiação",
+      "sha256": "fbe6ba041b91966b37d59afabf99f4e67f912087d7216a45a56105222164c459",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Oferta comercial específica de fios e suas aplicações; polo geral e empresas integradas históricas não demonstram segmento atual.",
+      "other": null
+    },
+    {
+      "id": "textil:1",
+      "title": "Tecelagem",
+      "sha256": "32a1404da087e686082113bee896d40e37397be745d3c12f8825af3f18a7b752",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Exemplo verificável de tecidos planos, aplicações/clientes e canal; polo geral não identifica tecelagem.",
+      "other": null
+    },
+    {
+      "id": "textil:2",
+      "title": "Malharia",
+      "sha256": "b9d2a2803308e8762b585ceb3ea5ae1dbd0f534ee5677097dcf28695545546f3",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Exemplo de oferta comercial de malhas por aplicação; polo da cadeia não identifica malharia.",
+      "other": null
+    },
+    {
+      "id": "textil:3",
+      "title": "Tinturaria",
+      "sha256": "853922a92f5a8814e10d05de42ea053dbea83906edbebfc2e516cb0d19e78978",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Exemplo verificável de serviço de tingimento/acabamento e mercado comprador; polo geral não demonstra prestadores.",
+      "other": null
+    },
+    {
+      "id": "textil:4",
+      "title": "Confecção",
+      "sha256": "ff9e665a93e1fa800d043f1d6f2379ddba2beccb495a2e780d25409541082817",
+      "verdict": "Requer correção",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": null,
+      "other": null
+    },
+    {
+      "id": "textil:5",
+      "title": "Tecidos técnicos",
+      "sha256": "7ff321eccbe372487ae2ad7e409954bda4afdc749eba2fa49dc2d9e6a1358dd7",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Caso específico de aplicação técnica, fornecedor e cliente/uso; polo geral e IPP amplo não bastam.",
+      "other": null
+    },
+    {
+      "id": "construcao:0",
+      "title": "Construção residencial",
+      "sha256": "035821acbe5cbceca9cc960fb096c4254c2ad0845cd65f28b0826b23fe185966",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": "Referência concreta de oferta/produto/canal residencial ou contratação, além de PAIC/SINAPI.",
+      "other": null
+    },
+    {
+      "id": "construcao:1",
+      "title": "Galpões",
+      "sha256": "06d3dcf972f3d74413940b788bb324397f806e29d7447cf69318e8f052ce3ff1",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": "Oferta/locação/empreendimento comercial verificável; EIV de projeto não construído não demonstra mercado corrente.",
+      "other": null
+    },
+    {
+      "id": "construcao:2",
+      "title": "Infraestrutura",
+      "sha256": "cb3be8f42eff5357a86071573d8e21503421c71aee0abad1fc3097d691df6508",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": "Contrato ou obra específica com estágio identificado, além da página de agenda Novo PAC.",
+      "other": null
+    },
+    {
+      "id": "construcao:3",
+      "title": "Cimento",
+      "sha256": "7124f5e549863e116b9a22b773a0e20923efc374dbd1c72ef93b21c411330df8",
+      "verdict": "Requer correção",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": null,
+      "other": null
+    },
+    {
+      "id": "construcao:4",
+      "title": "Cerâmica",
+      "sha256": "0251951c5ff38224ecdcf8c2c39998d23303c5848fba008059b1e118553cab0e",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": "Exemplos comerciais ou demanda por família cerâmica; IFRN confirma pesquisa, não adoção ou oferta comercial.",
+      "other": "Cenário adverso, SWOT e narrativa negam iniciativa recente apesar da inclusão IFRN."
+    },
+    {
+      "id": "construcao:5",
+      "title": "Vidros",
+      "sha256": "1c87231807b890173b72bbbfcd56aa87b90061d96bef44fc4192a5223acce411",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos.",
+      "essentialEvidenceMissing": "Exemplo de vidro plano/beneficiamento, aplicações e fornecedor/canal contemporâneo.",
+      "other": null
+    },
+    {
+      "id": "construcao:6",
+      "title": "Esquadrias",
+      "sha256": "e8a05882d0e22c4a816771dfbe74f4927f997630691e3963a40be25cf1aaf8f0",
+      "verdict": "Insuficiente para validar",
+      "highDefect": "Porter: substitutos confundidos com melhorias e oportunidades; entrantes genéricos. SWOT Ameaças contém descrição/limitação de fonte em vez de ameaça externa.",
+      "essentialEvidenceMissing": "Exemplo verificável de oferta de esquadrias por material/aplicação; programa de qualidade não mede mercado.",
+      "other": null
+    }
+  ]
+}

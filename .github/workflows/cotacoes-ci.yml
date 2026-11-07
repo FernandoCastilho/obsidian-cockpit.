@@ -1,5 +1,8 @@
 name: Cotações CI
 on:
+  push:
+    branches: ['feat/estudos-setoriais-completos']
+    paths: ['cotacoes/**', 'docs/sector-research/**', '.github/workflows/cotacoes-ci.yml']
   pull_request:
     paths: ['cotacoes/**', '.github/workflows/cotacoes-ci.yml']
 permissions:
@@ -28,7 +31,7 @@ jobs:
   smoke:
     runs-on: ubuntu-24.04
     needs: test-build
-    timeout-minutes: 15
+    timeout-minutes: 25
     defaults:
       run:
         working-directory: cotacoes
@@ -52,13 +55,50 @@ jobs:
           npm install --no-save playwright@1.63.0
           google-chrome --version
       - name: Servir o build
+        id: serve
         run: |
           nohup python3 -m http.server 8768 --bind 127.0.0.1 --directory dist > "$RUNNER_TEMP/server.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8768/ > /dev/null && break; sleep 1; done
       - name: Conferir curadorias de tributos e escala 6x1
         run: CURADORIA_QA_OUTPUT="$RUNNER_TEMP/qa-universal/curadoria" node scripts/smoke-curadoria.cjs
-      - name: Conferir largura, ajudas e fluxos das seis calculadoras
+      - name: Conferir estudo histórico de controle de juros em três larguras
+        run: JUROS_QA_OUTPUT="$RUNNER_TEMP/qa-juros" node scripts/smoke-aprender-juros.cjs
+      - name: Capturas e relatório do estudo de juros
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-juros-design
+          path: ${{ runner.temp }}/qa-juros
+          if-no-files-found: error
+          retention-days: 7
+      - name: Conferir seis calculadoras e alongamento em cinco larguras
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         run: CALCULATOR_QA_OUTPUT="$RUNNER_TEMP/qa-universal/calculators" node scripts/smoke-calculator-layout.cjs
+      - name: Conferir estudos incluídos, recortes pendentes, apresentação e áudio
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: RESEARCHED_SECTORS_QA_OUTPUT="$RUNNER_TEMP/qa-universal/researched-sectors" node scripts/smoke-researched-sectors.cjs
+      - name: Conferir pastas, histórico e recarga em oito cenários
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: FOLDERS_QA_OUTPUT="$RUNNER_TEMP/qa-universal/folders" node scripts/smoke-sector-folders.cjs
+      - name: Verificar matriz de pastas e capturas completas
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: node scripts/verify-sector-folders.cjs "$RUNNER_TEMP/qa-universal/folders"
+      - name: Capturas e relatório das pastas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pastas-setoriais-design
+          path: ${{ runner.temp }}/qa-universal/folders
+          if-no-files-found: error
+          retention-days: 7
+      - name: Capturas e relatório dos estudos setoriais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: estudos-setoriais-design
+          path: ${{ runner.temp }}/qa-universal/researched-sectors
+          if-no-files-found: error
+          retention-days: 7
       - name: Capturas da revisão das calculadoras
         if: always()
         uses: actions/upload-artifact@v4
@@ -67,15 +107,49 @@ jobs:
           path: ${{ runner.temp }}/qa-universal/calculators
           if-no-files-found: ignore
           retention-days: 7
+      - name: Conferir tema, Trends, alertas e falhas isoladas do BNDES
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        env:
+          THEME_QA_OUTPUT: ${{ runner.temp }}/qa-universal/theme
+          TRENDS_QA_OUTPUT: ${{ runner.temp }}/qa-universal/trends
+          SMOKE_OUT: ${{ runner.temp }}/qa-universal/alertas-fontes
+          PUBLISHED_QA_OUTPUT: ${{ runner.temp }}/qa-universal/delivered-build
+        run: |
+          failures=()
+          for s in smoke-theme smoke-trends smoke-alerta smoke-bndes-source-failures smoke-published; do
+            echo "::group::$s"
+            if ! node scripts/$s.cjs; then
+              failures+=("$s")
+            fi
+            echo "::endgroup::"
+          done
+          if (( ${#failures[@]} )); then
+            echo "::error::Cenários corrigidos com falha: ${failures[*]}"
+            exit 1
+          fi
+      - name: Conferir história dos juros, busca e navegação em Aprender
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: INTEREST_HISTORY_QA_OUTPUT="$RUNNER_TEMP/qa-universal/interest-history" node scripts/smoke-interest-history.cjs
+      - name: Capturas da história dos juros em Aprender
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aprender-historia-juros
+          path: ${{ runner.temp }}/qa-universal/interest-history
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Conferir os fluxos alterados de busca, calculadoras e BNDES
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         env:
           SEARCH_QA_OUTPUT: ${{ runner.temp }}/qa-universal
           CALCULATOR_QA_OUTPUT: ${{ runner.temp }}/qa-universal/calculators
           FINIMP_QA_OUTPUT: ${{ runner.temp }}/qa-universal/finimp
           BNDES_QA_OUTPUT: ${{ runner.temp }}/qa-universal/bndes
+          BNDES_PROFILES_QA_OUTPUT: ${{ runner.temp }}/qa-universal/bndes-profiles
+          TIC_QA_OUTPUT: ${{ runner.temp }}/qa-universal/tic-laser
         run: |
           failures=()
-          for s in smoke-global-search smoke-calculadora smoke-finimp smoke-bndes; do
+          for s in smoke-global-search smoke-calculadora smoke-finimp smoke-bndes smoke-bndes-profiles smoke-tic-animation; do
             echo "::group::$s"
             if ! node scripts/$s.cjs; then
               failures+=("$s")
@@ -87,9 +161,10 @@ jobs:
             exit 1
           fi
       - name: Smokes de navegador (abas, mercado, calendário e controles de 44 px)
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         run: |
           failures=()
-          for s in smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-recuperacao smoke-heavy-vehicles smoke-setores-navigation smoke-dynamic-notifications smoke-finimp-help smoke-recado smoke-conceito-diario smoke-motion smoke-alerta smoke-apresentacao; do
+          for s in smoke-ui smoke-market-table smoke-data-health smoke-market-workspace smoke-market-followup smoke-ux smoke-chart-compare smoke-outros smoke-date-range smoke-cupom smoke-calendario smoke-recuperacao smoke-heavy-vehicles smoke-setores-navigation smoke-dynamic-notifications smoke-finimp-help smoke-recado smoke-conceito-diario smoke-motion smoke-apresentacao; do
             echo "::group::$s"
             if ! FINIMP_HELP_QA_OUTPUT="$RUNNER_TEMP/qa-universal/finimp-help" SETORES_QA_OUTPUT="$RUNNER_TEMP/qa-universal/setores" SEARCH_QA_OUTPUT="$RUNNER_TEMP/qa-universal" CONCEITO_QA_OUTPUT="$RUNNER_TEMP/qa-c" UX_QA_OUTPUT="$RUNNER_TEMP/qa-ux" TABLE_QA_OUTPUT="$RUNNER_TEMP/qa-t" WORKSPACE_QA_OUTPUT="$RUNNER_TEMP/qa-w" FOLLOWUP_QA_OUTPUT="$RUNNER_TEMP/qa-f" node scripts/$s.cjs; then
               failures+=("$s")
@@ -101,10 +176,14 @@ jobs:
             exit 1
           fi
       - name: Seleção temporal com mouse e toque nos componentes
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         run: |
           npm run dev -- --host 127.0.0.1 --port 8770 > "$RUNNER_TEMP/comparison-vite.log" 2>&1 &
           for i in $(seq 1 20); do curl -fs http://127.0.0.1:8770/test/fixtures/chart-comparison.html > /dev/null && break; sleep 1; done
           SMOKE_BASE_URL=http://127.0.0.1:8770 COMPARISON_QA_OUTPUT="$RUNNER_TEMP/qa-universal" node scripts/smoke-chart-comparison.cjs
+      - name: Verificar matriz de oito calculadoras e cabeçalho Setores320
+        if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
+        run: node scripts/verify-smoke-matrix.cjs "$RUNNER_TEMP/qa-universal"
       - name: Capturas de tela dos smokes
         if: always()
         uses: actions/upload-artifact@v4

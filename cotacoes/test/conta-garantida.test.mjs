@@ -127,7 +127,7 @@ test('amortização integral não devolve IOF e reutilização posterior paga no
 test('sobrepagamento, lançamentos fora do período e inputs inválidos bloqueiam', () => {
   for (const overrides of [
     { events: [event('2026-11-05', 1000, 1001)] }, { events: [event('2026-11-04', 1000)] }, { events: [event('2026-11-16', 1000)] },
-    { rate: NaN }, { rate: -1 }, { iofDaily: Infinity }, { iofAdditional: -1 }, { start: '2026-02-29' }, { end: '2026-11-04' },
+    { rate: NaN }, { rate: -1 }, { taxProfile: 'manual' }, { taxProfile: 'simples', eligible: false }, { start: '2026-02-29' }, { end: '2026-11-04' },
     { holidays: ['2026-02-30'] }, { dayCount: 'random' }, { conversion: 'random' }, { rateBase: 31 }, { events: [event('2026-11-05', -1)] },
   ]) assert.equal(simulateContaGarantida(scenario(overrides)).ok, false, JSON.stringify(overrides))
 })
@@ -139,19 +139,18 @@ test('formulário não trata separadores monetários estrangeiros ou taxa incomp
   assert.ok(parseContaGarantidaForm(form({ duration: '3661' })).errors.duration)
 })
 
-test('regras de datas: histórico anterior ao período de referência requer alíquotas manuais', () => {
+test('histórico anterior e perfil manual são bloqueados; override não altera IOF', () => {
   assert.ok(parseContaGarantidaForm(form({ start: '2025-07-16' })).errors.taxProfile)
-  const manual = parseContaGarantidaForm(form({ start: '2025-07-16', taxProfile: 'manual', iofDaily: '0,0041', iofAdditional: '0,38' }))
-  assert.equal(manual.result.ok, true)
-  assert.ok(manual.warnings.some(w => w.includes('não valida')))
-  assert.equal(parseContaGarantidaForm(form({ taxProfile: 'manual', iofDaily: '' })).result, null)
-  assert.ok(parseContaGarantidaForm(form()).warnings.some(w => w.includes('05/11/2026')))
+  assert.equal(parseContaGarantidaForm(form({ taxProfile: 'manual', iofDaily: '0', iofAdditional: '0' })).result, null)
+  const r = simulateContaGarantida(scenario({ iofDaily: 0, iofAdditional: 0, settleAllAtEnd: true }))
+  close(r.totals.iof, 462)
+  assert.ok(parseContaGarantidaForm(form()).warnings.length)
 })
 
 test('Simples/MEI só libera referência reduzida com valor contratual e confirmação explícita', () => {
   assert.equal(parseContaGarantidaForm(form({ taxProfile: 'simples' })).result, null)
-  assert.equal(parseContaGarantidaForm(form({ taxProfile: 'simples', operationValue: '30.000', eligible: true })).result, null)
-  assert.equal(parseContaGarantidaForm(form({ taxProfile: 'simples', amount: '1.000', operationValue: '30.001', eligible: true })).result, null)
+  assert.equal(parseContaGarantidaForm(form({ taxProfile: 'simples', operationValue: '30.000', eligible: true })).result.ok, false)
+  close(parseContaGarantidaForm(form({ taxProfile: 'simples', amount: '1.000', operationValue: '30.001', eligible: true })).result.totals.dailyIof, 0.82)
   const eligible = parseContaGarantidaForm(form({ taxProfile: 'simples', amount: '30.000', operationValue: '30.000', eligible: true }))
   assert.equal(eligible.result.ok, true)
   close(eligible.result.totals.dailyIof, 8.22)

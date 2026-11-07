@@ -1,0 +1,371 @@
+{
+  "authorizedBy": "Parent instruction to remove displayed references to skills/local rules, preserving public-data limitations.",
+  "timestamp": "2026-11-06T17:39:26.943942+00:00",
+  "changes": [
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "beforeHash": "e631f782a40598f5adc24f98192e8b2a7e1ceb5f1ad8970b666e11d3b79e41d0",
+      "afterHash": "dec5665e434156aca840cb55fe16ab684ac3f69df65d08a8593aa43bcb0f8eab",
+      "changes": [
+        {
+          "path": "/0/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/transporte-logistica.json",
+      "beforeHash": "249a72bdd272579ea68d32fbcfccc9252c0280301d3e2796acfab3f66704c136",
+      "afterHash": "be3be414a36d0ee9d131e94f760d0bfedd5a6028fe50013f3ce8f13c2d6c9e09",
+      "changes": [
+        {
+          "path": "/0/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/6/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "beforeHash": "ed032c3f3a2d611c99b1f727aed11b3ce6c47641a2533e0ce7fc9c12e796db65",
+      "afterHash": "80d15c7f3bd9be835e02a645c80ca92138f9ac133b594357eb648f3db1c814f8",
+      "changes": [
+        {
+          "path": "/0/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/alimentos-agroindustria.json",
+      "beforeHash": "9786ccfc4e7cdb9e0f1f8a3e1f0901c4ced272d7b95cd517382e59dc3cdbb201",
+      "afterHash": "70ac242c7ba6dc6e4bf1ca0f3a7e43235fab1f04b771cde0869d7340ddeda7e5",
+      "changes": [
+        {
+          "path": "/0/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/metalmecanico.json",
+      "beforeHash": "b369ca654d84d86742834fab3ba18284158ee8378b2322c80a6f7407fb09c36b",
+      "afterHash": "d324aa826b9613f5047f2dac4e9688a51a4a9ce0ee972dec1f411614994763ba",
+      "changes": [
+        {
+          "path": "/0/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/automotivo.json",
+      "beforeHash": "a8139de5c833de379ae14ab3dfc5311a1dc311b827403a9dfba08da4932883a2",
+      "afterHash": "ecdcee4f5b700a401ca01866bbceba4a4cd23cf25e90c43a79fe3645ca7b6906",
+      "changes": [
+        {
+          "path": "/0/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/construcao.json",
+      "beforeHash": "2820e784fa8b1dcec7fe2aa40214c78c51e6b371866d934d54abae4c0c6c8492",
+      "afterHash": "bdfae4a262440c29545850f963f7a7adbc0861152f41c88afa8f40c3905dd6b4",
+      "changes": [
+        {
+          "path": "/0/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/6/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/textil.json",
+      "beforeHash": "34de46f884d2820c890ad908b31ff6859f4a6ec845d6f88e90e5e6b33131c0f3",
+      "afterHash": "c0e232e0df76596d7c96096601ad113d09e55364dfb86dae7eb0cf7907fdfb60",
+      "changes": [
+        {
+          "path": "/0/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/5",
+          "before": "Os arquivos de contexto pessoal e regras locais referidos pela skill não estavam disponíveis; pesquisa limitada a instruções autocontidas e fontes públicas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "beforeHash": "c35eb808df9676c2db3079bf27d9e5a704aaeca787d26e5bc8bb44e0033d2d21",
+      "afterHash": "55284f43612798e6f83ed350d3e1f47ade39f61406d1585aba4684140c0cb9d2",
+      "changes": [
+        {
+          "path": "/0/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/5/limitations/2",
+          "before": "Regras universais e contexto privado referidos pela skill não estavam acessíveis; aplicada a orientação autocontida.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    },
+    {
+      "file": "docs/sector-research/atacado.json",
+      "beforeHash": "7e088cb8c024713f9ff86c84908fb51a410c9ea6ca000c1f4c633c68d451deed",
+      "afterHash": "fb7220fd68d3ca8ded94902632971b3044b514ac481174c9d5075d5b84bee1a3",
+      "changes": [
+        {
+          "path": "/0/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/1/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/2/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/3/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        },
+        {
+          "path": "/4/limitations/0",
+          "before": "Não foram acessados os arquivos privados de contexto mencionados na skill; escopo aplicado com instruções autocontidas.",
+          "after": "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+        }
+      ]
+    }
+  ]
+}

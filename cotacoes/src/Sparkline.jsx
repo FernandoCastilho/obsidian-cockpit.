@@ -11,8 +11,10 @@ export default function Sparkline({ points, tone, height = 44, rate = false, lab
   const vals = points.map((p) => p.bid)
   const lo = Math.min(...vals)
   const hi = Math.max(...vals)
-  const x = (i) => (i / (points.length - 1)) * W
-  const y = (v) => 3 + (1 - (v - lo) / (hi - lo || 1)) * (height - 6)
+  const start = points[0].t, end = points.at(-1).t
+  const timed = Number.isFinite(start) && Number.isFinite(end) && end > start
+  const x = (i) => timed ? (points[i].t - start) / (end - start) * W : (i / (points.length - 1)) * W
+  const y = (v) => hi === lo ? height / 2 : 3 + (1 - (v - lo) / (hi - lo)) * (height - 6)
   const line = points.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.bid).toFixed(1)}`).join('')
   const t = tone ?? (periodChange(points) >= 0 ? 'up' : 'down')
   const color = t === 'up' ? 'var(--up)' : t === 'down' ? 'var(--down)' : 'var(--mut)'

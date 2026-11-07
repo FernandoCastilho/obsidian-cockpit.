@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-06",
+  "scope": "Revalidação editorial dos 18 estudos industriais após correção de 54 perguntas Canvas. Dados, fontes e transcrições não reauditados nesta etapa; auditorias documentais anteriores preservadas. Sem QA visual/áudio.",
+  "hashDefinition": "SHA256 do objeto JSON com chaves ordenadas, UTF-8, separadores compactos, excluído campo audit.",
+  "studies": [
+    {
+      "id": "base-florestal:0",
+      "title": "Florestas plantadas",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "f2711b43506c2d57deb71ddf17c3727d67d0769b77b98db823928c40cc12aaa4",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "base-florestal:1",
+      "title": "Serrarias",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "3154e7cd7b2654a3654019fd78d64cecdcf6c5c5021e5a6304b6cd7e720a56da",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "base-florestal:2",
+      "title": "Lâminas",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "b600674c7579a5cd2f20c572f24c2d612828581c5c6bcdaff5455c2e32e2cb22",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "base-florestal:3",
+      "title": "Compensados",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "463ef9bc69a4a465c6b91afd553dbc431c96a9c5a9f6176eefbe7ccc7ac66115",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "base-florestal:4",
+      "title": "MDF e MDP",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "d50dba1e67a627b6f47c1204ddb10b45c00b1d640cf849823413efe61c127362",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "base-florestal:5",
+      "title": "Móveis",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "fe9b64a05544dde5b36f2682a3873f560c8f7a7d6ad046740c34b363be32158f",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:0",
+      "title": "Celulose",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "4b3caaf09159bc178ef4ad6bc51d80fa9c0e1f54a52bf50bc6ef7819fe23bd7d",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:1",
+      "title": "Papel",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "a41c2c649ebf4314594f46918e5ccd15105f9ce5afdbfabf7252a3f7252a61c4",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:2",
+      "title": "Papelão ondulado",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "71c0e07e0d92f53c410a09cb204d5304229c53df7fc112ce59901c964892e0d2",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:3",
+      "title": "Caixas",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "8f98e2d01055050fbd426c0461b8dfadb226b31798ec0125da2e2d4a90c07162",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:4",
+      "title": "Sacos industriais",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "e94e90dbf58133d152fd223a9e3c9af5c84e8df19969d63131c832af8a51ecb3",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "papel-celulose:5",
+      "title": "Tubetes",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "c105866e4e1c2757e30c4ff255f47d184c99f387bb005990cba70e23bcfce248",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:0",
+      "title": "Resinas",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "37954094bab7a0324e586daeed15aab1b1f54d70dfdde06d403fd159fee1d377",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:1",
+      "title": "Transformação plástica",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "6ca2e9568cafbcc176cddf488167a760516c3b35789e214385d1e41cd6695a7d",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:2",
+      "title": "Embalagens flexíveis",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "962d7c382dab48167750c6fd347d6ec40f1586a47439a0640808dc1bc0e9c33d",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:3",
+      "title": "Tintas",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "a73b558cea53180f3244ab1ec8db4f4f76f068ff2591e2f715e9a45220ec1fcd",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:4",
+      "title": "Limpeza",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "1212aef28d4779e67dc2fdeb802da84e7dc7194b482e4c9edaa783cd2414f3b3",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    },
+    {
+      "id": "quimicos:5",
+      "title": "Borracha",
+      "verdict": "Aprovado",
+      "contentHashExcludingAudit": "54ca57f0cf3814477877a5f2d1ba87c7d6065462f296f071fa0b560617b78de5",
+      "editorial": "Perguntas de clientes, proposta de valor e economia legíveis e com objeto comercial adequado."
+    }
+  ],
+  "numericRegression": "Gráficos dos três grupos comparados com snapshots da segunda rodada: integralmente iguais."
+}

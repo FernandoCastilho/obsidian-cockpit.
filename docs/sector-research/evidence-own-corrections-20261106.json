@@ -1,0 +1,29 @@
+{
+  "accessDate": "2026-11-06",
+  "evidence": [
+    {
+      "study": "transporte-logistica-4",
+      "url": "https://anttlegis.antt.gov.br/action/UrlPublicasAction.php?acao=abrirAtoPublico&cod_menu=5408&cod_modulo=161&num_ato=00005998&seq_ato=000&sgl_orgao=DG/ANTT/MI&sgl_tipo=RES&vlr_ano=2022",
+      "status": "texto integral",
+      "claim": "Sinalização mantida se houver resíduo; veículo vazio não limpo sujeito às mesmas prescrições do carregado.",
+      "location": "Artigos 6, parágrafo 2, e 10"
+    },
+    {
+      "study": "alimentos-agroindustria-5",
+      "url": "https://www.gov.br/agricultura/pt-br/assuntos/noticias/2026/brasil-tem-mais-de-44-mil-cervejas-registradas-e-bate-recorde-em-valor-exportado",
+      "status": "texto integral",
+      "claim": "Conjuntura e polos limitados à notícia oficial, sem comparação regional de volume não conferida.",
+      "period": "2025",
+      "publicationDate": "2026-05-27"
+    },
+    {
+      "study": "transporte-logistica-1",
+      "url": "https://dados.florestal.gov.br/pt_BR/dataset/producao-da-extracao-vegetal-e-silvicultura",
+      "status": "Página integral oficial aberta; não depende de nota IBGE403",
+      "claim": "Base do SFB derivada da PEVS identifica produção florestal madeireira e não madeireira e granularidade estadual. Não mede frete.",
+      "sourceUpdatedAt": "2026-10-14",
+      "accessDate": "2026-11-06",
+      "correction": "Retirada afirmação não conferida sobre alteração da lista de produtos; substituída pela descrição verificada do conjunto de dados."
+    }
+  ]
+}

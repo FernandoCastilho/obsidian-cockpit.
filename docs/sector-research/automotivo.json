@@ -1,0 +1,1695 @@
+[
+  {
+    "group": "automotivo",
+    "topicIndex": 0,
+    "title": "Componentes automotivos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Componentes automotivos: Metal, polímeros, eletrônica e materiais de fricção são transformados em componentes e sistemas.",
+      "Tese operacional: Homologação, rastreabilidade e engenharia conjunta criam barreiras, mas montadoras negociam preço e produtividade ao longo da vida do projeto.",
+      "Principal vulnerabilidade: Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Separar investimento no ferramental, despesas de desenvolvimento, giro de produção e recebíveis aceitos. Validar propriedade do molde, indenização por cancelamento e contratos de fornecimento antes de usá-los como suporte financeiro."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Metal, polímeros, eletrônica e materiais de fricção são transformados em componentes e sistemas. Fornecedores podem vender diretamente à montadora ou a outro fabricante; desenvolvimento, ferramental, validação e produção seriada têm ciclos de caixa distintos.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Bruning e CR Bluecast aparecem em habilitações públicas do MDIC como fabricantes de autopeças. São exemplos de atuação, não ranking, medida de porte ou confirmação de benefício disponível hoje.",
+          "Homologação, rastreabilidade e engenharia conjunta criam barreiras, mas montadoras negociam preço e produtividade ao longo da vida do projeto.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Exemplo recente verificável: em outubro de 2026, o BNDES anunciou aprovação de financiamento ao plano de inovação da ZEN, de Brusque, para componentes ligados a veículos híbridos e elétricos e processos industriais. A publicação descreve pesquisa e desenvolvimento, não produtos já vendidos ou retorno já obtido. O caso mostra que a transição tecnológica também passa por fornecedores especializados; não prova crescimento de todo o mercado de autopeças."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          },
+          {
+            "label": "BNDES · ZEN e mobilidade eletrificada",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-financiamento-para-projeto-de-inovacao-da-ZEN-voltado-a-mobilidade-eletrificada/",
+            "purpose": "Caso específico e datado aberto integralmente; não ranking, oferta de crédito ou resultado comprovado."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Veículos automotores, reboques e carrocerias, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de componentes automotivos. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Volume por plataforma, horas de parada imputáveis ao fornecedor, peças rejeitadas, custo de garantia e recuperação do ferramental. Produção total de veículos não informa conteúdo local por peça.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Eletrificação e novas arquiteturas mudam conteúdo por veículo; o efeito difere entre peças de motor, estrutura, freio, vedação e eletrônica. Mover é contexto institucional, não garantia de pedidos ou benefício.",
+          "Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Separar investimento no ferramental, despesas de desenvolvimento, giro de produção e recebíveis aceitos. Validar propriedade do molde, indenização por cancelamento e contratos de fornecimento antes de usá-los como suporte financeiro.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos.",
+          "Na visita, separar o custo de desenvolver e homologar uma nova família de componentes do giro necessário à produção de itens já aprovados. Uma aprovação de financiamento a outra empresa não comprova acesso, taxa ou garantia para o cliente analisado."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Separar investimento no ferramental, despesas de desenvolvimento, giro de produção e recebíveis aceitos. Validar propriedade do molde, indenização por cancelamento e contratos de fornecimento antes de usá-los como suporte financeiro.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Engenharia local, redução de peso e adaptação a novas plataformas, com desembolso condicionado a marcos de validação.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Homologação, rastreabilidade e engenharia conjunta criam barreiras, mas montadoras negociam preço e produtividade ao longo da vida do projeto."
+          ],
+          [
+            "Fraquezas",
+            "Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento."
+          ],
+          [
+            "Oportunidades",
+            "Engenharia local, redução de peso e adaptação a novas plataformas, com desembolso condicionado a marcos de validação."
+          ],
+          [
+            "Ameaças",
+            "Eletrificação e novas arquiteturas mudam conteúdo por veículo; o efeito difere entre peças de motor, estrutura, freio, vedação e eletrônica. Mover é contexto institucional, não garantia de pedidos ou benefício."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é materiais e componentes. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é sistemista e montadora. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Homologação, rastreabilidade e engenharia conjunta criam barreiras, mas montadoras negociam preço e produtividade ao longo da vida do projeto. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Homologação por plataforma, rastreabilidade, ferramental e entrega consistente exigem investimento anterior à receita. Dependência de programa de veículo dificulta reaproveitar o ativo."
+          ],
+          [
+            "Substitutos",
+            "Remanufatura e arquitetura veicular que elimina ou redesenha componentes podem reduzir a demanda por peças novas. Segurança, garantia e homologação restringem substituição de materiais e soluções."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Volume por plataforma, horas de parada imputáveis ao fornecedor, peças rejeitadas, custo de garantia e recuperação do ferramental. Produção total de veículos não informa conteúdo local por peça.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Engenharia local, redução de peso e adaptação a novas plataformas, com desembolso condicionado a marcos de validação.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento. Eletrificação e novas arquiteturas mudam conteúdo por veículo; o efeito difere entre peças de motor, estrutura, freio, vedação e eletrônica. Mover é contexto institucional, não garantia de pedidos ou benefício.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Volume por plataforma, horas de parada imputáveis ao fornecedor, peças rejeitadas, custo de garantia e recuperação do ferramental. Produção total de veículos não informa conteúdo local por peça.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Engenharia local, redução de peso e adaptação a novas plataformas, com desembolso condicionado a marcos de validação.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Veículos automotores, reboques e carrocerias",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Veículos automotores, reboques e carrocerias",
+            "values": [
+              -27.9,
+              20.1,
+              3.0,
+              -7.1,
+              12.4
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "MDIC · Programa Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+      },
+      {
+        "label": "MDIC · habilitações ao Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+        "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · ZEN e mobilidade eletrificada",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-financiamento-para-projeto-de-inovacao-da-ZEN-voltado-a-mobilidade-eletrificada/",
+        "purpose": "Caso específico e datado aberto integralmente; não ranking, oferta de crédito ou resultado comprovado."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual requisito da plataforma diferencia o componente?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quanto da receita depende de cada cliente e programa de veículo?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como a empresa participa das cotações e homologações?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quais ferramentas e processos são exclusivos de cada programa?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem fornece material e ensaios exigidos pelo comprador?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço recupera ferramental, rejeições e mudanças de engenharia?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "materiais e componentes",
+          "detail": "Fluxo físico e financeiro: materiais e componentes"
+        },
+        {
+          "id": "1",
+          "label": "engenharia e ferramental",
+          "detail": "Metal, polímeros, eletrônica e materiais de fricção são transformados em componentes e sistemas. Fornecedores podem vender diretamente à montadora ou a outro fabricante; desenvolvimento, ferramental, validação e produção seriada têm ciclos de caixa distintos."
+        },
+        {
+          "id": "2",
+          "label": "produção e homologação",
+          "detail": "Fluxo físico e financeiro: produção e homologação"
+        },
+        {
+          "id": "3",
+          "label": "sistemista e montadora",
+          "detail": "Fluxo físico e financeiro: sistemista e montadora"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Componentes automotivos. Componentes automotivos: Metal, polímeros, eletrônica e materiais de fricção são transformados em componentes e sistemas. Tese operacional: Homologação, rastreabilidade e engenharia conjunta criam barreiras, mas montadoras negociam preço e produtividade ao longo da vida do projeto. Principal vulnerabilidade: Ferramental dedicado e desenvolvimento antecipado ficam expostos ao volume real da plataforma; mudança tecnológica pode encurtar a recuperação do investimento. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Separar investimento no ferramental, despesas de desenvolvimento, giro de produção e recebíveis aceitos. Validar propriedade do molde, indenização por cancelamento e contratos de fornecimento antes de usá-los como suporte financeiro. Metal, polímeros, eletrônica e materiais de fricção são transformados em componentes e sistemas. Fornecedores podem vender diretamente à montadora ou a outro fabricante; desenvolvimento, ferramental, validação e produção seriada têm ciclos de caixa distintos. Volume por plataforma, horas de parada imputáveis ao fornecedor, peças rejeitadas, custo de garantia e recuperação do ferramental. Produção total de veículos não informa conteúdo local por peça. Bruning e CR Bluecast aparecem em habilitações públicas do MDIC como fabricantes de autopeças. São exemplos de atuação, não ranking, medida de porte ou confirmação de benefício disponível hoje. Eletrificação e novas arquiteturas mudam conteúdo por veículo; o efeito difere entre peças de motor, estrutura, freio, vedação e eletrônica. Mover é contexto institucional, não garantia de pedidos ou benefício. Engenharia local, redução de peso e adaptação a novas plataformas, com desembolso condicionado a marcos de validação. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Exemplo recente verificável: em outubro de 2026, o BNDES anunciou aprovação de financiamento ao plano de inovação da ZEN, de Brusque, para componentes ligados a veículos híbridos e elétricos e processos industriais. A publicação descreve pesquisa e desenvolvimento, não produtos já vendidos ou retorno já obtido. O caso mostra que a transição tecnológica também passa por fornecedores especializados; não prova crescimento de todo o mercado de autopeças. Na visita, separar o custo de desenvolver e homologar uma nova família de componentes do giro necessário à produção de itens já aprovados. Uma aprovação de financiamento a outra empresa não comprova acesso, taxa ou garantia para o cliente analisado. Na análise de concorrência: Remanufatura e arquitetura veicular que elimina ou redesenha componentes podem reduzir a demanda por peças novas. Segurança, garantia e homologação restringem substituição de materiais e soluções. Para novos entrantes: Homologação por plataforma, rastreabilidade, ferramental e entrega consistente exigem investimento anterior à receita. Dependência de programa de veículo dificulta reaproveitar o ativo.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "ZEN/BNDES outubro2026 integral confirma projeto para eletrificação; aprovação não confundida com resultado. Mover e PIM delimitados."
+  },
+  {
+    "group": "automotivo",
+    "topicIndex": 1,
+    "title": "Implementos rodoviários",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Implementos rodoviários: Chapas e perfis de aço, eixos, suspensão, pneus e sistemas de freio formam reboques, semirreboques e carrocerias.",
+      "Tese operacional: Projeto adequado à carga, robustez, disponibilidade de peças e rede de assistência sustentam diferenciação; frete e prazo limitam a competição regional.",
+      "Principal vulnerabilidade: Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro para materiais e montagem deve ser casado a entrada e liquidação da venda; financiar equipamento produtivo é distinto de financiar o implemento comprado pelo frotista. Não presumir enquadramento Finame para qualquer modelo."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Chapas e perfis de aço, eixos, suspensão, pneus e sistemas de freio formam reboques, semirreboques e carrocerias. Configuração depende de carga, estrada e operação; fabricante, distribuidor e frotista têm estoques e recebimentos diferentes.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "Prefeitura de Caxias do Sul · Memorial Randon",
+            "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+            "purpose": "Vínculo histórico entre Randon e Caxias do Sul, sem quantificação de participação ou capacidade."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Randon e Caxias do Sul têm vínculo histórico documentado pelo município. A referência não representa participação atual nem desempenho dos fabricantes médios.",
+          "Projeto adequado à carga, robustez, disponibilidade de peças e rede de assistência sustentam diferenciação; frete e prazo limitam a competição regional.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência empresarial histórica: o BNDES descreveu a Randon, sediada em Caxias do Sul, como fabricante de implementos rodoviários, semirreboques, carrocerias e vagões, ao anunciar apoio à produção destinada à exportação em setembro de 2023. Reboques rodoviários e vagões ferroviários pertencem a mercados diferentes; o exemplo não permite somar suas vendas nem inferir participação da empresa no recorte."
+        ],
+        "sources": [
+          {
+            "label": "Prefeitura de Caxias do Sul · Memorial Randon",
+            "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+            "purpose": "Vínculo histórico entre Randon e Caxias do Sul, sem quantificação de participação ou capacidade."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "BNDES · Randon: produção para exportação",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/Producao-de-reboques-e-vagoes-e-financiada-pelo-BNDES-para-exportacao/",
+            "purpose": "Caso específico e datado aberto integralmente; não ranking, oferta de crédito ou resultado comprovado."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Veículos automotores, reboques e carrocerias, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de implementos rodoviários. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Pedidos firmes por aplicação, estoque de produto acabado, prazo de crédito do comprador, peso transportável e devoluções. Contar unidades sem distinguir implemento leve, pesado e especial prejudica comparação.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Safra, frete e capacidade ociosa do transporte afetam renovação; aumento de carga pode ser absorvido pela frota existente antes de gerar nova compra.",
+          "Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "Prefeitura de Caxias do Sul · Memorial Randon",
+            "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+            "purpose": "Vínculo histórico entre Randon e Caxias do Sul, sem quantificação de participação ou capacidade."
+          },
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro para materiais e montagem deve ser casado a entrada e liquidação da venda; financiar equipamento produtivo é distinto de financiar o implemento comprado pelo frotista. Não presumir enquadramento Finame para qualquer modelo.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos.",
+          "O caso de produção para exportação ajuda a distinguir financiamento antes do embarque de antecipação de recebível já constituído. Na análise de uma empresa média, conferir pedido externo, cronograma de produção, moeda e risco de cancelamento; as condições daquele caso histórico não são oferta atual."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro para materiais e montagem deve ser casado a entrada e liquidação da venda; financiar equipamento produtivo é distinto de financiar o implemento comprado pelo frotista. Não presumir enquadramento Finame para qualquer modelo.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Produtos especializados, menor tara e manutenção simplificada podem produzir vantagem verificável no custo por viagem.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Projeto adequado à carga, robustez, disponibilidade de peças e rede de assistência sustentam diferenciação; frete e prazo limitam a competição regional."
+          ],
+          [
+            "Fraquezas",
+            "Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque."
+          ],
+          [
+            "Oportunidades",
+            "Produtos especializados, menor tara e manutenção simplificada podem produzir vantagem verificável no custo por viagem."
+          ],
+          [
+            "Ameaças",
+            "Safra, frete e capacidade ociosa do transporte afetam renovação; aumento de carga pode ser absorvido pela frota existente antes de gerar nova compra."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é aço e sistemas. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é distribuidor e transportador. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Projeto adequado à carga, robustez, disponibilidade de peças e rede de assistência sustentam diferenciação; frete e prazo limitam a competição regional. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Engenharia estrutural, conformidade veicular, rede de manutenção e capital para produzir antes de entregar dificultam entrada. Nichos de carroceria simples têm barreiras distintas de aplicações especiais."
+          ],
+          [
+            "Substitutos",
+            "Transporte ferroviário ou outras configurações logísticas podem substituir parte do uso de implementos rodoviários; usados e reforma substituem compra nova. Infraestrutura, flexibilidade da rota e prazo limitam migração."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Pedidos firmes por aplicação, estoque de produto acabado, prazo de crédito do comprador, peso transportável e devoluções. Contar unidades sem distinguir implemento leve, pesado e especial prejudica comparação.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Produtos especializados, menor tara e manutenção simplificada podem produzir vantagem verificável no custo por viagem.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque. Safra, frete e capacidade ociosa do transporte afetam renovação; aumento de carga pode ser absorvido pela frota existente antes de gerar nova compra.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Pedidos firmes por aplicação, estoque de produto acabado, prazo de crédito do comprador, peso transportável e devoluções. Contar unidades sem distinguir implemento leve, pesado e especial prejudica comparação.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Produtos especializados, menor tara e manutenção simplificada podem produzir vantagem verificável no custo por viagem.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Veículos automotores, reboques e carrocerias",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Veículos automotores, reboques e carrocerias",
+            "values": [
+              -27.9,
+              20.1,
+              3.0,
+              -7.1,
+              12.4
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "Prefeitura de Caxias do Sul · Memorial Randon",
+        "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+        "purpose": "Vínculo histórico entre Randon e Caxias do Sul, sem quantificação de participação ou capacidade."
+      },
+      {
+        "label": "MDIC · Programa Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "BNDES · Randon: produção para exportação",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/Producao-de-reboques-e-vagoes-e-financiada-pelo-BNDES-para-exportacao/",
+        "purpose": "Caso específico e datado aberto integralmente; não ranking, oferta de crédito ou resultado comprovado."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual aplicação de transporte orienta o projeto do implemento?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra: transportadora, produtor, locadora ou autônomo?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como revendas e oficinas ajudam a vender e manter o produto?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual etapa limita fabricação e entrega dos implementos?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais fornecedores de eixos, freios e aço são críticos?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "A margem inclui garantia, customização e prazo de recebimento?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "aço e sistemas",
+          "detail": "Fluxo físico e financeiro: aço e sistemas"
+        },
+        {
+          "id": "1",
+          "label": "fabricação de estrutura",
+          "detail": "Chapas e perfis de aço, eixos, suspensão, pneus e sistemas de freio formam reboques, semirreboques e carrocerias. Configuração depende de carga, estrada e operação; fabricante, distribuidor e frotista têm estoques e recebimentos diferentes."
+        },
+        {
+          "id": "2",
+          "label": "montagem e validação",
+          "detail": "Fluxo físico e financeiro: montagem e validação"
+        },
+        {
+          "id": "3",
+          "label": "distribuidor e transportador",
+          "detail": "Fluxo físico e financeiro: distribuidor e transportador"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Implementos rodoviários. Implementos rodoviários: Chapas e perfis de aço, eixos, suspensão, pneus e sistemas de freio formam reboques, semirreboques e carrocerias. Tese operacional: Projeto adequado à carga, robustez, disponibilidade de peças e rede de assistência sustentam diferenciação; frete e prazo limitam a competição regional. Principal vulnerabilidade: Aço adquirido e chassi em produção podem ficar presos quando transportador adia compra; customização dificulta redirecionar estoque. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro para materiais e montagem deve ser casado a entrada e liquidação da venda; financiar equipamento produtivo é distinto de financiar o implemento comprado pelo frotista. Não presumir enquadramento Finame para qualquer modelo. Chapas e perfis de aço, eixos, suspensão, pneus e sistemas de freio formam reboques, semirreboques e carrocerias. Configuração depende de carga, estrada e operação; fabricante, distribuidor e frotista têm estoques e recebimentos diferentes. Pedidos firmes por aplicação, estoque de produto acabado, prazo de crédito do comprador, peso transportável e devoluções. Contar unidades sem distinguir implemento leve, pesado e especial prejudica comparação. Randon e Caxias do Sul têm vínculo histórico documentado pelo município. A referência não representa participação atual nem desempenho dos fabricantes médios. Safra, frete e capacidade ociosa do transporte afetam renovação; aumento de carga pode ser absorvido pela frota existente antes de gerar nova compra. Produtos especializados, menor tara e manutenção simplificada podem produzir vantagem verificável no custo por viagem. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Referência empresarial histórica: o BNDES descreveu a Randon, sediada em Caxias do Sul, como fabricante de implementos rodoviários, semirreboques, carrocerias e vagões, ao anunciar apoio à produção destinada à exportação em setembro de 2023. Reboques rodoviários e vagões ferroviários pertencem a mercados diferentes; o exemplo não permite somar suas vendas nem inferir participação da empresa no recorte. O caso de produção para exportação ajuda a distinguir financiamento antes do embarque de antecipação de recebível já constituído. Na análise de uma empresa média, conferir pedido externo, cronograma de produção, moeda e risco de cancelamento; as condições daquele caso histórico não são oferta atual. Na análise de concorrência: Transporte ferroviário ou outras configurações logísticas podem substituir parte do uso de implementos rodoviários; usados e reforma substituem compra nova. Infraestrutura, flexibilidade da rota e prazo limitam migração. Para novos entrantes: Engenharia estrutural, conformidade veicular, rede de manutenção e capital para produzir antes de entregar dificultam entrada. Nichos de carroceria simples têm barreiras distintas de aplicações especiais.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "Randon/BNDES2023 integral confirma atuação e exportação; vagões e reboques separados e caso datado."
+  },
+  {
+    "group": "automotivo",
+    "topicIndex": 2,
+    "title": "Reposição de autopeças",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Reposição de autopeças: Recorte de mercado: fabricação e comercialização de peças destinadas à manutenção da frota em uso.",
+      "Tese operacional: Catálogo correto e confiança do reparador reduzem erro de aplicação; segurança e procedência não podem ser substituídas por preço baixo.",
+      "Principal vulnerabilidade: Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro deve refletir idade e liquidez do estoque, não só valor contábil. Recebíveis de oficinas e varejistas exigem dispersão e documentação; reserva para devolução e garantia reduz base financiável."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Recorte de mercado: fabricação e comercialização de peças destinadas à manutenção da frota em uso. Separar peça nova, remanufaturada e usada, mercado original e independente; a atividade pode atravessar várias classes industriais e comerciais.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A lista industrial do MDIC identifica fabricantes, mas não comprova sua participação específica em reposição. Não foi recuperado ranking público atual de marcas no mercado independente.",
+          "Catálogo correto e confiança do reparador reduzem erro de aplicação; segurança e procedência não podem ser substituídas por preço baixo.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Como referência histórica de portfólio, o estudo do Departamento de Estudos Econômicos do Cade sobre a operação Fras-Le/Nakata descreve famílias como freios, cubos de roda e componentes para veículos pesados. O documento registra aprovação sem restrições em 2020. Esse caso não estima o tamanho atual da reposição, mas mostra por que separar aplicação e família de peça antes de comparar concorrentes."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          },
+          {
+            "label": "Cade · estudo de fusões e canais de autopeças",
+            "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+            "purpose": "Documento DEE 2023, anexo páginas 58–59: caso Fras-Le/Nakata 2020 e aquisição de portfólio por distribuidores. Histórico, não ranking atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "Não foi recuperada série pública comparável exclusiva deste mercado comercial. Produção de veículos, emplacamentos e faturamento da indústria não medem vendas da reposição ou do distribuidor. A lacuna impede afirmar tamanho e crescimento desse recorte.",
+          "Frota efetivamente em circulação por aplicação, frequência de manutenção, disponibilidade, taxa de devolução por incompatibilidade e margem por família. Cadastro de veículo não é automaticamente frota ativa.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "A reposição depende de uso e envelhecimento da frota e pode divergir de emplacamentos novos. Novas tecnologias alteram o catálogo gradualmente e não eliminam de imediato a demanda da frota antiga.",
+          "Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro deve refletir idade e liquidez do estoque, não só valor contábil. Recebíveis de oficinas e varejistas exigem dispersão e documentação; reserva para devolução e garantia reduz base financiável.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro deve refletir idade e liquidez do estoque, não só valor contábil. Recebíveis de oficinas e varejistas exigem dispersão e documentação; reserva para devolução e garantia reduz base financiável.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Informação de aplicação, kits completos, disponibilidade local e remanufatura com rastreabilidade podem gerar valor sem ampliar indiscriminadamente estoque.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Catálogo correto e confiança do reparador reduzem erro de aplicação; segurança e procedência não podem ser substituídas por preço baixo."
+          ],
+          [
+            "Fraquezas",
+            "Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo."
+          ],
+          [
+            "Oportunidades",
+            "Informação de aplicação, kits completos, disponibilidade local e remanufatura com rastreabilidade podem gerar valor sem ampliar indiscriminadamente estoque."
+          ],
+          [
+            "Ameaças",
+            "A reposição depende de uso e envelhecimento da frota e pode divergir de emplacamentos novos. Novas tecnologias alteram o catálogo gradualmente e não eliminam de imediato a demanda da frota antiga."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é fabricante e importador. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "Os compradores são oficinas, varejistas de autopeças e proprietários ou gestores de frotas. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Catálogo correto e confiança do reparador reduzem erro de aplicação; segurança e procedência não podem ser substituídas por preço baixo. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Catálogo confiável, procedência, disponibilidade e confiança das oficinas exigem tempo. Para fabricar ou importar componentes regulados, acrescentam-se requisitos de conformidade e rastreabilidade."
+          ],
+          [
+            "Substitutos",
+            "Recondicionamento ou remanufatura tecnicamente admissível podem substituir peça nova; troca do veículo pode eliminar a manutenção. Peça usada ou solução alternativa exige legalidade, segurança e aplicação correta."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Frota efetivamente em circulação por aplicação, frequência de manutenção, disponibilidade, taxa de devolução por incompatibilidade e margem por família. Cadastro de veículo não é automaticamente frota ativa.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Informação de aplicação, kits completos, disponibilidade local e remanufatura com rastreabilidade podem gerar valor sem ampliar indiscriminadamente estoque.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo. A reposição depende de uso e envelhecimento da frota e pode divergir de emplacamentos novos. Novas tecnologias alteram o catálogo gradualmente e não eliminam de imediato a demanda da frota antiga.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Frota efetivamente em circulação por aplicação, frequência de manutenção, disponibilidade, taxa de devolução por incompatibilidade e margem por família. Cadastro de veículo não é automaticamente frota ativa.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Informação de aplicação, kits completos, disponibilidade local e remanufatura com rastreabilidade podem gerar valor sem ampliar indiscriminadamente estoque.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "MDIC · Programa Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+      },
+      {
+        "label": "MDIC · habilitações ao Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+        "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+      },
+      {
+        "label": "Cade · estudo de fusões e canais de autopeças",
+        "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+        "purpose": "Documento DEE 2023, anexo páginas 58–59: caso Fras-Le/Nakata 2020 e aquisição de portfólio por distribuidores. Histórico, não ranking atual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Por que a oficina escolhe esta peça e marca?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais aplicações e clientes geram recompra?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como a peça chega ao reparador ou ao consumidor?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Como catálogo e rastreabilidade evitam erro de aplicação?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais fabricantes e distribuidores asseguram procedência e reposição?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual é a margem após frete, devolução e garantia?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "fabricante e importador",
+          "detail": "Fluxo físico e financeiro: fabricante e importador"
+        },
+        {
+          "id": "1",
+          "label": "catálogo e aplicação",
+          "detail": "Recorte de mercado: fabricação e comercialização de peças destinadas à manutenção da frota em uso. Separar peça nova, remanufaturada e usada, mercado original e independente; a atividade pode atravessar várias classes industriais e comerciais."
+        },
+        {
+          "id": "2",
+          "label": "loja e reparador",
+          "detail": "Fluxo físico e financeiro: loja e reparador"
+        },
+        {
+          "id": "3",
+          "label": "frota em manutenção",
+          "detail": "Fluxo físico e financeiro: frota em manutenção"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Reposição de autopeças. Reposição de autopeças: Recorte de mercado: fabricação e comercialização de peças destinadas à manutenção da frota em uso. Tese operacional: Catálogo correto e confiança do reparador reduzem erro de aplicação; segurança e procedência não podem ser substituídas por preço baixo. Principal vulnerabilidade: Grande variedade de modelos imobiliza estoque de baixo giro; erro de aplicação gera devolução, frete reverso e risco de dano ao veículo. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro deve refletir idade e liquidez do estoque, não só valor contábil. Recebíveis de oficinas e varejistas exigem dispersão e documentação; reserva para devolução e garantia reduz base financiável. Recorte de mercado: fabricação e comercialização de peças destinadas à manutenção da frota em uso. Separar peça nova, remanufaturada e usada, mercado original e independente; a atividade pode atravessar várias classes industriais e comerciais. Frota efetivamente em circulação por aplicação, frequência de manutenção, disponibilidade, taxa de devolução por incompatibilidade e margem por família. Cadastro de veículo não é automaticamente frota ativa. A lista industrial do MDIC identifica fabricantes, mas não comprova sua participação específica em reposição. Não foi recuperado ranking público atual de marcas no mercado independente. A reposição depende de uso e envelhecimento da frota e pode divergir de emplacamentos novos. Novas tecnologias alteram o catálogo gradualmente e não eliminam de imediato a demanda da frota antiga. Informação de aplicação, kits completos, disponibilidade local e remanufatura com rastreabilidade podem gerar valor sem ampliar indiscriminadamente estoque. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  Como referência histórica de portfólio, o estudo do Departamento de Estudos Econômicos do Cade sobre a operação Fras-Le/Nakata descreve famílias como freios, cubos de roda e componentes para veículos pesados. O documento registra aprovação sem restrições em 2020. Esse caso não estima o tamanho atual da reposição, mas mostra por que separar aplicação e família de peça antes de comparar concorrentes. Na análise de concorrência: Recondicionamento ou remanufatura tecnicamente admissível podem substituir peça nova; troca do veículo pode eliminar a manutenção. Peça usada ou solução alternativa exige legalidade, segurança e aplicação correta. Para novos entrantes: Catálogo confiável, procedência, disponibilidade e confiança das oficinas exigem tempo. Para fabricar ou importar componentes regulados, acrescentam-se requisitos de conformidade e rastreabilidade.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "PDF DEE/Cade2023, páginas58–59, conferido integralmente: famílias de peças, caso Fras-Le/Nakata2020 e múltiplos fornecedores. Alegações de terceiro não tratadas como conclusão; não extrapola participação atual."
+  },
+  {
+    "group": "automotivo",
+    "topicIndex": 3,
+    "title": "Distribuidores de peças",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Distribuidores de peças: O distribuidor compra de fabricantes ou importa, mantém centros de distribuição e abastece lojas, oficinas e frotas.",
+      "Tese operacional: Amplitude de catálogo, acurácia e entrega rápida criam valor, mas venda direta e plataformas digitais comprimem a remuneração da intermediação.",
+      "Principal vulnerabilidade: Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiar estoque elegível e recebíveis com análise de concentração; distinguir bonificações condicionais, consignação e mercadoria própria. Compras importadas demandam exposição cambial e prazo de desembaraço documentados."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "O distribuidor compra de fabricantes ou importa, mantém centros de distribuição e abastece lojas, oficinas e frotas. O produto é disponibilidade logística e crédito comercial; não confundir sua receita de revenda com produção das autopeças.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Fabricantes habilitados ao Mover não formam ranking de distribuidores. Não foi recuperada base pública de participação de mercado no atacado de peças; referências industriais não substituem essa lacuna.",
+          "Amplitude de catálogo, acurácia e entrega rápida criam valor, mas venda direta e plataformas digitais comprimem a remuneração da intermediação.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "O estudo do Departamento de Estudos Econômicos do Cade que sintetiza o caso Fras-Le/Nakata registra que clientes consultados recorriam a mais de um fornecedor para ampliar a diversidade de produtos. A análise histórica não confirmou destaque excepcional do portfólio combinado frente ao mercado. É evidência sobre compras e canais, não prova de exclusividade ou prática ilícita atual. Para o distribuidor médio, diversidade de fornecedores e estoque adequado devem ser analisados junto da demanda atendida."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          },
+          {
+            "label": "Cade · estudo de fusões e canais de autopeças",
+            "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+            "purpose": "Documento DEE 2023, anexo páginas 58–59: caso Fras-Le/Nakata 2020 e aquisição de portfólio por distribuidores. Histórico, não ranking atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "Não foi recuperada série pública comparável exclusiva deste mercado comercial. Produção de veículos, emplacamentos e faturamento da indústria não medem vendas da reposição ou do distribuidor. A lacuna impede afirmar tamanho e crescimento desse recorte.",
+          "Giro por item e aplicação, nível de atendimento, linhas por pedido, custo de entrega, devolução e atraso por canal. Receita pode subir por preço sem avanço de unidades.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "E-commerce amplia comparação de preços, mas frete urgente e acerto de aplicação continuam relevantes; integração de catálogo muda a produtividade comercial.",
+          "Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "MDIC · Programa Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+            "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+          },
+          {
+            "label": "MDIC · habilitações ao Mover",
+            "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+            "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Financiar estoque elegível e recebíveis com análise de concentração; distinguir bonificações condicionais, consignação e mercadoria própria. Compras importadas demandam exposição cambial e prazo de desembaraço documentados.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Financiar estoque elegível e recebíveis com análise de concentração; distinguir bonificações condicionais, consignação e mercadoria própria. Compras importadas demandam exposição cambial e prazo de desembaraço documentados.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Previsão de demanda por frota local, gestão de estoques compartilhados e integração com oficinas podem reduzir ruptura e obsolescência.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Amplitude de catálogo, acurácia e entrega rápida criam valor, mas venda direta e plataformas digitais comprimem a remuneração da intermediação."
+          ],
+          [
+            "Fraquezas",
+            "Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem."
+          ],
+          [
+            "Oportunidades",
+            "Previsão de demanda por frota local, gestão de estoques compartilhados e integração com oficinas podem reduzir ruptura e obsolescência."
+          ],
+          [
+            "Ameaças",
+            "E-commerce amplia comparação de preços, mas frete urgente e acerto de aplicação continuam relevantes; integração de catálogo muda a produtividade comercial."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é fabricantes e importação. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "Os compradores são lojas, oficinas e frotas compradoras. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Amplitude de catálogo, acurácia e entrega rápida criam valor, mas venda direta e plataformas digitais comprimem a remuneração da intermediação. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Cobertura de catálogo, estoque bem selecionado, logística de entregas e crédito a lojistas requerem capital e dados. Abrir depósito não reproduz uma rede capaz de entregar a peça correta rapidamente."
+          ],
+          [
+            "Substitutos",
+            "Compra direta do fabricante, canais digitais diretos e centrais de compra podem substituir a intermediação. Lote mínimo, prazo, crédito e necessidade de consolidar marcas sustentam o distribuidor."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Giro por item e aplicação, nível de atendimento, linhas por pedido, custo de entrega, devolução e atraso por canal. Receita pode subir por preço sem avanço de unidades.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Previsão de demanda por frota local, gestão de estoques compartilhados e integração com oficinas podem reduzir ruptura e obsolescência.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem. E-commerce amplia comparação de preços, mas frete urgente e acerto de aplicação continuam relevantes; integração de catálogo muda a produtividade comercial.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Giro por item e aplicação, nível de atendimento, linhas por pedido, custo de entrega, devolução e atraso por canal. Receita pode subir por preço sem avanço de unidades.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Previsão de demanda por frota local, gestão de estoques compartilhados e integração com oficinas podem reduzir ruptura e obsolescência.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "MDIC · Programa Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover",
+        "purpose": "Estrutura do programa automotivo; não se atribui incentivo a empresa sem verificar habilitação e condições."
+      },
+      {
+        "label": "MDIC · habilitações ao Mover",
+        "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+        "purpose": "Lista pública de fabricantes, incluindo Bruning e CR Bluecast; exemplos sem ranking ou inferência de porte."
+      },
+      {
+        "label": "Cade · estudo de fusões e canais de autopeças",
+        "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+        "purpose": "Documento DEE 2023, anexo páginas 58–59: caso Fras-Le/Nakata 2020 e aquisição de portfólio por distribuidores. Histórico, não ranking atual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; não abrange QA da interface nem reprodução de áudio. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual serviço justifica comprar do distribuidor em vez da fábrica?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais lojistas e oficinas são recorrentes e rentáveis?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como representantes e canais digitais se complementam?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Como o estoque cobre os itens necessários sem excesso?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais fabricantes concentram compras e condições comerciais?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual é a contribuição por cliente após entrega e crédito?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "fabricantes e importação",
+          "detail": "Fluxo físico e financeiro: fabricantes e importação"
+        },
+        {
+          "id": "1",
+          "label": "centro de distribuição",
+          "detail": "O distribuidor compra de fabricantes ou importa, mantém centros de distribuição e abastece lojas, oficinas e frotas. O produto é disponibilidade logística e crédito comercial; não confundir sua receita de revenda com produção das autopeças."
+        },
+        {
+          "id": "2",
+          "label": "lojas oficinas e frotas",
+          "detail": "Fluxo físico e financeiro: lojas oficinas e frotas"
+        },
+        {
+          "id": "3",
+          "label": "aplicação e pós-venda",
+          "detail": "Fluxo físico e financeiro: aplicação e pós-venda"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Distribuidores de peças. Distribuidores de peças: O distribuidor compra de fabricantes ou importa, mantém centros de distribuição e abastece lojas, oficinas e frotas. Tese operacional: Amplitude de catálogo, acurácia e entrega rápida criam valor, mas venda direta e plataformas digitais comprimem a remuneração da intermediação. Principal vulnerabilidade: Ampliação de catálogo e abertura de filiais consomem caixa antes de consolidar demanda; itens antigos e descontos comerciais podem mascarar perda de margem. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiar estoque elegível e recebíveis com análise de concentração; distinguir bonificações condicionais, consignação e mercadoria própria. Compras importadas demandam exposição cambial e prazo de desembaraço documentados. O distribuidor compra de fabricantes ou importa, mantém centros de distribuição e abastece lojas, oficinas e frotas. O produto é disponibilidade logística e crédito comercial; não confundir sua receita de revenda com produção das autopeças. Giro por item e aplicação, nível de atendimento, linhas por pedido, custo de entrega, devolução e atraso por canal. Receita pode subir por preço sem avanço de unidades. Fabricantes habilitados ao Mover não formam ranking de distribuidores. Não foi recuperada base pública de participação de mercado no atacado de peças; referências industriais não substituem essa lacuna. E-commerce amplia comparação de preços, mas frete urgente e acerto de aplicação continuam relevantes; integração de catálogo muda a produtividade comercial. Previsão de demanda por frota local, gestão de estoques compartilhados e integração com oficinas podem reduzir ruptura e obsolescência. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado.  O estudo do Departamento de Estudos Econômicos do Cade que sintetiza o caso Fras-Le/Nakata registra que clientes consultados recorriam a mais de um fornecedor para ampliar a diversidade de produtos. A análise histórica não confirmou destaque excepcional do portfólio combinado frente ao mercado. É evidência sobre compras e canais, não prova de exclusividade ou prática ilícita atual. Para o distribuidor médio, diversidade de fornecedores e estoque adequado devem ser analisados junto da demanda atendida. Na análise de concorrência: Compra direta do fabricante, canais digitais diretos e centrais de compra podem substituir a intermediação. Lote mínimo, prazo, crédito e necessidade de consolidar marcas sustentam o distribuidor. Para novos entrantes: Cobertura de catálogo, estoque bem selecionado, logística de entregas e crédito a lojistas requerem capital e dados. Abrir depósito não reproduz uma rede capaz de entregar a peça correta rapidamente.",
+    "reviewStatus": "approved",
+    "reviewReport": "docs/sector-research/manufacturing-independent-review-logistics.json",
+    "reviewNotes": "PDF DEE/Cade2023, páginas58–59, conferido integralmente: famílias de peças, caso Fras-Le/Nakata2020 e múltiplos fornecedores. Alegações de terceiro não tratadas como conclusão; não extrapola participação atual."
+  }
+]

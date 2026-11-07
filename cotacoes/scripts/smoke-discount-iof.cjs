@@ -1,0 +1,32 @@
+const { chromium } = require('playwright')
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+;(async()=>{
+ const browser=await chromium.launch(require('./smoke-launch.cjs')())
+ const base=process.env.SMOKE_PUBLISHED_URL||process.env.SMOKE_BASE_URL||'http://127.0.0.1:5237'
+ const out=process.env.PUBLISHED_QA_OUTPUT||process.env.SMOKE_OUT||'/tmp/iof-qa';fs.mkdirSync(out,{recursive:true})
+ try {for(const width of [390,1280]) {
+  const page=await browser.newPage({viewport:{width,height:1000}}),errors=[]
+  page.on('pageerror',e=>errors.push(e.message))
+  await page.goto(base+'/#calculadora/analise-desconto')
+  await page.locator('#ad-titleFeeMode').waitFor()
+  const notice=page.getByRole('dialog',{name:'Aviso',exact:true});if(await notice.isVisible())await notice.getByRole('button',{name:'Entendi',exact:true}).click()
+  await page.locator('#ad-titleFeeMode').selectOption('percent')
+  assert.equal(await page.locator('#ad-iofPaid, #ad-interest, #ad-iofAdditional').count(),0)
+  const before=await page.locator('.desconto-kpis').innerText()
+  await page.locator('#ad-operationRate').fill('3,66')
+  assert.notEqual(await page.locator('.desconto-kpis').innerText(),before)
+  const totals=await page.locator('.desconto-summary-panel').innerText()
+  await page.locator('#ad-averageValue').fill('451200,86')
+  assert.notEqual(await page.locator('.desconto-summary-panel').innerText(),totals)
+  await page.getByRole('button',{name:'Adicionar grupo de títulos',exact:true}).click()
+  await page.getByRole('button',{name:'Remover grupo 2',exact:true}).click()
+  await page.locator('#ad-operations').fill('')
+  assert.match(await page.locator('.desconto-result-status').innerText(),/Preencha/)
+  await page.locator('#ad-operations').fill('6')
+  assert.doesNotMatch(await page.locator('.desconto-summary-panel').innerText(),/NaN|Infinity/)
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false)
+  await page.screenshot({path:`${out}/desconto-${width}.png`,fullPage:true})
+  assert.deepEqual(errors,[]);await page.close()
+ }console.log('Desconto IOF: interação e responsividade 390/1280 OK')}finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exitCode=1})

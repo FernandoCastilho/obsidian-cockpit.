@@ -4,8 +4,8 @@ import { parseMoneyInput } from './moneyInput.js'
 import { parseDecimal } from './emprestimo.js'
 import { useDataFile } from './useDataFile.js'
 import { useMacro } from './useMacro.js'
-import { keyOf, pointsOf, tlpView } from './bndes.js'
-import { COMPOSICOES, CUSTOS_FIXOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, TFC_NOMES, codigoTfc, faixaTfb, faixaTfc, ipcaEsperado, parseIpcaProjection, simular, spreadSobreCdi, tlpNominal, validIpcaProjection, vencimento } from './finameMateriais.js'
+import { keyOf, pointsOf } from './bndes.js'
+import { COMPOSICOES, CUSTOS_FIXOS, FONTES, PERIODICIDADES, PORTES, REGRAS, SISTEMAS, TFC_NOMES, codigoTfc, faixaTfb, faixaTfc, simular, spreadSobreCdi, vencimento } from './finameMateriais.js'
 import { FINAME_FUNDING_OPTIONS, FINAME_FUNDING_SOURCES, finameFundingAnnualRate, finameFundingOption } from './finameFunding.js'
 import { nf } from './format.js'
 import Estado from './Estado.jsx'
@@ -26,7 +26,7 @@ export function FinameIcon() {
 }
 
 // Calculadoras › BNDES Finame Materiais: condições do produto (prazo, carência, custo financeiro, taxas), resultado e fluxo
-// parcela a parcela. O custo financeiro vem do painel: TFC ou TFB da faixa de prazo (aba BNDES) ou TLP + IPCA esperado (Focus).
+// parcela a parcela. O custo financeiro vem do painel: TFC ou TFB da faixa de prazo (aba BNDES). TLP exigível tem projeção própria.
 // As explicações ficam no "?" ao lado de cada rótulo; na tela só os valores.
 export default function FinameMateriais({ onBack, onFundingView }) {
   const bndes = useDataFile('bndes.json')
@@ -41,12 +41,10 @@ export default function FinameMateriais({ onBack, onFundingView }) {
   const [porte, setPorte] = useState('mpme')
   const [bndesText, setBndesText] = useState(String(REGRAS.taxaBndes.mpme).replace('.', ','))
   const [agenteText, setAgenteText] = useState('3,00')
-  const [ipcaText, setIpcaText] = useState('')
   const [sistema, setSistema] = useState('sac')
   const [periodicidade, setPeriodicidade] = useState(3)
   const [composicao, setComposicao] = useState('capitalizada')
-  const [iofFixoText, setIofFixoText] = useState('0')
-  const [iofDiarioText, setIofDiarioText] = useState('0')
+  const [finameEligible, setFinameEligible] = useState(false)
   const [hoje] = useState(() => { const d = new Date(); d.setHours(12, 0, 0, 0); return d })
 
   const money = parseMoneyInput(valorText)
@@ -55,25 +53,19 @@ export default function FinameMateriais({ onBack, onFundingView }) {
   const carencia = /^\d+$/.test(carText.trim()) ? Number(carText) : null
   const taxaBndes = parseDecimal(bndesText)
   const taxaAgente = parseDecimal(agenteText)
-  const iofFixo = parseDecimal(iofFixoText), iofDiario = parseDecimal(iofDiarioText)
 
   // Custo financeiro do painel
   const faixa = prazo ? faixaTfb(prazo) : 60
   const tfbPts = pointsOf(bndes.data, keyOf(faixa, liberacao))
   const tfb = tfbPts.length ? { data: tfbPts.at(-1)[0], valor: tfbPts.at(-1)[1] } : null
-  const tlp = tlpView(bndes.data)
   const tfcCodigo = codigoTfc(porte, prazo ?? 60)
   const tfcPts = Array.isArray(moedas.data?.series?.[tfcCodigo]?.points) ? moedas.data.series[tfcCodigo].points : []
   const tfc = tfcPts.length ? { data: tfcPts.at(-1)[0], valor: tfcPts.at(-1)[1], codigo: tfcCodigo, nome: TFC_NOMES[tfcCodigo], faixa: faixaTfc(prazo ?? 60) } : null
   const fixa = CUSTOS_FIXOS.has(custo)
-  const focusIpca = ipcaEsperado(macro.data?.focus)
-  const ipcaFocus = focusIpca?.valor ?? null
-  const ipca = ipcaText.trim() ? parseIpcaProjection(ipcaText) : ipcaFocus
   const cdi = Array.isArray(macro.data?.cdi) && macro.data.cdi.length ? macro.data.cdi.at(-1)[1] : null
-  // Na TFB, o custo financeiro é a própria TFB (nominal). Na TLP, é a TLP (real); o IPCA corrige o saldo no cronograma.
+  // Na TFB, o custo financeiro é a própria TFB (nominal). A TLP exigível usa motor próprio, sem correção capitalizada do saldo.
   const funding = finameFundingOption(custo)
-  const custoFinanceiro = finameFundingAnnualRate(custo, { tfb: tfb?.valor, tfc: tfc?.valor, tlp: tlp?.value })
-  const nominalTlp = custo === 'tlp' && Number.isFinite(custoFinanceiro) && Number.isFinite(ipca) ? tlpNominal(custoFinanceiro, ipca) : null
+  const custoFinanceiro = finameFundingAnnualRate(custo, { tfb: tfb?.valor, tfc: tfc?.valor })
 
   const erros = {
     valor: money.ok && money.value > 0 ? null : money.error || 'Informe um valor maior que zero.',
@@ -82,11 +74,10 @@ export default function FinameMateriais({ onBack, onFundingView }) {
     car: carencia !== null && carencia >= 0 && carencia <= (fixa ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses) && (prazo === null || carencia < prazo) ? null : `Carência de 0 a ${fixa ? REGRAS.carenciaMaxTfbMeses : REGRAS.carenciaMaxMeses} meses${fixa ? ` com ${custo.toUpperCase()}` : ''}, menor que o prazo.`,
     bndes: taxaBndes !== null && taxaBndes <= 100 ? null : 'Informe a taxa do BNDES em % a.a.',
     agente: taxaAgente !== null && taxaAgente <= 100 ? null : 'Informe o spread da instituição em % a.a.',
-    ipca: custo === 'tlp' && !validIpcaProjection(ipca) ? 'Informe o IPCA esperado de -50 a 100% a.a., limite deste modelo.' : null,
-    iof: iofFixo !== null && iofFixo <= 100 && iofDiario !== null && iofDiario <= 100 ? null : 'Informe as alíquotas do IOF em %: 0 e 0 na alíquota zero (padrão), ou 0,38 e 0,0082 se o agente cobrar.',
+    iof: finameEligible ? null : 'Confirme os recursos FINAME elegíveis ao art. 8º, IX. Outras origens exigem análise tributária antes da simulação.',
   }
-  const pronto = !Object.values(erros).some(Boolean) && Number.isFinite(custoFinanceiro)
-  const r = pronto ? simular({ valor: money.value, participacao, prazo, carencia, custo, custoFinanceiro, ipca: custo === 'tlp' ? ipca : 0, taxaBndes, taxaAgente, sistema, periodicidade, composicao, iof: { fixed: iofFixo, daily: iofDiario } }) : null
+  const pronto = funding?.mode === 'inline' && !Object.values(erros).some(Boolean) && Number.isFinite(custoFinanceiro)
+  const r = pronto ? simular({ valor: money.value, participacao, prazo, carencia, custo, custoFinanceiro, ipca: 0, taxaBndes, taxaAgente, sistema, periodicidade, composicao, iof: { fixed: 0, daily: 0 } }) : null
   const res = r?.ok ? r : null
   const spread = res ? spreadSobreCdi(res.taxaNominal, cdi) : null
 
@@ -115,11 +106,11 @@ export default function FinameMateriais({ onBack, onFundingView }) {
           <li><b>Quem pede:</b> empresas de qualquer porte sediadas no país, empresário individual, MEI, produtor rural pessoa física, administração pública, cooperativas, fundações e associações; operação indireta, por agente financeiro credenciado.</li>
           <li><b>Limites:</b> até {REGRAS.participacaoMaxPct}% dos itens; {brl(REGRAS.tetoCliente12m)} por cliente a cada 12 meses (da homologação); reembolso de notas emitidas até {REGRAS.reembolsoMeses} meses antes do protocolo. O teto de {brl(REGRAS.tetoOperacao)} por operação aparece em materiais do BNDES e da CNI (2020 a 2025), mas não consta na página oficial em 04/11/2026: a calculadora só avisa; confirme com o agente.</li>
           <li><b>Prazo:</b> até {REGRAS.prazoMaxMeses} meses, com até {REGRAS.carenciaMaxMeses} de carência ({REGRAS.carenciaMaxTfbMeses} com TFB, TFC ou TFC MPME). Juros exigíveis na carência; depois, SAC ou Price mensal com juros junto do principal.</li>
-          <li><b>Taxa:</b> custo financeiro (TFB, TFBD, TLP, Taxa LCD, Taxa Fixa Composta ou Taxa Fixa Composta MPME; Selic suspensa pela {REGRAS.selicSuspensa}) + taxa do BNDES ({pct(REGRAS.taxaBndes['mpme-nne'])} MPME N/NE; {pct(REGRAS.taxaBndes.mpme)} MPME nas demais regiões e grandes) + spread da instituição financeira (a "taxa do agente financeiro" do BNDES), negociado. TFC, TFB e TLP usam este cronograma; Taxa LCD abre sua projeção própria, e TFBD identifica os dados e o modelo ainda necessários.</li>
-          <li><b>IOF:</b> {REGRAS.iof}.</li>
+          <li><b>Taxa:</b> custo financeiro (TFB, TFBD, TLP, Taxa LCD, Taxa Fixa Composta ou Taxa Fixa Composta MPME; Selic suspensa pela {REGRAS.selicSuspensa}) + taxa do BNDES ({pct(REGRAS.taxaBndes['mpme-nne'])} MPME N/NE; {pct(REGRAS.taxaBndes.mpme)} MPME nas demais regiões e grandes) + spread da instituição financeira (a "taxa do agente financeiro" do BNDES), negociado. TFC e TFB usam este cronograma aproximado; TLP exigível e Taxa LCD abrem projeções próprias, e TFBD identifica os dados e o modelo ainda necessários.</li>
+          <li><b>IOF:</b> Alíquota zero apenas para recursos FINAME elegíveis, mediante confirmação (art. 8º, IX).</li>
           <li><b>Garantias:</b> livre negociação entre o agente e o cliente, observadas as normas do Banco Central; admitida a garantia do FGI (Tradicional ou PEAC) ou do FG BNDES-SEBRAE. Seguro conforme a política do agente.</li>
-          <li><b>Conta:</b> taxa composta das três parcelas (capitalizada, padrão do BNDES: o exemplo oficial da página "Taxa de juros" é 1,07 × 1,015 × 1,03 − 1 = 11,86%; ou somada); taxa mensal por juros compostos em meses iguais de 1/12 do ano (o contrato apura por dias úteis: numa parcela isolada, com 19 a 23 dias úteis no mês, os juros do mês podem diferir em cerca de ±10% do valor aqui mostrado, e a diferença se compensa ao longo do ano; a base de apuração do contrato deve ser confirmada com o agente); juros da carência capitalizados dentro do período e pagos no fim dele; a parte dos juros que remunera cada um é apurada em camadas, no mesmo cronograma: custo financeiro = juros só com o custo; BNDES = juros com custo + BNDES menos juros só com o custo; spread da instituição = juros com a taxa completa menos juros com custo + BNDES; na TLP, o saldo é corrigido pelo IPCA todo mês e a amortização é calculada sobre o saldo corrigido (SAC = saldo ÷ parcelas vincendas); SAC ou Price mensal; IOF sobre o principal de cada parcela (sem a correção pelo IPCA) pelos dias até o vencimento, contando a carência e limitados a 365.</li>
-          <li>O que ainda depende de conferência com o agente: valor mínimo, aceitação de Price no produto, periodicidade padrão dos juros na carência e a alíquota de IOF aplicável ao funding da operação. A conta aqui é estimativa; a proposta do agente prevalece.</li>
+          <li><b>Conta:</b> taxa composta das três parcelas (capitalizada, padrão do BNDES: o exemplo oficial da página "Taxa de juros" é 1,07 × 1,015 × 1,03 − 1 = 11,86%; ou somada); taxa mensal por juros compostos em meses iguais de 1/12 do ano apenas nesta aproximação. A base de dias, o calendário e os ajustes do contrato precisam ser confirmados com o agente; diferenças de dias podem alterar os juros totais mesmo que a soma anual de dias úteis coincida, pois o saldo muda; juros da carência capitalizados dentro do período e pagos no fim dele; a parte dos juros que remunera cada um é apurada em camadas, no mesmo cronograma: custo financeiro = juros só com o custo; BNDES = juros com custo + BNDES menos juros só com o custo; spread da instituição = juros com a taxa completa menos juros com custo + BNDES; SAC ou Price mensal apenas em TFC/TFB nesta tela. TLP exigível tem perfil próprio, sem capitalizar IPCA positivo no principal. Esta tela calcula IOF zero apenas após confirmação de recursos FINAME elegíveis.</li>
+          <li>O que ainda depende de conferência com o agente: valor mínimo, aceitação de Price no produto, periodicidade padrão dos juros na carência e a origem elegível dos recursos FINAME para o IOF zero. A conta aqui é estimativa; a proposta do agente prevalece.</li>
         </ul>
         <p className="fm-fontes-titulo">Base legal e onde cada regra foi conferida</p>
         <ul>{FONTES.map((f) => <li key={f.regra}><b>{f.regra}.</b> <a href={f.url} target="_blank" rel="noopener noreferrer">{f.fonte}</a>.</li>)}</ul>
@@ -138,7 +129,7 @@ export default function FinameMateriais({ onBack, onFundingView }) {
           {field('part', 'Participação do BNDES (%)', input('part', partText, setPartText), 'Até 100% dos itens financiáveis.')}
           {field('prazo', 'Prazo total (meses)', input('prazo', prazoText, setPrazoText, { inputMode: 'numeric' }), 'Até 84 meses (7 anos).')}
           {field('car', 'Carência (meses)', input('car', carText, setCarText, { inputMode: 'numeric' }), fixa ? `Até 12 meses com ${custo.toUpperCase()}; juros exigíveis durante a carência.` : 'Até 24 meses; juros exigíveis durante a carência.')}
-          {field('custo', 'Custo financeiro', <select id="fm-custo" value={custo} onChange={event => { const next = finameFundingOption(event.target.value); if (next) setCusto(next.id) }}>{FINAME_FUNDING_OPTIONS.map(option => <option key={option.id} value={option.id}>{option.label}{option.mode === 'dedicated' ? ' · projeção própria' : option.mode === 'unavailable' ? ' · indisponível' : ''}</option>)}</select>,
+          {field('custo', 'Custo financeiro', <select id="fm-custo" value={custo} onChange={event => { const next = finameFundingOption(event.target.value); if (next) { setCusto(next.id); setFinameEligible(false) } }}>{FINAME_FUNDING_OPTIONS.map(option => <option key={option.id} value={option.id}>{option.label}{option.mode === 'dedicated' ? ' · projeção própria' : option.mode === 'unavailable' ? ' · indisponível' : ''}</option>)}</select>,
             <><p>{funding?.hint} Selic pura suspensa como custo financeiro ({REGRAS.selicSuspensa}).</p><p>As moedas contratuais já exibidas pelo painel têm unidades diferentes: US$ (604) é nível cambial; 143 é índice Selic; LD1 é a sobretaxa LCD; 024 é sobretaxa Selic; 236 é o componente mensal TLP-IPCA; TR1 e TR2 são referências ligadas à TR. Esses valores não podem substituir indistintamente uma taxa anual do Finame.</p><ul>{FINAME_FUNDING_SOURCES.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>)}</ul></>)}
           {custo === 'tfc' ? (
             <div className="cx-field">
@@ -149,36 +140,22 @@ export default function FinameMateriais({ onBack, onFundingView }) {
             seg('lib', 'TFB · liberação dos recursos', 'Prazo entre a contratação e a liberação dos recursos pelo BNDES: a TFB é cotada por faixa de prazo do financiamento e por liberação em 30 ou 90 dias. Valor do último dia publicado, coletado pelo painel (aba BNDES).',
               [30, 90].map((d) => <button key={d} type="button" aria-pressed={liberacao === d} onClick={() => setLiberacao(d)}>{d} dias</button>),
               <p className="cx-hint fm-custo-valor">{tfb ? <>TFB da faixa de {faixa} meses: <b>{pct(tfb.valor, 4)} a.a.</b> em {dmy(tfb.data)}.</> : bndes.status === 'loading' ? 'Carregando a TFB…' : 'TFB indisponível no painel; a conta fica sem custo financeiro.'}</p>)
-          ) : custo === 'tlp' ? (
-            field('ipca', 'IPCA esperado (% a.a.)', input('ipca', ipcaText, setIpcaText, { placeholder: Number.isFinite(ipcaFocus) ? nf(ipcaFocus, 2) : '4,50' }),
-              'Projeção da inflação usada para corrigir o saldo na TLP. Vem preenchida com a mediana do Focus para o ano seguinte; pode ser alterada. O contrato corrige o saldo pelo IPCA efetivo e cobra a TLP (parcela real) sobre o saldo corrigido.',
-              tlp ? <>TLP <b>{pct(tlp.value, 2)} a.a.</b> ({dmy(tlp.date)}){focusIpca ? <> · IPCA esperado pelo Focus para {focusIpca.ano}: <b>{pct(ipcaFocus, 2)}</b></> : null}{Number.isFinite(nominalTlp) ? <> · ≈ {pct(nominalTlp, 2)} a.a. nominal (projeção)</> : null}</> : 'TLP indisponível no painel.')
-          ) : <div className="cx-field"><span className="cx-label">{funding?.label}</span><p className="cx-hint" role="status">{funding?.notice}</p>{funding?.mode === 'dedicated' && <><p className="cx-hint">Usa condições próprias; os dados do Finame não serão transferidos.</p><a className="cx-action" href={`#calculadora/${funding.calculatorId}`} onClick={event => { if (onFundingView) { event.preventDefault(); onFundingView(funding.calculatorId) } }}>Abrir projeção Selic + LCD</a></>}</div>}
+          ) : <div className="cx-field"><span className="cx-label">{funding?.label}</span><p className="cx-hint" role="status">{funding?.notice}</p>{funding?.mode === 'dedicated' && <><p className="cx-hint">Usa condições próprias; os dados do Finame não serão transferidos.</p><a className="cx-action" href={`#calculadora/${funding.calculatorId}`} onClick={event => { if (onFundingView) { event.preventDefault(); onFundingView(funding.calculatorId) } }}>{custo === 'lcd' ? 'Abrir projeção Selic + LCD' : 'Abrir projeção TLP exigível'}</a></>}</div>}
           {seg('porte', 'Taxa do BNDES · porte e região', '0,95% a.a. para MPMEs no Norte e Nordeste; 1,25% a.a. para MPMEs nas demais regiões e para grandes empresas (página do produto em 04/11/2026; a mudança de 1,15% para 1,25% em 22/01/2026 é informada pela Abimaq). O porte também escolhe a série da TFC. Editável.',
             PORTES.map((p) => <button key={p.id} type="button" aria-pressed={porte === p.id} onClick={() => { setPorte(p.id); setBndesText(String(p.taxa).replace('.', ',')) }}>{p.label}</button>),
             <><div className="cx-rate">{input('bndes', bndesText, setBndesText, { 'aria-label': 'Taxa do BNDES (% a.a.)' })}<span className="fm-unidade">% a.a.</span></div><p className="cx-error" id="fm-bndes-err" role={erros.bndes ? 'alert' : undefined}>{erros.bndes ?? ''}</p></>)}
           {field('agente', 'Spread da instituição financeira (% a.a.)', <div className="cx-rate">{input('agente', agenteText, setAgenteText)}<span className="fm-unidade">% a.a.</span></div>, 'É a "taxa do agente financeiro" na nomenclatura do BNDES: a remuneração do banco, negociada com o cliente conforme risco, garantias e relacionamento; não há teto público. Compõe a taxa final junto com o custo financeiro e a taxa do BNDES.')}
-          {seg('sis', 'Sistema de amortização', `SAC: ${SISTEMAS[0].hint}. Price: ${custo === 'tlp' ? 'parcelas iguais em termos reais, que crescem com o IPCA' : SISTEMAS[1].hint}. Parcelas mensais após a carência.`,
+          {seg('sis', 'Sistema de amortização', `TFC/TFB nesta tela: SAC: ${SISTEMAS[0].hint}. Price: ${SISTEMAS[1].hint}. Parcelas mensais após a carência. Outras modalidades usam condições próprias.`,
             SISTEMAS.map((s) => <button key={s.id} type="button" aria-pressed={sistema === s.id} onClick={() => setSistema(s.id)}>{s.label}</button>))}
-          {seg('per', 'Juros na carência', 'Juros exigíveis durante a carência, pagos na periodicidade escolhida; dentro do período, capitalizados mês a mês.',
+          {seg('per', 'Juros na carência', 'Juros exigíveis durante a carência, pagos em vencimentos contados retroativamente desde o fim da carência (Anexo I, item 5.3). Exemplo: 5 meses com periodicidade trimestral paga nos meses 2 e 5. Dentro de cada período, capitalizados mês a mês.',
             PERIODICIDADES.map((p) => <button key={p.id} type="button" aria-pressed={periodicidade === p.id} onClick={() => setPeriodicidade(p.id)}>{p.label}</button>))}
           {seg('comp', 'Composição da taxa', `Capitalizada: ${COMPOSICOES[0].hint}. Somada: ${COMPOSICOES[1].hint}.`,
             COMPOSICOES.map((c) => <button key={c.id} type="button" aria-pressed={composicao === c.id} onClick={() => setComposicao(c.id)}>{c.label}</button>))}
-          <details className="cx-iof">
-            <summary>IOF (padrão: alíquota zero)</summary>
-            <div className="fm-rotulo fm-iof-nota"><span>Alíquotas</span>{ajuda('IOF', `${REGRAS.iof}. Padrão: alíquota zero (art. 8º, IX).`)}</div>
-            <div className="cx-iof-fields">
-              <div className="cx-field">
-                <label htmlFor="fm-iof-fixo">Adicional, uma vez (%)</label>
-                {input('iof-fixo', iofFixoText, setIofFixoText, { 'aria-invalid': !!erros.iof, 'aria-describedby': 'fm-iof-err' })}
-              </div>
-              <div className="cx-field">
-                <label htmlFor="fm-iof-diario">Diária (% ao dia)</label>
-                {input('iof-diario', iofDiarioText, setIofDiarioText, { 'aria-invalid': !!erros.iof, 'aria-describedby': 'fm-iof-err' })}
-              </div>
-            </div>
-            <p className="cx-error" id="fm-iof-err" role={erros.iof ? 'alert' : undefined}>{erros.iof ?? ''}</p>
-          </details>
+          <div className="cx-iof">
+            <label htmlFor="fm-finame-eligible"><input id="fm-finame-eligible" type="checkbox" checked={finameEligible} onChange={e => setFinameEligible(e.target.checked)} />Confirmo com a instituição que esta operação utiliza recursos da FINAME elegíveis à alíquota zero do art. 8º, IX, do Decreto 6.306/2007.</label>
+            <p className="cx-hint">IOF automático: zero somente com esse enquadramento confirmado. O nome BNDES ou o indexador, isoladamente, não comprovam a origem dos recursos. Para outras origens ou dúvida, a simulação fica bloqueada até confirmar o tratamento tributário.</p>
+            <p className="cx-error" id="fm-iof-err" role={erros.iof ? 'alert' : undefined}>{erros.iof}</p>
+          </div>
         </div>
       </article>
 
@@ -190,16 +167,16 @@ export default function FinameMateriais({ onBack, onFundingView }) {
         {res && (
           <>
             <div className="fm-grade">
-              <div className="fm-kpi"><span className="fm-rotulo">{custo === 'tlp' ? 'Juros reais (sobre saldo corrigido)' : 'Taxa final'}{ajuda(custo === 'tlp' ? 'Juros reais' : 'Taxa final', <><p>{custo === 'tlp' ? 'Taxa real composta: (1 + TLP) × (1 + BNDES) × (1 + spread) − 1, cobrada sobre o saldo corrigido pelo IPCA; a taxa nominal aproximada considera o IPCA projetado.' : `Taxa final composta: (1 + custo financeiro) × (1 + taxa do BNDES) × (1 + spread da instituição) − 1${composicao === 'somada' ? ', ou a soma das três quando a composição é somada' : ''}. A taxa mensal é a equivalente em meses de 1/12 do ano.`}</p><p>{pct(res.taxaMensal, 3)} a.m. · {pct(custoFinanceiro, 2)} {custo.toUpperCase()} + {pct(taxaBndes, 2)} BNDES + {pct(taxaAgente, 2)} spread da instituição, {composicao === 'somada' ? 'somadas' : 'capitalizadas'}{custo === 'tlp' ? ` · ≈ ${pct(res.taxaNominal, 2)} nominal com IPCA de ${pct(ipca, 2)}` : ''}</p></>)}</span><b>{pct(res.taxa, 2)} a.a.</b><small>{pct(res.taxaMensal, 3)} a.m.</small></div>
+              <div className="fm-kpi"><span className="fm-rotulo">Taxa final{ajuda('Taxa final', <><p>{`Taxa final composta: (1 + custo financeiro) × (1 + taxa do BNDES) × (1 + spread da instituição) − 1${composicao === 'somada' ? ', ou a soma das três quando a composição é somada' : ''}. A taxa mensal é a equivalente em meses de 1/12 do ano.`}</p><p>{pct(res.taxaMensal, 3)} a.m. · {pct(custoFinanceiro, 2)} {custo.toUpperCase()} + {pct(taxaBndes, 2)} BNDES + {pct(taxaAgente, 2)} spread da instituição, {composicao === 'somada' ? 'somadas' : 'capitalizadas'}</p></>)}</span><b>{pct(res.taxa, 2)} a.a.</b><small>{pct(res.taxaMensal, 3)} a.m.</small></div>
               <div className="fm-kpi"><span className="fm-rotulo">Valor financiado{ajuda('Valor financiado', 'Valor dos materiais × participação do BNDES; o restante é recursos próprios do cliente.')}</span><b>{brl(res.financiado)}</b><small>{res.recursosProprios > 0 ? `${brl(res.recursosProprios)} de recursos próprios` : '100% dos itens financiáveis'}</small></div>
               <div className="fm-kpi"><span className="fm-rotulo">Juros na carência{ajuda('Juros na carência', 'Juros do período de carência, pagos na periodicidade escolhida (dentro do período, capitalizados mês a mês); sem amortização nesse período.')}</span><b>{brl(res.jurosCarencia)}</b><small>{carencia} {carencia === 1 ? 'mês' : 'meses'} · {PERIODICIDADES.find((p) => p.id === periodicidade).label.toLowerCase()}</small></div>
-              <div className="fm-kpi"><span className="fm-rotulo">Parcelas{ajuda('Parcelas', 'Primeira parcela após a carência (juros + amortização). No SAC as parcelas caem; na Price são iguais em TFC e TFB e, na TLP, iguais em termos reais, crescendo com o IPCA.')}</span><b>{brl(res.primeiraParcela)}</b><small>{res.parcelasAmortizacao}x mensais{sistema === 'sac' ? ` · última ${brl(res.ultimaParcela)}` : custo === 'tlp' ? ` · última ${brl(res.ultimaParcela)} (crescem com o IPCA)` : ' · iguais'}</small></div>
-              <div className="fm-kpi"><span className="fm-rotulo">Spread da instituição{ajuda('Spread da instituição', <><p>{'Remuneração do banco (a "taxa do agente financeiro" do BNDES). Em R$: juros com a taxa completa menos juros com custo financeiro + taxa do BNDES, no mesmo cronograma; a parte do BNDES é juros com custo + BNDES menos juros só com o custo, e o custo financeiro é o restante. Em pontos: quanto o spread acrescenta à taxa final, que na composição capitalizada é o spread multiplicado por (1 + custo) × (1 + BNDES).'}</p><p>{brl(res.atribuicao.agente)} dos juros ({pct((res.atribuicao.agente / res.juros) * 100, 1)}) · +{nf(res.spreadAgentePp, 2)} p.p. sobre custo + BNDES · BNDES {brl(res.atribuicao.bndes)} · custo financeiro {brl(res.atribuicao.custoFinanceiro)}</p></>)}</span><b>{pct(taxaAgente, 2)} a.a.</b><small>+{nf(res.spreadAgentePp, 2)} p.p. na taxa final</small></div>
-              <div className="fm-kpi"><span className="fm-rotulo">Juros totais{ajuda('Juros totais', 'Soma dos juros da carência e das parcelas. Na TLP, a correção pelo IPCA do saldo é mostrada à parte e também compõe o pagamento final.')}</span><b>{brl(res.juros)}</b><small>{pct((res.juros / res.financiado) * 100, 1)} do financiado{custo === 'tlp' ? ` · correção pelo IPCA ${brl(res.correcao)} (projeção)` : ''}</small></div>
-              <div className="fm-kpi"><span className="fm-rotulo">IOF{ajuda('IOF', 'Alíquota zero por padrão: operação com recursos da FINAME (Decreto 6.306/2007, art. 8º, IX). Se o agente cobrar, informe as alíquotas em IOF nas condições gerais.')}</span><b>{brl(res.iof)}</b><small>{res.iof > 0 ? `${brl(res.iofFixo)} adicional + ${brl(res.iofDiario)} diário` : 'Alíquota zero'}</small></div>
-              <div className="fm-kpi"><span className="fm-rotulo">Pagamento final{ajuda('Pagamento final', 'Valor financiado + juros totais + correção pelo IPCA (TLP) + IOF: tudo o que o cliente paga até a última parcela, sem tarifas, seguros ou garantias.')}</span><b>{brl(res.total)}</b></div>
+              <div className="fm-kpi"><span className="fm-rotulo">Parcelas{ajuda('Parcelas', 'Primeira parcela após a carência (juros + amortização). No SAC as parcelas caem; na Price são iguais em TFC e TFB, dentro da aproximação de períodos mensais iguais.')}</span><b>{brl(res.primeiraParcela)}</b><small>{res.parcelasAmortizacao}x mensais{sistema === 'sac' ? ` · última ${brl(res.ultimaParcela)}` : ' · iguais'}</small></div>
+              <div className="fm-kpi"><span className="fm-rotulo">Spread da instituição{ajuda('Spread da instituição', <><p>{'Remuneração do banco (a "taxa do agente financeiro" do BNDES). Em R$: juros com a taxa completa menos juros com custo financeiro + taxa do BNDES, no mesmo cronograma; a parte do BNDES é juros com custo + BNDES menos juros só com o custo, e o custo financeiro é o restante. Em pontos: quanto o spread acrescenta à taxa final, que na composição capitalizada é o spread multiplicado por (1 + custo) × (1 + BNDES).'}</p><p>{brl(res.atribuicao.agente)} dos juros ({pct(res.juros > 0 ? (res.atribuicao.agente / res.juros) * 100 : 0, 1)}) · +{nf(res.spreadAgentePp, 2)} p.p. sobre custo + BNDES · BNDES {brl(res.atribuicao.bndes)} · custo financeiro {brl(res.atribuicao.custoFinanceiro)}</p></>)}</span><b>{pct(taxaAgente, 2)} a.a.</b><small>+{nf(res.spreadAgentePp, 2)} p.p. na taxa final</small></div>
+              <div className="fm-kpi"><span className="fm-rotulo">Juros totais{ajuda('Juros totais', 'Soma dos juros da carência e das parcelas da projeção TFC/TFB.')}</span><b>{brl(res.juros)}</b><small>{pct((res.juros / res.financiado) * 100, 1)} do financiado</small></div>
+              <div className="fm-kpi"><span className="fm-rotulo">IOF{ajuda('IOF', 'Alíquota zero condicionada à confirmação de recursos FINAME elegíveis (Decreto 6.306/2007, art. 8º, IX).')}</span><b>{brl(res.iof)}</b><small>{res.iof > 0 ? `${brl(res.iofFixo)} adicional + ${brl(res.iofDiario)} diário` : 'Alíquota zero'}</small></div>
+              <div className="fm-kpi"><span className="fm-rotulo">Pagamento final{ajuda('Pagamento final', 'Valor financiado + juros totais + IOF: tudo o que o cliente paga nesta projeção TFC/TFB, sem tarifas, seguros ou garantias.')}</span><b>{brl(res.total)}</b></div>
             </div>
-            {spread != null && <p className="cx-hint cx-pad fm-rotulo">Equivale a <b>CDI + {pct(spread, 2)} a.a.</b>{ajuda('Equivale a CDI +', `Spread capitalizado sobre o CDI de hoje (${pct(cdi, 2)}) que dá a mesma taxa nominal: serve para comparar com o capital de giro.${custo === 'tlp' ? ' Na TLP, o custo real muda com o IPCA efetivo; a projeção usa o IPCA esperado.' : ''}`)}</p>}
+            {spread != null && <p className="cx-hint cx-pad fm-rotulo">Equivale a <b>CDI + {pct(spread, 2)} a.a.</b>{ajuda('Equivale a CDI +', `Spread capitalizado sobre o CDI de hoje (${pct(cdi, 2)}) que dá a mesma taxa nominal: serve para comparar com o capital de giro.`)}</p>}
             {res.avisos.map((a) => <Estado key={a} tipo="aviso">{a}</Estado>)}
           </>
         )}
@@ -207,21 +184,22 @@ export default function FinameMateriais({ onBack, onFundingView }) {
 
       {res && (
         <article className="desk-panel cx-panel fm-fluxo-panel">
-          <header><h3 className="cx-heading">Fluxo parcela a parcela{ajuda('Fluxo parcela a parcela', `Vencimentos no mesmo dia de cada mês a partir da liberação, considerada hoje (${data(hoje)}); o agente define as datas reais. "Juros pagos" é o que vence no mês: na carência, os juros acumulam e são pagos na periodicidade escolhida. IOF adicional na liberação e IOF diário em cada parcela, quando houver${custo === 'tlp' ? '; correção pelo IPCA projetada, aplicada ao saldo antes dos juros' : ''}.`)}</h3></header>
-          <div className="cx-wrap fm-fluxo" role="region" aria-label="Fluxo parcela a parcela" tabIndex={0}>
+          <header><h3 className="cx-heading">Fluxo parcela a parcela{ajuda('Fluxo parcela a parcela', `Calendário hipotético: liberação ilustrativa hoje (${data(hoje)}) e datas no mesmo dia de cada mês, recuando para o último dia em meses mais curtos. Não aplica data-base, dia 15, feriados ou ajuste bancário de vencimentos; não é memória contratual. "Juros pagos" é o que vence no mês: na carência, os juros acumulam e são pagos na periodicidade escolhida. IOF zero no enquadramento FINAME confirmado.`)}</h3></header>
+          <p className="cx-hint cx-pad" id="fm-calendario-hipotetico">Calendário hipotético, em meses iguais. Datas apenas ilustrativas, sem ajuste bancário ou feriados. Não use como memória contratual.</p>
+          <div className="cx-wrap fm-fluxo" role="region" aria-label="Fluxo parcela a parcela" aria-describedby="fm-calendario-hipotetico" tabIndex={0}>
             <table className="cx-matrix fm-tabela">
-              <thead><tr><th scope="col">Nº</th><th scope="col">Vencimento</th><th scope="col">Saldo inicial</th>{custo === 'tlp' && <th scope="col">Correção IPCA</th>}<th scope="col">Juros pagos</th><th scope="col">Amortização</th><th scope="col">Parcela</th><th scope="col">IOF</th><th scope="col">Total pago</th><th scope="col">Saldo final</th></tr></thead>
+              <thead><tr><th scope="col">Nº</th><th scope="col">Data ilustrativa</th><th scope="col">Saldo inicial</th><th scope="col">Juros pagos</th><th scope="col">Amortização</th><th scope="col">Parcela</th><th scope="col">IOF</th><th scope="col">Total pago</th><th scope="col">Saldo final</th></tr></thead>
               <tbody>
-                <tr className="fm-liberacao"><th scope="row">0 · liberação</th><td>{data(hoje)}</td><td>—</td>{custo === 'tlp' && <td>—</td>}<td>—</td><td>—</td><td>—</td><td>{brl(res.iofFixo)}</td><td>{brl(res.iofFixo)}</td><td>{brl(res.financiado)}</td></tr>
-                {res.parcelas.map((p) => <tr key={p.mes} className={p.carencia ? 'fm-carencia' : undefined}><th scope="row">{p.mes}{p.carencia ? ' · carência' : ''}</th><td>{data(vencimento(hoje, p.mes))}</td><td>{brl(p.saldoInicial)}</td>{custo === 'tlp' && <td>{brl(p.correcao)}</td>}<td>{brl(p.juros)}</td><td>{brl(p.amortizacao)}</td><td>{brl(p.parcela)}</td><td>{brl(p.iof)}</td><td>{brl(p.pago)}</td><td>{brl(p.saldo)}</td></tr>)}
+                <tr className="fm-liberacao"><th scope="row">0 · liberação hipotética</th><td>{data(hoje)}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>{brl(res.iofFixo)}</td><td>{brl(res.iofFixo)}</td><td>{brl(res.financiado)}</td></tr>
+                {res.parcelas.map((p) => <tr key={p.mes} className={p.carencia ? 'fm-carencia' : undefined}><th scope="row">{p.mes}{p.carencia ? ' · carência' : ''}</th><td>{data(vencimento(hoje, p.mes))}</td><td>{brl(p.saldoInicial)}</td><td>{brl(p.juros)}</td><td>{brl(p.amortizacao)}</td><td>{brl(p.parcela)}</td><td>{brl(p.iof)}</td><td>{brl(p.pago)}</td><td>{brl(p.saldo)}</td></tr>)}
               </tbody>
-              <tfoot><tr><th scope="row">Total</th><td>{res.parcelas.length} meses</td><td>—</td>{custo === 'tlp' && <td>{brl(res.correcao)}</td>}<td>{brl(res.juros)}</td><td>{brl(res.financiado + res.correcao)}</td><td>{brl(res.juros + res.financiado + res.correcao)}</td><td>{brl(res.iof)}</td><td>{brl(res.total)}</td><td>—</td></tr></tfoot>
+              <tfoot><tr><th scope="row">Total</th><td>{res.parcelas.length} meses</td><td>—</td><td>{brl(res.juros)}</td><td>{brl(res.financiado)}</td><td>{brl(res.juros + res.financiado)}</td><td>{brl(res.iof)}</td><td>{brl(res.total)}</td><td>—</td></tr></tfoot>
             </table>
           </div>
         </article>
       )}
 
-      <p className="status">Base de regras: {dmy(REGRAS.conferidoEm)} · Custos: painel BNDES e Focus · Fontes em Configurações &gt; Base de dados.</p>
+      <p className="status">Base de regras: {dmy(REGRAS.conferidoEm)} · Custos: painel BNDES · Fontes em Configurações &gt; Base de dados.</p>
     </section>
   )
 }

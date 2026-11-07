@@ -126,3 +126,38 @@ test('falhas TFB e TLP não são mascaradas pelo snapshot de outra fonte', () =>
     assert.match(result, /bndes indisponível/)
   }
 })
+
+test('TFB/TLP retidas avisam falha da própria fonte e a recuperação limpa o aviso', () => {
+  const data = { series: { TFB_60_90: { prazo: 60, liberacao: 90, points: [['2026-11-04', 10.5]] } }, tlp: { points: [['2026-11-01', 6.9]] } }
+  for (const [family, label, value] of [['tfb/TFB_60_90', 'TFB', /10,50% a\.a\./], ['tlp/TLP', 'TLP', /6,90% a\.a\./]]) {
+    const retained = html(family, failed, { status: 'ok', stale: true, error: 'HTTP 503', data })
+    assert.doesNotMatch(retained, /data-state="erro"/)
+    assert.match(retained, value)
+    assert.match(retained, new RegExp(`Não foi possível atualizar as séries ${label}`))
+    const recovered = html(family, failed, { status: 'ok', data })
+    assert.match(recovered, value)
+    assert.doesNotMatch(recovered, /Não foi possível atualizar as séries TFB|Não foi possível atualizar as séries TLP/)
+  }
+  const otherFamily = html('moedas/LD1', { status: 'ok', data: official }, { status: 'ok', stale: true, error: 'HTTP 503', data })
+  assert.doesNotMatch(otherFamily, /Não foi possível atualizar as séries TFB|Não foi possível atualizar as séries TLP/)
+})
+
+test('BNDES: dois acessos oficiais continuam disponíveis em todas as famílias e com falha das fontes', () => {
+  const destinations = [
+    ['Materiais Industrializados', 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/finame-materiais-industrializados'],
+    ['Máquinas e Equipamentos', 'https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao'],
+  ]
+  for (const family of ['tfb/TFB_60_90', 'tlp/TLP', 'tfc/C01', 'moedas/LD1']) {
+    const navigation = html(family, failed).match(/<nav class="bn-official-links" aria-label="Linhas oficiais BNDES">([\s\S]*?)<\/nav>/)?.[1]
+    assert.ok(navigation, `Acessos oficiais ausentes em ${family}`)
+    assert.equal((navigation.match(/<a /g) || []).length, 2)
+    for (const [label, href] of destinations) {
+      const anchor = navigation.match(new RegExp(`<a href="${href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"([^>]*)>([\\s\\S]*?)<\\/a>`))
+      assert.ok(anchor, `${label}: destino oficial incorreto`)
+      assert.match(anchor[1], /target="_blank"/)
+      assert.match(anchor[1], /rel="noopener noreferrer"/)
+      assert.ok(anchor[2].includes(label))
+      assert.ok(anchor[2].includes('abre em nova aba'))
+    }
+  }
+})

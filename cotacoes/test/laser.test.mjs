@@ -46,3 +46,20 @@ test('atalho do laser: Ctrl + ~ ou Ctrl + " (qualquer teclado), Alt + L de reser
   assert.equal(atalho({ ctrlKey: true, altKey: true, code: 'Backquote' }), false); assert.equal(atalho({ ctrlKey: true, metaKey: true, code: 'Backquote' }), false)
   assert.equal(atalho({ ctrlKey: true, key: 'a', code: 'KeyA' }), false); assert.equal(atalho({}), false)
 })
+
+
+test('diagramas usam a instância global, com portal, foco estável e Escape priorizando o laser', () => {
+  const source = file => readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')
+  const laser = source('Laser.jsx')
+  assert.match(laser, /dialog\[open\], \[data-laser-host\]/)
+  assert.match(laser, /!host.contains\(slot\) \? host : slot/)
+  assert.match(laser, /stopImmediatePropagation\(\); setOn\(false\)/)
+  for (const file of ['TechnologyIntegrationDiagram.jsx', 'SectorValueChain.jsx']) {
+    const jsx = source(file)
+    assert.match(jsx, /data-laser-host="true"/)
+    assert.match(jsx, /laser-slot tic-flow-laser-slot/)
+    assert.match(jsx, /!event.defaultPrevented/)
+    assert.doesNotMatch(jsx, /setLaser|pointerRef|tic-flow-laser-toggle/)
+    assert.doesNotMatch(jsx, /Pausar animação do diagrama|Retomar animação do diagrama/)
+  }
+})

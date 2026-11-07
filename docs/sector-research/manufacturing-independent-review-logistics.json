@@ -1,0 +1,1724 @@
+{
+  "reviewType": "Revisão independente de pesquisa e consistência, sem alteração de autoria",
+  "reviewedAt": "2026-11-06",
+  "independence": "Revisor não escreveu nem corrigiu os quatro grupos. Autoria corrigiu os valores após receber achados; as correções são relidas neste relatório.",
+  "overall": "Dez estudos de metalmecânico e automotivo aprovados documentalmente, com limites de recorte e de disponibilidade preservados. As96ocorrências numéricas originais dos quatro grupos foram cotejadas com APIs oficiais; decisão qualitativa final dos13estudos de têxtil e construção transferida ao auditor designado. Não inclui testes de interface ou áudio.",
+  "groups": [
+    {
+      "group": "metalmecanico",
+      "sha256": "b369ca654d84d86742834fab3ba18284158ee8378b2322c80a6f7407fb09c36b",
+      "studyCount": 6,
+      "numericEntries": 30,
+      "numericConfirmed": 30,
+      "numericChecks": [
+        {
+          "study": "Fundição",
+          "scope": "Brasil; Metalurgia",
+          "period": "2020",
+          "published": -7.2,
+          "official": -7.2,
+          "matches": true
+        },
+        {
+          "study": "Fundição",
+          "scope": "Brasil; Metalurgia",
+          "period": "2021",
+          "published": 15.4,
+          "official": 15.4,
+          "matches": true
+        },
+        {
+          "study": "Fundição",
+          "scope": "Brasil; Metalurgia",
+          "period": "2022",
+          "published": -5.0,
+          "official": -5.0,
+          "matches": true
+        },
+        {
+          "study": "Fundição",
+          "scope": "Brasil; Metalurgia",
+          "period": "2023",
+          "published": -2.8,
+          "official": -2.8,
+          "matches": true
+        },
+        {
+          "study": "Fundição",
+          "scope": "Brasil; Metalurgia",
+          "period": "2024",
+          "published": 2.6,
+          "official": 2.6,
+          "matches": true
+        },
+        {
+          "study": "Usinagem",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2020",
+          "published": 0.1,
+          "official": 0.1,
+          "matches": true
+        },
+        {
+          "study": "Usinagem",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2021",
+          "published": 5.2,
+          "official": 5.2,
+          "matches": true
+        },
+        {
+          "study": "Usinagem",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2022",
+          "published": -9.0,
+          "official": -9.0,
+          "matches": true
+        },
+        {
+          "study": "Usinagem",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2023",
+          "published": -3.4,
+          "official": -3.4,
+          "matches": true
+        },
+        {
+          "study": "Usinagem",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2024",
+          "published": 5.0,
+          "official": 5.0,
+          "matches": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2020",
+          "published": 0.1,
+          "official": 0.1,
+          "matches": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2021",
+          "published": 5.2,
+          "official": 5.2,
+          "matches": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2022",
+          "published": -9.0,
+          "official": -9.0,
+          "matches": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2023",
+          "published": -3.4,
+          "official": -3.4,
+          "matches": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2024",
+          "published": 5.0,
+          "official": 5.0,
+          "matches": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2020",
+          "published": -4.2,
+          "official": -4.2,
+          "matches": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2021",
+          "published": 24.0,
+          "official": 24.0,
+          "matches": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2022",
+          "published": -2.3,
+          "official": -2.3,
+          "matches": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2023",
+          "published": -7.2,
+          "official": -7.2,
+          "matches": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2024",
+          "published": 2.6,
+          "official": 2.6,
+          "matches": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2020",
+          "published": -4.2,
+          "official": -4.2,
+          "matches": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2021",
+          "published": 24.0,
+          "official": 24.0,
+          "matches": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2022",
+          "published": -2.3,
+          "official": -2.3,
+          "matches": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2023",
+          "published": -7.2,
+          "official": -7.2,
+          "matches": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2024",
+          "published": 2.6,
+          "official": 2.6,
+          "matches": true
+        },
+        {
+          "study": "Equipamentos",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2020",
+          "published": -4.2,
+          "official": -4.2,
+          "matches": true
+        },
+        {
+          "study": "Equipamentos",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2021",
+          "published": 24.0,
+          "official": 24.0,
+          "matches": true
+        },
+        {
+          "study": "Equipamentos",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2022",
+          "published": -2.3,
+          "official": -2.3,
+          "matches": true
+        },
+        {
+          "study": "Equipamentos",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2023",
+          "published": -7.2,
+          "official": -7.2,
+          "matches": true
+        },
+        {
+          "study": "Equipamentos",
+          "scope": "Brasil; Máquinas e equipamentos",
+          "period": "2024",
+          "published": 2.6,
+          "official": 2.6,
+          "matches": true
+        }
+      ],
+      "chartEntries": 30,
+      "chartLedgerCovered": 30,
+      "chartChecks": [
+        {
+          "study": "Fundição",
+          "year": 2020,
+          "value": -7.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fundição",
+          "year": 2021,
+          "value": 15.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fundição",
+          "year": 2022,
+          "value": -5.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fundição",
+          "year": 2023,
+          "value": -2.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fundição",
+          "year": 2024,
+          "value": 2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Usinagem",
+          "year": 2020,
+          "value": 0.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Usinagem",
+          "year": 2021,
+          "value": 5.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Usinagem",
+          "year": 2022,
+          "value": -9.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Usinagem",
+          "year": 2023,
+          "value": -3.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Usinagem",
+          "year": 2024,
+          "value": 5.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "year": 2020,
+          "value": 0.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "year": 2021,
+          "value": 5.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "year": 2022,
+          "value": -9.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "year": 2023,
+          "value": -3.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Estruturas metálicas",
+          "year": 2024,
+          "value": 5.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "year": 2020,
+          "value": -4.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "year": 2021,
+          "value": 24.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "year": 2022,
+          "value": -2.3,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "year": 2023,
+          "value": -7.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas industriais",
+          "year": 2024,
+          "value": 2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "year": 2020,
+          "value": -4.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "year": 2021,
+          "value": 24.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "year": 2022,
+          "value": -2.3,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "year": 2023,
+          "value": -7.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Máquinas agrícolas",
+          "year": 2024,
+          "value": 2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Equipamentos",
+          "year": 2020,
+          "value": -4.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Equipamentos",
+          "year": 2021,
+          "value": 24.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Equipamentos",
+          "year": 2022,
+          "value": -2.3,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Equipamentos",
+          "year": 2023,
+          "value": -7.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Equipamentos",
+          "year": 2024,
+          "value": 2.6,
+          "ledgerCovered": true
+        }
+      ],
+      "structuralChecks": {
+        "uniqueTopicIndices": true,
+        "canvasSix": true,
+        "sectionsPresent": true,
+        "transcriptPresent": true
+      },
+      "scopeLimit": "Conferência numérica integral das entradas do ledger e correspondência dos gráficos. Não equivale a confirmação integral de todas as afirmações qualitativas nem a estudo completo do mercado específico.",
+      "studies": [
+        {
+          "id": "metalmecanico-0",
+          "title": "Fundição",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Caso Tupy/BNDES integral sustenta fundição e polos; PIM Metalurgia delimitada como contexto, não medida de fundição. Correção factual posterior verificada em cinco ocorrências: areia separada da carga metálica e destinada à moldagem/macharia, conforme fonte primária Tupy. A revisão anterior não detectou a formulação incorreta.",
+          "factualCorrectionAddendum": "docs/sector-research/review-foundry-process-correction.json"
+        },
+        {
+          "id": "metalmecanico-1",
+          "title": "Usinagem",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Caso Romi/BNDES integral sustenta peças usinadas e equipamento; falta de ranking dos prestadores expressa, sem extrapolação."
+        },
+        {
+          "id": "metalmecanico-2",
+          "title": "Estruturas metálicas",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Página primária Medabil integral confirma oferta de estruturas, cobertura e fechamentos; sem alegação de ranking, desempenho ou contrato."
+        },
+        {
+          "id": "metalmecanico-3",
+          "title": "Máquinas industriais",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Romi/BNDES integral e estudo de investimento distinguem fabricante, exportação e comprador; números amplos identificados."
+        },
+        {
+          "id": "metalmecanico-4",
+          "title": "Máquinas agrícolas",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Página primária Jacto integral confirma famílias de máquinas e matriz Pompeia; cadastroMDA indisponível foi retirado. Sem inferência de vendas ou elegibilidade."
+        },
+        {
+          "id": "metalmecanico-5",
+          "title": "Equipamentos",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "MWM na notícia Tupy/BNDES integral confirma motores, geradores e motobombas; categoria ampla e ausência de ranking explicitadas."
+        }
+      ],
+      "editorialRevalidation": "Canvas e Porter relidos após atualização da autoria. Seis perguntas claras por recorte; substitutos e barreiras específicos. Sem novos dados estatísticos; aprovação mantida."
+    },
+    {
+      "group": "automotivo",
+      "sha256": "a8139de5c833de379ae14ab3dfc5311a1dc311b827403a9dfba08da4932883a2",
+      "studyCount": 4,
+      "numericEntries": 10,
+      "numericConfirmed": 10,
+      "numericChecks": [
+        {
+          "study": "Componentes automotivos",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2020",
+          "published": -27.9,
+          "official": -27.9,
+          "matches": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2021",
+          "published": 20.1,
+          "official": 20.1,
+          "matches": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2022",
+          "published": 3.0,
+          "official": 3.0,
+          "matches": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2023",
+          "published": -7.1,
+          "official": -7.1,
+          "matches": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2024",
+          "published": 12.4,
+          "official": 12.4,
+          "matches": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2020",
+          "published": -27.9,
+          "official": -27.9,
+          "matches": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2021",
+          "published": 20.1,
+          "official": 20.1,
+          "matches": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2022",
+          "published": 3.0,
+          "official": 3.0,
+          "matches": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2023",
+          "published": -7.1,
+          "official": -7.1,
+          "matches": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "scope": "Brasil; Veículos automotores, reboques e carrocerias",
+          "period": "2024",
+          "published": 12.4,
+          "official": 12.4,
+          "matches": true
+        }
+      ],
+      "chartEntries": 10,
+      "chartLedgerCovered": 10,
+      "chartChecks": [
+        {
+          "study": "Componentes automotivos",
+          "year": 2020,
+          "value": -27.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "year": 2021,
+          "value": 20.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "year": 2022,
+          "value": 3.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "year": 2023,
+          "value": -7.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Componentes automotivos",
+          "year": 2024,
+          "value": 12.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "year": 2020,
+          "value": -27.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "year": 2021,
+          "value": 20.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "year": 2022,
+          "value": 3.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "year": 2023,
+          "value": -7.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Implementos rodoviários",
+          "year": 2024,
+          "value": 12.4,
+          "ledgerCovered": true
+        }
+      ],
+      "structuralChecks": {
+        "uniqueTopicIndices": true,
+        "canvasSix": true,
+        "sectionsPresent": true,
+        "transcriptPresent": true
+      },
+      "scopeLimit": "Conferência numérica integral das entradas do ledger e correspondência dos gráficos. Não equivale a confirmação integral de todas as afirmações qualitativas nem a estudo completo do mercado específico.",
+      "studies": [
+        {
+          "id": "automotivo-0",
+          "title": "Componentes automotivos",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "ZEN/BNDES outubro2026 integral confirma projeto para eletrificação; aprovação não confundida com resultado. Mover e PIM delimitados."
+        },
+        {
+          "id": "automotivo-1",
+          "title": "Implementos rodoviários",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "Randon/BNDES2023 integral confirma atuação e exportação; vagões e reboques separados e caso datado."
+        },
+        {
+          "id": "automotivo-2",
+          "title": "Reposição de autopeças",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "PDF DEE/Cade2023, páginas58–59, conferido integralmente: famílias de peças, caso Fras-Le/Nakata2020 e múltiplos fornecedores. Alegações de terceiro não tratadas como conclusão; não extrapola participação atual."
+        },
+        {
+          "id": "automotivo-3",
+          "title": "Distribuidores de peças",
+          "reviewStatus": "approved",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": null,
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito.",
+          "decisionBasis": "PDF DEE/Cade2023, páginas58–59, conferido integralmente: famílias de peças, caso Fras-Le/Nakata2020 e múltiplos fornecedores. Alegações de terceiro não tratadas como conclusão; não extrapola participação atual."
+        }
+      ],
+      "editorialRevalidation": "Canvas e Porter relidos após atualização da autoria. Seis perguntas claras por recorte; substitutos e barreiras específicos. Sem novos dados estatísticos; aprovação mantida."
+    },
+    {
+      "group": "construcao",
+      "sha256": "d02a3fcc5cf7dc58866ad579bcdf0800390d8aba2eb374c35db5085bc3bc4b66",
+      "studyCount": 7,
+      "numericEntries": 20,
+      "numericConfirmed": 20,
+      "numericChecks": [
+        {
+          "study": "Cimento",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2020",
+          "published": -2.6,
+          "official": -2.6,
+          "matches": true
+        },
+        {
+          "study": "Cimento",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2021",
+          "published": 13.8,
+          "official": 13.8,
+          "matches": true
+        },
+        {
+          "study": "Cimento",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2022",
+          "published": -5.1,
+          "official": -5.1,
+          "matches": true
+        },
+        {
+          "study": "Cimento",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2023",
+          "published": -6.0,
+          "official": -6.0,
+          "matches": true
+        },
+        {
+          "study": "Cimento",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2024",
+          "published": 4.0,
+          "official": 4.0,
+          "matches": true
+        },
+        {
+          "study": "Cerâmica",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2020",
+          "published": -2.6,
+          "official": -2.6,
+          "matches": true
+        },
+        {
+          "study": "Cerâmica",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2021",
+          "published": 13.8,
+          "official": 13.8,
+          "matches": true
+        },
+        {
+          "study": "Cerâmica",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2022",
+          "published": -5.1,
+          "official": -5.1,
+          "matches": true
+        },
+        {
+          "study": "Cerâmica",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2023",
+          "published": -6.0,
+          "official": -6.0,
+          "matches": true
+        },
+        {
+          "study": "Cerâmica",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2024",
+          "published": 4.0,
+          "official": 4.0,
+          "matches": true
+        },
+        {
+          "study": "Vidros",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2020",
+          "published": -2.6,
+          "official": -2.6,
+          "matches": true
+        },
+        {
+          "study": "Vidros",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2021",
+          "published": 13.8,
+          "official": 13.8,
+          "matches": true
+        },
+        {
+          "study": "Vidros",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2022",
+          "published": -5.1,
+          "official": -5.1,
+          "matches": true
+        },
+        {
+          "study": "Vidros",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2023",
+          "published": -6.0,
+          "official": -6.0,
+          "matches": true
+        },
+        {
+          "study": "Vidros",
+          "scope": "Brasil; Produtos de minerais não metálicos",
+          "period": "2024",
+          "published": 4.0,
+          "official": 4.0,
+          "matches": true
+        },
+        {
+          "study": "Esquadrias",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2020",
+          "published": 0.1,
+          "official": 0.1,
+          "matches": true
+        },
+        {
+          "study": "Esquadrias",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2021",
+          "published": 5.2,
+          "official": 5.2,
+          "matches": true
+        },
+        {
+          "study": "Esquadrias",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2022",
+          "published": -9.0,
+          "official": -9.0,
+          "matches": true
+        },
+        {
+          "study": "Esquadrias",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2023",
+          "published": -3.4,
+          "official": -3.4,
+          "matches": true
+        },
+        {
+          "study": "Esquadrias",
+          "scope": "Brasil; Produtos de metal, exceto máquinas e equipamentos",
+          "period": "2024",
+          "published": 5.0,
+          "official": 5.0,
+          "matches": true
+        }
+      ],
+      "chartEntries": 20,
+      "chartLedgerCovered": 20,
+      "chartChecks": [
+        {
+          "study": "Cimento",
+          "year": 2020,
+          "value": -2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cimento",
+          "year": 2021,
+          "value": 13.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cimento",
+          "year": 2022,
+          "value": -5.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cimento",
+          "year": 2023,
+          "value": -6.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cimento",
+          "year": 2024,
+          "value": 4.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cerâmica",
+          "year": 2020,
+          "value": -2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cerâmica",
+          "year": 2021,
+          "value": 13.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cerâmica",
+          "year": 2022,
+          "value": -5.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cerâmica",
+          "year": 2023,
+          "value": -6.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Cerâmica",
+          "year": 2024,
+          "value": 4.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Vidros",
+          "year": 2020,
+          "value": -2.6,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Vidros",
+          "year": 2021,
+          "value": 13.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Vidros",
+          "year": 2022,
+          "value": -5.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Vidros",
+          "year": 2023,
+          "value": -6.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Vidros",
+          "year": 2024,
+          "value": 4.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Esquadrias",
+          "year": 2020,
+          "value": 0.1,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Esquadrias",
+          "year": 2021,
+          "value": 5.2,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Esquadrias",
+          "year": 2022,
+          "value": -9.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Esquadrias",
+          "year": 2023,
+          "value": -3.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Esquadrias",
+          "year": 2024,
+          "value": 5.0,
+          "ledgerCovered": true
+        }
+      ],
+      "structuralChecks": {
+        "uniqueTopicIndices": true,
+        "canvasSix": true,
+        "sectionsPresent": true,
+        "transcriptPresent": true
+      },
+      "scopeLimit": "Conferência numérica integral das entradas do ledger e correspondência dos gráficos. Não equivale a confirmação integral de todas as afirmações qualitativas nem a estudo completo do mercado específico.",
+      "studies": [
+        {
+          "id": "construcao-0",
+          "title": "Construção residencial",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-1",
+          "title": "Galpões",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-2",
+          "title": "Infraestrutura",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-3",
+          "title": "Cimento",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-4",
+          "title": "Cerâmica",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-5",
+          "title": "Vidros",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "construcao-6",
+          "title": "Esquadrias",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        }
+      ],
+      "reviewDelegatedTo": "audit_sector_study_evidence",
+      "decisionScope": "Somente conferência numérica histórica desta revisão; decisões qualitativas antigas abaixo foram substituídas pelo relatório do auditor designado."
+    },
+    {
+      "group": "textil",
+      "sha256": "cc174c3ec0cb396aa867a0233f7535cf313399245f90262826f0f941150a1bfd",
+      "studyCount": 6,
+      "numericEntries": 36,
+      "numericConfirmed": 36,
+      "numericChecks": [
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2020",
+          "published": -6.9,
+          "official": -6.9,
+          "matches": true
+        },
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2021",
+          "published": 8.4,
+          "official": 8.4,
+          "matches": true
+        },
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2022",
+          "published": -12.8,
+          "official": -12.8,
+          "matches": true
+        },
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2023",
+          "published": 0.9,
+          "official": 0.9,
+          "matches": true
+        },
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2024",
+          "published": 4.7,
+          "official": 4.7,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2020",
+          "published": -6.9,
+          "official": -6.9,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2021",
+          "published": 8.4,
+          "official": 8.4,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2022",
+          "published": -12.8,
+          "official": -12.8,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2023",
+          "published": 0.9,
+          "official": 0.9,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2024",
+          "published": 4.7,
+          "official": 4.7,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2020",
+          "published": -6.9,
+          "official": -6.9,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2021",
+          "published": 8.4,
+          "official": 8.4,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2022",
+          "published": -12.8,
+          "official": -12.8,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2023",
+          "published": 0.9,
+          "official": 0.9,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2024",
+          "published": 4.7,
+          "official": 4.7,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2020",
+          "published": -6.9,
+          "official": -6.9,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2021",
+          "published": 8.4,
+          "official": 8.4,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2022",
+          "published": -12.8,
+          "official": -12.8,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2023",
+          "published": 0.9,
+          "official": 0.9,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2024",
+          "published": 4.7,
+          "official": 4.7,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "2020",
+          "published": -23.7,
+          "official": -23.7,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "2021",
+          "published": 12.0,
+          "official": 12.0,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "2022",
+          "published": -8.4,
+          "official": -8.4,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "2023",
+          "published": -7.3,
+          "official": -7.3,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "2024",
+          "published": 4.0,
+          "official": 4.0,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2020",
+          "published": -6.9,
+          "official": -6.9,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2021",
+          "published": 8.4,
+          "official": 8.4,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2022",
+          "published": -12.8,
+          "official": -12.8,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2023",
+          "published": 0.9,
+          "official": 0.9,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Produtos têxteis",
+          "period": "2024",
+          "published": 4.7,
+          "official": 4.7,
+          "matches": true
+        },
+        {
+          "study": "Fiação",
+          "scope": "Brasil; Fabricação de produtos têxteis",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": 0.35,
+          "official": 0.35,
+          "matches": true
+        },
+        {
+          "study": "Tecelagem",
+          "scope": "Brasil; Fabricação de produtos têxteis",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": 0.35,
+          "official": 0.35,
+          "matches": true
+        },
+        {
+          "study": "Malharia",
+          "scope": "Brasil; Fabricação de produtos têxteis",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": 0.35,
+          "official": 0.35,
+          "matches": true
+        },
+        {
+          "study": "Tinturaria",
+          "scope": "Brasil; Fabricação de produtos têxteis",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": 0.35,
+          "official": 0.35,
+          "matches": true
+        },
+        {
+          "study": "Confecção",
+          "scope": "Brasil; Confecção de artigos do vestuário e acessórios",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": -0.94,
+          "official": -0.94,
+          "matches": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "scope": "Brasil; Fabricação de produtos têxteis",
+          "period": "setembro/2026 sobre agosto/2026",
+          "published": 0.35,
+          "official": 0.35,
+          "matches": true
+        }
+      ],
+      "chartEntries": 30,
+      "chartLedgerCovered": 30,
+      "chartChecks": [
+        {
+          "study": "Fiação",
+          "year": 2020,
+          "value": -6.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fiação",
+          "year": 2021,
+          "value": 8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fiação",
+          "year": 2022,
+          "value": -12.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fiação",
+          "year": 2023,
+          "value": 0.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Fiação",
+          "year": 2024,
+          "value": 4.7,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecelagem",
+          "year": 2020,
+          "value": -6.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecelagem",
+          "year": 2021,
+          "value": 8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecelagem",
+          "year": 2022,
+          "value": -12.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecelagem",
+          "year": 2023,
+          "value": 0.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecelagem",
+          "year": 2024,
+          "value": 4.7,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Malharia",
+          "year": 2020,
+          "value": -6.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Malharia",
+          "year": 2021,
+          "value": 8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Malharia",
+          "year": 2022,
+          "value": -12.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Malharia",
+          "year": 2023,
+          "value": 0.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Malharia",
+          "year": 2024,
+          "value": 4.7,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tinturaria",
+          "year": 2020,
+          "value": -6.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tinturaria",
+          "year": 2021,
+          "value": 8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tinturaria",
+          "year": 2022,
+          "value": -12.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tinturaria",
+          "year": 2023,
+          "value": 0.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tinturaria",
+          "year": 2024,
+          "value": 4.7,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Confecção",
+          "year": 2020,
+          "value": -23.7,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Confecção",
+          "year": 2021,
+          "value": 12.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Confecção",
+          "year": 2022,
+          "value": -8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Confecção",
+          "year": 2023,
+          "value": -7.3,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Confecção",
+          "year": 2024,
+          "value": 4.0,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "year": 2020,
+          "value": -6.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "year": 2021,
+          "value": 8.4,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "year": 2022,
+          "value": -12.8,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "year": 2023,
+          "value": 0.9,
+          "ledgerCovered": true
+        },
+        {
+          "study": "Tecidos técnicos",
+          "year": 2024,
+          "value": 4.7,
+          "ledgerCovered": true
+        }
+      ],
+      "structuralChecks": {
+        "uniqueTopicIndices": true,
+        "canvasSix": true,
+        "sectionsPresent": true,
+        "transcriptPresent": true
+      },
+      "scopeLimit": "Conferência numérica integral das entradas do ledger e correspondência dos gráficos. Não equivale a confirmação integral de todas as afirmações qualitativas nem a estudo completo do mercado específico.",
+      "studies": [
+        {
+          "id": "textil-0",
+          "title": "Fiação",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "textil-1",
+          "title": "Tecelagem",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "textil-2",
+          "title": "Malharia",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "textil-3",
+          "title": "Tinturaria",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "textil-4",
+          "title": "Confecção",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        },
+        {
+          "id": "textil-5",
+          "title": "Tecidos técnicos",
+          "reviewStatus": "transferred",
+          "numericStatus": "confirmed",
+          "minimumEvidenceMissing": "Consultar decisão atual do auditor designado, que recebeu fontes e achados.",
+          "analyticalContent": "Cadeia, ciclo de caixa, riscos e hipóteses estão separados de fatos observados; não foi detectada promessa de oferta de crédito."
+        }
+      ],
+      "reviewDelegatedTo": "audit_sector_study_evidence",
+      "decisionScope": "Somente conferência numérica histórica desta revisão; decisões qualitativas antigas abaixo foram substituídas pelo relatório do auditor designado."
+    }
+  ],
+  "sourcesChecked": [
+    {
+      "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+      "result": "API oficial diretamente recuperada. Compara todos os pontos anuais com universo e período."
+    },
+    {
+      "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+      "result": "API oficial diretamente recuperada. Confirma têxteis e confecção em setembro/2026."
+    },
+    {
+      "url": "https://site2.medabil.com.br/services/",
+      "result": "Fonte empresarial primária integral; confirma portfólio declarado, não execução ou liderança."
+    },
+    {
+      "url": "https://jacto.com/brasil/agriculturalmachines",
+      "result": "Catálogo primário integral; confirma famílias de produtos e matriz declarada."
+    },
+    {
+      "url": "https://cdn.cade.gov.br/Portal/centrais-de-conteudo/publicacoes/estudos-economicos/documentos-de-trabalho/2023/Documento-de-Trabalho-Fusoes-Conglomerais.pdf",
+      "result": "PDF integral páginas58–59; confirma caso histórico Fras-Le/Nakata e compras multifornecedor."
+    },
+    {
+      "url": "https://ri.tupy.com.br/nossos-processos/manufatura-e-usinagem/",
+      "result": "Página primária integral confirma separação fusão, macharia, moldagem, vazamento e acabamento."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "Alta",
+      "status": "Corrigido e rechecado pela API",
+      "finding": "A vintage antiga do anuário divergia em valores de 2024 para metalurgia, máquinas, veículos, minerais não metálicos, têxteis e confecção. Autor atualizou a série e preservou histórico anterior no registro de superseded."
+    },
+    {
+      "severity": "Alta",
+      "status": "Limitação de escopo preservada; não impede automaticamente aprovação",
+      "finding": "Séries agregadas são usadas como contexto, sem apresentar crescimento do recorte estreito. Nos estudos aprovados, mecanismos e exemplos verificáveis complementam os dados. Não se exige estimativa numérica inexistente de cada nicho. Aprovação documental não equivale a dimensionamento exaustivo do mercado."
+    },
+    {
+      "severity": "Média",
+      "status": "Corrigido pela autoria e relido",
+      "finding": "Cenários agora explicitam horizonte de um a dois anos e permanecem hipóteses qualitativas, sem probabilidades inventadas."
+    },
+    {
+      "severity": "Média",
+      "status": "Afirmação retirada e substituída pela autoria",
+      "finding": "INT retornou401, sem contorno. Autoria removeu afirmação correspondente e incluiu projeto público IFRN9411, confirmado integralmente pelo revisor como pesquisa, não adoção comercial."
+    },
+    {
+      "severity": "Média",
+      "status": "Revisão adicional realizada; construção e têxtil transferidos",
+      "finding": "BNB integral confirmou cadeia e casos históricos; BNDES vidro/cimento abstracts confirmaram recortes históricos; EIV Joinville confirmou projeto. PBQP-H restrito foi apontado à autoria. Parecer final dos13estudos construção/têxtil pertence ao auditor designado, não ao presente relatório."
+    },
+    {
+      "severity": "Baixa",
+      "status": "Melhoria editorial",
+      "finding": "Há repetição estrutural de parágrafos de margem, financiamento e cautelas. Os mecanismos produtivos são distintos, mas estudos de construção incluem ressalva de comércio exterior pouco informativa para o elo de execução local."
+    },
+    {
+      "severity": "Alta",
+      "status": "Corrigido e revalidado",
+      "finding": "Fundição incluía areia na carga destinada à fusão. Correção em resumo, corpo, diagrama e duas ocorrências da transcrição confirmada por fonte primária Tupy; não houve mudança de números.",
+      "addendum": "docs/sector-research/review-foundry-process-correction.json"
+    }
+  ],
+  "confirmedQualitative": [
+    {
+      "claim": "Tupy, digitalização em Betim e Joinville, apoio aprovado em dezembro de 2024",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R$-58-mi-BNDES-apoia-transformacao-digital-e-descarbonizacao-da-frota-agricola-da-Tupy/",
+      "status": "Página integral conferida; não atesta desembolso ou resultado"
+    },
+    {
+      "claim": "Romi e fabricação de usinagem para exportação; sede Santa Bárbara d’Oeste",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-financia-a-producao-de-equipamentos-eficientes-para-exportacao/",
+      "status": "Página integral conferida; caso histórico"
+    },
+    {
+      "claim": "Programa Finame contempla aquisição e comercialização",
+      "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+      "status": "Página integral conferida; nenhuma condição numérica extrapolada"
+    },
+    {
+      "claim": "Polo têxtil Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré, Hortolândia",
+      "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+      "status": "Lei integral conferida; criação institucional não ranking"
+    },
+    {
+      "claim": "Polo Pernambuco: Santa Cruz do Capibaribe, Toritama e Caruaru",
+      "url": "https://www.sefaz.pe.gov.br/Servicos/Nota-Fiscal-Avulsa/Paginas/notadamoda.aspx",
+      "status": "Página integral conferida; não é recomendação tributária"
+    },
+    {
+      "claim": "Polos catarinenses citados",
+      "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+      "status": "Página integral conferida; números de associação não usados como estatística oficial"
+    },
+    {
+      "claim": "CR Bluecast como fabricante de autopeças no Mover",
+      "url": "https://www.gov.br/mdic/pt-br/assuntos/sdic/setor-automotivo/programa-mover-1/habilitacoes-programa-mover",
+      "status": "Entrada verificada na página integral; não presume elegibilidade atual de qualquer produto"
+    },
+    {
+      "claim": "Randon e Caxias do Sul",
+      "url": "https://caxias.rs.gov.br/noticias/2020/11/prefeito-sanciona-lei-que-autoriza-compensacao-de-area-para-a-construcao-do-memorial-randon",
+      "status": "Página integral conferida; referência histórica"
+    },
+    {
+      "claim": "Apoio BNDES a Votorantim Cimentos em 2026",
+      "url": "https://agenciadenoticias.bndes.gov.br/noticia/Com-R%24-403-milhoes-BNDES-apoia-investimentos-da-Votorantim-Cimentos-em-novas-tecnologias-industriais/",
+      "status": "Página integral conferida; não comprova benefício a médias empresas"
+    },
+    {
+      "claim": "Queda macroindustrial em setembro de 2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+      "status": "Página integral conferida; não atribuir resultado a todos os subsetores"
+    }
+  ],
+  "numericTotal": 96,
+  "numericConfirmed": 96,
+  "qualitativeSupplementFile": "docs/sector-research/review-public-supplements.json"
+}

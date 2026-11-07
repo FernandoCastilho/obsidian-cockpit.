@@ -54,7 +54,7 @@ main.app.app-calculators {
 }
 .cx .cx-field label, .cx .cx-label { margin:0; font-size:.8125rem; line-height:1.4; color:var(--mut); }
 .cx .cx-field-label > label, .cx .fi-label > label { min-width:0; }
-.cx .cx-field input:not([type=checkbox]), .cx .cx-field select, .cx .cx-field textarea {
+.cx .cx-field input:not([type=checkbox]), .cx .cx-field select, .cx .cx-field textarea, .cx .cx-iof > select {
   width:100%; min-width:0; min-height:46px; border-radius:8px;
   background:var(--bg); color:var(--fg); border:1px solid var(--line);
   padding:10px 12px; font:inherit; font-size:.9375rem; line-height:1.4;
@@ -62,7 +62,7 @@ main.app.app-calculators {
 }
 .cx .cx-field .money-wrap > input { padding-left:42px; }
 .cx .cx-field input:not([type=checkbox]):focus-visible,
-.cx .cx-field select:focus-visible, .cx .cx-field textarea:focus-visible,
+.cx .cx-field select:focus-visible, .cx .cx-field textarea:focus-visible, .cx .cx-iof > select:focus-visible,
 .cx .cx-wrap:focus-visible, .cx .fi-scroll:focus-visible {
   outline:2px solid var(--amber, #ffb000); outline-offset:2px;
 }
@@ -74,6 +74,10 @@ main.app.app-calculators {
 .cx .seg button { min-height:44px; padding:8px 12px; font-size:.8125rem; }
 .cx .seg button[aria-pressed=true] { color:#000; }
 .cx .cx-iof { padding-top:14px; }
+.cx .cx-iof > label:has(> input[type=checkbox]) {
+  display:flex; align-items:center; gap:8px; min-height:44px;
+}
+.cx .cx-iof > label > input[type=checkbox] { flex:none; }
 .cx .cx-iof summary { font-size:.875rem; }
 .cx .cx-iof-fields { margin-top:12px; gap:18px 24px; }
 .cx .cx-error:empty, .cx .cx-hint:empty { display:none; }

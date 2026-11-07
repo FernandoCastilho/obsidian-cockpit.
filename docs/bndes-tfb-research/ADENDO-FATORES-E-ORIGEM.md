@@ -1,5 +1,7 @@
 # Retificação de origem e conferência dos fatores
 
+> Revisão de 06/11/2026: este adendo preserva o registro histórico. Fernando determinou desconsiderar o CET original de 20,01%; sua origem deixou de ser pendência de aceitação. O CET calculado independentemente pelas 34 parcelas, datas, IOF e tarifa é **20,16% a.a.** O cenário ativo não usa taxa de referência. Para o estado vigente, consulte `README.md` e a primeira seção de `AUDITORIA-COMPLETA.md`; as ressalvas de certificação contratual permanecem separadas do cálculo matemático.
+
 ## Origem das imagens
 
 Fernando esclareceu: “E aqui não tem nada a ver com Itaú, sou eu que tô montando, sou eu que tô gerando essas imagens pra fazer como teste e mandar pra você baseado nos cálculos oficiais.”

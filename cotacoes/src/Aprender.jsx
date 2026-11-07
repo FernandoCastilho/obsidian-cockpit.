@@ -2,6 +2,7 @@ import { Aviso } from './Avisos.jsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CONCEITOS, CONEXAO, LIGACOES, buscarConceitos, conexoesDe, porTopico } from './educacao.js'
 import Help from './Help.jsx'
+import './Aprender.css'
 
 const nomeCurto = (id) => CONCEITOS.find((c) => c.id === id)?.nome.replace(/ \(.*\)/, '') ?? id
 import { Panel } from './TerminalDesk.jsx'
@@ -17,6 +18,29 @@ function Concept({ c, goto }) {
           <h3>Explicação simples</h3>
           {c.crianca.map((t) => <p key={t}>{t}</p>)}
           <p className="learn-analogy"><span className="learn-tag">Analogia</span>{c.analogia}</p>
+
+          {c.estudoHistorico && <section className="learn-history" aria-label={c.estudoHistorico.titulo}>
+            <h3>{c.estudoHistorico.titulo}</h3>
+            <p className="learn-history-scope">{c.estudoHistorico.escopo}</p>
+            {c.estudoHistorico.casos.map((caso) => <details className="learn-history-case" key={caso.id}>
+              <summary><strong>{caso.pais}</strong><span>{caso.periodo} · {caso.tipo}</span></summary>
+              <p className="learn-history-takeaway">{caso.chamada}</p>
+              <ol className="learn-history-timeline">{caso.marcos.map(marco => <li key={marco}>{marco}</li>)}</ol>
+              <h4>O contexto</h4><p>{caso.contexto}</p>
+              <h4>Como seguraram os juros</h4><p>{caso.mecanismo}</p>
+              <h4>O que aconteceu</h4><p>{caso.resultado}</p>
+              <h4>O que a história não prova</h4><p>{caso.limite}</p>
+              <ul className="learn-history-sources">{caso.fontes.map(id => {
+                const fonte = c.fontes.find(f => f.id === id)
+                return fonte && <li key={id}><a href={fonte.url} target="_blank" rel="noopener noreferrer">{fonte.nome}</a></li>
+              })}</ul>
+            </details>)}
+            <h3>Por que os resultados foram diferentes</h3>
+            <div className="learn-history-comparison">{c.estudoHistorico.comparacao.map(item => <section key={item.titulo}><h4>{item.titulo}</h4><p>{item.texto}</p></section>)}</div>
+            <h3>Como usar essa história numa análise de crédito</h3>
+            <ul>{c.estudoHistorico.checklist.map(item => <li key={item}>{item}</li>)}</ul>
+            <p className="learn-history-conclusion">{c.estudoHistorico.conclusao}</p>
+          </section>}
 
           <details open>
             <summary>Onde você pode travar</summary>
@@ -68,10 +92,32 @@ export default function Aprender({ view = '', goto }) {
   const chosen = CONCEITOS.find((c) => c.id === view)
   const detail = useRef(null)
   const [termo, setTermo] = useState('')
+  const [abertos, setAbertos] = useState(() => new Set(chosen ? [chosen.topico] : []))
+  const antesDaBusca = useRef(null)
   const achados = useMemo(() => buscarConceitos(termo), [termo])
   const grupos = useMemo(() => porTopico(achados), [achados])
+  function buscar(valor) {
+    if (valor.trim()) {
+      if (!termo.trim()) antesDaBusca.current = abertos
+      setAbertos(new Set(porTopico(buscarConceitos(valor)).map((g) => g.topico)))
+    } else if (termo.trim()) {
+      setAbertos(antesDaBusca.current ?? new Set())
+      antesDaBusca.current = null
+    }
+    setTermo(valor)
+  }
+  function alternarGrupo(topico, aberto) {
+    setAbertos((anteriores) => {
+      if (anteriores.has(topico) === aberto) return anteriores
+      const proximos = new Set(anteriores)
+      if (aberto) proximos.add(topico)
+      else proximos.delete(topico)
+      return proximos
+    })
+  }
   // no celular a explicação fica abaixo da lista: leva a tela até ela ao escolher um conceito
   useEffect(() => {
+    if (chosen) setAbertos((anteriores) => anteriores.has(chosen.topico) ? anteriores : new Set([...anteriores, chosen.topico]))
     if (chosen) detail.current?.focus({ preventScroll: true })
     if (chosen && detail.current && window.matchMedia?.('(max-width: 999px)').matches) {
       detail.current.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
@@ -84,13 +130,17 @@ export default function Aprender({ view = '', goto }) {
         <nav className="learn-list" aria-label="Conceitos">
           <h2 className="learn-list-title">Conceitos</h2>
           <div className="learn-search" role="search">
-            <input type="search" value={termo} onChange={(e) => setTermo(e.target.value)} placeholder="Buscar conceito…" aria-label="Buscar conceito" autoComplete="off" />
-            {termo && <button type="button" className="learn-clear" onClick={() => setTermo('')} aria-label="Limpar busca">×</button>}
+            <input type="search" value={termo} onChange={(e) => buscar(e.target.value)} placeholder="Buscar conceito…" aria-label="Buscar conceito" autoComplete="off" />
+            {termo && <button type="button" className="learn-clear" onClick={() => buscar('')} aria-label="Limpar busca">×</button>}
           </div>
           <p className="learn-count" role="status">{termo.trim() ? (achados.length ? `${achados.length} ${achados.length === 1 ? 'conceito encontrado' : 'conceitos encontrados'}` : 'Nenhum conceito encontrado. Tente outra palavra.') : `${CONCEITOS.length} conceitos em ${grupos.length} tópicos`}</p>
+          {grupos.length > 0 && <div className="learn-group-actions" aria-label="Categorias de conceitos">
+            <button type="button" onClick={() => setAbertos(new Set(grupos.map((g) => g.topico)))} disabled={grupos.every((g) => abertos.has(g.topico))}>Expandir todas</button>
+            <button type="button" onClick={() => setAbertos(new Set())} disabled={grupos.every((g) => !abertos.has(g.topico))}>Recolher todas</button>
+          </div>}
           {grupos.map((g) => (
-            <section key={g.topico} className="learn-group" aria-labelledby={`learn-topic-${g.topico.replace(/\W+/g, '-')}`}>
-              <h3 id={`learn-topic-${g.topico.replace(/\W+/g, '-')}`} className="learn-topic">{g.topico}</h3>
+            <details key={g.topico} className="learn-group" open={abertos.has(g.topico)} onToggle={(e) => alternarGrupo(g.topico, e.currentTarget.open)}>
+              <summary className="learn-topic"><span>{g.topico}</span><small>{g.itens.length}</small></summary>
               <ul>
                 {g.itens.map((c) => (
                   <li key={c.id}>
@@ -101,7 +151,7 @@ export default function Aprender({ view = '', goto }) {
                   </li>
                 ))}
               </ul>
-            </section>
+            </details>
           ))}
         </nav>
         <section className="learn-detail" ref={detail} tabIndex={-1} aria-live="polite" aria-label="Explicação do conceito">

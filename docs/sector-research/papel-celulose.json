@@ -1,0 +1,2210 @@
+[
+  {
+    "group": "papel-celulose",
+    "topicIndex": 0,
+    "title": "Celulose",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Produção de pasta celulósica para mercado ou consumo integrado. Separar fibra curta, longa, fluff e celulose solúvel; madeira não é celulose e celulose não é papel.",
+      "Tese analítica: Preço realizado, custo da madeira entregue, energia, químicos, manutenção e frete explicam a contribuição. Uma valorização cambial pode reduzir receita em reais de exportação enquanto parte dos custos permanece local; dívida em moeda estrangeira exige olhar fluxo, não somente efeito contábil.",
+      "Prioridade na visita: Confirmar produto e integração, contratos de madeira, parada programada, manutenção e exposição cambial líquida. Se for fornecedora, analisar dependência do complexo industrial e prazo de aceite."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Produção de pasta celulósica para mercado ou consumo integrado. Separar fibra curta, longa, fluff e celulose solúvel; madeira não é celulose e celulose não é papel.",
+          "Síntese técnica e analítica: A rota industrial separa as fibras da madeira e recupera reagentes e energia conforme o processo. A fábrica integrada pode consumir a pasta internamente, enquanto a de mercado vende ao transformador; essa diferença muda exposição a preço e logística.",
+          "Preço realizado, custo da madeira entregue, energia, químicos, manutenção e frete explicam a contribuição. Uma valorização cambial pode reduzir receita em reais de exportação enquanto parte dos custos permanece local; dívida em moeda estrangeira exige olhar fluxo, não somente efeito contábil."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Klabin aparece em fonte do BNDES como produtora de diferentes fibras e papéis. É exemplo de integração e investimento, não parâmetro de porte para a empresa média. Uma média empresa na cadeia pode ser prestadora, fornecedora ou processadora especializada, sem possuir a economia de uma fábrica de celulose de mercado.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "A fonte pública regional situa grandes complexos exportadores em Mato Grosso do Sul, São Paulo, Bahia, Espírito Santo, Rio Grande do Sul e Paraná. O painel da FAO permite contrastar Brasil exportador e China compradora; são papéis na cadeia, não garantia de demanda futura."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Volume expedido por fibra; preço líquido por destino; custo caixa e manutenção; estoque no produtor e cliente; disponibilidade industrial; distância média da madeira.",
+          "Série recuperada no gráfico: Brasil, produção de celulose conforme série associativa IBÁ reproduzida pela Epagri; não é estatística de empresa média. Fonte estatística original associativa, exibida por órgão público; não rotular como levantamento próprio da Epagri. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura histórica: produção brasileira aumenta no fim da série, mas isso não comprova melhora de preço ou margem. Inferência: maior oferta amplia a importância de escoamento, frete e controle da entrada de capacidade; exportador e fornecedora média sentem esse movimento por canais distintos.",
+          "O BNDES registra investimentos recentes em pesquisa e modernização na cadeia. O estudo não confirma uma cotação internacional corrente por tipo de fibra nem série mensal própria de celulose; por isso não declara recuperação sustentada dos preços.",
+          "Inferência: Entrada de capacidade mundial, estoque dos compradores e paradas podem inverter preços. A vantagem florestal não elimina risco de execução, logística ou financiamento de grandes projetos.",
+          "Inferência: Especialidades, qualidade estável e eficiência energética podem proteger valor. A oportunidade para fornecedores médios depende de contratos e critérios técnicos, e não do crescimento agregado da exportação."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+            "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+          },
+          {
+            "label": "IBGE · Índice de Preços ao Produtor",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+            "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Produção, estoque, trânsito e recebimento externo formam o ciclo de giro. Dívida de expansão tem horizonte distinto do financiamento de exportação; hedge deve acompanhar moeda, montante e vencimento da exposição líquida.",
+          "Recuperação química, caldeiras, tratamento de efluentes e manutenção são investimentos essenciais, não acessórios opcionais. Avaliar parada, curva de partida e geração de caixa depois da manutenção.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Volume expedido por fibra; preço líquido por destino; custo caixa e manutenção; estoque no produtor e cliente; disponibilidade industrial; distância média da madeira.",
+          "Recuperação química, caldeiras, tratamento de efluentes e manutenção são investimentos essenciais, não acessórios opcionais. Avaliar parada, curva de partida e geração de caixa depois da manutenção."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Especialidades, qualidade estável e eficiência energética podem proteger valor. A oportunidade para fornecedores médios depende de contratos e critérios técnicos, e não do crescimento agregado da exportação."
+          ],
+          [
+            "Fragilidade a testar",
+            "Preço realizado, custo da madeira entregue, energia, químicos, manutenção e frete explicam a contribuição. Uma valorização cambial pode reduzir receita em reais de exportação enquanto parte dos custos permanece local; dívida em moeda estrangeira exige olhar fluxo, não somente efeito contábil."
+          ],
+          [
+            "Oportunidade",
+            "Reposição de estoques e demanda final absorvem oferta com estabilidade operacional; monitorar pedidos e preço líquido efetivo, não preço anunciado."
+          ],
+          [
+            "Ameaça",
+            "Entrada de capacidade mundial, estoque dos compradores e paradas podem inverter preços. A vantagem florestal não elimina risco de execução, logística ou financiamento de grandes projetos."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Madeira e químicos: verificar alternativas homologadas, prazo e custo de mudança. Preço realizado, custo da madeira entregue, energia, químicos, manutenção e frete explicam a contribuição. Uma valorização cambial pode reduzir receita em reais de exportação enquanto parte dos custos permanece local; dívida em moeda estrangeira exige olhar fluxo, não somente efeito contábil."
+          ],
+          [
+            "Compradores",
+            "Papeleiras e outros transformadores: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Especialidades, qualidade estável e eficiência energética podem proteger valor. A oportunidade para fornecedores médios depende de contratos e critérios técnicos, e não do crescimento agregado da exportação."
+          ],
+          [
+            "Entrantes",
+            "Floresta ou suprimento contratado, recuperação química, controle ambiental e operação contínua formam barreiras conjuntas. A construção da fábrica não garante curva de partida, regularidade ou homologação das fibras. Celuloses especiais têm barreiras técnicas diferentes da pasta de mercado."
+          ],
+          [
+            "Substitutos",
+            "Para parte das papeleiras, fibras recuperadas ou pastas de outras origens podem substituir celulose virgem, dentro de limites de resistência, alvura, higiene e disponibilidade. A troca altera preparação de massa e qualidade. Em aplicações técnicas ou sanitárias, nem toda fibra recuperada é aceitável. Celulose de outro produtor com mesma especificação é rival, não substituto."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Volume expedido por fibra; preço líquido por destino; custo caixa e manutenção; estoque no produtor e cliente; disponibilidade industrial; distância média da madeira.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Reposição de estoques e demanda final absorvem oferta com estabilidade operacional; monitorar pedidos e preço líquido efetivo, não preço anunciado.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Novas capacidades e menor consumo de papel pressionam preço e alongam estoque; observar caixa depois da manutenção e cronograma de dívida.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Confirmar produto e integração, contratos de madeira, parada programada, manutenção e exposição cambial líquida. Se for fornecedora, analisar dependência do complexo industrial e prazo de aceite.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "celulose-producao",
+        "title": "Celulose: produção brasileira",
+        "unit": "mil toneladas",
+        "scope": "Brasil, produção de celulose conforme série associativa IBÁ reproduzida pela Epagri; não é estatística de empresa média.",
+        "years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2021–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 12, página impressa 186; origem IBÁ, março de 2026. Fonte estatística original associativa, exibida por órgão público; não rotular como levantamento próprio da Epagri. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Celulose: produção brasileira",
+            "values": [
+              22505,
+              24969,
+              24251,
+              27530,
+              29439
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BNDES · Pesquisa e inovação na Klabin",
+        "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+        "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+      },
+      {
+        "label": "IBGE · Produção da Extração Vegetal e da Silvicultura",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9105-producao-da-extracao-vegetal-e-da-silvicultura.html",
+        "purpose": "Produção primária, volume, valor e área por município; não mede receita industrial."
+      },
+      {
+        "label": "IBGE · Índice de Preços ao Produtor",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9282-indice-de-precos-ao-produtor-industrias-extrativas-e-de-transformacao.html",
+        "purpose": "Preços de saída de fábrica por atividade, não margens. Abertura direta bloqueada; excertos oficiais indexados recuperados."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra a celulose e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Que atributo da fibra ou serviço técnico sustenta a preferência do cliente e como ele é comprovado?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: preparo da madeira, cozimento, recuperação, secagem ou logística da celulose?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual é o custo entregue por mercado após madeira, químicos, energia, frete e exposição cambial?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Madeira e químicos",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Cozimento e recuperação",
+          "detail": "A rota industrial separa as fibras da madeira e recupera reagentes e energia conforme o processo. A fábrica integrada pode consumir a pasta internamente, enquanto a de mercado vende ao transformador; essa diferença muda exposição a preço e logística."
+        },
+        {
+          "id": "2",
+          "label": "Secagem e logística",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Papeleiras e outros transformadores",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Celulose. Produção de pasta celulósica para mercado ou consumo integrado. Separar fibra curta, longa, fluff e celulose solúvel; madeira não é celulose e celulose não é papel. A rota industrial separa as fibras da madeira e recupera reagentes e energia conforme o processo. A fábrica integrada pode consumir a pasta internamente, enquanto a de mercado vende ao transformador; essa diferença muda exposição a preço e logística. O ponto econômico central é: Preço realizado, custo da madeira entregue, energia, químicos, manutenção e frete explicam a contribuição. Uma valorização cambial pode reduzir receita em reais de exportação enquanto parte dos custos permanece local; dívida em moeda estrangeira exige olhar fluxo, não somente efeito contábil. Para uma empresa média: Produção, estoque, trânsito e recebimento externo formam o ciclo de giro. Dívida de expansão tem horizonte distinto do financiamento de exportação; hedge deve acompanhar moeda, montante e vencimento da exposição líquida. No cenário favorável: Reposição de estoques e demanda final absorvem oferta com estabilidade operacional; monitorar pedidos e preço líquido efetivo, não preço anunciado. No adverso: Novas capacidades e menor consumo de papel pressionam preço e alongam estoque; observar caixa depois da manutenção e cronograma de dívida. Na visita: Confirmar produto e integração, contratos de madeira, parada programada, manutenção e exposição cambial líquida. Se for fornecedora, analisar dependência do complexo industrial e prazo de aceite. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "53e0baa6b7b8db6e04e1d3853feefdc83adb4c5d1464eb0f3a538eef6cf7af9d"
+    }
+  },
+  {
+    "group": "papel-celulose",
+    "topicIndex": 1,
+    "title": "Papel",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fabricação de papel em bobinas ou folhas, separando papéis gráficos, sanitários, embalagem e técnicos. Não agrega automaticamente conversão em caixas e sacos.",
+      "Tese analítica: Qualidade da fibra, vapor, energia, quebra da folha e eficiência da máquina moldam o custo. Reduzir gramatura sem manter desempenho pode aumentar reclamações do conversor e não representar economia real.",
+      "Prioridade na visita: Observar preparação de massa, máquina e rejeitos. Comparar fatura de energia, laudo de qualidade e preço por gramatura com a margem gerencial."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Fabricação de papel em bobinas ou folhas, separando papéis gráficos, sanitários, embalagem e técnicos. Não agrega automaticamente conversão em caixas e sacos.",
+          "Síntese técnica e analítica: Fibras virgens ou recuperadas são preparadas, formadas e secas. Gramatura, resistência, absorção e uniformidade determinam aptidão ao uso. Papel sanitário e papel para embalagem podem ter demanda e insumos distintos.",
+          "Qualidade da fibra, vapor, energia, quebra da folha e eficiência da máquina moldam o custo. Reduzir gramatura sem manter desempenho pode aumentar reclamações do conversor e não representar economia real."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Primo Tedesco em Caçador e Irani são exemplos públicos de projetos envolvendo papéis e reciclagem, citados pelo BNDES. Os casos não representam todos os papéis nem uma média financeira. O papel reciclado tem cadeia de abastecimento diferente da celulose integrada.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "A FAO apresenta China e Estados Unidos entre referências de produção de papel e papel-cartão. Comparar a empresa brasileira exige separar tipos de papel, disponibilidade de fibra e destino do produto, não usar o consumo total como mercado potencial."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          },
+          {
+            "label": "FAO · Estatísticas de produtos florestais",
+            "url": "https://www.fao.org/forestry/statistics/data/",
+            "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Tonelada vendável por hora; consumo de fibra e vapor; umidade; quebra da folha; qualidade das aparas; mix por gramatura e aplicação.",
+          "Série recuperada no gráfico: Brasil, papel e embalagens de papel conforme tabela; agregado mais amplo que papel em bobina. Agregado inclui embalagens; não somar com dossiês de caixas, sacos ou ondulado. Valores da mesma publicação, sem combinação de vintages. O período mais recente dessa série não equivale a acompanhamento mensal ao vivo."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Leitura histórica: o último ponto de produção fica próximo do anterior. A estabilidade do agregado pode ocultar diferenças entre gráficos, sanitários e embalagem; a composição da carteira deve preceder qualquer previsão de giro.",
+          "Fontes recentes do BNDES documentam modernização de produtores que utilizam papel reciclado. Isso sugere foco empresarial em eficiência, mas não prova aumento da demanda de todo tipo de papel.",
+          "Inferência: Aparas contaminadas e variações de fibra pioram rendimento e paradas. O preço da celulose de mercado não é indicador suficiente para quem utiliza aparas ou é integrado.",
+          "Inferência: Eficiência de água e energia, melhor preparação de massa e consistência do papel podem reduzir custo do cliente e tornar reajustes mais defensáveis."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Aparas, químicos e energia são pagos antes do giro das bobinas. Recebíveis concentrados em poucos conversores requerem análise de exigibilidade, devoluções e dependência comercial.",
+          "Modernização deve demonstrar redução de quebra, consumo ou rejeitos. O caso financiado pelo BNDES comprova uma operação específica, não uma linha automaticamente acessível hoje.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Tonelada vendável por hora; consumo de fibra e vapor; umidade; quebra da folha; qualidade das aparas; mix por gramatura e aplicação.",
+          "Modernização deve demonstrar redução de quebra, consumo ou rejeitos. O caso financiado pelo BNDES comprova uma operação específica, não uma linha automaticamente acessível hoje."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Eficiência de água e energia, melhor preparação de massa e consistência do papel podem reduzir custo do cliente e tornar reajustes mais defensáveis."
+          ],
+          [
+            "Fragilidade a testar",
+            "Qualidade da fibra, vapor, energia, quebra da folha e eficiência da máquina moldam o custo. Reduzir gramatura sem manter desempenho pode aumentar reclamações do conversor e não representar economia real."
+          ],
+          [
+            "Oportunidade",
+            "Clientes homologam papel de maior desempenho e eficiência reduz perdas; acompanhar contribuição por tonelada efetivamente vendida."
+          ],
+          [
+            "Ameaça",
+            "Aparas contaminadas e variações de fibra pioram rendimento e paradas. O preço da celulose de mercado não é indicador suficiente para quem utiliza aparas ou é integrado."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Celulose ou aparas: verificar alternativas homologadas, prazo e custo de mudança. Qualidade da fibra, vapor, energia, quebra da folha e eficiência da máquina moldam o custo. Reduzir gramatura sem manter desempenho pode aumentar reclamações do conversor e não representar economia real."
+          ],
+          [
+            "Compradores",
+            "Conversores e canais finais: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Eficiência de água e energia, melhor preparação de massa e consistência do papel podem reduzir custo do cliente e tornar reajustes mais defensáveis."
+          ],
+          [
+            "Entrantes",
+            "A máquina precisa entregar propriedades uniformes com disponibilidade operacional; água, energia, tratamento de efluentes e fornecimento de fibras são requisitos. Papéis técnicos adicionam homologação e formulação. Um novo produtor não transfere automaticamente capacidade entre papel gráfico, sanitário e embalagem."
+          ],
+          [
+            "Substitutos",
+            "Comunicação digital substitui parte do papel gráfico; embalagens plásticas, metálicas ou de vidro disputam usos de embalagem. Produtos têxteis reutilizáveis atendem algumas funções de limpeza, com logística própria. Cada mudança envolve requisitos distintos; não há substituto comum a todas as famílias de papel."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Tonelada vendável por hora; consumo de fibra e vapor; umidade; quebra da folha; qualidade das aparas; mix por gramatura e aplicação.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Clientes homologam papel de maior desempenho e eficiência reduz perdas; acompanhar contribuição por tonelada efetivamente vendida.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Insumo encarece, máquina perde disponibilidade e clientes adiam pedidos; observar estoque de bobinas e inadimplência de conversores.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Observar preparação de massa, máquina e rejeitos. Comparar fatura de energia, laudo de qualidade e preço por gramatura com a margem gerencial.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "papel-producao",
+        "title": "Papel e embalagens: produção brasileira",
+        "unit": "mil toneladas",
+        "scope": "Brasil, papel e embalagens de papel conforme tabela; agregado mais amplo que papel em bobina.",
+        "years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "period": "2021–2025",
+        "source": {
+          "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+          "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+          "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+        },
+        "method": "Transcrição de uma única edição da Epagri/Cepa, tabela 12, página impressa 186; origem IBÁ, março de 2026. Agregado inclui embalagens; não somar com dossiês de caixas, sacos ou ondulado. Não mede margem nem crescimento real da receita. Não houve interpolação ou cálculo de taxas.",
+        "series": [
+          {
+            "label": "Papel e embalagens: produção brasileira",
+            "values": [
+              10666,
+              11038,
+              10825,
+              11323,
+              11337
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "BNDES · Modernização da Primo Tedesco",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+        "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+      },
+      {
+        "label": "BNDES · Modernização da Irani",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+        "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+      },
+      {
+        "label": "BNDES · Mercado de papelão ondulado",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+        "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "Epagri/Cepa · Síntese Anual da Agricultura de Santa Catarina 2025",
+        "url": "https://docweb.epagri.sc.gov.br/website_cepa/publicacoes/Sintese_2025.pdf",
+        "purpose": "Publicação de junho de 2026; dados atribuídos a IBGE, Comex Stat e IBÁ conforme tabela. Cada gráfico identifica território e produto. Não reproduzir taxas ou datas editoriais inconsistentes como legislação vigente."
+      },
+      {
+        "label": "FAO · Estatísticas de produtos florestais",
+        "url": "https://www.fao.org/forestry/statistics/data/",
+        "purpose": "Produção e comércio internacional por categoria. Inclui estimativas ou repetição do dado anterior quando faltam declarações nacionais; não representa apenas florestas plantadas."
+      }
+    ],
+    "limitations": [
+      "As séries presentes cobrem somente seu território e agrupamento expressos. Não há série mensal atual exclusiva de cada empresa ou de todos os recortes; agregado ou exportação regional não equivale a mercado nacional.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Conferência limitada à tabela da Epagri; a fonte primária não foi reextraída integralmente. O texto possui erros editoriais em outros campos: esses campos foram excluídos, não corrigidos silenciosamente.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra o papel e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Quais propriedades do papel reduzem perdas na operação do cliente e como vocês medem esse benefício?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda de material ou produtividade: preparação da massa, formação, secagem ou acabamento do papel?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual família de papel gera margem após fibra, energia, perdas de máquina e prazo de recebimento?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Celulose ou aparas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Preparação de massa",
+          "detail": "Fibras virgens ou recuperadas são preparadas, formadas e secas. Gramatura, resistência, absorção e uniformidade determinam aptidão ao uso. Papel sanitário e papel para embalagem podem ter demanda e insumos distintos."
+        },
+        {
+          "id": "2",
+          "label": "Máquina e acabamento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Conversores e canais finais",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Papel. Fabricação de papel em bobinas ou folhas, separando papéis gráficos, sanitários, embalagem e técnicos. Não agrega automaticamente conversão em caixas e sacos. Fibras virgens ou recuperadas são preparadas, formadas e secas. Gramatura, resistência, absorção e uniformidade determinam aptidão ao uso. Papel sanitário e papel para embalagem podem ter demanda e insumos distintos. O ponto econômico central é: Qualidade da fibra, vapor, energia, quebra da folha e eficiência da máquina moldam o custo. Reduzir gramatura sem manter desempenho pode aumentar reclamações do conversor e não representar economia real. Para uma empresa média: Aparas, químicos e energia são pagos antes do giro das bobinas. Recebíveis concentrados em poucos conversores requerem análise de exigibilidade, devoluções e dependência comercial. No cenário favorável: Clientes homologam papel de maior desempenho e eficiência reduz perdas; acompanhar contribuição por tonelada efetivamente vendida. No adverso: Insumo encarece, máquina perde disponibilidade e clientes adiam pedidos; observar estoque de bobinas e inadimplência de conversores. Na visita: Observar preparação de massa, máquina e rejeitos. Comparar fatura de energia, laudo de qualidade e preço por gramatura com a margem gerencial. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Para o contexto quantitativo, consulte o gráfico com período, unidade e cobertura explícitos. Ele não deve ser usado como receita de uma empresa média.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "2309811774c5f2b7985338e59dacf047fde11aa96234c974ee51e1a143144e1a"
+    }
+  },
+  {
+    "group": "papel-celulose",
+    "topicIndex": 2,
+    "title": "Papelão ondulado",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Produção de chapas onduladas a partir de capas e miolos. Separar chapas vendidas a terceiros da conversão própria em caixas para não contar receita duas vezes.",
+      "Tese analítica: Papel, amido, vapor e perdas de ajuste dominam a operação física. Planejamento de largura e pedidos reduz aparas; velocidade nominal não equivale à produção vendável.",
+      "Prioridade na visita: Reconciliar bobinas consumidas, aparas e área de chapas expedida. Verificar resistência contratada e responsabilidade por armazenamento úmido."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Produção de chapas onduladas a partir de capas e miolos. Separar chapas vendidas a terceiros da conversão própria em caixas para não contar receita duas vezes.",
+          "Síntese técnica e analítica: A união de papéis planos e ondulados cria resistência com baixo peso. Perfil de onda, composição, colagem e umidade precisam atender a empilhamento e transporte; a chapa não é escolhida somente pela gramatura.",
+          "Papel, amido, vapor e perdas de ajuste dominam a operação física. Planejamento de largura e pedidos reduz aparas; velocidade nominal não equivale à produção vendável."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A análise histórica do BNDES distingue fibra virgem e reciclada e a logística deste mercado. Klabin, Irani e Primo Tedesco são exemplos de grupos da cadeia citados em fontes públicas; não foi apurado ranking contemporâneo de produtores independentes de chapas.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Caso territorial: a Prefeitura de Lages registrou abertura de operação de papel ondulado da Primo Tedesco e distinguiu a produção de sacos em Caçador da divisão de embalagens em Canoas. Inferência: localização e integração precisam ser verificadas por unidade; não assumir que todo investimento do grupo beneficia igualmente cada recorte."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+            "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+            "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Área e massa expedidas separadamente; gramatura média; refugo por largura; consumo de papel; resistência; ocupação da onduladeira e distância de entrega.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas de cobertura estão explicitadas; séries só são apresentadas onde os pontos foram efetivamente recuperados."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Modernizações registradas pelo BNDES atingem empresas da cadeia, mas não isolam produção de chapas de caixas. Não foi extraída série mensal específica de chapas vendidas; não atribuir ao recorte a receita consolidada de fabricante integrado.",
+          "Inferência: Aumentar toneladas porque a gramatura subiu não significa vender mais área ou melhorar produtividade. Chapa volumosa e sensível à umidade torna frete e armazenagem decisivos.",
+          "Inferência: Projeto que preserva resistência usando menos material pode criar valor, desde que validado nas condições reais de transporte e armazenagem do cliente."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Pesquisa e inovação na Klabin",
+            "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+            "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+          },
+          {
+            "label": "BNDES · Modernização da Irani",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+            "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Bobinas e estoque de chapas precedem recebimento do conversor. Contratos de repasse de papel precisam definir índice, defasagem e produto; preço agregado de celulose não substitui o insumo comprado.",
+          "Onduladeira, vapor e movimentação devem ser dimensionados conjuntamente. A localização e a carteira recorrente importam para justificar escala.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Área e massa expedidas separadamente; gramatura média; refugo por largura; consumo de papel; resistência; ocupação da onduladeira e distância de entrega.",
+          "Onduladeira, vapor e movimentação devem ser dimensionados conjuntamente. A localização e a carteira recorrente importam para justificar escala."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Projeto que preserva resistência usando menos material pode criar valor, desde que validado nas condições reais de transporte e armazenagem do cliente."
+          ],
+          [
+            "Fragilidade a testar",
+            "Papel, amido, vapor e perdas de ajuste dominam a operação física. Planejamento de largura e pedidos reduz aparas; velocidade nominal não equivale à produção vendável."
+          ],
+          [
+            "Oportunidade",
+            "Melhor programação e demanda recorrente aumentam área vendável sem excesso de estoque; acompanhar refugo, prazo e contribuição por pedido."
+          ],
+          [
+            "Ameaça",
+            "Reajustes do papel antes do repasse ao preço das chapas e perda de clientes podem pressionar margem e capital de giro. Frete e exposição à umidade agravam o risco logístico."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Kraftliner, testliner e miolo: verificar alternativas homologadas, prazo e custo de mudança. Papel, amido, vapor e perdas de ajuste dominam a operação física. Planejamento de largura e pedidos reduz aparas; velocidade nominal não equivale à produção vendável."
+          ],
+          [
+            "Compradores",
+            "Conversores de caixas: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Projeto que preserva resistência usando menos material pode criar valor, desde que validado nas condições reais de transporte e armazenagem do cliente."
+          ],
+          [
+            "Entrantes",
+            "A onduladeira depende de escala de pedidos compatíveis, combinação de larguras e fornecimento de papéis adequados. Domínio de colagem e umidade, proximidade logística e consistência de resistência são barreiras para vender chapas homologadas a conversores."
+          ],
+          [
+            "Substitutos",
+            "Chapas de plástico corrugado, madeira ou outras estruturas podem substituir o material em aplicações específicas; soluções retornáveis mudam a logística. Papel-cartão liso atende embalagens de menor exigência estrutural, mas não substitui automaticamente a proteção de uma chapa ondulada. Troca requer ensaio de empilhamento e transporte."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Área e massa expedidas separadamente; gramatura média; refugo por largura; consumo de papel; resistência; ocupação da onduladeira e distância de entrega.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Melhor programação e demanda recorrente aumentam área vendável sem excesso de estoque; acompanhar refugo, prazo e contribuição por pedido.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Compra de papel é reajustada antes de chapas e há perda de clientes; acompanhar defasagem de repasse e capital por pedido.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Reconciliar bobinas consumidas, aparas e área de chapas expedida. Verificar resistência contratada e responsabilidade por armazenamento úmido.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "BNDES · Mercado de papelão ondulado",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+        "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+      },
+      {
+        "label": "BNDES · Pesquisa e inovação na Klabin",
+        "url": "https://agenciadenoticias.bndes.gov.br/cultura/BNDES-aprova-R%24-12255-mi-para-impulsionar-pesquisa-desenvolvimento-e-inovacao-da-Klabin/",
+        "purpose": "Caso empresarial recente, referências a celulose, papel e embalagens; sem extrapolar condições financeiras para médias empresas."
+      },
+      {
+        "label": "BNDES · Modernização da Irani",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-825-mi-para-Irani-modernizar-producao-a-partir-de-papel-reciclado/",
+        "purpose": "Caso de investimento em papel reciclado; não usar ranking do release como estudo concorrencial independente."
+      },
+      {
+        "label": "BNDES · Modernização da Primo Tedesco",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+        "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+      },
+      {
+        "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+        "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+        "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as chapas e embalagens de papelão ondulado e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como vocês comprovam resistência e desempenho da embalagem no transporte real do cliente?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: combinação de larguras, ondulação, colagem, corte ou armazenagem das chapas?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Quanto sobra por pedido após papel, conversão, aparas, preparação da máquina e frete?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Kraftliner, testliner e miolo",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Onduladeira",
+          "detail": "A união de papéis planos e ondulados cria resistência com baixo peso. Perfil de onda, composição, colagem e umidade precisam atender a empilhamento e transporte; a chapa não é escolhida somente pela gramatura."
+        },
+        {
+          "id": "2",
+          "label": "Chapas e ensaios",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Conversores de caixas",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Papelão ondulado. Produção de chapas onduladas a partir de capas e miolos. Separar chapas vendidas a terceiros da conversão própria em caixas para não contar receita duas vezes. A união de papéis planos e ondulados cria resistência com baixo peso. Perfil de onda, composição, colagem e umidade precisam atender a empilhamento e transporte; a chapa não é escolhida somente pela gramatura. O ponto econômico central é: Papel, amido, vapor e perdas de ajuste dominam a operação física. Planejamento de largura e pedidos reduz aparas; velocidade nominal não equivale à produção vendável. Para uma empresa média: Bobinas e estoque de chapas precedem recebimento do conversor. Contratos de repasse de papel precisam definir índice, defasagem e produto; preço agregado de celulose não substitui o insumo comprado. No cenário favorável: Melhor programação e demanda recorrente aumentam área vendável sem excesso de estoque; acompanhar refugo, prazo e contribuição por pedido. No adverso: Compra de papel é reajustada antes de chapas e há perda de clientes; acompanhar defasagem de repasse e capital por pedido. Na visita: Reconciliar bobinas consumidas, aparas e área de chapas expedida. Verificar resistência contratada e responsabilidade por armazenamento úmido. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "b870f1be4c50404a45c227a0cb744af3e6c661e963372625f9c06c991375620e"
+    }
+  },
+  {
+    "group": "papel-celulose",
+    "topicIndex": 3,
+    "title": "Caixas",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Conversão de papelão ou papel-cartão em caixas. Diferenciar caixas onduladas de cartonagens dobráveis, impressas e especiais; a estrutura de custos não é intercambiável.",
+      "Tese analítica: Pedidos pequenos e muitas trocas de impressão elevam preparação e refugos. Uma caixa barata que gera dano ao produto pode custar mais ao cliente; uma especificação exagerada também consome material sem benefício.",
+      "Prioridade na visita: Escolher uma caixa real e verificar desenho, aprovação de arte, ensaio, ferramental, lote mínimo e obrigação de retirada do estoque personalizado."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Conversão de papelão ou papel-cartão em caixas. Diferenciar caixas onduladas de cartonagens dobráveis, impressas e especiais; a estrutura de custos não é intercambiável.",
+          "Síntese técnica e analítica: O conversor transforma substrato em embalagem dimensionada ao produto. Arte gráfica, faca, impressão, fechamento e resistência exigem compatibilidade com a linha do cliente. A embalagem precisa chegar utilizável e no ritmo do envase.",
+          "Pedidos pequenos e muitas trocas de impressão elevam preparação e refugos. Uma caixa barata que gera dano ao produto pode custar mais ao cliente; uma especificação exagerada também consome material sem benefício."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A fonte histórica do BNDES cobre papelão ondulado, não toda cartonagem. Grupos integrados competem com conversores independentes; a alternativa de comprar chapa reduz investimento inicial, mas aumenta dependência do fornecedor.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Caso territorial: a Prefeitura de Lages registrou abertura de operação de papel ondulado da Primo Tedesco e distinguiu a produção de sacos em Caçador da divisão de embalagens em Canoas. Inferência: localização e integração precisam ser verificadas por unidade; não assumir que todo investimento do grupo beneficia igualmente cada recorte."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+            "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+            "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Margem por pedido; tempo de preparação; perdas de impressão e corte; atraso de entrega; avarias do produto embalado; estoque por arte e cliente.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas de cobertura estão explicitadas; séries só são apresentadas onde os pontos foram efetivamente recuperados."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Não foi recuperada estatística que separe caixas onduladas e cartonagens no período mais recente. Não usar crescimento geral do comércio eletrônico como taxa observada de receita de caixas.",
+          "Inferência: Caixa com marca de um comprador pode ter valor de revenda quase nulo. Alteração de arte, promoção cancelada ou atraso de aprovação pode transformar estoque em perda.",
+          "Inferência: Engenharia de embalagem e reposição próxima ao cliente podem diferenciar médios conversores sem competir apenas por escala."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Compra do substrato e preparação antecedem produção. Cobrança de ferramental ou sinal para encomendas personalizadas deve estar contratada; recebível nasce conforme entrega e aceite, não apenas impressão.",
+          "Impressoras, corte e colagem dependem do mix. Financiar equipamento sem medir preparação pode ampliar ociosidade e capital em processo.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Margem por pedido; tempo de preparação; perdas de impressão e corte; atraso de entrega; avarias do produto embalado; estoque por arte e cliente.",
+          "Impressoras, corte e colagem dependem do mix. Financiar equipamento sem medir preparação pode ampliar ociosidade e capital em processo."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Engenharia de embalagem e reposição próxima ao cliente podem diferenciar médios conversores sem competir apenas por escala."
+          ],
+          [
+            "Fragilidade a testar",
+            "Pedidos pequenos e muitas trocas de impressão elevam preparação e refugos. Uma caixa barata que gera dano ao produto pode custar mais ao cliente; uma especificação exagerada também consome material sem benefício."
+          ],
+          [
+            "Oportunidade",
+            "Pedidos recorrentes e padronização reduzem preparação, avaria e estoque; acompanhar margem por arte ativa."
+          ],
+          [
+            "Ameaça",
+            "Caixa com marca de um comprador pode ter valor de revenda quase nulo. Alteração de arte, promoção cancelada ou atraso de aprovação pode transformar estoque em perda."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Chapas ou papel-cartão: verificar alternativas homologadas, prazo e custo de mudança. Pedidos pequenos e muitas trocas de impressão elevam preparação e refugos. Uma caixa barata que gera dano ao produto pode custar mais ao cliente; uma especificação exagerada também consome material sem benefício."
+          ],
+          [
+            "Compradores",
+            "Indústria, varejo e logística: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Engenharia de embalagem e reposição próxima ao cliente podem diferenciar médios conversores sem competir apenas por escala."
+          ],
+          [
+            "Entrantes",
+            "Impressão, corte e colagem precisam se integrar à aprovação de arte e à linha de embalagem do cliente. Facas, desenhos, lotes curtos e atendimento recorrente criam conhecimento específico. Em alimentos ou aplicações críticas, rastreabilidade e homologação aumentam barreiras além do investimento em conversão."
+          ],
+          [
+            "Substitutos",
+            "Caixas plásticas retornáveis, engradados de madeira, recipientes metálicos e embalagens flexíveis podem cumprir parte das funções. Reutilizáveis exigem coleta, higienização e controle de perdas; flexíveis podem reduzir proteção ou empilhamento. O custo de troca inclui equipamento de envase, armazenagem, transporte e avarias."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Margem por pedido; tempo de preparação; perdas de impressão e corte; atraso de entrega; avarias do produto embalado; estoque por arte e cliente.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Pedidos recorrentes e padronização reduzem preparação, avaria e estoque; acompanhar margem por arte ativa.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Cliente troca marca ou reduz produção com estoque exclusivo pronto; revisar contratos de obsolescência e concentração.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Escolher uma caixa real e verificar desenho, aprovação de arte, ensaio, ferramental, lote mínimo e obrigação de retirada do estoque personalizado.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "BNDES · Mercado de papelão ondulado",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+        "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+      },
+      {
+        "label": "BNDES · Modernização da Primo Tedesco",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+        "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+      },
+      {
+        "label": "Anvisa · Embalagens para alimentos",
+        "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+        "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+      },
+      {
+        "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+        "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+        "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra as caixas e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "O que o cliente ganha com o desenho e a personalização da caixa, e como esse ganho é validado?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: preparação da impressão, corte, colagem, acabamento ou entrega das caixas?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Que tamanho mínimo de pedido paga preparação, impressão, perdas e entrega sem consumir caixa?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Chapas ou papel-cartão",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Impressão e corte",
+          "detail": "O conversor transforma substrato em embalagem dimensionada ao produto. Arte gráfica, faca, impressão, fechamento e resistência exigem compatibilidade com a linha do cliente. A embalagem precisa chegar utilizável e no ritmo do envase."
+        },
+        {
+          "id": "2",
+          "label": "Colagem e acabamento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Indústria, varejo e logística",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Caixas. Conversão de papelão ou papel-cartão em caixas. Diferenciar caixas onduladas de cartonagens dobráveis, impressas e especiais; a estrutura de custos não é intercambiável. O conversor transforma substrato em embalagem dimensionada ao produto. Arte gráfica, faca, impressão, fechamento e resistência exigem compatibilidade com a linha do cliente. A embalagem precisa chegar utilizável e no ritmo do envase. O ponto econômico central é: Pedidos pequenos e muitas trocas de impressão elevam preparação e refugos. Uma caixa barata que gera dano ao produto pode custar mais ao cliente; uma especificação exagerada também consome material sem benefício. Para uma empresa média: Compra do substrato e preparação antecedem produção. Cobrança de ferramental ou sinal para encomendas personalizadas deve estar contratada; recebível nasce conforme entrega e aceite, não apenas impressão. No cenário favorável: Pedidos recorrentes e padronização reduzem preparação, avaria e estoque; acompanhar margem por arte ativa. No adverso: Cliente troca marca ou reduz produção com estoque exclusivo pronto; revisar contratos de obsolescência e concentração. Na visita: Escolher uma caixa real e verificar desenho, aprovação de arte, ensaio, ferramental, lote mínimo e obrigação de retirada do estoque personalizado. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "9431d0d95ef7ed188ccc164fbdea98dfca0cd681edf1b6de2c3779150a404481"
+    }
+  },
+  {
+    "group": "papel-celulose",
+    "topicIndex": 4,
+    "title": "Sacos industriais",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Conversão de papel kraft e, quando especificado, barreiras em sacos para ensaque industrial. Não inclui sacolas de varejo nem presume que todo saco industrial seja de papel.",
+      "Tese analítica: A economia depende da relação entre material, velocidade de ensaque e quebra no transporte. Reduzir papel sem ensaiar pode elevar perdas e reclamações de valor superior ao custo da embalagem.",
+      "Prioridade na visita: Observar ensaio de queda, porosidade e aplicação na máquina do cliente. Conferir exigências sanitárias quando houver contato com alimentos e cláusula de mudança de arte."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Conversão de papel kraft e, quando especificado, barreiras em sacos para ensaque industrial. Não inclui sacolas de varejo nem presume que todo saco industrial seja de papel.",
+          "Síntese técnica e analítica: Resistência, porosidade, fundo e válvula precisam funcionar na envasadora. O produto embalado impõe exigências diferentes de umidade, higiene e barreira; cimento e alimento não podem receber a mesma especificação por conveniência.",
+          "A economia depende da relação entre material, velocidade de ensaque e quebra no transporte. Reduzir papel sem ensaiar pode elevar perdas e reclamações de valor superior ao custo da embalagem."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Primo Tedesco é exemplo público, descrito pelo BNDES como atuante em sacos industriais e outros produtos de papel. Sua integração não pode ser presumida numa convertedora média. Não há ranking atual demonstrado neste levantamento.",
+          "Não há ranking de empresas médias comprovado neste recorte. Fabricantes integrados, independentes e distribuidores não devem ser comparados sem separar atividades.",
+          "Caso territorial: a Prefeitura de Lages registrou abertura de operação de papel ondulado da Primo Tedesco e distinguiu a produção de sacos em Caçador da divisão de embalagens em Canoas. Inferência: localização e integração precisam ser verificadas por unidade; não assumir que todo investimento do grupo beneficia igualmente cada recorte."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+            "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+            "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Sacos aceitos por lote; resistência; estabilidade da válvula; perdas na linha do cliente; papel por unidade; estoque por impressão e aplicação.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas de cobertura estão explicitadas; séries só são apresentadas onde os pontos foram efetivamente recuperados."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "A modernização da Primo Tedesco é sinal empresarial da cadeia, não prova crescimento de sacos isoladamente. Não foram extraídos embarques e preços recentes exclusivos do produto.",
+          "Inferência: Concentração em cimento expõe à construção; aplicações alimentícias trazem homologação e contato com alimentos. Lotes impressos de comprador específico podem não ter mercado alternativo.",
+          "Inferência: Ajustar válvula e porosidade ao ensaque pode gerar ganho verificável para o cliente e proteção comercial baseada em desempenho."
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Modernização da Primo Tedesco",
+            "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+            "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+          },
+          {
+            "label": "Anvisa · Embalagens para alimentos",
+            "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+            "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Estoque de kraft e barreiras antecede fabricação. Encomendas sazonais ou campanhas de cliente exigem planejamento de caixa; financiar o ciclo não resolve retorno de lote por falha no ensaque.",
+          "Linha de sacos e fechamento deve ser avaliada com laboratório e suporte técnico. Mudança de produto pode exigir novo ajuste e homologação.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo."
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Sacos aceitos por lote; resistência; estabilidade da válvula; perdas na linha do cliente; papel por unidade; estoque por impressão e aplicação.",
+          "Linha de sacos e fechamento deve ser avaliada com laboratório e suporte técnico. Mudança de produto pode exigir novo ajuste e homologação."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Ajustar válvula e porosidade ao ensaque pode gerar ganho verificável para o cliente e proteção comercial baseada em desempenho."
+          ],
+          [
+            "Fragilidade a testar",
+            "A economia depende da relação entre material, velocidade de ensaque e quebra no transporte. Reduzir papel sem ensaiar pode elevar perdas e reclamações de valor superior ao custo da embalagem."
+          ],
+          [
+            "Oportunidade",
+            "Clientes ampliam ensaque e reconhecem menor quebra; acompanhar reclamações e produtividade da linha do comprador."
+          ],
+          [
+            "Ameaça",
+            "Concentração em cimento expõe à construção; aplicações alimentícias trazem homologação e contato com alimentos. Lotes impressos de comprador específico podem não ter mercado alternativo."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Papel e barreiras: verificar alternativas homologadas, prazo e custo de mudança. A economia depende da relação entre material, velocidade de ensaque e quebra no transporte. Reduzir papel sem ensaiar pode elevar perdas e reclamações de valor superior ao custo da embalagem."
+          ],
+          [
+            "Compradores",
+            "Ensaque de produtos industriais: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Ajustar válvula e porosidade ao ensaque pode gerar ganho verificável para o cliente e proteção comercial baseada em desempenho."
+          ],
+          [
+            "Entrantes",
+            "O fabricante deve garantir válvula, resistência e porosidade compatíveis com a envasadora do comprador. Testes de ensaque e transporte, requisitos sanitários por aplicação e consistência entre lotes dificultam substituir fornecedor apenas por preço."
+          ],
+          [
+            "Substitutos",
+            "Sacos de ráfia ou filmes plásticos, big bags e fornecimento a granel podem substituir sacos de papel conforme produto e canal. Mudança exige compatibilidade com ensaque, dosagem, transporte e proteção contra umidade. Granel demanda infraestrutura no cliente e não atende necessariamente a venda fracionada."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Sacos aceitos por lote; resistência; estabilidade da válvula; perdas na linha do cliente; papel por unidade; estoque por impressão e aplicação.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Clientes ampliam ensaque e reconhecem menor quebra; acompanhar reclamações e produtividade da linha do comprador.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Menor atividade do comprador deixa estoque personalizado e reduz utilização; acompanhar carteira firme e consumo real de embalagens.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Observar ensaio de queda, porosidade e aplicação na máquina do cliente. Conferir exigências sanitárias quando houver contato com alimentos e cláusula de mudança de arte.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "BNDES · Modernização da Primo Tedesco",
+        "url": "https://agenciadenoticias.bndes.gov.br/noticia/BNDES-aprova-R%24-983-mi-para-Primo-Tedesco-digitalizar-producao-a-partir-de-papel-reciclado-em-SC/",
+        "purpose": "Caso empresarial de modernização em Caçador; evidência de operação, não disponibilidade atual de linha ou média do setor."
+      },
+      {
+        "label": "Anvisa · Embalagens para alimentos",
+        "url": "https://www.gov.br/anvisa/pt-br/setorregulado/regularizacao/alimentos/embalagens",
+        "purpose": "Contato com alimentos, materiais e regularização; reciclabilidade não substitui segurança sanitária."
+      },
+      {
+        "label": "BNDES · Mercado de papelão ondulado",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+        "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+      },
+      {
+        "label": "Prefeitura de Lages · Operações da Primo Tedesco",
+        "url": "https://www.lages.sc.gov.br/noticia-descricao/6279/primo-tedesco-anuncia-inicio-das-operacoes-em-lages",
+        "purpose": "Notícia de abertura de unidade; metas futuras não utilizadas como realização."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra os sacos industriais e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como vocês demonstram que o saco suporta envase, empilhamento e transporte do produto contratado?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: impressão, formação do saco, fechamento, ensaque ou transporte?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual contrato remunera papel, barreiras, impressão, perdas e atendimento técnico após o prazo de pagamento?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Papel e barreiras",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Impressão e tubulação",
+          "detail": "Resistência, porosidade, fundo e válvula precisam funcionar na envasadora. O produto embalado impõe exigências diferentes de umidade, higiene e barreira; cimento e alimento não podem receber a mesma especificação por conveniência."
+        },
+        {
+          "id": "2",
+          "label": "Fundo, válvula e ensaios",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Ensaque de produtos industriais",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Sacos industriais. Conversão de papel kraft e, quando especificado, barreiras em sacos para ensaque industrial. Não inclui sacolas de varejo nem presume que todo saco industrial seja de papel. Resistência, porosidade, fundo e válvula precisam funcionar na envasadora. O produto embalado impõe exigências diferentes de umidade, higiene e barreira; cimento e alimento não podem receber a mesma especificação por conveniência. O ponto econômico central é: A economia depende da relação entre material, velocidade de ensaque e quebra no transporte. Reduzir papel sem ensaiar pode elevar perdas e reclamações de valor superior ao custo da embalagem. Para uma empresa média: Estoque de kraft e barreiras antecede fabricação. Encomendas sazonais ou campanhas de cliente exigem planejamento de caixa; financiar o ciclo não resolve retorno de lote por falha no ensaque. No cenário favorável: Clientes ampliam ensaque e reconhecem menor quebra; acompanhar reclamações e produtividade da linha do comprador. No adverso: Menor atividade do comprador deixa estoque personalizado e reduz utilização; acompanhar carteira firme e consumo real de embalagens. Na visita: Observar ensaio de queda, porosidade e aplicação na máquina do cliente. Conferir exigências sanitárias quando houver contato com alimentos e cláusula de mudança de arte. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/segunda-revisao-documental.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "be70b67b11bda930255806f1b5c4221b46712886ecf50c221ed65879cb57002f"
+    }
+  },
+  {
+    "group": "papel-celulose",
+    "topicIndex": 5,
+    "title": "Tubetes",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Tubos de papel usados como suporte para bobinamento, núcleos e outras aplicações industriais. Separar produto leve descartável de tubete técnico submetido a carga e velocidade.",
+      "Tese analítica: O papel comprado só vira produto vendável depois de cura e controle dimensional. Peso maior pode elevar receita aparente e aumentar custo sem melhorar desempenho; medir por especificação aceita.",
+      "Prioridade na visita: Pedir desenho homologado, laudos de resistência e registros de quebra em uso. Comparar condição de armazenagem com a aplicada no teste e verificar tratamento das reclamações."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento e cadeia de valor",
+        "paragraphs": [
+          "Tubos de papel usados como suporte para bobinamento, núcleos e outras aplicações industriais. Separar produto leve descartável de tubete técnico submetido a carga e velocidade.",
+          "Síntese técnica e analítica: Tiras de papel são enroladas com adesivo e cortadas nas medidas requeridas. Umidade, espessura, alinhamento e cura afetam resistência e geometria; o suporte precisa operar na velocidade e no peso da bobina do cliente.",
+          "O papel comprado só vira produto vendável depois de cura e controle dimensional. Peso maior pode elevar receita aparente e aumentar custo sem melhorar desempenho; medir por especificação aceita.",
+          "Interface documentada: o guia da CETESB descreve o uso de tubetes no bobinamento. Inferência para o fornecedor: qualidade dimensional precisa ser validada na condição de operação do comprador, e não apenas em inspeção visual na expedição."
+        ],
+        "sources": [
+          {
+            "label": "Ibama · Lista de produtos industriais",
+            "url": "https://servicos.ibama.gov.br/ctf/manual/html/lista_produtos.htm",
+            "purpose": "Taxonomia histórica para distinção dos produtos; não confirma enquadramento tributário atual de cliente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "CETESB · Guia técnico ambiental de papel e celulose",
+            "url": "https://cetesb.sp.gov.br/consumosustentavel/wp-content/uploads/sites/20/2013/11/papel.pdf",
+            "purpose": "Referência técnica de processo e interfaces, não de tamanho de mercado ou norma atual."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Pesquisa comercial: a Incape Tubos divulga fabricação sob especificação em Rio dos Cedros (SC), com canal direto de orçamento e atendimento técnico. A Incape descreve aplicações em filmes, papel e têxteis. O guia da ABRE identifica a Sonoco em Araras (SP), com tubos de papelão e plástico para esses mercados. São exemplos de oferta declarada, não auditoria de capacidade ou ranking.",
+          "Os catálogos não demonstram vendas realizadas nem participação. A comparação pertinente é por especificação de bobinamento, regularidade de entrega e atendimento da planta consumidora, e não apenas pela presença nacional de uma marca. A localização desses fornecedores não estabelece concentração geográfica do subsetor."
+        ],
+        "sources": [
+          {
+            "label": "Ibama · Lista de produtos industriais",
+            "url": "https://servicos.ibama.gov.br/ctf/manual/html/lista_produtos.htm",
+            "purpose": "Taxonomia histórica para distinção dos produtos; não confirma enquadramento tributário atual de cliente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico e indicadores",
+        "paragraphs": [
+          "Resistência radial; circularidade; umidade; tolerância dimensional; quebra em uso; consumo de papel por especificação; lotes rejeitados.",
+          "A pesquisa buscou histórico e conjuntura separadamente. Fontes estruturais antigas explicam mecanismos, mas não fornecem preços, participação ou margem atuais. As lacunas de cobertura estão explicitadas; séries só são apresentadas onde os pontos foram efetivamente recuperados."
+        ],
+        "sources": [
+          {
+            "label": "Ibama · Lista de produtos industriais",
+            "url": "https://servicos.ibama.gov.br/ctf/manual/html/lista_produtos.htm",
+            "purpose": "Taxonomia histórica para distinção dos produtos; não confirma enquadramento tributário atual de cliente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e implicações",
+        "paragraphs": [
+          "Não foi localizada série pública exclusiva de tubetes; papel e embalagens são mercados relacionados, não substitutos estatísticos. A conjuntura precisa ser inferida com cautela a partir dos pedidos dos clientes de filmes, papéis e têxteis.",
+          "Inferência: Falha do tubete pode danificar a bobina e interromper produção, ampliando responsabilidade além do preço vendido. Homologação não elimina variação entre lotes.",
+          "Inferência: Desenvolvimento técnico com o cliente e entrega de especificações estáveis podem criar custo de troca maior que o do artefato simples.",
+          "A oferta consultada confirma a diversidade de compradores industriais: fios e tecidos, filmes flexíveis, tissue e papel-cartão exigem tubetes distintos. O anúncio da Incape amplia seu portfólio declarado, mas não tem data de publicação inequívoca: não foi usado como crescimento recente do mercado. Inferência: acompanhar pedidos e testes aprovados por aplicação é mais informativo para uma empresa média do que aplicar a variação agregada do papel ao seu faturamento."
+        ],
+        "sources": [
+          {
+            "label": "Ibama · Lista de produtos industriais",
+            "url": "https://servicos.ibama.gov.br/ctf/manual/html/lista_produtos.htm",
+            "purpose": "Taxonomia histórica para distinção dos produtos; não confirma enquadramento tributário atual de cliente."
+          },
+          {
+            "label": "BNDES · Mercado de papelão ondulado",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+            "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+          },
+          {
+            "label": "IBGE · Pesquisa Industrial Mensal",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+            "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+          }
+        ]
+      },
+      {
+        "id": "caixa",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Cura e estoque sob medida antecedem entrega. Recebíveis dependem de homologação e reclamações; itens especiais exigem discutir retirada mínima e responsabilidade por obsolescência.",
+          "Enroladeira, corte e controle devem ser compatíveis com dimensões e aplicação. Automatizar não dispensa capacidade de ensaio e rastreabilidade.",
+          "Encaixes propostos, não prática setorial comprovada: giro para ciclo operacional, recebíveis líquidos de glosas para entrega aceita e financiamento de investimento para ativos duráveis. Comparar custo total, garantias, amortização e risco de renovação. Não foram confirmadas taxas ou elegibilidade atual em programas.",
+          "FIDCs ou outras cessões podem depender de escala, documentação e concentração aceitáveis. Dívida de mercado de grandes companhias não demonstra acesso de uma empresa média. Não há aprovação de crédito ou margem típica neste estudo.",
+          "A consulta fiscal catarinense distingue fabricação de papel-cartão e tubetes e discute composição reciclada. É precedente histórico, não autorização fiscal atual. Inferência: no caixa, separar economia física de fibra de eventual incentivo tributário; benefício não validado deve ficar fora da capacidade de pagamento.",
+          "Inferência comercial: orçamento por diâmetro, espessura, comprimento e acabamento cria variedade de estoque. Separar itens repetitivos de desenvolvimentos sob medida; conferir quem paga ferramental, lote de teste e descarte após alteração da bobina. O canal direto observado permite prospectar compradores técnicos, mas não comprova carteira contratada."
+        ],
+        "sources": [
+          {
+            "label": "Secretaria da Fazenda de SC · Consulta sobre artefatos de papel reciclado",
+            "url": "https://legislacao.sef.sc.gov.br/html/consultas/2015/con_15_031.htm",
+            "purpose": "Precedente histórico de consulta fiscal, sem afirmar benefício vigente ou estendê-lo a outra empresa."
+          }
+        ]
+      },
+      {
+        "id": "insumos",
+        "title": "Insumos e controles prioritários",
+        "paragraphs": [
+          "Resistência radial; circularidade; umidade; tolerância dimensional; quebra em uso; consumo de papel por especificação; lotes rejeitados.",
+          "Enroladeira, corte e controle devem ser compatíveis com dimensões e aplicação. Automatizar não dispensa capacidade de ensaio e rastreabilidade."
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT: hipóteses para diagnóstico",
+        "paragraphs": [
+          "Leitura analítica do subsetor, a confirmar na visita."
+        ],
+        "columns": [
+          "Dimensão",
+          "Mecanismo"
+        ],
+        "rows": [
+          [
+            "Força potencial",
+            "Desenvolvimento técnico com o cliente e entrega de especificações estáveis podem criar custo de troca maior que o do artefato simples."
+          ],
+          [
+            "Fragilidade a testar",
+            "O papel comprado só vira produto vendável depois de cura e controle dimensional. Peso maior pode elevar receita aparente e aumentar custo sem melhorar desempenho; medir por especificação aceita."
+          ],
+          [
+            "Oportunidade",
+            "Novas homologações geram recorrência e reduzem perdas do cliente; acompanhar proporção de especificações técnicas e devoluções."
+          ],
+          [
+            "Ameaça",
+            "Falha do tubete pode danificar a bobina e interromper produção, ampliando responsabilidade além do preço vendido. Homologação não elimina variação entre lotes."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência e poder de negociação",
+        "paragraphs": [
+          "Hipóteses analíticas de concorrência por processo e aplicação, não participações de mercado demonstradas. Alternativas e custos de troca abaixo devem ser validados na especificação e no mercado atendidos pela empresa."
+        ],
+        "columns": [
+          "Força",
+          "Hipótese e evidência a solicitar"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "Papéis técnicos e cola: verificar alternativas homologadas, prazo e custo de mudança. O papel comprado só vira produto vendável depois de cura e controle dimensional. Peso maior pode elevar receita aparente e aumentar custo sem melhorar desempenho; medir por especificação aceita."
+          ],
+          [
+            "Compradores",
+            "Papel, filmes e têxteis: medir concentração, critérios de aceite e poder de glosa."
+          ],
+          [
+            "Rivalidade",
+            "Comparar preço líquido, regularidade e especificação, não apenas volume de concorrentes. Desenvolvimento técnico com o cliente e entrega de especificações estáveis podem criar custo de troca maior que o do artefato simples."
+          ],
+          [
+            "Entrantes",
+            "A barreira técnica é entregar circularidade, resistência e umidade consistentes sob carga e velocidade reais. Homologações por bobinadora, ferramental dimensional e rastreabilidade de falhas criam custo de entrada que não se resume à enroladeira."
+          ],
+          [
+            "Substitutos",
+            "Núcleos plásticos ou metálicos reutilizáveis e processos de bobinamento sem núcleo são alternativas em aplicações compatíveis. A troca pode exigir mandris diferentes, ajuste de bobinamento e logística de retorno. Peso, recuperação e risco de dano à bobina determinam o custo total, não apenas preço do tubete."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para o horizonte de planejamento após a pesquisa, sem probabilidades ou crescimento numérico."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa e sinal",
+          "Caixa e crédito"
+        ],
+        "rows": [
+          [
+            "Base",
+            "Demanda e custo oscilam sem ruptura estrutural. Resistência radial; circularidade; umidade; tolerância dimensional; quebra em uso; consumo de papel por especificação; lotes rejeitados.",
+            "Preservar liquidez e casar prazo da dívida com ciclo efetivo."
+          ],
+          [
+            "Favorável",
+            "Novas homologações geram recorrência e reduzem perdas do cliente; acompanhar proporção de especificações técnicas e devoluções.",
+            "Crescimento exige giro antes do recebimento; preservar margem após frete e qualidade."
+          ],
+          [
+            "Adverso",
+            "Cliente substitui fornecedor ou reduz bobinamento, deixando itens sem outra aplicação; acompanhar exposição por medida e contrato.",
+            "Revisar estoque realizável e cronograma de investimento antes de alongar dívida."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita e documentos",
+        "paragraphs": [
+          "Pedir desenho homologado, laudos de resistência e registros de quebra em uso. Comparar condição de armazenagem com a aplicada no teste e verificar tratamento das reclamações.",
+          "Pedir demonstrativo gerencial por produto/cliente, aging de recebíveis e estoques, contratos de insumos, dívidas por vencimento e investimentos contratados. Não presumir dados privados ou políticas de qualquer banco.",
+          "Encerrar validando uma hipótese comercial e uma de risco: qual gargalo limita receita rentável e qual obrigação de caixa não depende de novas vendas?"
+        ]
+      }
+    ],
+    "charts": [],
+    "sources": [
+      {
+        "label": "Ibama · Lista de produtos industriais",
+        "url": "https://servicos.ibama.gov.br/ctf/manual/html/lista_produtos.htm",
+        "purpose": "Taxonomia histórica para distinção dos produtos; não confirma enquadramento tributário atual de cliente."
+      },
+      {
+        "label": "BNDES · Mercado de papelão ondulado",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1522",
+        "purpose": "Estrutura e competitividade histórica, incluindo kraftliner e reciclados; não transportar margens antigas para o presente."
+      },
+      {
+        "label": "IBGE · Pesquisa Industrial Mensal",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Metodologia e acompanhamento de volume industrial. Não atribuir a taxa agregada a um produto específico."
+      },
+      {
+        "label": "CETESB · Guia técnico ambiental de papel e celulose",
+        "url": "https://cetesb.sp.gov.br/consumosustentavel/wp-content/uploads/sites/20/2013/11/papel.pdf",
+        "purpose": "Referência técnica de processo e interfaces, não de tamanho de mercado ou norma atual."
+      },
+      {
+        "label": "Secretaria da Fazenda de SC · Consulta sobre artefatos de papel reciclado",
+        "url": "https://legislacao.sef.sc.gov.br/html/consultas/2015/con_15_031.htm",
+        "purpose": "Precedente histórico de consulta fiscal, sem afirmar benefício vigente ou estendê-lo a outra empresa."
+      }
+    ],
+    "limitations": [
+      "Não foram recuperadas séries numéricas exclusivas e comparáveis para todos os anos desejados. Indicadores agregados não foram atribuídos ao subsetor.",
+      "Não há estimativa de margem típica, prazo médio de caixa, ranking atual ou condições bancárias de empresa média.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "A pesquisa comercial utiliza catálogos e comunicados empresariais identificados como declarações dos emissores; não substitui auditoria de capacidade, carteira ou demanda realizada. As referências privadas foram preservadas no registro de evidências, sem exibição na lista pública de fontes.",
+      "Aprovação documental independente em 06/11/2026. Não inclui teste visual da página, audição do áudio gerado ou validação operacional. Séries e referências parciais conservam os limites informados."
+    ],
+    "method": "Pesquisa pública consultada em 06/11/2026, Brasil como base. Referências públicas exibidas; registros de busca e dados em arquivo separado. Fontes históricas usadas para estrutura, nunca como conjuntura atual. Interpretações de margem, forças competitivas e cenários são análise própria. Não foram executadas operações bancárias, publicação externa ou consulta a dados privados. Revisão documental independente concluída em 06/11/2026; QA visual e áudio gerado não incluídos.",
+    "canvasQuestions": [
+      {
+        "dimension": "Clientes",
+        "question": "Quem compra os tubetes e qual critério decide a escolha: preço, prazo, desempenho ou outro requisito?"
+      },
+      {
+        "dimension": "Proposta de valor",
+        "question": "Como o cliente homologa resistência e precisão dimensional do tubete na própria bobinadeira?"
+      },
+      {
+        "dimension": "Operação",
+        "question": "Em qual etapa ocorre a principal perda: corte do papel, enrolamento, cura, acabamento ou uso do tubete na bobinadeira do cliente?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Qual fornecedor ou comprador é difícil de substituir e qual alternativa está efetivamente homologada?"
+      },
+      {
+        "dimension": "Economia",
+        "question": "Qual pedido gera margem depois de papel, adesivo, secagem, corte, refugo e transporte?"
+      },
+      {
+        "dimension": "Evolução",
+        "question": "Que investimento resolve o gargalo comprovado, e como ficaria seu pagamento no cenário adverso?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "Papéis técnicos e cola",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "1",
+          "label": "Corte e enrolamento",
+          "detail": "Tiras de papel são enroladas com adesivo e cortadas nas medidas requeridas. Umidade, espessura, alinhamento e cura afetam resistência e geometria; o suporte precisa operar na velocidade e no peso da bobina do cliente."
+        },
+        {
+          "id": "2",
+          "label": "Cura e acabamento",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        },
+        {
+          "id": "3",
+          "label": "Papel, filmes e têxteis",
+          "detail": "Etapa da cadeia; confirmar integração e responsabilidade da empresa."
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Fluxo físico e contrato comercial",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Estudo de Tubetes. Tubos de papel usados como suporte para bobinamento, núcleos e outras aplicações industriais. Separar produto leve descartável de tubete técnico submetido a carga e velocidade. Tiras de papel são enroladas com adesivo e cortadas nas medidas requeridas. Umidade, espessura, alinhamento e cura afetam resistência e geometria; o suporte precisa operar na velocidade e no peso da bobina do cliente. O ponto econômico central é: O papel comprado só vira produto vendável depois de cura e controle dimensional. Peso maior pode elevar receita aparente e aumentar custo sem melhorar desempenho; medir por especificação aceita. Para uma empresa média: Cura e estoque sob medida antecedem entrega. Recebíveis dependem de homologação e reclamações; itens especiais exigem discutir retirada mínima e responsabilidade por obsolescência. No cenário favorável: Novas homologações geram recorrência e reduzem perdas do cliente; acompanhar proporção de especificações técnicas e devoluções. No adverso: Cliente substitui fornecedor ou reduz bobinamento, deixando itens sem outra aplicação; acompanhar exposição por medida e contrato. Na visita: Pedir desenho homologado, laudos de resistência e registros de quebra em uso. Comparar condição de armazenagem com a aplicada no teste e verificar tratamento das reclamações. Os cenários são hipóteses, e não projeções numéricas. Há lacunas de dados declaradas. A revisão documental foi concluída; a qualidade do áudio gerado ainda requer conferência. Pesquisa comercial complementar. Pesquisa comercial: a Incape Tubos divulga fabricação sob especificação em Rio dos Cedros (SC), com canal direto de orçamento e atendimento técnico. A Incape descreve aplicações em filmes, papel e têxteis. O guia da ABRE identifica a Sonoco em Araras (SP), com tubos de papelão e plástico para esses mercados. São exemplos de oferta declarada, não auditoria de capacidade ou ranking. Os catálogos não demonstram vendas realizadas nem participação. A comparação pertinente é por especificação de bobinamento, regularidade de entrega e atendimento da planta consumidora, e não apenas pela presença nacional de uma marca. A localização desses fornecedores não estabelece concentração geográfica do subsetor.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/adendo-quatro-recortes.md",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "0b6b050193e11a8b9f9ec2c24e6f4f0cac1e600d2d7cce618a21ef49dcd127e6"
+    }
+  }
+]

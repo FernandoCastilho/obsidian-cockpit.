@@ -1,10 +1,65 @@
 # Auditoria independente da extensão v0.2
 
+## Estado vigente em 06/11/2026 — CET independente da referência anterior
+
+Fernando determinou desconsiderar o CET apresentado no cabeçalho e calcular usando as parcelas e todas as demais informações disponíveis. O cenário completo agora define `reportedCet = null`: **20,01% não é mais alvo, comparação ativa ou pendência de aceitação.** A transcrição original foi preservada.
+
+**Validação matemática concluída: CET de 20,1568899289311% a.a., apresentado como 20,16% a.a.** O cálculo usa dias corridos/365, valor líquido de R$ 2.905.817,27 em 26/10/2026 e os 34 pagamentos nas datas transcritas, com tarifa de R$ 2.200,00 somente na primeira cobrança. O IOF de R$ 94.182,73 é descontado uma única vez na liberação. Parcelas, encargos e datas não foram ajustados para atingir uma taxa.
+
+A nova conferência independente usa Newton com Decimal de 70 dígitos diretamente das 34 linhas: taxa anual `0.2015688992893112568494449836469052116318712437222958731943678583891447`, com residual de `2e-61` centavo. Confere principal de R$ 3.000.000,00, juros de R$ 842.970,58 e prestações mais tarifa de R$ 3.845.170,58.
+
+O resultado ativo passa a `status = calculated-no-reference`, com `reportedAnnualRateDecimal`, `annualDifferencePercentagePoints` e `referenceResidualCents` nulos. A nova regressão demonstra que referências opcionais diferentes não alteram as 34 parcelas, o fluxo ou a taxa calculada. O relatório foi regenerado pelo motor; nenhum valor de CET foi ajustado manualmente.
+
+Verificação executada nesta revisão: **92/92 testes TFB aprovados**. As novas verificações do cenário sem referência e do relatório falharam antes do ajuste e passaram depois. A regressão dos 204 campos preserva todas as informações das 34 linhas. O comando reproduzível está no `README.md`.
+
+Não há pendência matemática do CET para esse fluxo. A precisão original da taxa, a âncora e o calendário dizem respeito ao **gerador**. Completude contratual dos encargos, enquadramento normativo e aplicabilidade fiscal dizem respeito a uma **certificação contratual/regulatória separada**, que não foi atribuída ao cenário. Por isso, `cet.validated = false`, `cashFlowComplete = false` e `validationStatus = estimate-not-contract-validated` continuam explícitos; eles não indicam falta de parcelas nem de cálculo.
+
+## Registro histórico preservado — superado pelo estado vigente acima
+
+As seções seguintes documentam as revisões anteriores. As exigências de explicar a origem dos 20,01%, a comparação ativa e os antigos estados de CET pendente foram superados pela instrução atual. A referência anterior não bloqueia o cálculo validado do fluxo declarado.
+
 Data: 05/11/2026. Escopo: fotografias das três páginas, transcrição, candidato isolado v0.2, entrada completa, cálculo de retorno datado e testes. Não houve publicação, integração com UI, preview, sockets ou execução de fixture Python. O auditor não modificou o candidato nem o cálculo de retorno.
 
 ## Retificação posterior de origem
 
 Fernando esclareceu que montou as imagens e os cenários para testes baseados em cálculos oficiais. O material não foi emitido pelo Itaú. As conclusões aritméticas abaixo permanecem, mas a autoria e a pendência de CET referem-se ao cenário do usuário. Esta retificação não é nova validação de fórmulas oficiais.
+
+## Ajuste do cálculo em 06/11/2026 — v0.2.2
+
+O motor agora calcula o CET quando todos os eventos esperados do fluxo informado estão cobertos. A fórmula geral não era uma informação ausente: o método de dias corridos/365 consta do [art. 4º da Resolução CMN 4.881](https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf). O denominador permanece 365 no ano bissexto. A base dos juros do gerador continua ACT/ACT e não foi alterada.
+
+O cenário completo resulta em **20,1568899289% a.a. → 20,16%**, conferido por solucionadores independentes. O motor devolve o cálculo, a referência preservada e sua diferença de **0,14688993 ponto percentual**. Em **20,01%**, o residual é **−R$ 5.214,24**: não é erro de arredondamento nem falta de páginas.
+
+O campo `calculatedAnnualRateDecimal` deixa de ser nulo nesse horizonte, com `calculationStatus = calculated-declared-cash-flow` e `status = reference-mismatch`. Não foram modificados IOF, tarifa, parcelas, datas ou taxa contratual para forçar concordância. Horizonte parcial continua sem CET.
+
+A pendência passa a ser descrita com precisão:
+1. **CET do fluxo informado:** apurado matematicamente em 20,16%.
+2. **Referência de 20,01%:** não conciliada; exige fórmula original, referências das células/intervalos, data inicial e encargos usados para explicar a origem.
+3. **Gerador de parcelas:** precisão da taxa, regra da âncora e calendário continuam inferidos.
+4. **Certificação contratual/regulatória:** composição integral dos encargos e enquadramento da operação continuam não confirmados, inclusive o alcance dos arts. 1º e 9º.
+
+`cet.validated = false`, `cashFlowComplete = false` e `validationStatus = estimate-not-contract-validated` são preservados. As ressalvas seguintes registram a revisão anterior e não devem ser lidas como ausência do cálculo introduzido nesta versão.
+
+## Revalidação em 06/11/2026
+
+**Estado: reconciliação aritmética aprovada; certificação contratual e CET pendentes.** A conferência atual executou os cinco arquivos de teste do perfil: **81 testes aprovados**, sem alterar taxas, datas, fórmula ou convenção para ajustar o resultado ao cabeçalho.
+
+Comando reproduzível, dentro de `cotacoes`:
+
+```powershell
+$tfbTests = (Get-ChildItem -LiteralPath 'test' -Filter 'bndes-tfb*.test.mjs').FullName
+node --test @tfbTests 'test/bndes-credito-pequenas-empresas.test.mjs'
+```
+
+As validações executadas incluem os 204 campos das 34 linhas, conservação do principal, saldo final zero, juros por ano civil incluindo ano bissexto, IOF retido uma vez, tarifa somente na primeira cobrança, arredondamento em centavos, bloqueio de entradas incompatíveis, independência do fuso horário e duas apurações independentes do retorno do fluxo. O retorno continua **20,15688993% a.a. em ACT/365 fixo**, frente aos **20,01% a.a. informados**. O motor conserva `cet.validated = false` e `cashFlowComplete = false`; cobertura dos 34 pagamentos não confirma a composição integral dos encargos contratuais.
+
+Para encerrar a certificação, ainda é necessário obter e confrontar:
+
+- A fórmula original do CET do cenário, com datas consideradas, base de dias, encargos incluídos e precisão dos valores antes de arredondar. A divergência de **0,14688993 ponto percentual** e o residual de **-R$ 5.214,24** a 20,01% permanecem sem explicação documental.
+- A taxa com a precisão original das células e a regra de geração da âncora de carência. Os **17,5402% a.a.** que reproduzem os juros e a âncora atual são inferências documentadas.
+- O calendário bancário aplicável e o enquadramento tributário da operação. As datas deslocadas e o IOF das imagens foram reconciliados; isso não certifica o calendário completo nem a aplicabilidade fiscal.
+
+Não faltam páginas do cronograma: as três imagens cobrem os 34 pagamentos. Novos testes sobre os mesmos dados não substituem as entradas e regras originais acima. O resultado disponível permanece no relatório `RECONCILIACAO-COMPLETA.json`; não foi criada uma tela nem atribuída certificação a uma proposta de banco.
 
 ## Conclusão financeira
 

@@ -1,0 +1,61 @@
+{
+  "accessedAt": "2026-11-06",
+  "sources": {
+    "anp": {
+      "label": "ANP · Anuário Estatístico 2026",
+      "url": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/anuario/anuario-estatistico-2026-dados-abertos",
+      "purpose": "Histórico da indústria compradora, com períodos e unidades próprios; não mede vendas de válvulas."
+    },
+    "oil": {
+      "label": "ANP · Produção por UF, tabela 2.14",
+      "url": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv",
+      "purpose": "Dados anuais de produção de petróleo para reconstrução do gráfico de contexto."
+    },
+    "meta": {
+      "label": "ANP · Metadados da tabela 2.14",
+      "url": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-abertos-metadados-tabela2-14.pdf",
+      "purpose": "Unidade original em mil barris; inclui condensado e óleo de xisto."
+    },
+    "recent": {
+      "label": "ANP · Produção de setembro de 2026",
+      "url": "https://www.gov.br/anp/pt-br/canais_atendimento/imprensa/noticias-comunicados/producao-de-petroleo-e-gas-natural-bate-novo-recorde-em-setembro",
+      "purpose": "Conjuntura publicada em 03/11/2026; distingue produção bruta de gás disponibilizado ao mercado."
+    },
+    "epe": {
+      "label": "EPE · Caderno de Produção do PDE 2036",
+      "url": "https://epe.gov.br/pt/imprensa/noticias/pde-2036-projeta-producao-de-4-9-milhoes-de-barris-de-petroleo-por-dia-e-destaca-importancia-da-reposicao-de-reservas-e-de-novas-fronteiras-exploratorias",
+      "purpose": "Perspectivas indicativas publicadas em 05/11/2026, ainda em consulta pública na data da pesquisa; não são contratos de fornecimento."
+    },
+    "cnae": {
+      "label": "IBGE/Concla · Comércio de equipamentos industriais",
+      "url": "https://cnae.ibge.gov.br/?subclasse=4663000&tipo=cnae&versao=9&view=subclasse",
+      "purpose": "Referência ampla de classificação; o enquadramento depende da atividade efetiva e não delimita sozinho o mercado de válvulas."
+    },
+    "comex": {
+      "label": "MDIC · Como consultar o Comex Stat",
+      "url": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/estatisticas/perguntas-frequentes-faq/4-como-realizar-consultas",
+      "purpose": "Método para filtrar produto, origem e período; valor FOB, massa e quantidade estatística não são intercambiáveis."
+    },
+    "tax": {
+      "label": "Sefaz-SP · Consulta sobre válvulas",
+      "url": "https://legislacao.fazenda.sp.gov.br/Paginas/RC40028_2026.aspx",
+      "purpose": "Exemplo paulista específico da importância da classificação e finalidade do produto; não é regra tributária nacional nem enquadramento da empresa."
+    },
+    "nr": {
+      "label": "MTE · NR-13, texto disponibilizado como vigente",
+      "url": "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-13-atualizada-2023-b.pdf",
+      "purpose": "Escopo e responsabilidade técnica na integridade de equipamentos abrangidos; não certifica universalmente válvulas ou distribuidores."
+    },
+    "inmetro": {
+      "label": "Inmetro · Dispositivos de segurança de equipamentos seriados",
+      "url": "https://www.gov.br/inmetro/pt-br/acesso-a-informacao/perguntas-frequentes/avaliacao-da-conformidade/caldeiras-e-vasos-de-pressao-de-producao-seriada/que-tipos-de-dispositivos-de-seguranca-podem-ser-utilizados-para-a-protecao-de-caldeiras-e-vasos-de-pressao-de-producao-seriada-quais-ensaios-e-certificacoes-sao-requeridos-para-esses-dispositivos",
+      "purpose": "Requisitos de ensaio, marcação e certificação conforme o código de construção adotado; página atualizada em 22/07/2026."
+    }
+  },
+  "files": {
+    "anp-tabela2-14.csv": {
+      "sha256": "0b8bb15fe851afd2feb0e6f9afb62fdf525694c3c3515970bca265b01f14e83f",
+      "sourceUrl": "https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/anuario-estatistico-2026/secao-2/anuario-2026-dados_abertos-tabela2-14.csv"
+    }
+  }
+}

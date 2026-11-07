@@ -1,0 +1,2881 @@
+[
+  {
+    "group": "textil",
+    "topicIndex": 0,
+    "title": "Fiação",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Fiação: Fibras naturais e químicas são preparadas, misturadas, estiradas e transformadas em fios.",
+      "Tese operacional: Consistência do fio reduz parada e defeito no cliente; escala, automação e compra de fibra influenciam competitividade, enquanto fios diferenciados exigem validação.",
+      "Principal vulnerabilidade: Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro acompanha estoque de fibra e fio, com teste de preço realizável. Modernização de filatórios deve demonstrar produtividade e economia de energia sem ignorar manutenção e treinamento."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Fibras naturais e químicas são preparadas, misturadas, estiradas e transformadas em fios. Separar fio de algodão, misturas e filamentos e distinguir venda de fio da transferência interna de indústria integrada.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Vicunha e Coteminas são exemplos históricos de operações integradas citados pelo Banco do Nordeste; não se confirmou situação atual de plantas. Estudo Seade documenta a cadeia paulista, sem ranking de fiações.",
+          "Consistência do fio reduz parada e defeito no cliente; escala, automação e compra de fibra influenciam competitividade, enquanto fios diferenciados exigem validação.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+          "Como exemplo de oferta declarada, a Fiação São Bento, em Santa Catarina, apresenta fios de algodão, misturas e poliéster, processos Vortex e Open End e atendimento por representantes. As aplicações anunciadas incluem malharias e tecidos técnicos. O catálogo demonstra segmentação por matéria-prima e processo; não mede vendas, capacidade utilizada ou participação de mercado."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          },
+          {
+            "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+            "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+            "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de fiação. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Regularidade e resistência do fio, perdas de fibra, energia por massa vendável, paradas e estoque por título. Não comparar apenas toneladas de fios de especificações diferentes.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Preço internacional do algodão e disponibilidade de fibras químicas afetam o custo, mas o repasse depende do pedido de tecelagens e malharias. Não há cotação corrente recuperada neste estudo.",
+          "Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro acompanha estoque de fibra e fio, com teste de preço realizável. Modernização de filatórios deve demonstrar produtividade e economia de energia sem ignorar manutenção e treinamento.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro acompanha estoque de fibra e fio, com teste de preço realizável. Modernização de filatórios deve demonstrar produtividade e economia de energia sem ignorar manutenção e treinamento.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Fios com rastreabilidade, misturas funcionais e melhor regularidade, desde que a demanda pague o desenvolvimento.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Consistência do fio reduz parada e defeito no cliente; escala, automação e compra de fibra influenciam competitividade, enquanto fios diferenciados exigem validação."
+          ],
+          [
+            "Fraquezas",
+            "Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução."
+          ],
+          [
+            "Oportunidades",
+            "Fios com rastreabilidade, misturas funcionais e melhor regularidade, desde que a demanda pague o desenvolvimento."
+          ],
+          [
+            "Ameaças",
+            "Alta do algodão ou restrição de fibras químicas pode elevar custo antes do repasse; redução de encomendas de tecelagens e malharias aumenta ociosidade."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é algodão e fibras químicas. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é tecelagem e malharia. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Consistência do fio reduz parada e defeito no cliente; escala, automação e compra de fibra influenciam competitividade, enquanto fios diferenciados exigem validação. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Escala de preparação e fiação, regularidade do fio e controle de contaminação exigem equipamento e conhecimento. Homologação por título, resistência e composição limita entrada em contratos técnicos."
+          ],
+          [
+            "Substitutos",
+            "Filamentos contínuos e combinações diferentes de fibras podem substituir certos fios fiados; não tecidos podem eliminar o fio em algumas aplicações finais. Resistência, toque, maquinário do cliente e custo de reformular limitam a troca."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Regularidade e resistência do fio, perdas de fibra, energia por massa vendável, paradas e estoque por título. Não comparar apenas toneladas de fios de especificações diferentes.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Fios com rastreabilidade, misturas funcionais e melhor regularidade, desde que a demanda pague o desenvolvimento.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução. Preço internacional do algodão e disponibilidade de fibras químicas afetam o custo, mas o repasse depende do pedido de tecelagens e malharias. Não há cotação corrente recuperada neste estudo.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Regularidade e resistência do fio, perdas de fibra, energia por massa vendável, paradas e estoque por título. Não comparar apenas toneladas de fios de especificações diferentes.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Fios com rastreabilidade, misturas funcionais e melhor regularidade, desde que a demanda pague o desenvolvimento.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos têxteis",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos têxteis",
+            "values": [
+              -6.9,
+              8.4,
+              -12.8,
+              0.9,
+              4.7
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "Fundação Seade · têxtil e confecções paulista",
+        "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+      },
+      {
+        "label": "Banco do Nordeste · indústria têxtil e confecção",
+        "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+        "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+        "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+        "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual característica do fio o cliente valoriza?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais tecelagens e malharias geram pedidos recorrentes?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como amostras e representantes levam à homologação?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual etapa controla regularidade e contaminação do fio?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem assegura fibras, manutenção e ensaios?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "A margem cobre fibra, perdas, energia e prazo de estoque?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "algodão e fibras químicas",
+          "detail": "Fluxo físico e financeiro: algodão e fibras químicas"
+        },
+        {
+          "id": "1",
+          "label": "preparação e fiação",
+          "detail": "Fibras naturais e químicas são preparadas, misturadas, estiradas e transformadas em fios. Separar fio de algodão, misturas e filamentos e distinguir venda de fio da transferência interna de indústria integrada."
+        },
+        {
+          "id": "2",
+          "label": "fio e controle de qualidade",
+          "detail": "Fluxo físico e financeiro: fio e controle de qualidade"
+        },
+        {
+          "id": "3",
+          "label": "tecelagem e malharia",
+          "detail": "Fluxo físico e financeiro: tecelagem e malharia"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Fiação. Fiação: Fibras naturais e químicas são preparadas, misturadas, estiradas e transformadas em fios. Tese operacional: Consistência do fio reduz parada e defeito no cliente; escala, automação e compra de fibra influenciam competitividade, enquanto fios diferenciados exigem validação. Principal vulnerabilidade: Fibra comprada antes de vender o fio cria exposição de preço e câmbio; mistura inadequada ou contaminação pode comprometer lote e devolução. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro acompanha estoque de fibra e fio, com teste de preço realizável. Modernização de filatórios deve demonstrar produtividade e economia de energia sem ignorar manutenção e treinamento. Fibras naturais e químicas são preparadas, misturadas, estiradas e transformadas em fios. Separar fio de algodão, misturas e filamentos e distinguir venda de fio da transferência interna de indústria integrada. Regularidade e resistência do fio, perdas de fibra, energia por massa vendável, paradas e estoque por título. Não comparar apenas toneladas de fios de especificações diferentes. Vicunha e Coteminas são exemplos históricos de operações integradas citados pelo Banco do Nordeste; não se confirmou situação atual de plantas. Estudo Seade documenta a cadeia paulista, sem ranking de fiações. Preço internacional do algodão e disponibilidade de fibras químicas afetam o custo, mas o repasse depende do pedido de tecelagens e malharias. Não há cotação corrente recuperada neste estudo. Fios com rastreabilidade, misturas funcionais e melhor regularidade, desde que a demanda pague o desenvolvimento. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município. Na análise de concorrência: Filamentos contínuos e combinações diferentes de fibras podem substituir certos fios fiados; não tecidos podem eliminar o fio em algumas aplicações finais. Resistência, toque, maquinário do cliente e custo de reformular limitam a troca. Para novos entrantes: Escala de preparação e fiação, regularidade do fio e controle de contaminação exigem equipamento e conhecimento. Homologação por título, resistência e composição limita entrada em contratos técnicos. No ambiente externo, Alta do algodão ou restrição de fibras químicas pode elevar custo antes do repasse; redução de encomendas de tecelagens e malharias aumenta ociosidade.\n\nComo exemplo de oferta declarada, a Fiação São Bento, em Santa Catarina, apresenta fios de algodão, misturas e poliéster, processos Vortex e Open End e atendimento por representantes. As aplicações anunciadas incluem malharias e tecidos técnicos. O catálogo demonstra segmentação por matéria-prima e processo; não mede vendas, capacidade utilizada ou participação de mercado.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "b2aeb809067022ad8488e662300667b71adbcdedf0786bb323a41d05a22803f8",
+      "contentHashExcludingAudit": "3c5d0a3caf4cd2cc800ff20e794b9bc49be32356e8eb35c5933e73186942d3c4"
+    }
+  },
+  {
+    "group": "textil",
+    "topicIndex": 1,
+    "title": "Tecelagem",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Tecelagem: Fios de urdume e trama são entrelaçados em tecidos planos; preparação do fio e do tear antecede tecimento, inspeção e acabamento interno ou contratado.",
+      "Tese operacional: Desenvolvimento de tecido e consistência de lote diferenciam do tecido padronizado; flexibilidade precisa compensar custo de preparação e menor escala.",
+      "Principal vulnerabilidade: Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro financia fios, tecido em processo e prazo da confecção. Crédito para tear deve considerar ocupação real por mix e velocidade efetiva, não apenas capacidade nominal."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Fios de urdume e trama são entrelaçados em tecidos planos; preparação do fio e do tear antecede tecimento, inspeção e acabamento interno ou contratado. Denim, tecido de decoração e tecido técnico não são mercados equivalentes.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "BNDES descreve a cadeia e Seade a inserção paulista. Referências históricas de empresas integradas não sustentam ranking atual específico de tecelagem.",
+          "Desenvolvimento de tecido e consistência de lote diferenciam do tecido padronizado; flexibilidade precisa compensar custo de preparação e menor escala.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+          "O portfólio público Cedro Jeanswear oferece denim e linhas Colours diferenciados por elasticidade e uso, com canal de representantes. É um exemplo concreto de venda de tecido para transformação por confeccionistas e escolha por desempenho e acabamento. A declaração comercial não comprova liderança, volume vendido ou demanda realizada."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          },
+          {
+            "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+            "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+            "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecelagem. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Metros conformes por tear, paradas, defeitos por lote, tempo de mudança e rendimento do acabamento. Largura, gramatura e composição mudam consumo e valor.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Concorrência com tecidos importados e mudança do consumo final pressionam preço; câmbio pode proteger a venda e ao mesmo tempo encarecer fibra, insumos e máquina.",
+          "Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Banco do Nordeste · indústria têxtil e confecção",
+            "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+            "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro financia fios, tecido em processo e prazo da confecção. Crédito para tear deve considerar ocupação real por mix e velocidade efetiva, não apenas capacidade nominal.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro financia fios, tecido em processo e prazo da confecção. Crédito para tear deve considerar ocupação real por mix e velocidade efetiva, não apenas capacidade nominal.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Tecidos diferenciados e lotes com reposição rápida podem reduzir exposição à competição exclusivamente por volume.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Desenvolvimento de tecido e consistência de lote diferenciam do tecido padronizado; flexibilidade precisa compensar custo de preparação e menor escala."
+          ],
+          [
+            "Fraquezas",
+            "Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável."
+          ],
+          [
+            "Oportunidades",
+            "Tecidos diferenciados e lotes com reposição rápida podem reduzir exposição à competição exclusivamente por volume."
+          ],
+          [
+            "Ameaças",
+            "Concorrência com tecidos importados e mudança do consumo final pressionam preço; câmbio pode proteger a venda e ao mesmo tempo encarecer fibra, insumos e máquina."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é fios e preparação. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é confecção e indústria. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Desenvolvimento de tecido e consistência de lote diferenciam do tecido padronizado; flexibilidade precisa compensar custo de preparação e menor escala. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Preparação de urdume, regulagem de teares, qualidade do tecido e desenvolvimento de desenho exigem conhecimento. Pequenos lotes sofrem custo de troca e dificultam atingir produtividade de operadores estabelecidos."
+          ],
+          [
+            "Substitutos",
+            "Malhas, não tecidos, filmes e laminados podem substituir tecido plano conforme a aplicação. Estabilidade dimensional, resistência, toque e comportamento na confecção delimitam a substituição."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Metros conformes por tear, paradas, defeitos por lote, tempo de mudança e rendimento do acabamento. Largura, gramatura e composição mudam consumo e valor.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Tecidos diferenciados e lotes com reposição rápida podem reduzir exposição à competição exclusivamente por volume.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável. Concorrência com tecidos importados e mudança do consumo final pressionam preço; câmbio pode proteger a venda e ao mesmo tempo encarecer fibra, insumos e máquina.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Metros conformes por tear, paradas, defeitos por lote, tempo de mudança e rendimento do acabamento. Largura, gramatura e composição mudam consumo e valor.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Tecidos diferenciados e lotes com reposição rápida podem reduzir exposição à competição exclusivamente por volume.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos têxteis",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos têxteis",
+            "values": [
+              -6.9,
+              8.4,
+              -12.8,
+              0.9,
+              4.7
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "Fundação Seade · têxtil e confecções paulista",
+        "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+      },
+      {
+        "label": "Banco do Nordeste · indústria têxtil e confecção",
+        "url": "https://www.bnb.gov.br/revista/cse/article/download/2857/1959/9529",
+        "purpose": "Referência estrutural histórica com exemplos de Vicunha e Coteminas; situação societária e unidades atuais não confirmadas."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+        "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+        "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual aplicação diferencia o tecido produzido?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais clientes compram coleção e quais compram reposição?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como desenvolvimento e representantes transformam amostras em pedidos?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual etapa limita preparação, tecelagem e qualidade?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem fornece fios e serviços de acabamento?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço cobre preparação, perdas e lotes pequenos?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "fios e preparação",
+          "detail": "Fluxo físico e financeiro: fios e preparação"
+        },
+        {
+          "id": "1",
+          "label": "teares de tecido plano",
+          "detail": "Fios de urdume e trama são entrelaçados em tecidos planos; preparação do fio e do tear antecede tecimento, inspeção e acabamento interno ou contratado. Denim, tecido de decoração e tecido técnico não são mercados equivalentes."
+        },
+        {
+          "id": "2",
+          "label": "inspeção e acabamento",
+          "detail": "Fluxo físico e financeiro: inspeção e acabamento"
+        },
+        {
+          "id": "3",
+          "label": "confecção e indústria",
+          "detail": "Fluxo físico e financeiro: confecção e indústria"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Tecelagem. Tecelagem: Fios de urdume e trama são entrelaçados em tecidos planos; preparação do fio e do tear antecede tecimento, inspeção e acabamento interno ou contratado. Tese operacional: Desenvolvimento de tecido e consistência de lote diferenciam do tecido padronizado; flexibilidade precisa compensar custo de preparação e menor escala. Principal vulnerabilidade: Mudanças frequentes de coleção e lote pequeno aumentam preparação; tecido cru produzido sem pedido pode exigir desconto ou não ter acabamento comercial viável. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro financia fios, tecido em processo e prazo da confecção. Crédito para tear deve considerar ocupação real por mix e velocidade efetiva, não apenas capacidade nominal. Denim, tecido de decoração e tecido técnico não são mercados equivalentes. Metros conformes por tear, paradas, defeitos por lote, tempo de mudança e rendimento do acabamento. Largura, gramatura e composição mudam consumo e valor. BNDES descreve a cadeia e Seade a inserção paulista. Referências históricas de empresas integradas não sustentam ranking atual específico de tecelagem. Concorrência com tecidos importados e mudança do consumo final pressionam preço; câmbio pode proteger a venda e ao mesmo tempo encarecer fibra, insumos e máquina. Tecidos diferenciados e lotes com reposição rápida podem reduzir exposição à competição exclusivamente por volume. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município. Na análise de concorrência: Malhas, não tecidos, filmes e laminados podem substituir tecido plano conforme a aplicação. Estabilidade dimensional, resistência, toque e comportamento na confecção delimitam a substituição. Para novos entrantes: Preparação de urdume, regulagem de teares, qualidade do tecido e desenvolvimento de desenho exigem conhecimento. Pequenos lotes sofrem custo de troca e dificultam atingir produtividade de operadores estabelecidos.\n\nO portfólio público Cedro Jeanswear oferece denim e linhas Colours diferenciados por elasticidade e uso, com canal de representantes. É um exemplo concreto de venda de tecido para transformação por confeccionistas e escolha por desempenho e acabamento. A declaração comercial não comprova liderança, volume vendido ou demanda realizada.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "9d50b6e8ef463fa4e04040bb291f23ab4a954dc112b3c066adbd9020a9bcdb64",
+      "contentHashExcludingAudit": "6bb3e3c4d53d63090d9c592df13a36f57e6bafc08c229c4a6a367f006fc25514"
+    }
+  },
+  {
+    "group": "textil",
+    "topicIndex": 2,
+    "title": "Malharia",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Malharia: Fios formam laçadas para produzir malha, em máquinas circulares ou retilíneas.",
+      "Tese operacional: Flexibilidade de desenho, elasticidade e reposição podem diferenciar a malharia; estrutura simples também permite concorrência de produtores menores.",
+      "Principal vulnerabilidade: Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro de fio e malha deve acompanhar pedido e aprovação de amostra. Máquina retilínea especializada pode ter baixa liquidez em revenda, exigindo caixa operacional para pagar o investimento."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Fios formam laçadas para produzir malha, em máquinas circulares ou retilíneas. O produto pode ser tecido em rolo, peça parcialmente conformada ou artigo final; tingimento, estamparia e confecção são etapas distintas.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A cadeia têxtil documentada pelo IBGE distingue malharia de tecido plano. Não se extraiu ranking público atual de malharias nem participação de polos por técnica.",
+          "Flexibilidade de desenho, elasticidade e reposição podem diferenciar a malharia; estrutura simples também permite concorrência de produtores menores.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em malharia. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria.",
+          "A Dalila apresenta malharia circular, incluindo meia-malha, piquet e moletom, com aplicações casual e fitness. Seu canal eletrônico organiza a compra por cor e quantidade e disponibiliza dados técnicos. O exemplo mostra como variedade de coleção e especificação entram no canal comercial, sem comprovar giro, margem ou preferência do consumidor."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Assembleia Legislativa de Santa Catarina · fórum têxtil",
+            "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+            "purpose": "Notícia de 12/04/2023 confirma referências regionais. Números associativos e títulos promocionais não foram usados como ranking."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de malharia. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Produtividade por máquina, consumo de fio, estabilidade dimensional, encolhimento e defeitos após lavagem. Medir peça aprovada além do peso produzido.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Demanda de vestuário básico, esportivo e moda tem calendários distintos; a produção agregada têxtil não mostra qual aplicação cresce.",
+          "Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro de fio e malha deve acompanhar pedido e aprovação de amostra. Máquina retilínea especializada pode ter baixa liquidez em revenda, exigindo caixa operacional para pagar o investimento.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro de fio e malha deve acompanhar pedido e aprovação de amostra. Máquina retilínea especializada pode ter baixa liquidez em revenda, exigindo caixa operacional para pagar o investimento.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Produtos sem costura, conforto e desenho técnico são possibilidades condicionadas a demanda, qualidade e custo.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Flexibilidade de desenho, elasticidade e reposição podem diferenciar a malharia; estrutura simples também permite concorrência de produtores menores."
+          ],
+          [
+            "Fraquezas",
+            "Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque."
+          ],
+          [
+            "Oportunidades",
+            "Produtos sem costura, conforto e desenho técnico são possibilidades condicionadas a demanda, qualidade e custo."
+          ],
+          [
+            "Ameaças",
+            "Mudança de moda, clima ou redução de renda pode cancelar pedidos e deixar fios específicos em estoque; tecidos concorrentes pressionam aplicações em que elasticidade não é essencial."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é fios e desenho. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é confecção ou artigo final. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Flexibilidade de desenho, elasticidade e reposição podem diferenciar a malharia; estrutura simples também permite concorrência de produtores menores. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Programação e regulagem, domínio de fios/elastano, estabilidade dimensional e acabamento determinam a qualidade. Equipamento é insuficiente sem equipe capaz de repetir desenho e medidas."
+          ],
+          [
+            "Substitutos",
+            "Tecido plano com elasticidade, não tecidos e outras construções podem substituir malha em certos artigos. Caimento, conforto, deformação e custo de costura limitam equivalência."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Produtividade por máquina, consumo de fio, estabilidade dimensional, encolhimento e defeitos após lavagem. Medir peça aprovada além do peso produzido.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Produtos sem costura, conforto e desenho técnico são possibilidades condicionadas a demanda, qualidade e custo.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque. Demanda de vestuário básico, esportivo e moda tem calendários distintos; a produção agregada têxtil não mostra qual aplicação cresce.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Produtividade por máquina, consumo de fio, estabilidade dimensional, encolhimento e defeitos após lavagem. Medir peça aprovada além do peso produzido.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Produtos sem costura, conforto e desenho técnico são possibilidades condicionadas a demanda, qualidade e custo.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos têxteis",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos têxteis",
+            "values": [
+              -6.9,
+              8.4,
+              -12.8,
+              0.9,
+              4.7
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "Fundação Seade · têxtil e confecções paulista",
+        "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Assembleia Legislativa de Santa Catarina · fórum têxtil",
+        "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+        "purpose": "Notícia de 12/04/2023 confirma referências regionais. Números associativos e títulos promocionais não foram usados como ranking."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual toque, elasticidade ou construção diferencia a malha?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais confecções ou marcas geram recompra?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como coleções, amostras e atendimento técnico geram vendas?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Como máquinas e regulagem garantem estabilidade dimensional?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem fornece fios, elastano e acabamento confiáveis?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "Qual é a margem após preparação, defeitos e devoluções?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "fios e desenho",
+          "detail": "Fluxo físico e financeiro: fios e desenho"
+        },
+        {
+          "id": "1",
+          "label": "malharia circular ou retilínea",
+          "detail": "Fios formam laçadas para produzir malha, em máquinas circulares ou retilíneas. O produto pode ser tecido em rolo, peça parcialmente conformada ou artigo final; tingimento, estamparia e confecção são etapas distintas."
+        },
+        {
+          "id": "2",
+          "label": "beneficiamento e estabilidade",
+          "detail": "Fluxo físico e financeiro: beneficiamento e estabilidade"
+        },
+        {
+          "id": "3",
+          "label": "confecção ou artigo final",
+          "detail": "Fluxo físico e financeiro: confecção ou artigo final"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Malharia. Malharia: Fios formam laçadas para produzir malha, em máquinas circulares ou retilíneas. Tese operacional: Flexibilidade de desenho, elasticidade e reposição podem diferenciar a malharia; estrutura simples também permite concorrência de produtores menores. Principal vulnerabilidade: Problemas de tensão do fio e acabamento aparecem após tingimento ou lavagem, gerando perdas tardias; antecipar cor e coleção aumenta risco de estoque. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro de fio e malha deve acompanhar pedido e aprovação de amostra. Máquina retilínea especializada pode ter baixa liquidez em revenda, exigindo caixa operacional para pagar o investimento. Fios formam laçadas para produzir malha, em máquinas circulares ou retilíneas. O produto pode ser tecido em rolo, peça parcialmente conformada ou artigo final; tingimento, estamparia e confecção são etapas distintas. Produtividade por máquina, consumo de fio, estabilidade dimensional, encolhimento e defeitos após lavagem. Medir peça aprovada além do peso produzido. A cadeia têxtil documentada pelo IBGE distingue malharia de tecido plano. Não se extraiu ranking público atual de malharias nem participação de polos por técnica. Demanda de vestuário básico, esportivo e moda tem calendários distintos; a produção agregada têxtil não mostra qual aplicação cresce. Produtos sem costura, conforto e desenho técnico são possibilidades condicionadas a demanda, qualidade e custo. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em malharia. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria. Na análise de concorrência: Tecido plano com elasticidade, não tecidos e outras construções podem substituir malha em certos artigos. Caimento, conforto, deformação e custo de costura limitam equivalência. Para novos entrantes: Programação e regulagem, domínio de fios/elastano, estabilidade dimensional e acabamento determinam a qualidade. Equipamento é insuficiente sem equipe capaz de repetir desenho e medidas. No ambiente externo, Mudança de moda, clima ou redução de renda pode cancelar pedidos e deixar fios específicos em estoque; tecidos concorrentes pressionam aplicações em que elasticidade não é essencial.\n\nA Dalila apresenta malharia circular, incluindo meia-malha, piquet e moletom, com aplicações casual e fitness. Seu canal eletrônico organiza a compra por cor e quantidade e disponibiliza dados técnicos. O exemplo mostra como variedade de coleção e especificação entram no canal comercial, sem comprovar giro, margem ou preferência do consumidor.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "e2cd554d8b1d946679abcf4cdc9968a3adf573c59b0df431946ef7654450c9cb",
+      "contentHashExcludingAudit": "8c6b18ad869b0f9caa934167d54a80233b22d0b68eac78c3206646ee5de3e558"
+    }
+  },
+  {
+    "group": "textil",
+    "topicIndex": 3,
+    "title": "Tinturaria",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Tinturaria: Tecidos, fios ou peças recebem preparação, tingimento, lavagem e acabamento.",
+      "Tese operacional: Reprodutibilidade de cor, prazo e controle ambiental criam diferenciação; aprovação depende de luz, substrato e tolerância acordadas.",
+      "Principal vulnerabilidade: Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro suporta químicos, energia e folha até aceite do lote. Investimento em recuperação térmica, automação de dosagem e efluentes deve ser separado de expansão de capacidade."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Tecidos, fios ou peças recebem preparação, tingimento, lavagem e acabamento. Prestação de serviço sobre material do cliente difere de beneficiamento integrado; água, energia térmica, químicos e tratamento de efluentes são recursos centrais.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "A CONCLA enquadra atividades de acabamento na cadeia têxtil. Não há ranking público atual recuperado de tinturarias independentes; não usar faturamento de grupo integrado como receita desse serviço.",
+          "Reprodutibilidade de cor, prazo e controle ambiental criam diferenciação; aprovação depende de luz, substrato e tolerância acordadas.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município.",
+          "A HJ Tinturaria, de Brusque, anuncia serviço para malhas naturais e sintéticas em rolo e solicita orçamento, com testes funcionais. A empresa exclui explicitamente tecidos planos e peças prontas desse atendimento. O caso delimita o mercado de serviço por substrato e processo, sem generalizar a capacidade anunciada para todo beneficiamento têxtil."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+            "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+            "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tinturaria. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Acerto de cor na primeira execução, consumo de água e energia por lote conforme, reprocessamento, prazo e conformidade do efluente. Receita por massa não captura complexidade da receita química.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Custos de utilidades e química podem divergir do preço do serviço; aumento de pedidos sem capacidade de tratamento não é crescimento sustentável.",
+          "Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro suporta químicos, energia e folha até aceite do lote. Investimento em recuperação térmica, automação de dosagem e efluentes deve ser separado de expansão de capacidade.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro suporta químicos, energia e folha até aceite do lote. Investimento em recuperação térmica, automação de dosagem e efluentes deve ser separado de expansão de capacidade.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Reduzir reprocessamento, recuperar calor e controlar receitas oferece ganho de custo e qualidade com comprovação física.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Reprodutibilidade de cor, prazo e controle ambiental criam diferenciação; aprovação depende de luz, substrato e tolerância acordadas."
+          ],
+          [
+            "Fraquezas",
+            "Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação."
+          ],
+          [
+            "Oportunidades",
+            "Reduzir reprocessamento, recuperar calor e controlar receitas oferece ganho de custo e qualidade com comprovação física."
+          ],
+          [
+            "Ameaças",
+            "Custos de utilidades e química podem divergir do preço do serviço; aumento de pedidos sem capacidade de tratamento não é crescimento sustentável."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é tecido fio ou peça. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é cliente e aceite de cor. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Reprodutibilidade de cor, prazo e controle ambiental criam diferenciação; aprovação depende de luz, substrato e tolerância acordadas. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Tratamento de efluentes, licenciamento, água, energia e laboratório de cor requerem investimento. Reproduzir tonalidade e solidez entre lotes cria barreira de conhecimento e confiança."
+          ],
+          [
+            "Substitutos",
+            "Fios ou fibras já coloridos e uso de material sem tingimento podem eliminar etapas de tinturaria; estamparia digital substitui certos efeitos, não todo tingimento. Solidez, toque, escala e substrato condicionam a escolha."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Acerto de cor na primeira execução, consumo de água e energia por lote conforme, reprocessamento, prazo e conformidade do efluente. Receita por massa não captura complexidade da receita química.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Reduzir reprocessamento, recuperar calor e controlar receitas oferece ganho de custo e qualidade com comprovação física.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação. Custos de utilidades e química podem divergir do preço do serviço; aumento de pedidos sem capacidade de tratamento não é crescimento sustentável.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Acerto de cor na primeira execução, consumo de água e energia por lote conforme, reprocessamento, prazo e conformidade do efluente. Receita por massa não captura complexidade da receita química.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Reduzir reprocessamento, recuperar calor e controlar receitas oferece ganho de custo e qualidade com comprovação física.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos têxteis",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos têxteis",
+            "values": [
+              -6.9,
+              8.4,
+              -12.8,
+              0.9,
+              4.7
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Assembleia Legislativa de São Paulo · polo têxtil regional",
+        "url": "https://www.al.sp.gov.br/repositorio/legislacao/lei/2002/lei-11274-03.12.2002.html",
+        "purpose": "Documento de criação do polo tecnológico regional; evidência institucional histórica, não ranking ou medição de produção atual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual qualidade de cor e acabamento o cliente contrata?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quais clientes e substratos concentram a demanda?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como amostras e aprovações de cor entram na venda?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Qual recurso limita tingimento e tratamento de efluentes?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quem assegura químicos, água, energia e destinação de resíduos?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço cobre reprocessamento, utilidades e perdas de lote?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "tecido fio ou peça",
+          "detail": "Fluxo físico e financeiro: tecido fio ou peça"
+        },
+        {
+          "id": "1",
+          "label": "preparo tingimento e acabamento",
+          "detail": "Tecidos, fios ou peças recebem preparação, tingimento, lavagem e acabamento. Prestação de serviço sobre material do cliente difere de beneficiamento integrado; água, energia térmica, químicos e tratamento de efluentes são recursos centrais."
+        },
+        {
+          "id": "2",
+          "label": "controle e tratamento de efluentes",
+          "detail": "Fluxo físico e financeiro: controle e tratamento de efluentes"
+        },
+        {
+          "id": "3",
+          "label": "cliente e aceite de cor",
+          "detail": "Fluxo físico e financeiro: cliente e aceite de cor"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Tinturaria. Tinturaria: Tecidos, fios ou peças recebem preparação, tingimento, lavagem e acabamento. Tese operacional: Reprodutibilidade de cor, prazo e controle ambiental criam diferenciação; aprovação depende de luz, substrato e tolerância acordadas. Principal vulnerabilidade: Lote fora da cor ou danificado pode exigir reprocessamento e indenização de tecido alheio; restrição hídrica ou tratamento inadequado pode interromper a operação. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro suporta químicos, energia e folha até aceite do lote. Investimento em recuperação térmica, automação de dosagem e efluentes deve ser separado de expansão de capacidade. Tecidos, fios ou peças recebem preparação, tingimento, lavagem e acabamento. Prestação de serviço sobre material do cliente difere de beneficiamento integrado; água, energia térmica, químicos e tratamento de efluentes são recursos centrais. Acerto de cor na primeira execução, consumo de água e energia por lote conforme, reprocessamento, prazo e conformidade do efluente. Receita por massa não captura complexidade da receita química. A CONCLA enquadra atividades de acabamento na cadeia têxtil. Não há ranking público atual recuperado de tinturarias independentes; não usar faturamento de grupo integrado como receita desse serviço. Custos de utilidades e química podem divergir do preço do serviço; aumento de pedidos sem capacidade de tratamento não é crescimento sustentável. Reduzir reprocessamento, recuperar calor e controlar receitas oferece ganho de custo e qualidade com comprovação física. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência institucional verificável: Americana, Nova Odessa, Santa Bárbara d’Oeste, Sumaré e Hortolândia integram o polo tecnológico têxtil identificado em lei estadual. Para este elo, a utilidade é procurar fornecedores, compradores e serviços próximos; a lei não mede participação atual nem prova presença de cada processo em todo município. Na análise de concorrência: Fios ou fibras já coloridos e uso de material sem tingimento podem eliminar etapas de tinturaria; estamparia digital substitui certos efeitos, não todo tingimento. Solidez, toque, escala e substrato condicionam a escolha. Para novos entrantes: Tratamento de efluentes, licenciamento, água, energia e laboratório de cor requerem investimento. Reproduzir tonalidade e solidez entre lotes cria barreira de conhecimento e confiança.\n\nA HJ Tinturaria, de Brusque, anuncia serviço para malhas naturais e sintéticas em rolo e solicita orçamento, com testes funcionais. A empresa exclui explicitamente tecidos planos e peças prontas desse atendimento. O caso delimita o mercado de serviço por substrato e processo, sem generalizar a capacidade anunciada para todo beneficiamento têxtil.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "8522c5fb5f4e0f165a41a1fd5452a50b68441d108928c9ccae5b59a47b526802",
+      "contentHashExcludingAudit": "492a449668beac3d0adc049f22f6e49a330197ecfad9b989ae20190b8d7c811b"
+    }
+  },
+  {
+    "group": "textil",
+    "topicIndex": 4,
+    "title": "Confecção",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Confecção: Modelagem, corte, costura e acabamento convertem tecido em roupa.",
+      "Tese operacional: Modelagem, qualidade, velocidade e coordenação de fornecedores diferenciam a operação; facção sem design enfrenta pressão maior sobre preço da mão de obra.",
+      "Principal vulnerabilidade: Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro financia tecido, aviamentos, produção e prazo ao varejo. Desconto comercial, devolução e consignação precisam ser retirados da expectativa de caixa, em vez de tratar todo faturamento como recebível definitivo."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Modelagem, corte, costura e acabamento convertem tecido em roupa. Marca própria, private label, facção e produção integrada têm receitas, estoques e responsabilidades diferentes; varejo final não integra automaticamente o recorte fabril.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Seade e BNDES descrevem a descontinuidade da cadeia e diferentes modelos produtivos. Não foi recuperado ranking público comparável entre marcas, facções e fabricantes, que não devem ser somados como se fossem iguais.",
+          "Modelagem, qualidade, velocidade e coordenação de fornecedores diferenciam a operação; facção sem design enfrenta pressão maior sobre preço da mão de obra.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência comercial verificável: a Sefaz de Pernambuco identifica Santa Cruz do Capibaribe, Toritama e Caruaru no Polo Têxtil atendido pela Nota da Moda. A concentração de canais de compra é pertinente à confecção; não se confunde circulação no polo com faturamento fabril formal ou com número de empregos."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "Sefaz Pernambuco · Nota da Moda",
+            "url": "https://www.sefaz.pe.gov.br/Servicos/Nota-Fiscal-Avulsa/Paginas/notadamoda.aspx",
+            "purpose": "Página oficial identifica municípios do Polo Têxtil de Pernambuco; usada apenas para referência regional, sem recomendação tributária ou enquadramento individual."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Confecção de artigos do vestuário e acessórios, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de confecção. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Peças aprovadas por hora, eficiência por operação, retrabalho, cumprimento da coleção, devolução e estoque por tamanho/cor. Preço médio pode mudar só por mix.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Renda e consumo, clima e calendário comercial alteram pedidos; canais digitais reduzem barreira comercial e aumentam exigência de reposição e devolução.",
+          "Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de confecção de artigos do vestuário e acessórios variou -0,94% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Fundação Seade · têxtil e confecções paulista",
+            "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+            "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Giro financia tecido, aviamentos, produção e prazo ao varejo. Desconto comercial, devolução e consignação precisam ser retirados da expectativa de caixa, em vez de tratar todo faturamento como recebível definitivo.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Giro financia tecido, aviamentos, produção e prazo ao varejo. Desconto comercial, devolução e consignação precisam ser retirados da expectativa de caixa, em vez de tratar todo faturamento como recebível definitivo.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Produção sob demanda e reposição de itens vencedores podem reduzir risco de coleção se o prazo industrial acompanhar o canal.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Modelagem, qualidade, velocidade e coordenação de fornecedores diferenciam a operação; facção sem design enfrenta pressão maior sobre preço da mão de obra."
+          ],
+          [
+            "Fraquezas",
+            "Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia."
+          ],
+          [
+            "Oportunidades",
+            "Produção sob demanda e reposição de itens vencedores podem reduzir risco de coleção se o prazo industrial acompanhar o canal."
+          ],
+          [
+            "Ameaças",
+            "Renda e consumo, clima e calendário comercial alteram pedidos; canais digitais reduzem barreira comercial e aumentam exigência de reposição e devolução."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é tecido e aviamentos. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é marca varejo e consumidor. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Modelagem, qualidade, velocidade e coordenação de fornecedores diferenciam a operação; facção sem design enfrenta pressão maior sobre preço da mão de obra. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Abrir facção requer menos capital que construir marca e canal. Modelagem, coordenação de fornecedores, cumprimento de prazos e acesso a clientes elevam barreiras conforme o modelo comercial."
+          ],
+          [
+            "Substitutos",
+            "Roupa de segunda mão, aluguel, conserto e prolongamento do uso substituem parte da compra nova. Ocasião, higiene, ajuste, imagem e preço determinam aceitação; importado é rival, não categoria substituta."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Peças aprovadas por hora, eficiência por operação, retrabalho, cumprimento da coleção, devolução e estoque por tamanho/cor. Preço médio pode mudar só por mix.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Produção sob demanda e reposição de itens vencedores podem reduzir risco de coleção se o prazo industrial acompanhar o canal.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia. Renda e consumo, clima e calendário comercial alteram pedidos; canais digitais reduzem barreira comercial e aumentam exigência de reposição e devolução.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Peças aprovadas por hora, eficiência por operação, retrabalho, cumprimento da coleção, devolução e estoque por tamanho/cor. Preço médio pode mudar só por mix.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Produção sob demanda e reposição de itens vencedores podem reduzir risco de coleção se o prazo industrial acompanhar o canal.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Confecção de artigos do vestuário e acessórios",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Confecção de artigos do vestuário e acessórios",
+            "values": [
+              -23.7,
+              12.0,
+              -8.4,
+              -7.3,
+              4.0
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "Fundação Seade · têxtil e confecções paulista",
+        "url": "https://economia.seade.gov.br/wp-content/uploads/sites/15/2021/01/SpEconomia-janeiro-2021-industria-textil-confeccoes-estado-sao-paulo.pdf",
+        "purpose": "Estudo regional de janeiro/2021; não transfere participações regionais a outros anos."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Sefaz Pernambuco · Nota da Moda",
+        "url": "https://www.sefaz.pe.gov.br/Servicos/Nota-Fiscal-Avulsa/Paginas/notadamoda.aspx",
+        "purpose": "Página oficial identifica municípios do Polo Têxtil de Pernambuco; usada apenas para referência regional, sem recomendação tributária ou enquadramento individual."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual ajuste, design ou prazo diferencia a peça?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "A empresa vende para marcas, varejistas ou consumidores?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Quais canais geram recompra com margem?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Como modelagem, corte e costura respondem ao calendário comercial?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais fornecedores e facções sustentam prazo e qualidade?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "A margem inclui sobra de coleção, devolução e custo do canal?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "tecido e aviamentos",
+          "detail": "Fluxo físico e financeiro: tecido e aviamentos"
+        },
+        {
+          "id": "1",
+          "label": "modelagem corte e costura",
+          "detail": "Modelagem, corte, costura e acabamento convertem tecido em roupa. Marca própria, private label, facção e produção integrada têm receitas, estoques e responsabilidades diferentes; varejo final não integra automaticamente o recorte fabril."
+        },
+        {
+          "id": "2",
+          "label": "acabamento e expedição",
+          "detail": "Fluxo físico e financeiro: acabamento e expedição"
+        },
+        {
+          "id": "3",
+          "label": "marca varejo e consumidor",
+          "detail": "Fluxo físico e financeiro: marca varejo e consumidor"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Confecção. Confecção: Modelagem, corte, costura e acabamento convertem tecido em roupa. Tese operacional: Modelagem, qualidade, velocidade e coordenação de fornecedores diferenciam a operação; facção sem design enfrenta pressão maior sobre preço da mão de obra. Principal vulnerabilidade: Coleção não vendida perde valor rapidamente; erro na grade cria sobra mesmo quando o modelo vende. Terceirização exige controle de qualidade e condições de trabalho da cadeia. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Giro financia tecido, aviamentos, produção e prazo ao varejo. Desconto comercial, devolução e consignação precisam ser retirados da expectativa de caixa, em vez de tratar todo faturamento como recebível definitivo. Modelagem, corte, costura e acabamento convertem tecido em roupa. Marca própria, private label, facção e produção integrada têm receitas, estoques e responsabilidades diferentes; varejo final não integra automaticamente o recorte fabril. Peças aprovadas por hora, eficiência por operação, retrabalho, cumprimento da coleção, devolução e estoque por tamanho/cor. Preço médio pode mudar só por mix. Seade e BNDES descrevem a descontinuidade da cadeia e diferentes modelos produtivos. Não foi recuperado ranking público comparável entre marcas, facções e fabricantes, que não devem ser somados como se fossem iguais. Renda e consumo, clima e calendário comercial alteram pedidos; canais digitais reduzem barreira comercial e aumentam exigência de reposição e devolução. Produção sob demanda e reposição de itens vencedores podem reduzir risco de coleção se o prazo industrial acompanhar o canal. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência comercial verificável: a Sefaz de Pernambuco identifica Santa Cruz do Capibaribe, Toritama e Caruaru no Polo Têxtil atendido pela Nota da Moda. A concentração de canais de compra é pertinente à confecção; não se confunde circulação no polo com faturamento fabril formal ou com número de empregos. Na análise de concorrência: Roupa de segunda mão, aluguel, conserto e prolongamento do uso substituem parte da compra nova. Ocasião, higiene, ajuste, imagem e preço determinam aceitação; importado é rival, não categoria substituta. Para novos entrantes: Abrir facção requer menos capital que construir marca e canal. Modelagem, coordenação de fornecedores, cumprimento de prazos e acesso a clientes elevam barreiras conforme o modelo comercial.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "9650466bc02f8f85f11822d05a3e76b17db812d127a2246d3943fd347dc8dc8b",
+      "contentHashExcludingAudit": "bafdac69fe908912e71c2fd5802ef2e304eae020814a397846d7963833ab4d5f"
+    }
+  },
+  {
+    "group": "textil",
+    "topicIndex": 5,
+    "title": "Tecidos técnicos",
+    "reviewedAt": "2026-11-06",
+    "summary": [
+      "Tecidos técnicos: Recorte por função: materiais têxteis destinados a filtragem, proteção, reforço, construção ou outras aplicações de desempenho.",
+      "Tese operacional: Conhecimento da aplicação e validação junto ao cliente criam barreiras; o produto compete com materiais e soluções não têxteis, além de outros fabricantes.",
+      "Principal vulnerabilidade: Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada.",
+      "A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiar desenvolvimento em etapas e giro após validação; investimento em ensaios e equipamento especializado precisa de mercado comprovado. Não apresentar crédito de inovação como disponível sem verificar chamada e enquadramento."
+    ],
+    "sections": [
+      {
+        "id": "negocio",
+        "title": "Funcionamento, fronteiras e cadeia de valor",
+        "paragraphs": [
+          "Recorte por função: materiais têxteis destinados a filtragem, proteção, reforço, construção ou outras aplicações de desempenho. Pode incluir tecido plano, malha e não tecido; não tecido é tecnologia distinta e deve ser identificado, não confundido com tecelagem.",
+          "Análise econômica do recorte: o ponto de formação de margem está na diferença entre preço contratado e custo completo da entrega, incluindo perdas, qualidade, logística e pós-venda. Confirmar atividade efetiva, produtos e regime de contratação antes de usar qualquer classificação cadastral."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          }
+        ]
+      },
+      {
+        "id": "concorrencia",
+        "title": "Empresas, mercados e polos de referência",
+        "paragraphs": [
+          "Não foi recuperado ranking público que harmonize tecidos, não tecidos e aplicações técnicas. A classificação do IBGE ajuda a evitar somas indevidas; empresas de moda não são automaticamente concorrentes técnicos.",
+          "Conhecimento da aplicação e validação junto ao cliente criam barreiras; o produto compete com materiais e soluções não têxteis, além de outros fabricantes.",
+          "Comparação internacional: importações podem mudar preço e prazo, mas não foi extraída série de comércio exterior por produto e país neste dossiê. Não se atribui vantagem ou ranking a um país sem especificação equivalente, frete, tributo e assistência.",
+          "Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em tecidos técnicos. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria.",
+          "Como aplicação específica, a Ober, de Nova Odessa, oferece geotêxtil não tecido GeoFort em poliéster e polipropileno para drenagem, separação de solos e proteção de geomembranas, além de confeccionar geoformas segundo especificações. Trata-se de oferta declarada pelo fabricante, não comprovação independente de desempenho, vendas ou participação. A análise de tecidos técnicos não deve somar automaticamente geomembranas de polietileno, que pertencem a outra família de produtos."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "Assembleia Legislativa de Santa Catarina · fórum têxtil",
+            "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+            "purpose": "Notícia de 12/04/2023 confirma referências regionais. Números associativos e títulos promocionais não foram usados como ranking."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "title": "Histórico, indicadores e limites de comparação",
+        "paragraphs": [
+          "O gráfico apresenta a divisão agregada Produtos têxteis, de 2020 a 2024. É contexto produtivo, não crescimento exclusivo de tecidos técnicos. A variação é volume anual contra o ano anterior, não faturamento nominal e não nível de produção. A série foi recuperada diretamente na API oficial SIDRA em 06/11/2026. Utiliza a variação acumulada em dezembro de cada ano. O vintage atual substitui os valores inicialmente localizados em tabela histórica indexada; diferenças de revisão estão registradas nas evidências.",
+          "Desempenho especificado, aprovação em ensaio, estabilidade por lote, vida útil em serviço e tempo de homologação. Volume em massa não compara aplicações e exigências distintas.",
+          "Para análise da empresa, reconciliar carteira, produção, faturamento e recebimento. Indicador externo é sinal de mercado e não valida capacidade de pagamento individual."
+        ],
+        "sources": [
+          {
+            "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+            "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+            "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+          },
+          {
+            "label": "IBGE · PIA-Produto",
+            "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+            "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+          }
+        ]
+      },
+      {
+        "id": "conjuntura",
+        "title": "Conjuntura e mecanismos de transmissão",
+        "paragraphs": [
+          "Contexto público verificado: a Agência Brasil reportou retração da indústria brasileira em setembro de 2026, na comparação mensal, com desaceleração disseminada. Isso informa prudência com pedidos e estoques, não demonstra queda específica deste recorte.",
+          "Demanda industrial, infraestrutura e proteção não acompanha necessariamente a moda; agregado têxtil é apenas contexto e pode ocultar crescimento de aplicações técnicas.",
+          "Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada.",
+          "Distinção analítica: adiamento de encomenda é risco de ciclo; dependência de poucos compradores, processo ineficiente e produto sem diferenciação são fragilidades estruturais. Investigar se a perda de demanda é reversível ou corresponde à mudança permanente do produto comprado.",
+          "A página oficial do IPP apresenta setembro de 2026 para preços de saída da fábrica; isso não mede margem nem preço de varejo. A pesquisa não recuperou valores individuais de fiação, malharia ou acabamento, portanto não atribui a eles o índice têxtil agregado.",
+          "Leitura conjuntural agregada, recuperada diretamente na API SIDRA: o IPP de fabricação de produtos têxteis variou 0,35% em setembro de 2026 sobre agosto. É preço recebido na fábrica, não produção, preço de varejo ou margem; não se aplica automaticamente a cada especialidade. Os valores foram conferidos na API oficial SIDRA, tabela 6903, variável 1396, consultada em 06/11/2026."
+        ],
+        "sources": [
+          {
+            "label": "Agência Brasil · produção industrial em setembro",
+            "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+            "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+          },
+          {
+            "label": "IBGE/CONCLA · indústria têxtil",
+            "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+            "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+          },
+          {
+            "label": "BNDES · cadeia têxtil e inovação",
+            "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+            "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+          },
+          {
+            "label": "IBGE/SIDRA · IPP mensal",
+            "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+            "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+          }
+        ]
+      },
+      {
+        "id": "economia",
+        "title": "Economia da empresa média e financiamento",
+        "paragraphs": [
+          "Financiar desenvolvimento em etapas e giro após validação; investimento em ensaios e equipamento especializado precisa de mercado comprovado. Não apresentar crédito de inovação como disponível sem verificar chamada e enquadramento.",
+          "Encaixe analítico, não frequência observada de uso: crédito de giro pode cobrir diferença temporal entre compra e recebimento; cessão de recebíveis exige obrigação constituída e ausência de disputas; financiamento de investimento deve ser pago pelo caixa gerado, não pela simples existência da garantia.",
+          "A página do BNDES Finame descreve financiamento de aquisição e comercialização, mas não confirma orçamento, enquadramento, limite, taxa ou aprovação para a empresa analisada. Consultar a condição vigente do bem e do agente antes de apresentar proposta. Não extrapolar condições de grandes grupos."
+        ],
+        "columns": [
+          "Necessidade",
+          "Estrutura a examinar",
+          "Evidência na visita"
+        ],
+        "rows": [
+          [
+            "Ciclo operacional",
+            "Financiar desenvolvimento em etapas e giro após validação; investimento em ensaios e equipamento especializado precisa de mercado comprovado. Não apresentar crédito de inovação como disponível sem verificar chamada e enquadramento.",
+            "Pedido, contrato, cronograma de pagamentos e recebimentos, documentação de entrega e aceite."
+          ],
+          [
+            "Capacidade e produtividade",
+            "Substituição de materiais, maior durabilidade e eficiência de filtragem são hipóteses que exigem ensaios, não apenas discurso comercial.",
+            "Orçamento de investimento, ganho de produtividade verificável, custo de manutenção e alternativa de terceirização."
+          ],
+          [
+            "Capital de terceiros",
+            "Comparar banco, fornecedor e cessão/FIDC apenas se houver escala, documentação e custo total compatíveis.",
+            "Custo completo, concentração, recurso contra cedente, covenants e vencimentos."
+          ],
+          [
+            "Proteção de caixa",
+            "Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada.",
+            "Fluxo em moeda, repasse contratual, contingências e exposição não protegida."
+          ]
+        ],
+        "sources": [
+          {
+            "label": "BNDES · Finame BK Aquisição e Comercialização",
+            "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+            "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+          }
+        ]
+      },
+      {
+        "id": "swot",
+        "title": "SWOT específica do recorte",
+        "paragraphs": [
+          "Inferência analítica; não descreve uma empresa particular."
+        ],
+        "columns": [
+          "Dimensão",
+          "Hipótese e teste"
+        ],
+        "rows": [
+          [
+            "Forças",
+            "Conhecimento da aplicação e validação junto ao cliente criam barreiras; o produto compete com materiais e soluções não têxteis, além de outros fabricantes."
+          ],
+          [
+            "Fraquezas",
+            "Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada."
+          ],
+          [
+            "Oportunidades",
+            "Substituição de materiais, maior durabilidade e eficiência de filtragem são hipóteses que exigem ensaios, não apenas discurso comercial."
+          ],
+          [
+            "Ameaças",
+            "Mudança de especificação ou adoção de solução não têxtil pode invalidar produto homologado; concentração em poucos clientes industriais amplia o impacto de adiamentos de investimento."
+          ]
+        ]
+      },
+      {
+        "id": "porter",
+        "title": "Concorrência: mecanismos das forças de Porter",
+        "paragraphs": [
+          "Sem pontuação artificial de intensidade. Verificar cada hipótese na carteira e no produto efetivos."
+        ],
+        "columns": [
+          "Força",
+          "Mecanismo e evidência a pedir"
+        ],
+        "rows": [
+          [
+            "Fornecedores",
+            "A primeira etapa da cadeia é fibra e formulação. Ver concentração, alternativas homologadas, lotes mínimos e possibilidade de repasse."
+          ],
+          [
+            "Compradores",
+            "O elo comprador é aplicação industrial homologada. Ver concentração, poder de mudar especificação, prazo e condições de aceite."
+          ],
+          [
+            "Rivalidade",
+            "Conhecimento da aplicação e validação junto ao cliente criam barreiras; o produto compete com materiais e soluções não têxteis, além de outros fabricantes. Examinar propostas perdidas e motivos, não apenas quantidade de concorrentes."
+          ],
+          [
+            "Entrantes",
+            "Engenharia de aplicação, laboratório, rastreabilidade e validação prolongada junto ao cliente dificultam entrada. Cada uso tem requisitos próprios; reputação em vestuário não comprova capacidade em produto técnico."
+          ],
+          [
+            "Substitutos",
+            "Filtros metálicos ou cerâmicos, membranas e soluções não têxteis podem substituir materiais têxteis técnicos em funções específicas. Temperatura, abrasão, permeabilidade, esterilidade e homologação restringem a troca."
+          ]
+        ]
+      },
+      {
+        "id": "cenarios",
+        "title": "Cenários condicionais e sinais de acompanhamento",
+        "paragraphs": [
+          "Hipóteses qualitativas para um a dois anos após a pesquisa de novembro de 2026. Não são projeções publicadas, probabilidades ou promessa de crescimento."
+        ],
+        "columns": [
+          "Cenário",
+          "Premissa específica",
+          "Efeito sobre caixa e sinal"
+        ],
+        "rows": [
+          [
+            "Base",
+            "A carteira se mantém seletiva e o desafio operacional continua: Desempenho especificado, aprovação em ensaio, estabilidade por lote, vida útil em serviço e tempo de homologação. Volume em massa não compara aplicações e exigências distintas.",
+            "Crescimento só converte em caixa se aceite e recebimento acompanharem as entregas. Monitorar carteira executável e margem por contrato."
+          ],
+          [
+            "Favorável",
+            "Substituição de materiais, maior durabilidade e eficiência de filtragem são hipóteses que exigem ensaios, não apenas discurso comercial.",
+            "Produtividade ou diferenciação melhora resultado se o ganho não for integralmente cedido no preço. Sinal: pedidos repetidos com margem e prazo preservados."
+          ],
+          [
+            "Adverso",
+            "Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada. Demanda industrial, infraestrutura e proteção não acompanha necessariamente a moda; agregado têxtil é apenas contexto e pode ocultar crescimento de aplicações técnicas.",
+            "Mais estoque ou trabalho em andamento e menor geração de caixa. Sinal: cancelamentos, alteração de mix, devoluções e renegociação de recebíveis."
+          ]
+        ]
+      },
+      {
+        "id": "visita",
+        "title": "Roteiro de visita: da hipótese à evidência",
+        "paragraphs": [
+          "Iniciar pela composição real da receita e pelo fluxo físico. A visita não deve pedir dados pessoais de clientes nem presumir informações bancárias internas."
+        ],
+        "columns": [
+          "Etapa",
+          "Pergunta aplicada",
+          "Documento ou demonstração"
+        ],
+        "rows": [
+          [
+            "Chão de fábrica ou operação",
+            "Onde o gargalo transforma pedido rentável em atraso? Desempenho especificado, aprovação em ensaio, estabilidade por lote, vida útil em serviço e tempo de homologação. Volume em massa não compara aplicações e exigências distintas.",
+            "Observar fluxo, fila, teste e retrabalho; comparar orçamento e realizado."
+          ],
+          [
+            "Comercial",
+            "Qual parte da carteira pode ser cancelada ou depende de financiamento e aceite?",
+            "Pedidos, cláusulas, previsão de entrega e concentração agregada."
+          ],
+          [
+            "Compras",
+            "Como a empresa se protege deste risco? Risco a verificar: Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada.",
+            "Contratos de compra, estoque envelhecido, regras de reajuste e qualidade."
+          ],
+          [
+            "Financeiro",
+            "O recurso solicitado financia crescimento, defasagem normal ou prejuízo recorrente?",
+            "Fluxo de caixa por projeto/família, vencimentos e conciliação de recebíveis."
+          ],
+          [
+            "Estratégia",
+            "Qual investimento priorizar e como medir seu retorno? Oportunidade a testar: Substituição de materiais, maior durabilidade e eficiência de filtragem são hipóteses que exigem ensaios, não apenas discurso comercial.",
+            "Plano de implantação, retorno operacional e alternativas."
+          ]
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "historico-producao",
+        "title": "Contexto agregado: Produtos têxteis",
+        "unit": "% de variação anual da produção física",
+        "scope": "Brasil; divisão da PIM, não o subsetor isolado.",
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "period": "2020–2024",
+        "source": {
+          "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+          "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+          "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+        },
+        "method": "Variação acumulada em dezembro, percentual anual sobre ano anterior. API SIDRA tabela 8888, variável 11603, vintage 06/11/2026. Sem interpolação e sem somar taxas. Não representa subsetor isolado.",
+        "series": [
+          {
+            "label": "Produtos têxteis",
+            "values": [
+              -6.9,
+              8.4,
+              -12.8,
+              0.9,
+              4.7
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "IBGE · PIM-PF Brasil",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9294-pesquisaindustrial-mensal-producao-fisica-brasil.html",
+        "purpose": "Método, abrangência e conjuntura industrial; divisão agregada não equivale a subsetor."
+      },
+      {
+        "label": "IBGE · PIA-Produto",
+        "url": "https://www.ibge.gov.br/estatisticas/economicas/industria/9044-pesquisa-industrial-anual.html",
+        "purpose": "Produção e vendas por produto; estrutura anual. Não se extraiu faturamento exclusivo do recorte."
+      },
+      {
+        "label": "Agência Brasil · produção industrial em setembro",
+        "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/producao-da-industria-recua-08-em-setembro-4a-queda-em-cinco-meses",
+        "purpose": "Publicação de 05/11/2026, referência setembro/2026. Fonte pública que reporta PIM do IBGE; contexto macroindustrial."
+      },
+      {
+        "label": "BNDES · Finame BK Aquisição e Comercialização",
+        "url": "https://www.bndes.gov.br/wps/portal/site/home/financiamento/produto/bndes-finame-bk-aquisicao-comercializacao",
+        "purpose": "Produto oficial para aquisição/comercialização de bens; condições e garantias dependem do enquadramento e do agente. Sem oferta individual ou confirmação de orçamento disponível."
+      },
+      {
+        "label": "IBGE/CONCLA · indústria têxtil",
+        "url": "https://cnae.ibge.gov.br/?chave=c%C3%B3digo&divisao=13&tipo=cnae&versao=10&view=divisao",
+        "purpose": "Distingue fiação, tecelagem, malharia, não tecidos, fibras químicas e confecção."
+      },
+      {
+        "label": "BNDES · cadeia têxtil e inovação",
+        "url": "https://web.bndes.gov.br/bib/jspui/handle/1408/1964",
+        "purpose": "Estudo histórico da cadeia na década de 2000; não usado para números atuais."
+      },
+      {
+        "label": "IBGE/SIDRA · PIM-PF: variação acumulada em dezembro",
+        "url": "https://apisidra.ibge.gov.br/values/t/8888/n1/all/v/11603/p/202012,202112,202212,202312,202412/c544/all",
+        "purpose": "Volume industrial, variação anual 2020–2024, divisões CNAE. API direta recuperada em 06/11/2026; vintage atual substitui tabela histórica indexada."
+      },
+      {
+        "label": "IBGE/SIDRA · IPP mensal",
+        "url": "https://apisidra.ibge.gov.br/values/t/6903/n1/all/v/1396/p/202609/c842/all",
+        "purpose": "Variação mensal do preço ao produtor em setembro de 2026 frente a agosto. API direta; não mede produção, receita nem margem."
+      },
+      {
+        "label": "Assembleia Legislativa de Santa Catarina · fórum têxtil",
+        "url": "https://www.alesc.sc.gov.br/agencia/noticia/parlamento-assume-o-protagonismo-do-debate-dos-desafios-do-setor-com-o-lanc/",
+        "purpose": "Notícia de 12/04/2023 confirma referências regionais. Números associativos e títulos promocionais não foram usados como ranking."
+      }
+    ],
+    "limitations": [
+      "Fontes de estrutura antigas não confirmam capacidade, concentração, vínculo societário ou conjuntura atual.",
+      "Histórico agregado não mede o subsetor; não há margem, prazo de caixa ou inadimplência média inventados.",
+      "Não foram recuperadas séries próprias completas de comércio exterior, preços e capacidade por produto. Indicadores mensais específicos não são substituídos pela indústria total.",
+      "CNAE e NCM precisam ser conferidos no produto e atividade efetivos; nenhum código genérico foi atribuído automaticamente.",
+      "Oferta, condições atuais e elegibilidade de financiamento não foram confirmadas para empresa específica.",
+      "Pesquisa baseada em fontes públicas; não inclui dados privados de empresas ou clientes.",
+      "Revisão documental independente concluída em 06/11/2026. Não inclui QA visual, audição do áudio gerado ou validação operacional."
+    ],
+    "method": "Pesquisa pública em 06/11/2026. Estrutura sustentada por órgãos públicos e análise explicitamente identificada. Histórico tentado e recuperado parcialmente em janela plurianual; indexação não substitui revisão integral. Sem dados de cliente, oferta de crédito ou ranking inventado. Revisão documental independente concluída; QA visual e áudio gerado não incluídos. Histórico PIM atualizado para API SIDRA direta, vintage 06/11/2026, com revisões documentadas em registro separado.",
+    "canvasQuestions": [
+      {
+        "dimension": "Proposta de valor",
+        "question": "Qual função técnica o material precisa cumprir?"
+      },
+      {
+        "dimension": "Clientes",
+        "question": "Quem especifica, homologa e compra cada aplicação?"
+      },
+      {
+        "dimension": "Canais",
+        "question": "Como testes e venda técnica transformam amostras em contratos?"
+      },
+      {
+        "dimension": "Recursos e atividades",
+        "question": "Quais ensaios e processos asseguram desempenho repetível?"
+      },
+      {
+        "dimension": "Parcerias",
+        "question": "Quais parceiros fornecem fibras, formulação e validação?"
+      },
+      {
+        "dimension": "Receitas e custos",
+        "question": "O preço remunera desenvolvimento, homologação e lote mínimo?"
+      }
+    ],
+    "diagram": {
+      "nodes": [
+        {
+          "id": "0",
+          "label": "fibra e formulação",
+          "detail": "Fluxo físico e financeiro: fibra e formulação"
+        },
+        {
+          "id": "1",
+          "label": "formação do material",
+          "detail": "Recorte por função: materiais têxteis destinados a filtragem, proteção, reforço, construção ou outras aplicações de desempenho. Pode incluir tecido plano, malha e não tecido; não tecido é tecnologia distinta e deve ser identificado, não confundido com tecelagem."
+        },
+        {
+          "id": "2",
+          "label": "acabamento e ensaio funcional",
+          "detail": "Fluxo físico e financeiro: acabamento e ensaio funcional"
+        },
+        {
+          "id": "3",
+          "label": "aplicação industrial homologada",
+          "detail": "Fluxo físico e financeiro: aplicação industrial homologada"
+        }
+      ],
+      "edges": [
+        {
+          "to": "1",
+          "label": "Entrega, especificação e pagamento",
+          "from": "0"
+        },
+        {
+          "to": "2",
+          "label": "Entrega, especificação e pagamento",
+          "from": "1"
+        },
+        {
+          "to": "3",
+          "label": "Entrega, especificação e pagamento",
+          "from": "2"
+        }
+      ]
+    },
+    "transcript": "Tecidos técnicos. Tecidos técnicos: Recorte por função: materiais têxteis destinados a filtragem, proteção, reforço, construção ou outras aplicações de desempenho. Tese operacional: Conhecimento da aplicação e validação junto ao cliente criam barreiras; o produto compete com materiais e soluções não têxteis, além de outros fabricantes. Principal vulnerabilidade: Longa homologação consome desenvolvimento antes da receita; mudança de especificação ou falha em uso pode inviabilizar lote e gerar responsabilidade elevada. A prioridade financeira é demonstrar a conversão da carteira em entrega aceita e caixa. Financiar desenvolvimento em etapas e giro após validação; investimento em ensaios e equipamento especializado precisa de mercado comprovado. Não apresentar crédito de inovação como disponível sem verificar chamada e enquadramento. Recorte por função: materiais têxteis destinados a filtragem, proteção, reforço, construção ou outras aplicações de desempenho. Pode incluir tecido plano, malha e não tecido; não tecido é tecnologia distinta e deve ser identificado, não confundido com tecelagem. Desempenho especificado, aprovação em ensaio, estabilidade por lote, vida útil em serviço e tempo de homologação. Volume em massa não compara aplicações e exigências distintas. Não foi recuperado ranking público que harmonize tecidos, não tecidos e aplicações técnicas. A classificação do IBGE ajuda a evitar somas indevidas; empresas de moda não são automaticamente concorrentes técnicos. Demanda industrial, infraestrutura e proteção não acompanha necessariamente a moda; agregado têxtil é apenas contexto e pode ocultar crescimento de aplicações técnicas. Substituição de materiais, maior durabilidade e eficiência de filtragem são hipóteses que exigem ensaios, não apenas discurso comercial. As hipóteses precisam ser testadas na visita. O histórico agregado não representa o subsetor isolado. A revisão documental foi concluída. O áudio gerado ainda requer conferência. Referência regional: a Assembleia catarinense identifica Brusque, Gaspar, Jaraguá do Sul e Blumenau como polos da cadeia têxtil. É contexto de fornecedores e mão de obra, não comprovação da liderança específica em tecidos técnicos. Verificar competência técnica e aplicação de cada empresa antes de estabelecer parceria. Na análise de concorrência: Filtros metálicos ou cerâmicos, membranas e soluções não têxteis podem substituir materiais têxteis técnicos em funções específicas. Temperatura, abrasão, permeabilidade, esterilidade e homologação restringem a troca. Para novos entrantes: Engenharia de aplicação, laboratório, rastreabilidade e validação prolongada junto ao cliente dificultam entrada. Cada uso tem requisitos próprios; reputação em vestuário não comprova capacidade em produto técnico. No ambiente externo, Mudança de especificação ou adoção de solução não têxtil pode invalidar produto homologado; concentração em poucos clientes industriais amplia o impacto de adiamentos de investimento.\n\nComo aplicação específica, a Ober, de Nova Odessa, oferece geotêxtil não tecido GeoFort em poliéster e polipropileno para drenagem, separação de solos e proteção de geomembranas, além de confeccionar geoformas segundo especificações. Trata-se de oferta declarada pelo fabricante, não comprovação independente de desempenho, vendas ou participação. A análise de tecidos técnicos não deve somar automaticamente geomembranas de polietileno, que pertencem a outra família de produtos.",
+    "reviewStatus": "approved",
+    "audit": {
+      "scope": "documentary",
+      "verdict": "Aprovado",
+      "date": "2026-11-06",
+      "report": "audit/textil-construcao-aprovacoes.json",
+      "visualQA": "not-performed",
+      "generatedAudioQA": "not-performed",
+      "contentHashBefore": "00d3ae07aca0c1146e9818722b7e8bb1a49cf8b465f562744d0f50ae4afd223c",
+      "contentHashExcludingAudit": "f0db1da9a7873191d28ced313aab7888b9cb48cfcfc85d15e6a5769d69be011f"
+    }
+  }
+]

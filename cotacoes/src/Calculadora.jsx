@@ -2,11 +2,15 @@ import { useState } from 'react'
 import './Calculadora.css'
 import MoneyInput from './MoneyInput.jsx'
 import { parseMoneyInput } from './moneyInput.js'
-import { IOF_PJ, SYSTEMS, compareSystems, parseDecimal } from './emprestimo.js'
+import { SYSTEMS, compareSystems, parseDecimal } from './emprestimo.js'
+import { cgToday, cgAddDays } from './contaGarantida.js'
+import { resolveCreditIof } from './iofRules.js'
 import FinimpComparacao, { FinimpIcon } from './FinimpComparacao.jsx'
 import FinameMateriais, { FinameIcon } from './FinameMateriais.jsx'
 import ContaGarantida, { ContaGarantidaIcon } from './ContaGarantida.jsx'
 import AnaliseDesconto, { DescontoIcon } from './AnaliseDesconto.jsx'
+import BndesTlpExigivel, { TlpIcon } from './BndesTlpExigivel.jsx'
+import BndesCreditoTfb, { TfbIcon } from './BndesCreditoTfb.jsx'
 import BndesLcdCap, { LcdIcon } from './BndesLcdCap.jsx'
 import Help from './CalculatorHelp.jsx'
 import './CalculatorLayout.css'
@@ -27,6 +31,8 @@ function GiroIcon() {
 }
 
 const CALCS = [
+  { id: 'bndes-tlp-exigivel', title: 'BNDES TLP exigível', sub: 'IPCA e juros exigíveis, sem capitalização do principal', Icon: TlpIcon },
+  { id: 'bndes-credito-tfb', title: 'BNDES Crédito · TFB', sub: 'Conferência do exemplo histórico de 34 parcelas', Icon: TfbIcon },
   { id: 'conta-garantida', title: 'Conta Garantida', sub: 'Juros e IOF sobre saldos', Icon: ContaGarantidaIcon },
   { id: 'bndes-selic-lcd', title: 'BNDES Selic + LCD', sub: 'Selic, LCD e fluxo projetado', Icon: LcdIcon },
   { id: 'finimp', title: 'FINIMP', sub: 'Compare propostas e atinja sua meta', Icon: FinimpIcon },
@@ -41,19 +47,21 @@ function CapitalDeGiro({ onBack }) {
   const [rateText, setRateText] = useState('2,00')
   const [unit, setUnit] = useState('am')
   const [system, setSystem] = useState('price')
-  const [iofFixedText, setIofFixedText] = useState('0,38')
-  const [iofDailyText, setIofDailyText] = useState('0,0082')
+  const [start, setStart] = useState(cgToday)
+  const [firstDue, setFirstDue] = useState(() => cgAddDays(cgToday(), 30))
+  const [profile, setProfile] = useState('pj')
+  const [eligible, setEligible] = useState(false)
   const money = parseMoneyInput(valueText)
   const n = /^\d+$/.test(nText.trim()) ? Number(nText) : null
   const rate = parseDecimal(rateText)
-  const iofFixed = parseDecimal(iofFixedText), iofDaily = parseDecimal(iofDailyText)
+  const tax = resolveCreditIof({ date: start, profile, operationValue: money.value, eligible })
   const errors = {
     value: money.ok && money.value > 0 ? null : money.error || 'Informe um valor maior que zero.',
     n: n !== null && n >= 1 && n <= 600 ? null : 'Informe o prazo em meses, número inteiro de 1 a 600.',
     rate: rate !== null && rate <= 1000 ? null : 'Informe a taxa em %, por exemplo 2,00.',
-    iof: iofFixed !== null && iofFixed <= 100 && iofDaily !== null && iofDaily <= 100 ? null : 'Informe as alíquotas do IOF em %, por exemplo 0,38 e 0,0082.',
+    iof: tax.ok ? null : tax.error,
   }
-  const compared = Object.values(errors).some(Boolean) ? null : compareSystems({ value: money.value, n, rate, unit, system, iof: { fixed: iofFixed, daily: iofDaily } })
+  const compared = Object.values(errors).some(Boolean) ? null : compareSystems({ value: money.value, n, rate, unit, system, start, firstDue, profile, eligible })
   const result = compared?.selected.ok ? compared.selected : null
   // Colunas na ordem Price, SAC e (só quando escolhido) Bullet; as de Price e SAC aparecem sempre, vazias enquanto a entrada é inválida.
   const byId = Object.fromEntries(result ? [[result.system, result], ...compared.others.map((o) => [o.system, o.result])] : [])
@@ -75,7 +83,7 @@ function CapitalDeGiro({ onBack }) {
   return (
     <section className="cx" aria-labelledby="calc-h">
       <button type="button" className="cx-back" onClick={onBack}><span aria-hidden="true">‹</span> Calculadoras</button>
-      <h2 id="calc-h" className="cx-title cx-heading"><span className="cx-heading-text"><span className="cx-icon" aria-hidden="true"><GiroIcon /></span><span>Capital de Giro</span></span><Help title="Capital de Giro: cálculo e premissas"><p>Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. Não é o CET do contrato.</p><p>O IOF de pessoa jurídica é calculado sobre o principal de cada parcela, com meses de 365/12 dias, pois esta calculadora não pede datas. A taxa anual é convertida por juros compostos.</p></Help></h2>
+      <h2 id="calc-h" className="cx-title cx-heading"><span className="cx-heading-text"><span className="cx-icon" aria-hidden="true"><GiroIcon /></span><span>Capital de Giro</span></span><Help title="Capital de Giro: cálculo e premissas"><p>Estimativa com a taxa informada, sem tarifas, seguros nem outros impostos. Não é o CET do contrato.</p><p>O IOF de pessoa jurídica é calculado sobre o principal de cada parcela, pelos dias corridos reais entre liberação e vencimento, limitados a 365 por parcela. Os vencimentos mensais seguem o dia do primeiro vencimento, ajustado ao último dia quando necessário. Juros mantêm períodos mensais iguais; datas não alteram a prestação e não há ajuste automático de feriados. A taxa anual é convertida por juros compostos.</p></Help></h2>
 
       <article className="desk-panel cx-panel">
         <header><h3 className="cx-heading"><span>Condições gerais</span></h3></header>
@@ -97,22 +105,16 @@ function CapitalDeGiro({ onBack }) {
               {SYSTEMS.map((s) => <button key={s.id} type="button" aria-pressed={system === s.id} onClick={() => setSystem(s.id)}>{s.label}</button>)}
             </div>
           </div>
+          {field('start', 'Data da liberação', <input id="cx-start" type="date" max="9999-12-31" value={start} onChange={e => setStart(e.target.value)} />)}
+          {field('firstDue', 'Primeiro vencimento mensal', <input id="cx-firstDue" type="date" max="9999-12-31" value={firstDue} onChange={e => setFirstDue(e.target.value)} />)}
           <div className="cx-iof">
-            <div className="cx-field-label"><span className="cx-label">IOF de pessoa jurídica</span><Help title="Alíquotas do IOF"><p>Padrão: {IOF_PJ.fixed.toLocaleString('pt-BR')}% sobre o valor, uma vez, mais {IOF_PJ.daily.toLocaleString('pt-BR')}% ao dia sobre o principal de cada parcela, até {IOF_PJ.maxDays} dias (Decreto 12.499/2025). Confirme a alíquota vigente com seu banco.</p></Help></div>
-            <details>
-            <summary>Editar alíquotas</summary>
-            <div className="cx-iof-fields">
-              <div className="cx-field">
-                <div className="cx-field-label"><label htmlFor="cx-iof-fixed">Adicional, uma vez (%)</label></div>
-                <input id="cx-iof-fixed" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofFixedText} onChange={(e) => setIofFixedText(e.target.value)} onFocus={(e) => e.target.select()} />
-              </div>
-              <div className="cx-field">
-                <div className="cx-field-label"><label htmlFor="cx-iof-daily">Diária (% ao dia)</label></div>
-                <input id="cx-iof-daily" inputMode="decimal" autoComplete="off" aria-invalid={!!errors.iof} aria-describedby="cx-iof-err" value={iofDailyText} onChange={(e) => setIofDailyText(e.target.value)} onFocus={(e) => e.target.select()} />
-              </div>
-            </div>
-            <p className="cx-error" id="cx-iof-err" role={errors.iof ? 'alert' : undefined}>{errors.iof ?? ''}</p>
-            </details>
+            <label htmlFor="cx-profile">Enquadramento do IOF</label>
+            <select id="cx-profile" value={profile} onChange={e => { setProfile(e.target.value); setEligible(false) }}><option value="pj">Pessoa jurídica geral</option><option value="simples">Simples/MEI: operação elegível até R$ 30 mil</option></select>
+            {profile === 'simples' && <label><input type="checkbox" checked={eligible} onChange={e => setEligible(e.target.checked)} />Confirmo o enquadramento do tomador e a documentação da operação com a instituição.</label>}
+            <p className="cx-hint">{tax.ok ? `IOF automático: ${tax.additional.toLocaleString('pt-BR')}% adicional + ${tax.daily.toLocaleString('pt-BR', { maximumFractionDigits: 5 })}% ao dia, até 365 dias por parcela.` : 'Alíquotas calculadas conforme data e enquadramento.'}</p>
+            <p className="cx-error" role={errors.iof ? 'alert' : undefined}>{errors.iof}</p>
+            {tax.ok && <p className="cx-hint"><a href={tax.source} target="_blank" rel="noreferrer">Base legal: Decreto 6.306/2007, art. 7º</a> · Enquadramento automático; mudanças futuras não são antecipadas.</p>}
+            <p className="cx-hint">Juros em períodos mensais iguais. Confira vencimentos e convenção de juros no contrato. Para Bullet, o pagamento ocorre no último vencimento do calendário mensal.</p>
           </div>
         </div>
       </article>
@@ -165,6 +167,8 @@ function CapitalDeGiro({ onBack }) {
 
 // Aba Calculadoras: lista de calculadoras (ícones) e a calculadora aberta, com endereço próprio (#calculadora/giro).
 export default function Calculadora({ view, onView }) {
+  if (view === 'bndes-tlp-exigivel') return <BndesTlpExigivel onBack={() => onView('')} />
+  if (view === 'bndes-credito-tfb') return <BndesCreditoTfb onBack={() => onView('')} />
   if (view === 'bndes-selic-lcd') return <BndesLcdCap onBack={() => onView('')} />
   if (view === 'finimp') return <FinimpComparacao onBack={() => onView('')} />
   if (view === 'conta-garantida') return <ContaGarantida onBack={() => onView('')} />

@@ -1,0 +1,143 @@
+/* Resolved automatic or manual theme: keep the terminal vocabulary, layout and semantic colors.
+   Brand fill stays amber; amber text gets a darker ink on light surfaces. */
+:root {
+  color-scheme: dark;
+  --brand-fill: #ffb000;
+  --on-brand: #000;
+  --muted: var(--mut);
+  --surface-3: #21262d;
+  --pop-bg: #0d1117;
+  --flash-up: #1b4721;
+  --flash-down: #5a1d1a;
+  --currency-usd: #ffb000;
+  --currency-eur: #4cc3ff;
+  --currency-jpy: #199e70;
+  --currency-cnh: #a371f7;
+  --currency-par: #d55181;
+  --chart-teal: #4aa3a2;
+  --chart-gold: #e6b34a;
+  --chart-purple: #a98bd6;
+  --chart-pink: #d55181;
+  --chart-blue: #6fa8dc;
+  --chart-lime: #9bbf5a;
+  --chart-neutral: #c0c0c0;
+  --chart-oil: #ca9c49;
+  --chart-estr: #e0b341;
+  --chart-di: #e5b453;
+  --chart-indicator: #6aa9ff;
+  --series-lightness: 62%;
+}
+
+.bn-official-links { display:flex; flex-wrap:wrap; gap:8px 12px; margin:0 0 16px; }
+main.app .bn-official-links a {
+  display:inline-flex; align-items:center; min-height:44px; padding:10px 14px;
+  border:1px solid var(--line); border-radius:6px; color:var(--amber);
+  background:var(--card); font-size:.85rem; line-height:1.4; overflow-wrap:anywhere;
+}
+.bn-official-links a:hover { border-color:var(--amber); }
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f5f4f0;
+  --card: #fff;
+  --surface-2: #eeece6;
+  --surface-3: #e2ded4;
+  --line: #cec8bb;
+  --fg: #24231f;
+  --mut: #625e53;
+  --up: #087a43;
+  --down: #bb252b;
+  --amber: #865500;
+  --accent: #865500;
+  --warn: #865500;
+  --pop-bg: #fff;
+  --flash-up: #d9f0e2;
+  --flash-down: #f9dddd;
+  --currency-usd: #986100;
+  --currency-eur: #006a9b;
+  --currency-jpy: #087a50;
+  --currency-cnh: #7941ba;
+  --currency-par: #ad3466;
+  --chart-teal: #137978;
+  --chart-gold: #986100;
+  --chart-purple: #7944ad;
+  --chart-pink: #ad3466;
+  --chart-blue: #2b6da5;
+  --chart-lime: #596f20;
+  --chart-neutral: #66625b;
+  --chart-oil: #90601a;
+  --chart-estr: #916100;
+  --chart-di: #916100;
+  --chart-indicator: #246bb1;
+  --series-lightness: 30%;
+  --c-usd: var(--currency-usd);
+  --c-eur: var(--currency-eur);
+  --c-jpy: var(--currency-jpy);
+  --c-cnh: var(--currency-cnh);
+  --c-par: var(--currency-par);
+}
+
+/* Legacy terminal surfaces: scoped overrides also cover lazy-loaded screens. */
+:root[data-theme="light"] body .term-head, :root[data-theme="light"] body .topbar, :root[data-theme="light"] body .tape { background:var(--card); }
+:root[data-theme="light"] body .tape-item, :root[data-theme="light"] body .topbar-tabs button { border-right-color:var(--line); }
+:root[data-theme="light"] body .topbar-tabs button:hover, :root[data-theme="light"] body .kpi:hover { background:var(--surface-2); }
+:root[data-theme="light"] body .topbar-brand, :root[data-theme="light"] body .topbar-tabs button.on {
+  background:var(--brand-fill); color:var(--on-brand);
+}
+:root[data-theme="light"] body .desk-panel > header, :root[data-theme="light"] body .market-terminal > .terminal-titlebar,
+:root[data-theme="light"] body .executive-rates .executive-rates__heading, :root[data-theme="light"] body .learn-list-title {
+  background:var(--surface-2);
+}
+:root[data-theme="light"] body .market-terminal { background:var(--card); border-color:var(--line); }
+:root[data-theme="light"] body .market-terminal .summary-dates input, :root[data-theme="light"] body .calendar-trigger,
+:root[data-theme="light"] body .market-terminal .market-table thead, :root[data-theme="light"] body .config-table thead th,
+:root[data-theme="light"] body .base-busca input, :root[data-theme="light"] body .learn-search input, :root[data-theme="light"] body .learn-formula,
+:root[data-theme="light"] body .reforma-busca input, :root[data-theme="light"] body .qb .tk { background:var(--surface-2); }
+:root[data-theme="light"] body .compare-trigger, :root[data-theme="light"] body .calendar-trigger, :root[data-theme="light"] body .market-terminal .seg,
+:root[data-theme="light"] body .market-terminal .summary-dates input, :root[data-theme="light"] body .config-table kbd,
+:root[data-theme="light"] body .learn-tag, :root[data-theme="light"] body .learn-go, :root[data-theme="light"] body .learn-nav button.on,
+:root[data-theme="light"] body .learn-nav button:hover { border-color:var(--line); }
+:root[data-theme="light"] body .market-record, :root[data-theme="light"] body .market-news li, :root[data-theme="light"] body .desk-agenda li,
+:root[data-theme="light"] body .config-table th, :root[data-theme="light"] body .config-table td, :root[data-theme="light"] body .learn-count,
+:root[data-theme="light"] body .learn-topic, :root[data-theme="light"] body .learn-list li + li, :root[data-theme="light"] body .learn details,
+:root[data-theme="light"] body .learn-app, :root[data-theme="light"] body .reforma li, :root[data-theme="light"] body .ml-legend li { border-color:var(--line); }
+:root[data-theme="light"] body .market-terminal .market-record.is-selected,
+:root[data-theme="light"] body .market-terminal .market-record.is-selected .market-values th,
+:root[data-theme="light"] body .oil-spot-value, :root[data-theme="light"] body .config-table kbd, :root[data-theme="light"] body .learn-tag,
+:root[data-theme="light"] body .learn-result, :root[data-theme="light"] body .learn-list button.on { background:#fff0cc; }
+:root[data-theme="light"] body .market-terminal .market-record:hover, :root[data-theme="light"] body .desk-agenda button:hover,
+:root[data-theme="light"] body .learn-list button:hover { background:var(--surface-2); }
+:root[data-theme="light"] body .learn-topic, :root[data-theme="light"] body .reforma-day { background:var(--surface-2); }
+:root[data-theme="light"] body .online-pop { background:var(--pop-bg); }
+:root[data-theme="light"] body .config-table .chip.up {
+  border-color:color-mix(in srgb, var(--up) 30%, var(--card)); background:#e5f4e9;
+}
+:root[data-theme="light"] body .config-table .chip.down {
+  border-color:color-mix(in srgb, var(--down) 30%, var(--card)); background:#fbe7e7;
+}
+:root[data-theme="light"] body .estado-erro { color:var(--down); }
+:root[data-theme="light"] body .estado-aviso, :root[data-theme="light"] body .context-warning { color:var(--warn); }
+:root[data-theme="light"] body .desk-tabs-grupo, :root[data-theme="light"] body .global-search-scope,
+:root[data-theme="light"] body .global-search-results h3 small, :root[data-theme="light"] body .global-search-result small,
+:root[data-theme="light"] body .search-destination small { color:var(--mut); }
+:root[data-theme="light"] body .global-search-field input::placeholder { color:var(--mut); }
+:root[data-theme="light"] body .cen-nav button, :root[data-theme="light"] body .seg.bn-fam button { color:var(--mut); }
+:root[data-theme="light"] body .cen-nav button.on, :root[data-theme="light"] body .seg.bn-fam button[aria-pressed=true] { color:var(--amber); }
+:root[data-theme="light"] body .seg button, :root[data-theme="light"] body .seg button + button { border-color:var(--line); }
+:root[data-theme="light"] body .seg button:hover { border-color:var(--amber); }
+:root[data-theme="light"] body .seg button[aria-pressed=true], :root[data-theme="light"] body .seg button.on,
+:root[data-theme="light"] body .market-terminal .seg button[aria-pressed=true],
+:root[data-theme="light"] body .currency-comparison .seg button[aria-pressed=true],
+:root[data-theme="light"] body .chips button[aria-pressed=true], :root[data-theme="light"] body .drp-cell.is-edge,
+:root[data-theme="light"] body .update-notice button {
+  background:var(--brand-fill); border-color:var(--brand-fill); color:var(--on-brand);
+}
+/* Section tabs remain underlined, rather than looking like data filters. */
+:root[data-theme="light"] body .seg.bn-fam button[aria-pressed=true], :root[data-theme="light"] body .cen-nav button.on {
+  background:transparent; border-color:transparent; border-bottom-color:var(--amber); color:var(--amber);
+}
+:root[data-theme="light"] body .market-terminal .market-values th { background:var(--card); }
+:root[data-theme="light"] body .market-terminal .market-table thead th:first-child { background:var(--surface-2); }
+:root[data-theme="light"] main a { color:#865500; }
+:root[data-theme="light"] main a:visited { color:#72512d; }
+:root[data-theme="light"] body .other-market .oil-tile { --series:var(--chart-oil); }

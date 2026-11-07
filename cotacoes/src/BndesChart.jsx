@@ -39,7 +39,7 @@ export default function SeriesChart({ list, name, code, label, kind, loading, pe
       {plot.length > 1
         ? <>
           <p className="bn-range">No período: {dmy(first.period)} {show(first.value)} → {dmy(last.period)} {show(last.value)} ({delta(first.value, last.value)}).</p>
-          <div ref={ref}><Plot steppedLine={stepped} scales={!stepped} points={plot} history={history} width={width} color="#ca9c49" code={code} intraday={false} fmt={show} vfmt={(v) => nf(v)} label={name} rate={!level} labels /></div>
+          <div ref={ref}><Plot steppedLine={stepped} scales={!stepped} points={plot} history={history} width={width} color="var(--chart-oil)" code={code} intraday={false} fmt={show} vfmt={(v) => nf(v)} label={name} rate={!level} labels /></div>
         </>
         : <p role="status">{bad ? 'Ajuste o período.' : 'Poucas observações no período; escolha um intervalo maior.'}</p>}
       <details className="bn-obs-d">

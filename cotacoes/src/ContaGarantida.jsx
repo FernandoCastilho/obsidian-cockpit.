@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import MoneyInput from './MoneyInput.jsx'
 import CalculatorHelp from './CalculatorHelp.jsx'
+import ComparativoAlongamento from './ComparativoAlongamento.jsx'
 import { CG_SOURCES, CG_TAX_PROFILES, cgAddDays, cgInitialForm, parseContaGarantidaForm } from './contaGarantida.js'
 import './ContaGarantida.css'
 
@@ -11,6 +12,7 @@ export function ContaGarantidaIcon() {
 }
 export default function ContaGarantida({ onBack }) {
   const [form, setForm] = useState(cgInitialForm)
+  const [comparing, setComparing] = useState(false)
   const [page, setPage] = useState(0)
   const nextId = useRef(0)
   const { errors, warnings, params, result: calculation } = parseContaGarantidaForm({ ...form, rateBase: '30', conversion: 'proportional', status: 'performing' })
@@ -30,13 +32,15 @@ export default function ContaGarantida({ onBack }) {
   const safePage = Math.min(page, Math.max(0, pages - 1))
   return <section className="cx cx-cg" aria-labelledby="cg-heading">
     <button type="button" className="cx-back" onClick={onBack}>‹ Calculadoras</button>
-    <div className="cx-heading"><h2 id="cg-heading" className="cx-title"><span className="cx-icon"><ContaGarantidaIcon /></span>Conta Garantida</h2><CalculatorHelp title="Conta Garantida"><p>Simule uma utilização por prazo ou registre utilizações e amortizações por data. Veja o saldo diário, os juros e as duas parcelas do IOF.</p><p>Estimativa para crédito rotativo adimplente, com reutilização contratualmente prevista. Juros e IOF são pagos à parte, nunca incorporados ao saldo. Informe a taxa mensal da proposta e confira as convenções. Não é extrato, cotação bancária nem CET.</p><p>Esta versão não calcula as regras especiais de inadimplência, renegociação ou operações com principal contratualmente definido.</p></CalculatorHelp></div>
-    <p className="cg-notice">Estimativa para operação adimplente e rotativa. Não é extrato, cotação bancária nem CET.</p>
+    <div className="cx-heading"><h2 id="cg-heading" className="cx-title"><span className="cx-icon"><ContaGarantidaIcon /></span>Conta Garantida</h2><CalculatorHelp title="Conta Garantida"><p>Simule uma utilização por prazo ou registre utilizações e amortizações por data. Veja o saldo diário, os juros e as duas parcelas do IOF.</p><p>Estimativa para crédito rotativo adimplente, com reutilização contratualmente prevista. Juros e IOF são pagos à parte, nunca incorporados ao saldo. Informe a taxa mensal da proposta e confira as convenções. Não é extrato, cotação bancária nem CET.</p><p>Os modos Utilização única e Lançamentos por dia simulam o rotativo. Comparar com parcelado estima sua substituição por um novo giro de principal definido. Nenhum modo calcula inadimplência ou renegociação.</p></CalculatorHelp></div>
+    <p className="cg-notice">{comparing ? 'Compare encargos, parcelas e capacidade de pagamento. Estimativa, sem contratação ou CET.' : 'Estimativa para operação adimplente e rotativa. Não é extrato, cotação bancária nem CET.'}</p>
     <div className="cg-modes" role="group" aria-label="Tipo de simulação">
-      <button type="button" aria-pressed={form.mode === 'single'} onClick={() => set('mode', 'single')}>Utilização única</button>
-      <button type="button" aria-pressed={form.mode === 'ledger'} onClick={() => set('mode', 'ledger')}>Lançamentos por dia</button>
+      <button type="button" aria-pressed={!comparing && form.mode === 'single'} onClick={() => { setComparing(false); set('mode', 'single') }}>Utilização única</button>
+      <button type="button" aria-pressed={!comparing && form.mode === 'ledger'} onClick={() => { setComparing(false); set('mode', 'ledger') }}>Lançamentos por dia</button>
+      <button type="button" aria-pressed={comparing} onClick={() => setComparing(true)}>Comparar com parcelado</button>
     </div>
-
+    <div hidden={!comparing}><ComparativoAlongamento /></div>
+    {!comparing && <>
     <article className="desk-panel cx-panel">
       <header className="cx-heading"><h3>1. {form.mode === 'single' ? 'Valor e período de utilização' : 'Período e lançamentos'}</h3><CalculatorHelp title={form.mode === 'single' ? 'Valor e período de utilização' : 'Período e lançamentos'}>{form.mode === 'single' ? <p>A quitação é simulada no início da data final, antes dos encargos desse dia. O saldo inicial anterior à utilização é zero.</p> : <p>Valores em branco na tabela valem zero. Várias linhas da mesma data são somadas antes do cálculo, sem ordem intradia. Amortização reduz somente o valor utilizado; os pagamentos de juros e IOF ficam fora desta tabela. Para ver o IOF correto de uma conta existente, traga o histórico, não trate o saldo antigo como novo saque.</p>}</CalculatorHelp></header>
       {form.mode === 'single' ? <>
@@ -77,9 +81,9 @@ export default function ContaGarantida({ onBack }) {
       <header className="cx-heading"><h3>3. Referência de IOF</h3><CalculatorHelp title="Referência de IOF"><p>Juros e IOF são pagos à parte, sem capitalização ou financiamento no saldo utilizado. Operação rotativa por saldos diários: não se aplica um teto genérico de 365 dias. Os dois modos mantêm a mesma natureza rotativa, mesmo quando há apenas um saque.</p></CalculatorHelp></header>
       <div className="cx-form">
         {select('taxProfile', 'Enquadramento da operação', CG_TAX_PROFILES.map(p => [p.id, p.label]), 'Referências consultadas em 05/11/2026. Não há atualização automática nem tratamento de mudanças de alíquota dentro do período.')}
-        {form.taxProfile === 'manual' ? <>{input('iofDaily', 'IOF diário (% ao dia)', 'Aplicado somente ao saldo utilizado no fechamento.')}{input('iofAdditional', 'IOF adicional (%)', 'Aplicado ao aumento positivo do saldo utilizado entre fechamentos.')}</> : <div className="cg-tax-reference"><span>IOF diário</span><b>{String(params.iofDaily ?? '').replace('.', ',')}% ao dia</b><span>IOF adicional</span><b>0,38% sobre acréscimos diários</b></div>}
+        <div className="cg-tax-reference"><span>IOF diário automático</span><b>{params.iofDaily == null ? '—' : `${String(params.iofDaily).replace('.', ',')}% ao dia`}</b><span>IOF adicional automático</span><b>{params.iofAdditional == null ? '—' : `${String(params.iofAdditional).replace('.', ',')}% sobre acréscimos diários`}</b></div>
         {form.taxProfile === 'simples' && <>
-          {money('operationValue', 'Valor da operação confirmado no contrato', 'Até R$ 30 mil. Não é o saldo momentâneo nem apenas o valor de um saque.')}
+          {money('operationValue', 'Valor da operação confirmado no contrato', 'Redução até R$ 30 mil; acima, alíquota geral automática. Informe o valor total contratado, não o saldo momentâneo nem apenas um saque.')}
           <div className="cx-field"><div className="cx-field-label"><label className="cg-check" htmlFor="cg-eligible"><input {...control('eligible')} type="checkbox" checked={form.eligible} onChange={e => set('eligible', e.target.checked)} />Confirmo o enquadramento do Simples/MEI e a documentação com a instituição.</label><CalculatorHelp title="Confirmação do enquadramento"><p>Confirmo que o tomador é optante do Simples/MEI e que a operação e a documentação atendem ao art. 7º, VI, e ao art. 45, II, com a instituição financeira.</p><p>A seleção não comprova o enquadramento tributário.</p></CalculatorHelp></div><p id="cg-eligible-hint" className="sr-only">A seleção não comprova o enquadramento tributário.</p><p id="cg-eligible-error" className="cx-error" role={errors.eligible ? 'alert' : undefined}>{errors.eligible}</p></div>
         </>}
       </div>
@@ -119,5 +123,6 @@ export default function ContaGarantida({ onBack }) {
       <li>Não inclui indexadores variáveis como CDI, spread variável, mora, multa, excesso de limite, renegociação, isenções não confirmadas nem taxas que mudam no período. As regras de inadimplência dos §§ 18–19 não são simuladas. Contratos com principal definido têm base de IOF diferente.</li>
       <li>Os dados ficam somente nesta tela. Sair da calculadora ou recarregar apaga o rascunho. Nenhum valor informado é enviado a serviços ou incluído na busca.</li>
     </ul><p>Fontes consultadas em 05/11/2026: {CG_SOURCES.map((source, index) => <span key={source.url}>{index > 0 && ' · '}<a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></span>)}.</p></CalculatorHelp></div>
+    </>}
   </section>
 }

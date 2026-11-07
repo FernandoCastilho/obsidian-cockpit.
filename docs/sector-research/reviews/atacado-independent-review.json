@@ -1,0 +1,156 @@
+{
+  "role": "Revisão independente de precisão, não auditoria formal acionada pelo usuário",
+  "authorshipConflict": false,
+  "status": "Aprovação individual parcial; ver decisões por estudo",
+  "coverage": "Lidos cinco estudos integralmente por seções, todas as observações quantitativas e estrutura. Análises operacionais avaliadas como hipóteses de negócio, não resultados empíricos. Fontes materiais Anvisa abertas; limitações de acesso não foram contornadas.",
+  "numericItems": [
+    {
+      "id": "cmed-industria-2024",
+      "value": 160.7,
+      "unit": "R$ bilhões nominais",
+      "period": "2024",
+      "scope": "Brasil, faturamento industrial farmacêutico Sammed, total aproximado",
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2025/cmed-divulga-o-anuario-estatistico-do-mercado-farmaceutico",
+      "location": "atacado[1].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Pendente: notícia2025 não retornou corpo; PDF excedeu limite do leitor; download técnico retornou página de manutenção, não PDF"
+    },
+    {
+      "id": "cmed-industria-2025",
+      "value": 182,
+      "unit": "R$ bilhões nominais",
+      "period": "2025",
+      "scope": "Brasil, faturamento industrial farmacêutico Sammed, total aproximado",
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+      "location": "atacado[1].charts[0]",
+      "accessedAt": "2026-11-06",
+      "publicationDate": null,
+      "status": "Conferido na página integral Anvisa2026, parágrafo Dados gerais: aproximado, nominal, ano2025, origem Sammed"
+    }
+  ],
+  "counts": {
+    "numericObservationsIdentified": 2,
+    "numericObservationsVerified": 1,
+    "numericObservationsPending": 1
+  },
+  "materialFindings": [
+    {
+      "severity": "Alta",
+      "finding": "Faturamento2024 de160,7 não foi conferido em fonte integral. Não calcular crescimento com números arredondados e possivelmente vintages distintos; a notícia2026 informa13,7% mas não foi incorporada como observação ao estudo."
+    },
+    {
+      "severity": "Média",
+      "finding": "URL PAC terminada em9075-pesquisa-anual- é truncada. Afirmação de mudança de série em2024 não foi conferida em documento integral; requer nota metodológica exata. Abertura retornou403."
+    },
+    {
+      "severity": "Média",
+      "finding": "Quatro recortes não trazem observação quantitativa própria nem exemplos empresariais/polos documentados. Lacuna é admitida, evitando ranking inventado, mas cobertura empírica ainda não atende plenamente estudo aprofundado de mercado."
+    },
+    {
+      "severity": "Média",
+      "finding": "Regras Anvisa de boas práticas confirmadas em notícia histórica2021. Não há verificação de consolidação normativa2026 nem elegibilidade/certificação de empresa. Texto evita declaração individual."
+    },
+    {
+      "severity": "Baixa",
+      "finding": "Finanças, SWOT, Porter e cenários diferenciados por operação são úteis, sem margem/taxa inventada; tabelas de encaixe financeiro repetem estrutura geral e não são evidência empírica."
+    }
+  ],
+  "verifiedSources": [
+    {
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2026/cmed-divulga-9deg-edicao-do-anuario-estatistico-do-mercado-farmaceutico",
+      "datePublished": "2026-09-28",
+      "scope": "Sammed, vendas industriais2025, não faturamento atacadista",
+      "accessDate": "2026-11-06"
+    },
+    {
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/2021/anvisa-esclarece-sobre-distribuicao-armazenagem-e-transporte-de-farmacos",
+      "datePublished": "2021-09-28",
+      "scope": "Boas práticas e esclarecimentos RDC430/2020; não valida atualização normativa posterior",
+      "accessDate": "2026-11-06"
+    }
+  ],
+  "recommendation": "Preservar como material de estudo com lacunas explícitas; não atribuir selo CONFERIDO integral. Priorizar fonte CMED2024 e nota PAC para completar comprovação.",
+  "file": "docs/sector-research/atacado.json",
+  "sha256": "7e088cb8c024713f9ff86c84908fb51a410c9ea6ca000c1f4c633c68d451deed",
+  "date": "2026-11-06",
+  "reviewer": "research_manufacturing_sector_studies",
+  "studyDecisions": [
+    {
+      "id": "atacado:0",
+      "topicIndex": 0,
+      "title": "Distribuição de alimentos",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: InvestSP 10/06/2021 e Prefeitura Ivoti 10/07/2026 abertas integralmente confirmam centros Dellys e canais atendidos. Expansão física não confundida com demanda ou market share. Alegação metodológica PAC não confirmada retirada; limites preservados.",
+      "studySha256": "5264bfeacaf516f8248c3065a51bcdd57453757f0eb54277a68c4c1b596a0882",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "atacado:1",
+      "topicIndex": 1,
+      "title": "Distribuição de medicamentos",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: CFF integral confirma R$160,7 bilhões nominais de 2024; R$182 bilhões de 2025 já confirmado Anvisa. São vendas industriais, não receita da distribuição. RDC430 consolidada, artigos6,64 e72–79 conferidos incluindo alterações653 e hipóteses condicionadas de monitoramento.",
+      "studySha256": "68ebdc508631270d3faf097515d3621f2f9684e2f8d321d89fcddb5336c3fc73",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "atacado:2",
+      "topicIndex": 2,
+      "title": "Distribuição de materiais de construção",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: portfólio e logística Tambasa abertos integralmente confirmam categorias, canal e mecanismos declarados, sem validar métricas promocionais. Inmetro confirma certificado e registro distintos para fios e cabos, sem extrapolar obrigação para todo material. Análise comercial específica suficiente.",
+      "studySha256": "68e2d8c64b89d98d01906e1c3e16948dab82035e5261842c4cef9378cf5abc2e",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "atacado:3",
+      "topicIndex": 3,
+      "title": "Distribuição de insumos industriais",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: comunicado primário Brenntag de 28/09/2026 aberto integralmente confirma parceria Symrise para ingredientes cosméticos no Brasil e apoio técnico. Texto atribui declaração e não presume exclusividade, crescimento, vendas ou abrangência nacional do atacado. Mecanismos, cenários e limites suficientes.",
+      "studySha256": "06a63dd3b2e4028f5b6cdc7958d897d4cf7e534e282bed66aa9fb8f392d05db9",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    },
+    {
+      "id": "atacado:4",
+      "topicIndex": 4,
+      "title": "Distribuição de equipamentos",
+      "reviewStatus": "approved",
+      "reason": "Revalidação individual: página primária Sotreq Macaé aberta integralmente confirma máquinas, peças, aluguel e manutenção. Portfólio não é tratado como vendas realizadas ou liderança. Análise de canais, substituição, financiamento e limites específicos suficiente.",
+      "studySha256": "a9f4e5596ba5ff101fe7caedc1de972be02d9a7eae1e8345594000b829fa859f",
+      "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+    }
+  ],
+  "followupReviews": [
+    {
+      "id": "atacado:3",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: comunicado primário Brenntag de 28/09/2026 aberto integralmente confirma parceria Symrise para ingredientes cosméticos no Brasil e apoio técnico. Texto atribui declaração e não presume exclusividade, crescimento, vendas ou abrangência nacional do atacado. Mecanismos, cenários e limites suficientes."
+    },
+    {
+      "id": "atacado:4",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: página primária Sotreq Macaé aberta integralmente confirma máquinas, peças, aluguel e manutenção. Portfólio não é tratado como vendas realizadas ou liderança. Análise de canais, substituição, financiamento e limites específicos suficiente."
+    },
+    {
+      "id": "atacado:0",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: InvestSP 10/06/2021 e Prefeitura Ivoti 10/07/2026 abertas integralmente confirmam centros Dellys e canais atendidos. Expansão física não confundida com demanda ou market share. Alegação metodológica PAC não confirmada retirada; limites preservados."
+    },
+    {
+      "id": "atacado:1",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: CFF integral confirma R$160,7 bilhões nominais de 2024; R$182 bilhões de 2025 já confirmado Anvisa. São vendas industriais, não receita da distribuição. RDC430 consolidada, artigos6,64 e72–79 conferidos incluindo alterações653 e hipóteses condicionadas de monitoramento."
+    },
+    {
+      "id": "atacado:2",
+      "date": "2026-11-06",
+      "result": "Revalidação individual: portfólio e logística Tambasa abertos integralmente confirmam categorias, canal e mecanismos declarados, sem validar métricas promocionais. Inmetro confirma certificado e registro distintos para fios e cabos, sem extrapolar obrigação para todo material. Análise comercial específica suficiente."
+    }
+  ],
+  "finalStatus": "approved",
+  "finalScope": "Revisão documental individual concluída. Não inclui QA de interface, reprodução ou escuta de áudio.",
+  "finalRevalidation": "2026-11-06: todas as decisões individuais aprovadas após correções. Achados iniciais devem ser lidos como histórico, resoluções em followupReviews.",
+  "editorialAddendum": "Após aprovação, corrigidos espaços em registro editorial-corrections-applied.json, distinção Porter rivalidade/substitutos na logística portuária e limitação MAPA histórica. Sem alteração numérica; hashes atualizados."
+}

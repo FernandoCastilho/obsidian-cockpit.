@@ -33,13 +33,19 @@ test('base de dados: todas as fontes da governança aparecem na Base de dados', 
   assert.ok(ATRIBUICOES.some((a) => /BLS/.test(a.fonte)) && ATRIBUICOES.every((a) => a.texto.length > 30))
 })
 test('fontes detalhadas ficam na Base de dados, com exceções contextuais de Atividade e conteúdo setorial', () => {
-  // Preserva a conferência contextual C04 e as atribuições editoriais setoriais.
-  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'SectorProfile.jsx', 'SectorNews.jsx'])
+  // Preserva a conferência contextual C04 e as atribuições editoriais setoriais,
+  // inclusive o estudo com fontes e períodos junto aos gráficos.
+  const permitidos = new Set(['Config.jsx', 'BaseDados.jsx', 'Novidades.jsx', 'SectorProfile.jsx', 'SectorStudy.jsx', 'ResearchedSectorStudy.jsx', 'SectorNews.jsx', 'GoogleTrends.jsx'])
   for (const f of readdirSync(new URL('../src/', import.meta.url)).filter((x) => x.endsWith('.jsx') && !permitidos.has(x))) {
     const raw = src(f)
     // C04 exige fonte e data da conferência perto do indicador. Mantém a regra
     // anterior no restante da tela e evita transformar todo painel em referências.
-    const t = f === 'MarketContext.jsx' ? raw.replace(/<details><summary>Fontes e conferência dos indicadores<\/summary>[\s\S]*?<\/details>/, '') : raw
+    let t = f === 'MarketContext.jsx' ? raw.replace(/<details><summary>Fontes e conferência dos indicadores<\/summary>[\s\S]*?<\/details>/, '') : raw
+    // São acessos de produto solicitados, não uma repetição do catálogo de fontes.
+    if (f === 'Bndes.jsx') t = t.replace(/<nav className="bn-official-links"[\s\S]*?<\/nav>/, '')
+    // As duas conferências de crédito mantêm somente as normas do próprio cálculo
+    // no bloco recolhido de limites; não liberam links avulsos no resto do painel.
+    if (['BndesCreditoTfb.jsx', 'BndesTlpExigivel.jsx'].includes(f)) t = t.replace(/<details className="bndes-limits">[\s\S]*?<\/details>/, '')
     assert.doesNotMatch(t, /Fontes?: /, `${f}: texto "Fonte:" em painel`)
     assert.doesNotMatch(t, /href="https?:\/\/(?!wa\.me)/, `${f}: link externo fixo em painel`)
     assert.doesNotMatch(t, /\{[^}]*sourceName[^}]*\}\s*[·<]/, `${f}: nome da fonte exibido`)

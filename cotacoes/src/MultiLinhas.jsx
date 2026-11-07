@@ -69,7 +69,7 @@ export default function MultiLinhas({ series: baseSeries, width, fmt, ariaLabel,
                 <rect x={bx} y={M.t} width={bw} height={bh} rx="8" fill="var(--card, #161b22)" stroke="var(--line)" opacity="0.96" />
                 <text x={bx + 10} y={M.t + 15} fontSize="11" fill="var(--mut)">{dmy(hoverAt)}</text>
                 {series.map((s, k) => { const p = at(s); return (
-                  <text key={s.key} x={bx + 10} y={M.t + 32 + k * 16} fontSize="11.5" fill="var(--txt, #e6edf3)">
+                  <text key={s.key} x={bx + 10} y={M.t + 32 + k * 16} fontSize="11.5" fill="var(--fg)">
                     <tspan fill={s.color} fontWeight="700">●</tspan><tspan dx="5">{s.short ?? s.name}</tspan><tspan dx="6" fontWeight="700">{p ? fmt(p.v) : '—'}</tspan>
                   </text>
                 ) })}

@@ -1,0 +1,482 @@
+{
+  "createdAt": "2026-11-06T17:41:16.058582+00:00",
+  "scope": "Final local editorial freeze after authorized corrections; does not replace source-review findings or claim audio/UI verification. Earlier hashes remain historical snapshots.",
+  "hashDefinition": "contentHashExcludingAudit: SHA256 of UTF-8 JSON with ensure_ascii=False, sorted keys, compact separators, excluding only the top-level audit field. fileSha256 hashes actual file bytes.",
+  "fileHashes": {
+    "base-florestal": "dec5665e434156aca840cb55fe16ab684ac3f69df65d08a8593aa43bcb0f8eab",
+    "transporte-logistica": "be3be414a36d0ee9d131e94f760d0bfedd5a6028fe50013f3ce8f13c2d6c9e09",
+    "papel-celulose": "80d15c7f3bd9be835e02a645c80ca92138f9ac133b594357eb648f3db1c814f8",
+    "alimentos-agroindustria": "70ac242c7ba6dc6e4bf1ca0f3a7e43235fab1f04b771cde0869d7340ddeda7e5",
+    "metalmecanico": "d324aa826b9613f5047f2dac4e9688a51a4a9ce0ee972dec1f411614994763ba",
+    "automotivo": "06d0a06adb70b751ae032dd55705a3f94af9379213d37228512fe5009f68b557",
+    "construcao": "c1bb3474878cb1163b2ef5c63963d2a7b69551d3e7814075858ae82e348cfd83",
+    "textil": "ab7ffae3a6e5eb5bb78215bb0ddbacc10bad6cbc182f3718d58ac9ab19a66b9d",
+    "quimicos": "55284f43612798e6f83ed350d3e1f47ade39f61406d1585aba4684140c0cb9d2",
+    "atacado": "fb7220fd68d3ca8ded94902632971b3044b514ac481174c9d5075d5b84bee1a3",
+    "tic": "261014872d1450f5b13fedc337e0fd359ea403857773db739b54f8098b336376"
+  },
+  "studies": [
+    {
+      "studyId": "base-florestal:0",
+      "title": "Florestas plantadas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "b0eb81cbddfd8b80f620a21bdc13fbe494b31f404c9070151188f5e7866d0171",
+      "transcriptSha256": "cd2a18c25f86eb9633f186a2220e6eea43c8a54bbf9aec5cf013a5da34b55e1c"
+    },
+    {
+      "studyId": "base-florestal:1",
+      "title": "Serrarias",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "91c4f7669b488ee221c3aee60759408e373a212297587bcdbebfcc473639c511",
+      "transcriptSha256": "f68bb062309413ccfad5387c365bd7a1701edc1b351460bf154fc4ea2a8e0550"
+    },
+    {
+      "studyId": "base-florestal:2",
+      "title": "Lâminas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "93cd0ea80e3d8d78f40402814dbff751ace75b387aee796d914f62376138a646",
+      "transcriptSha256": "e01c5a3cf1d7733517a49e4cd01bf27afda80fb8d8b0d87881dec57be6925ad5"
+    },
+    {
+      "studyId": "base-florestal:3",
+      "title": "Compensados",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "2510f9ec27fbbb5c0e299359569bdd6e6923ff9371aa04e0cb04e80572d4d343",
+      "transcriptSha256": "d48f85761396b6959e072db7b136a3a1d37bca2d7fe98e407f47b573ff5ff6e2"
+    },
+    {
+      "studyId": "base-florestal:4",
+      "title": "MDF e MDP",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "998502f6f96e9685537474fa56d12039f0256c96e6ffef94e5df4f9ca22bd442",
+      "transcriptSha256": "822090ca64f14a03f146efcd1c67cf54041b9f62194db2cfea5bd7ac0e3bc534"
+    },
+    {
+      "studyId": "base-florestal:5",
+      "title": "Móveis",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "e757c014ac7c0c154a32cfc8d828ce6f5a51e02843f8be638cdfe0075cf10189",
+      "transcriptSha256": "fb28b3baf028a7ac43414f92cd166973a6aa9a6d292201c1f39d4ea67915cc28"
+    },
+    {
+      "studyId": "transporte-logistica:0",
+      "title": "Carga geral",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "e5a5305d0103ad57fcc01f41105c2a533c1ae953a6a2301858c86fc21b95e2be",
+      "transcriptSha256": "99547e9bc5ab251667e07fb9a593a73176460aa2960a05052f353438c69d982e"
+    },
+    {
+      "studyId": "transporte-logistica:1",
+      "title": "Transporte de madeira",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "4919940c500a17665bb5a01ad7854e5e573545afa29a5509ea0a96b53ab5f54a",
+      "transcriptSha256": "9c7808636cf923ed7aabf6c5ceec4e0ba55bb275d90a81880903fdc4ea4be57f"
+    },
+    {
+      "studyId": "transporte-logistica:2",
+      "title": "Transporte de grãos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "929466a5b88f1fb67f67d39ae9bd6819b3cc9e2d1083958e0ae446ab3f19baee",
+      "transcriptSha256": "474e36f63fece4619986d7163088911a0aa8acee9d91955c9f2a20ea71ec3895"
+    },
+    {
+      "studyId": "transporte-logistica:3",
+      "title": "Transporte refrigerado",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "b135ac488b7fbc100fc81f68bb55728b386dfe5b478a22a0337f4d5d87a7bd89",
+      "transcriptSha256": "5b7f56b9a1338e595b2efab56e5cd0ed0a784a2e10fb07ff204385c69558bb20"
+    },
+    {
+      "studyId": "transporte-logistica:4",
+      "title": "Transporte de produtos perigosos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "def56cc68297755186c2ca7982f56b64d240567f38b410f93966d8ae4599cda5",
+      "transcriptSha256": "83ccd9743d820c54bf9584313361550977bb80b6412e7878bba00ea6f5e73397"
+    },
+    {
+      "studyId": "transporte-logistica:5",
+      "title": "Armazenagem",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "ef6be25525891df4ca195c220490569818683b98c04a47a0ac9aafc8fbe7e01f",
+      "transcriptSha256": "dbf459bc7286f90fc81e01572e49156339a9ab6bac769b3a1d289de8271b36d4"
+    },
+    {
+      "studyId": "transporte-logistica:6",
+      "title": "Logística portuária",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "9bab283808ebaee80fe63feb95c4ac69ce145015430e86536958aed117ee6bf3",
+      "transcriptSha256": "572c8aa2f57721af3e33899bebdaf5b0f4da7492adb602594d842938f950182f"
+    },
+    {
+      "studyId": "papel-celulose:0",
+      "title": "Celulose",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "cc62fe67f7d90586e32f840a51ca48970180b738131e9a57f8030e523b51f653",
+      "transcriptSha256": "60fa2c2f5eadfc1818891f52bd3c275db647eb016c3fc1d141e16f10630d9a0f"
+    },
+    {
+      "studyId": "papel-celulose:1",
+      "title": "Papel",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "f92c405c4b409d0365a3f4faf5f19d1af0ffe345f57009df664410f36a76dbee",
+      "transcriptSha256": "dc7cf3c7077750661d5a45234f05ddd34be1c838739563a76aa29dea17818ee9"
+    },
+    {
+      "studyId": "papel-celulose:2",
+      "title": "Papelão ondulado",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "1397dfad2527f8daf00b59feb2667f163d0cfa92d6681684ed64a0dbfcd9f4c6",
+      "transcriptSha256": "20f08e6e0066cb9d0a0d79e1ca563926af5a8702231a719e0b5fa1871cb0d1de"
+    },
+    {
+      "studyId": "papel-celulose:3",
+      "title": "Caixas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "be86efabbdac30efe585435c6fcda03e79b70e548bc57945c56e5bce30d2bcab",
+      "transcriptSha256": "737a6e0981fb893ca9de35b42999a03d0d59afbdecf3a84db33ec8ef0369eb31"
+    },
+    {
+      "studyId": "papel-celulose:4",
+      "title": "Sacos industriais",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "ec5196e40a34d26da5b2f1356e36385d948fd450a462bb6e27952f2068ccd831",
+      "transcriptSha256": "7dd29c0d953a60f170b66d23d07dc1fde816f4ad9e64ea90f50a5ea4062fab76"
+    },
+    {
+      "studyId": "papel-celulose:5",
+      "title": "Tubetes",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "5132aaf330c0f3d2b613bbf0592d1257b06202613d1f677a7fd81efe33f56a57",
+      "transcriptSha256": "bd33ca44440dc6b8b8e1c87a9bb76a7dcbf2e0da079e197f4fba10f38164cb36"
+    },
+    {
+      "studyId": "alimentos-agroindustria:0",
+      "title": "Frigoríficos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "ac5675859207e53017ced81f0eb6029366244ff55c879fb59c6d1355db83a0f3",
+      "transcriptSha256": "4bc6bb3b69a1c1b29bfa3399c019cd37eddec6b6f6e6aa3d3e9d3ebdbb4464e5"
+    },
+    {
+      "studyId": "alimentos-agroindustria:1",
+      "title": "Laticínios",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "a0b913d0d46be21eafea4110360f9852307227684003f66a2b509ca231e8f7e8",
+      "transcriptSha256": "070024cac9c0902b9279cb674e61dec1d7f168524c5b0487e36921930ed22550"
+    },
+    {
+      "studyId": "alimentos-agroindustria:2",
+      "title": "Moinhos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "478c88787d18e22af725a59b46c1d4412b5cae1ccf04e68493db6af5c4540be7",
+      "transcriptSha256": "24775c8c0d846450ecd8c0e574aab12ec3d3fb1cc39b58158f23a0e258acacb6"
+    },
+    {
+      "studyId": "alimentos-agroindustria:3",
+      "title": "Óleos vegetais",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "20e12798bfbdecdc950e5fd1c6a620d2f9ee235917c7c158b5ff30f3c7393291",
+      "transcriptSha256": "35d6cdd6918e7f17011e61331c1c0ba084f8de623b3c4bfb64a80fe701a2ecfa"
+    },
+    {
+      "studyId": "alimentos-agroindustria:4",
+      "title": "Alimentos processados",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "39c2b0dcef3df1f3f32a8f711d42e0a8433eff820ee250de2220a07869edf2fc",
+      "transcriptSha256": "04a96335a101fede99f665be64505a63f3d8c44f2126d45879034069a12a59c5"
+    },
+    {
+      "studyId": "alimentos-agroindustria:5",
+      "title": "Bebidas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "5596a39b15c70cbf729573afcb22963835ca5b0bfb01a0a280ea51809447bee5",
+      "transcriptSha256": "de72acb825a2793511578e565fc760eeb10eeb00aeae6be2efd5fcb03eefc73e"
+    },
+    {
+      "studyId": "metalmecanico:0",
+      "title": "Fundição",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "6737ae588d56f01f31f1be7e6bc8045834776a521e409f773ffdd808e4293e76",
+      "transcriptSha256": "cca33f7c743ea946685f99e3fb810a72fe8c88cad29b9dfa16cbd1f00b34c10a"
+    },
+    {
+      "studyId": "metalmecanico:1",
+      "title": "Usinagem",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "1735e2bd306b61c143a79955e6c02f6d90855c76e5b23241fa98c2fbde72eb54",
+      "transcriptSha256": "30a2c7ab97ff8e7054bd7bb6787f8f249ca281e84b44dca3b0b8d63cfb52c99c"
+    },
+    {
+      "studyId": "metalmecanico:2",
+      "title": "Estruturas metálicas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "8462bbc328c295f0e118992e50f0b765311a25c41e315cf73f0189018cdfef5f",
+      "transcriptSha256": "96acfd9242487e0a3c468e0e84119afacc193ed5e1626302315982be7ae9a08e"
+    },
+    {
+      "studyId": "metalmecanico:3",
+      "title": "Máquinas industriais",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "4e7a161745a3f446176f7c77a013733e8b63f351567d249bd5959d78443a0437",
+      "transcriptSha256": "946ed3d0e11d2a7153290c5b8389fd68e1845ffa9befa80833b2c2570e83bffd"
+    },
+    {
+      "studyId": "metalmecanico:4",
+      "title": "Máquinas agrícolas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "de62bbb2944ca4e5a798f0a698351d45f75a91b0ea0e0ef42b4dca526199440f",
+      "transcriptSha256": "79da952969f9ced2fc578ac476f01de3f52e7c41057bd36ef12a3d2103368206"
+    },
+    {
+      "studyId": "metalmecanico:5",
+      "title": "Equipamentos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "7e40bd467cf3ad6f9166437d27aba62d17c5af59e076b8e52cf3096b60a380c4",
+      "transcriptSha256": "ade48939fa410ef4b2b06553050b633a70b40ec5ffb54079af0704e8f09cfd55"
+    },
+    {
+      "studyId": "automotivo:0",
+      "title": "Componentes automotivos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "a1ac12a8d7545d1d55d77dd5d075791a5581976f14d949ca82b52e63ed9e16c6",
+      "transcriptSha256": "b127caff9c68a45c03500acb8dbe8975cfa1ab4580245ff85caee1456f2f21f3"
+    },
+    {
+      "studyId": "automotivo:1",
+      "title": "Implementos rodoviários",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "d7e66a6ba5d925b47d0cd26ea9d133c3689245e23b38b985b9837c6a623fc2d1",
+      "transcriptSha256": "a4f7a3ce42eb9f1abad0aa659d5b2006fb3aebf63c0ab93cada63cf7725303a9"
+    },
+    {
+      "studyId": "automotivo:2",
+      "title": "Reposição de autopeças",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "92de5bddafca21553b92c710cfb2c5d169857637a44af7be33bd697b1acacff6",
+      "transcriptSha256": "961fc3026e43b72d2032a9ef62ea97b648d5c95b4d8528c1cd358f71462f2008"
+    },
+    {
+      "studyId": "automotivo:3",
+      "title": "Distribuidores de peças",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "5015f925a481d949c58e6cb2ed92069695e4b70d2d6bb583f9b6dcd81bd5a5fc",
+      "transcriptSha256": "54c819409cd19a506a794cae62e3510907ddf80e1a50c211d25fae51e2f15e83"
+    },
+    {
+      "studyId": "construcao:0",
+      "title": "Construção residencial",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "f0416524d7d7d26440c1e8db135644004b2c96b13edce3dbbc189894dc4a1609",
+      "transcriptSha256": "3abb1e4c860f5b19d7887ada4735aa4246a3d53eb7bb50cb134328fd61a6a5ef"
+    },
+    {
+      "studyId": "construcao:1",
+      "title": "Galpões",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "a692e3b67c0eb0795697d8371565b731d039a0af57eded5c8f706d726dd2b6da",
+      "transcriptSha256": "cc4d5f95147c730dd859e10f400c3abcd4c15a325fca8db63ab21dd5fd1a425a"
+    },
+    {
+      "studyId": "construcao:2",
+      "title": "Infraestrutura",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "696d645dedf0bfd99be69ecef829180da6bdb044f398c52627ffdfd8e604d97d",
+      "transcriptSha256": "9e86e4668e02f121b5d9f8f8c7c2523c05e8b5b0d7d242498904cb6181624553"
+    },
+    {
+      "studyId": "construcao:3",
+      "title": "Cimento",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "37ac776f56bbb9d84b38e7895d8558c2ef810e4982d352cdc414f73979a9c41e",
+      "transcriptSha256": "3cc4f0e9f8fafbe9041ea0d12f91748e548d9bf200cedd37310482d178414efa"
+    },
+    {
+      "studyId": "construcao:4",
+      "title": "Cerâmica",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "e0c15f711b6e331a3e2d2cbcaa781d7e9b511b8f16054b9489b6f9665c405149",
+      "transcriptSha256": "5a67f1708f6b3a0531d85ef9cd9353851f0c80d7ad11ca5e368a7c2af18fab34"
+    },
+    {
+      "studyId": "construcao:5",
+      "title": "Vidros",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "f0d388b7b821d6c1f1dc14a836c193bacf10c49358ad25b1a211bda5349b077c",
+      "transcriptSha256": "7f114b2cc044a24a7027c5cb3d93c1547e8f64a197d528c37f649c98e33685d8"
+    },
+    {
+      "studyId": "construcao:6",
+      "title": "Esquadrias",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "4f7454b81389f04d808abbd49b17466fbe3b56e5f30f9a09f068bc31fcf5106c",
+      "transcriptSha256": "0cecc785d864ecd02930d22a523091ecc5d9f0ad08511e216810c8043b13c25a"
+    },
+    {
+      "studyId": "textil:0",
+      "title": "Fiação",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "40879e1fd5f555e1d0580833da6cd18567058e954c9cc67ee3c6df1b04c20052",
+      "transcriptSha256": "2784de47d1e0bedba60e380797f829b9d10bdd92a1a08d80347cf0938de826b3"
+    },
+    {
+      "studyId": "textil:1",
+      "title": "Tecelagem",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "99f295fbc0fd7fa58afefab6e7b6145a5268ccd706b4ac191491241c8076b22f",
+      "transcriptSha256": "f9d8eac66f776a43e5147d9124b094c23b0aa063ae164b3bac6beeb03aacc3d8"
+    },
+    {
+      "studyId": "textil:2",
+      "title": "Malharia",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "9fc55a046441909a91a673f38af1a64597ace2ddf23387162343e50444279a32",
+      "transcriptSha256": "5977b51c71e86fe71a92a3401bbd6514d4b7e476ecfd436279c89ae8bd508b9c"
+    },
+    {
+      "studyId": "textil:3",
+      "title": "Tinturaria",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "4d31f80962ec9f6a9c2c1b54a6a4de7515e15744588012affe7b764aa630ebc7",
+      "transcriptSha256": "af48007dc750f44554a984f6ecdfdee59c75164bd9e329abff7d5139f7524dbf"
+    },
+    {
+      "studyId": "textil:4",
+      "title": "Confecção",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "3434ddc6e1520f04d76b8ced9a9545cfc7cf0d524fa200966dfe621d041928ec",
+      "transcriptSha256": "e6bd4f6ddb78fafa701cb1b94e36af447a68566722ea6c04ba3c66f1a0720e8b"
+    },
+    {
+      "studyId": "textil:5",
+      "title": "Tecidos técnicos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "c109aaf26853331898c6f2004b1cc5fc32ec2082f1fe9baaff12c697dd2f8788",
+      "transcriptSha256": "1db85e1a2732ae8f97056939ee48a993bf0a263ca18ac2619ad96763331ad18c"
+    },
+    {
+      "studyId": "quimicos:0",
+      "title": "Resinas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "9b77b0e9ccaccb06fb6ff5ccfd79b432260f622662b41744fb0b29fb2d2f19fd",
+      "transcriptSha256": "74cb574b0f1e37f26dc2359941d447dd4a2ab324331734e0721698c6fc66dadb"
+    },
+    {
+      "studyId": "quimicos:1",
+      "title": "Transformação plástica",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "05037044179ccfb08085c8f3cb178369cd1d1ef514018ecb28b9ec82ae6d839c",
+      "transcriptSha256": "208b4f60c232fbcb1cbcc18d183facb69a176c70b24129b511a2375a0b589258"
+    },
+    {
+      "studyId": "quimicos:2",
+      "title": "Embalagens flexíveis",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "14e165c9c8676779c3cbbedc6a137ee1a327bd346c0a6d8f0c667fcd72242ff2",
+      "transcriptSha256": "7e9feff40871e99daa6c8715078d1f64afea58df1619ab731faf9672fcd7db0a"
+    },
+    {
+      "studyId": "quimicos:3",
+      "title": "Tintas",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "2393eb58ef712c48e6a4305cb9b2655844cd8ef071ab429b3a3a4f05b4e04444",
+      "transcriptSha256": "bd6b556228811b7fb8c04b3ad68639ac1516fc477b4318039414102ba96ed83f"
+    },
+    {
+      "studyId": "quimicos:4",
+      "title": "Limpeza",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "95ab8f542e2e9afa138e651d964645b9e2d37b4640646f63f6e943cee06879cc",
+      "transcriptSha256": "1764a3372ba3740d8991294963b296887fbda14d99d23e42990fafcebede3f39"
+    },
+    {
+      "studyId": "quimicos:5",
+      "title": "Borracha",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "57a4103abdf65edafc22abf33360f96533ac7d3c04f02955731ce4a8fd0c08c8",
+      "transcriptSha256": "2d36c3888638f48cb79a0e3204dfaccc4ac17e62e7e595885249a6b84814eb25"
+    },
+    {
+      "studyId": "atacado:0",
+      "title": "Distribuição de alimentos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "10cb0c515ce04097dc1de425c2b74d42f638b76757fa94fbb83adc5677c56245",
+      "transcriptSha256": "31c6b920b99c5cef762c0fc3ac5a5e4d04cc35c766028355dcf34f6df846535d"
+    },
+    {
+      "studyId": "atacado:1",
+      "title": "Distribuição de medicamentos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "643f41ef12e9bf5162afb4cea2787e54095d963aa264f09c2e0e4987fecb56e4",
+      "transcriptSha256": "b8735568f476384de8c371ccdd07eeb64e0bc2b821b4df9744d0fa30c30f1122"
+    },
+    {
+      "studyId": "atacado:2",
+      "title": "Distribuição de materiais de construção",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "e8630b0fc31b50f196cc0d9a853e01997a9b5ecc3ae325715629e70a2c5a4ee2",
+      "transcriptSha256": "8ccec4aae544e793137cefe71dcb8b69ce5d1618ebd51291f226173afb930977"
+    },
+    {
+      "studyId": "atacado:3",
+      "title": "Distribuição de insumos industriais",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "df9799be306248f19c471c19ccbed1425e4c421e81091c2a9828dc2d8e594e05",
+      "transcriptSha256": "eda4d45c5bfc82885ae812d1710aa2af2715f4abc80f2b611b25db9fe5001a91"
+    },
+    {
+      "studyId": "atacado:4",
+      "title": "Distribuição de equipamentos",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "592dd6f9076fa67e8ab66f83bcc8b50fc817c50c9c74c2316364a0e7bc827866",
+      "transcriptSha256": "44b04a48c044362f0d978aff235716fce1de019fe14b4cf2b373459c8b9ffb91"
+    },
+    {
+      "studyId": "tic:1",
+      "title": "Cibersegurança",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "468d889308fa6913a9306108a221d82505777302d44164e13950b88df6220ce7",
+      "transcriptSha256": "77bc4838a2cc8982aaf55b1e68dddb30264df99240a5a9b1f2057e31fe30663b"
+    },
+    {
+      "studyId": "tic:2",
+      "title": "Redes e conectividade",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "7070cef13f9e627f31cbb92fa8dcb32eafdc5aff78c58fbea8fdf61a139266df",
+      "transcriptSha256": "c7a1a0eebafd460720e36fbc19e95ee063006cac4784c703fcb727652ec446c1"
+    },
+    {
+      "studyId": "tic:3",
+      "title": "Serviços gerenciados de TI",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "78917ea25a45f8d6e4f4e8649d5e8ac3dfca54b62a67fa1b28b3951159929d88",
+      "transcriptSha256": "15911a9f3d25171f5621ea823ce8df6e567d0c6be118cf6a4db26440a56cf114"
+    },
+    {
+      "studyId": "tic:4",
+      "title": "Comunicação e colaboração",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "77958439df1a3253d9f78a87e4b2038409a08e4750c9129615958dbff5b61955",
+      "transcriptSha256": "b89823945a330f5d11dfcef85f2c5249ee1835a5d1df8d29f872b85f2aff6174"
+    },
+    {
+      "studyId": "tic:5",
+      "title": "Software e serviços de TI",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "8f7170be0750427e72ea950e38f8be99d8c239e6b246659df40ec95d21e1c998",
+      "transcriptSha256": "ebfee133290172be6f801321f11ba92fba239797740d8e01f357e66c3550be96"
+    },
+    {
+      "studyId": "tic:6",
+      "title": "Data centers e nuvem",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "219bf5c583ccbcf6ca67d687b4e4ae0dcede9c6ae362a840fb937583d282bfb1",
+      "transcriptSha256": "1ae6bb5684d1c088e47bb3eb1b1a612e84f27006d933d219d9412824acb634ab"
+    },
+    {
+      "studyId": "tic:7",
+      "title": "Operadoras de telecomunicações",
+      "reviewStatus": "approved",
+      "contentHashExcludingAudit": "9a7f5cae5f6c896cdd7a3312aa04d49f4b5be59bc8de420843f5537da366dfc0",
+      "transcriptSha256": "e5407bfa4b6ca0e4f0fb6a1890b5b39218020072cda6a1e89c44dea3918ed4de"
+    }
+  ]
+}

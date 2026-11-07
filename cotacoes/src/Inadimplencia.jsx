@@ -16,7 +16,7 @@ export default function Inadimplencia({ searchTarget }) {
   const selected = (file.data?.series || []).filter(s => s.type === type)
   const end = Math.max(0, ...selected.flatMap(s => s.points.map(p => p.t)))
   const start = new Date(end); start.setUTCMonth(start.getUTCMonth() - period + 1)
-  const series = selected.map(s => ({ ...s, name: s.person === 'PF' ? 'Pessoa física' : 'Pessoa jurídica', color: s.person === 'PF' ? '#ffb000' : '#4cc3ff', points: s.points.filter(p => !period || p.t >= start.getTime()) }))
+  const series = selected.map(s => ({ ...s, name: s.person === 'PF' ? 'Pessoa física' : 'Pessoa jurídica', color: s.person === 'PF' ? 'var(--currency-usd)' : 'var(--currency-eur)', points: s.points.filter(p => !period || p.t >= start.getTime()) }))
   return <section className="credit-panel" aria-labelledby="credit-title">
     <div className="history-head"><h2 id="credit-title">Inadimplência PF e PJ</h2><RefreshButton files={['inadimplencia.json']} /></div>
     <p className="muted">Crédito no Sistema Financeiro Nacional · saldo com atraso superior a 90 dias · dados mensais</p>

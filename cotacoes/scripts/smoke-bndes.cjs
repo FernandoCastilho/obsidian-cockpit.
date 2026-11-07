@@ -1,6 +1,6 @@
 // Aba BNDES: uma área de trabalho com abas por família (TFB, TLP, TFC, Moedas), período único para todas as séries e observações recolhidas.
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
-const { mkdir } = require('node:fs/promises')
+const { mkdir, writeFile } = require('node:fs/promises')
 const wk = (iso) => { const d = new Date(`${iso}T12:00:00Z`).getUTCDay(); return d !== 0 && d !== 6 }
 const iso = (start, i) => new Date(start + i * 864e5).toISOString().slice(0, 10)
 const todayIso = new Date().toISOString().slice(0, 10)
@@ -136,7 +136,7 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.deepEqual(await tbl().locator('.bn-pick small').allTextContents().then((a) => a.map((s) => s.split(' · ')[0])), ['604', '143', 'LD1', '024', '236', 'TR1', 'TR2'])
       assert.match(await tbl().nth(0).innerText(), /US\$[\s\S]*R\$ 5,\d{4}[\s\S]*▲ \+0,\d\d%/)
       assert.match(await tbl().nth(5).innerText(), /TFBTR60\.90[\s\S]*3,60% a\.a\./, 'valor vigente da TR1: o do mês corrente, não o de 2099')
-      assert.match(await tbl().nth(2).innerText(), /SOBRETAXA LCD[\s\S]*-0,110000% a\.a\. · dado anterior/, 'LD1 preserva a referência oficial datada, mesmo quando a coleta não inclui essa série')
+      assert.match(await tbl().nth(2).innerText(), /SOBRETAXA LCD[\s\S]*-0,110000% a\.a\.\s+·\s+dado anterior/, 'LD1 preserva a referência oficial datada, mesmo quando a coleta não inclui essa série')
       assert.match(await tbl().nth(3).innerText(), /SOBRETAXA FIXA SELIC[\s\S]*indisponível/)
       await tbl().nth(0).getByRole('button').click()
       assert.match(await p.locator('.bn-range').innerText(), /No período: .* R\$ [\d,]+ → .* R\$ [\d,]+ \(\+[\d,]+%\)/)
@@ -206,7 +206,31 @@ const daily = (start, n, base, step, dec = 4) => Array.from({ length: n }, (_, i
       assert.match(await p.locator('.idx-defs').innerText(), /Acrescida do IPCA\. Não inclui os spreads do BNDES e do banco\./)
       if (outputDir) { await p.evaluate(() => window.scrollTo(0, 0)); await p.screenshot({ path: `${outputDir}/tlp-${width}-indexadores.png` }) }
       await p.getByRole('button', { name: 'Histórico na aba BNDES' }).click(); await p.waitForURL('**/#bndes/tlp/TLP')
-      if (width >= 900) { assert.match(await p.locator('.topbar-brand').innerText(), /^Painel\s*Especialista$/, 'marca da barra superior'); for (const w of [1000, 1100, 1299]) { await p.setViewportSize({ width: w, height: 800 }); const sp = await p.locator('.topbar-brand span').boundingBox(); assert.ok(sp && sp.width > 40, `"Especialista" visível (não só no texto) a ${w}px`); assert.equal(await p.evaluate(() => { const t = document.querySelector('.topbar-tabs'); return t.scrollWidth > t.clientWidth + 1 }), false, `abas sem corte a ${w}px`) } await p.setViewportSize({ width, height: 900 }); await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes') }
+      if (width >= 900) {
+        assert.match(await p.locator('.topbar-brand').innerText(), /^Painel\s*Especialista$/, 'marca da barra superior')
+        const headerGeometry = []
+        for (const w of [1000, 1024, 1100, 1199, 1299]) {
+          await p.setViewportSize({ width: w, height: 800 })
+          const sp = await p.locator('.topbar-brand span').boundingBox()
+          assert.ok(sp && sp.width > 40, `"Especialista" visível (não só no texto) a ${w}px`)
+          assert.equal(await p.evaluate(() => { const t = document.querySelector('.topbar-tabs'); return t.scrollWidth > t.clientWidth + 1 }), false, `abas sem corte a ${w}px`)
+          const geometry = await p.locator('.topbar').evaluate(header => {
+            const box = selector => { const r = header.querySelector(selector).getBoundingClientRect(); return { left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height } }
+            return { brand:box('.topbar-brand'), tabs:box('.topbar-tabs'), theme:box('.theme-trigger'), viewport:innerWidth, height:header.getBoundingClientRect().height }
+          })
+          headerGeometry.push({ width:w, ...geometry })
+          assert.ok(geometry.brand.right <= geometry.tabs.left + 1, `marca não invade abas a ${w}px`)
+          assert.ok(geometry.tabs.right <= geometry.theme.left + 1, `tema não invade abas a ${w}px`)
+          assert.ok(geometry.theme.left >= 0 && geometry.theme.right <= w + 1, `tema dentro da tela a ${w}px`)
+          assert.ok(geometry.theme.width >= 43.9 && geometry.theme.height >= 43.9, `tema preserva alvo44px a ${w}px`)
+          assert.ok(sp.y >= geometry.brand.top - 1 && sp.y + sp.height <= geometry.brand.bottom + 1, `marca completa dentro da barra a ${w}px`)
+          if (outputDir) {
+            await writeFile(`${outputDir}/topbar-geometry.json`, JSON.stringify(headerGeometry, null, 2))
+            await p.screenshot({ path: `${outputDir}/topbar-${w}.png` })
+          }
+        }
+        await p.setViewportSize({ width, height: 900 }); await p.keyboard.press('Alt+5'); await p.waitForURL('**/#bndes')
+      }
       assert.deepEqual(errors, [])
     }
     console.log('PASS aba BNDES: famílias com período único, TLP prefixada, tabelas, observações recolhidas e menu (390, 820 e 1280)')

@@ -23,3 +23,9 @@ A coleta foi adicionada à execução horária existente de Pages (dias úteis),
 - scripts/smoke-curadoria.cjs: dados fictícios, rede externa bloqueada, 390/820/1440px; alternância/repetição, teclado, sexta data, exclusão fora da janela, 5 dias das Manchetes, ausência, erro e resposta parcial. Incluído no CI.
 
 A coleta local real confirmou publicações nas quatro seções em 06/11/2026. Isso não certifica a íntegra de todos os artigos. A prévia local não está publicada.
+
+## Integração de 07/11/2026
+
+Atualizada sobre a base corrente sem remover Google Trends, pastas setoriais ou os gates de QA existentes. O smoke geral passou a simular `curadoria-noticias.json`, eliminando a leitura acidental de dados reais da reforma. A coleta especial de Trends preserva a curadoria; a execução normal continua responsável por coletá-la.
+
+Verificação local: 1.256 testes aprovados, build aprovado e lint sem erros (cinco avisos preexistentes). Coleta real em 07/11/2026 confirmou 103 itens de impostos, 1 de split payment, 73 de reforma e 39 de escala 6x1, com todas as consultas bem-sucedidas. As quantidades mudam conforme a janela móvel. O navegador local não inicia por restrição de sockets do ambiente; os smokes visuais devem passar no CI antes da integração.

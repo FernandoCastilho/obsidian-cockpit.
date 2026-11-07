@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ZONES } from './Clock.jsx'
 import { OnlineBadge } from './Acessos.jsx'
 import { DESK_TABS } from './terminal.js'
+import ThemeControl from './ThemeControl.jsx'
 import { AvisosButton } from './Avisos.jsx'
 
 const CLOCKS = [
@@ -66,6 +67,7 @@ export default function TopBar({ tab, onTab, feed, feedAt, feedLabel, feedTitle 
         {feedLabel || STATE_TEXT[feed]}
         {feedAt && feed !== 'loading' && <b>{feedAt}</b>}
       </div>
+      <ThemeControl />
       <AvisosButton className="topbar-info" />
       <span className="laser-slot laser-slot-top" />
     </div>

@@ -1,59 +1,60 @@
 # Conta Garantida
 
-Implementação isolada em 05/11/2026. Não publicada.
+Descrição dos modos de apuração da conta garantida, revisada em 06/11/2026. Rota `#calculadora/conta-garantida`; motor `cotacoes/src/contaGarantida.js`; tela `ContaGarantida.jsx`.
 
-## Escopo solicitado
+## Escopo e modos
 
-Nova calculadora em `#calculadora/conta-garantida`, com dois modos:
+Estimativa de crédito rotativo adimplente com reutilização contratualmente prevista. Não é extrato, cotação bancária nem CET.
 
-1. Utilização única: valor, data inicial e prazo em dias corridos ou data de quitação. O principal é quitado automaticamente na data final.
-2. Lançamentos por dia: utilizações e amortizações em tabela, com apuração até uma data escolhida, inclusive. Não presume quitação na data final.
+1. **Utilização única:** valor, data inicial e prazo em dias corridos ou data de quitação. O principal é quitado no início da data final, antes da apuração desse dia.
+2. **Lançamentos por dia:** utilizações e amortizações de principal até a data final, inclusive. Não há quitação automática no último dia.
+3. **Comparar com parcelado:** entrega paralela incorporada à produção em `0a9b237`, preservada neste lote. O comparativo de substituição total/parcial por giro e o diagnóstico opcional de NCG têm [documentação própria](conta-garantida-alongamento.md). As regras de apuração abaixo descrevem os dois primeiros modos; não substituem as premissas do comparativo.
 
-Instrução posterior e específica do usuário: juros e IOF são pagos à parte e não incorporados ao saldo. Portanto, não existe capitalização, juros sobre juros, financiamento de IOF nem coluna de encargos debitados. O saldo é exclusivamente o principal utilizado menos amortizações. Essa é a premissa deste produto, não uma afirmação universal sobre todos os contratos de conta garantida.
+Na conta garantida, juros e IOF são pagos à parte, **nunca incorporados ao principal**. Não existe capitalização de encargos da CG, juros sobre juros, financiamento de IOF ou coluna de encargos debitados. No comparativo, a carência do novo giro tem regras próprias, documentadas separadamente. Essa premissa foi solicitada para o produto; não é afirmação sobre todos os contratos bancários.
 
-## Cálculo
+A apuração da CG na UI fixa taxa **mensal, proporcional, divisor 30**. A taxa é obrigatória e começa vazia: zero é válido, vazio não é zero. Opções alternativas de base/conversão existentes no motor puro são cobertas por testes, mas não são controles da tela atual.
 
-- O saldo anterior ao primeiro dia é zero. Para uma operação já em andamento, deve ser incluído seu histórico desde a utilização original. Informar o saldo antigo como novo saque cria adicional indevido e não é uma importação de saldo inicial suportada.
-- Lançamentos da mesma data são somados, independentemente da ordem de entrada. Não há saldo credor nem modelagem intradia. Amortização superior à utilização acumulada bloqueia o resultado.
-- `saldo[d] = saldo[d−1] + utilizações[d] − amortizações[d]`.
-- Juros do dia = saldo utilizado × taxa diária nos dias escolhidos. A taxa é obrigatória e começa vazia. Zero é permitido, mas vazio nunca é convertido em zero.
-- A taxa diária pode ser proporcional (`taxa / base`) ou equivalente (`(1 + taxa)^(1/base) − 1`). Essa opção converte a taxa, não capitaliza juros. Bases disponíveis: 1, 30, 360, 365 e 252.
-- Dias de juros: corridos, ou segunda a sexta menos feriados informados pelo usuário. Não há importação implícita de calendário. IOF continua em todos os dias corridos.
-- IOF diário = saldo de fechamento × alíquota diária.
-- IOF adicional = `max(0, saldo[d] − saldo[d−1]) × alíquota adicional`. Amortização não estorna IOF, e nova elevação gera adicional novamente.
-- Utilização única: data inicial inclui saldo, data final tem quitação antes da apuração. Assim, data inicial + 10 dias resulta em dez saldos positivos e onze linhas, a última com zero. Uso e quitação na mesma data têm fechamento zero nesta convenção.
-- Sem arredondamentos intermediários; somente exibição em centavos. Somar centavos exibidos pode produzir diferença em relação ao total de precisão completa.
-- Custo total = juros + IOF diário + IOF adicional. Principal é apresentado separadamente, sem ser somado como custo.
-- Apuração mensal respeita meses civis, não reaplica adicional ao saldo que apenas atravessa o mês e não representa datas de recolhimento. Meses inicial e final podem ser parciais.
+## Cálculo e datas
 
-## Base legal e fronteiras
+- Saldo anterior ao primeiro dia = zero. Para uma operação já em andamento, inclua o histórico desde a utilização original. Informar saldo antigo como novo saque cobra adicional novamente; não é importação de saldo inicial já tributado.
+- Lançamentos na mesma data são compensados antes do fechamento, sem ordem intradia. Amortização superior ao principal utilizado bloqueia o resultado.
+- Saldo[d] = saldo[d−1] + utilizações[d] − amortizações[d].
+- Juros diários na UI = saldo devedor no fechamento × taxa mensal/100/30.
+- Para juros, escolha dias corridos ou segunda a sexta, excluindo os feriados que informar. Não há calendário bancário certificado nem importação automática de feriados. **IOF continua em dias corridos.**
+- IOF diário = saldo devedor de fechamento × alíquota diária.
+- IOF adicional = max(0, saldo[d] − saldo[d−1]) × alíquota adicional. Amortizar não estorna IOF; reutilizar o crédito pode gerar novo adicional.
+- Dez dias no modo único produzem dez saldos positivos e onze linhas, sendo a última de quitação com zero. Uso e quitação no mesmo dia resultam em fechamento zero nesta convenção.
+- No modo lançamentos, o fechamento final participa do cálculo e o saldo pode permanecer aberto.
+- Custo total = juros + IOF diário + adicional. Principal é mostrado separadamente, sem ser chamado de custo.
+- Totais preservam precisão integral até a apresentação. Somar valores diários já exibidos em centavos pode diferir do total; não é uma política de escrituração bancária.
+- Apuração mensal segue meses civis, sem reaplicar adicional por mera permanência do saldo. Não define datas de recolhimento; primeiro/último mês podem ser parciais.
 
-Fontes oficiais lidas em 05/11/2026:
+## IOF e fronteiras do modelo
 
-- Decreto 6.306/2007 atualizado, art. 7º, I(a), VI e §§ 1º, 12, 15, 16, 18 e 19; art. 45, II: https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html
-- Orientação da Receita Federal sobre a retomada das alíquotas em julho de 2025: https://www.gov.br/fazenda/pt-br/canais_atendimento/imprensa/notas-a-imprensa/2025/julho/receita-federal-do-brasil-explica-como-ficam-os-pagamentos-do-iof-diante-do-novo-entendimento/
+Regime suportado desde **17/07/2025**: PJ/PF 0,0082% ao dia e 0,38% adicional; Simples/MEI elegível confirmado até R$ 30 mil, 0,00274% ao dia e 0,38%. No Simples o formulário exige valor contratual da operação e confirmação do enquadramento; utilização acima desse valor bloqueia o cálculo. O enquadramento não é inferido do saldo momentâneo nem juridicamente certificado pela tela.
 
-Ambos os modos são cenários de contrato rotativo com reutilização prevista, mesmo quando o fluxo contém um único saque. Não são simulação de empréstimo de principal contratualmente definido.
+Datas anteriores a 17/07/2025 são **bloqueadas**, sem alternativa de alíquota manual na UI. Não há tabela histórica, transição automática ou previsão de mudanças legais futuras. A tela fixa operação adimplente; o motor também rejeita estados não suportados.
 
-Referências PJ/PF: 0,0082% ao dia e 0,38% adicional. Simples/MEI: 0,00274% ao dia, condicionado à confirmação do enquadramento, documentação e valor da operação até R$ 30 mil; não é inferido pelo saldo momentâneo. O formulário exige valor contratual da operação e confirmação explícita; utilização superior ao valor declarado bloqueia o cálculo. Isso não certifica elegibilidade tributária.
+Não se aplica teto genérico de 365 dias à soma dos saldos desta operação rotativa adimplente. Não estão implementados inadimplência, renegociação, principal contratualmente definido, excesso de limite, indexadores variáveis, tarifas ou encargos incorporados. Ampliar o período observado nos dois modos de apuração não converte saldo em empréstimo parcelado. O modo separado Comparar com parcelado projeta uma nova proposta, sem efetivar renegociação ou contratação.
 
-A referência automática só é disponibilizada a partir de 17/07/2025. Não há tabela histórica de alíquotas nem transições automáticas. Datas anteriores requerem alíquotas manuais constantes, com aviso de que isso não valida regimes históricos. Projeções além de 05/11/2026 mantêm a última referência verificada e avisam que não antecipam mudanças futuras.
-
-Não se aplica teto genérico de 365 dias a esta operação adimplente por soma de saldos. Inadimplência e renegociação, principal definido, excesso de limite, indexadores variáveis, tarifas, juros/IOF incorporados e regras especiais não estão implementados. O estado inadequado selecionado no formulário bloqueia o cálculo. O § 12 sobre encargos é explicado como limite do modelo, pois neste escopo todos são pagos à parte.
+Fontes: [Decreto 6.306/2007, art. 7º I(a), VI e §§ 1º, 12, 15, 16, 18 e 19](https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html) e [orientação da Receita de 17/07/2025](https://www.gov.br/fazenda/pt-br/canais_atendimento/imprensa/notas-a-imprensa/2025/julho/receita-federal-do-brasil-explica-como-ficam-os-pagamentos-do-iof-diante-do-novo-entendimento/).
 
 ## Interface e privacidade
 
-- Nova entrada em Calculadoras, rota própria e documento de busca estático. Identificadores existentes preservados.
-- Tabelas editável, mensal e diária; diário paginado em blocos de até 31 datas, com até 3.660 dias por simulação e 500 lançamentos.
-- Labels, tabelas com cabeçalhos e escopo, regiões roláveis nomeadas, botões nativos, estados de erro e resultados antigos removidos quando o formulário é inválido.
-- Campos só ficam na memória do componente. Trocar os dois modos mantém os campos, mas sair da calculadora ou recarregar apaga o rascunho. Nenhuma chamada de rede ou armazenamento é feita pela calculadora; dados privados não entram na busca gerada.
+Até 3.660 dias por simulação e 500 lançamentos; diário paginado em até 31 datas. Labels, cabeçalhos e regiões roláveis têm nomes. Entradas inválidas removem o resultado anterior.
 
-## Referências de teste
+Campos permanecem na memória do componente: trocar os modos mantém os rascunhos; sair da calculadora ou recarregar descarta-os. A calculadora não transmite os campos nem os inclui na busca estática.
 
-- R$ 100.000 usados por dez dias, taxa mensal proporcional de 3% / 30, IOF diário 0,0082% e adicional 0,38%: juros R$ 1.000, IOF diário R$ 82, IOF adicional R$ 380, custo R$ 1.462, saldo final zero. A taxa de 3% aparece apenas neste teste, nunca como oferta/default da tela.
-- Fluxo de cinco dias: uso 10.000; uso 5.000; amortização 8.000; uso 6.000; amortização 13.000. Saldos 10.000/15.000/7.000/13.000/0. Bases adicionais 10.000/5.000/0/6.000/0. Com 3%/30 e IOF padrão: juros 45; IOF diário 3,69; adicional 79,80; custo 128,49.
-- Quatrocentos dias adimplentes com R$ 100.000 sem capitalização: IOF diário R$ 3.280, sem corte em 365 dias.
+## Exemplos vigentes e regressões
 
-`node --test test/conta-garantida*.test.mjs` executa cálculos, datas, feriados, mesma data, amortização, novo uso, taxas, alíquotas, limites, Simples, ausência de capitalização e interações React sem navegador. Nesta integração, a regressão global usa lista explícita de arquivos elegíveis com `node --test`, excluindo integralmente `test/commodities.test.mjs` por conter a fixture Python restrita. Não execute `npm test` nem workflows de preview nesta tarefa. ESLint e build são executados offline, sem iniciar servidores.
+Os dois exemplos principais estão vinculados a `test/calculator-doc-examples.test.mjs`:
 
-Não foi executada validação visual em navegador. Testes de estrutura/renderização React não comprovam layout, foco real no navegador ou experiência mobile. O log de origem test-final.log registra npm test e a execução do teste XLSX com fixture Python, contrariando a declaração original de que essa fixture não havia sido executada. O integrador registrou a divergência, não repetiu a operação e revalidou a lista elegível excluindo integralmente commodities.test.mjs. Nesta consolidação não houve servidor, preview, socket, fixture Python, publicação ou push; a base anterior foi preservada.
+- R$ 100 mil utilizados em 06/11/2026 por dez dias, 3% a.m. proporcional/30, PJ: juros R$ 1.000; IOF diário R$ 82; adicional R$ 380; custo R$ 1.462; saldo final zero.
+- O mesmo principal por quarenta dias: juros R$ 4.000; IOF diário R$ 328; adicional ainda R$ 380; custo R$ 4.708. Saldo não cresce com encargos nem a extensão reaplica adicional.
+- Em quatrocentos dias adimplentes, R$ 100 mil geram IOF diário R$ 3.280, sem corte genérico em 365 dias.
+
+`node --test test/conta-garantida*.test.mjs test/calculator-doc-examples.test.mjs` verifica fórmulas, calendários, feriados, saques e amortizações, Simples, limites, não capitalização e interação React. Testes em memória não comprovam foco, layout ou uso por leitor de tela; ver o relatório da revisão correspondente para o que foi realmente executado.
+
+## Histórico documental
+
+A documentação inicial de 05/11/2026 listava bases 1/30/360/365/252, conversão equivalente e alíquota manual para datas antigas como se fossem opções da tela. São descrições superadas: a UI atual usa mensal proporcional/30 e bloqueia o histórico anterior a 17/07/2025. Os registros antigos de execução parcial e restrições de ambiente descreviam aquela tarefa, não constituem instruções operacionais da versão atual.

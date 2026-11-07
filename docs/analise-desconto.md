@@ -1,70 +1,64 @@
 # Análise de desconto
 
-Implementação isolada sobre a produção `eeecfc9d8d9560e010a3584e812ba74a95c6d9f5`. Não publicada.
+Descrição da interface e do motor vigentes, revisada em 06/11/2026. Acesso: Calculadoras → Análise de desconto, rota `#calculadora/analise-desconto`, comandos `DESCONTO` e `Análise de desconto`. Motor: `cotacoes/src/analiseDesconto.js`; tela: `AnaliseDesconto.jsx`.
 
-## Acesso e escopo
+## Entradas atuais
 
-- Calculadoras → Análise de desconto; rota `#calculadora/analise-desconto`.
-- Comandos `DESCONTO` e `Análise de desconto`; conteúdo integrado à busca.
-- Motor puro em `cotacoes/src/analiseDesconto.js`, tela em `AnaliseDesconto.jsx`, estilos próprios.
-- As calculadoras existentes e o motor `emprestimo.js` não foram modificados.
+- Informe data da operação, taxa mensal, convenção comercial simples (por fora) ou racional simples (por dentro), e os títulos agrupados por vencimento.
+- Cada grupo informa valor nominal **total** do grupo, quantidade de títulos e vencimento posterior à operação. O valor não é multiplicado pela quantidade.
+- Juros e IOF são calculados automaticamente por grupo. Não há campos de juros pagos ou alíquotas manuais na UI.
+- Escolha explicitamente a tarifa: total por operação, unitária × quantidade ou percentual do nominal. A referência histórica de R$ 564 era ambígua; nenhuma interpretação vem selecionada.
+- TAC é um valor por operação. O exemplo R$ 260 e demais valores iniciais são editáveis, não condições comerciais vigentes.
+- A projeção mensal recebe operações por mês, valor médio bruto e taxa de desconto projetada. Mantém quantidades e vencimentos dos títulos, escalona seus valores e **recalcula juros e IOF**. TAC e tarifas fixas permanecem por operação; tarifa percentual muda com o nominal.
+- O giro comparativo usa Price em 12, 24, 36 e 48 meses, com taxa e TAC próprias. Principal automático = volume bruto mensal do desconto; o usuário pode informar outro principal. Isso não é NCG apurada nem igualdade do valor líquido disponibilizado.
+- O valor inicial de TAC do giro (R$ 3.150) foi inferido de uma referência anterior; requer conferência e não é tarifa padrão.
 
-## Informações que não devem ser confundidas
+## Fórmulas do desconto
 
-1. A primeira foto tem seis operações por mês e a segunda tem sete. O valor editável é a única fonte da quantidade. O exemplo inicial usa seis; os testes de reconciliação usam sete.
-2. R$ 564,00 está rotulado como custo unitário, porém o resumo o trata como total por operação. A tela exige escolher total informado, unitário × quantidade ou percentual do valor. Nenhuma forma vem selecionada.
-3. O percentual de 0,25% reproduz os centavos da segunda foto, mas foi inferido, não confirmado como tarifa contratual. R$ 564,00 como total produz R$ 32.331,25/mês; a hipótese de 0,25% produz R$ 32.331,26/mês.
-4. O total R$ 4.054,75 da primeira foto exclui a tarifa de títulos. O custo completo da implementação inclui a tarifa e o líquido é corrigido. O subtotal sem títulos aparece separadamente para conciliação.
-5. As taxas de desconto da foto não permitem reconstruir juros sem os prazos dos títulos. A tela mantém as taxas como informação, explicitamente rotulada, e usa juros e IOF pagos como entradas em reais.
-6. A TAC de giro R$ 3.150,00 foi inferida dos resultados. É editável, com aviso, e não apresentada como tarifa padrão.
-7. O adicional de IOF inicia vazio, pendente de definição. É preciso informar explicitamente 0 ou outro percentual. Tanto 0% quanto 0,38% são testados. A alíquota diária de 0,0082% também é editável e rotulada como premissa.
-8. O principal do giro acompanha o volume bruto mensal por padrão explícito, não por apuração de NCG. O usuário pode informar outro principal. A tela alerta sobre montantes e fluxos diferentes.
+Para cada grupo de nominal N, taxa mensal i em fração e d dias corridos:
 
-## Fórmulas
+- Comercial: juros = N × i × d/30.
+- Racional: juros = N − N/(1 + i × d/30).
+- Base do IOF = N − juros antecipados. TAC e tarifa de títulos não reduzem essa base.
+- IOF = base × (alíquota adicional + alíquota diária × min(d, 365)).
+- Custo completo = juros + IOF + TAC + tarifa de títulos.
+- Subtotal sem títulos = juros + IOF + TAC; líquido = nominal − custo completo.
 
-Todos os percentuais são convertidos de % para fração antes do cálculo. Não há arredondamento intermediário; a exibição usa duas casas decimais.
+Cada grupo é calculado separadamente e os resultados são somados. Se taxa/prazo consomem o nominal ou custo total atinge o bruto, a simulação é bloqueada. Os percentuais da UI são divididos por 100. Não há arredondamento intermediário; a exibição usa centavos.
 
-- Tarifa de títulos: valor total informado, tarifa unitária × quantidade ou valor bruto × percentual.
-- Custo real: tarifa de títulos + TAC + juros pagos + IOF pago.
-- Líquido: valor bruto − custo real.
-- Projeção mensal: cada custo por operação × operações por mês. Para a tarifa percentual da projeção, a base é o valor médio bruto informado.
-- Juros e IOF pagos continuam valores nominais por operação, mesmo se o valor médio for alterado. A tela avisa e pede ajuste dos encargos ao trocar o cenário.
-- Principal automático do giro: valor médio bruto × operações por mês.
-- Giro Price: `PMT = P × i / (1 − (1+i)^(-n))`; taxa zero: `P/n`.
-- A implementação usa `expm1` e `log1p` para estabilidade numérica. Amortização fechada da parcela k: `PMT × (1+i)^(-(n-k+1))`; a última amortização elimina somente o resíduo numérico do saldo.
-- IOF diário: soma de cada amortização × menor valor entre dias corridos até seu vencimento e 365 × alíquota diária.
-- IOF adicional: principal × alíquota adicional, uma vez.
-- Juros do giro: matematicamente PMT × prazo − principal. No código, acumula juros sobre o saldo de abertura de cada parcela para evitar resíduo negativo ou perda de juros positivos quando a taxa é zero ou muito próxima de zero.
-- Custo do giro: juros + TAC única + IOF diário + IOF adicional. TAC e IOF são pagos à parte, não financiados.
-- Economia estimada: custo do desconto no prazo − custo do giro no prazo. Positivo significa menor custo do giro no cenário; negativo, maior custo.
-- Média mensal all-in: `(principal + custo do giro) / prazo`. Não é a parcela contratual; a PMT sem TAC e IOF aparece em outra linha.
-- Coluna Mês da comparação: usa o cenário de giro de 12 meses, com custo/economia divididos por 12. PMT e média all-in já são mensais.
+## IOF e calendário
 
-## Calendário
+As alíquotas vêm de `iofRules.js` conforme data, perfil e valor da operação. Regime suportado desde **17/07/2025**: PJ geral 0,0082% ao dia + 0,38%; Simples/MEI elegível confirmado até R$ 30 mil, 0,00274% ao dia + 0,38%. O giro possui enquadramento próprio; a projeção reavalia o limite por operação. Datas anteriores e perfis não suportados são recusados. A confirmação do usuário não certifica juridicamente a elegibilidade e mudanças futuras não são antecipadas.
 
-Data da operação também é a data de liberação hipotética do giro. Vencimentos mensais a partir do mês seguinte, no mesmo dia, limitado ao último dia do mês quando necessário. A origem é sempre a data inicial, evitando deslocamento acumulado após fevereiro. Datas são calculadas em UTC, sem ajuste por dias úteis, feriados ou horário de verão.
+Fontes: [Decreto 6.306/2007, art. 7º](https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html) e [orientação da Receita de 17/07/2025](https://www.gov.br/fazenda/pt-br/canais_atendimento/imprensa/notas-a-imprensa/2025/julho/receita-federal-do-brasil-explica-como-ficam-os-pagamentos-do-iof-diante-do-novo-entendimento/).
 
-Para 05/11/2026, as primeiras 12 parcelas vencem após 30, 61, 92, 120, 151, 181, 212, 242, 273, 304, 334 e 365 dias.
+Datas de títulos devem refletir ajustes contratuais; não há ajuste automático de feriados. A data da operação também é a liberação hipotética do giro. As parcelas do giro vencem mensalmente a partir do mês seguinte, no mesmo dia ou último dia do mês, sempre partindo da data original, sem deriva após fevereiro. Juros do giro usam períodos mensais iguais; IOF usa dias reais em UTC.
 
-## Reconciliação da segunda foto
+## Fórmulas do giro e comparação
 
-Premissas de reprodução: valor R$ 225.600,43, sete operações/mês, tarifa hipotética de 0,25% por operação, TAC desconto R$ 260,00, juros R$ 2.603,15, IOF desconto R$ 1.191,60, giro Price 1,83% a.m., TAC giro R$ 3.150,00, IOF diário 0,0082%, adicional zero, liberação 05/11/2026.
+Price: PMT = P × i / (1 − (1+i)^(-n)); taxa zero: P/n. O código usa `log1p`/`expm1`; acumula juros sobre o saldo para evitar cancelamento em taxas quase zero. A última amortização fecha o principal.
 
-- Volume mensal/principal: R$ 1.579.203,01.
-- Custo do desconto mensal: R$ 32.331,26. Anual: R$ 387.975,09.
-- Giro 12 meses: IOF R$ 26.371,44; custo R$ 223.607,95; média all-in R$ 150.234,25.
-- Giro 24 meses: IOF R$ 37.950,74; custo R$ 427.376,46; média all-in R$ 83.607,48.
-- Giro 36 meses: IOF R$ 41.750,30; custo R$ 635.698,26; média all-in R$ 61.525,04.
-- Giro 48 meses: IOF R$ 43.605,96; custo R$ 854.122,82; média all-in R$ 50.694,29.
+IOF diário do giro = soma de cada amortização × min(dias corridos desde a liberação, 365) × alíquota diária. Adicional = principal × alíquota adicional, uma vez. TAC e IOF são pagos à parte, sem financiamento.
 
-## Limites e verificações
+- Custo do giro = juros + TAC única + IOF.
+- Média mensal all-in = (principal + custo) / prazo. **Não é a parcela contratual**; a PMT aparece separadamente.
+- Diferença estimada = custo do desconto repetido no prazo − custo do giro. A coluna Mês usa o cenário de 12 meses dividido por 12 para custos; PMT e média de desembolso já são mensais.
+- Desconto repetido e giro amortizado têm fluxos diferentes. A diferença nominal não comprova economia contratual ou igualdade de disponibilidade de caixa. **Não é CET**, proposta nem recomendação de contratação.
 
-- Estimativa explicativa, não CET, proposta, conclusão tributária ou recomendação de contratação.
-- Desconto recorrente e giro amortizado têm fluxos diferentes. A diferença nominal de custos não comprova economia efetiva nem equivalência de disponibilidade de caixa.
-- Não inclui mora, baixa de duplicatas, seguros, outros encargos, renegociação ou reinvestimento de fluxos.
-- 29 testes focais: fórmulas, quatro prazos, calendários, alíquotas, formas de tarifa, limites, principal fracionário com juros zero/quase zero e interação de edição dos componentes React sem navegador.
-- 593 testes permitidos de regressão passaram. `commodities.test.mjs` foi integralmente excluído para não executar a fixture Python restrita. A lista executada consta no pacote de evidências.
-- Lint: zero erros, sete avisos preexistentes de dependências de hooks, fora dos arquivos novos.
-- Build de produção passou, incluindo regeneração da busca.
-- Não executados: navegador, QA visual responsivo, preview/socket, Git status ou fixture Python. Renderização e testes de handlers React não equivalem a validação visual.
-- Pendentes antes da publicação: decisão do adicional IOF, definição comercial da tarifa de títulos/TAC, auditoria independente, integração com candidatos paralelos e autorização de publicação.
+## Exemplo vigente e testes
+
+Exemplo sintético: operação em 05/11/2026; 30 títulos com nominal total de R$ 225.600,43, vencimento em 05/12/2026, comercial simples a 1,83% a.m.; tarifa total R$ 564 e TAC R$ 260; PJ geral.
+
+- Juros: R$ 4.128,49.
+- Base do IOF: R$ 221.471,94.
+- IOF: R$ 1.386,41.
+- Custo completo: R$ 6.338,90.
+- Líquido: R$ 219.261,53.
+
+Este exemplo está vinculado a `test/calculator-doc-examples.test.mjs`. Execute `node --test test/analise-desconto*.test.mjs test/calculator-doc-examples.test.mjs`: convenções, tarifas, grupos, datas, limites tributários, recálculo da projeção, Price e interação React. Testes em memória não substituem inspeção de navegador nem homologação bancária.
+
+## Histórico e exclusões
+
+O documento inicial (base `eeecfc9`) descrevia juros/IOF manuais e uma reconciliação das fotos com sete operações por mês, juros R$ 2.603,15 e IOF R$ 1.191,60 informados. Aqueles totais pertenciam ao fluxo antigo e **não validam a versão atual automática**. O campo de quantidade, não a foto, determina se a projeção usa seis, sete ou outro número de operações. A hipótese histórica de tarifa 0,25% também não é condição contratual confirmada.
+
+Não estão modelados mora, baixa de duplicatas, seguros, demais encargos, renegociação ou reinvestimento de fluxos. O rascunho desta tela fica em memória do componente e os resultados são removidos quando inválidos. Não há módulo de alongamento nesta calculadora.

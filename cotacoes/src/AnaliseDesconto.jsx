@@ -3,6 +3,7 @@ import MoneyInput from './MoneyInput.jsx'
 import CalculatorHelp from './CalculatorHelp.jsx'
 import { DISCOUNT_INITIAL_FORM, DISCOUNT_TERMS, TITLE_FEE_MODES, parseDiscountForm } from './analiseDesconto.js'
 import './AnaliseDesconto.css'
+import { IOF_SOURCE } from './iofRules.js'
 
 const brl = (value) => value == null ? '—' : value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const number = (value) => value == null ? '—' : value.toLocaleString('pt-BR')
@@ -12,7 +13,7 @@ export function DescontoIcon() {
 }
 
 export default function AnaliseDesconto({ onBack }) {
-  const [form, setForm] = useState(() => ({ ...DISCOUNT_INITIAL_FORM }))
+  const [form, setForm] = useState(() => ({ ...DISCOUNT_INITIAL_FORM, titleRows: DISCOUNT_INITIAL_FORM.titleRows.map(row => ({ ...row })) }))
   const { errors, operation, result: calculated } = parseDiscountForm(form)
   const result = calculated?.ok ? calculated : null
   const set = (key, value) => setForm((old) => ({ ...old, [key]: value }))
@@ -24,6 +25,11 @@ export default function AnaliseDesconto({ onBack }) {
   </div>
   const textField = (key, label, hint, inputMode = 'decimal') => field(key, label, <input {...props(key)} inputMode={inputMode} autoComplete="off" value={form[key]} onChange={(event) => set(key, event.target.value)} onFocus={(event) => event.target.select()} />, hint)
   const moneyField = (key, label, hint) => field(key, label, <MoneyInput {...props(key)} value={form[key]} onChange={(value) => set(key, value)} />, hint)
+  const taxFields = (key, eligibleKey) => <>
+    {field(key, 'Enquadramento tributário', <select {...props(key)} value={form[key]} onChange={event => set(key, event.target.value)}><option value="pj">Pessoa jurídica: regra geral</option><option value="simples">Optante do Simples Nacional / MEI</option></select>, 'Alíquotas automáticas. Simples confirmado: diária reduzida apenas para operação total até R$ 30 mil; acima, regra geral.')}
+    {form[key] === 'simples' && <label><input type="checkbox" checked={form[eligibleKey]} onChange={event => set(eligibleKey, event.target.checked)} /> Confirmo opção pelo Simples Nacional/MEI para esta operação.</label>}
+  </>
+  const setRow = (index, key, value) => set('titleRows', form.titleRows.map((row, i) => i === index ? { ...row, [key]: value } : row))
   const feeField = form.titleFeeMode === 'total' ? moneyField('titleFeeTotal', 'Tarifa total de títulos por operação', 'Total cobrado pelo conjunto de títulos. Não multiplica pela quantidade.')
     : form.titleFeeMode === 'unit' ? moneyField('titleFeeUnit', 'Custo unitário por título', 'Multiplicado pela quantidade de títulos em cada operação.')
       : form.titleFeeMode === 'percent' ? textField('titleFeePercent', 'Tarifa sobre o valor bruto (%)', '0,25% reproduz os centavos da tabela de referência; é uma hipótese, não uma tarifa contratual confirmada.') : null
@@ -46,23 +52,38 @@ export default function AnaliseDesconto({ onBack }) {
   ]
   return <section className="cx cx-desconto" aria-labelledby="ad-heading">
     <button type="button" className="cx-back" onClick={onBack}><span aria-hidden="true">‹</span> Calculadoras</button>
-    <div className="cx-heading"><h2 id="ad-heading" className="cx-title"><span className="cx-icon"><DescontoIcon /></span>Análise de desconto</h2><CalculatorHelp title="Análise de desconto"><p>Compare o custo recorrente de antecipar títulos com um capital de giro Price em 12, 24, 36 e 48 meses.</p><p>Exemplo editável. Confirme como a tarifa dos títulos é cobrada e a alíquota adicional de IOF antes de comparar. A quantidade de operações informada abaixo controla todos os resultados.</p></CalculatorHelp></div>
+    <div className="cx-heading"><h2 id="ad-heading" className="cx-title"><span className="cx-icon"><DescontoIcon /></span>Análise de desconto</h2><CalculatorHelp title="Análise de desconto"><p>Compare o custo recorrente de antecipar títulos com um capital de giro Price em 12, 24, 36 e 48 meses.</p><p>Exemplo editável. Informe os títulos, a convenção contratual e o enquadramento. Juros e IOF são calculados automaticamente. A quantidade de operações informada abaixo controla todos os resultados.</p></CalculatorHelp></div>
     <p className="desconto-notice">Simulação estimada. Não é CET nem recomendação de contratação.</p>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header className="cx-heading"><h3>1. Operação real de desconto</h3><CalculatorHelp title="Operação real de desconto"><p>O total de R$ 4.054,75 da primeira referência não inclui a tarifa de títulos. Aqui, custo completo e valor líquido incluem essa tarifa, sem omiti-la.</p></CalculatorHelp></header>
+      <header className="cx-heading"><h3>1. Operação simulada de desconto</h3><CalculatorHelp title="Operação simulada de desconto"><p>Os valores iniciais são um exemplo ilustrativo. Substitua pelos títulos e condições do contrato. O custo completo inclui juros, IOF, TAC e tarifa dos títulos.</p></CalculatorHelp></header>
       <div className="cx-form">
         {field('date', 'Data da operação e liberação do giro', <input {...props('date')} type="date" min="1900-01-01" max="9995-12-31" value={form.date} onChange={(event) => set('date', event.target.value)} />, 'A primeira parcela do giro vence no mês seguinte, no mesmo dia, limitado ao último dia do mês.')}
-        {moneyField('value', 'Valor bruto da operação')}
-        {textField('operationRate', 'Taxa da operação real (% a.m.)', 'Informativa. Os juros pagos abaixo são o valor efetivo informado, sem cálculo por prazo médio.')}
-        {textField('titles', 'Quantidade de títulos por operação', null, 'numeric')}
+        <div><span>Valor bruto dos títulos</span><b>{brl(operation?.value)}</b></div>
+        {textField('operationRate', 'Taxa da operação (% a.m.)', 'Aplicada a cada grupo de títulos pelos dias corridos até o vencimento informado, conforme a convenção selecionada.')}
+        {field('convention', 'Convenção contratual de desconto', <select {...props('convention')} value={form.convention} onChange={event => set('convention', event.target.value)}><option value="commercial30">Comercial simples (por fora), mês de 30 dias</option><option value="rational30">Racional simples (por dentro), mês de 30 dias</option></select>, 'Selecione a convenção efetiva do contrato. Vencimentos devem refletir prorrogações contratuais e feriados, quando aplicáveis; não ajustamos essas datas automaticamente.')}
+        {taxFields('taxProfile', 'eligible')}
         {field('titleFeeMode', 'Como calcular a tarifa dos títulos?', <select {...props('titleFeeMode')} value={form.titleFeeMode} onChange={(event) => set('titleFeeMode', event.target.value)}><option value="">Selecione a forma de cobrança</option>{TITLE_FEE_MODES.map((mode) => <option key={mode.id} value={mode.id}>{mode.label}</option>)}</select>, 'A referência mostra R$ 564,00 como “unitário”, mas os totais o tratam como tarifa da operação. Escolha a interpretação correta.')}
         {feeField}
         {moneyField('tac', 'Tarifa de contratação por operação (TAC)')}
-        {moneyField('interest', 'Juros pagos por operação', 'Valor real, informado em reais. Sem os vencimentos dos títulos, a taxa não permite reconstruir os juros.')}
-        {moneyField('iofPaid', 'IOF pago por operação', 'Valor real do desconto. As alíquotas do giro não modificam este campo.')}
+        <div><span>Juros calculados</span><b>{brl(operation?.interest)}</b></div>
+        <div><span>IOF automático</span><b>{brl(operation?.iof)}</b></div>
+      </div>
+      <div className="desconto-titles">
+        <h4>Títulos ou grupos com o mesmo vencimento</h4>
+        <p>Informe o valor nominal total de cada grupo e a quantidade de títulos. Não multiplique o valor pela quantidade. Todos usam a taxa contratual acima.</p>
+        {form.titleRows.map((row, index) => <fieldset key={index} className="cx-form"><legend>Grupo {index + 1}</legend>
+          <label>Valor nominal total do grupo<MoneyInput value={row.value} onChange={value => setRow(index, 'value', value)} /></label>
+          <label>Quantidade de títulos<input inputMode="numeric" value={row.count} onChange={event => setRow(index, 'count', event.target.value)} /></label>
+          <label>Vencimento contratual<input type="date" value={row.dueDate} onChange={event => setRow(index, 'dueDate', event.target.value)} /></label>
+          <button type="button" disabled={form.titleRows.length === 1} onClick={() => set('titleRows', form.titleRows.filter((_, i) => i !== index))}>Remover grupo {index + 1}</button>
+          {errors['titleRow' + index] && <p role="alert">{errors['titleRow' + index]}</p>}
+        </fieldset>)}
+        <button type="button" disabled={form.titleRows.length >= 500} onClick={() => set('titleRows', [...form.titleRows, { value: '', count: '1', dueDate: '' }])}>Adicionar grupo de títulos</button>
+        {errors.operation && <p role="alert" className="cx-error">{errors.operation}</p>}
       </div>
       <div className="desconto-kpis" aria-live="polite">
+        <div><span>Base do IOF: nominal menos juros antecipados</span><b>{brl(operation?.base)}</b></div>
         <div><span>Tarifa total de títulos</span><b>{brl(operation?.titleFee)}</b></div>
         <div><div className="cx-field-label"><span>Subtotal sem tarifa de títulos</span><CalculatorHelp title="Subtotal sem tarifa de títulos"><p>TAC + juros + IOF.</p></CalculatorHelp></div><b>{brl(operation?.costWithoutTitles)}</b></div>
         <div><div className="cx-field-label"><span>Custo total completo</span><CalculatorHelp title="Custo total completo"><p>Inclui a tarifa de títulos.</p></CalculatorHelp></div><b>{brl(operation?.cost)}</b></div>
@@ -71,23 +92,22 @@ export default function AnaliseDesconto({ onBack }) {
     </article>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header className="cx-heading"><h3>2. Projeção mensal do desconto</h3><CalculatorHelp title="Projeção mensal do desconto"><p>A projeção repete a quantidade de títulos, a TAC e os valores de juros e IOF pagos a cada operação. A tarifa percentual, se escolhida, incide sobre o valor médio. Mudar apenas o valor médio não recalcula juros nem IOF; ajuste os valores pagos para cada cenário.</p></CalculatorHelp></header>
+      <header className="cx-heading"><h3>2. Projeção mensal do desconto</h3><CalculatorHelp title="Projeção mensal do desconto"><p>A projeção mantém vencimentos e quantidade dos títulos, escalona proporcionalmente seus valores nominais para o valor médio e recalcula juros e IOF com a taxa projetada. A TAC e tarifas fixas permanecem por operação. O limite do Simples é conferido novamente para cada operação projetada.</p></CalculatorHelp></header>
       <div className="cx-form">
         {textField('operations', 'Quantidade de operações por mês', 'A primeira referência tem 6 e a comparação tem 7. Vale exclusivamente o número deste campo.', 'numeric')}
         {moneyField('averageValue', 'Valor médio bruto por operação', 'Volume mensal = valor médio × quantidade de operações.')}
-        {textField('discountRate', 'Taxa de desconto de referência (% a.m.)', 'Informativa. Não substitui os juros pagos informados, pois não há prazo médio ou vencimentos dos títulos.')}
+        {textField('discountRate', 'Taxa de desconto de referência (% a.m.)', 'Recalcula juros e base do IOF sobre os grupos escalonados, mantendo seus vencimentos.')}
       </div>
     </article>
 
     <article className="desk-panel cx-panel desconto-input-panel">
-      <header className="cx-heading"><h3>3. Premissas do capital de giro</h3><CalculatorHelp title="Premissas do capital de giro"><p>TAC e IOF são pagos à parte e não financiados. Dias corridos reais entre a liberação e cada vencimento, sem ajuste de feriados ou dias úteis. As alíquotas são premissas editáveis, não validação tributária.</p></CalculatorHelp></header>
+      <header className="cx-heading"><h3>3. Premissas do capital de giro</h3><CalculatorHelp title="Premissas do capital de giro"><p>TAC e IOF são pagos à parte e não financiados. Dias corridos reais entre a liberação e cada vencimento, sem ajuste de feriados ou dias úteis. Alíquotas legais automáticas por enquadramento e valor total da operação.</p></CalculatorHelp></header>
       <div className="cx-form">
         {field('giroPrincipalMode', 'Principal usado no giro', <select {...props('giroPrincipalMode')} value={form.giroPrincipalMode} onChange={(event) => set('giroPrincipalMode', event.target.value)}><option value="monthly">Igual ao volume bruto mensal do desconto</option><option value="manual">Informar outro valor</option></select>, 'Usar o volume mensal é uma hipótese de comparação, não uma necessidade de capital de giro (NCG) apurada.')}
         {form.giroPrincipalMode === 'manual' && moneyField('giroPrincipal', 'Valor financiado no giro', 'Ao informar outro principal, os montantes comparados também ficam diferentes.')}
         {textField('giroRate', 'Taxa do giro Price (% a.m.)', 'Taxa mensal efetiva, sem carência e com parcelas mensais.')}
         {moneyField('giroTac', 'TAC do giro, uma única vez', 'R$ 3.150,00 é o valor inferido para reconciliar a referência. Confirme a proposta; não é uma tarifa padrão.')}
-        {textField('iofDaily', 'IOF diário do giro (% ao dia)', '0,0082% é a premissa da referência. Aplicado a cada amortização, com limite de 365 dias.')}
-        {textField('iofAdditional', 'IOF adicional do giro, uma vez (%)', 'Informe explicitamente: 0 reproduz a referência sem adicional; 0,38 adiciona 0,38% do principal. Confirme a condição aplicável.')}
+        {taxFields('giroTaxProfile', 'giroEligible')}
       </div>
     </article>
 
@@ -127,7 +147,8 @@ export default function AnaliseDesconto({ onBack }) {
         <li>IOF do giro = adicional × principal + diária × soma de cada amortização multiplicada por seus dias corridos, limitados a 365. Percentuais são divididos por 100.</li>
         <li>Custo do giro = soma das parcelas − principal + TAC + IOF. Média mensal all-in = (principal + custo do giro) / meses.</li>
         <li>Não inclui juros de mora por títulos vencidos, despesas de baixa de duplicatas, seguros, outros encargos, renegociações nem reinvestimento dos fluxos.</li>
-        <li>Confirme juros, tarifas, alíquotas e calendário na proposta. Os dados iniciais são um exemplo, não condições comerciais vigentes.</li>
+        <li>Confirme convenção de juros, tarifas, enquadramento e calendário na proposta. IOF segue o regime suportado a partir de 17/07/2025; datas anteriores são bloqueadas. Os dados iniciais são um exemplo, não condições comerciais vigentes.</li>
+        <li><a href={IOF_SOURCE} target="_blank" rel="noreferrer">Decreto 6.306/2007: art. 7º, II, VI e §§ 1º, 4º e 15</a>. PJ: 0,0082% ao dia + 0,38%; Simples/MEI confirmado até R$ 30 mil: 0,00274% ao dia + 0,38%. IOF diário limitado a 365 dias por título.</li>
       </ul>
     </CalculatorHelp></div>
   </section>

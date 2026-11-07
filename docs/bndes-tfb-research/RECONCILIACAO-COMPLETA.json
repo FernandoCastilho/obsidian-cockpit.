@@ -25,11 +25,19 @@
       "interval": "elapsed-days",
       "regulatoryCetValidated": false
     },
-    "reportedAnnualCet": 0.2001,
-    "annualDifferencePercentagePoints": 0.14688992893113206,
+    "reportedAnnualCet": null,
+    "annualDifferencePercentagePoints": null,
     "monthly30DayEquivalent": 0.01520719239968107,
     "evidenceOrigin": "user-authored-test",
-    "cetPending": "Original formula and inputs of the user-generated test scenario, not a bank calculation."
+    "calculatedAnnualCetPercentDisplayed": "20.16",
+    "cetStatus": "calculated-no-reference",
+    "monthlyOneTwelfthEquivalent": 0.015420023595220246,
+    "referencePolicy": "ignored-by-user-instruction",
+    "mathematicalCetValidation": "validated-declared-cash-flow",
+    "mathematicalCetPending": null,
+    "contractCertificationPending": [
+      "Completude contratual dos encargos e enquadramento normativo e fiscal não certificados; separados da validação matemática do fluxo declarado."
+    ]
   },
   "calculation": {
     "ok": true,
@@ -40,7 +48,7 @@
     "profile": {
       "productId": "bndes-credito-pequenas-empresas",
       "lenderProfileId": "cenario-usuario-tfb-2026-10",
-      "version": "0.2.1-research",
+      "version": "0.2.2-research",
       "status": "inferred",
       "scope": "Reconciliação de cenário de teste montado pelo usuário. Não é proposta emitida por banco nem regra geral de Finame/TFC.",
       "evidenceOrigin": {
@@ -1454,15 +1462,22 @@
     "totalContractCostCents": null,
     "finalPayment": null,
     "cet": {
-      "reportedAnnualRateDecimal": "0.2001",
-      "calculatedAnnualRateDecimal": null,
+      "reportedAnnualRateDecimal": null,
+      "calculatedAnnualRateDecimal": 0.20156889928931132,
+      "annualDifferencePercentagePoints": null,
+      "residualCents": 5.960464477539063e-8,
+      "referenceResidualCents": null,
+      "referenceTolerancePercentagePoints": 0.005,
+      "dayCount": "actual-365-fixed",
+      "interval": "elapsed-days",
+      "calculationStatus": "calculated-declared-cash-flow",
       "validated": false,
-      "status": "not-validated-scenario-formula-unconfirmed"
+      "status": "calculated-no-reference"
     },
     "warnings": [
       "Estimativa não validada contratualmente. Reconciliação limitada ao horizonte documentado.",
       "Nenhuma regra deste perfil deve ser transferida automaticamente para Finame/TFC.",
-      "CET não calculado nem validado. Mesmo com todos os eventos visíveis, despesas, precisão e convenção regulatória precisam de confirmação.",
+      "CET calculado em ACT/365 somente para o fluxo declarado. A apuração matemática não certifica o gerador de parcelas, a completude dos encargos nem o enquadramento contratual e regulatório.",
       "Aplicabilidade das alíquotas e da base de IOF precisa de confirmação fiscal para a operação.",
       "Liberação no mês de cobrança (item 5.6), múltiplas liberações e IOF financiado não são suportados.",
       "Expoentes fracionários usam aritmética binária com bloqueio próximo de meio centavo; a reprodução não certifica arredondamento contratual em todos os casos.",

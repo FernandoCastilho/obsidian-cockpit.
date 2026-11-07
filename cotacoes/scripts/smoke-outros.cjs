@@ -1,5 +1,6 @@
 // Cenários › Inflação (IPCA) e › Fiscal (dívida bruta) e Frete marítimo: tabela no formato do Mercado; clicar abre o gráfico em tela cheia com filtros no topo.
 const { chromium } = require('playwright'), assert = require('node:assert/strict')
+const { mkdir } = require('node:fs/promises'), path = require('node:path')
 const points = []
 let index = 100
 for (let y = 2018; y <= 2026; y++) for (let m = 1; m <= 12; m++) {
@@ -28,13 +29,21 @@ const commoditiesBrl = { schemaVersion: 1, generatedAt: new Date().toISOString()
 const fuels = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [fuel('anp-gasolina', 'Gasolina comum · bomba', 'R$/litro', 6.51), fuel('anp-etanol', 'Etanol hidratado · bomba', 'R$/litro', 4.4), fuel('anp-diesel', 'Diesel S10 · bomba', 'R$/litro', 6.31), fuel('anp-glp', 'Gás de cozinha (botijão 13 kg)', 'R$/botijão 13 kg', 105.9)] }
 const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), commodities: [commodity('gold', 'Ouro', 'USD/onça troy', 4319, monthly(4000)), commodity('iron-ore', 'Minério de ferro', 'USD/tonelada seca', 97.7, monthly(90)), commodity('soybeans', 'Soja', 'USD/tonelada', 524, []), commodity('corn', 'Milho', 'USD/tonelada', 239.6, monthly(230))] }
 ;(async () => {
-  const b = await chromium.launch({ channel: process.env.SMOKE_CHANNEL || 'msedge', headless: true }), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
+  const b = await chromium.launch(require('./smoke-launch.cjs')()), base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:5216'
+  const out = process.env.SMOKE_OUT
+  if (out) await mkdir(out, { recursive: true })
+  const offline = async (p) => { await p.route('**/*', (r) => r.request().url().startsWith(base) ? r.continue() : r.abort()); return p }
+  const openPage = async (options) => offline(await b.newPage(options))
   try {
+    const { FONTES } = await import('../src/governanca.js')
+    assert.equal(new Set(FONTES.map((fonte) => fonte.id)).size, FONTES.length, 'catálogo não duplica fonte por id')
+    const expectedSources = FONTES.map((fonte) => fonte.nome)
+    assert.equal(new Set(expectedSources).size, expectedSources.length, 'catálogo não duplica nome de fonte')
     // aviso de entrada: aparece a cada abertura do app, fecha com o botão e não volta ao trocar de aba
     for (const width of [390, 1280]) {
       const ctx = await b.newContext({ viewport: { width, height: 800 }, serviceWorkers: 'block' })
       await ctx.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => false }))
-      const p = await ctx.newPage()
+      const p = await offline(await ctx.newPage())
       await p.goto(base + '/#resumo')
       const aviso = p.getByRole('dialog', { name: 'Aviso' }); await aviso.waitFor()
       assert.match(await aviso.innerText(), /aplicativo educacional[\s\S]*informação ilustrativa[\s\S]*Não representa compromisso nem informações atualizadas on-line/)
@@ -49,7 +58,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     }
     // Juros: sem Reino Unido e com a bandeira de cada país nas linhas e nos títulos dos gráficos
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       const hoje = Date.now(), dia = 864e5
       const estr = { schemaVersion: 1, generatedAt: new Date().toISOString(), series: { id: 'estr', sourceName: 'BCE (fixture de teste)', sourceUrl: 'https://www.ecb.europa.eu/', checkedAt: new Date().toISOString(), stale: false,
         points: Array.from({ length: 400 }, (_, i) => ({ date: new Date(hoje - (400 - i) * dia).toISOString().slice(0, 10), value: +(1.9 + i * 0.0005).toFixed(3) })) } }
@@ -103,10 +112,13 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     }
     // governança dos dados em Configurações: tabela por fonte, regras e nenhuma rolagem lateral da página
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const gov = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Governança dos dados' }) }); await gov.waitFor()
-      assert.equal(await gov.locator('.config-gov tbody tr').count(), 21, 'uma linha por fonte')
+      const sourceNames = (await gov.locator('.config-gov tbody tr > th[scope="row"]').allTextContents()).map((name) => name.trim())
+      assert.deepEqual(sourceNames, expectedSources, 'uma linha para cada fonte do catálogo, sem omissões ou duplicatas')
+      assert.equal(new Set(sourceNames).size, sourceNames.length, 'cada fonte aparece uma única vez na tabela')
+      assert.match(await gov.locator('.config-gov tbody tr', { has: p.getByRole('rowheader', { name: 'Google Trends: Em alta no Brasil', exact: true }) }).innerText(), /RSS oficial[\s\S]*08h e 15h[\s\S]*25 h/)
       assert.match(await gov.locator('.config-gov tbody tr',{hasText:'Veículos pesados'}).innerText(),/ANFAVEA[\s\S]*1080 h/i)
       const txt = await gov.innerText()
       assert.match(txt, /A cada 5 min no pregão/i); assert.match(txt, /Em resumo[\s\S]*Só o câmbio é coletado de 5 em 5 minutos[\s\S]*Coletar não é o mesmo que o número mudar/i); assert.match(txt, /Relê os arquivos publicados a cada 1 min/); assert.match(txt, /30 por dia/); assert.match(txt, /Atrasado após/i)
@@ -115,9 +127,9 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       if (width < 700) assert.equal(await p.evaluate(() => { const sc = document.querySelector('.config-gov').closest('.config-scroll'); return sc.scrollWidth > sc.clientWidth + 1 }), false, 'no celular a tabela vira cartões, sem rolagem interna')
       await p.close()
     }
-    // Setores: notícias institucionais em 120h, preço e roteiro de investigação da visita.
+    // Setores: notícias institucionais em 120h e preço, com a preparação de visita removida.
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       // Relógio e publicações sintéticas compartilham o instante; nenhuma URL é consultada.
       const agora = Date.parse('2026-11-05T15:00:00Z'), min = 60e3, stamp = new Date(agora).toISOString()
@@ -129,35 +141,32 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       const comm = { schemaVersion: 1, generatedAt: stamp, commodities: [{ id: 'copper', label: 'Cobre', unit: 'USD/tonelada', nature: 'média mensal', sourceName: 'Banco Mundial · Pink Sheet', benchmark: 'Grau A · LME', value: 10000, period: '2026-09', checkedAt: stamp, variationPct: 2.5, variationBasis: 'mês anterior' }] }
       await p.route('**/sector-news.json*', (r) => r.fulfill({ json: sectorNews }))
       await p.route('**/commodities.json*', (r) => r.fulfill({ json: comm }))
-      await p.goto(base + '/#setores')
+      await p.goto(base + '/#setores/industria')
       const painel = p.locator('.setores .desk-panel'); await painel.waitFor()
       await painel.locator('.sector-news-list > li').first().waitFor()
       assert.match(await painel.innerText(), /Produção industrial cai/)
       assert.equal(await painel.locator('.sector-news-list > li').count(), 1, 'somente publicação industrial dentro de 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Produção industrial expirada/)
-      // título "Setores e Insumos"; dois botões; em Setores só os setores, em Insumos só os insumos (Metais e Energia)
-      assert.equal((await p.locator('main h1').first().textContent()).trim(), 'Setores e Insumos')
-      const secao = p.getByRole('navigation', { name: 'Setores ou insumos' })
-      assert.deepEqual((await secao.getByRole('button').allTextContents()).map((t) => t.trim()), ['Setores', 'Insumos'])
-      assert.equal(await painel.getByRole('tab', { name: 'Cobre' }).count(), 0, 'insumos não aparecem em Setores')
-      assert.equal(await painel.getByRole('tab', { name: 'Indústria' }).count(), 1)
-      assert.equal(await p.locator('#setores-group-select').inputValue(), 'Indústria e transformação', 'grupo selecionado na navegação encadeada')
-      await secao.getByRole('button', { name: 'Insumos' }).click(); await p.waitForURL('**/#setores/cobre')
-      assert.equal(await painel.getByRole('tab', { name: 'Indústria' }).count(), 0, 'setores não aparecem em Insumos')
-      assert.equal(await p.locator('#setores-group-select').inputValue(), 'Metais'); assert.equal(await painel.getByRole('tab', { name: 'Petróleo e diesel' }).count(), 0, 'só os filhos do grupo escolhido')
-      assert.equal(await secao.getByRole('button', { name: 'Insumos' }).getAttribute('aria-pressed'), 'true')
-      await painel.getByRole('tab', { name: 'Cobre' }).click()
+      const central = p.locator('.central-setorial')
+      await central.getByRole('heading', { name: 'Explore por setor', exact: true }).waitFor()
+      assert.equal(await central.locator('.central-catalog').count(), 0, 'conteúdo setorial usa a largura sem catálogo lateral')
+      assert.equal(await central.getByLabel('Trocar subsetor', { exact: true }).count(), 1)
+      assert.equal(await central.getByRole('button', { name: 'Referência B3', exact: true }).count(), 0)
+      await central.getByRole('button', { name: 'Todos os setores', exact: true }).click()
+      await central.locator('.central-folder').first().waitFor()
+      await central.getByRole('button', { name: 'Cobre', exact: true }).click()
+      await p.waitForURL('**/#setores/cobre')
       await painel.locator('.setor-preco').waitFor()
       assert.match(await painel.locator('.setor-preco').innerText(), /10\.000,00/)
+      await painel.locator('.sector-news-list > li').first().waitFor()
       assert.equal(await painel.locator('.sector-news-list > li').count(), 2, 'duas notícias do cobre em 120h')
       assert.doesNotMatch(await painel.locator('.sector-news').innerText(), /Preço do cobre expirado/)
-      assert.match(await painel.locator('.sector-news-meta').first().innerText(), /Janela móvel de 120 horas/)
-      const visita = painel.getByRole('region', { name: 'Preparar a visita · Cobre', exact: true })
-      assert.equal(await visita.count(), 1, 'ficha atual da visita')
-      assert.equal(await visita.getByRole('region', { name: 'Pontos sensíveis a verificar', exact: true }).count(), 1, 'fatores do negócio para investigar')
-      assert.equal(await visita.getByRole('region', { name: 'Cinco perguntas específicas', exact: true }).locator('ol > li').count(), 5)
+      assert.equal(await painel.locator('.sector-news-meta').first().innerText(), 'Publicações de 31/10/2026 a 05/11/2026.') // Frozen fixture clock; retention assertions above remain in place.
+      assert.equal(await painel.getByRole('region', { name: /Preparar a visita/ }).count(), 0, 'preparação de visita removida conforme o catálogo atual')
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
+      if (out) await p.screenshot({ path: path.join(out, `setores-${width}-cobre.png`), fullPage: true })
       assert.deepEqual(errors, [])
+      console.log(`${width} PASS central de setores com notícias institucionais, janela120h e insumos`)
       await p.close()
     }
     // Resumo › Notícias: Manchetes e Reforma tributária como linha do tempo da semana, quebrada por dia
@@ -167,16 +176,16 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       { name: 'depois da meia-noite', iso: '2026-11-05T03:00:10Z', day: /^Quarta-feira.*04\/11(?:\s|$)/i },
     ]
     for (const width of [390, 1280]) for (const clockCase of newsTimes) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       // Navegador e fixture compartilham o mesmo instante; timers/RAF continuam funcionando.
       const agora = Date.parse(clockCase.iso), min = 60e3
       await p.clock.setFixedTime(agora)
-      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, t: agora - atras * min })
+      const mat = (title, atras, source) => ({ title, link: `https://exemplo.com/${encodeURIComponent(title)}`, source, sourceUrl: 'https://www.gov.br', t: agora - atras * min })
       const reforma = { schemaVersion: 1, generatedAt: agora, topic: 'reforma-tributaria', windowDays: 7, stale: false, error: null, items: [
         mat('Reforma tributária: Senado vota regulamentação', 1, 'Valor Econômico'), mat('IBS e CBS: o que muda para o varejo', 2, 'Folha'), mat('Comitê Gestor do IBS é instalado', 3, 'Valor Econômico'),
         mat('Imposto seletivo entra em debate na Câmara', 30 * 60, 'Estadão'), mat('Reforma tributária e o cashback para famílias', 55 * 60, 'Valor Econômico')] }
-      await p.route('**/reforma-tributaria.json*', (r) => r.fulfill({ json: reforma }))
+      await p.route('**/curadoria-noticias.json*', (r) => r.fulfill({ json: { schemaVersion: 1, generatedAt: agora, windowDays: 7, topics: { reforma: { label: 'Reforma tributária', checkedAt: agora, lastSuccessAt: agora, status: 'ok', items: reforma.items } } } }))
       // Um minuto antes pode ser o dia anterior em Brasília: o rótulo esperado muda no caso após meia-noite.
       const nota = (title, source = 'Valor Econômico') => ({ title, link: `https://exemplo.com/n/${encodeURIComponent(title)}`, source, t: agora - 60e3 })
       await p.route('**/news.json*', (r) => r.fulfill({ json: { generatedAt: agora, stale: {}, errors: [], news: { USD: [nota('Dólar sobe com fala do Fed')], EUR: [nota('BCE mantém juros na zona do euro')], JPY: [], CNH: [], MERCADO: [nota('Ibovespa e juros futuros recuam; iene dispara'), nota('Safra de soja avança no Mato Grosso')] } } }))
@@ -198,11 +207,11 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       assert.equal(await lista.locator('li').count(), 5, 'todas as matérias da semana')
       assert.ok(await lista.locator('.reforma-day').count() >= 2, 'agrupadas por dia')
       // linha do tempo enxuta: só a semana, de hoje para trás, quebrada por dia; sem filtro de dia, busca nem legenda
-      assert.match(await painel.innerText(), /Atualizado em\s+\d{2}\/\d{2}\/\d{4}/)
+      assert.match(await painel.innerText(), /Última consulta:\s+\d{2}\/\d{2}\/\d{4}/)
       assert.equal(await painel.locator('.refresh-btn').count(), 0, 'Reforma: só a data, sem botão de atualizar')
       assert.equal(await lista.getByLabel('Buscar nas matérias').count(), 0, 'sem busca')
       assert.equal(await lista.locator('.reforma-days').count(), 0, 'sem filtro de dia')
-      assert.doesNotMatch(await lista.innerText(), /últimos 7 dias/)
+      assert.match(await lista.innerText(), /últimos 7 dias \(168 horas\)/)
       assert.match(await lista.locator('.reforma-day').first().innerText(), clockCase.day, `reforma: ${clockCase.name} de Brasília`)
       assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `sem rolagem lateral a ${width}px`)
       await painel.getByRole('tab', { name: 'Manchetes' }).click(); await painel.locator('.market-news').waitFor()
@@ -212,7 +221,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     }
     // laser pointer (estilo Excalidraw): botão discreto liga, arrastar risca, o traço se apaga sozinho, Esc e novo clique param; funciona dentro de diálogo modal
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.goto(base + '/#config')
       const botao = p.getByRole('button', { name: 'Laser pointer: riscar a tela' }); await botao.waitFor()
@@ -257,7 +266,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
     }
     // base de dados em Configurações: uma linha por referência, com órgão, API e arquivo; busca; sem rolagem lateral
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' })
       await p.goto(base + '/#config')
       const bd = p.locator('.desk-panel', { has: p.getByRole('heading', { name: 'Base de dados' }) }); await bd.waitFor()
       assert.ok(await bd.locator('.config-base tbody tr').count() >= 40, 'uma linha por referência')
@@ -277,7 +286,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       for (let t = now - 420 * day; t <= now - day; t += day) { const w = new Date(t).getUTCDay(); if (w && w < 6) cdi.push([noon(t), t < now - 200 * day ? 14.9 : 14.4]) }
       const macroOk = { generatedAt: now, cdi, selic, sofr: [], sofrAvg: [], ptax: {}, ptaxHist: {}, focus: null }
       for (const [label, macro, expected] of [['com dados', macroOk, true], ['sem dados', { ...macroOk, cdi: [], selic: [[noon(now - 2 * day), 14.5]] }, false]]) {
-        const p = await b.newPage({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' })
+        const p = await openPage({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' })
         await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
         await p.route('**/macro.json*', (r) => r.fulfill({ json: macro }))
         await p.goto(base + '/#resumo')
@@ -294,7 +303,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       }
     }
     for (const width of [390, 1280]) {
-      const p = await b.newPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
+      const p = await openPage({ viewport: { width, height: 900 }, serviceWorkers: 'block' }), errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.route('**/ipca.json*', (r) => r.fulfill({ json: ipca }))
       await p.route('**/divida.json*', (r) => r.fulfill({ json: divida }))
@@ -495,22 +504,36 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       // aprender: lista de conceitos de um lado, explicação do outro, sem texto sobre o método
       await p.goto(base + '/#aprender')
       await p.locator('.learn-list').waitFor()
-      assert.equal(await p.locator('.learn-list li').count(), 21)
-      assert.equal(await p.locator('.learn-list button', { hasText: 'Regime FÁCIL' }).count(), 1, 'o catálogo inclui o conceito adicionado de Regime FÁCIL')
+      const expandir = async () => {
+        const button = p.getByRole('button', { name: 'Expandir todas', exact: true })
+        if (!(await button.isDisabled())) await button.click()
+        assert.equal(await p.locator('.learn-group[open]').count(), 7)
+      }
+      assert.equal(await p.locator('.learn-list li').count(), 27)
+      assert.equal(await p.locator('.learn-list button', { hasText: 'Regime FÁCIL' }).count(), 1, 'o conceito existente de Regime FÁCIL está preservado')
+      assert.equal(await p.locator('.learn-group[open]').count(), 0, 'categorias começam recolhidas')
+      if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-recolhido.png`), fullPage: true })
+      await expandir()
+      if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-expandido.png`), fullPage: true })
+      await p.getByRole('button', { name: 'Recolher todas', exact: true }).click()
+      assert.equal(await p.locator('.learn-group[open]').count(), 0)
+      await expandir()
       assert.doesNotMatch(await p.locator('main').innerText(), /feynman/i)
       await p.locator('.learn-list button', { hasText: 'Diferencial de juros' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Diferencial de juros' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /9,62%[\s\S]*R\$ 5,48/)
       // tópicos e busca
-      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Comércio exterior', 'Inflação', 'Commodities'])
+      assert.deepEqual((await p.locator('.learn-topic > span').allTextContents()).map((t) => t.trim()), ['Juros e câmbio', 'Funding e risco', 'Operações de crédito', 'Comércio exterior', 'Inflação', 'Commodities', 'Tributos e trabalho'])
       const busca = p.getByRole('searchbox', { name: 'Buscar conceito' })
       await busca.fill('FIDC')
       assert.equal(await p.locator('.learn-list li').count(), 2) // FIDC e CRA (que cita a subordinação como num FIDC)
-      assert.deepEqual((await p.locator('.learn-topic').allTextContents()).map((t) => t.trim()), ['Operações de crédito'], 'só o tópico com resultado')
+      assert.deepEqual((await p.locator('.learn-topic > span').allTextContents()).map((t) => t.trim()), ['Operações de crédito'], 'só o tópico com resultado')
+      assert.equal(await p.locator('.learn-group[open]').count(), 1, 'busca revela categoria com resultado')
       assert.match(await p.locator('.learn-count').innerText(), /2 conceitos encontrados/)
       await busca.fill('debenture'); assert.equal(await p.locator('.learn-list li', { hasText: 'Debênture' }).count(), 1, 'busca sem acento')
       await busca.fill('zzzxyz'); assert.match(await p.locator('.learn-count').innerText(), /Nenhum conceito encontrado/); assert.equal(await p.locator('.learn-list li').count(), 0)
-      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 21)
+      await p.getByRole('button', { name: 'Limpar busca' }).click(); assert.equal(await busca.inputValue(), ''); assert.equal(await p.locator('.learn-list li').count(), 27)
+      assert.equal(await p.locator('.learn-group[open]').count(), 7, 'limpar busca restaura categorias abertas manualmente')
       await busca.fill('recebiveis'); await p.locator('.learn-list button', { hasText: 'FIDC' }).click()
       await p.locator('.learn-detail h2', { hasText: 'FIDC' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /subordinação[\s\S]*30%[\s\S]*R\$ 1\.000\.000[\s\S]*R\$ 1\.000\.000/)
@@ -519,6 +542,7 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-detail .learn-conecta .learn-link', { hasText: 'Debênture' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Debênture' }).waitFor()
       await busca.fill('')
+      await expandir()
       for (const [nome, rx] of [['Debênture', /16,28%[\s\S]*162\.800/], ['Nota comercial', /17,42%[\s\S]*0,50 ano/], ['Inflação', /4,91%[\s\S]*9,1\d%/]]) {
         await p.locator('.learn-list button', { hasText: nome }).first().click()
         await p.locator('.learn-detail h2', { hasText: nome }).waitFor()
@@ -529,8 +553,25 @@ const commodities = { schemaVersion: 1, generatedAt: new Date().toISOString(), c
       await p.locator('.learn-list').waitFor()
       const geral = p.locator('.learn-detail')
       await geral.getByRole('heading', { name: 'Como as peças se encaixam' }).waitFor()
-      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 21, 'um papel para cada conceito')
+      assert.equal(await geral.locator('.learn-links').first().locator('li').count(), 27, 'um papel para cada conceito')
       assert.match(await geral.innerText(), /O caminho de ponta a ponta[\s\S]*Inflação →[\s\S]*Quem se liga a quem[\s\S]*Liquidação antecipada ↔ FIDC/i)
+      const buscaFinal = p.getByRole('searchbox', { name: 'Buscar conceito' })
+      for (const [buscaTema, titulo, slug] of [['Escala 6x1', /Escala 6x1/, 'escala-6x1'], ['Reforma Tributária', /Reforma Tributária/, 'reforma-tributaria'], ['Split Payment', /Split Payment/, 'split-payment'], ['Dividendos', /Dividendos/, 'dividendos'], ['CET', /CET \(Custo Efetivo Total\)/, 'cet']]) {
+        await buscaFinal.fill(buscaTema)
+        await p.locator('.learn-list li button', { hasText: slug === 'cet' ? /^CET/ : titulo }).first().click()
+        await p.locator('.learn-detail h2', { hasText: titulo }).waitFor()
+        assert.equal(await p.locator('.learn-detail details').filter({ has: p.locator('summary', { hasText: /^Fontes$/ }) }).count(), 1, 'novo tema informa fontes')
+        if (slug === 'cet') {
+          assert.match(await p.locator('.learn-detail').innerText(), /13,40% ao ano/)
+          await p.locator('.learn-detail summary', { hasText: /^Versão precisa$/ }).click()
+          assert.match(await p.locator('.learn-detail [role="math"]').innerText(), /dj − d0.*365/)
+          await p.locator('.learn-detail summary', { hasText: /^Fontes$/ }).click()
+          assert.equal(await p.locator('.learn-detail a[href="https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf"]').count(), 1)
+        }
+        if (out) await p.screenshot({ path: path.join(out, `aprender-${width}-${slug}.png`), fullPage: true })
+      }
+      await buscaFinal.fill('')
+      await expandir()
       await p.locator('.learn-list button', { hasText: 'Liquidação antecipada' }).click()
       await p.locator('.learn-detail h2', { hasText: 'Liquidação antecipada' }).waitFor()
       assert.match(await p.locator('.learn-detail').innerText(), /Na curva[\s\S]*1\.150\.000[\s\S]*1\.180\.804[\s\S]*Break funding[\s\S]*10\.089/)

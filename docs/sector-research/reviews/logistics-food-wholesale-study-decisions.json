@@ -1,0 +1,164 @@
+[
+  {
+    "id": "transporte-logistica:0",
+    "topicIndex": 0,
+    "title": "Carga geral",
+    "reviewStatus": "approved",
+    "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+    "studySha256": "f60065a62a198c61a12a9fea65178f55e2024e1265a28928d3335e238e504044",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:1",
+    "topicIndex": 1,
+    "title": "Transporte de madeira",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: página SFB/PEVS integral confirma cobertura estadual e atualização de outubro de 2026. Removida afirmação metodológica não confirmada. DOF e distinção nativa/plantada preservados. Sem estatísticas estreitas inventadas.",
+    "studySha256": "3e77d17fa3471c4054469952d43ba6bd4fb762986afba2b62e1e34c0a240127e",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:2",
+    "topicIndex": 2,
+    "title": "Transporte de grãos",
+    "reviewStatus": "approved",
+    "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+    "studySha256": "6b4920a7555533b42f81f7154e4ad2b521b6309ed4758b0250b4d0197105fd80",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:3",
+    "topicIndex": 3,
+    "title": "Transporte refrigerado",
+    "reviewStatus": "approved",
+    "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+    "studySha256": "91208773f0bebead4b9ec3b740ebf26d2d2b20d307e3feaa562a618f32f95bbe",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:4",
+    "topicIndex": 4,
+    "title": "Transporte de produtos perigosos",
+    "reviewStatus": "approved",
+    "reason": "Revisão independente adicional confirmou ANTTlegis consolidado, artigo6 parágrafo2 e artigo10: resíduos em veículo vazio mantêm prescrições e sinalização. Demais afirmações e limites já conferidos. Aprovado individualmente.",
+    "studySha256": "98d8d86e651114f4aadfbce69e39cd7701f58da17aa8b9f597066295d8e6eb55",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:5",
+    "topicIndex": 5,
+    "title": "Armazenagem",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: PDFs integrais IBGE confirmam 166,1 milhões de toneladas no segundo semestre de 2015 e 233,8 no segundo semestre de 2025; ambos convertem armazenagem convencional a 0,6 t/m³. Polos e limite capacidade versus ocupação conferidos. Não representa todos os armazéns logísticos.",
+    "studySha256": "21fef55455195c862dfd2467052df5d986d7407b60bd7251e75086bb694aa418",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "transporte-logistica:6",
+    "topicIndex": 6,
+    "title": "Logística portuária",
+    "reviewStatus": "approved",
+    "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+    "studySha256": "af8b3e1ffd3ad7f6907289c3d34bf6f219c7e46a8ce88af0ca90a7abf5c29f1c",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:0",
+    "topicIndex": 0,
+    "title": "Frigoríficos",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: leitura independente API SIDRA1092, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Vintage única preservada, escopo bovinos sob inspeção e casos Cade/habilitação histórica delimitados.",
+    "studySha256": "319e94cd9e9411facf1bad9d13494ebef8b7be8c610375703ec47dbedda44603",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:1",
+    "topicIndex": 1,
+    "title": "Laticínios",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: leitura independente API SIDRA1086, 11 somas anuais de quatro trimestres2015–2025 e primeiro/segundo trimestre2026, 13 valores e gráfico exatamente conferidos. Unidade mil litros e aquisição sob inspeção preservadas; sem confundir produção nas fazendas ou derivados. Caso Cade histórico delimitado.",
+    "studySha256": "1c7f7e4b66f95c2eb4cdccc225b3e5e337f0ff217a5618cf23bdfa36d3fb2e00",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:2",
+    "topicIndex": 2,
+    "title": "Moinhos",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: íntegra MAPA de33 linhas preservada em food-commercial-revalidation.json foi lida e confirma cadastro histórico07/06/2023 e locais citados. Reabertura retornou timeout/404, sem invalidar cópia integral, mas acesso permanece limitado. Bunge FIPAN2026 aberta independentemente confirma anúncio e previsão, não vendas. Fonte Conab e mecanismos delimitados.",
+    "studySha256": "f91b211960b6664db420f306c2895724dfb03e9fe57e91694c1f202737f296a8",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:3",
+    "topicIndex": 3,
+    "title": "Óleos vegetais",
+    "reviewStatus": "approved",
+    "reason": "Afirmações materiais verificadas; análises e lacunas explicitamente delimitadas. Aprovação de precisão do conteúdo, não certificação de exaustividade do mercado.",
+    "studySha256": "43e5666c3c7827b70373325382029aa1ce0a6d8dc7e9b9b437afb3fc127f5695",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:4",
+    "topicIndex": 4,
+    "title": "Alimentos processados",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: ITR M.Dias31/03/2026 aberto independentemente confirma plantas de biscoitos/massas; notícia estadual integral preservada e lida confirma carta de intenções Castrolanda em Castro e canalB2B. Reabertura da notícia indisponível nesta tentativa. Anúncio não tratado como operação. Sem novas métricas extrapoladas.",
+    "studySha256": "33b9161a2e8bff8a1e98df1cce553d68ce960d639dce040e2df7c6d54d530956",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "alimentos-agroindustria:5",
+    "topicIndex": 5,
+    "title": "Bebidas",
+    "reviewStatus": "approved",
+    "reason": "Revisão independente confirmou notícia integral MAPA maio2026/ref2025 para polos SãoPaulo/SantaCatarina e valor exportado versus volume. Comparação regional não validada foi retirada. Sem números novos e sem extrapolar cerveja a todas bebidas. Aprovado individualmente.",
+    "studySha256": "72a9ee30924505c4248db50f08918572ae8c556e163c0b2f26065faa76fa0a76",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "atacado:0",
+    "topicIndex": 0,
+    "title": "Distribuição de alimentos",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: InvestSP 10/06/2021 e Prefeitura Ivoti 10/07/2026 abertas integralmente confirmam centros Dellys e canais atendidos. Expansão física não confundida com demanda ou market share. Alegação metodológica PAC não confirmada retirada; limites preservados.",
+    "studySha256": "5264bfeacaf516f8248c3065a51bcdd57453757f0eb54277a68c4c1b596a0882",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "atacado:1",
+    "topicIndex": 1,
+    "title": "Distribuição de medicamentos",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: CFF integral confirma R$160,7 bilhões nominais de 2024; R$182 bilhões de 2025 já confirmado Anvisa. São vendas industriais, não receita da distribuição. RDC430 consolidada, artigos6,64 e72–79 conferidos incluindo alterações653 e hipóteses condicionadas de monitoramento.",
+    "studySha256": "68ebdc508631270d3faf097515d3621f2f9684e2f8d321d89fcddb5336c3fc73",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "atacado:2",
+    "topicIndex": 2,
+    "title": "Distribuição de materiais de construção",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: portfólio e logística Tambasa abertos integralmente confirmam categorias, canal e mecanismos declarados, sem validar métricas promocionais. Inmetro confirma certificado e registro distintos para fios e cabos, sem extrapolar obrigação para todo material. Análise comercial específica suficiente.",
+    "studySha256": "68e2d8c64b89d98d01906e1c3e16948dab82035e5261842c4cef9378cf5abc2e",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "atacado:3",
+    "topicIndex": 3,
+    "title": "Distribuição de insumos industriais",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: comunicado primário Brenntag de 28/09/2026 aberto integralmente confirma parceria Symrise para ingredientes cosméticos no Brasil e apoio técnico. Texto atribui declaração e não presume exclusividade, crescimento, vendas ou abrangência nacional do atacado. Mecanismos, cenários e limites suficientes.",
+    "studySha256": "06a63dd3b2e4028f5b6cdc7958d897d4cf7e534e282bed66aa9fb8f392d05db9",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  },
+  {
+    "id": "atacado:4",
+    "topicIndex": 4,
+    "title": "Distribuição de equipamentos",
+    "reviewStatus": "approved",
+    "reason": "Revalidação individual: página primária Sotreq Macaé aberta integralmente confirma máquinas, peças, aluguel e manutenção. Portfólio não é tratado como vendas realizadas ou liderança. Análise de canais, substituição, financiamento e limites específicos suficiente.",
+    "studySha256": "a9f4e5596ba5ff101fe7caedc1de972be02d9a7eae1e8345594000b829fa859f",
+    "hashMethod": "SHA256 do estudo individual JSON canônico: chaves ordenadas, UTF8, separadores compactos, incluindo metadata."
+  }
+]

@@ -1,3 +1,4 @@
+import { resolveCreditIof } from './iofRules.js'
 import { parseMoneyInput } from './moneyInput.js'
 import { parseDecimal } from './emprestimo.js'
 
@@ -6,9 +7,7 @@ export const CG_PRESET_FROM = '2025-07-17'
 export const CG_MAX_DAYS = 3660
 export const CG_TAX_PROFILES = [
   { id: 'pj', label: 'Pessoa jurídica: referência geral', daily: 0.0082, additional: 0.38 },
-  { id: 'pf', label: 'Pessoa física: referência geral', daily: 0.0082, additional: 0.38 },
-  { id: 'simples', label: 'Simples/MEI: operação elegível até R$ 30 mil', daily: 0.00274, additional: 0.38 },
-  { id: 'manual', label: 'Alíquotas informadas pelo usuário' },
+  { id: 'simples', label: 'Simples/MEI: redução somente até R$ 30 mil', daily: 0.00274, additional: 0.38 },
 ]
 export const CG_SOURCES = [
   { label: 'Decreto 6.306/2007 atualizado: art. 7º', url: 'https://www2.camara.leg.br/legin/fed/decret/2007/decreto-6306-14-dezembro-2007-566561-normaatualizada-pe.html' },
@@ -39,7 +38,7 @@ export function cgInitialForm(today = cgToday()) {
   return {
     mode: 'single', start: today, end: cgAddDays(today, 10), duration: '10', dateMode: 'duration', amount: '',
     rate: '', rateBase: '30', conversion: 'proportional', dayCount: 'calendar', holidays: '',
-    taxProfile: 'pj', iofDaily: '0,0082', iofAdditional: '0,38', eligible: false, operationValue: '',
+    taxProfile: 'pj', eligible: false, operationValue: '',
     status: 'performing', rows: [{ id: 'first', date: today, draw: '', payment: '' }],
   }
 }
@@ -47,13 +46,16 @@ export function cgInitialForm(today = cgToday()) {
 // The explicit daily close convention is a simulation, not a reconstruction of a bank ledger.
 // All movements on one date are netted. No positive account balance or intraday overdraft is modeled.
 export function simulateContaGarantida(input) {
-  const { start, end, rate, rateBase, conversion, dayCount, iofDaily, iofAdditional, events = [], holidays = [], settleAllAtEnd = false } = input
+  const { start, end, rate, rateBase, conversion, dayCount, events = [], holidays = [], settleAllAtEnd = false } = input
   const from = cgDate(start), to = cgDate(end)
   if (!from || !to || to < from || (to - from) / DAY > CG_MAX_DAYS) return fail('Informe datas válidas, em ordem, em um intervalo de até 3.660 dias.')
   if (!validPercent(rate) || ![1, 30, 360, 365, 252].includes(rateBase) || !['proportional', 'equivalent'].includes(conversion)) return fail('Confira a taxa e sua conversão diária.')
   if (!['calendar', 'business'].includes(dayCount)) return fail('Confira a contagem dos dias.')
   if (input.capitalization && input.capitalization !== 'separate') return fail('Este simulador não incorpora juros ou IOF ao saldo utilizado.')
-  if (![iofDaily, iofAdditional].every(validPercent) || !Array.isArray(holidays) || holidays.some(d => !cgDate(d))) return fail('Confira alíquotas e feriados.')
+  const tax = resolveCreditIof({ date: start, profile: input.taxProfile || 'pj', operationValue: input.taxProfile === 'simples' ? input.operationValue : Array.isArray(events) ? events.reduce((sum, event) => sum + (Number.isFinite(event.draw) ? event.draw : 0), 0) : 0, eligible: input.eligible })
+  if (!tax.ok) return fail(tax.error)
+  const iofDaily = tax.daily, iofAdditional = tax.additional
+  if (!Array.isArray(holidays) || holidays.some(d => !cgDate(d))) return fail('Confira alíquotas e feriados.')
   if (!Array.isArray(events) || events.length > 500) return fail('Use até 500 lançamentos.')
   const byDate = new Map()
   for (const event of events) {
@@ -84,6 +86,7 @@ export function simulateContaGarantida(input) {
     const dailyIof = balance * iofDaily / 100, additionalIof = additionalBase * iofAdditional / 100
     const row = { date, draw, payment, interest, countsInterest, balance, additionalBase, dailyIof, additionalIof }
     if (![balance, interest, dailyIof, additionalIof].every(validMoney)) return fail('O resultado excedeu o limite numérico. Reduza valores, taxa ou prazo.')
+    if (input.taxProfile === 'simples' && balance > input.operationValue) return fail('O saldo utilizado supera o valor contratual declarado.')
     rows.push(row)
     const aggregate = months.get(month) || { month, days: 0, interest: 0, dailyBase: 0, additionalBase: 0, dailyIof: 0, additionalIof: 0 }
     aggregate.days++
@@ -131,16 +134,18 @@ export function parseContaGarantidaForm(form) {
   if (form.dayCount === 'business') warnings.push('Dias úteis = segunda a sexta, menos os feriados que você informou. Não há calendário bancário automático.')
   const profile = CG_TAX_PROFILES.find(p => p.id === form.taxProfile)
   if (!profile) errors.taxProfile = 'Escolha a referência de IOF.'
-  params.iofDaily = profile?.id === 'manual' ? decimal('iofDaily') : profile?.daily
-  params.iofAdditional = profile?.id === 'manual' ? decimal('iofAdditional') : profile?.additional
-  if (profile && profile.id !== 'manual') {
-    if (form.start < CG_PRESET_FROM) errors.taxProfile = 'Referências disponíveis só a partir de 17/07/2025. Para outro período, informe alíquotas com orientação tributária; não há histórico automático.'
-    if (params.end > CG_LEGAL_CHECKED_AT) warnings.push('Projeção mantém as alíquotas consultadas em 05/11/2026. Não antecipa mudanças futuras na legislação.')
-  } else if (profile) warnings.push('Alíquotas manuais constantes em todo o período. Isso não valida isenção, regime especial ou regras históricas.')
+  params.taxProfile = form.taxProfile
+  params.eligible = form.eligible
+  params.operationValue = profile?.id === 'simples' ? money('operationValue') : form.mode === 'single' ? money('amount') : (form.rows || []).reduce((sum, row) => sum + (parseMoneyInput(row.draw, { optional: true }).value || 0), 0)
+  const tax = resolveCreditIof({ date: form.start, profile: form.taxProfile, operationValue: params.operationValue, eligible: form.eligible })
+  if (!tax.ok) errors.taxProfile = tax.error
+  params.iofDaily = tax.ok ? tax.daily : undefined
+  params.iofAdditional = tax.ok ? tax.additional : undefined
+  if (params.end > CG_LEGAL_CHECKED_AT) warnings.push('Projeção mantém as alíquotas consultadas; não antecipa mudanças futuras na legislação.')
   if (form.status !== 'performing') errors.status = 'Esta versão só simula operação adimplente. Inadimplência, renegociação e principal contratualmente definido exigem regras próprias.'
   if (profile?.id === 'simples') {
     const operationValue = money('operationValue')
-    if (!(operationValue > 0 && operationValue <= 30000)) errors.operationValue = 'O valor contratual da operação deve ser maior que zero e até R$ 30.000,00.'
+    if (!(operationValue > 0)) errors.operationValue = 'Informe o valor contratual total maior que zero. Acima de R$ 30 mil aplica-se a alíquota geral.'
     if (!form.eligible) errors.eligible = 'Confirme o enquadramento e a documentação com a instituição; saldo momentâneo de até R$ 30 mil não basta.'
   }
   params.events = []

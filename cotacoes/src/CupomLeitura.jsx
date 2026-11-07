@@ -81,7 +81,7 @@ export default function CupomLeitura({ curves }) {
           </div>
           {serie.length > 1 ? (
             <div ref={ref}>
-              <Plot points={plot} width={width} color="#4aa3a2" code={`cupom-${du}`} intraday={false} scales={false} fmt={(v) => `${f2(v)}%`} vfmt={(v) => f2(v)} label={`Cupom cambial · ${VERTICES.find((v) => v.du === du)?.label}`} nice rate labels />
+              <Plot points={plot} width={width} color="var(--chart-teal)" code={`cupom-${du}`} intraday={false} scales={false} fmt={(v) => `${f2(v)}%`} vfmt={(v) => f2(v)} label={`Cupom cambial · ${VERTICES.find((v) => v.du === du)?.label}`} nice rate labels />
             </div>
           ) : <p className="status">Sem pontos suficientes para este prazo.</p>}
           <p className="status">Pontos = datas de comparação disponíveis ({serie.map((p) => dm(p.date)).join(', ')}); não é série diária.</p>

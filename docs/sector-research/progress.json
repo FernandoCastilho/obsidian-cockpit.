@@ -1,0 +1,544 @@
+{
+  "totalTarget": 67,
+  "existingTicPreserved": true,
+  "prepared": 67,
+  "approved": 67,
+  "studies": [
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 0,
+      "title": "Frigoríficos",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "f43e06bc1989c05d5161b8db7ecc6b84f3e3904d54af31f8a565a62fde954255"
+    },
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 1,
+      "title": "Laticínios",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "3b96c0e722435fb788d472b7a26d13cf9323307b75f6c42d83e2e8edd17071aa"
+    },
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 2,
+      "title": "Moinhos",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "d242f16cacb37ae58214e20f009b240bc22554c6c53c9ea6de2ef29ccd899f3f"
+    },
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 3,
+      "title": "Óleos vegetais",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "131123daec70c924066ba9eb1fb722f0f8567b40907fe42a8132b07ff02d7b1d"
+    },
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 4,
+      "title": "Alimentos processados",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "e05817c7a5d8bfbf318ce3c06ce9ab10f6489549849298b7d7b5d28013ed356f"
+    },
+    {
+      "group": "alimentos-agroindustria",
+      "topicIndex": 5,
+      "title": "Bebidas",
+      "status": "approved",
+      "sourceFile": "alimentos-agroindustria.json",
+      "sourceSha256": "e965e0de674591f0967614997d08641f03f40afaa689d5c7cfe1a2df3804dbc6"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 0,
+      "title": "Distribuição de alimentos",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "90723bb897ae362658f9d3e8a652b9b829aa9c40b9aeec0ccf9160a1f172cb9d"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 1,
+      "title": "Distribuição de medicamentos",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "5e28f2df231e5ce4412f06c90b3a51d6c0a2695a40e8e94087cda22c9fd6735d"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 2,
+      "title": "Distribuição de materiais de construção",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "56cc732d17d212f901401c5e3aa35155c39957778c5492567046acefe55b2d11"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 3,
+      "title": "Distribuição de insumos industriais",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "c01e8422ac5e801a35f9faa86ce614ccdeb173a7a831913d5c9d90d3e99699c6"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 4,
+      "title": "Distribuição de equipamentos",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "81f7bac543bdc8052ab985f5f95d4c03bd44d095b67b93f1289632fb68e7e4f5"
+    },
+    {
+      "group": "atacado",
+      "topicIndex": 5,
+      "title": "Distribuição de válvulas para óleo e gás",
+      "status": "approved",
+      "sourceFile": "atacado.json",
+      "sourceSha256": "fd01490b4980108db0e21676e45702bb16d9694ecc92469457db0764a442b2d7"
+    },
+    {
+      "group": "automotivo",
+      "topicIndex": 0,
+      "title": "Componentes automotivos",
+      "status": "approved",
+      "sourceFile": "automotivo.json",
+      "sourceSha256": "449ed7912a7ed3fa4126691d4093589b3bb4466b30117aabeb1c47da032ad38b"
+    },
+    {
+      "group": "automotivo",
+      "topicIndex": 1,
+      "title": "Implementos rodoviários",
+      "status": "approved",
+      "sourceFile": "automotivo.json",
+      "sourceSha256": "c9121645e6fb1d7a6dd2dbb27db4d7375f2ef5eaf222a24af84f63536a7c82db"
+    },
+    {
+      "group": "automotivo",
+      "topicIndex": 2,
+      "title": "Reposição de autopeças",
+      "status": "approved",
+      "sourceFile": "automotivo.json",
+      "sourceSha256": "01494795b1e421455b13d392eb993311b3d61c55c9be675be7f23963af34b127"
+    },
+    {
+      "group": "automotivo",
+      "topicIndex": 3,
+      "title": "Distribuidores de peças",
+      "status": "approved",
+      "sourceFile": "automotivo.json",
+      "sourceSha256": "4b46c2fba7fca2053a3b9653292c07eb66b21bd179add677afce4c9731eeb0a7"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 0,
+      "title": "Florestas plantadas",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "1bb875780a2b26a02a2d7a5fd84675b1773875cfab4baa1a74b4116368e0baaf"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 1,
+      "title": "Serrarias",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "0f2fd996736e7e4dccf3970d14c201bba6261d3110474d02abd5cd6a84d2cdd2"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 2,
+      "title": "Lâminas",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "2d8c1ea00d5d5b4e181db5ba2a00aa69d1361a1929345141118f9e6c1bfcb438"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 3,
+      "title": "Compensados",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "d520763269f05193ed0320b591efcda7f539a5ab20023ca04e468a7c89e521b4"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 4,
+      "title": "MDF e MDP",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "465c8cb883c7a9052825493b647a67ab4093cb93f834498fe170398d669f7315"
+    },
+    {
+      "group": "base-florestal",
+      "topicIndex": 5,
+      "title": "Móveis",
+      "status": "approved",
+      "sourceFile": "base-florestal.json",
+      "sourceSha256": "5a007a906c60885af5359412c5f50e54f8decff1f85106ab237a3e48b8fa85b9"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 0,
+      "title": "Construção residencial",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "17865c92473d66af951aa752b8e2d9163d340e3d78d2a19ea080785645fba368"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 1,
+      "title": "Galpões",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "d168294cb719b942929048cf4ba313fa47f384d11cb218787a965449d9f17f42"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 2,
+      "title": "Infraestrutura",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "e61f2547c54782964fe5a85dede612cbd8e038d46cc3b4301fb83ce8621aff95"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 3,
+      "title": "Cimento",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "6d08acb6214a1462c7b7e378c3f01bbb9d85171efd9f2b9ebbfb4ced0502a7e7"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 4,
+      "title": "Cerâmica",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "60304909d117b9091b4032696afea4cd8d5ff1475addcf3548716315ae40e29c"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 5,
+      "title": "Vidros",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "2a3b73059a490763c47ddf2d2be9892525ffb500cce7156bb3609b3730355791"
+    },
+    {
+      "group": "construcao",
+      "topicIndex": 6,
+      "title": "Esquadrias",
+      "status": "approved",
+      "sourceFile": "construcao.json",
+      "sourceSha256": "9a2767eb014be42086a15cef2f7c534b29c6cc6b7843d357cd8f629aa3011a26"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 0,
+      "title": "Fundição",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "6a7afd06b397deef9fe86bec2498dd639a3a64e04bd24f8f4b7343ba62c40ac3"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 1,
+      "title": "Usinagem",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "e38193f00910213bccbc6150726f98980c931cbc9f87d79403e10b29a63a300e"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 2,
+      "title": "Estruturas metálicas",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "32afdeb3111aae8a396a12c704819e2d657c50aa9bd5281e4f8499e385d8fae5"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 3,
+      "title": "Máquinas industriais",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "a6419c642a65775255133a5a166e5d0f898d29b1254721009dd245133ac9f86f"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 4,
+      "title": "Máquinas agrícolas",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "b5dc403962ba9f64b83abb6d5b062dbb4641335b0158af13a890ebea9c89e4e8"
+    },
+    {
+      "group": "metalmecanico",
+      "topicIndex": 5,
+      "title": "Equipamentos",
+      "status": "approved",
+      "sourceFile": "metalmecanico.json",
+      "sourceSha256": "60a06c9ad1b73ba0cff54167f607b1d8698352b3fd932248054e4ec0ea61189c"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 0,
+      "title": "Celulose",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "d5f1485e06566c8a19d3e89b32290140fa630efc08e9791b0cd992a29a1df6d3"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 1,
+      "title": "Papel",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "71f0efaedadc6d7f24aa7ef7763adc1cb13d142a90893ca0042c16718e4cbcf5"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 2,
+      "title": "Papelão ondulado",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "538c97b2e4724753f182218bb4dcb45d005ec3c15d3d8ac8da87f54b8d3315ac"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 3,
+      "title": "Caixas",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "2839a578bdec96add6e3c35ade395be25948bfb83e123227cefb34b1d6c9737b"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 4,
+      "title": "Sacos industriais",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "bd39baddb0926c10cbd65e8346d29e3c765633b13eac87e3675b6ee29a09986e"
+    },
+    {
+      "group": "papel-celulose",
+      "topicIndex": 5,
+      "title": "Tubetes",
+      "status": "approved",
+      "sourceFile": "papel-celulose.json",
+      "sourceSha256": "e2aafb4afc6e02d93f02d0c5f5849db764bf3d27043e21e4742a53aeba9acb97"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 0,
+      "title": "Resinas",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "3ca5b067afc8d8605e5c06df337717c6f7231fdac6be92f1ff3e5ce97333c7ce"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 1,
+      "title": "Transformação plástica",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "27826009b53d688f4244c78825d1f615350f82798d54c10822e5702f50f1897c"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 2,
+      "title": "Embalagens flexíveis",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "cfb369493fd35c8813f46aa25eb3ef4d5bd58c27541c48cf73470c21c8239f65"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 3,
+      "title": "Tintas",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "67b4139a7c455cd6ed2a95ca19af509219e003e61a3179a9e69ef27b79f6cb69"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 4,
+      "title": "Limpeza",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "d0ac977d262ff4e83255997cef3d2e28b679f9595d2f6ce3a44ced340725a115"
+    },
+    {
+      "group": "quimicos",
+      "topicIndex": 5,
+      "title": "Borracha",
+      "status": "approved",
+      "sourceFile": "quimicos.json",
+      "sourceSha256": "5b9f1a8ddc8f8f596eb95a35fea73f01d32d8eda06c1fee9a977b4b30b18e245"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 0,
+      "title": "Fiação",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "326c413b907bad63ee356f70290a95503f0d044e79f4a2a35b1cd7ff9f8065a1"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 1,
+      "title": "Tecelagem",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "4ee66190db0aee5ea8f50d494b407c8dd06fcc3f23756975dd7b48aa84ffe8b8"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 2,
+      "title": "Malharia",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "0c4a594bb9c2f7e5e43ebe229bf8140e515a65768733a8cd0a7e557c2f9e2187"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 3,
+      "title": "Tinturaria",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "39111825c80d568eff13c83c9b2770c83275d9af6c9bd204da97ed9bd56f91d1"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 4,
+      "title": "Confecção",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "4b520c938ff6fb48cc0beac3a8df93c8cfe1b2d6921228f4d64e9fbed48113d2"
+    },
+    {
+      "group": "textil",
+      "topicIndex": 5,
+      "title": "Tecidos técnicos",
+      "status": "approved",
+      "sourceFile": "textil.json",
+      "sourceSha256": "741081a15a8cac82fa494252b04294adaf358b10171eae2f6c6c6fe57d666720"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 1,
+      "title": "Cibersegurança",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "e496ad5d5ee08e91ca0f5841cf6cf5eab4106bb22b37abed27655222e9d70215"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 2,
+      "title": "Redes e conectividade",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "d3125539de44f064295f27103a1b122703eb86447fc9e6869201d35c261a3f69"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 3,
+      "title": "Serviços gerenciados de TI",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "dec2d73c6f876eb636783266d3e8a6fbb2a4a8e1c8a37d961a295c511da39d56"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 4,
+      "title": "Comunicação e colaboração",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "7fb431927eb0c5666f45ddf4b26c418a3bc22222deabd6b6331c74e2356f2433"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 5,
+      "title": "Software e serviços de TI",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "dd9aefa6cdf9cd22c12e21e05030528bcbdf29df533fece4c148ca41b5f2260f"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 6,
+      "title": "Data centers e nuvem",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "3ebac2f3d901a3bddc5bfb642615356c34c04272b1d04cad3bc66be98ed5d87d"
+    },
+    {
+      "group": "tic",
+      "topicIndex": 7,
+      "title": "Operadoras de telecomunicações",
+      "status": "approved",
+      "sourceFile": "tic.json",
+      "sourceSha256": "3b5fb9b86d772b8d61eb6d2ddc529f7822d478b223d2cfa86dfe51ed50b70e51"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 0,
+      "title": "Carga geral",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "4a1b0edf86d7e3ac25a72e976e23c76c9babdb8747360e300ad435e8d221f4d6"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 1,
+      "title": "Transporte de madeira",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "2743782276e6bb6213057445c952fbb1ae5f9281cf49fca3ce5a98d565f97286"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 2,
+      "title": "Transporte de grãos",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "4e783e9590c6e436a35f9ed912a87943a1d86d6dbc55e2c8309938740bd10fdd"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 3,
+      "title": "Transporte refrigerado",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "7ba4c2de98b2fdb7c708067a59fab37731816b7743ecfdf505748f412d4d5786"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 4,
+      "title": "Transporte de produtos perigosos",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "dd3cbe91f73e0b2c80a6aaec013d36f086a9d789692df3131e249da990783fd0"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 5,
+      "title": "Armazenagem",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "02c425c6059e2a4c29f8d221345f896c9f1794ca4e5ad969551539b042320a4b"
+    },
+    {
+      "group": "transporte-logistica",
+      "topicIndex": 6,
+      "title": "Logística portuária",
+      "status": "approved",
+      "sourceFile": "transporte-logistica.json",
+      "sourceSha256": "c44ac7a8a6fd50a243d1bcb9317d57763915cf665e0fbcc3e41fb50aa462035c"
+    }
+  ]
+}

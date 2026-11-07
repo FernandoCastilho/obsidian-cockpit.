@@ -1,0 +1,398 @@
+{
+  "accessedAt": "2026-11-06",
+  "changes": "Substituídos2 pontos indexados bovinos e valor leite por mesma vintage SIDRA; acrescentadas séries anuais completas2015–2025 e1T/2T2026; aprovações3/5 não alteradas.",
+  "records": [
+    {
+      "topicIndex": 0,
+      "value": 30651802,
+      "unit": "cabeças",
+      "period": "2015",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7739650,
+        7633038,
+        7585455,
+        7693659
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 29702048,
+      "unit": "cabeças",
+      "period": "2016",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7319737,
+        7654362,
+        7321596,
+        7406353
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 30866663,
+      "unit": "cabeças",
+      "period": "2017",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7398120,
+        7423406,
+        7986421,
+        8058716
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 32042688,
+      "unit": "cabeças",
+      "period": "2018",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7773005,
+        7767877,
+        8316874,
+        8184932
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 32445850,
+      "unit": "cabeças",
+      "period": "2019",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7927343,
+        7938871,
+        8498729,
+        8080907
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 29887036,
+      "unit": "cabeças",
+      "period": "2020",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7336730,
+        7403577,
+        7773780,
+        7372949
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 27704853,
+      "unit": "cabeças",
+      "period": "2021",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6597323,
+        7126495,
+        7019544,
+        6961491
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 29947584,
+      "unit": "cabeças",
+      "period": "2022",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7011231,
+        7428815,
+        7963127,
+        7544411
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 34101806,
+      "unit": "cabeças",
+      "period": "2023",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        7466521,
+        8478163,
+        8997920,
+        9159202
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 39689184,
+      "unit": "cabeças",
+      "period": "2024",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        9433520,
+        10067712,
+        10500586,
+        9687366
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 42952312,
+      "unit": "cabeças",
+      "period": "2025",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        9962917,
+        10585635,
+        11347487,
+        11056273
+      ]
+    },
+    {
+      "topicIndex": 0,
+      "value": 10311847,
+      "unit": "cabeças",
+      "period": "1º trimestre 2026",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Observação direta"
+    },
+    {
+      "topicIndex": 0,
+      "value": 10721343,
+      "unit": "cabeças",
+      "period": "2º trimestre 2026",
+      "scope": "Brasil, bovinos sob inspeção sanitária, total das categorias; não todas as espécies ou produção informal.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1092/n1/all/v/284/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Observação direta"
+    },
+    {
+      "topicIndex": 1,
+      "value": 24062308,
+      "unit": "mil litros",
+      "period": "2015",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6135395,
+        5645460,
+        5990688,
+        6290765
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 23169654,
+      "unit": "mil litros",
+      "period": "2016",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        5861377,
+        5219521,
+        5848661,
+        6240095
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 24333511,
+      "unit": "mil litros",
+      "period": "2017",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        5861576,
+        5647942,
+        6279291,
+        6544702
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 24457864,
+      "unit": "mil litros",
+      "period": "2018",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6019432,
+        5478583,
+        6256214,
+        6703635
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 25011825,
+      "unit": "mil litros",
+      "period": "2019",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6195154,
+        5860992,
+        6283741,
+        6671938
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 25641262,
+      "unit": "mil litros",
+      "period": "2020",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6447161,
+        5874522,
+        6516870,
+        6802709
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 25121798,
+      "unit": "mil litros",
+      "period": "2021",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6576168,
+        5839306,
+        6206647,
+        6499677
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 23918221,
+      "unit": "mil litros",
+      "period": "2022",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        5954427,
+        5499132,
+        6148420,
+        6316242
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 24605600,
+      "unit": "mil litros",
+      "period": "2023",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6006785,
+        5789617,
+        6318682,
+        6490516
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 25366096,
+      "unit": "mil litros",
+      "period": "2024",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6280522,
+        5943220,
+        6358355,
+        6783999
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 27613017,
+      "unit": "mil litros",
+      "period": "2025",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Soma4 trimestres",
+      "inputs": [
+        6608360,
+        6549388,
+        7087761,
+        7367508
+      ]
+    },
+    {
+      "topicIndex": 1,
+      "value": 6786539,
+      "unit": "mil litros",
+      "period": "1º trimestre 2026",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Observação direta"
+    },
+    {
+      "topicIndex": 1,
+      "value": 6613992,
+      "unit": "mil litros",
+      "period": "2º trimestre 2026",
+      "scope": "Brasil, estabelecimentos sob inspeção sanitária; não inclui universo informal. Aquisição não equivale a produção de derivados.",
+      "url": "https://apisidra.ibge.gov.br/values/t/1086/n1/all/v/282/p/all",
+      "accessedAt": "2026-11-06",
+      "method": "Observação direta"
+    }
+  ]
+}

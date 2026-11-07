@@ -1,0 +1,85 @@
+{
+  "applied": [
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/0/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/1/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/2/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/3/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/4/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/base-florestal.json",
+      "path": "/5/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/0/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/1/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/2/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/3/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/4/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/5/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/0/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/1/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/2/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/3/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/4/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/quimicos.json",
+      "path": "/5/canvasQuestions/2/question"
+    },
+    {
+      "file": "docs/sector-research/papel-celulose.json",
+      "path": "/2/sections/6/rows/3/1"
+    },
+    {
+      "file": "docs/sector-research/tic.json",
+      "path": "/1/sections/1/sources/0/purpose"
+    }
+  ],
+  "skipped": []
+}

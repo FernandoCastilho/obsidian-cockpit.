@@ -18,10 +18,10 @@ test('B3 respects Brazil civil date and deduplicates only completed same-hour ch
 test('weekly Focus cron at 08:30 Brazil on Monday and Tuesday (Monday holiday); hourly crons and coin workflow not duplicated',async()=>{
  assert.equal(FOCUS_CRON,'30 11 * * 1,2');const p=saoPauloParts('2026-11-02T11:30:00Z');assert.equal(p.weekday,'Mon');assert.equal(p.hour,'08');assert.equal(p.minute,'30');assert.equal(saoPauloParts('2026-11-03T11:30:00Z').weekday,'Tue')
  const y=await readFile(new URL('../../.github/workflows/pages.yml',import.meta.url),'utf8')
- const crons=[...y.matchAll(/- cron: '([^']+)'/g)].map(m=>m[1]);assert.equal(crons.length,3);assert.equal(new Set(crons).size,3)
+ const crons=[...y.matchAll(/- cron: '([^']+)'/g)].map(m=>m[1]);assert.equal(crons.length,4);assert.equal(new Set(crons).size,4);assert.ok(crons.includes('0 11,18 * * *'))
  assert.match(y,/if: github.event.schedule == '30 11 \* \* 1,2'/)
- assert.equal((y.match(/if: github.event.schedule != '30 11 \* \* 1,2'/g)||[]).length,33)
- assert.match(y,/Revalidar janela setorial sem coleta externa\n\s+if: github.event.schedule != '30 11 \* \* 1,2'\n\s+run: node scripts\/fetch-sector-news\.mjs --offline/)
+ const regular=y.split('\n').filter(l=>l.includes("github.event.schedule != '30 11 * * 1,2'"));assert.equal(regular.length,33);assert.ok(regular.every(l=>l.includes("github.event.schedule != '0 11,18 * * *'")))
+ assert.match(y,/Revalidar janela setorial sem coleta externa\n\s+if: github.event.schedule != '0 11,18 \* \* \*' && \(github.event.schedule != '30 11 \* \* 1,2'\)\n\s+run: node scripts\/fetch-sector-news\.mjs --offline/)
 })
 test('Focus failure/skip preserves actual publication date, values and quote timestamps',()=>{
  const prev={generatedAt:1,focusCheckedAt:2,focus:{date:'2026-10-23',rows:[{values:{2026:10}}]},stale:{focus:1}}
