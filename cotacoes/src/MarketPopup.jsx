@@ -27,6 +27,9 @@ function QuoteCard({ item, daily=false }) {
     <MiniLine points={item.points} color={item.color} label={daily?'Histórico diário do Brent, até 30 observações':'Amostras intradiárias '+item.key+'/BRL'}/>
   </article>
 }
+function MarketHeading({ slot }) {
+  return <div className="mp-title-row"><span className="mp-chart-icon" aria-hidden="true"><i/><i/><i/></span><div><h2 id="market-popup-title">Panorama do dia</h2><p>Leitura rápida para decisões de crédito e câmbio</p></div><p className="mp-edition">{slot && <>{new Date(slot.day+'T12:00:00Z').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'})}<br/>Edição das {slot.hour}h · Brasília</>}</p></div>
+}
 function Panorama({ slot, quotes, curves, oil }) {
   const day=fromInput(slot.day)
   const usd=useIntraday('USD',day), eur=useIntraday('EUR',day), cnh=useIntraday('CNH',day)
@@ -34,7 +37,7 @@ function Panorama({ slot, quotes, curves, oil }) {
   const fx=[marketFx('USD',quotes?.USD,usd.data?.points,now),marketFx('EUR',quotes?.EUR,eur.data?.points,now),marketFx('CNH',quotes?.CNH,cnh.data?.points,now)]
   const di=marketDi(curves,now), brent=marketBrent(oil,now)
   return <>
-    <div className="mp-title-row"><span className="mp-chart-icon" aria-hidden="true"><i/><i/><i/></span><div><h2 id="market-popup-title">Panorama do dia</h2><p>Leitura rápida para decisões de crédito e câmbio</p></div><p className="mp-edition">{new Date(slot.day+'T12:00:00Z').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'})}<br/>Edição das {slot.hour}h · Brasília</p></div>
+
     <div className="mp-grid">
       <QuoteCard item={fx[0]}/>
       <article className="mp-card mp-di"><div className="mp-card-head"><span className="mp-symbol" aria-hidden="true">%</span><h3>JUROS FUTUROS</h3></div><p className="mp-data-stamp">B3 · curva diária · {di.date||'Sem data válida'}</p>
@@ -47,7 +50,7 @@ function Panorama({ slot, quotes, curves, oil }) {
       <QuoteCard item={fx[2]}/>
     </div>
     <div className="mp-summary"><h3><span aria-hidden="true">▤</span> O que mudou</h3><p>{marketSummary(fx,brent)}</p></div>
-    <p id="market-popup-note" className="mp-footnote">Cada cartão mantém a data e a natureza da fonte. Valores indicativos; fontes diárias não são cotações em tempo real. Dias úteis nacionais, das 9h às 18h, com o Painel aberto.</p>
+
   </>
 }
 export default function MarketPopup({ ready, quotes, curves, oil, paused=false }) {
@@ -57,10 +60,11 @@ export default function MarketPopup({ ready, quotes, curves, oil, paused=false }
   useEffect(()=>{
     if(!ready||paused||navigator.webdriver)return undefined
     const el=dialog.current
+    let active=true
     const storage=()=>{try{return window.localStorage}catch{return null}}
     const attempt=()=>{
       const current=marketSlot()
-      if(document.visibilityState==='hidden'||el.open||seenMarketSlot(current,storage(),memory.current)||document.querySelector('dialog:modal'))return
+      if(!active||document.visibilityState==='hidden'||el.open||seenMarketSlot(current,storage(),memory.current)||document.querySelector('dialog:modal'))return
       priorFocus.current=document.activeElement
       setSlot(current)
       el.showModal()
@@ -78,7 +82,7 @@ export default function MarketPopup({ ready, quotes, curves, oil, paused=false }
     window.addEventListener('focus',tick)
     document.addEventListener('visibilitychange',tick)
     return ()=>{
-      clearInterval(timer);window.removeEventListener('focus',tick);document.removeEventListener('visibilitychange',tick)
+      active=false;clearInterval(timer);window.removeEventListener('focus',tick);document.removeEventListener('visibilitychange',tick)
       if(el.open)el.close()
       if(overflow.current!==null){document.body.style.overflow=overflow.current;overflow.current=null}
     }
@@ -88,6 +92,6 @@ export default function MarketPopup({ ready, quotes, curves, oil, paused=false }
     else [...document.querySelectorAll('nav button[aria-current="page"], nav button, main button')].find(el=>!el.disabled&&el.getClientRects().length)?.focus({preventScroll:true})
   }} onKeyDown={e=>{if(e.key==='Tab'){e.preventDefault();dialog.current.querySelector('button')?.focus()}}}>
     <div className="mp-ribbon"><span>Painel do Especialista · Panorama de mercado</span><button type="button" aria-label="Fechar panorama" autoFocus onClick={close}>×</button></div>
-    <div className="mp-content">{slot&&<Panorama slot={slot} quotes={quotes} curves={curves} oil={oil}/>}</div>
+    <div className="mp-content"><MarketHeading slot={slot}/>{slot&&<Panorama slot={slot} quotes={quotes} curves={curves} oil={oil}/>}<p id="market-popup-note" className="mp-footnote">Cada cartão mantém a data e a natureza da fonte. Valores indicativos; fontes diárias não são cotações em tempo real. Dias úteis nacionais, das 9h às 18h, com o Painel aberto.</p></div>
   </dialog>
 }

@@ -41,3 +41,5 @@ dialog.market-popup{color-scheme:light;--text:#080d35;--mut:#4d5874;--up:#087223
 @media(max-width:460px){.market-popup .mp-grid{display:flex;flex-direction:column}.market-popup .mp-card{width:100%}.market-popup .mp-data-stamp{min-height:0}.market-popup .mp-values strong{font-size:31px}.market-popup h3{font-size:16px}.market-popup .mp-summary p{font-size:13px}}
 
 @media(max-width:760px){.market-popup .mp-edition br{display:initial}.market-popup .mp-edition br::after{content:" · "}}
+
+dialog.market-popup{line-height:1.25}.market-popup .mp-data-stamp{min-height:0}
