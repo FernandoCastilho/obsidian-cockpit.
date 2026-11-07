@@ -93,3 +93,23 @@ test('síntese é descritiva, não inventa causa nem última hora quando indispo
  assert.equal(marketTone(.001),'flat')
  assert.equal(marketTone(null),'flat')
 })
+
+test('síntese omite câmbio retido, antigo, diário ou de sexta-feira na segunda',()=>{
+ const monday=time('2026-11-09T12:00:00Z')
+ const friday=time('2026-11-06T20:00:00Z')
+ for(const quote of [
+  {...q,timestamp:friday,stale:true},
+  {...q,timestamp:friday},
+  {...q,timestamp:monday-11*60000},
+  {...q,timestamp:monday,stale:true},
+  {...q,timestamp:monday,fallback:true}
+ ]){
+  const fx=marketFx('USD',quote,[],monday)
+  assert.equal(fx.summaryEligible,false)
+  assert.doesNotMatch(marketSummary([fx],marketBrent(null,monday)),/Dólar:|frente ao real no dia/)
+ }
+ const fresh=marketFx('USD',{...q,timestamp:monday},[],monday)
+ assert.equal(fresh.summaryEligible,true)
+ assert.match(marketSummary([fresh],marketBrent(null,monday)),/Dólar: \+1,00% frente ao real no dia/)
+ assert.match(marketSummary([],marketBrent(oil,monday)),/2026-11-09/)
+})

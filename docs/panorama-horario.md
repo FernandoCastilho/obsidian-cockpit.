@@ -18,7 +18,7 @@ DI: curva diária B3 e vértices próximos de dois e cinco anos úteis, marcados
 
 Brent: spot diário EIA, data real e variação entre observações. Histórico de até trinta observações, sem substituir por preço de topo ou ponto futuro.
 
-O que mudou é uma síntese aritmética das variações, sem atribuir causas econômicas não verificadas.
+O que mudou resume somente câmbio fresco do mesmo dia; variações retidas, antigas e referências diárias não entram como movimento atual. Brent traz a data na própria síntese. Não atribui causas econômicas não verificadas.
 
 ## Testes
 
@@ -28,4 +28,4 @@ smoke-market-popup.cjs cobre 390/820/1280 px em claro/escuro, com fontes sintét
 
 Para verificar produção sem substituir dados, usar POPUP_REAL_DATA=1 e SMOKE_BASE_URL do site. O relógio do navegador continua simulado exclusivamente para provocar o agendamento; as datas das fontes reais permanecem visíveis.
 
-Validação local: 12 testes focados, lint sem erros (5 avisos anteriores), build e 6 cenários de navegador aprovados. A suíte completa Windows teve 1.248/1.258 testes aprovados; 10 falhas de fsync de diretório e execução de CLI em caminhos Windows no teste sector-news-safe. O CI Linux deve passar antes do merge.
+Validação local: 13 testes focados, lint sem erros (5 avisos anteriores), build e 6 cenários de navegador aprovados. A suíte completa Windows teve 1.248/1.258 testes aprovados; 10 falhas de fsync de diretório e execução de CLI em caminhos Windows no teste sector-news-safe. O CI Linux deve passar antes do merge.

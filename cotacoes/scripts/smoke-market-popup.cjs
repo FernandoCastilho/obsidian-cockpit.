@@ -3,24 +3,29 @@ const assert = require('node:assert/strict'), fs=require('node:fs')
 const base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:8793'
 const out=process.env.POPUP_QA_OUTPUT||'popup-qa'
 const real=process.env.POPUP_REAL_DATA==='1'
-const instant=new Date('2026-11-06T15:00:00Z')
+let instant=new Date('2026-11-06T15:00:00Z')
 const raw=(code,codein,bid,pct)=>({code,codein,bid:String(bid),ask:String(bid+.001),high:String(bid*1.01),low:String(bid*.99),pctChange:String(pct),varBid:String(bid*.01),timestamp:String(instant.getTime()/1000)})
 const quotes={USDBRL:raw('USD','BRL',5.28,.46),EURBRL:raw('EUR','BRL',5.74,.31),JPYBRL:raw('JPY','BRL',.032,.1),USDCNH:raw('USD','CNH',7.23,.18)}
 const curves={generatedAt:instant.getTime(),br:{compare:[{id:'hoje',date:'2026-11-06'},{id:'d1',date:'2026-11-05'}],curves:{'2026-11-06':[[63,12.1],[126,12.15],[252,12.2],[504,12.35],[756,12.55],[1008,12.65],[1260,12.85]],'2026-11-05':[[63,12],[126,12.1],[252,12.15],[503,12.28],[755,12.50],[1007,12.6],[1259,12.75]]}}}
 const oil={benchmark:'Brent',kind:'spot',unit:'USD/barril',points:Array.from({length:20},(_,i)=>({date:'2026-10-'+String(12+i).padStart(2,'0'),value:80-i*.15+Math.sin(i)*.4}))}
 const intraday={generatedAt:instant.getTime(),series:Object.fromEntries(['USD','EUR','CNH','JPY'].map(code=>[code,{points:Array.from({length:25},(_,i)=>[instant.getTime()-(24-i)*300000,({USD:5.28,EUR:5.74,CNH:.73,JPY:.032}[code])*(.995+i*.0002+Math.sin(i)*.0005)])}]))}
 ;(async()=>{
+ if(real){
+  const {marketSlot}=await import('../src/marketPopup.js')
+  instant=new Date(new Date().toISOString().slice(0,10)+'T15:00:00Z')
+  for(let n=0;n<370&&!marketSlot(instant.getTime());n++)instant=new Date(instant.getTime()+86400000)
+ }
  fs.mkdirSync(out,{recursive:true})
  const browser=await chromium.launch(require('./smoke-launch.cjs')())
  const report=[], colors=[]
  try{
  for(const width of [390,820,1280])for(const theme of ['light','dark']){
   const ctx=await browser.newContext({viewport:{width,height:900},timezoneId:'Asia/Tokyo',colorScheme:theme,reducedMotion:'reduce',serviceWorkers:'block'})
-  await ctx.addInitScript(theme=>{
+  await ctx.addInitScript(({theme,day})=>{
    Object.defineProperty(navigator,'webdriver',{get:()=>false})
    localStorage.setItem('painel-theme',theme)
-   localStorage.setItem('aprender-conceito-dia','2026-11-06')
-  },theme)
+   localStorage.setItem('aprender-conceito-dia',day)
+  },{theme,day:instant.toISOString().slice(0,10)})
   if(!real){
    await ctx.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort())
    await ctx.route('**/json/last/**',r=>r.fulfill({json:quotes}))
@@ -68,7 +73,7 @@ const intraday={generatedAt:instant.getTime(),series:Object.fromEntries(['USD','
   assert.notEqual(await p.evaluate(()=>document.activeElement.tagName),'BODY')
   await p.reload();await aviso.getByRole('button',{name:'Entendi'}).click();await p.clock.runFor(1200)
   assert.equal(await modal.evaluate(e=>e.open),false,'não repete ao recarregar')
-  if(width===1280&&theme==='light'){
+  if(width===1280&&theme==='light'&&!real){
    await p.clock.setFixedTime(new Date('2026-11-06T16:00:00Z'));await p.clock.runFor(1200)
    await p.waitForFunction(()=>document.querySelector('.market-popup').open)
    assert.match(await modal.locator('.mp-edition').innerText(),/13h/)

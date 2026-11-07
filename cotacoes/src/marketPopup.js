@@ -4,6 +4,7 @@ import { brentReturns } from './oilReference.js'
 
 export const MARKET_POPUP_KEY = 'painel-panorama-hora'
 const zone = 'America/Sao_Paulo'
+const dayFormatter = new Intl.DateTimeFormat('en-CA',{timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit'})
 const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
 export function marketSlot(now = Date.now()) {
   const date = new Date(now)
@@ -46,10 +47,10 @@ export function marketFx(code, quote, points, now = Date.now()) {
   const day = usable && !quote.fallback && Number.isFinite(quote.pct) ? quote.pct : null
   return { key:code, title:code==='USD'?'DÓLAR/REAL':code==='EUR'?'EURO/REAL':'CONTEXTO: YUAN',
     symbol:code==='USD'?'⇄':code==='EUR'?'€':'¥', value:usable ? 'R$ '+number(quote.bid,4) : '—',
-    change:day, stamp:usable ? stamp(quote.timestamp):'Sem dado válido',
+    change:day, summaryEligible:!!usable && !state && dayFormatter.format(new Date(quote.timestamp)) === dayFormatter.format(new Date(now)), stamp:usable ? stamp(quote.timestamp):'Sem dado válido',
     note:!usable?'Cotação indisponível':quote.fallback?'Reserva diária · BCE':state ? state+' · AwesomeAPI':'AwesomeAPI · cotação indicativa',
     hour:hourMarketChange(usable?quote:null,points,now), points:validMarketPoints(points, now),
-    detail:code==='CNH'?(quote?.source === 'CNY' ? 'CNY/BRL · referência onshore' : 'CNH/BRL · yuan offshore por cruzamento'):'Variação do dia', color:'#174cff' }
+    detail:code==='CNH'?(quote?.source === 'CNY' ? 'CNY/BRL · referência onshore' : 'CNH/BRL · yuan offshore por cruzamento'):(state?'Variação na data da cotação':'Variação do dia'), color:'#174cff' }
 }
 const nearest = (points, target) => (points||[]).filter(p=>Array.isArray(p)&&Number.isFinite(p[0])&&Number.isFinite(p[1])).reduce((b,p)=>!b||Math.abs(p[0]-target)<Math.abs(b[0]-target)?p:b,null)
 export function marketDi(curves, now=Date.now()) {
@@ -72,7 +73,7 @@ export function marketBrent(oil, now=Date.now()) {
     points:(r.last?oil.points:[]).filter(p=>p.date<=today&&Number.isFinite(p.value)&&p.value>0).slice(-30).map(p=>({t:Date.parse(p.date+'T12:00:00Z'),bid:p.value})) }
 }
 export function marketSummary(fx, brent) {
-  const parts=fx.filter(x=>Number.isFinite(x.change)).map(x=>`${x.key==='USD'?'Dólar':x.key==='EUR'?'Euro':'Yuan offshore'}: ${signedMarketChange(x.change)} frente ao real no dia`)
-  if (Number.isFinite(brent.change)) parts.push(`Brent spot: ${signedMarketChange(brent.change)} entre as últimas observações diárias`)
+  const parts=fx.filter(x=>x.summaryEligible && Number.isFinite(x.change)).map(x=>`${x.key==='USD'?'Dólar':x.key==='EUR'?'Euro':'Yuan offshore'}: ${signedMarketChange(x.change)} frente ao real no dia`)
+  if (Number.isFinite(brent.change)) parts.push(`Brent spot (${brent.stamp}): ${signedMarketChange(brent.change)} entre as últimas observações diárias`)
   return parts.length?parts.join('. ')+'.':'Sem variações válidas para resumir. Confira as datas e as fontes dos cartões.'
 }
