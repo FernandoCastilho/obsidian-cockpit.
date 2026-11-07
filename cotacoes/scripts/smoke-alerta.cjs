@@ -135,7 +135,23 @@ const id = '2026-11-05:USD:alta'
       assert.equal((await s.ledger()).attempts, 2)
       await capture(s.p, `alerta-${width}-envio-recuperado.png`)
       await s.finish()
-      console.log(`${width} PASS alerta após9h, fechamento-anterior, permissão tardia/externa, dispensa/reload, falha/retry e deduplicação`)
+      // A cotação envelhece sem nova leitura: permissão/retry não podem enviar o alerta vencido.
+      for (const retryExpired of [false, true]) {
+        s = await start(width, retryExpired ? 'granted' : 'default', retryExpired)
+        await s.checkBanner()
+        const action = s.p.getByRole('button', { name: retryExpired ? 'Tentar enviar novamente' : 'Permitir notificações de câmbio' })
+        await action.waitFor()
+        await s.p.clock.setFixedTime(now + 540001) // timestamp original now-60000: idade 10min + 1ms
+        await s.p.evaluate(() => window.qaNotification.patch({ fail: false }))
+        await action.click()
+        await s.p.locator('.alerta-var-item').waitFor({ state: 'detached' })
+        assert.equal((await s.ledger()).sent.length, 0, 'cotação vencida não é despachada')
+        assert.equal((await s.ledger()).attempts, retryExpired ? 1 : 0, 'não inicia uma nova tentativa com dado vencido')
+        assert.equal(await s.saved(), undefined, 'cotação vencida não consome a deduplicação')
+        await s.finish()
+      }
+      console.log(`${width} PASS alerta após9h, fechamento-anterior, permissão tardia/externa, dispensa/reload, falha/retry, deduplicação e expiração no envio`)
+
     }
   } finally { await b.close() }
 })().catch((e) => { console.error(e); process.exit(1) })

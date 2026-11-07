@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { marketDate } from './marketReturns.js'
 import { LIMITE_PCT, alertasDoDia, textoAlerta } from './alertaVariacao.js'
 import { notificarAlerta, permissaoNotificacao } from './alertaNotificacao.js'
@@ -18,6 +18,8 @@ export default function AlertaVariacao({ quotes }) {
   const testing = typeof navigator !== 'undefined' && navigator.webdriver // o smoke próprio desliga isso
   const [estado, setEstado] = useState(ler)
   const estadoRef = useRef(estado)
+  const quotesRef = useRef(quotes)
+  quotesRef.current = quotes
   const ativo = useRef(true)
   const pendentes = useRef(new Set())
   const pedindo = useRef(false)
@@ -26,7 +28,6 @@ export default function AlertaVariacao({ quotes }) {
   const [pedidoErro, setPedidoErro] = useState('')
   const [falhas, setFalhas] = useState({})
   const [tentativa, setTentativa] = useState(0)
-  const alertas = useMemo(() => (testing ? [] : alertasDoDia({ quotes })), [quotes, testing])
   const salvar = useCallback((change) => {
     const hoje = marketDate(Date.now())
     const next = change(Object.fromEntries(Object.entries(estadoRef.current).filter(([k]) => k.startsWith(hoje + ':'))))
@@ -48,12 +49,19 @@ export default function AlertaVariacao({ quotes }) {
   }, [])
 
   useEffect(() => {
-    if (perm !== 'granted') return
-    for (const a of alertas) {
+    if (testing || perm !== 'granted') return
+    // Permissão e retry podem ocorrer muito depois do último render com cotações.
+    for (const a of alertasDoDia({ quotes })) {
       const entry = estadoRef.current[a.id]
       if (entry?.dispensado || entregue(entry) || pendentes.current.has(a.id)) continue
       pendentes.current.add(a.id)
-      notificarAlerta(a).then((enviado) => {
+      notificarAlerta(() => {
+        // getRegistration é assíncrono: revalida imediatamente antes de despachar,
+        // usando os dados mais recentes e sem enviar um alerta já dispensado/desmontado.
+        const entry = estadoRef.current[a.id]
+        if (!ativo.current || entry?.dispensado || entregue(entry)) return null
+        return alertasDoDia({ quotes: quotesRef.current }).find((atual) => atual.id === a.id) ?? null
+      }).then((enviado) => {
         // O antigo `notificado` era gravado mesmo sem envio e não comprova entrega.
         // Persistir só depois que o navegador aceitar a notificação, sem presumir que a pessoa a viu.
         if (enviado) salvar((s) => ({ ...s, [a.id]: { ...s[a.id], sistemaEnviadoEm: Date.now() } }))
@@ -63,9 +71,9 @@ export default function AlertaVariacao({ quotes }) {
         }
       }).finally(() => pendentes.current.delete(a.id))
     }
-  }, [alertas, perm, tentativa, salvar])
+  }, [quotes, testing, perm, tentativa, salvar])
 
-  const visiveis = alertas.filter((a) => !estado[a.id]?.dispensado)
+  const visiveis = (testing ? [] : alertasDoDia({ quotes })).filter((a) => !estado[a.id]?.dispensado)
   const falhou = visiveis.some((a) => falhas[a.id] && !entregue(estado[a.id]))
   const dispensar = (id) => salvar((s) => ({ ...s, [id]: { ...s[id], dispensado: true } }))
   const pedir = async () => {

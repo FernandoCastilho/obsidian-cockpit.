@@ -34,3 +34,12 @@ Merge/deploy dependem da sequência coordenada e do CI do candidato integrado fi
 ## Candidato integrado após #300 e #312
 
 Base `eedf6005e7c43c780ba2a9a5715fee238ea709dc`. Sincronização sem alteração adicional da lógica do alerta; índice de busca regenerado a partir de todos os fontes integrados. Passaram 1.281 testes, lint sem erros (cinco avisos preexistentes), build e preservação dos 37 arquivos semanais. O CI inicial do head `0ed2095` passou integralmente: https://github.com/FernandoCastilho/painel-especialista/actions/runs/42369143538. Esse resultado anterior não substitui CI, capturas e aprovação do Auditor no novo candidato integrado.
+
+
+## Correção pedida pelo Auditor
+
+O Auditor reproduziu uma cotação inicialmente válida com 9m59s enviada após envelhecer para 10m01s na autorização tardia. O cálculo não fica mais congelado no memo: cada tentativa revalida idade/dia e a cotação mais recente; o callback é novamente consultado depois de aguardar o registro do service worker, imediatamente antes de chamar a API de envio. Alertas expirados ou do dia anterior não são marcados como entregues. Reversão, dispensa e desmontagem também cancelam um despacho que ainda não começou. Uma chamada já aceita/iniciada pelo sistema não pode ser cancelada por esta guarda.
+
+Regressões adicionadas: autorização posterior, diálogo de permissão demorado, liberação externa, retry, espera pelo registro com e sem service worker, atualização/reversão/dispensa durante a espera e virada de Brasília. O smoke de 390/1280 px também atravessa o limite de dez minutos antes de autorizar e antes de retry.
+
+Validação local da correção: 1.288 testes passaram, lint sem erros (cinco avisos preexistentes), build e preservação dos 37 arquivos semanais aprovados. CI e parecer formal precisam ser renovados para o novo SHA; os resultados anteriores não liberam este candidato.
