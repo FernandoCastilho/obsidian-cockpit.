@@ -65,6 +65,8 @@ test('CI adds the folders gates without replacing the calculator matrix or artif
   assert.match(workflow, /Capturas de tela dos smokes\n\s+if: always\(\)[\s\S]*?\$\{\{ runner\.temp \}\}\/qa-universal/)
   assert.doesNotMatch(workflow, /continue-on-error:\s*true/)
   assert.ok(workflow.indexOf('smoke-sector-folders.cjs') < workflow.indexOf('verify-sector-folders.cjs'))
+  assert.match(workflow, /Capturas e relatório das pastas\n\s+if: always\(\)[\s\S]*?name: pastas-setoriais-design[\s\S]*?path: \$\{\{ runner\.temp \}\}\/qa-universal\/folders/)
+  assert.ok(workflow.indexOf('name: pastas-setoriais-design') < workflow.indexOf('Conferir tema, Trends'))
 })
 
 test('folders smoke exercises reload after history, checks the actual theme and isolates remote calls', () => {
@@ -75,6 +77,7 @@ test('folders smoke exercises reload after history, checks the actual theme and 
   assert.match(smoke, /page\.goForward\(\)[\s\S]*?value === 'compensados'\)[\s\S]*?page\.reload\(\)/)
   assert.ok((smoke.match(/await page\.reload\(\)/g) || []).length >= 3)
   assert.match(smoke, /report\.passed = true/)
+  assert.match(smoke, /report\.failureContext = await activePage\.evaluate/)
   assert.match(smoke, /finally \{ fs\.writeFileSync/)
 })
 

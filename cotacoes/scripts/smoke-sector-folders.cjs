@@ -124,6 +124,15 @@ const report = { schemaVersion: 1, passed: false, results: [], errors: [] }
     console.log(`PASS: ${report.results.length} cenários de pastas em desktop/mobile e claro/escuro`)
   } catch (error) {
     report.failure = error.message
+    if (activePage) report.failureContext = await activePage.evaluate(() => ({
+      url: location.href,
+      query: document.querySelector('.central-search input')?.value,
+      historyState: history.state,
+      expectedFocusId: history.state?.centralSetorial?.focusId,
+      expectedFocusExists: Boolean(document.getElementById(history.state?.centralSetorial?.focusId || '')),
+      activeElement: { id: document.activeElement?.id, tag: document.activeElement?.tagName, className: document.activeElement?.className },
+      visibleResults: [...document.querySelectorAll('.central-topic')].map(element => ({ id: element.id, visible: element.getClientRects().length > 0 })),
+    })).catch(() => null)
     if (activePage) await activePage.screenshot({ path: path.join(out, `${activeScenario}-failure.png`), fullPage: true }).catch(() => {})
     throw error
   }

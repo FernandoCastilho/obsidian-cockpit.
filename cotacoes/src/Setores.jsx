@@ -14,6 +14,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
   const surfaceRef = useRef(null)
   const routeMemory = useRef(new Map())
   const scrollIntent = useRef(null)
+  const focusIntent = useRef(null)
   const parts = view.split('/')
   const routeGroup = ['pasta', 'topico'].includes(parts[0]) ? CATALOGO_SETORIAL.find(group => group.id === parts[1]) : null
   const topicIndex = parts[0] === 'topico' && /^\d+$/.test(parts[2] || '') ? Number(parts[2]) : -1
@@ -32,6 +33,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
     try { window.history.replaceState(withCentralHistory(window.history.state, context), '') } catch { /* history unavailable */ }
   }
   function changeQuery(next) {
+    focusIntent.current = null
     setQuery(next)
     remember({ view, query: next, scroll: window.scrollY, focusId: document.activeElement?.id || '' })
   }
@@ -59,8 +61,18 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
     const remembered = readCentralHistory(window.history.state, view)
     const scrolling = scrollIntent.current?.view === view ? scrollIntent.current : null
     scrollIntent.current = null
+    focusIntent.current = { view, query: remembered?.query || '', remembered, scrolling }
     setQuery(remembered?.query || '')
+  }, [view, hasDetail, folder])
+  useEffect(() => {
+    const intent = focusIntent.current
+    // Restoring history can need another render. Never focus a result before
+    // the remembered query has committed and made that result available.
+    if (!intent || intent.view !== view || intent.query !== query) return
+    const { remembered, scrolling } = intent
     const frame = window.requestAnimationFrame(() => {
+      if (focusIntent.current !== intent) return
+      focusIntent.current = null
       const surface = surfaceRef.current
       if (!surface) return
       const target = remembered?.focusId ? document.getElementById(remembered.focusId) : surface
@@ -71,7 +83,7 @@ export default function Setores({ view = '', onView = () => {}, quotes }) {
       else if ((scrolling || !remembered) && (hasDetail || folder)) surface.scrollIntoView({ block: 'start', behavior: 'instant' })
     })
     return () => window.cancelAnimationFrame(frame)
-  }, [view, hasDetail, folder])
+  }, [view, query, hasDetail, folder])
   const openTopic = (group, index) => navigate(`topico/${group.id}/${index}`)
   const topicButton = (group, topic) => <button type="button" id={`central-topic-${group.id}-${group.topics.indexOf(topic)}`} className="central-topic" aria-current={routeTopic === topic && routeGroup?.id === group.id ? 'page' : undefined} onClick={() => openTopic(group, group.topics.indexOf(topic))}><span className="central-document-icon" aria-hidden="true"/><span>{topic}</span><span className="central-topic-arrow" aria-hidden="true">→</span></button>
 

@@ -81,6 +81,14 @@ jobs:
       - name: Verificar matriz de pastas e capturas completas
         if: ${{ !cancelled() && steps.serve.outcome == 'success' }}
         run: node scripts/verify-sector-folders.cjs "$RUNNER_TEMP/qa-universal/folders"
+      - name: Capturas e relatório das pastas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pastas-setoriais-design
+          path: ${{ runner.temp }}/qa-universal/folders
+          if-no-files-found: error
+          retention-days: 7
       - name: Capturas e relatório dos estudos setoriais
         if: always()
         uses: actions/upload-artifact@v4

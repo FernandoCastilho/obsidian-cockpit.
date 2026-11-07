@@ -49,9 +49,13 @@ async function setup(t, initial = 'central', state = { unrelatedFeature: { prese
     }
     if (document.activeElement !== body && ![...elements.values()].includes(document.activeElement)) document.activeElement = body
   }
-  const settle = async () => {
-    renderer.render(); await renderer.settle(); syncDom()
-    for (const [id, fn] of [...frames]) { frames.delete(id); fn() }
+  const flushFrames = () => { for (const [id, fn] of [...frames]) { frames.delete(id); fn() } }
+  const settle = async ({ frameBeforeQueryCommit = false, deferFrames = false } = {}) => {
+    renderer.render()
+    // A passive effect may enqueue query state while the next frame already runs.
+    // Keep that intermediate committed tree observable to catch focus-before-DOM races.
+    if (frameBeforeQueryCommit) { syncDom(); flushFrames() }
+    await renderer.settle(); syncDom(); if (!deferFrames) flushFrames()
     await renderer.settle(); syncDom()
   }
   await settle()
@@ -62,7 +66,7 @@ async function setup(t, initial = 'central', state = { unrelatedFeature: { prese
     async queryTo(value) { const node = nodes(renderer.value).find(node => node.type === 'input'); elements.get(key(node)).focus(); node.props.onChange({ target: { value } }); await settle() },
     async click(name, index = 0) { const node = nodes(renderer.value).filter(node => node.type === 'button' && (node.props['aria-label'] || text(node)) === name)[index]; assert.ok(node, name); elements.get(key(node)).focus(); node.props.onClick(); await settle() },
     async clickId(id) { const node = nodes(renderer.value).find(node => node.props?.id === id); assert.ok(node, id); elements.get(id).focus(); node.props.onClick(); await settle() },
-    async back() { index--; view = entries[index].view; await settle() },
+    async back(options) { index--; view = entries[index].view; await settle(options) },
     async forward() { index++; view = entries[index].view; await settle() },
     async reload() { renderer.close(); frames.clear(); elements.clear(); document.activeElement = body; render(); await settle() },
   }
@@ -162,4 +166,25 @@ test('empty-result clear action restores search focus and does not scroll the re
   assert.equal(h.state.centralSetorial.focusId, 'search-review')
   assert.equal(h.calls.slice(callsBefore).some(call => 'scroll' in call || 'scrollIntoView' in call), false)
   assert.equal(h.length, 1)
+})
+
+
+test('Back restores result focus only after the remembered query has committed to the DOM', async t => {
+  const h = await setup(t, 'topico/base-florestal/4')
+  await h.queryTo('ciberseguranca')
+  await h.clickId('central-topic-tic-1')
+  for (let repeat = 0; repeat < 2; repeat++) {
+    const callsBefore = h.calls.length
+    await h.back({ frameBeforeQueryCommit: true })
+    assert.equal(h.query, 'ciberseguranca')
+    assert.equal(h.active, 'central-topic-tic-1', 'focus must wait for the restored result, not fall back to the surface')
+    assert.equal(h.calls.slice(callsBefore).some(call => call.focus === 'surface'), false, 'no premature fallback during the query render')
+    await h.forward()
+    assert.equal(h.view, 'topico/tic/1')
+    assert.equal(h.query, '')
+  }
+  await h.back({ deferFrames: true })
+  await h.queryTo('outro termo')
+  assert.equal(h.active, 'search-review', 'typing cancels the old restoration instead of stealing focus')
+  assert.equal(h.query, 'outro termo')
 })
