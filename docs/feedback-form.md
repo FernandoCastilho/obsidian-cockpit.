@@ -1,0 +1,33 @@
+# Caixa de sugestões
+
+Mascote vetorial discreto, aberto somente por clique. O formulário contém tipo (sugestão/dica/problema), mensagem obrigatória e nome/e-mail opcionais. Não inclua dados de clientes nem informações confidenciais.
+
+## Estado da ativação
+
+**Envio desativado.** `cotacoes/src/feedbackConfig.json` contém `verified: false` e nenhum ID. Não há senha, credencial ou endereço privado no código. O Formspree ainda depende de concluir a etapa segura de cadastro. Não apresentar essa versão como envio de e-mail funcionando.
+
+## Para ativar
+
+1. Concluir o cadastro seguro, criar o formulário no plano gratuito e confirmar o destino autorizado. Manter as proteções contra spam do serviço. Conferir se a configuração de CAPTCHA aceita o POST JSON; não desativar proteções para contornar falhas.
+2. Enviar um único teste claramente identificado e sem dados confidenciais. Verificar aceitação pelo serviço e recebimento na caixa de destino. Registrar data, ID público do formulário e confirmação da entrega, sem publicar endereço privado, mensagens ou dados de caixa postal.
+3. Só depois preencher `formId` e marcar `verified: true`. Atualizar a asserção de desativação em `test/feedback.test.mjs` para exigir a evidência de ativação e repetir a verificação completa.
+4. Testar erro, quota, fechamento, cliques repetidos, teclado e mobile antes de mesclar/publicar.
+
+## Comportamento e limites
+
+- Mensagem: até 4.000 caracteres; nome: 100; e-mail: 254.
+- Apenas campos digitados são transmitidos. URL, histórico, cotações e dados financeiros não são coletados. A requisição omite cookies e referer.
+- Campo honeypot e bloqueio de clique repetido reduzem erros; não substituem proteções de spam do servidor.
+- A resposta precisa ser HTTP de sucesso e JSON `ok: true`. Isso comprova aceitação pelo serviço, não entrega ao destinatário.
+- Erros preservam o texto. Não há reenvio automático. Falha de rede/timeout pode ocorrer após aceitação; o aviso pede aguardar para evitar duplicidade.
+- Fechar enquanto envia mantém a operação. Reabrir mostra o estado. O rascunho fica apenas na memória da página e se perde ao recarregar/sair.
+- O diálogo nativo fecha com Escape e botão, restaura foco e fecha ao navegar sem roubar foco da nova tela.
+- Nenhum plano pago foi contratado. Conferir limite vigente do plano gratuito no serviço.
+
+## Testes
+
+`node --test test/feedback*.test.mjs`: 11 cenários sintéticos de validação, configuração desativada, privacidade, quota/erro, aborto, honeypot, cliques repetidos, foco, fechamento, reabertura e navegação. Nenhum envia e-mail real.
+
+`test/fixtures/feedback-responsive.html`: prévia de desenvolvimento do componente real em 320/390/768/1100 px com temas claro/escuro. Não é emulação de dispositivo físico e não entra no build.
+
+Em 7/11/2026, a suíte local completa passou (1.257 testes), o build passou e o lint não apresentou erros (cinco avisos existentes em outros componentes). A prévia não foi alcançável pelo navegador de revisão deste executor; a validação visual não foi concluída. A entrega real também não foi testada porque o cadastro permanece pendente.
