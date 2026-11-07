@@ -36,7 +36,7 @@ const fixture = mode => ({ schemaVersion: 1, windowDays: 7, generatedAt: now, to
         await list.getByRole('link', { name: titles[id], exact: true }).waitFor()
         assert.equal(await list.getByRole('link').count(), 1)
         assert.match(await list.innerText(), /7 dias \(168 horas\)/)
-        assert.doesNotMatch(await list.innerText(), /expirada|futura|120 horas/)
+        assert.doesNotMatch(await list.innerText(), /expirada|futura|120 horas|Curadoria automática|Última consulta|Última coleta completa/)
         assert.equal(await tab.getAttribute('aria-selected'), 'true')
         const box = await tab.boundingBox(); assert.ok(box.height >= 44)
         await tab.focus(); assert.equal(await tab.evaluate(node => document.activeElement === node), true)
@@ -59,6 +59,7 @@ const fixture = mode => ({ schemaVersion: 1, windowDays: 7, generatedAt: now, to
         if (next === 'empty') await panel.getByText(/Isso não significa ausência de notícias/).waitFor()
         else if (next === 'partial') await panel.getByText(/Atualização incompleta, atrasada ou não confirmada/).waitFor()
         else await panel.getByText(/Curadoria indisponível no momento/).waitFor()
+        assert.doesNotMatch(await panel.innerText(), /Curadoria automática|Última consulta|Última coleta completa/)
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false)
       }
       assert.deepEqual(errors, [])
