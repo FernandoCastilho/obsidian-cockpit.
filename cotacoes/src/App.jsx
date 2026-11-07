@@ -25,6 +25,7 @@ const CdiFuturo = lazy(() => import('./CdiFuturo.jsx'))
 import HolidayNotice from './HolidayNotice.jsx'
 import AvisoInicial from './AvisoInicial.jsx'
 import ConceitoDiario from './ConceitoDiario.jsx'
+import MarketPopup from './MarketPopup.jsx'
 import Recado from './Recado.jsx'
 import AlertaVariacao from './AlertaVariacao.jsx'
 import { OnlineBadge } from './Acessos.jsx'
@@ -261,6 +262,7 @@ export default function App() {
       </>}>
     <AvisoInicial onDismiss={() => setAvisoFechado(true)} />
     <ConceitoDiario ready={avisoFechado} goto={goto} />
+    <MarketPopup ready={avisoFechado} quotes={quotes} curves={curves.data} oil={oil.data} paused={tab === 'apresentar'} />
     <Recado />
     <Laser />
     <GlobalSearch onNavigate={(doc, query) => { const [id,...rest]=doc.route.split('/'); goto(id,rest.join('/')); setSearchSelection({doc,query}) }} />

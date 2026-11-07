@@ -52,6 +52,14 @@ const id = '2026-11-05:USD:alta'
     const enter = async (reload = false) => {
       if (reload) await p.reload(); else await p.goto(base + '/#resumo')
       await p.locator('dialog.aviso-inicial:not(.recado)').getByRole('button', { name: 'Entendi' }).click()
+      // A entrada em dia útil às 15h abre o panorama. Fechar pela UI antes de testar a faixa.
+      if (!reload) {
+        const panorama = p.getByRole('dialog', { name: 'Panorama do dia', exact: true })
+        await panorama.waitFor()
+        assert.equal(await p.locator('dialog:modal').count(), 1, 'panorama não empilha com o aviso')
+        await panorama.getByRole('button', { name: 'Fechar panorama' }).click()
+        await panorama.waitFor({ state: 'hidden' })
+      }
       await p.locator('.alerta-variacao').waitFor()
     }
     const ledger = () => p.evaluate(() => window.qaNotification.read())
